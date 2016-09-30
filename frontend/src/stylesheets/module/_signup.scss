@@ -1,0 +1,64 @@
+@import "../common/mixins";
+@import url(https://fonts.googleapis.com/css?family=Oswald:700|Quattrocento);
+@import url(https://fonts.googleapis.com/css?family=Josefin+Sans:700);
+@import url(https://fonts.googleapis.com/css?family=Lato:400);
+
+.signup + p {
+  margin-top: 20px;
+}
+
+#landing-container {
+  min-height: 804px
+}
+
+#welcome-header {
+  min-height: 804px; position: relative; background-size: cover !important;
+}
+
+#welcome-main-container {
+  display: flex; flex-direction: column; justify-content: space-around; height: 80vh; padding: 10vh 20px;
+  @include media-xs-only { height: 120vh; }
+}
+
+#welcome-header-title {
+  text-align: center; margin: 0 auto; padding-top: 6rem; max-width: 750px;
+
+  #app-title {
+    color: #fff; font-family:'Josefin Sans', sans-serif; font-size: 54px; font-weight: bold; letter-spacing: 2px; line-height: 1.125; text-transform: uppercase;
+    @include media-xs-only { font-size: 44px; }
+  }
+
+  .app-subtitle {
+    font-family:'Lato', sans-serif; color: #fff; opacity: 0.75; font-size: 1.4rem; padding: 0 10px; margin-bottom: 10px;
+  }
+}
+
+#welcome-body {
+  margin-top: 25px;margin-bottom: 25px;
+  #welcome-body-message { text-align: center; color: #fff; font-size: 1rem }
+}
+
+#login-button {
+  text-align: center;
+}
+
+.kep-login-facebook {
+  background-color: rgba(76, 105, 186, 0.86) !important;
+  font-size: 18px; font-family: Roboto, sans-serif !important; font-weight: 500 !important; @include transition-standard(background-color 150ms); border: 0;
+  &:hover { background-color: #3d5084 !important; }
+}
+
+.feature-row  > div {
+  > span { font-size: 60px !important; border-radius: 18px; color: #fff !important; }
+  > p { font-family: "Lato", sans-serif; font-size: 0.9rem; bottom: -13px; color: #fff !important; }
+}
+
+.page-signup {
+  h1 { margin: 0; }
+  .signup-right { display: flex; flex-direction: column; justify-content: center; padding: 30px; }
+}
+
+#stepper-img {
+  height: 100vh; width: 100%; object-fit: cover;
+  @include media-xs-only { height: 250px; }
+}
