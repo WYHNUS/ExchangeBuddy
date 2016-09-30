@@ -1,6 +1,8 @@
 # frontend
 
-This project is generated with [generator-react-webpack](https://github.com/react-webpack-generators/generator-react-webpack)
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+
+You can find the most recent version of guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
 ## Installation
 
@@ -9,12 +11,12 @@ This project is generated with [generator-react-webpack](https://github.com/reac
 
 ## Build & development
 
-Run 'npm start' for preview.
+Run 'npm start' for preview in the development mode.
 Develop in 'src' folder.
 
 ## Deploy
 
-Run 'npm run dist'
+Run 'npm run build'
 
 ## Stack
 
