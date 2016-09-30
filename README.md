@@ -4,23 +4,18 @@
 
 **Founder and Business Guru:**
 
-- Ng Chuen Weng Eugene - A0124507M
+- Ng Chuen Weng Eugene
 
 **Current Developers:**
 
-- Lee Kai Yi
-- Wang Yanhao
-- Zhang Hanming
+- [Lee Kai Yi](https://github.com/kaiyisg)	- *Front-end Developer and UI/UX Designer*
+- [Wang Yanhao](https://github.com/WYHNUS)	- *Full-stack Developer*
+- [Zhang Hanming](https://github.com/ZhangHanming)	*Back-end Developer*
 
-
-## Project is based on [work](https://github.com/irvinlim/exchangebuddy) from previous develop team.
+**Project is based on [work](https://github.com/irvinlim/exchangebuddy) from previous develop team.**
 
 **Previous Developers:**
 
-- Irvin Lim Wei Quan - A0139812A
-- Leon Mak An Sheng - A0143029M
-- Lam Chi Thanh - A0144881Y
-
-**Business Guru:**
-
-- Ng Chuen Weng Eugene - A0124507M
+- [Irvin Lim Wei Quan](https://github.com/irvinlim)
+- [Leon Mak An Sheng](https://github.com/leonmak)
+- [Lam Chi Thanh](https://github.com/zevergreenz)
