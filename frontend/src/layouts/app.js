@@ -3,12 +3,13 @@ import MuiTheme from './mui-theme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Helmet from "react-helmet";
 import $ from "jquery";
+import '../../public/application.css';
 
 // import Header from './components/Header';
 // import MessageSnackbar from '../components/MessageSnackbar/';
 
 import { makeRouteSlug } from '../util/helper';
-// import * as ImagesHelper from '../util/images';
+//import * as ImagesHelper from '../util/images';
 
 // Component
 class App extends React.Component {
