@@ -1,7 +1,7 @@
 'use strict';
 var config = require('../config/config');
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, DataType) {
   var University = sequelize.define('University', {
     name: {
   	  type: DataType.TEXT(),
@@ -51,7 +51,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        
+
       }
     }
   });

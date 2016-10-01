@@ -1,7 +1,7 @@
 'use strict';
 var config = require('../config/config');
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, DataType) {
   var Country = sequelize.define('Country', {
     // Use this as the primary key to identify countries
 	// Has to be uppercase.
@@ -49,7 +49,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        
+
       }
     }
   });

@@ -2,7 +2,7 @@
 var jwt = require('jsonwebtoken');
 var config = require('../config/config');
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, DataType) {
   var User = sequelize.define('User', {
     email: {
       type: DataType.STRING(255),
@@ -73,7 +73,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        
+
       }
     },
     instanceMethods: {
