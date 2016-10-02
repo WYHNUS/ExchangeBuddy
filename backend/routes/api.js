@@ -4,6 +4,7 @@ var jwt = require('express-jwt');
 var config = require('../config/config');
 var models  = require('../models');
 var AuthCtrl = require('../controllers/AuthenticateController');
+var CountryCtrl = require('../controllers/CountryController');
 
 // Set up token authenticate
 var verifyToken = jwt({secret: config.secret});
@@ -16,6 +17,7 @@ router.get('/', function(req, res) {
 
 // Authenticate with Facebook access token
 router.post('/authenticate', AuthCtrl.authenticate);
+router.get('/country', CountryCtrl.getAllCountries);
 // Verify JSWT
 router.get('/me', verifyToken, function(req, res) {
   res.send(req.user);
