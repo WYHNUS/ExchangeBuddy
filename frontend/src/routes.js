@@ -82,20 +82,20 @@ import Home from './pages/home';
 //   // }
 // };
 
-// const goToDefaultGroup = (nextState, replace) => {
-//   // if (Meteor.user() && Meteor.user().defaultGroupId) {
-//   //   // If have default group, redirect there.
-//   //   replace({
-//   //     pathname: `/group/${Meteor.user().defaultGroupId}`,
-//   //     state: { nextPathname: nextState.location.pathname }
-//   //   });
-//   // } else {
-//     replace({
-//       pathname: '/',
-//       state: { nextPathname: nextState.location.pathname }
-//     });
-//   // }
-// };
+const goToDefaultGroup = (nextState, replace) => {
+  // if (Meteor.user() && Meteor.user().defaultGroupId) {
+  //   // If have default group, redirect there.
+  //   replace({
+  //     pathname: `/group/${Meteor.user().defaultGroupId}`,
+  //     state: { nextPathname: nextState.location.pathname }
+  //   });
+  // } else {
+    replace({
+      pathname: '/',
+      state: { nextPathname: nextState.location.pathname }
+    });
+  // }
+};
 
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, Store);
@@ -110,12 +110,19 @@ const history = syncHistoryWithStore(browserHistory, Store);
         <Router history={ history }>
           <Route path="/" component={ App }>
             <IndexRoute name="home" component={ Home } />
+            
+
+
           </Route>
         </Router>
       </Provider>
     );
-/*/   });
+   //});
 // });
+/*
+<Route path="group">
+              <IndexRoute name="home" component={GroupHome}/>
+            </Route>*/
 
 
 // <Provider store={ Store }>
@@ -152,7 +159,7 @@ const history = syncHistoryWithStore(browserHistory, Store);
 
 //               <Route path="404" component={ NotFound } />
 //               <Route path="*" component={ NotFound } />
-//             </Route>*/
+//             </Route>
 
 //           </Route>
 //         </Router>

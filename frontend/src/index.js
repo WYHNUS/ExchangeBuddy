@@ -1,6 +1,7 @@
 import 'core-js/fn/object/assign';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 // Initialize configs
 // import './config/reactga';
@@ -9,6 +10,7 @@ import ReactDOM from 'react-dom';
 
 // Finally, pass to React Router to display components
 import Router from './routes.js';
+injectTapEventPlugin();
 
 //import './stylesheets/application.scss'; not sure how to import this
 

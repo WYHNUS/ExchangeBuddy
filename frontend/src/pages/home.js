@@ -7,14 +7,14 @@ import * as IconsHelper from '../util/icons';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import {Tabs, Tab} from 'material-ui/Tabs';
 // Needed for onTouchTap
-import injectTapEventPlugin from 'react-tap-event-plugin';
+//import injectTapEventPlugin from 'react-tap-event-plugin';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 
 const landingContainerStyle = {
   backgroundColor: "darkslategray",
 }
 
-injectTapEventPlugin();
+//injectTapEventPlugin();
 
 // const landingImg = {
 //   background: `linear-gradient(to top, rgba(25, 25, 25, 0.21) 0%,rgb(0, 0, 0) 215%),
