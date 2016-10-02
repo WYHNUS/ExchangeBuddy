@@ -5,6 +5,7 @@ var config = require('../config/config');
 var models  = require('../models');
 var AuthCtrl = require('../controllers/AuthenticateController');
 var CountryCtrl = require('../controllers/CountryController');
+var UniCtrl = require('../controllers/UniversityController');
 
 // Set up token authenticate
 var verifyToken = jwt({secret: config.secret});
@@ -19,6 +20,7 @@ router.get('/', function(req, res) {
 router.post('/authenticate', AuthCtrl.authenticate);
 router.get('/country', CountryCtrl.getAllCountries);
 router.get('/country/:id', CountryCtrl.getCountry);
+router.get('/university', UniCtrl.getUniversities);
 // Verify JSWT
 router.get('/me', verifyToken, function(req, res) {
   res.send(req.user);
