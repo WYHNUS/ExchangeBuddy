@@ -6,6 +6,6 @@ exports.getAllCountries = function(req, res){
         for(var i = 0; i < countries.length; i++){
             result[i] = countries[i];
         }
-        res.send(result);
+        res.send(JSON.stringify(result));
     });
 }
