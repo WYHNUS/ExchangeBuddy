@@ -9,3 +9,13 @@ exports.getAllCountries = function(req, res){
         res.send(JSON.stringify(result));
     });
 }
+
+exports.getCountry = function(req, res){
+    models.Country.findOne({
+        where: {
+            alpha2Code: req.params.id
+        }
+    }).then(function(country){
+        res.send(JSON.stringify(country));
+    })
+}
