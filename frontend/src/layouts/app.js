@@ -6,6 +6,7 @@ import $ from "jquery";
 import MessageSnackbar from '../components/MessageSnackbar';
 import { makeRouteSlug } from '../util/helper';
 import BottomBar from '../components/BottomBar';
+//import '../stylesheets/App.sass';
 
 class App extends React.Component{
 	render(){
