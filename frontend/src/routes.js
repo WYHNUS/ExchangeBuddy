@@ -22,7 +22,7 @@ import App from './layouts/app';
 import Home from './pages/home';
 // import Signup from './pages/signup';
 // import Verify from './pages/verify';
-// import NotFound from './pages/not-found';
+import NotFound from './pages/not-found';
 // import Profile from './pages/profile';
 // import About from './pages/about';
 // import PrivacyPolicy from './pages/privacy-policy';
@@ -112,16 +112,20 @@ const history = syncHistoryWithStore(browserHistory, Store);
             <IndexRoute name="home" component={ Home } />
             <Route path="group">
               <IndexRoute name="home" component={GroupHome}/>
-            </Route>
-            
-
-
+            </Route>         
           </Route>
+          <Route path="*" component={NotFound}/>
         </Router>
       </Provider>
     );
-   //});
-// });
+
+    /*<Route path="home" component={Home}/>
+              <Route path="wiki" component={Wiki}/>
+              <Route path="journal" component={Journal}/>
+              <Route path="stories" component={Stories}/>
+              <Route path="profile" component={Profile}/>
+              <Route path="settings" component={Settings}/>
+              */
 /*
 */
 

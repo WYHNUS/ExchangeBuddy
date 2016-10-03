@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Row, Col } from 'meteor/lifefilm:react-flexbox-grid';
+import { Grid, Row, Col } from 'react-flexbox-grid';
 import Paper from 'material-ui/Paper';
 
 import NavigationBar from '../components/NavigationBar/NavigationBar';
