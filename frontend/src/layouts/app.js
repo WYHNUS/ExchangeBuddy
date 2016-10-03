@@ -5,6 +5,7 @@ import Helmet from "react-helmet";
 import $ from "jquery";
 import MessageSnackbar from '../components/MessageSnackbar';
 import { makeRouteSlug } from '../util/helper';
+import BottomBar from '../components/BottomBar';
 
 class App extends React.Component{
 	render(){
@@ -31,6 +32,7 @@ class App extends React.Component{
 					<div id="main" className={`page-${ makeRouteSlug(this.props.routes) }`}>
 					{ this.props.children }
 					</div>
+					<BottomBar/>
 
 					</div>
 					</MuiThemeProvider>

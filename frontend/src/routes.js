@@ -23,7 +23,6 @@ export default (
           <Route path="/" component={ App }>
           	<IndexRoute component={Landing}/>
           	<Route path="home" component={Home}/>
-          	
           </Route>
         </Router>
       </Provider>

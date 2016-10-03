@@ -6,6 +6,7 @@ import {reducer as formReducer} from 'redux-form';
 import { messageSnackbarOpen, messageSnackbarMessage } from './messageSnackbar';
 import { browserIsMobileWidth } from './browser';
 import { switchGroupDialogOpen } from './switchGroupDialog';
+import { pageVisibility } from './pageVisibility';
 
 const rootReducer = combineReducers({
   // Add more reducers here
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   messageSnackbarMessage,
   browserIsMobileWidth,
   switchGroupDialogOpen,
+  pageVisibility,
 
   // Add routerReducer
   routing: routerReducer,
