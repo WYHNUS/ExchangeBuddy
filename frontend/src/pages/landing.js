@@ -15,6 +15,8 @@ const landingImg={
 
 }
 
+//TODO check login logic before deciding which button to serve to users
+
 const Landing = () => (
   <div id="landing-container" style={landingContainerStyle}>
     <div id="welcome-header" style={landingImg}>
@@ -36,7 +38,7 @@ const Landing = () => (
         : <RaisedButton
             primary={true}
             label="Go to your group"
-            onTouchTap={ () => browserHistory.push('/group') }
+            onTouchTap={ () => browserHistory.push('/home') }
             style={{ maxWidth: 250, margin: '0 auto', height: 50 }}
             labelStyle={{ fontSize: "16px", padding: '0 20px' }} />
         }

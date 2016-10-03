@@ -10,9 +10,11 @@ import Store from './redux-store';
 
 // Layout
 import App from './layouts/app';
+import Home from './layouts/home';
 
-import Home from './pages/home';
+import Events from './pages/home/events';
 import Landing from './pages/landing';
+import NotFound from './pages/not-found';
 
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, Store);
@@ -22,7 +24,10 @@ export default (
         <Router history={ history }>
           <Route path="/" component={ App }>
           	<IndexRoute component={Landing}/>
-          	<Route path="home" component={Home}/>
+          	<Route path="home" component={Home}>
+              <IndexRoute component={Events}/>
+            </Route>
+            <Route path="*" component={NotFound}/>
           </Route>
         </Router>
       </Provider>
