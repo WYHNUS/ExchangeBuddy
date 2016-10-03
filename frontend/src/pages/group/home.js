@@ -1,16 +1,16 @@
 import React from 'react';
-import { Grid, Row, Col } from 'meteor/lifefilm:react-flexbox-grid';
+import { Grid, Row, Col } from 'react-flexbox-grid';
 
-import GroupWelcome from '../../components/Group/Home/GroupWelcome';
+/*import GroupWelcome from '../../components/Group/Home/GroupWelcome';
 import MemberList from '../../components/Group/Home/MemberList';
 import FacebookShare from '../../components/Button/FacebookShare';
 import RaisedButton from 'material-ui/RaisedButton';
-
-import LoginButton from '../../components/LoginButton';
+*/
+/*import LoginButton from '../../components/LoginButton';*/
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { showSnackbar } from '../../../client/actions/snackbar';
+import { showSnackbar } from '../../actions/snackbar';
 
 
 const buttonStyle = {
@@ -19,7 +19,7 @@ const buttonStyle = {
   width: "100%",
 };
 
-const joinedGroupStory = (params, actions) => () => {
+/*const joinedGroupStory = (params, actions) => () => {
   FB.getLoginStatus(function(response) {
   if (response.status === 'connected') {
     var uid = response.authResponse.userID;
@@ -38,9 +38,9 @@ const joinedGroupStory = (params, actions) => () => {
     actions.showSnackbar("You must be log in before inviting.");
   }
  });
-};
+};*/
 
-const LoggedIn = ({ params, actions }) => (
+/*const LoggedIn = ({ params, actions }) => (
   <Row>
     <Col xs={12} style={{ marginTop: 15 }}>
       <h3 className="pinline" style={{ fontSize: "1.3em" }}><span>ExchangeBuddy is better with friends</span></h3>
@@ -89,6 +89,28 @@ const GroupHome = ({ params, actions }) => (
     </Row>
 
     { Meteor.user() ? <LoggedIn params={params} actions={actions} /> : <NotLoggedIn /> }
+
+  </Grid>
+);*/
+
+const GroupHome = ({ params, actions }) => (
+  <Grid>
+
+    <Row>
+      <Col xs={12}>
+        {/*<GroupWelcome groupId={ parseInt(params.id) } />*/}
+      </Col>
+    </Row>
+
+    <Row>
+      <Col xs={12} style={{ marginTop: 15 }}>
+        <h3 className="pinline" style={{ fontSize: "1.3em" }}><span>Who's going</span></h3>
+        <p className="small-text" style={{ textAlign: 'center' }}>These students will be on exchange at the same time as you.</p>
+        {/*<MemberList groupId={ parseInt(params.id) } />*/}
+      </Col>
+    </Row>
+
+    { /*Meteor.user() ? <LoggedIn params={params} actions={actions} /> : <NotLoggedIn /> */}
 
   </Grid>
 );

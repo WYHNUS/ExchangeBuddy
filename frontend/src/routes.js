@@ -32,7 +32,7 @@ import Home from './pages/home';
 // import EditInfo from './pages/info/edit-info';
 
 // // Group
-// import GroupHome from './pages/group/home';
+import GroupHome from './pages/group/home';
 // import GroupInfo from './pages/group/info';
 // import GroupInfoPage from './pages/group/info'; // temp
 // import GroupChat from './pages/group/chat';
@@ -110,6 +110,9 @@ const history = syncHistoryWithStore(browserHistory, Store);
         <Router history={ history }>
           <Route path="/" component={ App }>
             <IndexRoute name="home" component={ Home } />
+            <Route path="group">
+              <IndexRoute name="home" component={GroupHome}/>
+            </Route>
             
 
 
@@ -120,9 +123,7 @@ const history = syncHistoryWithStore(browserHistory, Store);
    //});
 // });
 /*
-<Route path="group">
-              <IndexRoute name="home" component={GroupHome}/>
-            </Route>*/
+*/
 
 
 // <Provider store={ Store }>
