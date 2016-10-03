@@ -3,7 +3,7 @@ import MuiTheme from './mui-theme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Helmet from "react-helmet";
 import $ from "jquery";
-import MessageSnackbar from '../components/MessageSnackbar/';
+import MessageSnackbar from '../components/MessageSnackbar';
 import { makeRouteSlug } from '../util/helper';
 
 class App extends React.Component{
