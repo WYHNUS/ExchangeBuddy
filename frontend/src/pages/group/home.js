@@ -97,6 +97,8 @@ const GroupHome = ({ params, actions }) => (
 const GroupHome = ({ params, actions }) => (
   <Grid>
 
+    
+
     <Row>
       <Col xs={12}>
         {/*<GroupWelcome groupId={ parseInt(params.id) } />*/}

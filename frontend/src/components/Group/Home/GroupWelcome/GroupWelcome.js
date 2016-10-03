@@ -22,11 +22,16 @@ const NotLoggedIn = ({ group }) => (
   </div>
 );
 
-const GroupWelcome = ({ group }) => {
+/*const GroupWelcome = ({ group }) => {
   if (Meteor.user())
     return <LoggedIn group={group} />;
   else
     return <NotLoggedIn group={group} />;
+};
+*/
+
+const GroupWelcome = ({ group }) => {
+  return <LoggedIn group={group}/>;
 };
 
 export default GroupWelcome;
