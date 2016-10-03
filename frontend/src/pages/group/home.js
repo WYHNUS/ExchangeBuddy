@@ -11,7 +11,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { showSnackbar } from '../../actions/snackbar';
-import BottomBar from '../../components/BottomBar';
+
 
 
 const buttonStyle = {
@@ -110,7 +110,7 @@ const GroupHome = ({ params, actions }) => (
         {/*<MemberList groupId={ parseInt(params.id) } />*/}
       </Col>
     </Row>
-    <BottomBar/>
+    
 
     { /*Meteor.user() ? <LoggedIn params={params} actions={actions} /> : <NotLoggedIn /> */}
 

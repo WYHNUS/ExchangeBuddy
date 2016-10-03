@@ -53,9 +53,9 @@ class BottomBarComponent extends Component {
       <BottomNavigation selectedIndex={tabIdx}>
       <BottomNavigationItem onTouchTap={this.goToURL('/group/home')} label="Home" icon={IconsHelper.materialIcon("home")} />
       <BottomNavigationItem onTouchTap={this.goToURL('/group/wiki')} label="Wiki" icon={IconsHelper.materialIcon("info")} />
-      <BottomNavigationItem onTouchTap={this.goToURL('/group/journal')} className="Journal" icon={IconsHelper.materialIcon("info")} />
-      <BottomNavigationItem onTouchTap={this.goToURL('/group/stories')} label="Stories" icon={IconsHelper.materialIcon("info")} />
-      <BottomNavigationItem onTouchTap={this.goToURL('/group/profile')} label="Profile" icon={IconsHelper.materialIcon("info")} />
+      <BottomNavigationItem onTouchTap={this.goToURL('/group/journal')} className="Journal" icon={IconsHelper.materialIcon("create")} />
+      <BottomNavigationItem onTouchTap={this.goToURL('/group/stories')} label="Stories" icon={IconsHelper.materialIcon("library_books")} />
+      <BottomNavigationItem onTouchTap={this.goToURL('/group/profile')} label="Profile" icon={IconsHelper.materialIcon("account_circle")} />
       </BottomNavigation>
       </Paper>
       }

@@ -20,6 +20,7 @@ import App from './layouts/app';
 
 // Pages
 import Home from './pages/home';
+import Main from './pages/main';
 // import Signup from './pages/signup';
 // import Verify from './pages/verify';
 import NotFound from './pages/not-found';
@@ -109,9 +110,11 @@ const history = syncHistoryWithStore(browserHistory, Store);
       <Provider store={ Store }>
         <Router history={ history }>
           <Route path="/" component={ App }>
-            <IndexRoute name="home" component={ Home } />
-            <Route path="group">
-              <IndexRoute name="home" component={GroupHome}/>
+            <IndexRoute component={ Home } />
+            <Route path="group" component={Main}>
+              <IndexRoute component={GroupHome}/>
+              <Route path="home" component={GroupHome}/>
+              <Route path="*" component={NotFound}/>
             </Route>         
           </Route>
           <Route path="*" component={NotFound}/>
