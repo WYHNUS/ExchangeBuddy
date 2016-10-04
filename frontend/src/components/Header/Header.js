@@ -26,14 +26,12 @@ const gotourl = (groupId, tab) => () => {
 
 const tabToIdx = tab => {
   switch(tab) {
-    case 'home':
-      return 0;
-    case 'info':
-      return 1;
-    case 'chat':
-      return 2;
     case 'events':
-      return 3;
+      return 0;
+    case 'chat':
+      return 1;
+    case 'friends':
+      return 2;
     default:
       return 0;
   }

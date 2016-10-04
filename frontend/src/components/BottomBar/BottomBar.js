@@ -16,7 +16,7 @@ function urlToIdx(url) {
     // drops/:id have second lvl
     return -1;
   }*/
-  console.log(firstLvl);  
+  //console.log(firstLvl);  
   switch (firstLvl) {
     case 'home':
     return 0;

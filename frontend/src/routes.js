@@ -35,6 +35,7 @@ export default (
           	<IndexRoute component={Landing}/>
 
           	<Route path="home" component={Home}>
+                <IndexRoute component={Events}/>
                 <Route path="events" component={Events}/>
                 <Route path="chat" component={Chat}/>
                 <Route path="friends" component={Friends}/>

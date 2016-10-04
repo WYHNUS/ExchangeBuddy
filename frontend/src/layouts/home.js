@@ -7,6 +7,7 @@ class Home extends React.Component{
 
   componentDidMount() {
     this.props.toggleBottomBarVisibility(true);
+    //console.log(this.props.routes[1]);
   }
 
   render() {
