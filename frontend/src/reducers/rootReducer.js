@@ -7,6 +7,7 @@ import { messageSnackbarOpen, messageSnackbarMessage } from './messageSnackbar';
 import { browserIsMobileWidth } from './browser';
 import { switchGroupDialogOpen } from './switchGroupDialog';
 import { pageVisibility } from './pageVisibility';
+import { home } from './home';
 
 const rootReducer = combineReducers({
   // Add more reducers here
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   browserIsMobileWidth,
   switchGroupDialogOpen,
   pageVisibility,
+  home,
 
   // Add routerReducer
   routing: routerReducer,

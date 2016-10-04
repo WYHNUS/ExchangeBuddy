@@ -7,17 +7,18 @@ import IconButton from 'material-ui/IconButton';
 import LinearProgress from 'material-ui/LinearProgress';
 import Helmet from "react-helmet";
 
-import HeaderProfile from './HeaderProfile';
+//import HeaderProfile from './HeaderProfile';
+import * as IconsHelper from '../../util/icons';
+
 
 /*import * as Colors from 'material-ui/styles/colors';
 import * as ImagesHelper from '../../util/images';
-import * as IconsHelper from '../../util/icons';
 import * as UniversityHelper from '../../util/university';
 import { pluralizer } from '../../util/helper';
 */
 const gotourl = (groupId, tab) => () => {
-  const queryParams = ['group', groupId];
-
+  const queryParams = ['home', groupId];
+  console.log(groupId);
   if (tab)
     queryParams.push(tab);
 
@@ -41,7 +42,7 @@ const getTitle = tab => {
   if(tab)
     return tab.charAt(0).toUpperCase() + tab.slice(1);
   else
-    return 'Home';
+    return 'events';
 }
 
 /*const eventHandleScroll = (event) => {
@@ -75,6 +76,11 @@ export default class Header extends React.Component {
     };
   }
 
+  componentWillMount() {
+    //console.log(this.props.params);
+    //console.log(this.props.tab);
+  }
+
   /*handleUpload(event) {
     const self = this;
     const files = event.currentTarget.files;
@@ -94,11 +100,11 @@ export default class Header extends React.Component {
     });
   }*/
 
-  componentWillMount(nextProps) {
+  /*componentWillMount(nextProps) {
     this.setState({
       bgImageId: this.props.uni.bgImageId || 'exchangebuddy/section-images/About'
     });
-  }
+  }*/
 
   /*componentDidMount() {
     $(window).on('scroll', eventHandleScroll);
@@ -110,20 +116,19 @@ export default class Header extends React.Component {
 
   render() {
     const { user, uni, group, actions, params, tab } = this.props;
+    //params=221241432;
 
     return (
       <div
         id="header"
         style={{
-          backgroundImage: `linear-gradient(to bottom, rgba(25,25,25,0.5) 0%,rgba(0,0,0,0.9) 100%),
+          /*backgroundImage: `linear-gradient(to bottom, rgba(25,25,25,0.5) 0%,rgba(0,0,0,0.9) 100%),
             url('${ImagesHelper.getUrlScale(this.state.bgImageId, 1000)}')`,
           backgroundColor: "#000000",
           backgroundPosition: 'center center',
           backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
+          backgroundRepeat: 'no-repeat',*/
         }}>
-
-        <Helmet title={ getTitle(tab) } titleTemplate ={"%s - "+ uni.name} meta={[{"property": "og:image", "content": UniversityHelper.getImageUrl(uni,200) }]}/>
 
         <Grid>
           <Row id="header-row">
@@ -133,12 +138,12 @@ export default class Header extends React.Component {
             </Col>
 
             <Col xs={12} md={8} id="header-title">
-              <h2 id="uni-name">{ uni.name }</h2>
-              <p id="uni-description">{ `${ group.term } ${ group.year } - ${ group.users.length } ${ pluralizer(group.users.length, 'Member', 'Members') }` }</p>
+              <h2 id="uni-name">{ /*uni.name */}</h2>
+              <p id="uni-description">{ /*`${ group.term } ${ group.year } - ${ group.users.length } ${ pluralizer(group.users.length, 'Member', 'Members') }`*/ }</p>
             </Col>
 
             <Col xs={6} md={2}>
-              <HeaderProfile user={ user } uni={ uni } group={ group } actions={ actions } />
+              {/*<HeaderProfile user={ user } uni={ uni } group={ group } actions={ actions } />*/}
             </Col>
           </Row>
         </Grid>
@@ -146,21 +151,13 @@ export default class Header extends React.Component {
           <div className="row center-xs center-md" id="header-tab-row">
             <Col xs={12} md={8} id="header-tab-col">
             <Tabs inkBarStyle={{ backgroundColor: "#fff" }} initialSelectedIndex={ tabToIdx(tab) } >
-              <Tab icon={IconsHelper.materialIcon("home")} label="HOME" className="header-tab" onActive={ gotourl(params.id) } />
-              <Tab icon={IconsHelper.materialIcon("info")} label="INFO" className="header-tab" onActive={ gotourl(params.id, "info") } />
-              { /*Meteor.user() && <Tab icon={IconsHelper.materialIcon("chat")*/} label="CHAT" className="header-tab" onActive={ gotourl(params.id, "chat") } /> }
-              <Tab icon={IconsHelper.materialIcon("event")} label="EVENTS" className="header-tab" onActive={ gotourl(params.id, "events") } />
+              <Tab icon={IconsHelper.materialIcon("library_books")} label="EVENTS" className="header-tab" onActive={ gotourl(params.id) } />
+              <Tab icon={IconsHelper.materialIcon("chat")} label="CHAT" className="header-tab" onActive={ gotourl(params.id, "info") } />
+              <Tab icon={IconsHelper.materialIcon("friends")} label="FRIENDS" className="header-tab" onActive={ gotourl(params.id, "events") } />
             </Tabs>
             </Col>
           </div>
         </Grid>
-
-        <input id="file-upload" type="file" accept="image/*"onChange={ this.handleUpload.bind(this) } />
-        <IconButton className="upload_cover_photo" onTouchTap={ () => $("#file-upload").trigger('click') } tooltip="Upload a new university cover photo" tooltipPosition="top-left">
-          { IconsHelper.icon('add_a_photo', { color: Colors.grey100 }) }
-        </IconButton>
-
-        { this.state.loadingFile && <LinearProgress style={{ position: 'absolute', bottom: 0 }} mode="indeterminate" /> }
       </div>
     );
   }

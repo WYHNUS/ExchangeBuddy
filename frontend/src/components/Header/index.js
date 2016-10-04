@@ -14,34 +14,12 @@ import { openSwitchGroupDialog } from '../../actions/switchGroupDialog';
 // Component
 import ChildComponent from './Header';
 
-// react-komposer
-const composer = (props, onData) => {
-  /*const user = Meteor.user();*/
-  const groupId = parseInt(props.params.id);
 
-  if (!groupId)
-    return browserHistory.push(`/`);
-
-  /*Meteor.call('Group.get', groupId, (err, group) => {
-    if (!group)
-      return browserHistory.push(`/`);
-
-    onData(null, {
-      user,
-      uni: group.university,
-      group
-    });
-  });*/
-};
-
-const ComposedComponent = composeWithTracker(composer, Loading)(ChildComponent);
-
-// redux
-const mapStateToProps = (state, ownProps) => {
-  return{
-    params: ownProps.params,
-    tab: ownProps.tab
-  }
+const mapStateToProps = (state)=>{
+  return {
+    params: state.home.homeCountry,
+    tab: state.home.homeCountry
+  };
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -50,6 +28,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const Header = connect(mapStateToProps, mapDispatchToProps)(ComposedComponent);
-
-export default Header;
+export default connect(mapStateToProps, mapDispatchToProps)(ChildComponent);
