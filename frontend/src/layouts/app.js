@@ -8,7 +8,13 @@ import { makeRouteSlug } from '../util/helper';
 import BottomBar from '../components/BottomBar';
 //import '../stylesheets/App.sass';
 
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { resizeBrowserWindow } from '../actions/browser';
+
 class App extends React.Component{
+
 	render(){
 		return(
 			<MuiThemeProvider muiTheme={MuiTheme}>
@@ -40,11 +46,6 @@ class App extends React.Component{
 					);
 	}
 }
-
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
-import { resizeBrowserWindow } from '../actions/browser';
 
 const mapDispatchToProps = (dispatch) => {
 	return {

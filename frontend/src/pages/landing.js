@@ -6,6 +6,9 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import RaisedButton from 'material-ui/RaisedButton';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 
+import { connect } from 'react-redux';
+import { toggleBottomBarVisibility } from '../actions/pageVisibility';
+
 
 const landingContainerStyle = {
   backgroundColor: "darkslategray",
@@ -17,8 +20,14 @@ const landingImg={
 
 //TODO check login logic before deciding which button to serve to users
 
-const Landing = () => (
-  <div id="landing-container" style={landingContainerStyle}>
+class Landing extends React.Component{
+  componentDidMount() {
+    this.props.toggleBottomBarVisibility(false);
+  }
+
+  render(){
+    return(
+      <div id="landing-container" style={landingContainerStyle}>
     <div id="welcome-header" style={landingImg}>
 
       <NavigationBar />
@@ -55,6 +64,14 @@ const Landing = () => (
       </div>
     </div>
   </div>
-);
+    );
+  }
+}
 
-export default Landing;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Landing);

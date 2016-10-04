@@ -1,24 +1,33 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
+import { connect } from 'react-redux';
+import { toggleBottomBarVisibility } from '../actions/pageVisibility';
 //import Header from '../components/Header';
 //import SwitchGroupDialog from '../components/SwitchGroupDialog';
+class Home extends React.Component{
 
-const Home = React.createClass({
-  propTypes: {
-    children: React.PropTypes.element.isRequired,
-  },
+  componentDidMount() {
+    this.props.toggleBottomBarVisibility(true);
+  }
 
   render() {
     return (
       <div>
-        {/*<Header params={ this.props.params } tab={ this.props.routes[2].path } />*/}
-        <div id="group-container">
-          { this.props.children }
-        </div>
+    {/*<Header params={ this.props.params } tab={ this.props.routes[2].path } />*/}
+    <div id="group-container">
+    { this.props.children }
+    </div>
 
-        {/*<SwitchGroupDialog />*/}
-      </div>
-    );
+  {/*<SwitchGroupDialog />*/}
+  </div>
+  );
   }
-})
 
-export default Home;
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Home);
