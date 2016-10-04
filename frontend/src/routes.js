@@ -34,7 +34,6 @@ export const getRoutes = (store) =>{
   const authRequired = (nextState, replaceState) => {
     // Now you can access the store object here.
     const state = store.getState();
-    console.log(state);
 
     /*if (!state.user.isAuthenticated) {
       // Not authenticated, redirect to login.
@@ -42,20 +41,30 @@ export const getRoutes = (store) =>{
     }*/
   };
 
+  const goToDefaultGroup = (nextState, replace)=>{
+    // Now you can access the store object here.
+    const state = store.getState();
+    replace({
+      pathname: `/home/${state.home.homeCountry.id}`, //should be state.user.defaultGroupId
+      state: { nextPathname: nextState.location.pathname }
+    });
+  }
+
   return(
   <Route path="/" component={ App }>
     <IndexRoute component={Landing}/>
-    <Route path="home" component={Home} onEnter={authRequired}>
-      <IndexRoute component={Events}/>
-      <Route path="events" component={Events}/>
-      <Route path="chat" component={Chat}/>
-      <Route path="friends" component={Friends}/>
+    <Route path="home" onEnter={authRequired}>
+      <IndexRoute onEnter={goToDefaultGroup}/>
+      <Route path=":id" component={Home}> 
+        <Route path="events" component={Events}/>
+        <Route path="chat" component={Chat}/>
+        <Route path="friends" component={Friends}/>
+      </Route>
     </Route>
-
-    <Route path="journal" component={Journal}/>
+    <Route path="journal" component={Journal} onEnter={authRequired}/>
     <Route path="stories" component={Stories}/>
     <Route path="wiki" component={Wiki}/>
-    <Route path="profile" component={Profile}/>
+    <Route path="profile" component={Profile} onEnter={authRequired}/>
     <Route path="notloggedin" component={NotLoggedIn}/>
     <Route path="*" component={NotFound}/>
   </Route>
@@ -82,7 +91,7 @@ export default (
 //              </Route>
 //            </Route>
 
-const goToDefaultGroup = (nextState, replace) => {
+/*const goToDefaultGroup = (nextState, replace) => {
   // if (Meteor.user() && Meteor.user().defaultGroupId) {
   //   // If have default group, redirect there.
   //   replace({
@@ -90,16 +99,11 @@ const goToDefaultGroup = (nextState, replace) => {
   //     state: { nextPathname: nextState.location.pathname }
   //   });
   // } else {
-    /*replace({
+    replace({
       pathname: '/',
       state: { nextPathname: nextState.location.pathname }
-    });*/
-
-    replace({
-      pathname: `/home/1`,
-      state: { nextPathname: nextState.location.pathname }
     });
-};
+};*/
 
 /*<Route path="wiki" component={Wiki}/>
             <Route path="journal" component={Journal}/>

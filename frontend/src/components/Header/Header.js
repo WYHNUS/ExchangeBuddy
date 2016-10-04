@@ -18,7 +18,7 @@ import { pluralizer } from '../../util/helper';
 */
 const gotourl = (groupId, tab) => () => {
   const queryParams = ['home', groupId];
-  console.log(groupId);
+  console.log(tab);
   if (tab)
     queryParams.push(tab);
 
@@ -38,11 +38,16 @@ const tabToIdx = tab => {
   }
 }
 
-const getTitle = tab => {
-  if(tab)
-    return tab.charAt(0).toUpperCase() + tab.slice(1);
-  else
-    return 'events';
+const pathToIdx = () =>{
+  var pathArray = window.location.pathname.split("/");
+  var path;
+  if(pathArray.length>3){
+    path = pathArray[3];
+  }else{
+    path='events';
+  }
+  console.log(path);
+  return tabToIdx(path);
 }
 
 /*const eventHandleScroll = (event) => {
@@ -77,6 +82,7 @@ export default class Header extends React.Component {
   }
 
   componentWillMount() {
+    //console.log(window.location.pathname);
     //console.log(this.props.params);
     //console.log(this.props.tab);
   }
@@ -150,10 +156,10 @@ export default class Header extends React.Component {
         <Grid>
           <div className="row center-xs center-md" id="header-tab-row">
             <Col xs={12} md={8} id="header-tab-col">
-            <Tabs inkBarStyle={{ backgroundColor: "#fff" }} initialSelectedIndex={ tabToIdx(tab) } >
-              <Tab icon={IconsHelper.materialIcon("library_books")} label="EVENTS" className="header-tab" onActive={ gotourl(params.id) } />
-              <Tab icon={IconsHelper.materialIcon("chat")} label="CHAT" className="header-tab" onActive={ gotourl(params.id, "info") } />
-              <Tab icon={IconsHelper.materialIcon("friends")} label="FRIENDS" className="header-tab" onActive={ gotourl(params.id, "events") } />
+            <Tabs inkBarStyle={{ backgroundColor: "#fff" }} initialSelectedIndex={ pathToIdx() } >
+              <Tab icon={IconsHelper.materialIcon("library_books")} label="EVENTS" className="header-tab" onActive={ gotourl(params.id, "events") } />
+              <Tab icon={IconsHelper.materialIcon("chat")} label="CHAT" className="header-tab" onActive={ gotourl(params.id, "chat") } />
+              <Tab icon={IconsHelper.materialIcon("friends")} label="FRIENDS" className="header-tab" onActive={ gotourl(params.id, "friends") } />
             </Tabs>
             </Col>
           </div>
