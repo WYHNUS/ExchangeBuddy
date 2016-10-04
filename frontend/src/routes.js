@@ -21,6 +21,7 @@ import Profile from './pages/profile';
 import Wiki from './pages/wiki';
 import Stories from './pages/stories';
 import Journal from './pages/journal';
+import NotLoggedIn from './pages/notloggedin';
 
 // Redux
 const store = configureStore();
@@ -28,28 +29,45 @@ const store = configureStore();
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store);
 
+export const getRoutes = (store) =>{
+
+  const authRequired = (nextState, replaceState) => {
+    // Now you can access the store object here.
+    const state = store.getState();
+
+    if (!state.user.isAuthenticated) {
+      // Not authenticated, redirect to login.
+      replaceState({ nextPathname: nextState.location.pathname }, '/login');
+    }
+  };
+
+  return(
+  <Route path="/" component={ App }>
+    <IndexRoute component={Landing}/>
+    <Route path="home" component={Home}>
+      <IndexRoute component={Events}/>
+      <Route path="events" component={Events}/>
+      <Route path="chat" component={Chat}/>
+      <Route path="friends" component={Friends}/>
+    </Route>
+
+    <Route path="journal" component={Journal}/>
+    <Route path="stories" component={Stories}/>
+    <Route path="wiki" component={Wiki}/>
+    <Route path="profile" component={Profile}/>
+    <Route path="notloggedin" component={NotLoggedIn}/>
+    <Route path="*" component={NotFound}/>
+  </Route>
+  );
+}
+
 export default (
       <Provider store={ store }>
         <Router history={ history }>
-          <Route path="/" component={ App }>
-          	<IndexRoute component={Landing}/>
-
-          	<Route path="home" component={Home}>
-                <IndexRoute component={Events}/>
-                <Route path="events" component={Events}/>
-                <Route path="chat" component={Chat}/>
-                <Route path="friends" component={Friends}/>
-            </Route>
-
-            <Route path="journal" component={Journal}/>
-            <Route path="stories" component={Stories}/>
-            <Route path="wiki" component={Wiki}/>
-            <Route path="profile" component={Profile}/>
-            <Route path="*" component={NotFound}/>
-          </Route>
+          { getRoutes(store) }
         </Router>
       </Provider>
-      );
+);
 
 
 //www.exchangebuddy.com/home/9134593223/events
