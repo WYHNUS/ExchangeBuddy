@@ -4,7 +4,7 @@ import { render } from 'react-dom';
 import { Router, Route, Redirect, IndexRoute, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
-import Store from './redux-store';
+import configureStore from './store/configureStore';
 
 /** ROUTES **/
 
@@ -13,25 +13,67 @@ import App from './layouts/app';
 import Home from './layouts/home';
 
 import Events from './pages/home/events';
+import Chat from './pages/home/chat';
+import Friends from './pages/home/friends';
 import Landing from './pages/landing';
 import NotFound from './pages/not-found';
+import Profile from './pages/profile';
+
+// Redux
+const store = configureStore();
 
 // Create an enhanced history that syncs navigation events with the store
-const history = syncHistoryWithStore(browserHistory, Store);
+const history = syncHistoryWithStore(browserHistory, store);
 
 export default (
-      <Provider store={ Store }>
+      <Provider store={ store }>
         <Router history={ history }>
           <Route path="/" component={ App }>
           	<IndexRoute component={Landing}/>
+
           	<Route path="home" component={Home}>
-              <IndexRoute component={Events}/>
+                <Route path="events" component={Events}/>
+                <Route path="chat" component={Chat}/>
+                <Route path="friends" component={Friends}/>
             </Route>
+
+            <Route path="profile" component={Profile}/>
             <Route path="*" component={NotFound}/>
           </Route>
         </Router>
       </Provider>
       );
+
+
+//www.exchangebuddy.com/home/9134593223/events
+//actual routing done this way
+//<Route path="home">
+//              <IndexRoute onEnter={goToDefaultGroup}/>
+//              <Route path=":id" component={Home}>
+//                <Route path="events" component={Events}/>
+//                <Route path="chat" component={Chat}/>
+//                <Route path="friends" component={Friends}/>
+//              </Route>
+//            </Route>
+
+const goToDefaultGroup = (nextState, replace) => {
+  // if (Meteor.user() && Meteor.user().defaultGroupId) {
+  //   // If have default group, redirect there.
+  //   replace({
+  //     pathname: `/group/${Meteor.user().defaultGroupId}`,
+  //     state: { nextPathname: nextState.location.pathname }
+  //   });
+  // } else {
+    /*replace({
+      pathname: '/',
+      state: { nextPathname: nextState.location.pathname }
+    });*/
+
+    replace({
+      pathname: `/home/1`,
+      state: { nextPathname: nextState.location.pathname }
+    });
+};
 
 /*<Route path="wiki" component={Wiki}/>
             <Route path="journal" component={Journal}/>

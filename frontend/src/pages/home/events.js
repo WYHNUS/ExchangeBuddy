@@ -8,9 +8,14 @@ import { showSnackbar } from '../../actions/snackbar';
 import { pageVisibility } from '../../actions/pageVisibility';
 
 
-const Home =()=>(
+var seed = 
+{
+
+}
+
+const Events =()=>(
 	<div>
-	hello
+	Home event page
 	</div>
 );
 
@@ -20,4 +25,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(null, mapDispatchToProps)(Events);
