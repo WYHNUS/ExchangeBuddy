@@ -18,6 +18,9 @@ import Friends from './pages/home/friends';
 import Landing from './pages/landing';
 import NotFound from './pages/not-found';
 import Profile from './pages/profile';
+import Wiki from './pages/wiki';
+import Stories from './pages/stories';
+import Journal from './pages/journal';
 
 // Redux
 const store = configureStore();
@@ -37,6 +40,9 @@ export default (
                 <Route path="friends" component={Friends}/>
             </Route>
 
+            <Route path="journal" component={Journal}/>
+            <Route path="stories" component={Stories}/>
+            <Route path="wiki" component={Wiki}/>
             <Route path="profile" component={Profile}/>
             <Route path="*" component={NotFound}/>
           </Route>
