@@ -1,4 +1,5 @@
 import React from 'react';
+import {PropTypes} from 'react';
 import MuiTheme from './mui-theme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Helmet from "react-helmet";
@@ -6,18 +7,22 @@ import $ from "jquery";
 import MessageSnackbar from '../components/MessageSnackbar';
 import { makeRouteSlug } from '../util/helper';
 import BottomBar from '../components/BottomBar';
+import TopBar from '../components/TopBar';
+import Drawer from 'material-ui/Drawer';
 //import '../stylesheets/App.sass';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { resizeBrowserWindow } from '../actions/browser';
+import {toggleHomeSearchDrawerVisibility} from '../actions/pageVisibility';
 
 class App extends React.Component{
 
 	render(){
 		return(
 			<MuiThemeProvider muiTheme={MuiTheme}>
+
 			<div id="root-container">
 
 			<Helmet
@@ -35,10 +40,22 @@ class App extends React.Component{
 					{"rel": "shortcut icon", "href": "favicon.png?v1", "type": "image/png", "sizes": "16x16 32x32 64x64"},
 					{"rel": "apple-touch-icon", "sizes": "120x120", "href": "apple-touch-icon-precomposed.png"}
 					]} />
+					<TopBar onTouchTap={()=>this.props.toggleHomeSearchDrawerVisibility(false)}/>
+					{/*onTouchTap={()=>this.props.toggleHomeSearchDrawerVisibility(false)}*/}
 
 					<div id="main" className={`page-${ makeRouteSlug(this.props.routes) }`}>
 					{ this.props.children }
 					</div>
+
+					<Drawer 
+					width={200} 
+					openSecondary={true} 
+					open={this.props.homeSearchDrawerOpen}
+					disableSwipeToOpen={false}
+					docked={false} 
+					onRequestChange={(open) => this.props.toggleHomeSearchDrawerVisibility(open)}>
+					</Drawer>
+
 					<BottomBar/>
 
 					</div>
@@ -47,10 +64,17 @@ class App extends React.Component{
 	}
 }
 
+const mapStateToProps = (state)=>{
+  return {
+    homeSearchDrawerOpen: state.pageVisibility.homeSearchDrawerOpen
+  };
+}
+
 const mapDispatchToProps = (dispatch) => {
 	return {
 		actions: bindActionCreators({ resizeBrowserWindow }, dispatch),
+		toggleHomeSearchDrawerVisibility: visibility=>dispatch(toggleHomeSearchDrawerVisibility(visibility))
 	};
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

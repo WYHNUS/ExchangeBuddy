@@ -18,7 +18,6 @@ import { pluralizer } from '../../util/helper';
 */
 const gotourl = (groupId, tab) => () => {
   const queryParams = ['home', groupId];
-  console.log(tab);
   if (tab)
     queryParams.push(tab);
 
@@ -46,7 +45,6 @@ const pathToIdx = () =>{
   }else{
     path='events';
   }
-  console.log(path);
   return tabToIdx(path);
 }
 

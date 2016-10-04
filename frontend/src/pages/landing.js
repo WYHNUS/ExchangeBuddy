@@ -4,7 +4,6 @@ import * as IconsHelper from '../util/icons';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import RaisedButton from 'material-ui/RaisedButton';
-import NavigationBar from '../components/NavigationBar/NavigationBar';
 
 import { connect } from 'react-redux';
 import { toggleBottomBarVisibility } from '../actions/pageVisibility';
@@ -29,8 +28,6 @@ class Landing extends React.Component{
     return(
       <div id="landing-container" style={landingContainerStyle}>
     <div id="welcome-header" style={landingImg}>
-
-      <NavigationBar />
 
       <div id="welcome-main-container">
         <div id="welcome-header-title">

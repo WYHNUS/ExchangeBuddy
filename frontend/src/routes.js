@@ -22,6 +22,7 @@ import Wiki from './pages/wiki';
 import Stories from './pages/stories';
 import Journal from './pages/journal';
 import NotLoggedIn from './pages/notloggedin';
+import Signup from './pages/signup';
 
 // Redux
 const store = configureStore();
@@ -56,6 +57,7 @@ export const getRoutes = (store) =>{
     <Route path="home" onEnter={authRequired}>
       <IndexRoute onEnter={goToDefaultGroup}/>
       <Route path=":id" component={Home}> 
+        <IndexRoute component={Events}/>
         <Route path="events" component={Events}/>
         <Route path="chat" component={Chat}/>
         <Route path="friends" component={Friends}/>
@@ -66,6 +68,7 @@ export const getRoutes = (store) =>{
     <Route path="wiki" component={Wiki}/>
     <Route path="profile" component={Profile} onEnter={authRequired}/>
     <Route path="notloggedin" component={NotLoggedIn}/>
+    <Route path="signup" component={Signup}/>
     <Route path="*" component={NotFound}/>
   </Route>
   );
