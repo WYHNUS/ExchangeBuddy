@@ -4,7 +4,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { showSnackbar } from '../../actions/snackbar';
+import { showSnackbar } from '../../actions/messageSnackbar';
 import { pageVisibility } from '../../actions/pageVisibility';
 
 

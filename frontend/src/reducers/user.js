@@ -4,29 +4,29 @@ import {
   Started_Session_Check, Checked_Session_Status,
   Clicked_Logout, Logout_Success,
   Navigate_Away_From_Auth_Form
-} from '../actions/AuthActions';
+} from '../actions/authActions';
 
-const defaultStartState = {
+const initialState = {
   isLoggedIn: false,
   fetchingAuthUpdate: false,
   userObject: null,
   error: null
 }
 
-export function updateUserInfo(userAuthState = defaultStartState , action) {
+export function user(state = initialState , action) {
   switch (action.type){
 
     case Started_Session_Check:
     case Clicked_Login:
     case Clicked_SignUp:
     case Clicked_Logout:
-      return Object.assign({}, userAuthState, {
+      return Object.assign({}, state, {
         fetchingAuthUpdate: true
       });
 
     case Login_Success:
     case SignUp_Success:
-      return Object.assign({}, userAuthState, {
+      return Object.assign({}, state, {
         isLoggedIn: true,
         fetchingAuthUpdate: false,
         userObject: action.userObject,
@@ -35,7 +35,7 @@ export function updateUserInfo(userAuthState = defaultStartState , action) {
 
     case Login_Fail:
     case SignUp_Fail:
-      return Object.assign({}, userAuthState, {
+      return Object.assign({}, state, {
         isLoggedIn: false,
         fetchingAuthUpdate: false,
         error: action.error
@@ -43,7 +43,7 @@ export function updateUserInfo(userAuthState = defaultStartState , action) {
 
     case Checked_Session_Status:
       if (action.result && action.result.isLoggedIn){
-        return Object.assign({}, userAuthState, {
+        return Object.assign({}, state, {
           isLoggedIn: true,
           fetchingAuthUpdate: false,
           userObject: action.result.user,
@@ -52,17 +52,17 @@ export function updateUserInfo(userAuthState = defaultStartState , action) {
       }
       // set to default conditions
       // (ignore errors and let login/signup handle server errors)
-      return  Object.assign({}, defaultStartState);
+      return  Object.assign({}, initialState);
 
     case Logout_Success:
-      return Object.assign({}, defaultStartState);
+      return Object.assign({}, initialState);
 
     case Navigate_Away_From_Auth_Form:
-      return Object.assign({}, userAuthState, {
+      return Object.assign({}, state, {
         error: null
       });
 
     default:
-      return userAuthState;
+      return state;
   }
 }

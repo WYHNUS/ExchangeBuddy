@@ -34,17 +34,18 @@ export const getRoutes = (store) =>{
   const authRequired = (nextState, replaceState) => {
     // Now you can access the store object here.
     const state = store.getState();
+    console.log(state);
 
-    if (!state.user.isAuthenticated) {
+    /*if (!state.user.isAuthenticated) {
       // Not authenticated, redirect to login.
       replaceState({ nextPathname: nextState.location.pathname }, '/login');
-    }
+    }*/
   };
 
   return(
   <Route path="/" component={ App }>
     <IndexRoute component={Landing}/>
-    <Route path="home" component={Home}>
+    <Route path="home" component={Home} onEnter={authRequired}>
       <IndexRoute component={Events}/>
       <Route path="events" component={Events}/>
       <Route path="chat" component={Chat}/>

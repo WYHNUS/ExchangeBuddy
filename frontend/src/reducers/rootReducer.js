@@ -3,20 +3,20 @@ import { routerReducer } from 'react-router-redux';
 import {reducer as formReducer} from 'redux-form';
 
 // Reducers
-import { messageSnackbarOpen, messageSnackbarMessage } from './messageSnackbar';
+import { messageSnackbar } from './messageSnackbar';
 import { browserIsMobileWidth } from './browser';
 import { switchGroupDialogOpen } from './switchGroupDialog';
 import { pageVisibility } from './pageVisibility';
 import { home } from './home';
+import { user } from './user';
 
 const rootReducer = combineReducers({
-  // Add more reducers here
-  messageSnackbarOpen,
-  messageSnackbarMessage,
+  messageSnackbar,
   browserIsMobileWidth,
   switchGroupDialogOpen,
   pageVisibility,
   home,
+  user,
 
   // Add routerReducer
   routing: routerReducer,

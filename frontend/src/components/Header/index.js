@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Action creators
-import { showSnackbar } from '../../actions/snackbar';
+import { showSnackbar } from '../../actions/messageSnackbar';
 import { openSwitchGroupDialog } from '../../actions/switchGroupDialog';
 
 // Component
