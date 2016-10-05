@@ -1,89 +1,100 @@
 import React from 'react';
-// import { Meteor } from 'meteor/meteor';
 
 import { render } from 'react-dom';
 import { Router, Route, Redirect, IndexRoute, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
-import Store from './redux-store';
-
-// Helpers
-// import { logPageView } from '../../util/analytics';
-// import { setCurrentUser } from '../../util/session';
+import configureStore from './store/configureStore';
 
 /** ROUTES **/
 
 // Layout
 import App from './layouts/app';
-// import Group from './layouts/group';
-// import Static from './layouts/static';
+import Home from './layouts/home';
 
-// Pages
-import Home from './pages/home';
-import Main from './pages/main';
-// import Signup from './pages/signup';
-// import Verify from './pages/verify';
+import Events from './pages/home/events';
+import Chat from './pages/home/chat';
+import Friends from './pages/home/friends';
+import Landing from './pages/landing';
 import NotFound from './pages/not-found';
-// import Profile from './pages/profile';
-// import About from './pages/about';
-// import PrivacyPolicy from './pages/privacy-policy';
+import Profile from './pages/profile';
+import Wiki from './pages/wiki';
+import Stories from './pages/stories';
+import Journal from './pages/journal';
+import NotLoggedIn from './pages/notloggedin';
+import Signup from './pages/signup';
 
-// // Info
-// import ViewInfo from './pages/info/view-info';
-// import EditInfo from './pages/info/edit-info';
+// Redux
+const store = configureStore();
 
-// // Group
-import GroupHome from './pages/group/home';
-// import GroupInfo from './pages/group/info';
-// import GroupInfoPage from './pages/group/info'; // temp
-// import GroupChat from './pages/group/chat';
-// import GroupEvents from './pages/group/events';
+// Create an enhanced history that syncs navigation events with the store
+const history = syncHistoryWithStore(browserHistory, store);
 
-// Route event handlers
-// const combine = (handlers) => {
-//   return (nextState, replace) => {
-//     handlers.forEach(function (handler) {
-//       handler.call(null, nextState, replace);
-//     });
-//   };
-// };
+export const getRoutes = (store) =>{
 
-// const requireAuth = (nextState, replace) => {
-//   // if (!Meteor.userId()) {
-//     replace({
-//       pathname: '/',
-//       state: { nextPathname: nextState.location.pathname },
-//     });
-//   // }
-// };
+  const authRequired = (nextState, replaceState) => {
+    // Now you can access the store object here.
+    const state = store.getState();
 
-// const authenticatedRedirect = (nextState, replace) => {
-//   // if (Meteor.userId()) {
-//     let path;
-//     // if (Meteor.user().homeUniEmailVerified) {
-//       path = `/group`;
-//     // } else {
-//     //   path = '/signup';
-//     // }
+    /*if (!state.user.isAuthenticated) {
+      // Not authenticated, redirect to login.
+      replaceState({ nextPathname: nextState.location.pathname }, '/login');
+    }*/
+  };
 
-//     // Redirect user only if logged in
-//     replace({
-//       pathname: path,
-//       state: { nextPathname: nextState.location.pathname },
-//     });
-//   // }
-// };
+  const goToDefaultGroup = (nextState, replace)=>{
+    // Now you can access the store object here.
+    const state = store.getState();
+    replace({
+      pathname: `/home/${state.home.homeCountry.id}`, //should be state.user.defaultGroupId
+      state: { nextPathname: nextState.location.pathname }
+    });
+  }
 
-// const verifiedRedirect = (nextState, replace) => {
-//   // if (Meteor.user() && Meteor.user().homeUniEmailVerified) {
-//     replace({
-//       pathname: `/group`,
-//       state: { nextPathname: nextState.location.pathname }
-//     });
-//   // }
-// };
+  return(
+  <Route path="/" component={ App }>
+    <IndexRoute component={Landing}/>
+    <Route path="home" onEnter={authRequired}>
+      <IndexRoute onEnter={goToDefaultGroup}/>
+      <Route path=":id" component={Home}> 
+        <IndexRoute component={Events}/>
+        <Route path="events" component={Events}/>
+        <Route path="chat" component={Chat}/>
+        <Route path="friends" component={Friends}/>
+      </Route>
+    </Route>
+    <Route path="journal" component={Journal} onEnter={authRequired}/>
+    <Route path="stories" component={Stories}/>
+    <Route path="wiki" component={Wiki}/>
+    <Route path="profile" component={Profile} onEnter={authRequired}/>
+    <Route path="notloggedin" component={NotLoggedIn}/>
+    <Route path="signup" component={Signup}/>
+    <Route path="*" component={NotFound}/>
+  </Route>
+  );
+}
 
-const goToDefaultGroup = (nextState, replace) => {
+export default (
+      <Provider store={ store }>
+        <Router history={ history }>
+          { getRoutes(store) }
+        </Router>
+      </Provider>
+);
+
+
+//www.exchangebuddy.com/home/9134593223/events
+//actual routing done this way
+//<Route path="home">
+//              <IndexRoute onEnter={goToDefaultGroup}/>
+//              <Route path=":id" component={Home}>
+//                <Route path="events" component={Events}/>
+//                <Route path="chat" component={Chat}/>
+//                <Route path="friends" component={Friends}/>
+//              </Route>
+//            </Route>
+
+/*const goToDefaultGroup = (nextState, replace) => {
   // if (Meteor.user() && Meteor.user().defaultGroupId) {
   //   // If have default group, redirect there.
   //   replace({
@@ -95,80 +106,11 @@ const goToDefaultGroup = (nextState, replace) => {
       pathname: '/',
       state: { nextPathname: nextState.location.pathname }
     });
-  // }
-};
+};*/
 
-// Create an enhanced history that syncs navigation events with the store
-const history = syncHistoryWithStore(browserHistory, Store);
-
-// Return root element for rendering.
-// Meteor.startup(() => {
-  // Set current user to Meteor variable
-  // setCurrentUser((isUserSet) => {
-    // Continue with rendering
-    export default (
-      <Provider store={ Store }>
-        <Router history={ history }>
-          <Route path="/" component={ App }>
-            <IndexRoute component={ Home } />
-            <Route path="group" component={Main}>
-              <IndexRoute component={GroupHome}/>
-              <Route path="home" component={GroupHome}/>
-              <Route path="*" component={NotFound}/>
-            </Route>         
-          </Route>
-          <Route path="*" component={NotFound}/>
-        </Router>
-      </Provider>
-    );
-
-    /*<Route path="home" component={Home}/>
-              <Route path="wiki" component={Wiki}/>
-              <Route path="journal" component={Journal}/>
-              <Route path="stories" component={Stories}/>
-              <Route path="profile" component={Profile}/>
-              <Route path="settings" component={Settings}/>
-              */
-/*
-*/
-
-
-// <Provider store={ Store }>
-//         <Router history={ history } onUpdate={ logPageView }>
-//           <Route path="/" component={ App }>
-
-//             <IndexRoute name="home" component={ Home } />
-//             <Route name="signup" path="signup" component={ Signup } onEnter={ combine([ requireAuth, verifiedRedirect ]) } />
-//             <Route name="verify" path="verify/:token" component={ Verify } />
-
-//             <Route path="group">
-//               <IndexRoute onEnter={ goToDefaultGroup } />
-//               <Route path=":id" component={ Group }>
-//                 <IndexRoute name="home" component={ GroupHome } />
-//                 <Route name="info" path="info">
-//                   <IndexRoute name="info-home" component={ GroupInfo } />
-//                   <Route path=":about">
-//                     <Route path=":sectionId">
-//                       <IndexRoute name= "info-page" component={ ViewInfo } />
-//                       <Route name="info-page-edit" path="edit" component={ EditInfo } onEnter={ requireAuth } />
-//                     </Route>
-//                   </Route>
-//                 </Route>
-//                 <Route name="chat" path="chat" component={ GroupChat } onEnter={ requireAuth } />
-//                 <Route name="events" path="events" component={ GroupEvents } />
-//                 <Redirect from="*" to="/group" />
-//               </Route>
-//             </Route>
-
-//             <Route component={ Static }>
-//               <Route name="profile" path="profile(/:userId)" component={ Profile } />
-//               <Route name="about" path="about" component={ About } />
-//               <Route name="privacy-policy" path="privacy-policy" component={ PrivacyPolicy } />
-
-//               <Route path="404" component={ NotFound } />
-//               <Route path="*" component={ NotFound } />
-//             </Route>
-
-//           </Route>
-//         </Router>
-//       </Provider>,
+/*<Route path="wiki" component={Wiki}/>
+            <Route path="journal" component={Journal}/>
+            <Route path="stories" component={Stories}/>
+            <Route path="profile" component={Profile}/>
+            <Route path="settings" component={Settings}/>
+            <Route path="*" component={NotFound}/>*/

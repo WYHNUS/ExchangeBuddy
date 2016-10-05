@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Action creators
-import { hideSnackbar } from '../../actions/snackbar';
+import { hideSnackbar } from '../../actions/messageSnackbar';
 
 // Component
 import ChildComponent from './MessageSnackbar';

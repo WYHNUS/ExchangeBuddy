@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { toggleBottomBarVisibility } from '../actions/pageVisibility';
 
-class Profile extends React.Component{
+class Journal extends React.Component{
 
 	componentDidMount() {
 		this.props.toggleBottomBarVisibility(true);
@@ -11,7 +11,7 @@ class Profile extends React.Component{
 	render() {
 		return (
 			<div>
-			profile
+			Journal
 			</div>
 			);
 	}
@@ -23,4 +23,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(null, mapDispatchToProps)(Profile);
+export default connect(null, mapDispatchToProps)(Journal);

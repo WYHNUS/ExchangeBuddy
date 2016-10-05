@@ -1,9 +1,31 @@
 import React from 'react';
+import { Link } from 'react-router';
+import IconButton from 'material-ui/IconButton';
 
-const NotFound = () => (
-  <div className="not-found">
-    <p><strong>Error [404]</strong>: { window.location.pathname } does not exist.</p>
-  </div>
-);
+//import * as Icons from '../utils/Icons';
 
-export default NotFound;
+var divStyle = {
+  margin: '40px',
+};
+
+const NotFoundPage = () => {
+	return (
+		<div className="row center-xs"
+		style={divStyle}>
+		<div className="col-xs-8">
+
+		{/*<img src={fallingimg} alt="404" style={{maxWidth:"100%"}}></img>*/}
+		<h2>404 - Sorry, page not found</h2>
+
+		<Link id="home-button" to="/">
+    {/*<IconButton tooltip="Go home" touch={true} iconStyle={{color: '#808080'}}>
+      {Icons.MUI('home')}
+    </IconButton>*/}
+		</Link>
+
+		</div>
+		</div>
+		);
+};
+
+export default NotFoundPage;

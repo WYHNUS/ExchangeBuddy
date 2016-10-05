@@ -2,16 +2,16 @@ import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { toggleBottomBarVisibility } from '../actions/pageVisibility';
 
-class Profile extends React.Component{
+class NotLoggedIn extends React.Component{
 
 	componentDidMount() {
-		this.props.toggleBottomBarVisibility(true);
+		this.props.toggleBottomBarVisibility(false);
 	}
 
 	render() {
 		return (
 			<div>
-			profile
+			notloggedin
 			</div>
 			);
 	}
@@ -23,4 +23,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(null, mapDispatchToProps)(Profile);
+export default connect(null, mapDispatchToProps)(NotLoggedIn);
