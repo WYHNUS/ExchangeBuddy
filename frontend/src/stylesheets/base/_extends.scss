@@ -1,0 +1,48 @@
+%clearfix {
+  *zoom: 1;
+
+  &:before,
+  &:after {
+    display: table;
+    content: "";
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+h3.pinline {
+  text-align: center;
+  text-transform: uppercase;
+  display: block;
+  overflow: hidden;
+  font-size: 1em;
+  font-weight: 400;
+  margin: 20px 0 5px;
+
+  span {
+    position: relative;
+    display: inline-block;
+    line-height: 1;
+
+    &:before, &:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      height: 1px;
+      background: #000;
+      width: 99999px;
+    }
+
+    &:before {
+      left: 100%;
+      margin-left: 20px;
+    }
+
+    &:after {
+      right: 100%;
+      margin-right: 20px;
+    }
+  }
+}

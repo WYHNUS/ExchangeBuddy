@@ -9,7 +9,7 @@ import { makeRouteSlug } from '../util/helper';
 import BottomBar from '../components/BottomBar';
 import TopBar from '../components/TopBar';
 import Drawer from 'material-ui/Drawer';
-//import '../stylesheets/App.sass';
+import '../stylesheets/application.scss';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';

@@ -1,0 +1,41 @@
+@import '../common/mixins';
+@import '../common/colors';
+
+// Base
+html body {
+  background: #fcfcfc;
+
+  &, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, p { font-family: Roboto, sans-serif; color: #444; }
+  .h1, .h2, .h3, .h4, h1, h2, h3, h4 { font-weight: 300; }
+  .h5, .h6, h5, h6 { font-weight: 400; color: #9c9c9c }
+
+  a { color: $link-color; font-weight: inherit; }
+  p { margin-bottom: 10px; }
+  b, strong { font-weight: 500; }
+  label { font-weight: inherit; }
+
+  h1 { font-size: 2em; line-height: 1.2em; }
+  h2 { font-size: 1.4rem; }
+}
+
+#main { overflow: hidden; min-height: 100vh; }
+.page { min-height: 100vh; background-size: cover; background-position: center center; background-repeat: no-repeat;  }
+
+// Layout
+body .container { padding: 0 1rem; } // Make all containers fluid
+
+// Common elements
+a.button:hover { text-decoration: none; }
+
+// Misc
+.small-text { color: #9e9e9e; font-size: 12px; }
+
+// Links
+#navigation-bar { padding: 20px 0; }
+#navigation-links {
+  display: flex; justify-content: flex-end; align-items: center;
+  a {
+    color: #d3d3d3; font-size: 18px; margin: 0 15px;
+    &:hover { color: #f5f5f5; }
+  }
+}

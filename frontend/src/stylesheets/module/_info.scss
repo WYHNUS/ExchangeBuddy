@@ -1,0 +1,109 @@
+@import "../common/mixins";
+
+.grid-list {
+  > div { padding: 0 5px; margin: 0 0 10px; }
+
+  .grid-tile {
+    cursor: pointer; @include transition-standard(all 150ms); background-size: cover; background-position: center center; min-height: 220px;
+    &:hover { opacity: 0.9; }
+  }
+}
+
+.grid-img {
+  max-height: 250px;
+  transform: translateY(0) !important;
+}
+
+.raised-btn > button {
+  height: 42px !important;
+  > div > div {
+    height: 42px !important; line-height: 42px; padding: 0 20px;
+  }
+}
+
+.md-info {
+  line-height: 2rem;
+  @include media-sm-up { padding: 3%;}
+  @include media-xs-only { padding: 6%;}
+}
+
+.pluginConnectTextDark a {
+  color: #000000;
+}
+
+.info-container > .container {
+  @include media-xs-only { padding: 0 }
+}
+
+.info-text-container {
+  padding-bottom: 21px;
+  margin-bottom: 21px;
+  @include media-xs-only { margin: 0 }
+}
+
+.info-title-container {
+  overflow: hidden;
+  text-align: center;
+  &:hover #info-edit-img-overlay{ opacity: 1 !important; margin-top: 15% !important;}
+  &:hover #info-edit-img{ background-color: rgba(3, 3, 3, 0.49);}
+  > div > div {
+    > img { width: 100%; object-fit: cover; min-height: 300px; }
+    > div { padding-top: 0 !important; }
+  }
+}
+
+.info-container-col {
+  margin-bottom: 21px;
+}
+
+.form-title-field {
+  z-index: 2;
+  padding: 15px 0;
+  > input {
+    font-size: 2rem !important;
+    color: white !important;
+    text-align: center;
+  }
+}
+
+#grid-item-add {
+  padding-bottom: 5px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-color: #c5c5c5;
+  border-style: dotted;
+  display: inline-block;
+  cursor: pointer;
+  &:hover #grid-item-add-overlay { opacity:1; padding-top: 75px}
+}
+
+#grid-item-add-overlay {
+  background: rgba(0, 0, 0, 0);
+  text-align: center;
+  padding: 94px 0 66px 0;
+  opacity: 0;
+  transition: .25s ease;
+  -webkit-transition: .25s ease;
+  p { color: #a6a6a6; }
+}
+
+#grid-item-add-icon {
+  font-family: Helvetica;
+  font-weight:900;
+  font-size: 50px;
+  color: #a6a6a6;
+}
+
+#info-edit-img {
+  opacity: 1; height: 100%; width: 100%; position: absolute; top: 0;
+  @include box-shadow(inset 1px 1px 40px 0 rgba(0,0,0,.45) !important);
+  @include transition-standard(all 250ms);
+  #info-edit-img-overlay {
+    opacity: 0;
+    margin-top: 18%;
+    @include transition-standard(all 250ms);
+    > p { color: #ffffff; }
+    span { font-family: Helvetica; font-weight:900; font-size: 50px; color: #ffffff; }
+  }
+}

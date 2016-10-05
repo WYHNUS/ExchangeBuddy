@@ -1,0 +1,115 @@
+/* Vendor-prefixed styles */
+
+@mixin border-radius($args) {
+  -ms-border-radius: $args;
+  -o-border-radius: $args;
+  -webkit-border-radius: $args;
+  -moz-border-radius: $args;
+  border-radius: $args;
+}
+
+@mixin box-shadow($args) {
+  -ms-box-shadow: $args;
+  -o-box-shadow: $args;
+  -webkit-box-shadow: $args;
+  -moz-box-shadow: $args;
+  box-shadow: $args;
+}
+
+@mixin transform($args) {
+  -webkit-transform: $args;
+  -moz-transform: $args;
+  -o-transform: $args;
+  -ms-transform: $args;
+  transform: $args;
+}
+
+@mixin transform-origin($args) {
+  -webkit-transform-origin: $args;
+  -moz-transform-origin: $args;
+  -o-transform-origin: $args;
+  -ms-transform-origin: $args;
+  transform-origin: $args;
+}
+
+@mixin placeholder {
+  &.placeholder { @content }
+  &:-moz-placeholder { @content }
+  &::-moz-placeholder { @content; }
+  &:-ms-input-placeholder { @content; }
+  &::-webkit-input-placeholder { @content }
+}
+
+/* Media Queries */
+
+@mixin media-xs-only {
+  @media (max-width: 767px) { @content };
+}
+
+@mixin media-sm-up {
+  @media (min-width: 768px) { @content };
+}
+
+@mixin media-sm-down {
+  @media (max-width: 991px) { @content };
+}
+
+@mixin media-md-up {
+  @media (min-width: 992px) { @content };
+}
+
+@mixin media-md-down {
+  @media (max-width: 1199px) { @content };
+}
+
+@mixin media-lg-up {
+  @media (min-width: 1200px) { @content };
+}
+
+/* Animations and Transitions */
+
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+@mixin transition-all($args) {
+  -webkit-transition: all $args;
+  -moz-transition: all $args;
+  -o-transition: all $args;
+  -o-transition: all $args;
+  transition: all $args;
+}
+
+@mixin transition-standard($args) {
+  @include transition($args cubic-bezier(0.4, 0.0, 0.2, 1));
+}
+
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+  @-moz-keyframes #{$animation-name} {
+    @content;
+  }
+  @-ms-keyframes #{$animation-name} {
+    @content;
+  }
+  @-o-keyframes #{$animation-name} {
+    @content;
+  }
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+
+@mixin animation($str) {
+  -webkit-animation: #{$str};
+  -moz-animation: #{$str};
+  -ms-animation: #{$str};
+  -o-animation: #{$str};
+  animation: #{$str};
+}
