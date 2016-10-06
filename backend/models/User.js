@@ -59,9 +59,9 @@ module.exports = function(sequelize, DataType) {
           }
         });
 
-        User.belongsToMany(models.University, {
-          as: 'exchangeUniversity',
-          through: 'student_exchange_university',
+        User.belongsToMany(models.Exchange, {
+          as: 'exchangeEvent',
+          through: 'student_exchange',
           foreignKey: 'userId'
         });
 
@@ -72,6 +72,8 @@ module.exports = function(sequelize, DataType) {
         });
 
         User.hasMany(models.ChatMessage);
+
+        User.hasMany(models.Blog);
       }
     },
     instanceMethods: {

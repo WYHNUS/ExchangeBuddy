@@ -5,12 +5,17 @@ module.exports = function(sequelize, DataType) {
   var Group = sequelize.define('Group', {
     name: {
       type: DataType.STRING(255),
-    }
-    year: {
-      type: DataType.INTEGER(4),
     },
-    term: {
-      type: DataType.STRING(50),
+    /*
+    groupType attribute is currently restricted to 3 default groups
+    0: default group of same exchange university, same year, same semester
+    1: default group of same home university, same year, same semester
+    2: default group of same home university, same exchange university
+    */
+    groupType: {
+      type: DataType.INTEGER(1),
+      min: 0,
+      max: 2,
     }
   }, {
     classMethods: {
