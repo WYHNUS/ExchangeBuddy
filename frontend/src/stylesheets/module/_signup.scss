@@ -17,7 +17,7 @@
 
 #welcome-main-container {
   display: flex; flex-direction: column; justify-content: space-around; height: 80vh; padding: 10vh 20px;
-  @include media-xs-only { height: 120vh; }
+  @include media-xs-only { /*height: 120vh;*/ }
 }
 
 #welcome-header-title {

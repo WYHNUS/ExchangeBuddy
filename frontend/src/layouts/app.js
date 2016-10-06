@@ -23,6 +23,9 @@ class App extends React.Component{
 		return(
 			<MuiThemeProvider muiTheme={MuiTheme}>
 
+			<div>
+					<TopBar onTouchTap={()=>this.props.toggleHomeSearchDrawerVisibility(false)}/>
+
 			<div id="root-container">
 
 			<Helmet
@@ -40,8 +43,7 @@ class App extends React.Component{
 					{"rel": "shortcut icon", "href": "favicon.png?v1", "type": "image/png", "sizes": "16x16 32x32 64x64"},
 					{"rel": "apple-touch-icon", "sizes": "120x120", "href": "apple-touch-icon-precomposed.png"}
 					]} />
-					<TopBar onTouchTap={()=>this.props.toggleHomeSearchDrawerVisibility(false)}/>
-					{/*onTouchTap={()=>this.props.toggleHomeSearchDrawerVisibility(false)}*/}
+
 
 					<div id="main" className={`page-${ makeRouteSlug(this.props.routes) }`}>
 					{ this.props.children }
@@ -56,9 +58,14 @@ class App extends React.Component{
 					onRequestChange={(open) => this.props.toggleHomeSearchDrawerVisibility(open)}>
 					</Drawer>
 
+					
+
+					</div>
+
 					<BottomBar/>
 
 					</div>
+
 					</MuiThemeProvider>
 					);
 	}

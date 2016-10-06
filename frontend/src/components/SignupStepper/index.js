@@ -1,6 +1,4 @@
-import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import { composeWithTracker } from 'react-komposer';
 import Loading from '../Loading';
 
 // Redux
@@ -13,7 +11,7 @@ import { connect } from 'react-redux';
 import ChildComponent from './SignupStepper';
 
 // react-komposer
-const composer = (props, onData) => {
+/*const composer = (props, onData) => {
   const user = Meteor.user();
 
   // Get all universities
@@ -29,7 +27,7 @@ const composer = (props, onData) => {
   });
 };
 
-const ComposedComponent = composeWithTracker(composer, Loading)(ChildComponent);
+const ComposedComponent = composeWithTracker(composer, Loading)(ChildComponent);*/
 
 // redux
 const mapDispatchToProps = (dispatch) => {

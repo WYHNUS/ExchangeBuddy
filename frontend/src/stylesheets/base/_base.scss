@@ -4,6 +4,7 @@
 // Base
 html body {
   background: #fcfcfc;
+  margin: 0;
 
   &, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, p { font-family: Roboto, sans-serif; color: #444; }
   .h1, .h2, .h3, .h4, h1, h2, h3, h4 { font-weight: 300; }
@@ -18,7 +19,7 @@ html body {
   h2 { font-size: 1.4rem; }
 }
 
-#main { overflow: hidden; min-height: 100vh; }
+/*#main { overflow: hidden; min-height: 100vh; }*/
 .page { min-height: 100vh; background-size: cover; background-position: center center; background-repeat: no-repeat;  }
 
 // Layout
