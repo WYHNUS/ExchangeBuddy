@@ -157,7 +157,7 @@ export default class Header extends React.Component {
             <Tabs inkBarStyle={{ backgroundColor: "#fff" }} initialSelectedIndex={ pathToIdx() } >
               <Tab icon={IconsHelper.materialIcon("library_books")} label="EVENTS" className="header-tab" onActive={ gotourl(params.id, "events") } />
               <Tab icon={IconsHelper.materialIcon("chat")} label="CHAT" className="header-tab" onActive={ gotourl(params.id, "chat") } />
-              <Tab icon={IconsHelper.materialIcon("friends")} label="FRIENDS" className="header-tab" onActive={ gotourl(params.id, "friends") } />
+              <Tab icon={IconsHelper.materialIcon("people")} label="FRIENDS" className="header-tab" onActive={ gotourl(params.id, "friends") } />
             </Tabs>
             </Col>
           </div>

@@ -1,0 +1,11 @@
+/*@import "../common/mixins";*/
+
+.app-bar{
+	background-color: rgb(255,255,255) !important;
+
+	>div{color: rgb(0,0,0)!important;}
+
+	>div>button>div>span.material-icons{
+		color: rgb(0,0,0)!important;
+	}
+}
