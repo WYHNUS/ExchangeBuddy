@@ -9,6 +9,8 @@ import {browserHistory} from 'react-router';
 //import * as Icons from '../utils/Icons';
 import classNames from 'classnames';
 
+const src = require('../../static/ExchangeBuddyMini.png');
+
 function handleTouchTap(state) {
 	browserHistory.push('/');
 }
@@ -26,9 +28,11 @@ class TopBar extends Component {
     });
 
 		return(
+      <div>
+      
 			<AppBar
         className={appClass}
-  			title={<span id="app-title">exchangebuddy</span>}
+  			title={<span id="app-title">{<img src={src}/>}</span>}
         style={{textAlign:"center"}}
   			onTitleTouchTap={handleTouchTap}
   			iconElementLeft={<IconButton
@@ -41,6 +45,7 @@ class TopBar extends Component {
           </IconButton>}
   			showMenuIconButton={this.props.pageVisibility.topBarBackButtonVisibility}
 			/>
+      </div>
 			)
 	}
 }

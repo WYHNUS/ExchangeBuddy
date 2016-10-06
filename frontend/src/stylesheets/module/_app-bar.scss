@@ -2,6 +2,11 @@
 
 .app-bar{
 	background-color: rgb(255,255,255) !important;
+	position: fixed!important;
+	left: 0;
+	top: 0;
+	width: 100%;
+
 
 	>div{color: rgb(0,0,0)!important;}
 

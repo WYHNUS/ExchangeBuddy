@@ -9,7 +9,6 @@ import { makeRouteSlug } from '../util/helper';
 import BottomBar from '../components/BottomBar';
 import TopBar from '../components/TopBar';
 import Drawer from 'material-ui/Drawer';
-import Headroom from 'react-headroom';
 import '../stylesheets/application.scss';
 
 import { bindActionCreators } from 'redux';
@@ -25,10 +24,7 @@ class App extends React.Component{
 			<MuiThemeProvider muiTheme={MuiTheme}>
 
 			<div>
-
-			<Headroom>
 					<TopBar onTouchTap={()=>this.props.toggleHomeSearchDrawerVisibility(false)}/>
-					</Headroom>
 
 			<div id="root-container">
 
