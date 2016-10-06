@@ -17,10 +17,10 @@ router.get('/', function(req, res) {
 });
 
 // Authenticate with Facebook access token
-router.post('/authenticate', AuthCtrl.authenticate);
-router.get('/country', CountryCtrl.getAllCountries);
-router.get('/country/:id', CountryCtrl.getCountry);
-router.get('/university', UniCtrl.getUniversities);
+router.post('/authenticate',AuthCtrl.authenticate);
+router.get('/country', verifyToken, CountryCtrl.getAllCountries);
+router.get('/country/:id', verifyToken, CountryCtrl.getCountry);
+router.get('/university', verifyToken, UniCtrl.getUniversities);
 // Verify JSWT
 router.get('/me', verifyToken, function(req, res) {
   res.send(req.user);

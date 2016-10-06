@@ -1,6 +1,6 @@
 # frontend
 
-This project was bootstrapped with [react-redux-starter-kit](https://github.com/davezuko/react-redux-starter-kit).
+This project was bootstrapped with [react-redux-starter-kit](https://github.com/davezuko/react-redux-starter-kit#react-redux-starter-kit).
 
 ## Installation
 
