@@ -4,6 +4,7 @@ import * as IconsHelper from '../util/icons';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import RaisedButton from 'material-ui/RaisedButton';
+import landing from '../res/landing.jpg';
 
 import { connect } from 'react-redux';
 import { toggleBottomBarVisibility } from '../actions/pageVisibility';
@@ -13,8 +14,13 @@ const landingContainerStyle = {
   backgroundColor: "darkslategray",
 }
 
-const landingImg={
-
+/*const landingImg = {
+  background: `linear-gradient(to top, rgba(25, 25, 25, 0.21) 0%,rgb(0, 0, 0) 215%),
+    url(${ImagesHelper.getUrlScale(Meteor.settings.public.landingImageId, 900)}) no-repeat center center `,
+}*/
+const landingImg= {
+  background: `linear-gradient(to top, rgba(25, 25, 25, 0.21) 0%,rgb(0, 0, 0) 215%),
+  url(${landing}) no-repeat center center`,
 }
 
 //TODO check login logic before deciding which button to serve to users
@@ -27,7 +33,7 @@ class Landing extends React.Component{
   render(){
     return(
       <div id="landing-container" style={landingContainerStyle}>
-    <div id="welcome-header" style={landingImg}>
+      <div id="welcome-header" style={landingImg}>
 
       <div id="welcome-main-container">
         <div id="welcome-header-title">

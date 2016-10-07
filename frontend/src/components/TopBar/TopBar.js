@@ -21,11 +21,25 @@ class TopBar extends Component {
 		browserHistory.goBack();
 	}
 
+  setElementClass(){
+      if(this.props.pageVisibility.homeSearchDrawerOpenButtonVisibility){
+        return "filter-list-visible";
+      }else{
+        return "filter-list-invisible";
+      }
+    }
+
 	render(){
     const appClass = classNames({
       'back-btn': this.props.pageVisibility.topBarBackButtonVisibility,
       'app-bar': true,
     });
+
+    /*setElementClass(){
+      if(this.props.)
+      className={`page-${ makeRouteSlug(this.props.routes) }`}
+    }*/
+    
 
 		return(
       <div>
@@ -40,7 +54,7 @@ class TopBar extends Component {
   				{IconsHelper.materialIcon("arrow_back")}
           </IconButton>}
         iconElementRight={<IconButton
-          className="filter-list-invisible"
+          className={this.setElementClass()}
           onClick={()=>this.props.toggleHomeSearchDrawerVisibility(true)}>
           {IconsHelper.materialIcon("filter_list")}
           </IconButton>}
