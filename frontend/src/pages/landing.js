@@ -56,13 +56,11 @@ class Landing extends React.Component{
         }
 
         <div id="feature-list">
-          <Grid>
-            <div className="row center-xs center-md feature-row">
-              <Col xs={4} sm={3} md={2}>{IconsHelper.materialIcon("info")}<p>Information Wiki</p></Col>
-              <Col xs={4} sm={3} md={2}>{IconsHelper.materialIcon("group")}<p>Group Chat</p></Col>
-              <Col xs={4} sm={3} md={2}>{IconsHelper.materialIcon("event")}<p>Event Listing</p></Col>
+          <div className="row feature-row center-xs">
+              <div className="col-xs">{IconsHelper.materialIcon("info")}<p>Information Wiki</p></div>
+              <div className="col-xs">{IconsHelper.materialIcon("group")}<p>Group Chat</p></div>
+              <div className="col-xs">{IconsHelper.materialIcon("event")}<p>Event Listing</p></div>
             </div>
-          </Grid>
         </div>
       </div>
     </div>
