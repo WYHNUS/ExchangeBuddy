@@ -40,6 +40,7 @@ class TopBar extends Component {
   				{IconsHelper.materialIcon("arrow_back")}
           </IconButton>}
         iconElementRight={<IconButton
+          className="filter-list-invisible"
           onClick={()=>this.props.toggleHomeSearchDrawerVisibility(true)}>
           {IconsHelper.materialIcon("filter_list")}
           </IconButton>}

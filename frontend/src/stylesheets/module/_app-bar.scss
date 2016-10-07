@@ -8,9 +8,22 @@
 	width: 100%;
 
 
-	>div{color: rgb(0,0,0)!important;}
+	>div{
+		color: rgb(0,0,0)!important;
+	}
+
+
 
 	>div>button>div>span.material-icons{
 		color: rgb(0,0,0)!important;
 	}
+
+	img{
+		margin-bottom: -15px;
+		margin-left: -15px;
+	}
+}
+
+.filter-list-invisible{
+	display: none!important;
 }
