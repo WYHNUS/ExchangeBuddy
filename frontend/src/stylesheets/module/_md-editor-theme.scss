@@ -74,6 +74,10 @@
 }
 
 .medium-editor-element {
+  outline: 0px solid transparent;
   min-height: 300px
 }
 
+.medium-editor-element:focus {
+  outline: 0px solid transparent;
+}

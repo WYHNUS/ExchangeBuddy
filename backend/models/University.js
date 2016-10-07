@@ -51,7 +51,15 @@ module.exports = function(sequelize, DataType) {
   }, {
     classMethods: {
       associate: function(models) {
+        University.belongsTo(models.Country);
 
+        University.hasMany(models.User, {
+          as: 'homeUniversity'
+        });
+
+        University.hasMany(models.Exchange, {
+          as: 'exchangeUniversity'
+        });
       }
     }
   });

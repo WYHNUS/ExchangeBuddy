@@ -14,12 +14,13 @@ module.exports = function(sequelize, DataType) {
       type: DataType.TEXT(),
     },
 
-    profilePictureId: {
+    profilePictureUrl: {
       type: DataType.STRING(255),
     },
 
     gender: {
-      type: DataType.ENUM('male', 'female', 'others'),
+      type: DataType.STRING(255),
+      validate: { isIn: [['male', 'female']] },
     },
 
     bio: {
@@ -34,46 +35,45 @@ module.exports = function(sequelize, DataType) {
       type: DataType.DATEONLY(),
     },
 
-    // Don't use BIGINT because there's some serious bug in Sequelize or something...
-    // A BIGINT has at most 20 digits (if unsigned)
     fbUserId: {
       type: DataType.STRING(),
       unique: true,
     },
 
-    fbToken: {
-      type: DataType.TEXT(),
-    },
-
-    fbTokenExpiresAt: {
-      type: DataType.DATE(),
-    },
-
-    homeUniId: {
-      type: DataType.INTEGER(),
-    },
-
-    homeUniEmail: {
-      type: DataType.STRING(255),
-      validate: { isEmail: true },
-    },
-
-    homeUniEmailVerified: {
+    isEmailVerified: {
       type: DataType.BOOLEAN(),
-    },
-
-    // 2-letter country code
-    homeCountryCode: {
-      type: DataType.CHAR(2),
-    },
-
-    defaultGroupId: {
-      type: DataType.INTEGER(),
     }
   }, {
     classMethods: {
       associate: function(models) {
+        // are we setting this to nationality?
+        User.belongsTo(models.Country, {
+          as: "homeCountry"
+        });
 
+        User.belongsTo(models.University, {
+          onDelete: 'CASCADE',
+          foreignKey: {
+            as: 'homeUniversity',
+            allowNull: false
+          }
+        });
+
+        User.belongsToMany(models.Exchange, {
+          as: 'exchangeEvent',
+          through: 'student_exchange',
+          foreignKey: 'userId'
+        });
+
+        User.belongsToMany(models.Group, {
+          as: 'user',
+          through: 'chat_group',
+          foreignKey: 'userId'
+        });
+
+        User.hasMany(models.ChatMessage);
+
+        User.hasMany(models.Blog);
       }
     },
     instanceMethods: {
@@ -85,8 +85,7 @@ module.exports = function(sequelize, DataType) {
           id: this.id,
           email: this.email,
           displayName: this.displayName,
-          fbUserId: this.fbUserId,
-          profilePictureId: this.profilePictureId,
+          profilePictureUrl: this.profilePictureUrl,
           exp: parseInt(expiry.getTime() / 1000),
         }, config.secret);
       }
