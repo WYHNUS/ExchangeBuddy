@@ -27,6 +27,7 @@ router.get('/me', verifyToken, function(req, res) {
 });
 
 router.get('/user/:id', verifyToken, UserCtrl.getUser);
+router.post('/verificationemail', UserCtrl.createUser);
 
 router.get('/country', verifyToken, CountryCtrl.getAllCountries);
 router.get('/country/:id', verifyToken, CountryCtrl.getCountry);
