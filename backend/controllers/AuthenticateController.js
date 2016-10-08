@@ -26,7 +26,8 @@ exports.authenticate = function (req, res) {
         // Else, create a login as new user.
         User.findOrCreate({
             where: {
-                fbUserId: response.id
+                fbUserId: response.id,
+                email: response.email
             },
             defaults: {
                 name: response.name,
@@ -60,43 +61,74 @@ exports.authenticate = function (req, res) {
                         name: payload.homeUniversity.name + " students in " + payload.exchangeUniversity.name
                     }
                 ];
-                var asyncArray = defaultGroups.map(group => {
-                    return Group.findOrCreate({
-                        where: {
-                            name: group.name,
-                            groupType: group.id,
-                        }
-                    });
-                });
 
                 // For new users, add exchange event
-                var deferred = q.defer();
                 Exchange.create({
                     year: payload.exchangeYear,
                     term: payload.exchangeSem,
                     UniversityId: payload.exchangeUniversity.id,
                     UserId: user.id
-                }).then (function(exchange) {
-                    deferred.resolve(exchange);
-                });
-                asyncArray.push(deferred.promise);
-                    
-                Promise.all(asyncArray).spread((responses) => {
-                    console.log(responses[0]);
-                    console.log("printing functions: <<<<<<<<< ")
-                    console.log(Group.Instance.prototype);
-                    /*
-                        error : addUser is not a function
-                    */
-                    for (var i=0; i<3; i++) {
-                        responses[i].addUser(user);
-                    }
+                }).then(function(exchange) {
+                    return Group.findOrCreate({
+                        where: {
+                            name: defaultGroups[0].name,
+                            groupType: defaultGroups[0].id,
+                        }
+                    })
+                }).spread(function(group) {
+                    group.addUser(user);
+                    return Group.findOrCreate({
+                        where: {
+                            name: defaultGroups[1].name,
+                            groupType: defaultGroups[1].id,
+                        }
+                    })
+                }).spread(function(group) {
+                    group.addUser(user);
+                    return Group.findOrCreate({
+                        where: {
+                            name: defaultGroups[2].name,
+                            groupType: defaultGroups[2].id,
+                        }
+                    })
+                }).spread(function(group) {
+                    group.addUser(user);
                     res.json(user.generateJwt());
                 }).catch(function(err) {
                     res.status(500).json({
                         message: err.message
                     });
                 });
+
+                /*
+                    Don't understand why promise chain doesn't work on method findOrCreate, have to use method above
+                */
+                // Exchange.create({
+                //     year: payload.exchangeYear,
+                //     term: payload.exchangeSem,
+                //     UniversityId: payload.exchangeUniversity.id,
+                //     UserId: user.id
+                // }).then (function(exchange) {
+                //     var defaultGroupArray = defaultGroups.map(group => {
+                //         return Group.findOrCreate({
+                //             where: {
+                //                 name: group.name,
+                //                 groupType: group.id,
+                //             }
+                //         });
+                //     });
+                //     Promise.all(defaultGroupArray).spread((responses) => {
+                //         // console.log(Group.Instance.prototype);
+                //         responses.map(group => {
+                //             group.addUser(user);
+                //         });
+                //         res.json(user.generateJwt());
+                //     })
+                // }).catch(function(err) {
+                //     res.status(500).json({
+                //         message: err.message
+                //     });
+                // });
             } else {
                 res.json(user.generateJwt());
             }
