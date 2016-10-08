@@ -66,7 +66,7 @@ module.exports = function(sequelize, DataType) {
         });
 
         User.belongsToMany(models.Group, {
-          as: 'user',
+          as: 'group',
           through: 'chat_group',
           foreignKey: 'userId'
         });

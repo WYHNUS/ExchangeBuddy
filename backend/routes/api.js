@@ -32,6 +32,7 @@ router.post('/verificationemail', UserCtrl.createUser);
 router.get('/country', verifyToken, CountryCtrl.getAllCountries);
 router.get('/country/:id', verifyToken, CountryCtrl.getCountry);
 
+router.post('/university', UniCtrl.createUniversity);	// dummy
 router.get('/university', verifyToken, UniCtrl.getAllUniversities);
 router.get('/university/:id', verifyToken, UniCtrl.getUniversity);
 

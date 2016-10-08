@@ -1,4 +1,5 @@
 var graph = require('fbgraph');
+var Promise = require("bluebird");
 var q = require('q');
 var models = require('../models');
 var User = models.User;
@@ -31,7 +32,7 @@ exports.authenticate = function (req, res) {
                 name: response.name,
                 email: response.email,
                 gender: req.body.gender,
-                homeUniversityId: req.body.homeUniversity.id,
+                UniversityId: req.body.homeUniversity.id,
             }
         }).spread(function (user, created) {
             if (created) {
@@ -63,16 +64,8 @@ exports.authenticate = function (req, res) {
                     return Group.findOrCreate({
                         where: {
                             name: group.name,
-                            groupType: group.id
-                        },
-
-                        /*
-                            Those lines of code are problematic for now and I'll investigate later
-                                -- Yanhao
-                        */
-                        include: [{model: User}]
-                    }).spread(function(group) {
-                        group.setUser(user.id);
+                            groupType: group.id,
+                        }
                     });
                 });
 
@@ -81,14 +74,21 @@ exports.authenticate = function (req, res) {
                 Exchange.create({
                     year: payload.exchangeYear,
                     term: payload.exchangeSem,
-                    exchangeUniversityId: payload.exchangeUniversity.id,
-                    userId: user.id
+                    UniversityId: payload.exchangeUniversity.id,
+                    UserId: user.id
                 }).then (function(exchange) {
                     deferred.resolve(exchange);
                 });
                 asyncArray.push(deferred.promise);
                     
-                Promise.all(asyncArray).then(function() {
+                Promise.all(asyncArray).spread((responses) => {
+                    console.log(responses[0]);
+                    /*
+                        error : addUser is not a function
+                    */
+                    for (var i=0; i<3; i++) {
+                        responses[i].addUser(user);
+                    }
                     res.json(user.generateJwt());
                 }).catch(function(err) {
                     res.status(500).json({
