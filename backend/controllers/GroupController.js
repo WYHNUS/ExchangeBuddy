@@ -38,7 +38,7 @@ exports.getGroup = function(req, res) {
         attributes: ['id', 'name'],
         include: [{
         	attributes: ['id', 'displayName', 'profilePictureUrl'],
-        	model: User，
+        	model: User,
         	as: 'user',
         	through: {
 				where: {

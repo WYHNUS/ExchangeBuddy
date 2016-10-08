@@ -2,7 +2,7 @@ var models = require('../models');
 
 exports.getAllCountries = function(req, res){
     models.Country.findAll({
-        attributes: ['name', 'region', 'capital', 'timezones', 'callingCodes']
+        attributes: ['id', 'name', 'region', 'capital', 'timezones', 'callingCodes']
     }).then(function(countries){
         res.json(countries);
     }).catch(function(err) {

@@ -1,6 +1,8 @@
 var graph = require('fbgraph');
+var q = require('q');
 var models = require('../models');
 var User = models.User;
+var Group = models.Group;
 var Exchange = models.Exchange;
 
 exports.authenticate = function (req, res) {
@@ -62,22 +64,36 @@ exports.authenticate = function (req, res) {
                         where: {
                             name: group.name,
                             groupType: group.id
-                        }
-                    }).then(function(group) {
-                        group.addUser(user);
+                        },
+
+                        /*
+                            Those lines of code are problematic for now and I'll investigate later
+                                -- Yanhao
+                        */
+                        include: [{model: User}]
+                    }).spread(function(group) {
+                        group.setUser(user.id);
                     });
                 });
 
                 // For new users, add exchange event
-                asyncArray.push(Exchange.create({
+                var deferred = q.defer();
+                Exchange.create({
                     year: payload.exchangeYear,
                     term: payload.exchangeSem,
                     exchangeUniversityId: payload.exchangeUniversity.id,
                     userId: user.id
-                }));
+                }).then (function(exchange) {
+                    deferred.resolve(exchange);
+                });
+                asyncArray.push(deferred.promise);
                     
                 Promise.all(asyncArray).then(function() {
                     res.json(user.generateJwt());
+                }).catch(function(err) {
+                    res.status(500).json({
+                        message: err.message
+                    });
                 });
             } else {
                 res.json(user.generateJwt());

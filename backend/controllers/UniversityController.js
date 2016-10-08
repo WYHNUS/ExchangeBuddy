@@ -2,7 +2,7 @@ var models = require('../models');
 
 exports.getAllUniversities = function(req, res){
     models.University.findAll({
-    	attributes: ['name', 'city', 'logoImageId', 'emailDomains']
+    	attributes: ['id', 'name', 'city', 'logoImageId', 'emailDomains']
     }).then(function(universities){
         res.json(universities);
     }).catch(function(err) {

@@ -2,10 +2,13 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('express-jwt');
 var config = require('../config/config');
+
 var models  = require('../models');
-var AuthCtrl = require('../controllers/AuthenticateController');
 var CountryCtrl = require('../controllers/CountryController');
 var UniCtrl = require('../controllers/UniversityController');
+var AuthCtrl = require('../controllers/AuthenticateController');
+var UserCtrl = require('../controllers/UserController');
+var GroupCtrl = require('../controllers/GroupController');
 
 // Set up token authenticate
 var verifyToken = jwt({secret: config.secret});
