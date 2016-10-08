@@ -2,10 +2,13 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('express-jwt');
 var config = require('../config/config');
+
 var models  = require('../models');
-var AuthCtrl = require('../controllers/AuthenticateController');
 var CountryCtrl = require('../controllers/CountryController');
 var UniCtrl = require('../controllers/UniversityController');
+var AuthCtrl = require('../controllers/AuthenticateController');
+var UserCtrl = require('../controllers/UserController');
+var GroupCtrl = require('../controllers/GroupController');
 
 // Set up token authenticate
 var verifyToken = jwt({secret: config.secret});
@@ -17,13 +20,21 @@ router.get('/', function(req, res) {
 });
 
 // Authenticate with Facebook access token
-router.post('/authenticate',AuthCtrl.authenticate);
-router.get('/country', verifyToken, CountryCtrl.getAllCountries);
-router.get('/country/:id', verifyToken, CountryCtrl.getCountry);
-router.get('/university', verifyToken, UniCtrl.getUniversities);
+router.post('/authenticate', AuthCtrl.authenticate);
 // Verify JSWT
 router.get('/me', verifyToken, function(req, res) {
   res.send(req.user);
 });
+
+router.get('/user/:id', verifyToken, UserCtrl.getUser);
+
+router.get('/country', verifyToken, CountryCtrl.getAllCountries);
+router.get('/country/:id', verifyToken, CountryCtrl.getCountry);
+
+router.get('/university', verifyToken, UniCtrl.getAllUniversities);
+router.get('/university/:id', verifyToken, UniCtrl.getUniversity);
+
+router.get('/group', verifyToken, GroupCtrl.getGroupIndex);
+router.get('/group/:id', verifyToken, GroupCtrl.getGroup);
 
 module.exports = router;

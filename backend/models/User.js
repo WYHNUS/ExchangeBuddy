@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataType) {
       unique: true,
     },
 
-    displayName: {
+    name: {
       type: DataType.TEXT(),
     },
 
@@ -54,7 +54,7 @@ module.exports = function(sequelize, DataType) {
         User.belongsTo(models.University, {
           onDelete: 'CASCADE',
           foreignKey: {
-            as: 'homeUniversity',
+            as: 'homeUniversityId',
             allowNull: false
           }
         });
@@ -84,7 +84,7 @@ module.exports = function(sequelize, DataType) {
         return jwt.sign({
           id: this.id,
           email: this.email,
-          displayName: this.displayName,
+          name: this.name,
           profilePictureUrl: this.profilePictureUrl,
           exp: parseInt(expiry.getTime() / 1000),
         }, config.secret);
