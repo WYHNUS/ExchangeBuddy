@@ -83,6 +83,8 @@ exports.authenticate = function (req, res) {
                     
                 Promise.all(asyncArray).spread((responses) => {
                     console.log(responses[0]);
+                    console.log("printing functions: <<<<<<<<< ")
+                    console.log(Group.Instance.prototype);
                     /*
                         error : addUser is not a function
                     */
