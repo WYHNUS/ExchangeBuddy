@@ -1,7 +1,5 @@
 var models = require('../models');
 var User = models.User;
-var Deck = models.Deck;
-var Card = models.Card;
 
 // Show a specific user
 exports.getUser = function(req, res) {

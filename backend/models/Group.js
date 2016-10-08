@@ -16,6 +16,7 @@ module.exports = function(sequelize, DataType) {
       type: DataType.INTEGER(1),
       min: 0,
       max: 2,
+      allowNull: false
     }
   }, {
     classMethods: {
