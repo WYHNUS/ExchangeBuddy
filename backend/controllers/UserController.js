@@ -7,7 +7,7 @@ exports.getUser = function(req, res) {
         where: {
             id: req.params.id
         },
-        attributes: ['id', 'email', 'displayName', 'profilePictureUrl', 'bio']
+        attributes: ['id', 'email', 'name', 'profilePictureUrl', 'bio']
     }).then(function(user) {
         res.json(user);
     }).catch(function(err) {

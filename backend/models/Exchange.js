@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataType) {
         Exchange.belongsTo(models.University, {
           onDelete: 'CASCADE',
           foreignKey: {
-            as: 'exchangeUniversity',
+            as: 'exchangeUniversityId',
             allowNull: false
           }
         });
