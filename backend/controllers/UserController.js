@@ -38,8 +38,7 @@ exports.createUser = function(req, res){
                 UniversityId: req.body.exchangeUniversity.id
             }
         })
-    ])
-    .spread(function(user, homeUniversity, exchange){
+    ]).spread(function(user, homeUniversity, exchange){
         if(!!user && !!homeUniversity && !!exchange){
             user.setUniversity(homeUniversity);
             user.addExchangeEvent(exchange);
@@ -47,7 +46,8 @@ exports.createUser = function(req, res){
                 success: true
             });
         }
-
+    }).catch(function(err){
+        resError(res, err);
     });
 }
 
