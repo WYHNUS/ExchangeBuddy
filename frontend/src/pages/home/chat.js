@@ -7,17 +7,31 @@ import { bindActionCreators } from 'redux';
 import { showSnackbar } from '../../actions/messageSnackbar';
 import { pageVisibility } from '../../actions/pageVisibility';
 
+import SubmitForm from '../../components/HomeContainer/Chat/SubmitForm';
+import MessageList from '../../components/HomeContainer/Chat/MessageList';
 
-const Chat =()=>(
-	<div>
-	Home Chat page
-	</div>
-);
+class Chat extends React.Component{
+	render(){
+		return(
+		<Grid>
+		<div className="chat-container">
+		<MessageList groupId={ parseInt(this.props.params.id) } />
+		<SubmitForm groupId={ parseInt(this.props.params.id) } />
+		</div>
+		</Grid>);
+	}
+}
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    actions: bindActionCreators({ showSnackbar }, dispatch),
-  };
+	return {
+		actions: bindActionCreators({ showSnackbar }, dispatch)
+	};
 };
 
-export default connect(null, mapDispatchToProps)(Chat);
+const mapStateToProps = (state)=>{
+	return {
+		params: state.home.homeCountry
+	};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Chat);

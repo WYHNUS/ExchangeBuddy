@@ -43,7 +43,7 @@ import ChildComponent from './MessageList';
   }
 };*/
 
-const ComposedComponent = composeWithTracker(composer, Loading)(ChildComponent);
+//const ComposedComponent = composeWithTracker(composer, Loading)(ChildComponent);
 
 // Redux
 import { bindActionCreators } from 'redux';
@@ -52,13 +52,19 @@ import { connect } from 'react-redux';
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
+    fetchHomeMessages:(groupId)=>{
+      dispatch(fetchHomeMessages(groupId)).then((response) => {
+            !response.error ? dispatch(fetchPostsSuccess(response.payload)) : dispatch(fetchPostsFailure(response.payload));
+          });
+    }
   };
 };
 
 const mapStateToProps = (state) => {
   return {
-
+    messages: state.home.homeMessages.homeMessages,
+    user: state.user
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ComposedComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(ChildComponent);

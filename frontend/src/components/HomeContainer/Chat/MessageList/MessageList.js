@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactHtmlParser from 'react-html-parser';
 import truncate from 'truncate';
 import Linkify from 'react-linkify';
 
-import { formatTime } from '../../../../../util/helper';
-import * as UserHelper from '../../../../../util/user';
+import { formatTime } from '../../../../util/helper';
+import * as UserHelper from '../../../../util/user';
 
 const MessageFBEvent = ({ message }) => {
   const { content, user, createdAt, type, eventPosting, id } = message;
@@ -91,11 +91,11 @@ export default class MessageList extends React.Component {
   }
 
   componentDidMount() {
-    chatScrollToLatest();
+    //chatScrollToLatest();
   }
 
   componentDidUpdate() {
-    chatScrollToLatest();
+    //chatScrollToLatest();
   }
 
   render() {
@@ -108,3 +108,10 @@ export default class MessageList extends React.Component {
     )
   }
 }
+
+MessageList.propTypes = {
+  messages: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired
+};
+
+

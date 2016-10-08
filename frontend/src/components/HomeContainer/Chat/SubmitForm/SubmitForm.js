@@ -3,8 +3,9 @@ import { reduxForm, Field } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 import IconButton from 'material-ui/IconButton';
 import { TextFormField } from '../../../Field';
+import $ from "jquery";
 
-import * as UserHelper from '../../../../../util/user';
+import * as UserHelper from '../../../../util/user';
 
 const submitForm = (groupId, callback) => (values) => {
   const params = { userToken: Meteor.userToken(), userId: Meteor.userId(), groupId: groupId, content: values.message, type: "user" };
