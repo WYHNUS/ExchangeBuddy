@@ -1,14 +1,14 @@
 var models = require('../models');
 
 exports.getAllCountries = function(req, res){
-    models.Country.findAll().then(function(countries){
-        var result = {};
-        for(var i = 0; i < countries.length; i++){
-            result[i] = countries[i];
-        }
-        res.send(JSON.stringify(result));
+    models.Country.findAll({
+        attributes: ['name', 'region', 'capital', 'timezones', 'callingCodes']
+    }).then(function(countries){
+        res.json(countries);
+    }).catch(function(err) {
+        resError(res, err);
     });
-}
+};
 
 exports.getCountry = function(req, res){
     models.Country.findOne({
@@ -16,6 +16,14 @@ exports.getCountry = function(req, res){
             alpha2Code: req.params.id
         }
     }).then(function(country){
-        res.send(JSON.stringify(country));
-    })
+        res.json(country);
+    }).catch(function(err) {
+        resError(res, err);
+    });
+};
+
+function resError(res, err) {
+    return res.status(500).json({
+        message: err.message
+    });
 }

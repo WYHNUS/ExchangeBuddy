@@ -1,11 +1,29 @@
 var models = require('../models');
 
-exports.getUniversities = function(req, res){
-    models.University.findAll().then(function(universities){
-        var result = {};
-        for(var i = 0; i < universities.length; i++){
-            result[i] = universities[i];
+exports.getAllUniversities = function(req, res){
+    models.University.findAll({
+    	attributes: ['name', 'city', 'logoImageId', 'emailDomains']
+    }).then(function(universities){
+        res.json(universities);
+    }).catch(function(err) {
+        resError(res, err);
+    });
+};
+
+exports.getUniversity = function(req, res){
+    models.University.findOne({
+        where: {
+            id: req.params.id
         }
-        res.send(JSON.stringify(result));
+    }).then(function(university){
+        res.json(university);
+    }).catch(function(err) {
+        resError(res, err);
+    });
+};
+
+function resError(res, err) {
+    return res.status(500).json({
+        message: err.message
     });
 }
