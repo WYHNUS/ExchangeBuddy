@@ -6,20 +6,20 @@ import MenuItem from 'material-ui/MenuItem';
 import { TextFormField, SelectFormField, AutoCompleteFormField } from '../../Field';
 import NextButton from '../NextButton';
 
-import * as SessionHelper from '../../../../util/session';
+// import * as SessionHelper from '../../../util/session';
 
 export const fields = [ 'displayName', 'gender', 'homeUniName' ];
 
-const saveForm = (callback) => {
-  return (values) => {
-    const { displayName, gender, homeUniName } = values;
+// const saveForm = (callback) => {
+//   return (values) => {
+//     const { displayName, gender, homeUniName } = values;
 
-    Meteor.call('User.updateProfile', { id: Meteor.userId(), displayName, gender, homeUniName }, (err, result) => {
-      if (!err)
-        SessionHelper.setCurrentUser(callback); // Required so that Meteor.user() will reflect the new user information
-    });
-  };
-};
+//     Meteor.call('User.updateProfile', { id: Meteor.userId(), displayName, gender, homeUniName }, (err, result) => {
+//       if (!err)
+//         SessionHelper.setCurrentUser(callback); // Required so that Meteor.user() will reflect the new user information
+//     });
+//   };
+// };
 let universitiesProps;
 const validate = values => {
   const errors = {};
@@ -53,7 +53,7 @@ class Step1 extends React.Component {
     universitiesProps = universities;
 
     return (
-      <form onSubmit={ handleSubmit(saveForm(handleNext)) }>
+      <form /*onSubmit={ handleSubmit(saveForm(handleNext)) }*/>
         <Row>
           <Col xs={12}>
             <TextFormField name="displayName" floatingLabelText="Your name" {...displayName} />
@@ -83,9 +83,9 @@ class Step1 extends React.Component {
   }
 }
 
-Step1.propTypes{
-  user:PropTypes.object.isRequired,
-}
+// Step1.propTypes{
+//   user:PropTypes.object.isRequired,
+// }
 
 
 // Decorate with redux-form

@@ -1,4 +1,4 @@
-import { Meteor } from 'meteor/meteor';
+// import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { composeWithTracker } from 'react-komposer';
 import Loading from '../../Loading';
@@ -11,24 +11,24 @@ import { connect } from 'react-redux';
 import ChildComponent from './Step2';
 
 // react-komposer
-const composer = (props, onData) => {
-  const user = Meteor.user();
+// const composer = (props, onData) => {
+//   const user = Meteor.user();
 
-  Meteor.call('User.getGroups', user.id, (err, groups) => {
-    const defaultGroup = groups.length && groups.reduce((p, group) => group.id == user.defaultGroupId ? group : p);
+//   Meteor.call('User.getGroups', user.id, (err, groups) => {
+//     const defaultGroup = groups.length && groups.reduce((p, group) => group.id == user.defaultGroupId ? group : p);
 
-    const initialValues = defaultGroup ? {
-      exchangeUniName: defaultGroup.university.name,
-      exchangeUniYear: defaultGroup.year,
-      exchangeTerm: defaultGroup.term,
-    } : {};
+//     const initialValues = defaultGroup ? {
+//       exchangeUniName: defaultGroup.university.name,
+//       exchangeUniYear: defaultGroup.year,
+//       exchangeTerm: defaultGroup.term,
+//     } : {};
 
-    onData(null, { initialValues });
-  });
+//     onData(null, { initialValues });
+//   });
 
-};
+// };
 
-const ComposedComponent = composeWithTracker(composer, Loading)(ChildComponent);
+// const ComposedComponent = composeWithTracker(composer, Loading)(ChildComponent);
 
 // redux
 const mapStateToProps = (state) => {

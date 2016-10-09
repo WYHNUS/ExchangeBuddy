@@ -77,7 +77,7 @@ exports.createUser = function(req, res) {
                     Will improve after a better strategy is discovered...
 
                     >>>>>>>>>> Ideal solution (not working) <<<<<<<<<<<
-                    
+
                     var defaultGroupArray = defaultGroups.map(group => {
                         return Group.findOrCreate({
                             where: {
@@ -120,9 +120,10 @@ exports.createUser = function(req, res) {
                     group.addUser(user);
 
                     // should sent a confirmation email here
-                    res.status(200)
+                    res.status(201)
                         .json({
-                            message: 'Callback Hell reaches to the end.'
+                            // Callback Hell reaches to the end.
+                            message: 'User created.'
                         });
 
                 });

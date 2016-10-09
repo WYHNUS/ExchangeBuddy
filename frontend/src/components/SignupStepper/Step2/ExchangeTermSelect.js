@@ -1,4 +1,4 @@
-import { Meteor } from 'meteor/meteor';
+// import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { composeWithTracker } from 'react-komposer';
 import Loading from '../../Loading';
@@ -19,27 +19,26 @@ const ChildComponent = ({ terms }) => {
     return null;
 };
 
-const composer = (props, onData) => {
-  const user = Meteor.user();
-  const defaultTerms = [ 'Fall', 'Spring' ];
+// const composer = (props, onData) => {
+//   const user = Meteor.user();
+//   const defaultTerms = [ 'Fall', 'Spring' ];
 
-  if (!props.uniName)
-    onData(null, {});
-  else
-    Meteor.call('University.getByName', props.uniName, (err, uni) => {
-      if (!uni)
-        return;
+//   if (!props.uniName)
+//     onData(null, {});
+//   else
+//     Meteor.call('University.getByName', props.uniName, (err, uni) => {
+//       if (!uni)
+//         return;
 
-      let terms = uni.terms && uni.terms.length && JSON.parse(uni.terms);
-      if (!terms)
-        terms = defaultTerms;
+//       let terms = uni.terms && uni.terms.length && JSON.parse(uni.terms);
+//       if (!terms)
+//         terms = defaultTerms;
 
-      onData(null, {
-        terms
-      });
+//       onData(null, {
+//         terms
+//       });
 
-    });
-
-};
+//     });
+// };
 
 export default composeWithTracker(composer, <div />)(ChildComponent);
