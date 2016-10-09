@@ -21,29 +21,29 @@ export function home(state=initialState, action) {
 	switch (action.type) {
 		
 		case TOGGLE_HOME_COUNTRY:
-		return {...state, homeCountry: {id:action.id}}
+			return {...state, homeCountry: {id:action.id}}
 		
 		case FETCH_HOME_MESSAGES:
-		return {...state, homeMessages: {homeMessages:[], error: null, loading: true}};
+			return {...state, homeMessages: {homeMessages:[], error: null, loading: true}};
 		case FETCH_HOME_MESSAGES_SUCCESS:
-		return {...state, homeMessages: {homeMessages: action.payload, error:null, loading: false}};
+			return {...state, homeMessages: {homeMessages: action.payload, error:null, loading: false}};
 		case FETCH_HOME_MESSAGES_FAILURE:
-		error = action.payload || {message: action.payload};
-		return {...state, homeMessages: {homeMessages: [], error: error, loading: false}};
+			error = action.payload || {message: action.payload};
+			return {...state, homeMessages: {homeMessages: [], error: error, loading: false}};
 		case RESET_HOME_MESSAGES:
-		return {...state, homeMessages: {homeMessages: [], error:null, loading: false}}
+			return {...state, homeMessages: {homeMessages: [], error:null, loading: false}}
 
 		case FETCH_FB_EVENTS:
-		return {...state, homeEvents: {homeEvents:[], error: null, loading: true}};
+			return {...state, homeEvents: {homeEvents:[], error: null, loading: true}};
 		case FETCH_FB_EVENTS_SUCCESS:
-		return {...state, homeEvents: {homeEvents: action.payload, error:null, loading: false}};
+			return {...state, homeEvents: {homeEvents: action.payload, error:null, loading: false}};
 		case FETCH_FB_EVENTS_FAILURE:
-		error = action.payload || {message: action.payload};
-		return {...state, homeEvents: {homeEvents: [], error: error, loading: false}};
+			error = action.payload || {message: action.payload};
+			return {...state, homeEvents: {homeEvents: [], error: error, loading: false}};
 		case RESET_FB_EVENTS:
-		return {...state, homeEvents: {homeEvents: [], error:null, loading: false}}
+			return {...state, homeEvents: {homeEvents: [], error:null, loading: false}}
 
 		default:
-		return state
+			return state
 	}
 }

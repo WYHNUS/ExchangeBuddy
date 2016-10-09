@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes }from 'react';
 import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
 import { LinkButton } from '../Link';
 
@@ -36,9 +36,11 @@ export default class SignupStepper extends React.Component {
   componentDidMount() {
     if (this.props.hasJoinedGroup)
       this.setState({ stepIndex: 2 });
+    this.props.fetchAllUniversities();
   }
 
   render() {
+    const { universities } = this.props;
     return (
       <Stepper activeStep={ this.state.stepIndex } orientation="vertical">
         <Step>
@@ -68,4 +70,8 @@ export default class SignupStepper extends React.Component {
       </Stepper>
     );
   }
+}
+
+SignupStepper.propTypes = {
+  universities: PropTypes.array.isRequired
 }

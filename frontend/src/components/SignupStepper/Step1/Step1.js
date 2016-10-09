@@ -63,6 +63,14 @@ class Step1 extends React.Component {
               <MenuItem value="female" primaryText="Female" />
             </SelectFormField>
 
+            <AutoCompleteFormField
+              name="homeUniName"
+              floatingLabelText="Current university"
+              {...homeUniName}
+              openOnFocus={true}
+              filter={ filter }
+              maxSearchResults={10}
+              dataSource={ universities.map((uni) => uni.name ) } />
           </Col>
         </Row>
 
@@ -77,15 +85,6 @@ class Step1 extends React.Component {
 // Step1.propTypes{
 //   user:PropTypes.object.isRequired,
 // }
-
-            // <AutoCompleteFormField
-            //   name="homeUniName"
-            //   floatingLabelText="Current university"
-            //   {...homeUniName}
-            //   openOnFocus={true}
-            //   filter={ filter }
-            //   maxSearchResults={10}
-            //   dataSource={ universities.map((uni) => uni.name ) } />
 
 // Decorate with redux-form
 export default reduxForm({

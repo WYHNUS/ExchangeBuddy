@@ -28,18 +28,28 @@ const ComposedComponent = composeWithTracker(composer, Loading)(ChildComponent);
 // Redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { fetchAllUniversities, fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure } from '../../actions/utilityInfo';
 
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
-    fetchAllUniversity:()=>{
-      dispatch(fetchAllUniversity()).then((response) => {
-            !response.error ? dispatch(fetchPostsSuccess(response.payload)) : dispatch(fetchPostsFailure(response.payload));
-          });
+    fetchAllUniversities:()=>{
+      var response = dispatch(fetchAllUniversities());
+      if (!response.error) {
+        dispatch(fetchAllUniversitiesSuccess(response.payload));
+      } else {
+        dispatch(fetchAllUniversitiesFailure(response.payload));
+      }
     }
   };
 };
 
-const SignupStepper = connect(null, mapDispatchToProps)(ChildComponent);
+const mapStateToProps = (state) => {
+  return {
+    universities: []
+  };
+};
+
+const SignupStepper = connect(mapStateToProps, mapDispatchToProps)(ChildComponent);
 
 export default SignupStepper;
