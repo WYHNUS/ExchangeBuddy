@@ -34,11 +34,12 @@ exports.verifyToken = function(req, res){
     }).then(function(user){
         if(!!user){
             user.isEmailVerified = true;
-            user.save();
-            console.log('verified');
-            res.send({
-                status: 'success'
+            user.save().then(function(){
+                res.send({
+                    status: 'success'
+                });
             });
+
         }else{
             res.send({
                 status: 'verification failed'
