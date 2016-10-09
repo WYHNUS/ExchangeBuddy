@@ -1,10 +1,6 @@
 import React from 'react';
 import Loading from '../Loading';
 
-// Redux
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
 // Action creators
 
 // Component
@@ -29,10 +25,18 @@ import ChildComponent from './SignupStepper';
 
 const ComposedComponent = composeWithTracker(composer, Loading)(ChildComponent);*/
 
-// redux
+// Redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
+    fetchAllUniversity:()=>{
+      dispatch(fetchAllUniversity()).then((response) => {
+            !response.error ? dispatch(fetchPostsSuccess(response.payload)) : dispatch(fetchPostsFailure(response.payload));
+          });
+    }
   };
 };
 
