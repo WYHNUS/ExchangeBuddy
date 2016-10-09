@@ -10,6 +10,16 @@ exports.getAllUniversities = function(req, res){
     });
 };
 
+exports.createUniversity = function(req, res) {
+    models.University.create({
+        name: req.body.name
+    }).then(function(university) {
+        res.json(university);
+    }).catch(function(err) {
+        resError(res, err);
+    });
+};
+
 exports.getUniversity = function(req, res){
     models.University.findOne({
         where: {

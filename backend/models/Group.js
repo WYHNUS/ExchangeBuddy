@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataType) {
     classMethods: {
       associate: function(models) {
         Group.belongsToMany(models.User, {
-          as: 'group',
+          as: 'user',
           through: 'chat_group',
           foreignKey: 'groupId'
         });

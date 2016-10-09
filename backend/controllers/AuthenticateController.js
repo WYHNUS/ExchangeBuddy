@@ -1,4 +1,5 @@
 var graph = require('fbgraph');
+var Promise = require("bluebird");
 var q = require('q');
 var models = require('../models');
 var User = models.User;
@@ -25,13 +26,13 @@ exports.authenticate = function (req, res) {
         // Else, create a login as new user.
         User.findOrCreate({
             where: {
-                fbUserId: response.id
+                fbUserId: response.id,
+                email: response.email
             },
             defaults: {
                 name: response.name,
-                email: response.email,
                 gender: req.body.gender,
-                homeUniversityId: req.body.homeUniversity.id,
+                UniversityId: req.body.homeUniversity.id,
             }
         }).spread(function (user, created) {
             if (created) {
@@ -59,42 +60,74 @@ exports.authenticate = function (req, res) {
                         name: payload.homeUniversity.name + " students in " + payload.exchangeUniversity.name
                     }
                 ];
-                var asyncArray = defaultGroups.map(group => {
-                    return Group.findOrCreate({
-                        where: {
-                            name: group.name,
-                            groupType: group.id
-                        },
-
-                        /*
-                            Those lines of code are problematic for now and I'll investigate later
-                                -- Yanhao
-                        */
-                        include: [{model: User}]
-                    }).spread(function(group) {
-                        group.setUser(user.id);
-                    });
-                });
 
                 // For new users, add exchange event
-                var deferred = q.defer();
                 Exchange.create({
                     year: payload.exchangeYear,
                     term: payload.exchangeSem,
-                    exchangeUniversityId: payload.exchangeUniversity.id,
-                    userId: user.id
-                }).then (function(exchange) {
-                    deferred.resolve(exchange);
-                });
-                asyncArray.push(deferred.promise);
-                    
-                Promise.all(asyncArray).then(function() {
+                    UniversityId: payload.exchangeUniversity.id,
+                    UserId: user.id
+                }).then(function(exchange) {
+                    return Group.findOrCreate({
+                        where: {
+                            name: defaultGroups[0].name,
+                            groupType: defaultGroups[0].id,
+                        }
+                    })
+                }).spread(function(group) {
+                    group.addUser(user);
+                    return Group.findOrCreate({
+                        where: {
+                            name: defaultGroups[1].name,
+                            groupType: defaultGroups[1].id,
+                        }
+                    })
+                }).spread(function(group) {
+                    group.addUser(user);
+                    return Group.findOrCreate({
+                        where: {
+                            name: defaultGroups[2].name,
+                            groupType: defaultGroups[2].id,
+                        }
+                    })
+                }).spread(function(group) {
+                    group.addUser(user);
                     res.json(user.generateJwt());
                 }).catch(function(err) {
                     res.status(500).json({
                         message: err.message
                     });
                 });
+
+                /*
+                    Don't understand why promise chain doesn't work on method findOrCreate, have to use method above
+                */
+                // Exchange.create({
+                //     year: payload.exchangeYear,
+                //     term: payload.exchangeSem,
+                //     UniversityId: payload.exchangeUniversity.id,
+                //     UserId: user.id
+                // }).then (function(exchange) {
+                //     var defaultGroupArray = defaultGroups.map(group => {
+                //         return Group.findOrCreate({
+                //             where: {
+                //                 name: group.name,
+                //                 groupType: group.id,
+                //             }
+                //         });
+                //     });
+                //     Promise.all(defaultGroupArray).spread((responses) => {
+                //         // console.log(Group.Instance.prototype);
+                //         responses.map(group => {
+                //             group.addUser(user);
+                //         });
+                //         res.json(user.generateJwt());
+                //     })
+                // }).catch(function(err) {
+                //     res.status(500).json({
+                //         message: err.message
+                //     });
+                // });
             } else {
                 res.json(user.generateJwt());
             }
