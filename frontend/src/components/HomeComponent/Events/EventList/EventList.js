@@ -20,7 +20,6 @@ export default class EventsList extends React.Component {
 
     const EventItem = ({ source, groupEvent }) => {
       if (source == 'Facebook'){
-        console.log('fbevenets');
         return <EventItemFb groupEvent={ groupEvent } groupId={ groupId } />;
       }
       else if (source == 'Meetup')
