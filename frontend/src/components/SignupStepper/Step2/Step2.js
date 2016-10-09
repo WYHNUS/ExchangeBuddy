@@ -1,29 +1,29 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 
-import { Row, Col } from 'meteor/lifefilm:react-flexbox-grid';
+import { Grid, Row, Col } from 'react-flexbox-grid';
 import MenuItem from 'material-ui/MenuItem';
 import { TextFormField, SelectFormField, AutoCompleteFormField } from '../../Field';
 import PrevButton from '../PrevButton';
 import NextButton from '../NextButton';
 import ExchangeTermSelect from './ExchangeTermSelect';
 
-import { propExistsDeep } from '../../../../util/helper';
+import { propExistsDeep } from '../../../util/helper';
 
 export const fields = [ 'exchangeUniName', 'exchangeUniYear', 'exchangeTerm' ];
 
-const saveForm = (callback) => {
-  return (values) => {
-    const { exchangeUniName, exchangeUniYear, exchangeTerm } = values;
+// const saveForm = (callback) => {
+//   return (values) => {
+//     const { exchangeUniName, exchangeUniYear, exchangeTerm } = values;
 
-    Meteor.call('UserGroup.addUserToGroup', { userId: Meteor.userId(), exchangeUniName, exchangeUniYear, exchangeTerm }, (err, result) => {
-      if (err)
-        console.log("Error in invoking UserGroup.addUserToGroup: " + err);
-      else if (callback)
-        callback();
-    });
-  };
-};
+//     Meteor.call('UserGroup.addUserToGroup', { userId: Meteor.userId(), exchangeUniName, exchangeUniYear, exchangeTerm }, (err, result) => {
+//       if (err)
+//         console.log("Error in invoking UserGroup.addUserToGroup: " + err);
+//       else if (callback)
+//         callback();
+//     });
+//   };
+// };
 
 const validate = values => {
   const errors = {};
@@ -64,7 +64,7 @@ class Step2 extends React.Component {
     const uniName = propExistsDeep(formState, [ 'signupStep2', 'values', 'exchangeUniName' ]) && formState.signupStep2.values.exchangeUniName;
 
     return (
-      <form onSubmit={ handleSubmit(saveForm(handleNext)) }>
+      <form /*onSubmit={ handleSubmit(saveForm(handleNext)) }*/>
 
         <AutoCompleteFormField
           id="exchangeUniName"

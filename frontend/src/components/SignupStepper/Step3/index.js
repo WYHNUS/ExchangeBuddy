@@ -1,4 +1,4 @@
-import { Meteor } from 'meteor/meteor';
+// import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { composeWithTracker } from 'react-komposer';
 import Loading from '../../Loading';
@@ -11,22 +11,22 @@ import { connect } from 'react-redux';
 import ChildComponent from './Step3';
 
 // react-komposer
-const composer = (props, onData) => {
-  const user = Meteor.user();
+// const composer = (props, onData) => {
+//   const user = Meteor.user();
 
-  if (user.homeUniId) {
-    Meteor.call('University.get', user.homeUniId, (err, uni) => {
-      const emailDomains = JSON.parse(uni.emailDomains);
+//   if (user.homeUniId) {
+//     Meteor.call('University.get', user.homeUniId, (err, uni) => {
+//       const emailDomains = JSON.parse(uni.emailDomains);
 
-      onData(null, {
-        user, university: uni, emailDomains
-      });
-    });
-  }
+//       onData(null, {
+//         user, university: uni, emailDomains
+//       });
+//     });
+//   }
 
-};
+// };
 
-const ComposedComponent = composeWithTracker(composer, Loading)(ChildComponent);
+// const ComposedComponent = composeWithTracker(composer, Loading)(ChildComponent);
 
 // redux
 const mapStateToProps = (state) => {
