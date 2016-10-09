@@ -31,7 +31,6 @@ exports.authenticate = function (req, res) {
             },
             defaults: {
                 name: response.name,
-                email: response.email,
                 gender: req.body.gender,
                 UniversityId: req.body.homeUniversity.id,
             }
