@@ -3,6 +3,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import RaisedButton from 'material-ui/RaisedButton';
 import truncate from 'truncate';
+var moment = require('moment');
 
 const postToChat = (groupEvent, groupId, cardText) => {
   const {name, coverPicture, startTime, id } = groupEvent;
@@ -40,7 +41,7 @@ const EventItemFb = ({ groupEvent, groupId }) => {
           <Col xs={12} md={5}>
             <RaisedButton primary={true} style={{margin: "3px 6px"}} label="View on Facebook" target="_blank" href={`https://facebook.com/events/${groupEvent.id}`} />
           </Col>
-            { Meteor.user() ?
+            { /*Meteor.user()*/true ?
               <Col xs={12} md={4}>
                 <RaisedButton primary={true} style={{margin: "3px 6px"}} label="Post to Chat" onTouchTap={ ()=> postToChat(groupEvent, parseInt(groupId), cardText) } />
               </Col>

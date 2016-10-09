@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 // Routes
 export const makeRouteSlug = (routes) => {
   return routes.map(route => route.path).filter(route => route && route != '/' && route.substr(0, 1) != ':').join('-');
@@ -27,3 +29,6 @@ export const propExistsDeep = function(parent, arrayOfChildProps) {
     return true;
   });
 };
+
+export const formatTime = (date) => moment(date).format('h:mm A');
+export const formatDate = (date) => moment(date).format('"D MMM YYYY');

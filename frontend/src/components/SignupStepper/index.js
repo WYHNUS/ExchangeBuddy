@@ -36,6 +36,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const SignupStepper = connect(null, mapDispatchToProps)(ComposedComponent);
+const SignupStepper = connect(null, mapDispatchToProps)(ChildComponent);
 
 export default SignupStepper;

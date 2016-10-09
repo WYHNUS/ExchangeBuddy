@@ -41,6 +41,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const Step3 = connect(mapStateToProps, mapDispatchToProps)(ComposedComponent);
+const Step3 = connect(mapStateToProps, mapDispatchToProps)(ChildComponent);
 
 export default Step3;

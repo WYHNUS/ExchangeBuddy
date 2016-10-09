@@ -19,8 +19,10 @@ export default class EventsList extends React.Component {
     const { groupEvents, source, groupId } = this.props;
 
     const EventItem = ({ source, groupEvent }) => {
-      if (source == 'Facebook')
+      if (source == 'Facebook'){
+        console.log('fbevenets');
         return <EventItemFb groupEvent={ groupEvent } groupId={ groupId } />;
+      }
       else if (source == 'Meetup')
         return <EventItemMu groupEvent={ groupEvent } groupId={ groupId } />;
       else
@@ -48,5 +50,7 @@ export default class EventsList extends React.Component {
 }
 
 EventsList.propTypes = {
-  groupEvents: PropTypes.array.isRequired
+  groupEvents: PropTypes.array.isRequired,
+  source: PropTypes.string.isRequired,
+  groupId: PropTypes.number.isRequired
 };

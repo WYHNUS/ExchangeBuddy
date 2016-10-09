@@ -9,6 +9,7 @@ import LoginButton from '../components/LoginButton';
 
 import { connect } from 'react-redux';
 import { toggleBottomBarVisibility } from '../actions/pageVisibility';
+var request = require('superagent');
 
 
 const landingContainerStyle = {
@@ -51,7 +52,7 @@ class Landing extends React.Component{
         : <RaisedButton
             primary={true}
             label="Go to your group"
-            onTouchTap={ () => browserHistory.push('/home') }
+            onTouchTap={ () => /*request('/user/1')*/browserHistory.push('/home')}
             style={{ maxWidth: 250, margin: '0 auto', height: 50 }}
             labelStyle={{ fontSize: "16px", padding: '0 20px' }} />
         }

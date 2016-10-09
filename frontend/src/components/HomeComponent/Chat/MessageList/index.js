@@ -45,6 +45,56 @@ import ChildComponent from './MessageList';
 
 //const ComposedComponent = composeWithTracker(composer, Loading)(ChildComponent);
 
+const date = new Date();
+const defaultUrl = '../../../../res/user.png';
+
+//groupId: 213324
+//api: /api/group/:groupId/messages
+
+var seed = 
+[
+{
+  type: 'user', //user or eventFB or eventMU
+  user: {
+    userId: 12341,
+    displayName: 'Lee Kai Yi',
+    userAvatarUrl: defaultUrl
+  },
+  content: 'hello, this is the first msg',
+  createdAt: date
+},
+{
+  type: 'eventFB', //user or event
+  user: {
+    userId: 12342,
+    displayName: 'Yanhao',
+    userAvatarUrl: defaultUrl
+  },
+  content: 'hello, this is the first event',
+  createdAt: date,
+  eventPosting:{
+    id: 1234123,
+    url: 'http://meetup.com',
+    yes_rsvp_count: 4,
+    name: 'cat event',
+    profilePicture: '',
+    coverPicture: '',
+    startTime: date
+  }
+},
+{
+  type: 'user', //user or event
+  user: {
+    userId: 123413,
+    displayName: 'Hanming',
+    userAvatarUrl: defaultUrl
+  },
+  content: 'hello, this is the second msg',
+  createdAt: date
+}
+]
+
+
 // Redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -62,7 +112,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    messages: state.home.homeMessages.homeMessages,
+    messages: seed,
     user: state.user
   };
 };

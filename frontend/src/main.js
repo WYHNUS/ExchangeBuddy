@@ -11,6 +11,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 // Finally, pass to React Router to display components
 import Router from './routes.js';
 injectTapEventPlugin();
+//require('dotenv').config();
 
 //import './stylesheets/application.scss'; not sure how to import this
 

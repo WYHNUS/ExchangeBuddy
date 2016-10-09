@@ -8,14 +8,21 @@ import $ from "jquery";
 import * as UserHelper from '../../../../util/user';
 
 const submitForm = (groupId, callback) => (values) => {
-  const params = { userToken: Meteor.userToken(), userId: Meteor.userId(), groupId: groupId, content: values.message, type: "user" };
-
-  Meteor.call('GroupChatMessage.sendToGroup', params, (err, success) => {
+  //const params = { userToken: Meteor.userToken(), userId: Meteor.userId(), groupId: groupId, content: values.message, type: "user" };
+  console.log({
+    userToken: 13829471,
+    userId: 1,
+    groupId: groupId,
+    content: values.message,
+    type: "user"
+  })
+  callback();
+  /*Meteor.call('GroupChatMessage.sendToGroup', params, (err, success) => {
     if (err)
       console.log("Error in invoking GroupChatMessage.sendToGroup: " + err);
     else
       callback();
-  });
+  });*/
 };
 
 const handleKeyPress = (submitHandler) => (event) => {
@@ -30,6 +37,8 @@ class SubmitForm extends Component {
 
   render() {
     const { handleSubmit, pristine, reset, submitting, user, groupId } = this.props;
+
+    //console.log(handleSubmit);
 
     const submitHandler = handleSubmit(submitForm(groupId, reset));
 
