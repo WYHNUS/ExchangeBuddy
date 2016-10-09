@@ -1,10 +1,6 @@
 var graph = require('fbgraph');
-var Promise = require("bluebird");
-var q = require('q');
 var models = require('../models');
 var User = models.User;
-var Group = models.Group;
-var Exchange = models.Exchange;
 
 exports.authenticate = function (req, res) {
     if (!req.body.facebookToken) {
