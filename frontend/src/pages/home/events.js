@@ -9,11 +9,13 @@ import { pageVisibility } from '../../actions/pageVisibility';
 
 import EventList from '../../components/HomeComponent/Events/EventList';
 
+import {fetchFbEvents, fetchFbEventsSuccess, fetchFbEventsFailure} from '../../actions/home';
+
 
 var date=new Date();
 var fbseed = 
 [
-  {
+{
     id: 1234123,
     url: 'http://Facebook.com',
     yes_rsvp_count: 4,
@@ -26,8 +28,8 @@ var fbseed =
     venue:{
     	profilePicture: ''
     }
-  },
-  {
+},
+{
     id: 1234123,
     url: 'http://Facebook.com',
     yes_rsvp_count: 4,
@@ -40,12 +42,12 @@ var fbseed =
     venue:{
     	profilePicture: ''
     }
-  }
+}
 ]
 
 var meetupseed = 
 [
-  {
+{
     id: 1234123,
     url: 'http://meetup.com',
     yes_rsvp_count: 4,
@@ -58,8 +60,8 @@ var meetupseed =
     venue:{
     	profilePicture: ''
     }
-  },
-  {
+},
+{
     id: 1234123,
     url: 'http://meetup.com',
     yes_rsvp_count: 4,
@@ -72,13 +74,14 @@ var meetupseed =
     venue:{
     	profilePicture: ''
     }
-  }
+}
 ]
 
 
 class Events extends React.Component{
 	componentWillMount(){
 		//fetchHomeEvenets(groupId)
+        fetchFbEvents(123,[1231,12341]);
 	}
 
 	render(){
@@ -109,7 +112,15 @@ const mapStateToProps = (state )=>{
 const mapDispatchToProps = (dispatch) => {
 	return {
 		actions: bindActionCreators({ showSnackbar }, dispatch),
-	};
-};
+
+        fetchFbEvents:(countryCode, uniLatLng)=>{
+          dispatch(fetchFbEvents(countryCode, uniLatLng)).then((response) => {
+            !response.error ? dispatch(fetchFbEventsSuccess(response.payload)) : 
+            dispatch(fetchFbEventsFailure(response.payload));
+        })
+      }
+  }
+}
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Events);

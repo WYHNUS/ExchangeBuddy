@@ -152,7 +152,7 @@ export default class Header extends React.Component {
           </Row>
         </Grid>
         <Grid>
-          <div className="row center-xs center-md" id="header-tab-row">
+          <div className="row center-xs center-md" >{/*id="header-tab-row"*/}
             <Col xs={12} md={8} id="header-tab-col">
             <Tabs inkBarStyle={{ backgroundColor: "#fff" }} initialSelectedIndex={ pathToIdx() } >
               <Tab icon={IconsHelper.materialIcon("library_books")} label="EVENTS" className="header-tab" onActive={ gotourl(params.id, "events") } />
@@ -166,3 +166,5 @@ export default class Header extends React.Component {
     );
   }
 }
+
+

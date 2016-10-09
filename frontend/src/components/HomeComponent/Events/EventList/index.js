@@ -38,7 +38,7 @@ import ChildComponent from './EventList';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     actions: bindActionCreators({  }, dispatch),
   };
