@@ -1,4 +1,5 @@
 module.exports = {
+    'port': process.env.PORT,
     'secret': process.env.APP_SECRET,
     'db': {
       'username': process.env.DB_USER_NAME,
