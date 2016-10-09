@@ -9,6 +9,7 @@ var UniCtrl = require('../controllers/UniversityController');
 var AuthCtrl = require('../controllers/AuthenticateController');
 var UserCtrl = require('../controllers/UserController');
 var GroupCtrl = require('../controllers/GroupController');
+var MailCtrl = require('../controllers/MailController');
 
 // Set up token authenticate
 var verifyToken = jwt({secret: config.secret});
@@ -28,6 +29,7 @@ router.get('/me', verifyToken, function(req, res) {
 
 router.get('/user/:id', verifyToken, UserCtrl.getUser);
 router.post('/verificationemail', UserCtrl.createUser);
+router.get('/verify/:token', MailCtrl.verifyToken);
 
 router.get('/country', verifyToken, CountryCtrl.getAllCountries);
 router.get('/country/:id', verifyToken, CountryCtrl.getCountry);
