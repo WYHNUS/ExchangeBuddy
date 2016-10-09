@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import { reduxForm } from 'redux-form';
 
-import { Row, Col } from 'meteor/lifefilm:react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid';
 import MenuItem from 'material-ui/MenuItem';
 import { TextFormField, SelectFormField, AutoCompleteFormField } from '../../Field';
 import NextButton from '../NextButton';
@@ -81,6 +81,10 @@ class Step1 extends React.Component {
       </form>
     );
   }
+}
+
+Step1.propTypes{
+  user:PropTypes.object.isRequired,
 }
 
 

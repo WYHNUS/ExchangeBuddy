@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { composeWithTracker } from 'react-komposer';
 import Loading from '../../Loading';
@@ -13,7 +12,7 @@ import { connect } from 'react-redux';
 import ChildComponent from './Step1';
 
 // react-komposer
-const composer = (props, onData) => {
+/*const composer = (props, onData) => {
   const user = Meteor.user();
 
   const initialValues = {
@@ -33,9 +32,13 @@ const composer = (props, onData) => {
   else
     onData(null, { initialValues });
 
-};
+};*/
 
-const ComposedComponent = composeWithTracker(composer, Loading)(ChildComponent);
+const mapStateToProps = (state) => {
+  return{
+    user:state.user.userObject
+  };
+};
 
 // redux
 const mapDispatchToProps = (dispatch) => {
@@ -44,6 +47,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const Step1 = connect(null, mapDispatchToProps)(ComposedComponent);
+const Step1 = connect(mapStateToProps, mapDispatchToProps)(ChildComponent);
 
 export default Step1;

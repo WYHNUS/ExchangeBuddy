@@ -15,6 +15,8 @@ export function toggleHomeCountry(id){
 	}
 }
 
+
+
 export function fetchHomeMessages(groupId) {
 	const request = axios({
 		method: 'get',

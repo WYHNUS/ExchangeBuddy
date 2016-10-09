@@ -1,13 +1,13 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 
-import { Row, Col } from 'meteor/lifefilm:react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid';
 import MenuItem from 'material-ui/MenuItem';
 import { TextFormField, SelectFormField, AutoCompleteFormField } from '../../Field';
 import NextButton from '../NextButton';
 import ExchangeTermSelect from '../Step2/ExchangeTermSelect';
 
-import { propExistsDeep } from '../../../../util/helper';
+import { propExistsDeep } from '../../../util/helper';
 
 export const fields = [ 'exchangeUniName', 'exchangeUniYear', 'exchangeTerm' ];
 

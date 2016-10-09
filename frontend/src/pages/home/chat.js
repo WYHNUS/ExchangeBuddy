@@ -7,8 +7,8 @@ import { bindActionCreators } from 'redux';
 import { showSnackbar } from '../../actions/messageSnackbar';
 import { pageVisibility } from '../../actions/pageVisibility';
 
-import SubmitForm from '../../components/HomeContainer/Chat/SubmitForm';
-import MessageList from '../../components/HomeContainer/Chat/MessageList';
+import SubmitForm from '../../components/HomeComponent/Chat/SubmitForm';
+import MessageList from '../../components/HomeComponent/Chat/MessageList';
 
 class Chat extends React.Component{
 	render(){
