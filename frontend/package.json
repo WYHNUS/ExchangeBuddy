@@ -7,6 +7,7 @@
     "node": ">=4.5.0",
     "npm": "^3.0.0"
   },
+  "proxy": "http://localhost:3001",
   "scripts": {
     "clean": "rimraf dist",
     "compile": "better-npm-run compile",
@@ -99,6 +100,7 @@
     "css-loader": "^0.25.0",
     "cssnano": "^3.7.4",
     "debug": "^2.2.0",
+    "dotenv": "^2.0.0",
     "extract-text-webpack-plugin": "^1.0.0",
     "facebook-events-by-location-core": "^0.1.4",
     "fast-sha256": "^1.0.0",
@@ -167,9 +169,6 @@
     "yargs": "^5.0.0"
   },
   "devDependencies": {
-    "faker": "^3.1.0",
-    "react-scripts": "0.6.1",
-    "redux-devtools": "^3.3.1",
     "babel-core": "^6.17.0",
     "babel-eslint": "^6.0.0-beta.6",
     "babel-plugin-istanbul": "^2.0.1",
@@ -188,6 +187,8 @@
     "eslint-plugin-react": "^6.0.0",
     "eslint-plugin-standard": "^2.0.0",
     "express": "^4.14.0",
+    "faker": "^3.1.0",
+    "json-loader": "^0.5.4",
     "karma": "^1.0.0",
     "karma-coverage": "^1.0.0",
     "karma-mocha": "^1.0.1",
@@ -198,7 +199,9 @@
     "nodemon": "^1.10.2",
     "phantomjs-prebuilt": "^2.1.12",
     "react-addons-test-utils": "^15.0.0",
+    "react-scripts": "0.6.1",
     "redbox-react": "^1.2.10",
+    "redux-devtools": "^3.3.1",
     "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0",
     "webpack-dev-middleware": "^1.6.1",

@@ -33,6 +33,7 @@ import ChildComponent from './EventList';
   }
 };*/
 
+
 // Redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -43,9 +44,11 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-
+    groupEvents:ownProps.groupEvents,
+    groupId:ownProps.groupId,
+    source: ownProps.source
   };
 };
 
