@@ -54,20 +54,20 @@ const defaultUrl = '../../../../res/user.png';
 var seed = 
 [
 {
-  type: 'user', //user or event
+  type: 'user', //user or eventFB or eventMU
   user: {
     userId: 12341,
-    userName: 'Lee Kai Yi',
+    displayName: 'Lee Kai Yi',
     userAvatarUrl: defaultUrl
   },
   content: 'hello, this is the first msg',
   createdAt: date
 },
 {
-  type: 'event', //user or event
+  type: 'eventFB', //user or event
   user: {
     userId: 12342,
-    userName: 'Yanhao',
+    displayName: 'Yanhao',
     userAvatarUrl: defaultUrl
   },
   content: 'hello, this is the first event',
@@ -86,7 +86,7 @@ var seed =
   type: 'user', //user or event
   user: {
     userId: 123413,
-    userName: 'Hanming',
+    displayName: 'Hanming',
     userAvatarUrl: defaultUrl
   },
   content: 'hello, this is the second msg',

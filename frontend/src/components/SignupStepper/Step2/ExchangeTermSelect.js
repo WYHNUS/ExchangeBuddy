@@ -41,4 +41,5 @@ const ChildComponent = ({ terms }) => {
 //     });
 // };
 
-export default composeWithTracker(composer, <div />)(ChildComponent);
+//export default composeWithTracker(composer, <div />)(ChildComponent);
+export default ChildComponent;
