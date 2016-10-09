@@ -8,7 +8,7 @@ import PrevButton from '../PrevButton';
 
 export const fields = [ 'homeUniEmail' ];
 
-import * as SessionHelper from '../../../../util/session';
+// import * as SessionHelper from '../../../util/session';
 
 let uniEmailDomains;
 
@@ -57,21 +57,21 @@ const validate = (values) => {
   return errors;
 };
 
-const submitForm = (self) => (values) => {
-  const { homeUniEmail } = values;
+// const submitForm = (self) => (values) => {
+//   const { homeUniEmail } = values;
 
-  if (!Meteor.userId())
-    return console.log("Error: Not logged in.");
+//   if (!Meteor.userId())
+//     return console.log("Error: Not logged in.");
 
-  Meteor.call('User.sendVerificationEmail', { userId: Meteor.userId(), homeUniEmail }, (err, result) => {
-    if (err) {
-      return console.log("Error in invoking User.sendVerificationEmail: " + err);
-    } else {
-      SessionHelper.setCurrentUser(); // Required so that Meteor.user() will reflect the new user information
-      self.setState({ emailSent: true });
-    }
-  });
-};
+//   Meteor.call('User.sendVerificationEmail', { userId: Meteor.userId(), homeUniEmail }, (err, result) => {
+//     if (err) {
+//       return console.log("Error in invoking User.sendVerificationEmail: " + err);
+//     } else {
+//       SessionHelper.setCurrentUser(); // Required so that Meteor.user() will reflect the new user information
+//       self.setState({ emailSent: true });
+//     }
+//   });
+// };
 
 class Step3 extends React.Component {
   constructor(props) {
@@ -89,7 +89,7 @@ class Step3 extends React.Component {
     const { user, university, emailDomains } = this.props;
 
     return (
-      <form onSubmit={ handleSubmit(submitForm(this)) }>
+      <form /*onSubmit={ handleSubmit(submitForm(this)) }*/>
 
         <p style={{ fontSize: "15px" }}>To complete your registration, please enter your email address at <strong>{ university.name }</strong>.</p>
         <p style={{ fontSize: "15px" }}>We will be sending a verification email to confirm your place at the university.</p>

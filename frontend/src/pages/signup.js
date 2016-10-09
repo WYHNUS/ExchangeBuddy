@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 
-//import SignupStepper from '../components/SignupStepper';
+import SignupStepper from '../components/SignupStepper';
 /*import * as ImagesHelper from '../../util/images';*/
 
 const Signup = () => (
@@ -11,7 +11,7 @@ const Signup = () => (
     </Col>
     <Col md={5} xs={12} className="signup-right">
       <h1>Complete your profile</h1>
-      {/*<SignupStepper/>*/}
+      {<SignupStepper/>}
     </Col>
   </Row>
 );
