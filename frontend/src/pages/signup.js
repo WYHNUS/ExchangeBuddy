@@ -11,7 +11,7 @@ const Signup = () => (
     </Col>
     <Col md={5} xs={12} className="signup-right">
       <h1>Complete your profile</h1>
-      {/*<SignupStepper />*/}
+      {/*<SignupStepper/>*/}
     </Col>
   </Row>
 );

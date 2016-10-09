@@ -62,6 +62,7 @@ exports.createUser = function(req, res){
               console.log(response.body);
               console.log(response.headers);
             });
+
             res.status(200).send({
                 success: true
             });

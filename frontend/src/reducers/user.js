@@ -6,15 +6,37 @@ import {
   Navigate_Away_From_Auth_Form
 } from '../actions/authActions';
 
+import {
+  UPDATE_USER_PROFILE
+}from '../actions/user';
+
 const initialState = {
   isLoggedIn: false,
   fetchingAuthUpdate: false,
-  userObject: null,
+  userObject: 
+  {
+    email:'',
+    displayName:'',
+    profilePictureId:'',
+    gender:'',
+    bio:'',
+    website:'',
+    birthday:'',
+    fbUserId:'',
+    fbToken:'',
+    fbTokenExpiresAt:'',
+    homeUniId: null
+  },
   error: null
 }
 
 export function user(state = initialState , action) {
   switch (action.type){
+
+    case UPDATE_USER_PROFILE:
+    return Object.assign({}, state, {
+        userObject: {...state.userObject}
+      });
 
     case Started_Session_Check:
     case Clicked_Login:

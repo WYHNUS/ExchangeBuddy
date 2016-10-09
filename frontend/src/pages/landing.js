@@ -5,6 +5,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import RaisedButton from 'material-ui/RaisedButton';
 import landing from '../res/landing.jpg';
+import LoginButton from '../components/LoginButton';
 
 import { connect } from 'react-redux';
 import { toggleBottomBarVisibility } from '../actions/pageVisibility';
@@ -54,6 +55,9 @@ class Landing extends React.Component{
             style={{ maxWidth: 250, margin: '0 auto', height: 50 }}
             labelStyle={{ fontSize: "16px", padding: '0 20px' }} />
         }
+        <div id="login-button">
+            <LoginButton />
+          </div>
 
         <div id="feature-list">
           <div className="row feature-row center-xs">
