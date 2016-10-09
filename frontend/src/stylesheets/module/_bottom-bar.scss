@@ -3,4 +3,17 @@
 	left: 0;
 	bottom: 0;
 	width: 100%;
+
+	> div > button {
+		min-width: 60px !important;
+		pointer-events: all;
+
+		> div > span {
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+	}
+
 }
