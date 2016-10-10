@@ -4,16 +4,46 @@ import Loading from '../../../Loading';
 import {AutoCompleteFormField} from '../../../Field';
 
 
+var owngroups = 
+[
+{
+	name: 'KTH Royal Institute of Technology exchange students -- Spring 2016',
+	id: '1',
+	groupType: 0
+},
+{
+	name: 'National University of Singapore going abroad -- Spring 2016',
+	id: '2',
+	groupType: 1
+}, 
+{
+	name: 'National University of Singapore students in KTH Royal Institute of Technology',
+	id: '3',
+	groupType: 2
+},
+{
+	name: 'NCST Batch 32',
+	id: '4',
+	groupType: 3
+}
+
+]
+
 export default class SearchBar extends React.Component {
 	render() {
 		return(
 			<div>
 			SearchBar
-			{/*<AutoCompleteFormField/>*/}
+			
 			</div>
 			);
 	}
 }
+//dataSource={groups.map((group)=>group.name)
+/*<AutoCompleteFormField
+			name="groupSearch"
+			openOnFocus={false}
+			/>*/
 
 SearchBar.PropTypes={
 	toggleHomeGroupUniversitySearchList: PropTypes.func.isRequired

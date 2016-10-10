@@ -23,23 +23,16 @@ const Search = React.createClass({
 			disableSwipeToOpen={false}
 			docked={false} 
 			onRequestChange={(open) => this.props.toggleHomeSearchDrawerVisibility(open)}>
-			
-			<Grid>
-			<Row>
-			<Col xs={12}>
 
-			<Row center="xs">
-			<Col xs={10}>
+			<div className="row center-xs">
 			<SearchBar/>
+			</div>
+			<div className="row center-xs">
 			<GroupList/>
+			</div>
+			<div className="row center-xs">
 			<UniversitySearchList/>
-
-			</Col>
-			</Row>
-
-			</Col>
-			</Row>
-			</Grid>
+			</div>
 
 			
 
