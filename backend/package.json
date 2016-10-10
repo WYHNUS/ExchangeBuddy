@@ -24,6 +24,8 @@
     "rand-token": "^0.2.1",
     "sendgrid": "^4.5.0",
     "sequelize": "^3.24.3",
-    "sequelize-cli": "^2.4.0"
+    "sequelize-cli": "^2.4.0",
+    "socket.io": "^1.5.0",
+    "socketio-jwt": "^4.5.0"
   }
 }
