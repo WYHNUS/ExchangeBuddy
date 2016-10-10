@@ -6,7 +6,7 @@ const PrevButton = (props) => (
     label="Back"
     disableTouchRipple={true}
     disableFocusRipple={true}
-    onTouchTap={this.handlePrev}
+    onTouchTap={props.handlePrev}
     style={{ margin: 6 }}
     {...props} />
 );

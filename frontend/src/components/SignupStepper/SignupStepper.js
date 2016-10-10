@@ -12,8 +12,8 @@ export default class SignupStepper extends React.Component {
 
     this.state = {
       finished: false,
-      // stepIndex: 0,
-      stepIndex: 1,
+      stepIndex: 0,
+      // stepIndex: 1,
     };
   }
 

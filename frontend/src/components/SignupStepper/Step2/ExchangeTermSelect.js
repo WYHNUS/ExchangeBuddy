@@ -1,6 +1,6 @@
 // import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import { composeWithTracker } from 'react-komposer';
+import { composeWithPromise } from 'react-komposer';
 import Loading from '../../Loading';
 
 import { SelectFormField } from '../../Field';
@@ -18,6 +18,16 @@ const ChildComponent = ({ terms }) => {
   else
     return null;
 };
+
+const getExchangeTerms = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve([ 'Fall', 'Spring' ]), 2000);
+  })
+}
+
+const composer = (props) => {
+  return getExchangeTerms()
+}
 
 // const composer = (props, onData) => {
 //   const user = Meteor.user();
@@ -41,5 +51,4 @@ const ChildComponent = ({ terms }) => {
 //     });
 // };
 
-//export default composeWithTracker(composer, <div />)(ChildComponent);
-export default ChildComponent;
+export default composeWithPromise(composer)(ChildComponent);

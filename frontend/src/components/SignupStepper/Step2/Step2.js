@@ -50,6 +50,11 @@ const filter = (searchText, key) => {
 };
 
 class Step2 extends React.Component {
+  submitForm (val, props) {
+    console.log(val);
+    props.handleNext();
+  }
+
   render() {
     const { universities, handleNext, handlePrev, handleSubmit, submitting, formState } = this.props;
 
@@ -64,8 +69,9 @@ class Step2 extends React.Component {
     const uniName = propExistsDeep(formState, [ 'signupStep2', 'values', 'exchangeUniName' ]) && formState.signupStep2.values.exchangeUniName;
 
     return (
-      <form /*onSubmit={ handleSubmit(saveForm(handleNext)) }*/>
-
+      <form onSubmit={ handleSubmit((values) => {
+        this.submitForm(values, this.props)
+      }) }>
         <AutoCompleteFormField
           id="exchangeUniName"
           name="exchangeUniName"
