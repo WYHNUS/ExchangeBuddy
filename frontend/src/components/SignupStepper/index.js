@@ -33,20 +33,21 @@ import { fetchAllUniversities, fetchAllUniversitiesSuccess, fetchAllUniversities
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
-    fetchAllUniversities:()=>{
-      var response = dispatch(fetchAllUniversities());
-      if (!response.error) {
-        dispatch(fetchAllUniversitiesSuccess(response.payload));
-      } else {
-        dispatch(fetchAllUniversitiesFailure(response.payload));
-      }
+    fetchAllUniversities: () => {
+      dispatch(fetchAllUniversities()).payload.then((response) => {
+        if (!response.error) {
+          dispatch(fetchAllUniversitiesSuccess(response.data));
+        } else {
+          dispatch(fetchAllUniversitiesFailure(response.error));
+        }
+      });
     }
   };
 };
 
 const mapStateToProps = (state) => {
   return {
-    universities: []
+    universitiesList: state.utilityInfo.universitiesList
   };
 };
 

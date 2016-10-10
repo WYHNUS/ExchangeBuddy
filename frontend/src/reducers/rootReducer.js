@@ -9,6 +9,7 @@ import { switchGroupDialogOpen } from './switchGroupDialog';
 import { pageVisibility } from './pageVisibility';
 import { home } from './home';
 import { user } from './user';
+import { utilityInfo } from './utilityInfo';
 
 const rootReducer = combineReducers({
   messageSnackbar,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   pageVisibility,
   home,
   user,
+  utilityInfo,
 
   // Add routerReducer
   routing: routerReducer,

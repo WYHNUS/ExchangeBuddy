@@ -40,38 +40,43 @@ export default class SignupStepper extends React.Component {
   }
 
   render() {
-    const { universities } = this.props;
+    const { universities, error, loading } = this.props.universitiesList;
+
+    if (loading) {
+      return <div>Loading</div>
+    }
+
     return (
-      <Stepper activeStep={ this.state.stepIndex } orientation="vertical">
-        <Step>
-          <StepLabel>Complete your profile</StepLabel>
-          <StepContent>
-            <Step1
-              handleNext={ this.handleNext.bind(this) }
-              universities={ this.props.universities } />
-          </StepContent>
-        </Step>
-        <Step>
-          <StepLabel>Select your exchange university</StepLabel>
-          <StepContent>
-            <Step2
-              handlePrev={ this.handlePrev.bind(this) }
-              handleNext={ this.handleNext.bind(this) }
-              universities={ this.props.universities } />
-          </StepContent>
-        </Step>
-        <Step>
-          <StepLabel>Verify your email</StepLabel>
-          <StepContent>
-            <Step3
-              handlePrev={ this.handlePrev.bind(this) } />
-          </StepContent>
-        </Step>
-      </Stepper>
+        <Stepper activeStep={ this.state.stepIndex } orientation="vertical">
+          <Step>
+            <StepLabel>Complete your profile</StepLabel>
+            <StepContent>
+              <Step1
+                handleNext={ this.handleNext.bind(this) }
+                universities={ this.props.universitiesList.universities } />
+            </StepContent>
+          </Step>
+          <Step>
+            <StepLabel>Select your exchange university</StepLabel>
+            <StepContent>
+              <Step2
+                handlePrev={ this.handlePrev.bind(this) }
+                handleNext={ this.handleNext.bind(this) }
+                universities={ this.props.universitiesList.universities } />
+            </StepContent>
+          </Step>
+          <Step>
+            <StepLabel>Verify your email</StepLabel>
+            <StepContent>
+              <Step3
+                handlePrev={ this.handlePrev.bind(this) } />
+            </StepContent>
+          </Step>
+        </Stepper>
     );
   }
 }
 
 SignupStepper.propTypes = {
-  universities: PropTypes.array.isRequired
+  universitiesList: PropTypes.object.isRequired
 }

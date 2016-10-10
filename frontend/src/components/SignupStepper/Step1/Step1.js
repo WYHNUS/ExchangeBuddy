@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 
 import { Row, Col } from 'react-flexbox-grid';
@@ -51,7 +51,7 @@ class Step1 extends React.Component {
   render() {
     const { universities, fields: { displayName, gender, homeUniName }, handleNext, handleSubmit, submitting } = this.props;
     universitiesProps = universities;
-
+    
     return (
       <form /*onSubmit={ handleSubmit(saveForm(handleNext)) }*/>
         <Row>
@@ -82,8 +82,8 @@ class Step1 extends React.Component {
   }
 }
 
-// Step1.propTypes{
-//   user:PropTypes.object.isRequired,
+// Step1.propTypes {
+//   user:PropTypes.object.isRequired
 // }
 
 // Decorate with redux-form
