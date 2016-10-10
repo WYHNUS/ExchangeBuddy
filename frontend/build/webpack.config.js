@@ -112,7 +112,7 @@ const BASE_CSS_LOADER = 'css?sourceMap&-minimize'
 
 webpackConfig.module.loaders.push({
   test    : /\.scss$/,
-  exclude : null,
+  exclude : /flexboxgrid/,
   loaders : [
     'style',
     BASE_CSS_LOADER,
@@ -122,12 +122,17 @@ webpackConfig.module.loaders.push({
 })
 webpackConfig.module.loaders.push({
   test    : /\.css$/,
-  exclude : null,
+  exclude : /flexboxgrid/,
   loaders : [
     'style',
     BASE_CSS_LOADER,
     'postcss'
   ]
+})
+webpackConfig.module.loaders.push({
+  test: /\.css$/,
+  loader: 'style!css?modules',
+  include: /flexboxgrid/,
 })
 
 webpackConfig.sassLoader = {

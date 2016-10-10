@@ -8,14 +8,14 @@ import MessageSnackbar from '../components/MessageSnackbar';
 import { makeRouteSlug } from '../util/helper';
 import BottomBar from '../components/BottomBar';
 import TopBar from '../components/TopBar';
-import Drawer from 'material-ui/Drawer';
 import '../stylesheets/application.scss';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { resizeBrowserWindow } from '../actions/browser';
-import {toggleHomeSearchDrawerVisibility} from '../actions/pageVisibility';
+
+import Search from '../pages/home/search';
 
 class App extends React.Component{
 
@@ -49,15 +49,7 @@ class App extends React.Component{
 					{ this.props.children }
 					</div>
 
-					<Drawer 
-					width={200} 
-					openSecondary={true} 
-					open={this.props.homeSearchDrawerOpen}
-					disableSwipeToOpen={false}
-					docked={false} 
-					onRequestChange={(open) => this.props.toggleHomeSearchDrawerVisibility(open)}>
-					</Drawer>
-
+					<Search/>
 					
 
 					</div>
@@ -73,14 +65,12 @@ class App extends React.Component{
 
 const mapStateToProps = (state)=>{
   return {
-    homeSearchDrawerOpen: state.pageVisibility.homeSearchDrawerOpen
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		actions: bindActionCreators({ resizeBrowserWindow }, dispatch),
-		toggleHomeSearchDrawerVisibility: visibility=>dispatch(toggleHomeSearchDrawerVisibility(visibility))
+		actions: bindActionCreators({ resizeBrowserWindow }, dispatch)
 	};
 };
 

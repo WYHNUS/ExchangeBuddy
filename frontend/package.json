@@ -7,7 +7,9 @@
     "node": ">=4.5.0",
     "npm": "^3.0.0"
   },
-  "browser": { "fs": false },
+  "browser": {
+    "fs": false
+  },
   "proxy": "http://localhost:3001",
   "scripts": {
     "clean": "rimraf dist",
@@ -150,6 +152,7 @@
     "react-redux": "^4.4.5",
     "react-router": "^2.8.0",
     "react-router-redux": "^4.0.5",
+    "react-search-input": "^0.10.3",
     "react-slick": "^0.13.0",
     "react-tap-event-plugin": "^1.0.0",
     "redux": "^3.5.2",
