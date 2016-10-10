@@ -20,6 +20,7 @@ export const fields = [ 'displayName', 'gender', 'homeUniName' ];
 //     });
 //   };
 // };
+
 let universitiesProps;
 const validate = values => {
   const errors = {};
@@ -47,13 +48,21 @@ const filter = (searchText, key) => {
   );
 };
 
+
 class Step1 extends React.Component {
+  submitForm (val, props) {
+    console.log(val);
+    props.handleNext();
+  }
+
   render() {
     const { universities, fields: { displayName, gender, homeUniName }, handleNext, handleSubmit, submitting } = this.props;
     universitiesProps = universities;
     
     return (
-      <form /*onSubmit={ handleSubmit(saveForm(handleNext)) }*/>
+      <form onSubmit={ handleSubmit((values) => {
+        this.submitForm(values, this.props)
+      }) }>
         <Row>
           <Col xs={12}>
             <TextFormField name="displayName" floatingLabelText="Your name" {...displayName} />
@@ -89,5 +98,6 @@ class Step1 extends React.Component {
 // Decorate with redux-form
 export default reduxForm({
   form: 'signupStep1',
+  fields: ['displayName', 'gender', 'homeUniName'],
   validate, fields
 })(Step1);
