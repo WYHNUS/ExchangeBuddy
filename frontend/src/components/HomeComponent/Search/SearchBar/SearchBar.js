@@ -7,22 +7,22 @@ import {AutoCompleteFormField} from '../../../Field';
 var owngroups = 
 [
 {
-	name: 'KTH Royal Institute of Technology exchange students -- Spring 2016',
+	name: 'Waseda University exchange students -- Spring 2016',
 	id: '1',
 	groupType: 0
 },
 {
-	name: 'National University of Singapore going abroad -- Spring 2016',
+	name: 'National Technological University students going abroad -- Spring 2016',
 	id: '2',
 	groupType: 1
 }, 
 {
-	name: 'National University of Singapore students in KTH Royal Institute of Technology',
+	name: 'National Technological University students in KTH Royal Institute of Technology',
 	id: '3',
 	groupType: 2
 },
 {
-	name: 'NCST Batch 32',
+	name: 'Japan Internship -- Spring 2016',
 	id: '4',
 	groupType: 3
 }

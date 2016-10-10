@@ -17,12 +17,18 @@ var owngroups =
 	name: 'National University of Singapore going abroad -- Spring 2016',
 	id: '2',
 	groupType: 1
-},
+}, 
 {
 	name: 'National University of Singapore students in KTH Royal Institute of Technology',
 	id: '3',
 	groupType: 2
+},
+{
+	name: 'NCST Batch 32',
+	id: '4',
+	groupType: 3
 }
+
 ]
 
 const mapDispatchToProps = (dispatch, ownProps) => {

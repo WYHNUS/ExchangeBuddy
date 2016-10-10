@@ -17,7 +17,8 @@ const Search = React.createClass({
 	render(){
 		return(
 			<Drawer 
-			width={200} 
+			className="groupSearchLayout"
+			width={window.innerWidth/3*2} 
 			openSecondary={true} 
 			open={this.props.homeSearchDrawerOpen}
 			disableSwipeToOpen={false}
