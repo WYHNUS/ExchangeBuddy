@@ -6,7 +6,7 @@ import ChildComponent from './SearchBar';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import {toggleHomeGroupUniversitySearchList} from '../../../../actions/homeSearchGroups'
+import {toggleHomeGroupUniversitySearchList} from '../../../../actions/pageVisibility'
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {

@@ -6,7 +6,11 @@ import ChildComponent from './GroupList';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-var owngroups = 
+import {toggleHomeSearchDrawerVisibility} from '../../../../actions/pageVisibility';
+import {toggleSelectedHomeGroup} from '../../../../actions/home';
+import {toggleHomeTab} from '../../../../actions/home';
+
+/*var owngroups = 
 [
 {
 	name: 'KTH Royal Institute of Technology exchange students -- Spring 2016',
@@ -28,20 +32,23 @@ var owngroups =
 	id: '4',
 	groupType: 3
 }
-
-]
+]*/
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    actions: bindActionCreators({  }, dispatch),
-  };
+	return {
+		actions: bindActionCreators({  }, dispatch),
+		toggleHomeSearchDrawerVisibility: visibility=>dispatch(toggleHomeSearchDrawerVisibility(visibility)),
+		toggleSelectedHomeGroup: index=>dispatch(toggleSelectedHomeGroup(index)),
+		toggleHomeTab: tabValue=>dispatch(toggleHomeTab(tabValue))
+	};
 };
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-  	user: state.user.userObject,
-  	groups: owngroups
-  };
+	return {
+		user: state.user.userObject,
+		groups: state.home.homeGroups.homeGroups,
+		homeGroups: state.home.homeGroups
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChildComponent);

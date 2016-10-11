@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 
 // Action creators
 import { showSnackbar } from '../../actions/messageSnackbar';
+import {toggleHomeTab} from '../../actions/home';
 //import { openSwitchGroupDialog } from '../../actions/switchGroupDialog';
 
 // Component
@@ -16,16 +17,18 @@ import ChildComponent from './Header';
 
 
 const mapStateToProps = (state)=>{
-  return {
-    params: state.home.homeCountry,
-    tab: state.home.homeCountry
-  };
+	return {
+		params: state.home.homeGroupDetails.homeGroupDetails,
+		homeTabValue: state.home.homeTabValue,
+		homeGroupDetails: state.home.homeGroupDetails 
+	}
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    actions: bindActionCreators({ showSnackbar }, dispatch),
-  };
+	return {
+		actions: bindActionCreators({ showSnackbar }, dispatch),
+		toggleHomeTab:tab=>dispatch(toggleHomeTab(tab))
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChildComponent);

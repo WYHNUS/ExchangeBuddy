@@ -6,13 +6,20 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { showSnackbar } from '../../actions/messageSnackbar';
 import { pageVisibility } from '../../actions/pageVisibility';
+import MemberList from '../../components/HomeComponent/Friends/MemberList';
 
 
-const Friends =()=>(
-	<div>
-	Home friends page
-	</div>
-);
+class Friends extends React.Component{
+
+	render(){
+		return(
+		<Grid>
+		<div className="friends-container">
+		<MemberList groupId={ parseInt(this.props.params.id) }/>
+		</div>
+		</Grid>);
+	}
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -20,4 +27,10 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Friends);
+const mapStateToProps = (state)=>{
+	return {
+		params: state.home.homeGroupDetails.homeGroupDetails
+	};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Friends);

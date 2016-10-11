@@ -1,4 +1,5 @@
-export const TOGGLE_HOME_COUNTRY = 'TOGGLE_HOME_COUNTRY'
+export const TOGGLE_SELECTED_HOME_GROUP = 'TOGGLE_SELECTED_HOME_GROUP';
+export const TOGGLE_HOME_TAB = 'TOGGLE_HOME_TAB';
 
 //api for fetching fb events
 export const FETCH_FB_EVENTS = 'FETCH_FB_EVENTS';
@@ -20,6 +21,11 @@ export const RESET_HOME_MESSAGES = 'RESET_HOME_MESSAGES';
 
 const ROOT_URL = 'https://exchangebuddy.com';
 //import EventSearch from "facebook-events-by-location-core";	
+
+/************************************************************
+FETCHING FB EVENTS OF A GROUP
+************************************************************/
+
 
 export function fetchFbEvents(countryCode, uniLatLng){
 	/*var es = new EventSearch({
@@ -59,6 +65,11 @@ export function resetFbEvents(){
 	}
 }
 
+
+/************************************************************
+FETCHING MU EVENTS OF A GROUP
+************************************************************/
+
 export function fetchMuEvents(){
 
 }
@@ -75,14 +86,9 @@ export function resetMuEvents(){
 
 }
 
-
-export function toggleHomeCountry(id){
-	return{
-		type: TOGGLE_HOME_COUNTRY,
-		id
-	}
-}
-
+/************************************************************
+FETCHING HOME MESSAGES OF A GROUP
+************************************************************/
 
 
 export function fetchHomeMessages(groupId) {
@@ -115,5 +121,27 @@ export function fetchHomeMessagesError(error) {
 export function resetHomeMessages(){
 	return{
 		type: RESET_HOME_MESSAGES
+	}
+}
+
+
+/************************************************************
+TOGGLING BETWEEN GROUPS
+************************************************************/
+
+export function toggleSelectedHomeGroup(index){
+	return{
+		type: TOGGLE_SELECTED_HOME_GROUP,
+		index
+	}
+}
+
+/************************************************************
+TOGGLING HOME TAB
+************************************************************/
+export function toggleHomeTab(tabValue){
+	return{
+		type: TOGGLE_HOME_TAB,
+		tabValue
 	}
 }
