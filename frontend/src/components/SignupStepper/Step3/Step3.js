@@ -77,21 +77,28 @@ class Step3 extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      emailSent: false
-    };
+    // this.state = {
+    //   emailSent: false
+    // };
+  }
+
+  submitForm (val, props) {
+    props.saveData(val);
   }
 
   render() {
     uniEmailDomains = this.props.emailDomains;
 
-    const { handlePrev, handleSubmit, submitting } = this.props;
-    const { user, university, emailDomains } = this.props;
+    const { saveData, handlePrev, handleSubmit, submitting } = this.props;
+    const { user, universityName, emailDomains } = this.props;
+    const { isEmailSent, fetching, authEmailError } = this.props;
 
     return (
-      <form /*onSubmit={ handleSubmit(submitForm(this)) }*/>
+      <form onSubmit={ handleSubmit((values) => {
+        this.submitForm(values, this.props)
+      }) }>
 
-        <p style={{ fontSize: "15px" }}>To complete your registration, please enter your email address at <strong>{ university.name }</strong>.</p>
+        <p style={{ fontSize: "15px" }}>To complete your registration, please enter your email address at <strong>{ universityName }</strong>.</p>
         <p style={{ fontSize: "15px" }}>We will be sending a verification email to confirm your place at the university.</p>
 
         { emailDomains ?
@@ -103,7 +110,7 @@ class Step3 extends React.Component {
           name="homeUniEmail"
           floatingLabelText="Your university email address" />
 
-        { this.state.emailSent ? <p>Verification email sent!</p> : null }
+        { this.props.isEmailSent ? <p>Verification email sent!</p> : null }
 
         <div style={{ marginTop: 12 }}>
           <NextButton label="Send verification email" disabled={submitting} />

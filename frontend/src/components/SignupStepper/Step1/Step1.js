@@ -58,7 +58,7 @@ class Step1 extends React.Component {
   render() {
     const { universities, fields: { displayName, gender, homeUniName }, saveData, handleNext, handleSubmit, submitting } = this.props;
     universitiesProps = universities;
-    
+
     return (
       <form onSubmit={ handleSubmit((values) => {
         this.submitForm(values, this.props)

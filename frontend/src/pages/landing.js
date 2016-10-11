@@ -57,8 +57,8 @@ class Landing extends React.Component{
             labelStyle={{ fontSize: "16px", padding: '0 20px' }} />
         }
         <div id="login-button">
-            <LoginButton />
-          </div>
+          <LoginButton />
+        </div>
 
         <div id="feature-list">
           <div className="row feature-row center-xs">
