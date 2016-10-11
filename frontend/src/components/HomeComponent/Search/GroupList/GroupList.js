@@ -6,7 +6,7 @@ import IconButton from 'material-ui/IconButton';
 import * as Colors from 'material-ui/styles/colors';
 import { List, ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
-import imageUrl from '../../../../res/user.png';
+import imageUrl from '../../../../res/kth.svg';
 
 const GroupItem = ({ name, heading }) => {
   const goToGroup = () => { browserHistory.push(`/group/${group.id}`); handleClose(); };
