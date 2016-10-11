@@ -138,7 +138,7 @@ exports.createUser = function(req, res){
                     // should sent a confirmation email here
                     MailCtrl.sendVerificationEmail(user);
 
-                    res.status(200)
+                    res.status(201)
                         .json({
                             success: true,
                             message: 'Callback Hell reaches to the end.'
