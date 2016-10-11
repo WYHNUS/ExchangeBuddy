@@ -6,6 +6,8 @@ import ChildComponent from './GroupList';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import {toggleHomeSearchDrawerVisibility} from '../../../../actions/pageVisibility';
+
 var owngroups = 
 [
 {
@@ -32,16 +34,17 @@ var owngroups =
 ]
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    actions: bindActionCreators({  }, dispatch),
-  };
+	return {
+		actions: bindActionCreators({  }, dispatch),
+		toggleHomeSearchDrawerVisibility: visibility=>dispatch(toggleHomeSearchDrawerVisibility(visibility))
+	};
 };
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-  	user: state.user.userObject,
-  	groups: owngroups
-  };
+	return {
+		user: state.user.userObject,
+		groups: owngroups
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChildComponent);

@@ -25,6 +25,7 @@ const gotourl = (groupId, tab) => () => {
 };
 
 const tabToIdx = tab => {
+  console.log(tab,'tab');
   switch(tab) {
     case 'events':
       return 0;
@@ -38,6 +39,7 @@ const tabToIdx = tab => {
 }
 
 const pathToIdx = () =>{
+  
   var pathArray = window.location.pathname.split("/");
   var path;
   if(pathArray.length>3){
@@ -45,6 +47,7 @@ const pathToIdx = () =>{
   }else{
     path='events';
   }
+  console.log(path);
   return tabToIdx(path);
 }
 
@@ -76,6 +79,7 @@ export default class Header extends React.Component {
     this.state = {
       loadingFile: false,
       bgImageId: null,
+      value: 'chat'
     };
   }
 
@@ -118,6 +122,13 @@ export default class Header extends React.Component {
     $(window).off('scroll', eventHandleScroll);
   }*/
 
+  handleChange = (value) => {
+    console.log(value);
+    this.setState({
+      value: value,
+    });
+  };
+
   render() {
     const { user, uni, group, actions, params, tab } = this.props;
     //params=221241432;
@@ -154,10 +165,10 @@ export default class Header extends React.Component {
         <Grid>
           <div className="row center-xs center-md" >{/*id="header-tab-row"*/}
             <Col xs={12} md={8} id="header-tab-col">
-            <Tabs inkBarStyle={{ backgroundColor: "#fff" }} initialSelectedIndex={ pathToIdx() } >
-              <Tab icon={IconsHelper.materialIcon("library_books")} label="EVENTS" className="header-tab" onActive={ gotourl(params.id, "events") } />
-              <Tab icon={IconsHelper.materialIcon("chat")} label="CHAT" className="header-tab" onActive={ gotourl(params.id, "chat") } />
-              <Tab icon={IconsHelper.materialIcon("people")} label="FRIENDS" className="header-tab" onActive={ gotourl(params.id, "friends") } />
+            <Tabs inkBarStyle={{ backgroundColor: "#fff" }}  initialSelectedIndex={ pathToIdx() } >
+              <Tab value='event' icon={IconsHelper.materialIcon("library_books")} label="EVENTS" className="header-tab" onActive={ gotourl(params.id, "events") } />
+              <Tab value='chat' icon={IconsHelper.materialIcon("chat")} label="CHAT" className="header-tab" onActive={ gotourl(params.id, "chat") } />
+              <Tab value='friends' icon={IconsHelper.materialIcon("people")} label="FRIENDS" className="header-tab" onActive={ gotourl(params.id, "friends") } />
             </Tabs>
             </Col>
           </div>
@@ -167,4 +178,6 @@ export default class Header extends React.Component {
   }
 }
 
+/*
 
+value={this.props.value} onChange={this.handleChange}*/
