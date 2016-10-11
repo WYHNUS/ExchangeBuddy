@@ -51,12 +51,12 @@ const filter = (searchText, key) => {
 
 class Step2 extends React.Component {
   submitForm (val, props) {
-    console.log(val);
     props.handleNext();
+    props.saveData(val);
   }
 
   render() {
-    const { universities, handleNext, handlePrev, handleSubmit, submitting, formState } = this.props;
+    const { universities, saveData, handleNext, handlePrev, handleSubmit, submitting, formState } = this.props;
 
     // Year of exchange
     const year = new Date().getFullYear();

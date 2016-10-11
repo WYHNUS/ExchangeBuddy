@@ -12,8 +12,15 @@ export default class SignupStepper extends React.Component {
 
     this.state = {
       finished: false,
-      // stepIndex: 0,
-      stepIndex: 2,
+      stepIndex: 0,
+      // stepIndex: 2,
+      displayName: null,
+      gender: null, 
+      homeUniName: null,
+      exchangeUniName: null,
+      exchangeUniYear: null,
+      exchangeUniName: null,
+      exchangeTerm: null,
     };
   }
 
@@ -32,6 +39,29 @@ export default class SignupStepper extends React.Component {
     if (stepIndex > 0) {
       this.setState({ stepIndex: stepIndex - 1 });
     }
+  }
+
+  saveData(callback, data) {
+    console.log(data);
+    if (!!data.displayName) {
+      this.state.displayName = data.displayName;
+    }
+    if (!!data.gender) {
+      this.state.gender = data.gender;
+    }
+    if (!!data.homeUniName) {
+      this.state.homeUniName = data.homeUniName;
+    }
+    if (!!data.exchangeUniName) {
+      this.state.exchangeUniName = data.exchangeUniName;
+    }
+    if (!!data.exchangeUniYear) {
+      this.state.exchangeUniYear = data.exchangeUniYear;
+    }
+    if (!!data.exchangeTerm) {
+      this.state.exchangeTerm = data.exchangeTerm;
+    }
+    console.log(this.state);
   }
 
   componentDidMount() {
@@ -53,6 +83,7 @@ export default class SignupStepper extends React.Component {
             <StepLabel>Complete your profile</StepLabel>
             <StepContent>
               <Step1
+                saveData = { this.saveData.bind(this, null) }
                 handleNext={ this.handleNext.bind(this) }
                 universities={ this.props.universitiesList.universities } />
             </StepContent>
@@ -61,6 +92,7 @@ export default class SignupStepper extends React.Component {
             <StepLabel>Select your exchange university</StepLabel>
             <StepContent>
               <Step2
+                saveData = { this.saveData.bind(this, null) }
                 handlePrev={ this.handlePrev.bind(this) }
                 handleNext={ this.handleNext.bind(this) }
                 universities={ this.props.universitiesList.universities } />
