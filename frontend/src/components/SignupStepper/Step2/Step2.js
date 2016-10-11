@@ -6,7 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 import { TextFormField, SelectFormField, AutoCompleteFormField } from '../../Field';
 import PrevButton from '../PrevButton';
 import NextButton from '../NextButton';
-import ExchangeTermSelect from './ExchangeTermSelect';
+import ExchangeTermSelect from '../ExchangeTermSelect';
 
 import { propExistsDeep } from '../../../util/helper';
 
