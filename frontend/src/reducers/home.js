@@ -1,7 +1,7 @@
 import {TOGGLE_SELECTED_HOME_GROUP,FETCH_HOME_MESSAGES,FETCH_HOME_MESSAGES_SUCCESS,
 	FETCH_HOME_MESSAGES_FAILURE,RESET_HOME_MESSAGES,
 	FETCH_FB_EVENTS, FETCH_FB_EVENTS_SUCCESS,
-	FETCH_FB_EVENTS_FAILURE, RESET_FB_EVENTS} from '../actions/home';
+	FETCH_FB_EVENTS_FAILURE, RESET_FB_EVENTS, TOGGLE_HOME_TAB} from '../actions/home';
 
 	const homeGroups=
 	[
@@ -80,7 +80,8 @@ import {TOGGLE_SELECTED_HOME_GROUP,FETCH_HOME_MESSAGES,FETCH_HOME_MESSAGES_SUCCE
 		homeGroupDetails:{homeGroupDetails:homeGroupDetails,error:null,loading:false},
 		homeEvents:{homeEvents:[],error:null,loading:false},
 		homeMessages:{homeMessages:[],error:null,loading:false},
-		homeFriends:{homeFriends:homeFriends,error:null,loading:false}
+		homeFriends:{homeFriends:homeFriends,error:null,loading:false},
+		homeTabValue:'events'
 	}
 
 
@@ -89,11 +90,14 @@ import {TOGGLE_SELECTED_HOME_GROUP,FETCH_HOME_MESSAGES,FETCH_HOME_MESSAGES_SUCCE
 		let error;
 
 		switch (action.type) {
+			case TOGGLE_HOME_TAB:
+			return {...state, homeTabValue:action.tabValue}
 
 			case TOGGLE_SELECTED_HOME_GROUP:
 			return {...state, 
 				homeGroups: {...state.homeGroups,selected:action.index},
 				homeGroupDetails:{...state.homeGroupDetails, homeGroupDetails:state.homeGroups.homeGroups[action.index]}}
+
 
 				case FETCH_HOME_MESSAGES:
 				return {...state, homeMessages: {homeMessages:[], error: null, loading: true}};

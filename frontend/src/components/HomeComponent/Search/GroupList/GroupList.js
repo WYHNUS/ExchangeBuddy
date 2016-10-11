@@ -9,79 +9,72 @@ import Avatar from 'material-ui/Avatar';
 import imageUrl from '../../../../res/kth.svg';
 import { browserHistory } from 'react-router';
 
-const handleClose=()=>{
 
-}
+class GroupItem extends React.Component {
+  render(){
+    const {group, heading, toggleHomeTab, toggleSelectedHomeGroup, toggleHomeSearchDrawerVisibility} = this.props;
 
-const GroupItem = ({ group, heading, handleClose, toggleSelectedHomeGroup }) => {
-  const goToGroup = () => { 
-    browserHistory.push(`/home/${group.id}`); 
-    toggleSelectedHomeGroup(group.groupType);
-    handleClose(false); 
-  };
-
-  return (
-    <div className="group-body">
+    const goToGroup = () => { 
+      browserHistory.push(`/home/${group.id}`); 
+      toggleSelectedHomeGroup(group.groupType);
+      toggleHomeTab('events');
+      toggleHomeSearchDrawerVisibility(false); 
+    };
+    return (
+      <div className="group-body">
       <h5 className="group-heading">{heading}</h5>
       <ListItem
       primaryText={group.name}
       leftAvatar={<Avatar src={ imageUrl } size={ 40 } style={{ objectFit: 'contain', backgroundColor: '#fff'}}/>}
       onTouchTap={goToGroup}
       />
-    </div>
-  );
-};
+      </div>
+      );
+  }
+}
 
-
-
-const Group = ({ group, currentUser, handleClose, toggleSelectedHomeGroup }) => {
-  const { groupType } = group;
-//onTouchTap={/* this.openPopover.bind(this) */} 
+class Group extends React.Component {
+  render(){
+    const { groupType } = this.props.group;
     const bSize = 60;
     const cSize = 60;
     var uni = "";
-
-  return (
-    <div>
+    return (
+      <div>
       <div className="group-row">
-        {
-          groupType === 0 ? <GroupItem group={group} toggleSelectedHomeGroup={toggleSelectedHomeGroup} 
-          handleClose={handleClose} heading={"Your Exchange University Group"} />
-        : groupType === 1 ? <GroupItem group={group} toggleSelectedHomeGroup={toggleSelectedHomeGroup}
-          handleClose={handleClose} heading={"Your Home University Group"}/>
-        : groupType === 2 ? <GroupItem group={group} toggleSelectedHomeGroup={toggleSelectedHomeGroup} 
-          handleClose={handleClose} heading={"Your Home University Alumni Support Group"}/>
-        : groupType === 3 ? <GroupItem group={group} toggleSelectedHomeGroup={toggleSelectedHomeGroup} 
-          handleClose={handleClose} heading={"Your Special Group"}/>
+      {
+        groupType === 0 ? <GroupItem {...this.props} heading={"Your Exchange University Group"} />
+        : groupType === 1 ? <GroupItem {...this.props} heading={"Your Home University Group"}/>
+        : groupType === 2 ? <GroupItem {...this.props} heading={"Your Home University Alumni Support Group"}/>
+        : groupType === 3 ? <GroupItem {...this.props} heading={"Your Special Group"}/>
         : null
-        }
+      }
       </div>
-    </div>
-  )
-};
-
-/*<IconButton id="header-logo" style={{ width: bSize, height: bSize, padding: 0 }}>
-          { UniversityHelper.getImage(uni, bSize) }
-        </IconButton>*/
+      </div>
+      );
+  }
+}
 
 
 export default class GroupList extends React.Component {
 
-	render() {
-		const {groups, user, toggleHomeSearchDrawerVisibility, toggleSelectedHomeGroup} = this.props;
-		return(
-			<List className="groups-container">
-			{ groups.length > 0 && groups.map((group, idx) => 
-        <Group group={ group } currentUser={ user } key={ idx } 
-        handleClose={toggleHomeSearchDrawerVisibility} toggleSelectedHomeGroup={toggleSelectedHomeGroup} />) }
-			</List>
-			);
-	}
+ render() {
+  const {groups, user, toggleHomeSearchDrawerVisibility, toggleSelectedHomeGroup} = this.props;
+  return(
+   <List className="groups-container">
+   { groups.length > 0 && groups.map((group, idx) => 
+    <Group group={group} {...this.props} key={idx}/>
+        /*<Group group={ group } currentUser={ user } key={ idx } 
+        handleClose={toggleHomeSearchDrawerVisibility} toggleSelectedHomeGroup={toggleSelectedHomeGroup} />*/) }
+   </List>
+   );
+}
 }
 
 GroupList.PropTypes={
-	user: PropTypes.object.isRequired,
-	groups: PropTypes.object.isRequired,
-  toggleHomeSearchDrawerVisibility: PropTypes.func.isRequired,
-  toggleSelectedHomeGroup: PropTypes.func.isRequired
+ user: PropTypes.object.isRequired,
+ groups: PropTypes.object.isRequired,
+ toggleHomeSearchDrawerVisibility: PropTypes.func.isRequired,
+ toggleSelectedHomeGroup: PropTypes.func.isRequired,
+ toggleHomeTab: PropTypes.func.isRequired
 }

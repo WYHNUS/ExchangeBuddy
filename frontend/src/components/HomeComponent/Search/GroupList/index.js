@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 
 import {toggleHomeSearchDrawerVisibility} from '../../../../actions/pageVisibility';
 import {toggleSelectedHomeGroup} from '../../../../actions/home';
+import {toggleHomeTab} from '../../../../actions/home';
 
 /*var owngroups = 
 [
@@ -37,7 +38,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		actions: bindActionCreators({  }, dispatch),
 		toggleHomeSearchDrawerVisibility: visibility=>dispatch(toggleHomeSearchDrawerVisibility(visibility)),
-		toggleSelectedHomeGroup: index=>dispatch(toggleSelectedHomeGroup(index))
+		toggleSelectedHomeGroup: index=>dispatch(toggleSelectedHomeGroup(index)),
+		toggleHomeTab: tabValue=>dispatch(toggleHomeTab(tabValue))
 	};
 };
 

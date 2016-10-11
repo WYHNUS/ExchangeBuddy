@@ -41,6 +41,7 @@ const tabToIdx = tab => {
 const pathToIdx = () =>{
   
   var pathArray = window.location.pathname.split("/");
+  console.log(pathArray);
   var path;
   if(pathArray.length>3){
     path = pathArray[3];
@@ -78,8 +79,7 @@ export default class Header extends React.Component {
 
     this.state = {
       loadingFile: false,
-      bgImageId: null,
-      value: 'chat'
+      bgImageId: null
     };
   }
 
@@ -123,14 +123,11 @@ export default class Header extends React.Component {
   }*/
 
   handleChange = (value) => {
-    //console.log(value);
-    this.setState({
-      value: value,
-    });
+    this.props.toggleHomeTab(value);
   };
 
   render() {
-    const { user, uni, group, actions, params, tab, homeGroupDetails } = this.props;
+    const { user, uni, group, actions, params, homeGroupDetails, homeTabValue } = this.props;
     //params=221241432;
 
     return (
@@ -165,8 +162,8 @@ export default class Header extends React.Component {
         <Grid>
           <div className="row center-xs center-md" >{/*id="header-tab-row"*/}
             <Col xs={12} md={8} id="header-tab-col">
-            <Tabs inkBarStyle={{ backgroundColor: "#fff" }}  initialSelectedIndex={ pathToIdx() } >
-              <Tab value='event' icon={IconsHelper.materialIcon("library_books")} label="EVENTS" className="header-tab" onActive={ gotourl(params.id, "events") } />
+            <Tabs inkBarStyle={{ backgroundColor: "#fff" }} value={homeTabValue} onChange={this.handleChange} >
+              <Tab value='events' icon={IconsHelper.materialIcon("library_books")} label="EVENTS" className="header-tab" onActive={ gotourl(params.id, "events") } />
               <Tab value='chat' icon={IconsHelper.materialIcon("chat")} label="CHAT" className="header-tab" onActive={ gotourl(params.id, "chat") } />
               <Tab value='friends' icon={IconsHelper.materialIcon("people")} label="FRIENDS" className="header-tab" onActive={ gotourl(params.id, "friends") } />
             </Tabs>
@@ -181,3 +178,4 @@ export default class Header extends React.Component {
 /*
 
 value={this.props.value} onChange={this.handleChange}*/
+//initialSelectedIndex={ pathToIdx() }

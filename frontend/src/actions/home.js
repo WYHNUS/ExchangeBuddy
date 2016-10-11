@@ -1,4 +1,5 @@
-export const TOGGLE_SELECTED_HOME_GROUP = 'TOGGLE_SELECTED_HOME_GROUP'
+export const TOGGLE_SELECTED_HOME_GROUP = 'TOGGLE_SELECTED_HOME_GROUP';
+export const TOGGLE_HOME_TAB = 'TOGGLE_HOME_TAB';
 
 //api for fetching fb events
 export const FETCH_FB_EVENTS = 'FETCH_FB_EVENTS';
@@ -136,5 +137,11 @@ export function toggleSelectedHomeGroup(index){
 }
 
 /************************************************************
-TOGGLING BETWEEN GROUPS
+TOGGLING HOME TAB
 ************************************************************/
+export function toggleHomeTab(tabValue){
+	return{
+		type: TOGGLE_HOME_TAB,
+		tabValue
+	}
+}
