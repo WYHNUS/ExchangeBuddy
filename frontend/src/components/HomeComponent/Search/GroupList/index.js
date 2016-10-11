@@ -47,7 +47,8 @@ const mapStateToProps = (state, ownProps) => {
 	return {
 		user: state.user.userObject,
 		groups: state.home.homeGroups.homeGroups,
-		homeGroups: state.home.homeGroups
+		homeGroups: state.home.homeGroups,
+		homeGroupDetails:state.home.homeGroupDetails.homeGroupDetails
 	};
 };
 

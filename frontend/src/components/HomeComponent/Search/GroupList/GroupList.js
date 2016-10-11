@@ -12,7 +12,9 @@ import { browserHistory } from 'react-router';
 
 class GroupItem extends React.Component {
   render(){
-    const {group, heading, toggleHomeTab, toggleSelectedHomeGroup, toggleHomeSearchDrawerVisibility} = this.props;
+    const {group, heading, toggleHomeTab, 
+      toggleSelectedHomeGroup, toggleHomeSearchDrawerVisibility,
+    homeGroupDetails} = this.props;
 
     const goToGroup = () => { 
       browserHistory.push(`/home/${group.id}`); 
@@ -24,6 +26,7 @@ class GroupItem extends React.Component {
       <div className="group-body">
       <h5 className="group-heading">{heading}</h5>
       <ListItem
+      className={group.groupType===homeGroupDetails.groupType?'selected-group':null}
       primaryText={group.name}
       leftAvatar={<Avatar src={ imageUrl } size={ 40 } style={{ objectFit: 'contain', backgroundColor: '#fff'}}/>}
       onTouchTap={goToGroup}
@@ -76,5 +79,6 @@ GroupList.PropTypes={
  groups: PropTypes.object.isRequired,
  toggleHomeSearchDrawerVisibility: PropTypes.func.isRequired,
  toggleSelectedHomeGroup: PropTypes.func.isRequired,
- toggleHomeTab: PropTypes.func.isRequired
+ toggleHomeTab: PropTypes.func.isRequired,
+ homeGroupDetails: PropTypes.object.isRequired
 }
