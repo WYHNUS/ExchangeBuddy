@@ -6,7 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 import { TextFormField, SelectFormField, AutoCompleteFormField } from '../../Field';
 import PrevButton from '../PrevButton';
 import NextButton from '../NextButton';
-import ExchangeTermSelect from './ExchangeTermSelect';
+import ExchangeTermSelect from '../ExchangeTermSelect';
 
 import { propExistsDeep } from '../../../util/helper';
 
@@ -51,12 +51,12 @@ const filter = (searchText, key) => {
 
 class Step2 extends React.Component {
   submitForm (val, props) {
-    console.log(val);
     props.handleNext();
+    props.saveData(val);
   }
 
   render() {
-    const { universities, handleNext, handlePrev, handleSubmit, submitting, formState } = this.props;
+    const { universities, saveData, handleNext, handlePrev, handleSubmit, submitting, formState } = this.props;
 
     // Year of exchange
     const year = new Date().getFullYear();

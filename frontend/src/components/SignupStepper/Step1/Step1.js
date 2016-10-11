@@ -51,14 +51,14 @@ const filter = (searchText, key) => {
 
 class Step1 extends React.Component {
   submitForm (val, props) {
-    console.log(val);
     props.handleNext();
+    props.saveData(val);
   }
 
   render() {
-    const { universities, fields: { displayName, gender, homeUniName }, handleNext, handleSubmit, submitting } = this.props;
+    const { universities, fields: { displayName, gender, homeUniName }, saveData, handleNext, handleSubmit, submitting } = this.props;
     universitiesProps = universities;
-    
+
     return (
       <form onSubmit={ handleSubmit((values) => {
         this.submitForm(values, this.props)
