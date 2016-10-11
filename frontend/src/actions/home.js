@@ -31,12 +31,14 @@ export function fetchFbEvents(countryCode, uniLatLng){
 	/*var es = new EventSearch({
 		lat: 40.710803,
 		lng: -73.964040,
-		accessToken: Meteor.settings.public.Facebook.appAccessToken,
+		accessToken: '	',
           // distance in metres
         distance: 50000
-	});*/
+	});
 
-	var req = 'miao';
+	var req = es.search();*/
+
+	var req='miao';
 
 	return {
 		type: FETCH_FB_EVENTS,
@@ -46,6 +48,7 @@ export function fetchFbEvents(countryCode, uniLatLng){
 }
 
 export function fetchFbEventsSuccess(events){
+	console.log(events);
 	return {
 		type: FETCH_FB_EVENTS_SUCCESS,
 		payload: events
@@ -53,6 +56,7 @@ export function fetchFbEventsSuccess(events){
 }
 
 export function fetchFbEventsFailure(error){
+	console.log(error);
 	return {
 		type: FETCH_FB_EVENTS_FAILURE,
 		payload: error
