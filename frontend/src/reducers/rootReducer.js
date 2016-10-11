@@ -5,7 +5,6 @@ import {reducer as formReducer} from 'redux-form';
 // Reducers
 import { messageSnackbar } from './messageSnackbar';
 import { browserIsMobileWidth } from './browser';
-import { switchGroupDialogOpen } from './switchGroupDialog';
 import { pageVisibility } from './pageVisibility';
 import { home } from './home';
 import { user } from './user';
@@ -14,7 +13,6 @@ import { utilityInfo } from './utilityInfo';
 const rootReducer = combineReducers({
   messageSnackbar,
   browserIsMobileWidth,
-  switchGroupDialogOpen,
   pageVisibility,
   home,
   user,

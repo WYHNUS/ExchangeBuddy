@@ -105,7 +105,7 @@ class Events extends React.Component{
 
 const mapStateToProps = (state )=>{
 	return{
-		params: state.home.homeCountry
+		params: state.home.homeGroupDetails.homeGroupDetails
 	};
 }
 

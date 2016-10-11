@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 import {toggleHomeSearchDrawerVisibility} from '../../../../actions/pageVisibility';
 
-var owngroups = 
+/*var owngroups = 
 [
 {
 	name: 'KTH Royal Institute of Technology exchange students -- Spring 2016',
@@ -30,8 +30,7 @@ var owngroups =
 	id: '4',
 	groupType: 3
 }
-
-]
+]*/
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
@@ -43,7 +42,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const mapStateToProps = (state, ownProps) => {
 	return {
 		user: state.user.userObject,
-		groups: owngroups
+		groups: state.home.homeGroups.homeGroups,
+		homeGroups: state.home.homeGroups
 	};
 };
 

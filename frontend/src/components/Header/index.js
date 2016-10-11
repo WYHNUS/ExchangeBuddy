@@ -16,16 +16,16 @@ import ChildComponent from './Header';
 
 
 const mapStateToProps = (state)=>{
-  return {
-    params: state.home.homeCountry,
-    tab: state.home.homeCountry
-  };
+	return {
+		params: state.home.homeGroupDetails.homeGroupDetails,
+		tab: state.home.homeGroupDetails.homeGroupDetails
+	}
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    actions: bindActionCreators({ showSnackbar }, dispatch),
-  };
+	return {
+		actions: bindActionCreators({ showSnackbar }, dispatch),
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChildComponent);

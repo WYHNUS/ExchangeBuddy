@@ -25,7 +25,7 @@ const gotourl = (groupId, tab) => () => {
 };
 
 const tabToIdx = tab => {
-  console.log(tab,'tab');
+  //console.log(tab,'tab');
   switch(tab) {
     case 'events':
       return 0;
@@ -123,7 +123,7 @@ export default class Header extends React.Component {
   }*/
 
   handleChange = (value) => {
-    console.log(value);
+    //console.log(value);
     this.setState({
       value: value,
     });
