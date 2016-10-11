@@ -7,7 +7,8 @@ import { SelectFormField } from '../../Field';
 import MenuItem from 'material-ui/MenuItem';
 
 const ChildComponent = ({ terms }) => {
-  if (terms)
+    console.log(terms);
+  if (terms) {
     return (
       <SelectFormField
         name="exchangeTerm"
@@ -15,17 +16,20 @@ const ChildComponent = ({ terms }) => {
         { terms.map(term => <MenuItem key={term} value={term} primaryText={term} />) }
       </SelectFormField>
     );
-  else
+  } else {
     return null;
+  }
 };
 
 const getExchangeTerms = () => {
   return new Promise((resolve) => {
-    setTimeout(() => resolve([ 'Fall', 'Spring' ]), 2000);
+    const terms = [ 'Fall', 'Spring' ];
+    setTimeout(() => resolve({terms}), 2000);
   })
 }
 
 const composer = (props) => {
+  console.log(props.uniName);
   return getExchangeTerms()
 }
 
@@ -51,4 +55,4 @@ const composer = (props) => {
 //     });
 // };
 
-export default composeWithPromise(composer)(ChildComponent);
+export default composeWithPromise(composer)(ChildComponent, Loading);
