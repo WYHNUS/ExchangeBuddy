@@ -30,7 +30,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state)=>{
 	return {
-		params: state.home.homeCountry
+		params: state.home.homeGroupDetails.homeGroupDetails
 	};
 }
 

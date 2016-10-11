@@ -50,7 +50,9 @@ import {TOGGLE_SELECTED_HOME_GROUP,FETCH_HOME_MESSAGES,FETCH_HOME_MESSAGES_SUCCE
 			switch (action.type) {
 
 				case TOGGLE_SELECTED_HOME_GROUP:
-				return {...state, homeGroups: {selected:action.index}}
+				return {...state, 
+					homeGroups: {...state.homeGroups,selected:action.index},
+					homeGroupDetails:{...state.homeGroupDetails, homeGroupDetails:state.homeGroups.homeGroups[action.index]}}
 
 				case FETCH_HOME_MESSAGES:
 				return {...state, homeMessages: {homeMessages:[], error: null, loading: true}};

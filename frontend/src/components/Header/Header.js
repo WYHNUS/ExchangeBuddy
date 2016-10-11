@@ -47,7 +47,7 @@ const pathToIdx = () =>{
   }else{
     path='events';
   }
-  console.log(path);
+  //console.log(path);
   return tabToIdx(path);
 }
 
@@ -130,7 +130,7 @@ export default class Header extends React.Component {
   };
 
   render() {
-    const { user, uni, group, actions, params, tab } = this.props;
+    const { user, uni, group, actions, params, tab, homeGroupDetails } = this.props;
     //params=221241432;
 
     return (
@@ -153,7 +153,7 @@ export default class Header extends React.Component {
             </Col>
 
             <Col xs={12} md={8} id="header-title">
-              <h2 id="uni-name">{ /*uni.name */}</h2>
+              <h2 id="uni-name">{ homeGroupDetails.homeGroupDetails.name}</h2>
               <p id="uni-description">{ /*`${ group.term } ${ group.year } - ${ group.users.length } ${ pluralizer(group.users.length, 'Member', 'Members') }`*/ }</p>
             </Col>
 

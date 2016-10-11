@@ -18,7 +18,8 @@ import ChildComponent from './Header';
 const mapStateToProps = (state)=>{
 	return {
 		params: state.home.homeGroupDetails.homeGroupDetails,
-		tab: state.home.homeGroupDetails.homeGroupDetails
+		tab: state.home.homeGroupDetails.homeGroupDetails,
+		homeGroupDetails: state.home.homeGroupDetails 
 	}
 }
 
