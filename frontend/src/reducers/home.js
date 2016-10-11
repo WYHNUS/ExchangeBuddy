@@ -3,56 +3,97 @@ import {TOGGLE_SELECTED_HOME_GROUP,FETCH_HOME_MESSAGES,FETCH_HOME_MESSAGES_SUCCE
 	FETCH_FB_EVENTS, FETCH_FB_EVENTS_SUCCESS,
 	FETCH_FB_EVENTS_FAILURE, RESET_FB_EVENTS} from '../actions/home';
 
-	const initialState={
-		homeGroups:{
-			selected:0,
-			homeGroups:
-			[
-			{
-				name: 'KTH Royal Institute of Technology exchange students -- Spring 2016',
-				id: '1',
-				groupType: 0
-			},
-			{
-				name: 'National University of Singapore going abroad -- Spring 2016',
-				id: '2',
-				groupType: 1
-			}, 
-			{
-				name: 'National University of Singapore students in KTH Royal Institute of Technology',
-				id: '3',
-				groupType: 2
-			},
-			{
-				name: 'NCST Batch 32',
-				id: '4',
-				groupType: 3
-			}
-			]
-			,error:null,loading:false},
-			homeGroupDetails:{homeGroupDetails:
-				{
-					id:'1',
-					name: 'KTH Royal Institute of Technology exchange students -- Spring 2016',
-					groupType:0
-				}
-				,error:null,loading:false},
-			homeEvents:{homeEvents:[],error:null,loading:false},
-			homeMessages:{homeMessages:[],error:null,loading:false},
-			homeFriends:{homeFriends:[],error:null,loading:false}
+	const homeGroups=
+	[
+	{
+		name: 'KTH Royal Institute of Technology exchange students -- Spring 2016',
+		id: '1',
+		groupType: 0
+	},
+	{
+		name: 'National University of Singapore going abroad -- Spring 2016',
+		id: '2',
+		groupType: 1
+	}, 
+	{
+		name: 'National University of Singapore students in KTH Royal Institute of Technology',
+		id: '3',
+		groupType: 2
+	},
+	{
+		name: 'NCST Batch 32',
+		id: '4',
+		groupType: 3
+	}
+	];
+	const homeGroupDetails=
+	{
+		id:'1',
+		name: 'KTH Royal Institute of Technology exchange students -- Spring 2016',
+		groupType:0
+	};
+	const homeMessages=
+	[
+	];
+	const homeFriends=
+	[
+	{
+		id: '1',
+		displayName: 'Lee Kai Yi',
+		homeUniversity:
+		{
+			name: 'National University of Singapore'
 		}
 
+	},
+	{
+		id: '2',
+		displayName: 'Eugene Ng',
+		homeUniversity:
+		{
+			name: 'National University of Singapore'
+		}
 
-		export function home(state=initialState, action) {
+	},
+	{
+		id: '3',
+		displayName: 'Wang Yanhao',
+		homeUniversity:
+		{
+			name: 'National University of Singapore'
+		}
 
-			let error;
+	},
+	{
+		id: '4',
+		displayName: 'Zhang Hanming',
+		homeUniversity:
+		{
+			name: 'National University of Singapore'
+		}
 
-			switch (action.type) {
+	}
+	]
 
-				case TOGGLE_SELECTED_HOME_GROUP:
-				return {...state, 
-					homeGroups: {...state.homeGroups,selected:action.index},
-					homeGroupDetails:{...state.homeGroupDetails, homeGroupDetails:state.homeGroups.homeGroups[action.index]}}
+	const initialState={
+		homeGroups:{selected:0,homeGroups:homeGroups,error:null,loading:false},
+		homeGroupDetails:{homeGroupDetails:homeGroupDetails,error:null,loading:false},
+		homeEvents:{homeEvents:[],error:null,loading:false},
+		homeMessages:{homeMessages:[],error:null,loading:false},
+		homeFriends:{homeFriends:homeFriends,error:null,loading:false}
+	}
+
+
+	export function home(state=initialState, action) {
+
+		let error;
+
+		switch (action.type) {
+
+			case TOGGLE_SELECTED_HOME_GROUP:
+			return {...state, 
+				homeGroups: {...state.homeGroups,selected:action.index},
+				homeGroupDetails:{...state.homeGroupDetails, homeGroupDetails:state.homeGroups.homeGroups[action.index]}}
 
 				case FETCH_HOME_MESSAGES:
 				return {...state, homeMessages: {homeMessages:[], error: null, loading: true}};
