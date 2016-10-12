@@ -85,32 +85,6 @@ exports.createUser = function(req, res){
                     }
                 ];
 
-
-                /*
-                    You are about to see a very bad way of writing code...
-                    Worse than callback hell...
-                    But the code below doesn't work -- group is not a Group instance...
-                    Will improve after a better strategy is discovered...
-
-                    >>>>>>>>>> Ideal solution (not working) <<<<<<<<<<<
-
-                    var defaultGroupArray = defaultGroups.map(group => {
-                        return Group.findOrCreate({
-                            where: {
-                                name: group.name,
-                                groupType: group.id,
-                            }
-                        });
-                    });
-                    Promise.all(defaultGroupArray).spread((responses) => {
-                        // console.log(Group.Instance.prototype);
-                        responses.map(group => {
-                            group.addUser(user);
-                        });
-                        res.json(user.generateJwt());
-                    })
-                */
-
                 var defaultGroupArray = defaultGroups.map(group => {
                     return Group.findOrCreate({
                         where: {
@@ -120,7 +94,6 @@ exports.createUser = function(req, res){
                     });
                 });
                 models.sequelize.Promise.all(defaultGroupArray).spread((group1, group2, group3) => {
-                    // console.log(Group.Instance.prototype);
 
                     groups = [group1, group2, group3];
                     groups.map(group => {
@@ -130,40 +103,6 @@ exports.createUser = function(req, res){
                     res.json(user.generateJwt());
                 });
 
-                // Group.findOrCreate({
-                //     where: {
-                //         name: defaultGroups[0].name,
-                //         groupType: defaultGroups[0].id,
-                //     }
-                // }).spread(function(group) {
-                //     group.addUser(user);
-                //     return Group.findOrCreate({
-                //         where: {
-                //             name: defaultGroups[1].name,
-                //             groupType: defaultGroups[1].id,
-                //         }
-                //     })
-                // }).spread(function(group) {
-                //     group.addUser(user);
-                //     return Group.findOrCreate({
-                //         where: {
-                //             name: defaultGroups[2].name,
-                //             groupType: defaultGroups[2].id,
-                //         }
-                //     })
-                // }).spread(function(group) {
-                //     group.addUser(user);
-                //
-                //     // should sent a confirmation email here
-                //     MailCtrl.sendVerificationEmail(user);
-                //
-                //     res.status(201)
-                //         .json({
-                //             success: true,
-                //             message: 'Callback Hell reaches to the end.'
-                //         });
-                //
-                // });
             }).catch(function(err){
                 resError(res, err);
             });
