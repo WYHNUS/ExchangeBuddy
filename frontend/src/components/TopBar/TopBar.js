@@ -50,8 +50,8 @@ class TopBar extends Component {
         style={{textAlign:"center"}}
   			onTitleTouchTap={handleTouchTap}
   			iconElementLeft={<IconButton
-  				onClick={this.navigateBack}>
-  				{IconsHelper.materialIcon("arrow_back")}
+  				onClick={/*this.navigateBack*/()=>browserHistory.push('/settings')}>
+  				{IconsHelper.materialIcon("settings")}
           </IconButton>}
         iconElementRight={<IconButton
           className={this.setElementClass()}
