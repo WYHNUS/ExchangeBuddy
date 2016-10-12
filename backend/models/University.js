@@ -27,11 +27,11 @@ module.exports = function(sequelize, DataType) {
       type: DataType.TEXT(),
   	},
 
-  	// Cloudinary images
-  	logoImageId: {
+  	// AWS images
+    logoImageUrl: {
       type: DataType.STRING(255),
-  	},
-  	bgImageId: {
+    },
+  	bgImageUrl: {
       type: DataType.STRING(255),
   	},
 
