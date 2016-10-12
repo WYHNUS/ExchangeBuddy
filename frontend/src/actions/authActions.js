@@ -31,6 +31,8 @@ export const Navigate_Away_From_Auth_Form = 'Navigate_Away_From_Auth_Form';
  * action creators
  */
 
+const ROOT_URL = 'https://exchangebuddy.com';
+
 export function clickedSignUp() {
     return { type: Clicked_SignUp }
 }
@@ -79,14 +81,16 @@ export function attemptLogin(token) {
     dispatch(clickedLogin());
 
     request
-    .post('/auth/facebook/token')
-    .withCredentials()
-    .send({ access_token: token })
+    .post(ROOT_URL + '/authenticate')
+    // .withCredentials()
+    .send({ facebookToken: token })
     .end(function(err,res){
-      if(res.body.message){
-        dispatch(loginFail({error:res.body.message}))
+      console.log(res);
+      console.log(err);
+      if(res.body.status === "success"){
+        dispatch(loginSuccess(res.body.token));
       } else {
-        dispatch(loginSuccess(res.body))
+        dispatch(loginFail({error:res.body.message}));
       }
     })
   }

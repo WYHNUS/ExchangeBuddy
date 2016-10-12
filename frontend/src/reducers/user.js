@@ -11,6 +11,7 @@ import {
 }from '../actions/user';
 
 const initialState = {
+  isAuthenticated: false,
   isLoggedIn: false,
   fetchingAuthUpdate: false,
   userObject: 
@@ -51,6 +52,7 @@ export function user(state = initialState , action) {
       return Object.assign({}, state, {
         isLoggedIn: true,
         fetchingAuthUpdate: false,
+        isAuthenticated: true,
         userObject: action.userObject,
         error: null
       });
