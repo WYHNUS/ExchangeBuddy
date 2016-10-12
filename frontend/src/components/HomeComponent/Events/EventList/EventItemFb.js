@@ -23,6 +23,7 @@ const EventItemFb = ({ groupEvent, groupId }) => {
   <div className='row center-xs'>
       <Card className="event-item-card col-xs" initiallyExpanded={true}>
         <CardHeader
+          className="event-item-header"
           title={ groupEvent.name }
           subtitle={ `${ moment(groupEvent.startTime).format("D MMM, ddd, hA") } - ${groupEvent.stats.attending} attending` }
           avatar={ groupEvent.venue.profilePicture || groupEvent.profilePicture }

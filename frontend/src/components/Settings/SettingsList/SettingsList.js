@@ -12,7 +12,9 @@ export default class SettingsList extends React.Component {
 
 			<div className='row center-xs'>
 			<Card className="settings-item-card col-xs" style={{maxWidth: "512px"}}>
-			<CardHeader title={ "About" } 
+			<CardHeader 
+			className="settings-title"
+			title={ "About" } 
 			actAsExpander={ true } 
 			showExpandableButton={ true } />
 			<CardText expandable={true}>
@@ -30,7 +32,9 @@ export default class SettingsList extends React.Component {
 
 			<div className='row center-xs'>
 			<Card className="settings-item-card col-xs" style={{maxWidth: "512px"}}>
-			<CardHeader title={ "Privacy Policy" } 
+			<CardHeader 
+			className="settings-title"
+			title={ "Privacy Policy" } 
 			actAsExpander={ true } 
 			showExpandableButton={ true } />
 			<CardText expandable={true}>

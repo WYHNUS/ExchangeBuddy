@@ -21,6 +21,7 @@ const EventItemMu = ({ groupEvent, groupId }) => (
   <div className='row center-xs'>
       <Card className="event-item-card col-xs" initiallyExpanded={true}>
         <CardHeader
+          className="event-item-header"
           title={ groupEvent.name }
           subtitle={ `${ moment(groupEvent.time).format("D MMM, ddd, hA") } - ${groupEvent.yes_rsvp_count} RSVPs` }
           actAsExpander={true}
