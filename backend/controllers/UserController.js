@@ -41,7 +41,7 @@ exports.createUser = function(req, res){
             }
         })
     ]).spread(function(homeUniversity, exchangeUniversity, existingUser) {
-        if (!existingUser) {
+        if (!!existingUser) {
             return res.status(500).json({
                     message: "Email account already registered!"
                 });
@@ -54,7 +54,7 @@ exports.createUser = function(req, res){
                     gender: req.body.gender,
                     fbUserId: req.body.facebookToken,
                     isEmailVerified: 0, // default to false
-                    UniversityId: req.body.homeUniversity.id
+                    UniversityId: req.body.homeUniversity.id,
                     verificationToken: token
                 }),
                 Exchange.create({
