@@ -12,6 +12,8 @@ export const Clicked_Login = 'Clicked_Login';
 export const Login_Success = 'Login_Success';
 export const Login_Fail = 'Login_Fail';
 
+export const Not_Registered = 'Not_Registered';
+
 export const Started_Session_Check = 'Started_Session_Check';
 export const Checked_Session_Status = 'Checked_Session_Status';
 
@@ -30,6 +32,8 @@ export const Navigate_Away_From_Auth_Form = 'Navigate_Away_From_Auth_Form';
 /*
  * action creators
  */
+
+const ROOT_URL = 'http://localhost:3001';
 
 export function clickedSignUp() {
     return { type: Clicked_SignUp }
@@ -65,30 +69,39 @@ export function clickedLogin() {
     return { type: Clicked_Login };
 }
 
-export function loginSuccess(userObject) {
-    return { type: Login_Success, userObject };
+export function loginSuccess(userObject, token) {
+    return { type: Login_Success, userObject, token };
 }
 
 export function loginFail(error) {
     return { type: Login_Fail, error };
 }
 
+export function requireRegistration(error) {
+    return { type: Login_Fail, error };
+}
 
 export function attemptLogin(token) {
   return (dispatch) => {
     dispatch(clickedLogin());
 
     request
-    .post('/auth/facebook/token')
-    .withCredentials()
-    .send({ access_token: token })
-    .end(function(err,res){
-      if(res.body.message){
-        dispatch(loginFail({error:res.body.message}))
-      } else {
-        dispatch(loginSuccess(res.body))
-      }
-    })
+      .post(ROOT_URL + '/authenticate')
+      // .withCredentials()
+      .send({ facebookToken: token })
+      .end(function(err,res){
+        // console.log(res);
+        // console.log(err);
+        if(res.body.status === "success"){
+          dispatch(loginSuccess(res.body.user, res.body.token));
+        } else {
+          if (res.status === 404) {
+            dispatch(requireRegistration({error:res.body.message}));
+          } else {
+            dispatch(loginFail({error:res.body.message}));
+          }
+        }
+      })
   }
 }
 

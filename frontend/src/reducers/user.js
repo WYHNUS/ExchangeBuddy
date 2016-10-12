@@ -1,6 +1,6 @@
 import {
   Clicked_SignUp, SignUp_Success, SignUp_Fail,
-  Clicked_Login, Login_Success, Login_Fail,
+  Clicked_Login, Login_Success, Login_Fail, Not_Registered,
   Started_Session_Check, Checked_Session_Status,
   Clicked_Logout, Logout_Success,
   Navigate_Away_From_Auth_Form
@@ -11,13 +11,16 @@ import {
 }from '../actions/user';
 
 const initialState = {
+  isAuthenticated: false,
   isLoggedIn: false,
+  isRegistered: null,
   fetchingAuthUpdate: false,
-  userObject: 
-  {
+  token: null,
+  error: null,
+  userObject: {
     email:'',
-    displayName:'',
-    profilePictureId:'',
+    name:'',
+    profilePictureUrl:'',
     gender:'',
     bio:'',
     website:'',
@@ -25,9 +28,8 @@ const initialState = {
     fbUserId:'',
     fbToken:'',
     fbTokenExpiresAt:'',
-    homeUniId: null
-  },
-  error: null
+    UniversityId: null
+  }
 }
 
 export function user(state = initialState , action) {
@@ -51,7 +53,10 @@ export function user(state = initialState , action) {
       return Object.assign({}, state, {
         isLoggedIn: true,
         fetchingAuthUpdate: false,
+        isAuthenticated: true,
+        isRegistered: true,
         userObject: action.userObject,
+        token: action.token,
         error: null
       });
 
@@ -60,6 +65,17 @@ export function user(state = initialState , action) {
       return Object.assign({}, state, {
         isLoggedIn: false,
         fetchingAuthUpdate: false,
+        isAuthenticated: false,
+        isRegistered: null,
+        error: action.error
+      });
+
+    case Not_Registered:
+      return Object.assign({}, state, {
+        isLoggedIn: false,
+        fetchingAuthUpdate: false,
+        isAuthenticated: false,
+        isRegistered: false,
         error: action.error
       });
 
@@ -81,6 +97,7 @@ export function user(state = initialState , action) {
 
     case Navigate_Away_From_Auth_Form:
       return Object.assign({}, state, {
+        isRegistered: null,
         error: null
       });
 
