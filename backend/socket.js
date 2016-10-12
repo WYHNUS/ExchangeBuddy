@@ -15,7 +15,8 @@ module.exports = function(io){
     io.sockets.on('connection', function(socket){
         console.log('connected');
         socket.on('adduser', function(data){
-            groupsOfUsers[data.group.name].push(data.user.id);
+            console.log(data);
+            groupsOfUsers   [data.group.name].push(data.user.id);
             socket.user = data.user;
             socket.room = data.group;
             socket.join(socket.room.name);

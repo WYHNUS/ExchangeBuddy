@@ -11,6 +11,31 @@ import SubmitForm from '../../components/HomeComponent/Chat/SubmitForm';
 import MessageList from '../../components/HomeComponent/Chat/MessageList';
 
 class Chat extends React.Component{
+
+	componentWillMount(){
+		/*var socket = io.connect("http://localhost:3001");
+		socket.emit('adduser',
+		{
+			group:
+			{
+				name: 'alkdsjfhaldsjkafhlkdsj'
+			},
+			user:
+			{
+				id:1	
+			}
+		}
+		);*/
+	}
+
+	componentDidMount(){
+
+	}
+
+	componentWillUnmount(){
+		
+	}
+
 	render(){
 		return(
 		<Grid>
