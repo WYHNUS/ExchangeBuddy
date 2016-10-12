@@ -40,7 +40,7 @@ export default class EventsList extends React.Component {
         <Row>
           <Col xs={12}>
             { this.state.showAll ? null
-              : <RaisedButton label="Show all events" primary={true} style={{ display: "block" }} onTouchTap={ showAllEvents } /> }
+              : <RaisedButton className="event-item-button" style={{display:"block"}} label="Show all events" primary={true} onTouchTap={ showAllEvents } /> }
           </Col>
         </Row>
 			</div>
@@ -51,5 +51,5 @@ export default class EventsList extends React.Component {
 EventsList.propTypes = {
   groupEvents: PropTypes.array.isRequired,
   source: PropTypes.string.isRequired,
-  groupId: PropTypes.number.isRequired
+  groupId: PropTypes.string.isRequired
 };
