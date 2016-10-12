@@ -33,14 +33,16 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 export const getRoutes = (store) =>{
 
-  const authRequired = (nextState, replaceState) => {
+  const authRequired = (nextState, replace) => {
     // Now you can access the store object here.
     const state = store.getState();
-
-    /*if (!state.user.isAuthenticated) {
-      // Not authenticated, redirect to login.
-      replaceState({ nextPathname: nextState.location.pathname }, '/login');
-    }*/
+    console.log(state);
+    if (!state.user.isAuthenticated) {
+      replace({ 
+        pathname: '/notloggedin'//nextState.location.pathname, 
+        // state: { nextPathname:'/notloggedin' }
+      });
+    }
   };
 
   const goToDefaultGroup = (nextState, replace)=>{

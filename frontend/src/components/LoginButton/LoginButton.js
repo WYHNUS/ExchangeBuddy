@@ -7,7 +7,6 @@ import FacebookLogin from 'react-facebook-login';
 const responseFacebook = (actions) => (response) => {
   if (!response || !response.userID)
     return;
-
   browserHistory.push('/signup');
 
   /*Meteor.call('User.loginFacebook', response, (error, { user, token }) => {
@@ -30,7 +29,7 @@ const LoginButton = ({ actions }) => (
   <FacebookLogin
     appId={ "580995375434079" }
     scope="public_profile,email,user_education_history,user_location"
-    fields="name,email,picture,gender,education,location"
+    fields="name,email,picture,gender,education,location,accessToken"
     callback={ responseFacebook(actions) } />
 );
 

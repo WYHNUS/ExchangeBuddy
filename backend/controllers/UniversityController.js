@@ -12,7 +12,8 @@ exports.getAllUniversities = function(req, res){
 
 exports.createUniversity = function(req, res) {
     models.University.create({
-        name: req.body.name
+        name: req.body.name,
+        logoImageUrl: req.body.logoImageUrl
     }).then(function(university) {
         res.json(university);
     }).catch(function(err) {

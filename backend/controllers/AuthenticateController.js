@@ -28,6 +28,7 @@ exports.authenticate = function (req, res) {
                 res.json(user.generateJwt());
             } else {
                 return res.status(401).json({
+                    status: 'fail',
                     message: 'Email account not verified.'
                 });
             }
