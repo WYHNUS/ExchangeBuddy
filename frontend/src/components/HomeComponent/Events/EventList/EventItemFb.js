@@ -20,9 +20,8 @@ const postToChat = (groupEvent, groupId, cardText) => {
 const EventItemFb = ({ groupEvent, groupId }) => {
   const cardText = truncate(groupEvent.description, 300);
   return (
-  <Row>
-    <Col xs={12}>
-      <Card className="event-item-card" initiallyExpanded={true}>
+  <div className='row center-xs'>
+      <Card className="event-item-card col-xs" initiallyExpanded={true}>
         <CardHeader
           title={ groupEvent.name }
           subtitle={ `${ moment(groupEvent.startTime).format("D MMM, ddd, hA") } - ${groupEvent.stats.attending} attending` }
@@ -49,8 +48,7 @@ const EventItemFb = ({ groupEvent, groupId }) => {
           </div>
         </CardActions>
       </Card>
-    </Col>
-  </Row>
+  </div>
   )
 }
 

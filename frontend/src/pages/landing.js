@@ -65,7 +65,7 @@ class Landing extends React.Component{
               <div className="col-xs">{IconsHelper.materialIcon("info")}<p>Information Wiki</p></div>
               <div className="col-xs">{IconsHelper.materialIcon("group")}<p>Group Chat</p></div>
               <div className="col-xs">{IconsHelper.materialIcon("event")}<p>Event Listing</p></div>
-            </div>
+          </div>
         </div>
       </div>
     </div>

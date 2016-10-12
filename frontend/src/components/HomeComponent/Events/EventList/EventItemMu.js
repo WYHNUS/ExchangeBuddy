@@ -18,9 +18,8 @@ const postToChat = (groupEvent, groupId, cardText) => {
 }
 
 const EventItemMu = ({ groupEvent, groupId }) => (
-  <Row>
-    <Col xs={12}>
-      <Card className="event-item-card" initiallyExpanded={true}>
+  <div className='row center-xs'>
+      <Card className="event-item-card col-xs" initiallyExpanded={true}>
         <CardHeader
           title={ groupEvent.name }
           subtitle={ `${ moment(groupEvent.time).format("D MMM, ddd, hA") } - ${groupEvent.yes_rsvp_count} RSVPs` }
@@ -44,8 +43,7 @@ const EventItemMu = ({ groupEvent, groupId }) => (
         </CardActions>
 
       </Card>
-    </Col>
-  </Row>
+  </div>
 )
 
 export default EventItemMu;
