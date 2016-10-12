@@ -5,6 +5,7 @@ import { toggleBottomBarVisibility,
   toggleTopBarBackButtonVisibility } from '../actions/pageVisibility';
 import Header from '../components/Header';
 //import SwitchGroupDialog from '../components/SwitchGroupDialog';
+
 class Home extends React.Component{
 
   componentDidMount() {

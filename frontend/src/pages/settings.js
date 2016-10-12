@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { toggleBottomBarVisibility } from '../actions/pageVisibility';
+import SettingsList from '../components/Settings/SettingsList';
 
 class Settings extends React.Component{
 
@@ -10,8 +11,11 @@ class Settings extends React.Component{
 
 	render() {
 		return (
-			<div>
-			Settings
+			<div className="row center-xs">
+			<div className="col-xs">
+			<SettingsList/>
+			
+			</div>
 			</div>
 			);
 	}

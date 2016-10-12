@@ -39,7 +39,12 @@ function urlToIdx(url) {
 class BottomBar extends Component {
 
   goToURL(url) {
-    return ()=>browserHistory.push(url);
+    if(url==='/home'){
+      console.log('/home');
+      return ()=>{browserHistory.push(url);this.props.toggleHomeTab('events');}
+    }else{
+      return ()=>browserHistory.push(url);
+    }
   }
 
   /*BottomBar.contextTypes = {
@@ -70,7 +75,8 @@ class BottomBar extends Component {
 }
 
 BottomBar.propTypes = {
-  pageVisibility: PropTypes.object.isRequired
+  pageVisibility: PropTypes.object.isRequired,
+  toggleHomeTab: PropTypes.func.isRequired
 }
 
 export default BottomBar;
