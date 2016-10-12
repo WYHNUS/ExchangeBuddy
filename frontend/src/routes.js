@@ -23,6 +23,7 @@ import Stories from './pages/stories';
 import Journal from './pages/journal';
 import NotLoggedIn from './pages/notloggedin';
 import Signup from './pages/signup';
+import Settings from './pages/settings';
 
 // Redux
 const store = configureStore();
@@ -66,9 +67,10 @@ export const getRoutes = (store) =>{
     <Route path="journal" component={Journal} onEnter={authRequired}/>
     <Route path="stories" component={Stories}/>
     <Route path="wiki" component={Wiki}/>
-    <Route path="profile" component={Profile} onEnter={authRequired}/>
+    <Route path="profile(/:userId)" component={ Profile } />
     <Route path="notloggedin" component={NotLoggedIn}/>
     <Route path="signup" component={Signup}/>
+    <Route path='settings' component={Settings}/>
     <Route path="*" component={NotFound}/>
   </Route>
   );

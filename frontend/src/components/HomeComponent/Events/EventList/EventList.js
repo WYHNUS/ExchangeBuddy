@@ -34,15 +34,22 @@ export default class EventsList extends React.Component {
     const end = this.state.showAll ? groupEvents.length : 5;
 
 		return (
+      /*<div className="row feature-row center-xs">
+              <div className="col-xs">{IconsHelper.materialIcon("info")}<p>Information Wiki</p></div>
+              <div className="col-xs">{IconsHelper.materialIcon("group")}<p>Group Chat</p></div>
+              <div className="col-xs">{IconsHelper.materialIcon("event")}<p>Event Listing</p></div>
+          </div>*/
 			<div className="event-list">
-        { groupEvents.slice(0, end).map((groupEvent, idx) => <EventItem key={ idx } source={ source } groupEvent={ groupEvent } /> ) }
+        
+        { groupEvents.slice(0, end).map((groupEvent, idx) => 
+          <EventItem key={ idx } source={ source } groupEvent={ groupEvent }/> ) }
 
-        <Row>
-          <Col xs={12}>
+        <div className='row center-xs'>
+          <div className='col-xs event-item-button'>
             { this.state.showAll ? null
-              : <RaisedButton label="Show all events" primary={true} style={{ display: "block" }} onTouchTap={ showAllEvents } /> }
-          </Col>
-        </Row>
+              : <RaisedButton style={{display:"block"}} label="Show all events" primary={true} onTouchTap={ showAllEvents } /> }
+          </div>
+        </div>
 			</div>
 		);
 	}
@@ -51,5 +58,5 @@ export default class EventsList extends React.Component {
 EventsList.propTypes = {
   groupEvents: PropTypes.array.isRequired,
   source: PropTypes.string.isRequired,
-  groupId: PropTypes.number.isRequired
+  groupId: PropTypes.string.isRequired
 };
