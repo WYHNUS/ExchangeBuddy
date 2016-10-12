@@ -36,7 +36,7 @@ export const getRoutes = (store) =>{
   const authRequired = (nextState, replace) => {
     // Now you can access the store object here.
     const state = store.getState();
-    console.log(state);
+    
     if (!state.user.isAuthenticated) {
       replace({ 
         pathname: '/notloggedin'//nextState.location.pathname, 

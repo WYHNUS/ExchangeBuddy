@@ -31,7 +31,7 @@ export const Navigate_Away_From_Auth_Form = 'Navigate_Away_From_Auth_Form';
  * action creators
  */
 
-const ROOT_URL = 'https://exchangebuddy.com';
+const ROOT_URL = 'http://localhost:3001';
 
 export function clickedSignUp() {
     return { type: Clicked_SignUp }
@@ -67,8 +67,8 @@ export function clickedLogin() {
     return { type: Clicked_Login };
 }
 
-export function loginSuccess(userObject) {
-    return { type: Login_Success, userObject };
+export function loginSuccess(userObject, token) {
+    return { type: Login_Success, userObject, token };
 }
 
 export function loginFail(error) {
@@ -81,18 +81,18 @@ export function attemptLogin(token) {
     dispatch(clickedLogin());
 
     request
-    .post(ROOT_URL + '/authenticate')
-    // .withCredentials()
-    .send({ facebookToken: token })
-    .end(function(err,res){
-      console.log(res);
-      console.log(err);
-      if(res.body.status === "success"){
-        dispatch(loginSuccess(res.body.token));
-      } else {
-        dispatch(loginFail({error:res.body.message}));
-      }
-    })
+      .post(ROOT_URL + '/authenticate')
+      // .withCredentials()
+      .send({ facebookToken: token })
+      .end(function(err,res){
+        // console.log(res);
+        // console.log(err);
+        if(res.body.status === "success"){
+          dispatch(loginSuccess(res.body.user, res.body.token));
+        } else {
+          dispatch(loginFail({error:res.body.message}));
+        }
+      })
   }
 }
 

@@ -11,7 +11,7 @@ exports.authenticate = function (req, res) {
             });
     }
     var facebookToken = req.body.facebookToken;
-    var userEmail = req.body.email;
+    console.log(facebookToken);
     graph.get("/me?fields=name,id,email&access_token=" + facebookToken, function (error, response) {
         if (error) {
             return res.status(400)
@@ -24,7 +24,7 @@ exports.authenticate = function (req, res) {
         // Check if use has their emailAccount verified
         User.findOne({
             where: {
-                email: userEmail
+                fbUserId: response.id
             }
         }).then(function (user) {
             if (!user) {
@@ -33,7 +33,7 @@ exports.authenticate = function (req, res) {
                     message: 'User not found.'
                 });
             }
-            if (!user.isEmailVerified) {
+            if (user.isEmailVerified) {
                 return res.json({
                     status: 'success',
                     user: user,

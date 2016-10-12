@@ -17,17 +17,18 @@ const initialState = {
   userObject: 
   {
     email:'',
-    displayName:'',
-    profilePictureId:'',
+    name:'',
+    profilePictureUrl:'',
     gender:'',
     bio:'',
     website:'',
     birthday:'',
     fbUserId:'',
-    fbToken:'',
-    fbTokenExpiresAt:'',
-    homeUniId: null
+    // fbToken:'',
+    // fbTokenExpiresAt:'',
+    UniversityId: null
   },
+  token: null,
   error: null
 }
 
@@ -54,6 +55,7 @@ export function user(state = initialState , action) {
         fetchingAuthUpdate: false,
         isAuthenticated: true,
         userObject: action.userObject,
+        token: action.token,
         error: null
       });
 
