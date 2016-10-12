@@ -94,13 +94,16 @@ exports.createUser = function(req, res){
                     });
                 });
                 models.sequelize.Promise.all(defaultGroupArray).spread((group1, group2, group3) => {
-
                     groups = [group1, group2, group3];
                     groups.map(group => {
                         group[0].addUser(user);
                     });
                     MailCtrl.sendVerificationEmail(user);
-                    res.json(user.generateJwt());
+                    res.status(201)
+                        .json({
+                            success: true,
+                            message: 'Verification email sent.'
+                        });
                 });
 
             }).catch(function(err){
