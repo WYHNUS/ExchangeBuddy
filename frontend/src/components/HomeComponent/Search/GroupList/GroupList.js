@@ -24,7 +24,7 @@ class GroupItem extends React.Component {
     };
     return (
       <div className="group-body">
-      <h5 className="group-heading">{heading}</h5>
+      <h5 className="group-heading">{heading}</h5>  
       <ListItem
       className={group.groupType===homeGroupDetails.groupType?'selected-group':null}
       primaryText={group.name}
