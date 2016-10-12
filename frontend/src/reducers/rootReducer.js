@@ -9,6 +9,7 @@ import { pageVisibility } from './pageVisibility';
 import { home } from './home';
 import { user } from './user';
 import { utilityInfo } from './utilityInfo';
+import {profile} from './profile';
 
 const rootReducer = combineReducers({
   messageSnackbar,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   home,
   user,
   utilityInfo,
+  profile,
 
   // Add routerReducer
   routing: routerReducer,

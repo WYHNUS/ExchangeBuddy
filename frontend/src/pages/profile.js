@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { toggleBottomBarVisibility } from '../actions/pageVisibility';
+import ProfilePaper from '../components/ProfilePaper';
 
 class Profile extends React.Component{
 
@@ -11,7 +12,7 @@ class Profile extends React.Component{
 	render() {
 		return (
 			<div>
-			profile
+			<ProfilePaper userId={ this.props.user.userId } />
 			</div>
 			);
 	}
@@ -23,4 +24,11 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(null, mapDispatchToProps)(Profile);
+const mapStateToProps = (state )=>{
+	return{
+		user: state.user.userObject
+	};
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
