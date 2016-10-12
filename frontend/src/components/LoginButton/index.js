@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Action creators
-import { attemptLogin } from '../../actions/authActions';
+import { attemptLogin, navigatedAwayFromAuthFormPage } from '../../actions/authActions';
 import { showSnackbar } from '../../actions/messageSnackbar';
 
 // Component
@@ -17,7 +17,7 @@ import ChildComponent from './LoginButton';
 // redux
 function mapStateToProps(state) {
   return {
-    userAuthSession: state.userAuthSession,
+    userAuthSession: state.user,
     pageVisibility: state.pageVisibility,
   };
 }
@@ -25,7 +25,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({ showSnackbar }, dispatch),
-    attemptLogin: (token, email) => dispatch(attemptLogin(token, email)),
+    attemptLogin: (token) => dispatch(attemptLogin(token)),
+    navigatedAwayFromAuthFormPage: () => dispatch(navigatedAwayFromAuthFormPage()),
   };
 };
 

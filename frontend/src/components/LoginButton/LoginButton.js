@@ -5,16 +5,6 @@ import FacebookLogin from 'react-facebook-login';
 //import { setUserSession } from '../../../util/session';
 
 const responseFacebook = (attemptLogin) => (response) => {attemptLogin(response.accessToken)};
-  // if (!response || !response.userID)
-  //   return;
-
-  // attemptLogin(response.accessToken);
-  // .then(function(res) {
-  //   console.log(res);
-  // }, function(err) {
-  //   console.log(err);
-  //   // browserHistory.push('/signup');
-  // });
 
   /*Meteor.call('User.loginFacebook', response, (error, { user, token }) => {
     if (error || !user || !token) {
@@ -30,13 +20,33 @@ const responseFacebook = (attemptLogin) => (response) => {attemptLogin(response.
       actions.showSnackbar("Logged in!");
     }
   })*/
-// };
 
 // const LoginButton = ({ actions }) => (
 export default class LoginButton extends Component {
   constructor(props){
     super(props);
-    // this.goToProfileIfLoggedIn = this.goToProfileIfLoggedIn.bind(this);
+    this.redirectIfLoggedIn = this.redirectIfLoggedIn.bind(this);
+  }
+
+  redirectIfLoggedIn() {
+    if (this.props.userAuthSession.isLoggedIn){
+      browserHistory.push('/home');
+    } else if (this.props.userAuthSession.error) {
+      console.log(this.props.userAuthSession.error);
+      if (!this.props.userAuthSession.isRegistered) {
+        browserHistory.push('/signup');
+      }
+    }
+  }
+
+  componentWillMount() {
+    this.redirectIfLoggedIn();
+  }
+  componentDidUpdate() {
+    this.redirectIfLoggedIn();
+  }
+  componentWillUnmount() {
+    this.props.navigatedAwayFromAuthFormPage();
   }
 
   render() {
@@ -48,7 +58,5 @@ export default class LoginButton extends Component {
         callback={ responseFacebook(this.props.attemptLogin) } />
     )
   }
-// );
 }
 
-// export default LoginButton;

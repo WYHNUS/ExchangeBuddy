@@ -36,13 +36,13 @@ export const getRoutes = (store) =>{
   const authRequired = (nextState, replace) => {
     // Now you can access the store object here.
     const state = store.getState();
-    
-    if (!state.user.isAuthenticated) {
-      replace({ 
-        pathname: '/notloggedin'//nextState.location.pathname, 
-        // state: { nextPathname:'/notloggedin' }
-      });
-    }
+
+    /* >>>>>>>>>>>> tmp remove check for development <<<<<<<<<<<< */
+    // if (!state.user.isAuthenticated) {
+    //   replace({ 
+    //     pathname: '/notloggedin'
+    //   });
+    // }
   };
 
   const goToDefaultGroup = (nextState, replace)=>{
@@ -85,36 +85,3 @@ export default (
         </Router>
       </Provider>
 );
-
-
-//www.exchangebuddy.com/home/9134593223/events
-//actual routing done this way
-//<Route path="home">
-//              <IndexRoute onEnter={goToDefaultGroup}/>
-//              <Route path=":id" component={Home}>
-//                <Route path="events" component={Events}/>
-//                <Route path="chat" component={Chat}/>
-//                <Route path="friends" component={Friends}/>
-//              </Route>
-//            </Route>
-
-/*const goToDefaultGroup = (nextState, replace) => {
-  // if (Meteor.user() && Meteor.user().defaultGroupId) {
-  //   // If have default group, redirect there.
-  //   replace({
-  //     pathname: `/group/${Meteor.user().defaultGroupId}`,
-  //     state: { nextPathname: nextState.location.pathname }
-  //   });
-  // } else {
-    replace({
-      pathname: '/',
-      state: { nextPathname: nextState.location.pathname }
-    });
-};*/
-
-/*<Route path="wiki" component={Wiki}/>
-            <Route path="journal" component={Journal}/>
-            <Route path="stories" component={Stories}/>
-            <Route path="profile" component={Profile}/>
-            <Route path="settings" component={Settings}/>
-            <Route path="*" component={NotFound}/>*/

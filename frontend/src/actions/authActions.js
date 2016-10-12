@@ -12,6 +12,8 @@ export const Clicked_Login = 'Clicked_Login';
 export const Login_Success = 'Login_Success';
 export const Login_Fail = 'Login_Fail';
 
+export const Not_Registered = 'Not_Registered';
+
 export const Started_Session_Check = 'Started_Session_Check';
 export const Checked_Session_Status = 'Checked_Session_Status';
 
@@ -75,6 +77,9 @@ export function loginFail(error) {
     return { type: Login_Fail, error };
 }
 
+export function requireRegistration(error) {
+    return { type: Login_Fail, error };
+}
 
 export function attemptLogin(token) {
   return (dispatch) => {
@@ -90,7 +95,11 @@ export function attemptLogin(token) {
         if(res.body.status === "success"){
           dispatch(loginSuccess(res.body.user, res.body.token));
         } else {
-          dispatch(loginFail({error:res.body.message}));
+          if (res.status === 404) {
+            dispatch(requireRegistration({error:res.body.message}));
+          } else {
+            dispatch(loginFail({error:res.body.message}));
+          }
         }
       })
   }
