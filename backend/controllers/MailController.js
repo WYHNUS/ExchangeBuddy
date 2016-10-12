@@ -1,4 +1,5 @@
 var helper = require('sendgrid').mail;
+// var AWS = require('aws-sdk');
 var models = require('../models');
 var User = models.User;
 

@@ -16,6 +16,7 @@ module.exports = function(sequelize, DataType) {
             type: DataType.TEXT(),
         },
 
+        // this is set to be facebook image url
         profilePictureUrl: {
             type: DataType.STRING(255),
         },
