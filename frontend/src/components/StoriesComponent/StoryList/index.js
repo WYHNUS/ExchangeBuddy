@@ -12,9 +12,9 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
 	return {
-		stories:ownProps.stories,
+		stories:state.stories.storyList.storyList,
 		user:state.user.userObject
 
 	};

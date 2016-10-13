@@ -20,6 +20,7 @@ import NotFound from './pages/not-found';
 import Profile from './pages/profile';
 import Wiki from './pages/wiki';
 import Stories from './pages/stories/stories';
+import Story from './pages/stories/story';
 import Journal from './pages/journal';
 import NotLoggedIn from './pages/notloggedin';
 import Signup from './pages/signup';
@@ -67,7 +68,10 @@ export const getRoutes = (store) =>{
       </Route>
     </Route>
     <Route path="journal" component={Journal} onEnter={authRequired}/>
-    <Route path="stories" component={Stories}/>
+    <Route path="stories">
+      <IndexRoute component={Stories}/>
+      <Route path=":id" component={Story}/>
+    </Route>
     <Route path="wiki" component={Wiki}/>
     <Route path="profile(/:userId)" component={ Profile } />
     <Route path="notloggedin" component={NotLoggedIn}/>

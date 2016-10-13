@@ -10,6 +10,7 @@ import { home } from './home';
 import { user } from './user';
 import { utilityInfo } from './utilityInfo';
 import {profile} from './profile';
+import {stories} from './stories';
 
 const rootReducer = combineReducers({
   messageSnackbar,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   user,
   utilityInfo,
   profile,
+  stories,
 
   // Add routerReducer
   routing: routerReducer,

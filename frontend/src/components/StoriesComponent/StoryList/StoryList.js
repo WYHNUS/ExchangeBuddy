@@ -14,22 +14,21 @@ import $ from 'jquery';
 class Story extends React.Component{
 	//`/home/${state.home.homeGroupDetails.homeGroupDetails.id}`
 	//'#content'
+	//$(`#content_${this.props.story.id}`).append(this.props.story.content);
 
 	componentDidMount(){
-		$(`#content_${this.props.story.id}`).append(this.props.story.content);
 	}
 
 	render(){
 		const { content, author, createdAt, id, title, } = this.props.story;
 		return (
-		<div>
-		<div className="story-row">
-		<div className="story-avatar">{ UserHelper.getAvatar(author, 40) }</div>
-		<div>{ title }</div>
-		<div id={`content_${this.props.story.id}`}>{}</div>
-		</div>
-		</div>
-		)
+			<div>
+			<div className="story-row">
+			<div className="story-avatar">{ UserHelper.getAvatar(author, 40) }</div>
+			<div>{ title }</div>
+			</div>
+			</div>
+			)
 	}
 	
 	
@@ -41,12 +40,12 @@ export default class StoryList extends React.Component {
 		super(props);
 	}
 
-	componentDidMount() {
-    //chatScrollToLatest();
-}
+	componentDidMount() 
+	{//chatScrollToLatest();
+	}
 
-componentDidUpdate() {
-    //chatScrollToLatest();
+	componentDidUpdate() 
+{//chatScrollToLatest();
 }
 
 render() {

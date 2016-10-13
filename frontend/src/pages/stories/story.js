@@ -1,21 +1,21 @@
 import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
-import { toggleBottomBarVisibility } from '../actions/pageVisibility';
+import { toggleBottomBarVisibility } from '../../actions/pageVisibility';
 
-import StoryList from '../../components/StoriesComponent/StoryDetails';
+import StoryDetails from '../../components/StoriesComponent/StoryDetails';
 
 import story1ImgUrl from '../../res/SEP-Application.png';
 
 class Story extends React.Component{
 
 	componentDidMount() {
-		this.props.toggleBottomBarVisibility(true);
+		this.props.toggleBottomBarVisibility(false);
 	}
 
 	render() {
 		return (
 			<div>
-			<StoryDetails story={this.props.story}/>
+			<StoryDetails/>
 			</div>
 			);
 	}

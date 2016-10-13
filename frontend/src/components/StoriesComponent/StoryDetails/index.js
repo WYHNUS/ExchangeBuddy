@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Component
-import ChildComponent from './StoryList';
+import ChildComponent from './StoryDetails';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -12,11 +12,10 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
 	return {
-		stories:ownProps.stories,
+		storyDetails: state.stories.storyDetails.storyDetails,
 		user:state.user.userObject
-
 	};
 };
 
