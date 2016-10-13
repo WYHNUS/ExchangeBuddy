@@ -4,11 +4,13 @@ import React, {PropTypes} from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactHtmlParser from 'react-html-parser';
 import truncate from 'truncate';
-import Linkify from 'react-linkify';
+import {Link, browserHistory} from 'react-router';
 
 import { formatTime } from '../../../util/helper';
 import * as UserHelper from '../../../util/user';
+import * as IconsHelper from '../../../util/icons';
 import $ from 'jquery';
+var moment = require('moment');
 
 import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
@@ -35,6 +37,8 @@ titlePosition="top"*/
 componentDidMount(){
 }
 
+//person_pin
+
 render(){
 	const { id, title, tags, favorites, status, author, storyImgUrl, createdAt } = this.props.story;
 	return (
@@ -42,7 +46,12 @@ render(){
 		key={storyImgUrl}
 		title={title}
 		actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-		subtitle={<span>by <b>{author.displayName}</b></span>}
+		subtitle={
+			<span>
+			<div><span>{IconsHelper.smallWhiteMaterialIcon("perm_identity")} by <b>{author.displayName}</b></span></div>
+			<div><span>{moment(createdAt).fromNow()}</span></div>
+			</span>
+		}
 		titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
 		<img src={storyImgUrl} />
 		</GridTile>
@@ -76,15 +85,17 @@ render() {
 
 	return (
 		<div>
-		<div className="stories-container"
+		<div 
 		style={styles.stories_list_root}>
 		<GridList
+		className="stories-container"
 		cols={1}
 		cellHeight={400}
 		padding={1}
 		style={styles.stories_list_grid}
 		>
-		{ stories.length > 0 && stories.map((story, idx) => (<Story story={story} key={ idx }/>)) }
+		{ stories.length > 0 && stories.map((story, idx) => (
+			<Story story={story} key={ idx }/>)) }
 		</GridList>
 		
 		</div>

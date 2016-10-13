@@ -47,7 +47,7 @@ var story1 =
 	favorites: 20,
 	status: 'published',
 	author:{
-		diplayName: "Lee Min Han",
+		displayName: "Lee Min Han",
 		userId:1
 	},
 	title: 'For NUS Students: Starting the Application Process',
@@ -89,7 +89,7 @@ var story2=
 	favorites: 40,
 	status: 'published',
 	author:{
-		diplayName: "ExchangeBuddy",
+		displayName: "ExchangeBuddy",
 		userId:2
 	},
 	title: 'Exchange in Singapore - All you need to know',
@@ -106,11 +106,13 @@ var storyList =
 	favorites: 20,
 	status: 'published',
 	author:{
-		diplayName: "Lee Min Han",
+		displayName: "Lee Min Han",
 		userId:1
 	},
 	storyImgUrl: story1ImgUrl,
-	createdAt: 'Thu Oct 13 2016 14:45:36 GMT+0800 (SGT)'
+	createdAt: 'Thu Oct 13 2016 14:45:36 GMT+0800 (SGT)',
+	replies: 10
+
 },
 {
 	id:2,
@@ -119,11 +121,13 @@ var storyList =
 	favorites: 40,
 	status: 'published',
 	author:{
-		diplayName: "ExchangeBuddy",
+		displayName: "ExchangeBuddy",
 		userId:2
 	},
 	storyImgUrl: story2ImgUrl,
-	createdAt: 'Thu Oct 13 2016 14:45:36 GMT+0800 (SGT)'
+	createdAt: 'Thu Oct 13 2016 14:45:36 GMT+0800 (SGT)',
+	replies: 3
+
 }
 ]
 

@@ -16,3 +16,12 @@ export const materialIcon = (name, style={}) => (
     { name }
   </FontIcon>
 );
+
+export const smallWhiteMaterialIcon = (name, style={}) => (
+  <FontIcon
+    className="material-icons"
+    color={ "#FFFFFF" }
+    style={style}>
+    { name }
+  </FontIcon>
+);
