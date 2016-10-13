@@ -124,7 +124,7 @@
     "jsonwebtoken": "^7.1.9",
     "material-ui": "^0.15.4",
     "medium-editor": "^5.21.1",
-    "meetup-api": "^1.4.3",
+    "meetup-api": "^1.4.6",
     "moment": "^2.15.1",
     "mysql": "^2.11.1",
     "node-sass": "^3.7.0",

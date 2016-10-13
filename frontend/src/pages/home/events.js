@@ -9,7 +9,8 @@ import { pageVisibility } from '../../actions/pageVisibility';
 
 import EventList from '../../components/HomeComponent/Events/EventList';
 
-import {fetchFbEvents, fetchFbEventsSuccess, fetchFbEventsFailure} from '../../actions/home';
+import {fetchFbEvents, fetchFbEventsSuccess, 
+    fetchFbEventsFailure, fetchMuEvents} from '../../actions/home';
 
 
 var date=new Date();
@@ -77,11 +78,26 @@ var meetupseed =
 }
 ]
 
+const university = 
+{
+        lat:1.2966426,
+        lng:103.7742052,
+        city: 'Singapore',
+        country: 'Singapore',
+        countryCode: 'SGP'
+};
+
+const country = 
+{
+    capital: "Singapore"
+}
+
 
 class Events extends React.Component{
 	componentWillMount(){
 		//fetchHomeEvenets(groupId)
         fetchFbEvents(123,[1231,12341]);
+        fetchMuEvents(university, country);
 	}
 
 	render(){
@@ -117,9 +133,12 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(fetchFbEvents(countryCode, uniLatLng)).then((response) => {
             !response.error ? dispatch(fetchFbEventsSuccess(response.payload)) : 
             dispatch(fetchFbEventsFailure(response.payload));
-        })
-      }
-  }
+        })},
+
+        fetchMuEvents:(university, country)=>{
+            dispatch(fetchMuEvents(university,country))
+        }
+    }
 }
 
 

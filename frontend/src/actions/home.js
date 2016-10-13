@@ -21,6 +21,8 @@ export const RESET_HOME_MESSAGES = 'RESET_HOME_MESSAGES';
 
 const ROOT_URL = 'https://exchangebuddy.com';
 //import EventSearch from "facebook-events-by-location-core";	
+/*import meetup from "meetup-api";
+const Meetup = meetup({ "key": '70384fc6d75796e3b6b426ff3146f' });*/
 
 /************************************************************
 FETCHING FB EVENTS OF A GROUP
@@ -74,12 +76,53 @@ export function resetFbEvents(){
 FETCHING MU EVENTS OF A GROUP
 ************************************************************/
 
-export function fetchMuEvents(){
+export function fetchMuEvents(university, country){
+	/*const options = {
+		order: "trending",
+		page: 20,
+		offset: 0,
+		desc: true,
+	};
+
+	if (university.lat && university.lng) {
+		options.lat = university.lat;
+		options.lon = university.lng;
+	} else if (university.city) {
+		options.city = university.city;
+		options.country = university.countryCode;
+	} else {
+		options.city = country.capital;
+		options.country = university.countryCode;
+	}
+	if (university.countryCode == 'US') {
+    	// If this university has no latLng or city,
+   		// Check if have state, otherwise the city defaults to Washington D.C.
+    	// Washington D.C. does not belong in a state so it breaks Meetup API's query
+    	// We have no choice. Use a default of New York, NY.
+    	if (!university.lat && !university.lng && !university.city && !university.state) {
+    		options.state = 'NY';
+    		options.city = 'New York';
+    	}
+    }
+
+    Meetup.getOpenEvents(options, (error, events) => {
+    	if (error){
+    		console.log(error);
+    	}else{
+    		console.log(events);
+    		resolve(events);
+    	}
+    });*/
+
+    return {
+    	type: FETCH_MU_EVENTS,
+    	payload: req
+    };
 
 }
 
 export function fetchMuEventsSuccess(events){
-	
+
 }
 
 export function fetchMuEventsFailure(error){
