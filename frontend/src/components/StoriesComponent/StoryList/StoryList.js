@@ -9,20 +9,30 @@ import Linkify from 'react-linkify';
 
 import { formatTime } from '../../../util/helper';
 import * as UserHelper from '../../../util/user';
+import $ from 'jquery';
 
-const Story = ({ story }) => {
-	const { content, user, createdAt, id } = story;
+class Story extends React.Component{
 
-	return (
+	componentDidMount(){
+		$('#content').append(this.props.story.content);
+	}
+
+	render(){
+		const { content, author, createdAt, id, title, } = this.props.story;
+		return (
 		<div>
 		<div className="story-row">
-		<div className="story-avatar">{ UserHelper.getAvatar(user, 40) }</div>
-		<div>{ story.name }</div>
-
+		<div className="story-avatar">{ UserHelper.getAvatar(author, 40) }</div>
+		<div>{ title }</div>
+		<div id="content">{}</div>
 		</div>
 		</div>
 		)
-};
+	}
+	
+	
+}
+
 
 export default class StoryList extends React.Component {
 	constructor(props) {

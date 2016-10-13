@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		stores:ownProps.stories,
+		stories:ownProps.stories,
 		user:state.user.userObject
 
 	};

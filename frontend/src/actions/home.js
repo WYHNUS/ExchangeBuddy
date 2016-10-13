@@ -114,6 +114,8 @@ export function fetchMuEvents(university, country){
     	}
     });*/
 
+    var req='miao';
+
     return {
     	type: FETCH_MU_EVENTS,
     	payload: req
