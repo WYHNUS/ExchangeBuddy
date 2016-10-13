@@ -19,7 +19,7 @@ import Landing from './pages/landing';
 import NotFound from './pages/not-found';
 import Profile from './pages/profile';
 import Wiki from './pages/wiki';
-import Stories from './pages/stories';
+import Stories from './pages/stories/stories';
 import Journal from './pages/journal';
 import NotLoggedIn from './pages/notloggedin';
 import Signup from './pages/signup';

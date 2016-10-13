@@ -1,7 +1,6 @@
 var moment=require('moment');
 
 import React, {PropTypes} from 'react';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactHtmlParser from 'react-html-parser';
 import truncate from 'truncate';
@@ -12,11 +11,9 @@ import * as UserHelper from '../../../util/user';
 import $ from 'jquery';
 
 class Story extends React.Component{
-	//`/home/${state.home.homeGroupDetails.homeGroupDetails.id}`
-	//'#content'
 
 	componentDidMount(){
-		$(`#content_${this.props.story.id}`).append(this.props.story.content);
+		$('#content').append(this.props.story.content);
 	}
 
 	render(){
@@ -26,7 +23,7 @@ class Story extends React.Component{
 		<div className="story-row">
 		<div className="story-avatar">{ UserHelper.getAvatar(author, 40) }</div>
 		<div>{ title }</div>
-		<div id={`content_${this.props.story.id}`}>{}</div>
+		<div id="content">{}</div>
 		</div>
 		</div>
 		)
@@ -36,7 +33,7 @@ class Story extends React.Component{
 }
 
 
-export default class StoryList extends React.Component {
+export default class StoryDetails extends React.Component {
 	constructor(props) {
 		super(props);
 	}
@@ -63,7 +60,7 @@ render() {
 }
 
 
-StoryList.propTypes = {
+StoryDetails.propTypes = {
 	stories: PropTypes.array.isRequired,
 	user: PropTypes.object.isRequired
 };

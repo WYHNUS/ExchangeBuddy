@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
-import { toggleBottomBarVisibility } from '../actions/pageVisibility';
+import { toggleBottomBarVisibility } from '../../actions/pageVisibility';
 
-import StoryList from '../components/StoriesComponent/StoryList';
+import StoryList from '../../components/StoriesComponent/StoryList';
 
-import story1ImgUrl from '../res/SEP-Application.png';
+import story1ImgUrl from '../../res/SEP-Application.png';
 
 
 var stories =

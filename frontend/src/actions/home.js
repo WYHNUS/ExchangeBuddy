@@ -22,7 +22,7 @@ export const RESET_HOME_MESSAGES = 'RESET_HOME_MESSAGES';
 const ROOT_URL = 'https://exchangebuddy.com';
 //import EventSearch from "facebook-events-by-location-core";	
 /*import meetup from "meetup-api";
-const Meetup = meetup({ "key": '70384fc6d75796e3b6b426ff3146f' });*/
+const Meetup = meetup({ "key": '' });*/
 
 /************************************************************
 FETCHING FB EVENTS OF A GROUP
