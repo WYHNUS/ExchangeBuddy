@@ -1,5 +1,4 @@
 var helper = require('sendgrid').mail;
-var passwordless = require('passwordless');
 var graph = require('fbgraph');
 var uid = require('rand-token').uid;
 
