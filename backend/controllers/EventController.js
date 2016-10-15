@@ -4,16 +4,18 @@ exports.createEvent = function(req, res){
     models.Event.create({
         lat: req.body.lat,
         lng: req.body.lng,
-        startTime: req.body.startTime,
-        endTime: req.body.endTime,
+        startTime: new Date(req.body.startTime),
+        endTime: new Date(req.body.endTime),
         detail: req.body.detail,
         imgSrc: req.body.imgSrc,
         GroupId: req.body.GroupId
     }).then(function(event){
-        req.send({
+        res.send({
             success: true
         });
-    });
+    }).catch(function(err) {
+        resError(res, err);
+    });;
 }
 
 exports.deleteEvent = function(req, res){
@@ -31,15 +33,17 @@ exports.deleteEvent = function(req, res){
                 success: false
             })
         }
-    });
+    }).catch(function(err) {
+        resError(res, err);
+    });;
 }
 
 exports.updateEvent = function(req, res){
     models.Event.update({
         lat: req.body.lat,
         lng: req.body.lng,
-        startTime: req.body.startTime,
-        endTime: req.body.endTime,
+        startTime: new Date(req.body.startTime),
+        endTime: new Date(req.body.endTime),
         detail: req.body.detail,
         imgSrc: req.body.imgSrc
     }, {
@@ -56,7 +60,9 @@ exports.updateEvent = function(req, res){
                 success: false
             })
         }
-    })
+    }).catch(function(err) {
+        resError(res, err);
+    });
 }
 
 exports.getAllEvents = function(req, res){
@@ -66,14 +72,16 @@ exports.getAllEvents = function(req, res){
         }
     }).then(function(events){
         res.send(events);
-    })
+    }).catch(function(err) {
+        resError(res, err);
+    });
 }
 
 exports.goToEvent = function(req, res){
     models.sequelize.Promise.all([
         models.Event.findOne({
             where: {
-                id: req.body.EventId
+                id: req.body.eventId
             }
         }),
 
@@ -83,10 +91,25 @@ exports.goToEvent = function(req, res){
             }
         })
     ]).spread(function(event, user){
-        event.addUserEvent(user);
-        res.send({
-            success: true
-        });
-    })
+        if(!!event && !!user){
+            event.addUserEvent(user);
+            res.send({
+                success: true
+            });
+        }else{
+            res.send({
+                success: false,
+                error: "user or event doesn't exist"
+            })
+        }
 
+    }).catch(function(err) {
+        resError(res, err);
+    });
+}
+
+function resError(res, err) {
+    return res.status(500).json({
+        message: err.message
+    });
 }
