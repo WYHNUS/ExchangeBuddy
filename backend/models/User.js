@@ -75,6 +75,12 @@ module.exports = function(sequelize, DataType) {
                     foreignKey: 'userId'
                 });
 
+                User.belongsToMany(models.Event, {
+                    as: 'event',
+                    through: 'user_event',
+                    foreignKey: 'userId'
+                })
+
                 User.belongsToMany(models.Group, {
                     as: 'group',
                     through: 'chat_group',
