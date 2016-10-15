@@ -2,13 +2,13 @@ import React from 'react';
 import { Field } from 'redux-form';
 import { TextField, SelectField, AutoComplete } from 'redux-form-material-ui';
 
-export const TextFormField = ({ name, ...rest }) =>
-  <Field
+export const TextFormField = ({ name, ...rest }) => {
+  return <Field
     component={ TextField }
     name={name}
     fullWidth={true}
     autoComplete="off"
-    {...rest} />;
+    {...rest} />};
 
 export const EmailFormField = TextFormField;
 

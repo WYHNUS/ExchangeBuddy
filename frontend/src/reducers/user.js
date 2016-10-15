@@ -7,7 +7,7 @@ import {
 } from '../actions/authActions';
 
 import {
-  UPDATE_USER_PROFILE
+  UPDATE_USER_PROFILE, SAVE_SIGNUP_PAGE_ONE_INFO, SAVE_SIGNUP_PAGE_TWO_INFO
 }from '../actions/user';
 
 const initialState = {
@@ -29,11 +29,35 @@ const initialState = {
     fbToken:'',
     fbTokenExpiresAt:'',
     UniversityId: null
+  },
+  signupInfo: {
+    displayName: '',
+    gender: '',
+    homeUniName: '',
+    exchangeUniName: '',
+    exchangeUniYear: '',
+    exchangeTerm: ''
   }
 }
 
 export function user(state = initialState , action) {
   switch (action.type){
+    case SAVE_SIGNUP_PAGE_ONE_INFO:
+      return Object.assign({}, state, {
+        signupInfo: {
+          displayName: action.field.displayName,
+          gender: action.field.gender,
+          homeUniName: action.field.homeUniName
+        }
+      });
+    case SAVE_SIGNUP_PAGE_TWO_INFO:
+      return Object.assign({}, state, {
+        signupInfo: {
+          exchangeUniName: action.field.exchangeUniName,
+          exchangeUniYear: action.field.exchangeUniYear,
+          exchangeTerm: action.field.exchangeTerm
+        }
+      });
 
     case UPDATE_USER_PROFILE:
     return Object.assign({}, state, {
