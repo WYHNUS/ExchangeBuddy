@@ -32,7 +32,6 @@ exports.createUser = function(req, res){
             });
     }
     var facebookToken = req.body.facebookToken;
-    var token = uid(32);
 
     models.sequelize.Promise.all([
         University.findOne({
@@ -56,7 +55,7 @@ exports.createUser = function(req, res){
                     message: "Email account already registered!"
                 });
         }
-        if (!!homeUniversity && !!exchangeUniversity) {
+        else if (!!homeUniversity && !!exchangeUniversity) {
             graph.get("/me?fields=name,id,email&access_token=" + facebookToken, function (error, response) {
                 if (error) {
                     return res.status(400)
@@ -73,7 +72,6 @@ exports.createUser = function(req, res){
                         fbUserId: response.id,
                         isEmailVerified: 0, // default to false
                         UniversityId: req.body.homeUniversity.id,
-                        verificationToken: token
                     }),
                     Exchange.create({
                         year: req.body.exchangeYear,

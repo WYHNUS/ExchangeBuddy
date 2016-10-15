@@ -47,8 +47,8 @@ module.exports = function(sequelize, DataType) {
             unique: true,
         },
         verificationToken: {
-            type: DataType.STRING(32),
-            unique: true,
+            type: DataType.UUID(),
+            defaultValue: DataType.UUIDV4()
         },
         isEmailVerified: {
             type: DataType.BOOLEAN(),
