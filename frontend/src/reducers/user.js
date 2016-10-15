@@ -7,8 +7,8 @@ import {
 } from '../actions/authActions';
 
 import {
-  UPDATE_USER_PROFILE, SAVE_SIGNUP_PAGE_ONE_INFO, SAVE_SIGNUP_PAGE_TWO_INFO
-}from '../actions/user';
+  UPDATE_USER_PROFILE, SAVE_SIGNUP_PAGE_ONE_INFO, SAVE_SIGNUP_PAGE_TWO_INFO, SAVE_SIGNUP_PAGE_THREE_INFO
+} from '../actions/user';
 
 const initialState = {
   isAuthenticated: false,
@@ -36,7 +36,8 @@ const initialState = {
     homeUniName: '',
     exchangeUniName: '',
     exchangeUniYear: '',
-    exchangeTerm: ''
+    exchangeTerm: '',
+    emailDomains: ''
   }
 }
 
@@ -47,15 +48,35 @@ export function user(state = initialState , action) {
         signupInfo: {
           displayName: action.field.displayName,
           gender: action.field.gender,
-          homeUniName: action.field.homeUniName
+          homeUniName: action.field.homeUniName,
+          exchangeUniName: state.signupInfo.exchangeUniName,
+          exchangeUniYear: state.signupInfo.exchangeUniYear,
+          exchangeTerm: state.signupInfo.exchangeTerm,
+          emailDomain: state.signupInfo.emailDomain
         }
       });
     case SAVE_SIGNUP_PAGE_TWO_INFO:
       return Object.assign({}, state, {
         signupInfo: {
+          displayName: state.signupInfo.displayName,
+          gender: state.signupInfo.gender,
+          homeUniName: state.signupInfo.homeUniName,
           exchangeUniName: action.field.exchangeUniName,
           exchangeUniYear: action.field.exchangeUniYear,
-          exchangeTerm: action.field.exchangeTerm
+          exchangeTerm: action.field.exchangeTerm,
+          emailDomain: state.signupInfo.emailDomain
+        }
+      });
+    case SAVE_SIGNUP_PAGE_THREE_INFO:
+      return Object.assign({}, state, {
+        signupInfo: {
+          displayName: state.signupInfo.displayName,
+          gender: state.signupInfo.gender,
+          homeUniName: state.signupInfo.homeUniName,
+          exchangeUniName: state.signupInfo.exchangeUniName,
+          exchangeUniYear: state.signupInfo.exchangeUniYear,
+          exchangeTerm: state.signupInfo.exchangeTerm,
+          emailDomain: action.emailDomains
         }
       });
 

@@ -10,21 +10,6 @@ import ExchangeTermSelect from '../ExchangeTermSelect';
 
 import { propExistsDeep } from '../../../util/helper';
 
-export const fields = [ 'exchangeUniName', 'exchangeUniYear', 'exchangeTerm' ];
-
-// const saveForm = (callback) => {
-//   return (values) => {
-//     const { exchangeUniName, exchangeUniYear, exchangeTerm } = values;
-
-//     Meteor.call('UserGroup.addUserToGroup', { userId: Meteor.userId(), exchangeUniName, exchangeUniYear, exchangeTerm }, (err, result) => {
-//       if (err)
-//         console.log("Error in invoking UserGroup.addUserToGroup: " + err);
-//       else if (callback)
-//         callback();
-//     });
-//   };
-// };
-
 const validate = values => {
   const errors = {};
   const requiredFields = [ 'exchangeUniName', 'exchangeUniYear', 'exchangeTerm' ];
@@ -52,11 +37,11 @@ const filter = (searchText, key) => {
 class Step2 extends React.Component {
   submitForm (val, props) {
     props.handleNext();
-    props.saveData(val);
+    this.props.saveData(val);
   }
 
   render() {
-    const { universities, saveData, handleNext, handlePrev, handleSubmit, submitting, formState } = this.props;
+    const { universities, handleNext, handlePrev, handleSubmit, submitting, formState } = this.props;
 
     // Year of exchange
     const year = new Date().getFullYear();
@@ -98,9 +83,7 @@ class Step2 extends React.Component {
   }
 }
 
-
 // Decorate with redux-form
 export default reduxForm({
-  form: 'signupStep2',
-  validate, fields
+  form: 'signupStep2'
 })(Step2);

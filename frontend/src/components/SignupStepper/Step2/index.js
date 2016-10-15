@@ -1,4 +1,3 @@
-// import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import Loading from '../../Loading';
 
@@ -15,8 +14,8 @@ import ChildComponent from './Step2';
 const mapStateToProps = (state) => {
   return {
     initialValues: { 
-      exchangeUniYear: state.user.signupInfo.exchangeUniYear,
       exchangeUniName: state.user.signupInfo.exchangeUniName,
+      exchangeUniYear: state.user.signupInfo.exchangeUniYear,
       exchangeTerm: state.user.signupInfo.exchangeTerm
     }
   };

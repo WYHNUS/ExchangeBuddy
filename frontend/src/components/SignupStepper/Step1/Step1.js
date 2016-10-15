@@ -36,7 +36,6 @@ const filter = (searchText, key) => {
 
 class Step1 extends React.Component {
   submitForm (val, props) {
-    console.log(val);
     props.handleNext();
     this.props.saveData(val);
   }
@@ -51,9 +50,9 @@ class Step1 extends React.Component {
       }) }>
         <Row>
           <Col xs={12}>
-            <TextFormField name="displayName" floatingLabelText="Your name" {...this.props.initialValues.displayName} />
+            <TextFormField name="displayName" floatingLabelText="Your name" /*{...this.props.initialValues.displayName}*/ />
 
-            <SelectFormField name="gender" floatingLabelText="Gender" {...this.props.initialValues.gender}>
+            <SelectFormField name="gender" floatingLabelText="Gender" /*{...this.props.initialValues.gender}*/>
               <MenuItem value="male" primaryText="Male" />
               <MenuItem value="female" primaryText="Female" />
             </SelectFormField>
@@ -61,7 +60,7 @@ class Step1 extends React.Component {
             <AutoCompleteFormField
               name="homeUniName"
               floatingLabelText="Current university"
-              {...this.props.initialValues.homeUniName}
+              /*{...this.props.initialValues.homeUniName}*/
               openOnFocus={true}
               filter={ filter }
               maxSearchResults={10}

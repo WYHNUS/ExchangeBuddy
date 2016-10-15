@@ -25,11 +25,6 @@ export const Logout_Success = 'Logout_Success';
 export const Navigate_Away_From_Auth_Form = 'Navigate_Away_From_Auth_Form';
 
 /*
- * other constants
- */
-
-
-/*
  * action creators
  */
 
@@ -104,7 +99,6 @@ export function attemptLogin(token) {
       })
   }
 }
-
 
 export function startedSessionCheck() {
     return { type: Started_Session_Check };
