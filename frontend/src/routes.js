@@ -25,6 +25,7 @@ import Journal from './pages/journal';
 import NotLoggedIn from './pages/notloggedin';
 import Signup from './pages/signup';
 import Settings from './pages/settings';
+import NewEvent from './pages/home/newevent';
 
 // Redux
 const store = configureStore();
@@ -62,7 +63,9 @@ export const getRoutes = (store) =>{
       <IndexRoute onEnter={goToDefaultGroup}/>
       <Route path=":id" component={Home}> 
         <IndexRoute component={Events}/>
-        <Route path="events" component={Events}/>
+        <Route path="events" component={Events}>
+          <Route path="new" component={NewEvent}/>
+        </Route>
         <Route path="chat" component={Chat}/>
         <Route path="friends" component={Friends}/>
       </Route>
