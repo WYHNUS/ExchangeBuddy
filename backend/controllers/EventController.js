@@ -26,7 +26,7 @@ exports.deleteEvent = function(req, res){
             res.send({
                 success: true
             })
-        }eles{
+        }else{
             res.send({
                 success: false
             })
@@ -67,4 +67,26 @@ exports.getAllEvents = function(req, res){
     }).then(function(events){
         res.send(events);
     })
+}
+
+exports.goToEvent = function(req, res){
+    models.sequelize.Promise.all([
+        models.Event.findOne({
+            where: {
+                id: req.body.EventId
+            }
+        }),
+
+        models.User.findOne({
+            where: {
+                id: req.body.userId
+            }
+        })
+    ]).spread(function(event, user){
+        event.addUserEvent(user);
+        res.send({
+            success: true
+        });
+    })
+
 }

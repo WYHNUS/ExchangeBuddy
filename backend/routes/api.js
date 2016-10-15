@@ -46,5 +46,6 @@ router.get('/allEvents', EventCtrl.getAllEvents);
 router.put('/event', EventCtrl.createEvent);
 router.patch('/event', EventCtrl.updateEvent);
 router.delete('/event', EventCtrl.deleteEvent);
+router.post('/goToEvent', EventCtrl.goToEvent);
 
 module.exports = router;
