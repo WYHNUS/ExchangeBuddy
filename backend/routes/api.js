@@ -42,7 +42,7 @@ router.get('/university/:id', verifyToken, UniCtrl.getUniversity);
 router.get('/group', verifyToken, GroupCtrl.getGroupIndex);
 router.get('/group/:id', verifyToken, GroupCtrl.getGroup);
 
-router.get('/allEvents', EventCtrl.getAllEvents);
+router.post('/allEvents', EventCtrl.getAllEvents);
 router.put('/event', EventCtrl.createEvent);
 router.patch('/event', EventCtrl.updateEvent);
 router.delete('/event', EventCtrl.deleteEvent);
