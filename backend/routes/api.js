@@ -47,5 +47,7 @@ router.put('/event', EventCtrl.createEvent);
 router.patch('/event', EventCtrl.updateEvent);
 router.delete('/event', EventCtrl.deleteEvent);
 router.post('/goToEvent', EventCtrl.goToEvent);
+router.post('/comment', EventCtrl.comment);
+router.get('/comment/:eventId', EventCtrl.getComments);
 
 module.exports = router;
