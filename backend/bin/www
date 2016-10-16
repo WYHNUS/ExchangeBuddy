@@ -8,7 +8,7 @@ var models = require('../models');
 // set up socket
 require('../socket')(io);
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3001);
 
 models.sequelize.sync({force: false}).then(function () {
   var server = http.listen(app.get('port'), function() {

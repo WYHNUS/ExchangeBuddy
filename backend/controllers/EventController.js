@@ -121,7 +121,7 @@ exports.comment = function(req, res){
     })
 }
 
-exports.comment = function(req, res){
+exports.getComments = function(req, res){
     models.Comment.findAll({
         where: {
             EventId: req.query.eventId
