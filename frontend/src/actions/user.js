@@ -1,9 +1,13 @@
+import request from 'superagent';
+
 export const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';
 export const SAVE_SIGNUP_PAGE_ONE_INFO = 'SAVE_SIGNUP_PAGE_ONE_INFO';
 export const SAVE_SIGNUP_PAGE_TWO_INFO = 'SAVE_SIGNUP_PAGE_TWO_INFO';
 export const SAVE_SIGNUP_PAGE_THREE_INFO = 'SAVE_SIGNUP_PAGE_THREE_INFO';
 
-export const FIND_UNI_DOMAIN = 'FIND_UNI_DOMAIN';
+export const CLICKED_SIGNUP = 'CLICKED_SIGNUP';
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
+export const SIGNUP_FAIL = 'SIGNUP_FAIL';
 
 const ROOT_URL = 'http://localhost:3001';
 
@@ -27,39 +31,42 @@ export function saveSignupPageThreeInfo(email) {
 	return { type: SAVE_SIGNUP_PAGE_THREE_INFO, field }
 }
 
-// export function attemptSubmitSignup(field) {
-// 	return (dispatch) => {
-// 	    dispatch(clickedLogin());
+export function clickedSignup() {
+    return { type: CLICKED_SIGNUP };
+}
 
-// 	    request.post(ROOT_URL + '/verificationemail')
-// 			.send({
-// 				facebookToken: ,
-// 				email: ,
-// 				name: ,
-// 				gender: ,
-// 				exchangeYear: ,
-// 				exchangeSem: ,
-// 				homeUniversity: {
-// 					id: ,
-// 					name: 
-// 				},
-// 				exchangeUniversity: {
-// 					id: ,
-// 					name: 
-// 				}
-// 			})
-// 			.end(function(err,res){
-// 				// console.log(res);
-// 				// console.log(err);
-// 				if(res.body.status === "success"){
-// 					dispatch(loginSuccess(res.body.user, res.body.token));
-// 				} else {
-// 					if (res.status === 404) {
-// 						dispatch(requireRegistration({error:res.body.message}));
-// 					} else {
-// 						dispatch(loginFail({error:res.body.message}));
-// 					}
-// 				}
-// 			});
-//   	}
-// }
+export function signupSuccess(msg) {
+    return { type: SIGNUP_SUCCESS, msg };
+}
+
+export function signupFail(error) {
+    return { type: SIGNUP_FAIL, error };
+}
+
+export function submitSignupForm(field, email) {
+	console.log(field);
+	console.log(email);
+	return (dispatch) => {
+	    dispatch(clickedSignup());
+
+	    request.post(ROOT_URL + '/verificationemail')
+			.send({
+				// facebookToken: ,
+				email: email.homeUniEmail,
+				name: field.displayName,
+				gender: field.gender,
+				exchangeYear: field.exchangeUniYear,
+				exchangeSem: field.exchangeTerm,
+				homeUniversity: field.homeUniName,
+				exchangeUniversity: field.exchangeUniName
+			})
+			.end(function(err, res){
+				console.log(res);
+				if(res.body.status === "success"){
+					dispatch(signupSuccess(res.body.message));
+				} else {
+					dispatch(signupFail({error:res.body.message}));
+				}
+			});
+  	}
+}

@@ -1,5 +1,4 @@
 import {
-  Clicked_SignUp, SignUp_Success, SignUp_Fail,
   Clicked_Login, Login_Success, Login_Fail, Not_Registered,
   Started_Session_Check, Checked_Session_Status,
   Clicked_Logout, Logout_Success,
@@ -7,11 +6,13 @@ import {
 } from '../actions/authActions';
 
 import {
-  UPDATE_USER_PROFILE, SAVE_SIGNUP_PAGE_ONE_INFO, SAVE_SIGNUP_PAGE_TWO_INFO, SAVE_SIGNUP_PAGE_THREE_INFO
+  UPDATE_USER_PROFILE, SAVE_SIGNUP_PAGE_ONE_INFO, SAVE_SIGNUP_PAGE_TWO_INFO,
+  CLICKED_SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAIL
 } from '../actions/user';
 
 const initialState = {
   isAuthenticated: false,
+  isEmailSent: false,
   isLoggedIn: false,
   isRegistered: null,
   fetchingAuthUpdate: false,
@@ -36,8 +37,7 @@ const initialState = {
     homeUniName: '',
     exchangeUniName: '',
     exchangeUniYear: '',
-    exchangeTerm: '',
-    emailDomains: ''
+    exchangeTerm: ''
   }
 }
 
@@ -51,8 +51,7 @@ export function user(state = initialState , action) {
           homeUniName: action.field.homeUniName,
           exchangeUniName: state.signupInfo.exchangeUniName,
           exchangeUniYear: state.signupInfo.exchangeUniYear,
-          exchangeTerm: state.signupInfo.exchangeTerm,
-          emailDomain: state.signupInfo.emailDomain
+          exchangeTerm: state.signupInfo.exchangeTerm
         }
       });
     case SAVE_SIGNUP_PAGE_TWO_INFO:
@@ -63,21 +62,18 @@ export function user(state = initialState , action) {
           homeUniName: state.signupInfo.homeUniName,
           exchangeUniName: action.field.exchangeUniName,
           exchangeUniYear: action.field.exchangeUniYear,
-          exchangeTerm: action.field.exchangeTerm,
-          emailDomain: state.signupInfo.emailDomain
+          exchangeTerm: action.field.exchangeTerm
         }
       });
-    case SAVE_SIGNUP_PAGE_THREE_INFO:
+
+    case SIGNUP_SUCCESS:
       return Object.assign({}, state, {
-        signupInfo: {
-          displayName: state.signupInfo.displayName,
-          gender: state.signupInfo.gender,
-          homeUniName: state.signupInfo.homeUniName,
-          exchangeUniName: state.signupInfo.exchangeUniName,
-          exchangeUniYear: state.signupInfo.exchangeUniYear,
-          exchangeTerm: state.signupInfo.exchangeTerm,
-          emailDomain: action.emailDomains
-        }
+        isAuthenticated: false,
+        isLoggedIn: false,
+        isEmailSent: true,
+        isRegistered: true,
+        fetchingAuthUpdate: false,
+        error: null
       });
 
     case UPDATE_USER_PROFILE:
@@ -87,14 +83,13 @@ export function user(state = initialState , action) {
 
     case Started_Session_Check:
     case Clicked_Login:
-    case Clicked_SignUp:
+    case CLICKED_SIGNUP:
     case Clicked_Logout:
       return Object.assign({}, state, {
         fetchingAuthUpdate: true
       });
 
     case Login_Success:
-    case SignUp_Success:
       return Object.assign({}, state, {
         isLoggedIn: true,
         fetchingAuthUpdate: false,
@@ -105,14 +100,14 @@ export function user(state = initialState , action) {
         error: null
       });
 
-    case Login_Fail:
-    case SignUp_Fail:
+    case SIGNUP_FAIL:
       return Object.assign({}, state, {
         isLoggedIn: false,
+        isEmailSent: false,
         fetchingAuthUpdate: false,
         isAuthenticated: false,
         isRegistered: null,
-        error: action.error
+        error: action.error.error
       });
 
     case Not_Registered:

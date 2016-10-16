@@ -8,7 +8,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Action creators
-import { saveSignupPageThreeInfo } from '../../../actions/user';
+import { 
+	saveSignupPageThreeInfo, 
+	submitSignupForm, signupSuccess, signupFail
+} from '../../../actions/user';
 // Component
 import ChildComponent from './Step3';
 
@@ -16,14 +19,24 @@ import ChildComponent from './Step3';
 const mapStateToProps = (state) => {
   return {
     homeUniName: state.user.signupInfo.homeUniName,
-    emailDomains: state.utilityInfo.emailDomains
+    allSignupInfo: state.user.signupInfo,
+    isEmailSent: state.user.isAuthEmailSent,
+    authEmailError: state.user.error
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
-    saveData: (email) => dispatch(saveSignupPageThreeInfo(email)),
+    submitSignupForm: (signupInfo, email) => {
+      dispatch(submitSignupForm(signupInfo, email)).payload.then((response) => {
+        if (!response.error) {
+          dispatch(signupSuccess(response.data));
+        } else {
+          dispatch(signupFail(response.error));
+        }
+      });
+    }
   };
 };
 

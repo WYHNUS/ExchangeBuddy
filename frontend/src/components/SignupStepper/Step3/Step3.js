@@ -77,8 +77,7 @@ class Step3 extends React.Component {
   }
 
   submitForm (val) {
-    console.log(val);
-    this.props.saveData(val);
+    this.props.submitSignupForm(this.props.allSignupInfo, val);
   }
 
   render() {
@@ -103,7 +102,8 @@ class Step3 extends React.Component {
           name="homeUniEmail"
           floatingLabelText="Your university email address" />
 
-        { isEmailSent ? <p>Verification email sent!</p> : null }
+        { this.props.isEmailSent ? <p>Verification email sent!</p> : null }
+        { this.props.authEmailError ? <p>{ this.props.authEmailError }</p> : null}
 
         <div style={{ marginTop: 12 }}>
           <NextButton label="Send verification email" disabled={submitting} />
@@ -117,5 +117,5 @@ class Step3 extends React.Component {
 // Decorate with redux-form
 export default reduxForm({
   form: 'signupStep3',
-  validate//, fields
+  validate
 })(Step3);

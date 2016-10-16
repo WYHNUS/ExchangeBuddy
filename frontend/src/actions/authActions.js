@@ -3,11 +3,6 @@ import request from 'superagent';
 /*
  * action types
  */
-
-export const Clicked_SignUp = 'Clicked_SignUp';
-export const SignUp_Success = 'SignUp_Success';
-export const SignUp_Fail = 'SignUp_Fail';
-
 export const Clicked_Login = 'Clicked_Login';
 export const Login_Success = 'Login_Success';
 export const Login_Fail = 'Login_Fail';
@@ -29,36 +24,6 @@ export const Navigate_Away_From_Auth_Form = 'Navigate_Away_From_Auth_Form';
  */
 
 const ROOT_URL = 'http://localhost:3001';
-
-export function clickedSignUp() {
-    return { type: Clicked_SignUp }
-}
-
-export function signUpSuccess(userObject) {
-    return { type: SignUp_Success, userObject };
-}
-
-export function signUpFail(error) {
-    return { type: SignUp_Fail, error };
-}
-
-export function attemptSignUp(token) {
-  return (dispatch) => {
-    dispatch(clickedSignUp());
-
-    request
-    .post('/auth/facebook/token')
-    .withCredentials()
-    .send({ access_token: token })
-    .end(function(err,res){
-      if(res.body.message){
-        dispatch(signUpFail({error:res.body.message}))
-      } else {
-        dispatch(signUpSuccess(res.body))
-      }
-    })
-  }
-}
 
 export function clickedLogin() {
     return { type: Clicked_Login };
