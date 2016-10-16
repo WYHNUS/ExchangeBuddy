@@ -33,7 +33,7 @@ export const Navigate_Away_From_Auth_Form = 'Navigate_Away_From_Auth_Form';
  * action creators
  */
 
-const ROOT_URL = 'http://localhost:3001';
+import {ROOT_URL} from '../util/backend';
 
 export function clickedSignUp() {
     return { type: Clicked_SignUp }

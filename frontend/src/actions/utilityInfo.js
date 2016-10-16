@@ -6,8 +6,7 @@ export const FETCH_All_UNIVERSITIES_SUCCESS = 'FETCH_All_UNIVERSITIES_SUCCESS';
 export const FETCH_All_UNIVERSITIES_FAILURE = 'FETCH_All_UNIVERSITIES_FAILURE';
 export const RESET_All_UNIVERSITIES = 'RESET_All_UNIVERSITIES';
 
-
-const ROOT_URL = 'http://localhost:3001';
+import {ROOT_URL} from '../util/backend';
 
 export function fetchAllUniversities() {
 	const request = axios({

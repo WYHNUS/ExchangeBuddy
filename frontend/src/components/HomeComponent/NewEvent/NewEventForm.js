@@ -103,7 +103,7 @@ class NewEventForm extends Component {
     const { handleSubmit, pristine, passSnackbarMessage, submitting, dropId, user, location } = this.props;
 
     return (
-      <form onSubmit={ handleSubmit(handler(passSnackbarMessage, socketHandler, user, location, dropId)) }>
+      <form onSubmit={ handleSubmit(handler(passSnackbarMessage, user, location, dropId)) }>
       <h1>{dropId ? 'Edit message' : 'New message'}</h1>
 
       <div className="row center-xs">
