@@ -3,11 +3,6 @@ import request from 'superagent';
 /*
  * action types
  */
-
-export const Clicked_SignUp = 'Clicked_SignUp';
-export const SignUp_Success = 'SignUp_Success';
-export const SignUp_Fail = 'SignUp_Fail';
-
 export const Clicked_Login = 'Clicked_Login';
 export const Login_Success = 'Login_Success';
 export const Login_Fail = 'Login_Fail';
@@ -25,45 +20,10 @@ export const Logout_Success = 'Logout_Success';
 export const Navigate_Away_From_Auth_Form = 'Navigate_Away_From_Auth_Form';
 
 /*
- * other constants
- */
-
-
-/*
  * action creators
  */
 
 import {ROOT_URL} from '../util/backend';
-
-export function clickedSignUp() {
-    return { type: Clicked_SignUp }
-}
-
-export function signUpSuccess(userObject) {
-    return { type: SignUp_Success, userObject };
-}
-
-export function signUpFail(error) {
-    return { type: SignUp_Fail, error };
-}
-
-export function attemptSignUp(token) {
-  return (dispatch) => {
-    dispatch(clickedSignUp());
-
-    request
-    .post('/auth/facebook/token')
-    .withCredentials()
-    .send({ access_token: token })
-    .end(function(err,res){
-      if(res.body.message){
-        dispatch(signUpFail({error:res.body.message}))
-      } else {
-        dispatch(signUpSuccess(res.body))
-      }
-    })
-  }
-}
 
 export function clickedLogin() {
     return { type: Clicked_Login };
@@ -77,8 +37,8 @@ export function loginFail(error) {
     return { type: Login_Fail, error };
 }
 
-export function requireRegistration(error) {
-    return { type: Login_Fail, error };
+export function requireRegistration(fbToken, user, error) {
+    return { type: Not_Registered, fbToken, user, error };
 }
 
 export function attemptLogin(token) {
@@ -87,7 +47,6 @@ export function attemptLogin(token) {
 
     request
       .post(ROOT_URL + '/authenticate')
-      // .withCredentials()
       .send({ facebookToken: token })
       .end(function(err,res){
         // console.log(res);
@@ -96,7 +55,7 @@ export function attemptLogin(token) {
           dispatch(loginSuccess(res.body.user, res.body.token));
         } else {
           if (res.status === 404) {
-            dispatch(requireRegistration({error:res.body.message}));
+            dispatch(requireRegistration(token, res.body.user, res.body.message));
           } else {
             dispatch(loginFail({error:res.body.message}));
           }
@@ -104,7 +63,6 @@ export function attemptLogin(token) {
       })
   }
 }
-
 
 export function startedSessionCheck() {
     return { type: Started_Session_Check };

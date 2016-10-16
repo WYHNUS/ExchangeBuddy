@@ -32,7 +32,7 @@ export default class LoginButton extends Component {
     if (this.props.userAuthSession.isLoggedIn){
       browserHistory.push('/home');
     } else if (this.props.userAuthSession.error) {
-      console.log(this.props.userAuthSession.error);
+      console.log(this.props.userAuthSession.isRegistered);
       if (!this.props.userAuthSession.isRegistered) {
         browserHistory.push('/signup');
       }

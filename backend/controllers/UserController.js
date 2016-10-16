@@ -36,12 +36,12 @@ exports.createUser = function(req, res){
     models.sequelize.Promise.all([
         University.findOne({
             where: {
-                id: req.body.homeUniversity.id
+                name: req.body.homeUniversity
             }
         }),
         University.findOne({
             where: {
-                id: req.body.exchangeUniversity.id
+                name: req.body.exchangeUniversity
             }
         }),
         User.findOne({
@@ -52,6 +52,7 @@ exports.createUser = function(req, res){
     ]).spread(function(homeUniversity, exchangeUniversity, existingUser) {
         if (!!existingUser) {
             return res.status(500).json({
+                    status: 'fail',
                     message: "Email account already registered!"
                 });
         }
@@ -71,12 +72,12 @@ exports.createUser = function(req, res){
                         gender: req.body.gender,
                         fbUserId: response.id,
                         isEmailVerified: 0, // default to false
-                        UniversityId: req.body.homeUniversity.id,
+                        UniversityId: homeUniversity.id,
                     }),
                     Exchange.create({
                         year: req.body.exchangeYear,
                         term: req.body.exchangeSem,
-                        UniversityId: req.body.exchangeUniversity.id
+                        UniversityId: exchangeUniversity.id
                     })
                 ]).spread(function(user, exchange) {
                     user.addExchangeEvent(exchange);
@@ -117,7 +118,7 @@ exports.createUser = function(req, res){
                         MailCtrl.sendVerificationEmail(user);
                         res.status(201)
                             .json({
-                                success: true,
+                                status: 'success',
                                 message: 'Verification email sent.'
                             });
                     });
@@ -129,7 +130,8 @@ exports.createUser = function(req, res){
         } else {
             res.status(400)
                 .json({
-                    message: 'Invalid University Id.'
+                    status: 'fail',
+                    message: 'Invalid University Name.'
                 });
         }
     }).catch(function(err){
@@ -139,6 +141,7 @@ exports.createUser = function(req, res){
 
 function resError(res, err) {
     return res.status(500).json({
+        status: 'fail',
         message: err.message
     });
 }

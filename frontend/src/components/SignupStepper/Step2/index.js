@@ -1,45 +1,31 @@
-// import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import { composeWithTracker } from 'react-komposer';
 import Loading from '../../Loading';
 
 // Redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+// Action creators
+import { saveSignupPageTwoInfo } from '../../../actions/user';
 // Component
 import ChildComponent from './Step2';
-
-// react-komposer
-// const composer = (props, onData) => {
-//   const user = Meteor.user();
-
-//   Meteor.call('User.getGroups', user.id, (err, groups) => {
-//     const defaultGroup = groups.length && groups.reduce((p, group) => group.id == user.defaultGroupId ? group : p);
-
-//     const initialValues = defaultGroup ? {
-//       exchangeUniName: defaultGroup.university.name,
-//       exchangeUniYear: defaultGroup.year,
-//       exchangeTerm: defaultGroup.term,
-//     } : {};
-
-//     onData(null, { initialValues });
-//   });
-
-// };
-
-// const ComposedComponent = composeWithTracker(composer, Loading)(ChildComponent);
 
 // redux
 const mapStateToProps = (state) => {
   return {
-    formState: state.form
+    homeUniName: state.user.signupInfo.homeUniName,
+    initialValues: { 
+      exchangeUniName: state.user.signupInfo.exchangeUniName,
+      exchangeUniYear: state.user.signupInfo.exchangeUniYear,
+      exchangeTerm: state.user.signupInfo.exchangeTerm
+    }
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
+    saveData: (val) => dispatch(saveSignupPageTwoInfo(val)),
   };
 };
 

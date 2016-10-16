@@ -13,7 +13,8 @@ exports.getAllUniversities = function(req, res){
 exports.createUniversity = function(req, res) {
     models.University.create({
         name: req.body.name,
-        logoImageUrl: req.body.logoImageUrl
+        logoImageUrl: req.body.logoImageUrl,
+        emailDomains: JSON.stringify(req.body.emailDomains)
     }).then(function(university) {
         res.json(university);
     }).catch(function(err) {

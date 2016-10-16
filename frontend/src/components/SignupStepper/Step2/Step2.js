@@ -10,21 +10,7 @@ import ExchangeTermSelect from '../ExchangeTermSelect';
 
 import { propExistsDeep } from '../../../util/helper';
 
-export const fields = [ 'exchangeUniName', 'exchangeUniYear', 'exchangeTerm' ];
-
-// const saveForm = (callback) => {
-//   return (values) => {
-//     const { exchangeUniName, exchangeUniYear, exchangeTerm } = values;
-
-//     Meteor.call('UserGroup.addUserToGroup', { userId: Meteor.userId(), exchangeUniName, exchangeUniYear, exchangeTerm }, (err, result) => {
-//       if (err)
-//         console.log("Error in invoking UserGroup.addUserToGroup: " + err);
-//       else if (callback)
-//         callback();
-//     });
-//   };
-// };
-
+let universitiesProps, homeUniName;
 const validate = values => {
   const errors = {};
   const requiredFields = [ 'exchangeUniName', 'exchangeUniYear', 'exchangeTerm' ];
@@ -33,6 +19,12 @@ const validate = values => {
       errors[ field ] = 'Required'
     }
   });
+  if (universitiesProps && universitiesProps.filter(uni => uni.name === values.exchangeUniName).length === 0 ) {
+    errors['exchangeUniName'] = 'University not found';
+  }
+  if (values.exchangeUniName === homeUniName) {
+    errors['exchangeUniName'] = 'Are you sure your Home University and Exchange University are the same? :)';
+  }
 
   return errors;
 };
@@ -52,11 +44,13 @@ const filter = (searchText, key) => {
 class Step2 extends React.Component {
   submitForm (val, props) {
     props.handleNext();
-    props.saveData(val);
+    this.props.saveData(val);
   }
 
   render() {
-    const { universities, saveData, handleNext, handlePrev, handleSubmit, submitting, formState } = this.props;
+    const { universities, handleNext, handlePrev, handleSubmit, submitting, formState } = this.props;
+    universitiesProps = universities;
+    homeUniName = this.props.homeUniName;
 
     // Year of exchange
     const year = new Date().getFullYear();
@@ -98,9 +92,8 @@ class Step2 extends React.Component {
   }
 }
 
-
 // Decorate with redux-form
 export default reduxForm({
   form: 'signupStep2',
-  validate, fields
+  validate
 })(Step2);

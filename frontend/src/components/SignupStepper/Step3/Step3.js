@@ -57,52 +57,44 @@ const validate = (values) => {
   return errors;
 };
 
-// const submitForm = (self) => (values) => {
-//   const { homeUniEmail } = values;
-
-//   if (!Meteor.userId())
-//     return console.log("Error: Not logged in.");
-
-//   Meteor.call('User.sendVerificationEmail', { userId: Meteor.userId(), homeUniEmail }, (err, result) => {
-//     if (err) {
-//       return console.log("Error in invoking User.sendVerificationEmail: " + err);
-//     } else {
-//       SessionHelper.setCurrentUser(); // Required so that Meteor.user() will reflect the new user information
-//       self.setState({ emailSent: true });
-//     }
-//   });
-// };
-
 class Step3 extends React.Component {
   constructor(props) {
     super(props);
-
-    // this.state = {
-    //   emailSent: false
-    // };
+    this.state = {emailDomains:[]};
   }
 
-  submitForm (val, props) {
-    props.saveData(val);
+  componentDidMount() {
+    if (this.props.homeUniName && this.props.universities) {
+      var allUniList = this.props.universities;
+      for (var i=0; i<allUniList.length; i++) {
+        console.log(JSON.parse(allUniList[i].emailDomains));
+        if (allUniList[i].name === this.props.homeUniName) {
+          this.state.emailDomains = JSON.parse(allUniList[i].emailDomains);
+        }
+      }
+    }
+    uniEmailDomains = this.state.emailDomains;
+  }
+
+  submitForm (val) {
+    this.props.submitSignupForm(this.props.allSignupInfo, val);
   }
 
   render() {
-    uniEmailDomains = this.props.emailDomains;
-
-    const { saveData, handlePrev, handleSubmit, submitting } = this.props;
-    const { user, universityName, emailDomains } = this.props;
+    const { handlePrev, handleSubmit, submitting } = this.props;
+    const { homeUniName } = this.props;
     const { isEmailSent, fetching, authEmailError } = this.props;
 
     return (
       <form onSubmit={ handleSubmit((values) => {
-        this.submitForm(values, this.props)
+        this.submitForm(values)
       }) }>
 
-        <p style={{ fontSize: "15px" }}>To complete your registration, please enter your email address at <strong>{ universityName }</strong>.</p>
+        <p style={{ fontSize: "15px" }}>To complete your registration, please enter your email address at <strong>{ homeUniName }</strong>.</p>
         <p style={{ fontSize: "15px" }}>We will be sending a verification email to confirm your place at the university.</p>
 
-        { emailDomains ?
-          <p className="small-text">Email domains allowed: { emailDomains.map(x => `@${x}`).join(', ') }</p> :
+        { this.state.emailDomains ?
+          <p className="small-text">Email domains allowed: { this.state.emailDomains.map(x => `@${x}`).join(', ') }</p> :
           null
         }
 
@@ -111,6 +103,7 @@ class Step3 extends React.Component {
           floatingLabelText="Your university email address" />
 
         { this.props.isEmailSent ? <p>Verification email sent!</p> : null }
+        { this.props.authEmailError ? <p>{ this.props.authEmailError }</p> : null}
 
         <div style={{ marginTop: 12 }}>
           <NextButton label="Send verification email" disabled={submitting} />
@@ -121,9 +114,8 @@ class Step3 extends React.Component {
   }
 }
 
-
 // Decorate with redux-form
 export default reduxForm({
   form: 'signupStep3',
-  validate, fields
+  validate
 })(Step3);
