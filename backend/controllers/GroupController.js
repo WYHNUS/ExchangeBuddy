@@ -56,6 +56,18 @@ exports.getGroup = function(req, res) {
     });
 };
 
+exports.getMembers = function(req, res){
+	Group.findOne({
+		where: {
+			id: req.body.GroupId
+		}
+	}).then(function(group){
+		group.getUser().then(function(users){
+			res.send(users);
+		})
+	})
+}
+
 function resError(res, err) {
     return res.status(500).json({
         message: err.message
