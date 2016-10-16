@@ -51,7 +51,7 @@ export function submitSignupForm(field, email) {
 
 	    request.post(ROOT_URL + '/verificationemail')
 			.send({
-				// facebookToken: ,
+				facebookToken: field.fbToken,
 				email: email.homeUniEmail,
 				name: field.displayName,
 				gender: field.gender,

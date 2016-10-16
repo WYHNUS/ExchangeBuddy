@@ -37,8 +37,8 @@ export function loginFail(error) {
     return { type: Login_Fail, error };
 }
 
-export function requireRegistration(error) {
-    return { type: Login_Fail, error };
+export function requireRegistration(fbToken, error) {
+    return { type: Not_Registered, fbToken, error };
 }
 
 export function attemptLogin(token) {
@@ -56,7 +56,7 @@ export function attemptLogin(token) {
           dispatch(loginSuccess(res.body.user, res.body.token));
         } else {
           if (res.status === 404) {
-            dispatch(requireRegistration({error:res.body.message}));
+            dispatch(requireRegistration(token, res.body.message));
           } else {
             dispatch(loginFail({error:res.body.message}));
           }

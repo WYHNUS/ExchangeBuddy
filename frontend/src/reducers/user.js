@@ -26,12 +26,13 @@ const initialState = {
     bio:'',
     website:'',
     birthday:'',
-    fbUserId:'',
+    // fbUserId:'',
     fbToken:'',
-    fbTokenExpiresAt:'',
+    // fbTokenExpiresAt:'',
     UniversityId: null
   },
   signupInfo: {
+    fbToken: '',
     displayName: '',
     gender: '',
     homeUniName: '',
@@ -46,6 +47,7 @@ export function user(state = initialState , action) {
     case SAVE_SIGNUP_PAGE_ONE_INFO:
       return Object.assign({}, state, {
         signupInfo: {
+          fbToken: state.signupInfo.fbToken,
           displayName: action.field.displayName,
           gender: action.field.gender,
           homeUniName: action.field.homeUniName,
@@ -57,6 +59,7 @@ export function user(state = initialState , action) {
     case SAVE_SIGNUP_PAGE_TWO_INFO:
       return Object.assign({}, state, {
         signupInfo: {
+          fbToken: state.signupInfo.fbToken,
           displayName: state.signupInfo.displayName,
           gender: state.signupInfo.gender,
           homeUniName: state.signupInfo.homeUniName,
@@ -116,7 +119,10 @@ export function user(state = initialState , action) {
         fetchingAuthUpdate: false,
         isAuthenticated: false,
         isRegistered: false,
-        error: action.error
+        error: action.error,
+        signupInfo: {
+          fbToken: action.fbToken
+        }
       });
 
     case Checked_Session_Status:
