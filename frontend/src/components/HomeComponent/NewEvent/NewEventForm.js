@@ -6,10 +6,14 @@ import request from 'superagent'
 import { TextField, Toggle } from 'redux-form-material-ui'
 import moment from 'moment';
 import RaisedButton from 'material-ui/RaisedButton'
+import DatePicker from 'material-ui/DatePicker';
+import TimePicker from 'material-ui/TimePicker';
 //import ImageUpload from '../ImageUpload/index.js'
 import validUrl from 'valid-url'
 
 const handler = (passSnackbarMessage, user, location, dropId) => values => {
+
+  console.log(values);
   
   if(dropId){
     // If edit/:dropId route
@@ -74,23 +78,20 @@ class NewEventForm extends Component {
     const {drops, profileDrops, selectedDrop} = this.props;
     //this.clickedDrop = selectedDrop.selectedDropSrc === "profile" ? profileDrops[selectedDrop.selectedDropIdx] : null;
 
-    if(this.props.route.path === "add"){
+    /*if(this.props.route.path === "add"){
       this.props.initialize({});
 
     }else if(this.clickedDrop){
       console.log(this.clickedDrop)
-      this.clickedDrop.emojiUni = ':'+EmojiUniToAnnotation[this.clickedDrop.emojiUni]+':';
       this.props.initialize(this.clickedDrop);
 
     } else{
       request
       .get('/api/feeds/'+this.props.params.dropId)
       .end((err,res) => {
-        const emojiName = EmojiUniToAnnotation[res.body.emojiUni];
-        res.body.emojiUni = ':'+emojiName+':';
         this.props.initialize(res.body);
       })
-    }
+    }*/
   }
 
   componentDidUpdate(prevProps) {
@@ -104,20 +105,33 @@ class NewEventForm extends Component {
 
     return (
       <form onSubmit={ handleSubmit(handler(passSnackbarMessage, user, location, dropId)) }>
-      <h1>{dropId ? 'Edit message' : 'New message'}</h1>
+      <h1>{dropId ? 'Edit event' : 'New event'}</h1>
 
       <div className="row center-xs">
         <div className="col-xs-10">
-          <Field name="emojiUni" component={EmojiInput} hintText="Choose Emoji"/>
           <Field name="title" component={TextField} fullWidth={true}
-          floatingLabelText="Write Message" floatingLabelStyle={{left: 0}}
+          floatingLabelText="Event Title" floatingLabelStyle={{left: 0}}
           errorStyle={{textAlign: "left"}}
-          multiLine={true} rows={2}/>
-          </div>
-          <div className="col-xs-12"><h3>Other Options</h3></div>
-          <div className="col-xs-10">
+          multiLine={false} />
+        </div>
+        <div className="col-xs-10">
+          <Field name="details" component={TextField} fullWidth={true}
+          floatingLabelText="Event Details" floatingLabelStyle={{left: 0}}
+          errorStyle={{textAlign: "left"}}
+          multiLine={true} rows={3}/>
+        </div>
+
+        <div className="col-xs-10">
+
           {/*<Field name="imageId" component={ImageUpload} />*/}
         </div>
+        <div className="col-xs-10">
+          {/*<Field name="startDate" component={} />*/}
+        </div>
+        <DatePicker hintText="Start Date" />
+        <TimePicker hintText="Start Time" />
+
+        <RaisedButton label="Add ending time" />
 
         <div className="col-xs-12">
           <RaisedButton type="submit" label="Submit"
