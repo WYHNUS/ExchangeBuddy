@@ -60,30 +60,42 @@ const validate = (values) => {
 class Step3 extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {emailDomains:[]};
   }
 
   componentDidMount() {
-    if (this.props.homeUniName && this.props.universities)
-      this.props.findHomeUniEmailDomain(this.props.homeUniName, this.props.universities);
+    if (this.props.homeUniName && this.props.universities) {
+      var allUniList = this.props.universities;
+      for (var i=0; i<allUniList.length; i++) {
+        console.log(allUniList[i].name);
+        if (allUniList[i].name === this.props.homeUniName) {
+          this.state.emailDomains = ["u.nus.edu", "comp.nus.edu"];
+        }
+      }
+    }
+    uniEmailDomains = this.state.emailDomains;
   }
 
   submitForm (val) {
     console.log(val);
+    this.props.saveData(val);
   }
 
   render() {
     const { handlePrev, handleSubmit, submitting } = this.props;
-    const { homeUniName, emailDomains } = this.props;
+    const { homeUniName } = this.props;
     const { isEmailSent, fetching, authEmailError } = this.props;
 
     return (
-      <form onSubmit={ this.submitForm(this) }>
+      <form onSubmit={ handleSubmit((values) => {
+        this.submitForm(values)
+      }) }>
 
         <p style={{ fontSize: "15px" }}>To complete your registration, please enter your email address at <strong>{ homeUniName }</strong>.</p>
         <p style={{ fontSize: "15px" }}>We will be sending a verification email to confirm your place at the university.</p>
 
-        { emailDomains ?
-          <p className="small-text">Email domains allowed: { emailDomains.map(x => `@${x}`).join(', ') }</p> :
+        { this.state.emailDomains ?
+          <p className="small-text">Email domains allowed: { this.state.emailDomains.map(x => `@${x}`).join(', ') }</p> :
           null
         }
 
@@ -102,9 +114,8 @@ class Step3 extends React.Component {
   }
 }
 
-
 // Decorate with redux-form
 export default reduxForm({
-  form: 'signupStep3'//,
-  // validate, fields
+  form: 'signupStep3',
+  validate//, fields
 })(Step3);

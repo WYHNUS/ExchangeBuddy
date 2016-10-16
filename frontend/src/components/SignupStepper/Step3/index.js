@@ -8,7 +8,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Action creators
-import { findHomeUniEmailDomain } from '../../../actions/utilityInfo';
 import { saveSignupPageThreeInfo } from '../../../actions/user';
 // Component
 import ChildComponent from './Step3';
@@ -24,7 +23,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
-    findHomeUniEmailDomain: (uniName, allUniList) => dispatch(findHomeUniEmailDomain(uniName, allUniList)),
     saveData: (email) => dispatch(saveSignupPageThreeInfo(email)),
   };
 };

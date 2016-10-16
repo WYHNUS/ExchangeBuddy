@@ -82,5 +82,6 @@ class Step1 extends React.Component {
 
 // Decorate with redux-form
 export default reduxForm({
-  form: 'signupStep1'
+  form: 'signupStep1',
+  validate
 })(Step1);
