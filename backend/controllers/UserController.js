@@ -52,6 +52,7 @@ exports.createUser = function(req, res){
     ]).spread(function(homeUniversity, exchangeUniversity, existingUser) {
         if (!!existingUser) {
             return res.status(500).json({
+                    status: 'fail',
                     message: "Email account already registered!"
                 });
         }
@@ -117,7 +118,7 @@ exports.createUser = function(req, res){
                         MailCtrl.sendVerificationEmail(user);
                         res.status(201)
                             .json({
-                                success: true,
+                                status: 'success',
                                 message: 'Verification email sent.'
                             });
                     });
@@ -129,6 +130,7 @@ exports.createUser = function(req, res){
         } else {
             res.status(400)
                 .json({
+                    status: 'fail',
                     message: 'Invalid University Name.'
                 });
         }
@@ -139,6 +141,7 @@ exports.createUser = function(req, res){
 
 function resError(res, err) {
     return res.status(500).json({
+        status: 'fail',
         message: err.message
     });
 }
