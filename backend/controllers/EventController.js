@@ -108,6 +108,29 @@ exports.goToEvent = function(req, res){
     });
 }
 
+exports.comment = function(req, res){
+    models.Comment.create({
+        content: req.body.content,
+        EventId: req.body.EventId
+    }).then(function(comment){
+        res.send({
+            success: true
+        })
+    }).catch(function(err){
+        resError(res, err);
+    })
+}
+
+exports.comment = function(req, res){
+    models.Comment.findAll({
+        where: {
+            EventId: req.query.eventId
+        }
+    }).then(function(comments){
+        res.send(comments);
+    })
+}
+
 function resError(res, err) {
     return res.status(500).json({
         message: err.message

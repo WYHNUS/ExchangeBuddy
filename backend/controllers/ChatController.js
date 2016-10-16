@@ -12,3 +12,13 @@ exports.addChatMessage = function(user, msg, group){
         });
     });
 }
+
+exports.getMessages = function(req, res){
+    ChatMessage.findAll({
+        where: {
+            GroupId: req.body.GroupId
+        }
+    }).then(function(messages){
+        res.send(messages);
+    })
+}
