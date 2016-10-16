@@ -6,6 +6,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { showSnackbar } from '../../actions/messageSnackbar';
 import { pageVisibility } from '../../actions/pageVisibility';
+import RaisedButton from 'material-ui/RaisedButton';
+import { browserHistory } from 'react-router';
+import * as IconsHelper from '../../util/icons' 
 
 import EventList from '../../components/HomeComponent/Events/EventList';
 
@@ -101,16 +104,26 @@ class Events extends React.Component{
 	}
 
 	render(){
+        const {id} = this.props.homeGroupDetails;
 		return(
 			<Grid>
+            <div className='row center-xs'>
+            <div className="col-xs-12">
+            <RaisedButton
+              label='New Event'
+              onTouchTap={ () => browserHistory.push(`/home/${id}/events/new`)}
+              secondary={true}
+              icon={IconsHelper.materialIcon("add")}/>
+            </div>
+            </div>
 			<Row>
 			<Col xs={12} md={6}>
 			<h3 className="event-title pinline"> <span>Facebook Events</span> </h3>
-			{<EventList source="Facebook" groupId={ this.props.params.id } groupEvents={fbseed} />}
+			{<EventList source="Facebook" groupId={ id } groupEvents={fbseed} />}
 			</Col>
 			<Col xs={12} md={6}>
 			<h3 className="event-title pinline"> <span>Meetup Events</span> </h3>
-			{<EventList source="Meetup" groupId={ this.props.params.id } groupEvents={meetupseed}/>}
+			{<EventList source="Meetup" groupId={ id } groupEvents={meetupseed}/>}
 			</Col>
 			</Row>
 			</Grid>
@@ -121,7 +134,7 @@ class Events extends React.Component{
 
 const mapStateToProps = (state )=>{
 	return{
-		params: state.home.homeGroupDetails.homeGroupDetails
+		homeGroupDetails: state.home.homeGroupDetails.homeGroupDetails
 	};
 }
 
