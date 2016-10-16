@@ -7,37 +7,36 @@ import Loading from '../../Loading';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+// Action creators
+import { 
+	saveSignupPageThreeInfo, 
+	submitSignupForm, signupSuccess, signupFail
+} from '../../../actions/user';
 // Component
 import ChildComponent from './Step3';
-
-// react-komposer
-// const composer = (props, onData) => {
-//   const user = Meteor.user();
-
-//   if (user.homeUniId) {
-//     Meteor.call('University.get', user.homeUniId, (err, uni) => {
-//       const emailDomains = JSON.parse(uni.emailDomains);
-
-//       onData(null, {
-//         user, university: uni, emailDomains
-//       });
-//     });
-//   }
-
-// };
-
-// const ComposedComponent = composeWithTracker(composer, Loading)(ChildComponent);
 
 // redux
 const mapStateToProps = (state) => {
   return {
-    formState: state.form
+    homeUniName: state.user.signupInfo.homeUniName,
+    allSignupInfo: state.user.signupInfo,
+    isEmailSent: state.user.isAuthEmailSent,
+    authEmailError: state.user.error
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
+    submitSignupForm: (signupInfo, email) => {
+      dispatch(submitSignupForm(signupInfo, email)).payload.then((response) => {
+        if (!response.error) {
+          dispatch(signupSuccess(response.data));
+        } else {
+          dispatch(signupFail(response.error));
+        }
+      });
+    }
   };
 };
 

@@ -1,5 +1,4 @@
 import {
-  Clicked_SignUp, SignUp_Success, SignUp_Fail,
   Clicked_Login, Login_Success, Login_Fail, Not_Registered,
   Started_Session_Check, Checked_Session_Status,
   Clicked_Logout, Logout_Success,
@@ -7,11 +6,13 @@ import {
 } from '../actions/authActions';
 
 import {
-  UPDATE_USER_PROFILE
-}from '../actions/user';
+  UPDATE_USER_PROFILE, SAVE_SIGNUP_PAGE_ONE_INFO, SAVE_SIGNUP_PAGE_TWO_INFO,
+  CLICKED_SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAIL
+} from '../actions/user';
 
 const initialState = {
   isAuthenticated: false,
+  isEmailSent: false,
   isLoggedIn: false,
   isRegistered: null,
   fetchingAuthUpdate: false,
@@ -25,15 +26,58 @@ const initialState = {
     bio:'',
     website:'',
     birthday:'',
-    fbUserId:'',
+    // fbUserId:'',
     fbToken:'',
-    fbTokenExpiresAt:'',
+    // fbTokenExpiresAt:'',
     UniversityId: null
+  },
+  signupInfo: {
+    fbToken: '',
+    displayName: '',
+    gender: '',
+    homeUniName: '',
+    exchangeUniName: '',
+    exchangeUniYear: '',
+    exchangeTerm: ''
   }
 }
 
 export function user(state = initialState , action) {
   switch (action.type){
+    case SAVE_SIGNUP_PAGE_ONE_INFO:
+      return Object.assign({}, state, {
+        signupInfo: {
+          fbToken: state.signupInfo.fbToken,
+          displayName: action.field.displayName,
+          gender: action.field.gender,
+          homeUniName: action.field.homeUniName,
+          exchangeUniName: state.signupInfo.exchangeUniName,
+          exchangeUniYear: state.signupInfo.exchangeUniYear,
+          exchangeTerm: state.signupInfo.exchangeTerm
+        }
+      });
+    case SAVE_SIGNUP_PAGE_TWO_INFO:
+      return Object.assign({}, state, {
+        signupInfo: {
+          fbToken: state.signupInfo.fbToken,
+          displayName: state.signupInfo.displayName,
+          gender: state.signupInfo.gender,
+          homeUniName: state.signupInfo.homeUniName,
+          exchangeUniName: action.field.exchangeUniName,
+          exchangeUniYear: action.field.exchangeUniYear,
+          exchangeTerm: action.field.exchangeTerm
+        }
+      });
+
+    case SIGNUP_SUCCESS:
+      return Object.assign({}, state, {
+        isAuthenticated: false,
+        isLoggedIn: false,
+        isEmailSent: true,
+        isRegistered: true,
+        fetchingAuthUpdate: false,
+        error: null
+      });
 
     case UPDATE_USER_PROFILE:
     return Object.assign({}, state, {
@@ -42,14 +86,13 @@ export function user(state = initialState , action) {
 
     case Started_Session_Check:
     case Clicked_Login:
-    case Clicked_SignUp:
+    case CLICKED_SIGNUP:
     case Clicked_Logout:
       return Object.assign({}, state, {
         fetchingAuthUpdate: true
       });
 
     case Login_Success:
-    case SignUp_Success:
       return Object.assign({}, state, {
         isLoggedIn: true,
         fetchingAuthUpdate: false,
@@ -60,14 +103,14 @@ export function user(state = initialState , action) {
         error: null
       });
 
-    case Login_Fail:
-    case SignUp_Fail:
+    case SIGNUP_FAIL:
       return Object.assign({}, state, {
         isLoggedIn: false,
+        isEmailSent: false,
         fetchingAuthUpdate: false,
         isAuthenticated: false,
         isRegistered: null,
-        error: action.error
+        error: action.error.error
       });
 
     case Not_Registered:
@@ -76,7 +119,12 @@ export function user(state = initialState , action) {
         fetchingAuthUpdate: false,
         isAuthenticated: false,
         isRegistered: false,
-        error: action.error
+        error: action.error,
+        signupInfo: {
+          fbToken: action.fbToken,
+          displayName: action.user.name,
+          gender: action.user.gender
+        }
       });
 
     case Checked_Session_Status:

@@ -1,6 +1,8 @@
 var request = require('superagent');
 
-const HOST = 'https://exchangebuddy.com/';
+// export const ROOT_URL = 'http://54.186.208.82:3000';
+
+export const ROOT_URL = 'http://localhost:3001';
 
 function defaultPromise(req){
     return new Promise(function(resolve, reject) {

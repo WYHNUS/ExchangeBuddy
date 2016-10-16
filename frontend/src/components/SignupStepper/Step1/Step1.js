@@ -6,21 +6,6 @@ import MenuItem from 'material-ui/MenuItem';
 import { TextFormField, SelectFormField, AutoCompleteFormField } from '../../Field';
 import NextButton from '../NextButton';
 
-// import * as SessionHelper from '../../../util/session';
-
-export const fields = [ 'displayName', 'gender', 'homeUniName' ];
-
-// const saveForm = (callback) => {
-//   return (values) => {
-//     const { displayName, gender, homeUniName } = values;
-
-//     Meteor.call('User.updateProfile', { id: Meteor.userId(), displayName, gender, homeUniName }, (err, result) => {
-//       if (!err)
-//         SessionHelper.setCurrentUser(callback); // Required so that Meteor.user() will reflect the new user information
-//     });
-//   };
-// };
-
 let universitiesProps;
 const validate = values => {
   const errors = {};
@@ -52,11 +37,11 @@ const filter = (searchText, key) => {
 class Step1 extends React.Component {
   submitForm (val, props) {
     props.handleNext();
-    props.saveData(val);
+    this.props.saveData(val);
   }
 
   render() {
-    const { universities, fields: { displayName, gender, homeUniName }, saveData, handleNext, handleSubmit, submitting } = this.props;
+    const { universities, handleNext, handleSubmit, submitting } = this.props;
     universitiesProps = universities;
     
     return (
@@ -65,9 +50,9 @@ class Step1 extends React.Component {
       }) }>
         <Row>
           <Col xs={12}>
-            <TextFormField name="displayName" floatingLabelText="Your name" {...displayName} />
+            <TextFormField name="displayName" floatingLabelText="Your name" />
 
-            <SelectFormField name="gender" floatingLabelText="Gender" {...gender}>
+            <SelectFormField name="gender" floatingLabelText="Gender">
               <MenuItem value="male" primaryText="Male" />
               <MenuItem value="female" primaryText="Female" />
             </SelectFormField>
@@ -75,11 +60,10 @@ class Step1 extends React.Component {
             <AutoCompleteFormField
               name="homeUniName"
               floatingLabelText="Current university"
-              {...homeUniName}
               openOnFocus={true}
               filter={ filter }
               maxSearchResults={10}
-              dataSource={ universities.map((uni) => uni.name ) } />
+              dataSource={ universities.map((uni) => uni.name) } />
           </Col>
         </Row>
 
@@ -98,6 +82,5 @@ class Step1 extends React.Component {
 // Decorate with redux-form
 export default reduxForm({
   form: 'signupStep1',
-  fields: ['displayName', 'gender', 'homeUniName'],
-  validate, fields
+  validate
 })(Step1);
