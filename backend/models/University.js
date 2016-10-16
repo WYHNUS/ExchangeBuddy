@@ -4,7 +4,8 @@ var config = require('../config/config');
 module.exports = function(sequelize, DataType) {
   var University = sequelize.define('University', {
     name: {
-  	  type: DataType.TEXT(),
+  	  type: DataType.STRING(255),
+      unique: true,
   	},
   	city: {
       type: DataType.TEXT(),

@@ -49,7 +49,7 @@ export function submitSignupForm(field, email) {
 	return (dispatch) => {
 	    dispatch(clickedSignup());
 
-	    request.post(ROOT_URL + '/verificationemail')
+	    request.put(ROOT_URL + '/verificationemail')
 			.send({
 				facebookToken: field.fbToken,
 				email: email.homeUniEmail,
