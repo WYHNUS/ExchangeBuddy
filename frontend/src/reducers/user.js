@@ -121,7 +121,9 @@ export function user(state = initialState , action) {
         isRegistered: false,
         error: action.error,
         signupInfo: {
-          fbToken: action.fbToken
+          fbToken: action.fbToken,
+          displayName: action.user.name,
+          gender: action.user.gender
         }
       });
 

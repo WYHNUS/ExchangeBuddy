@@ -12,7 +12,7 @@ exports.authenticate = function (req, res) {
     }
     var facebookToken = req.body.facebookToken;
     console.log(facebookToken);
-    graph.get("/me?fields=name,id,email&access_token=" + facebookToken, function (error, response) {
+    graph.get("/me?fields=name,id,gender&access_token=" + facebookToken, function (error, response) {
         if (error) {
             return res.status(400)
                 .json({
@@ -30,7 +30,11 @@ exports.authenticate = function (req, res) {
             if (!user) {
                 return res.status(404).json({
                     status: 'fail',
-                    message: 'User not found.'
+                    message: 'User not found.',
+                    user: {
+                        name: response.name,
+                        gender: response.gender
+                    }
                 });
             }
             if (user.isEmailVerified) {
