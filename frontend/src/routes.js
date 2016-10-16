@@ -63,8 +63,9 @@ export const getRoutes = (store) =>{
       <IndexRoute onEnter={goToDefaultGroup}/>
       <Route path=":id" component={Home}> 
         <IndexRoute component={Events}/>
-        <Route path="events" component={Events}>
-          <Route path="new" component={NewEvent}/>
+        <Route path="events">
+          <IndexRoute component={Events}/>
+          <Route path="/new" component={NewEvent}/>
         </Route>
         <Route path="chat" component={Chat}/>
         <Route path="friends" component={Friends}/>

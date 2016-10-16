@@ -9,7 +9,7 @@ export const CLICKED_SIGNUP = 'CLICKED_SIGNUP';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAIL = 'SIGNUP_FAIL';
 
-const ROOT_URL = 'http://localhost:3001';
+import {ROOT_URL} from '../util/backend';
 
 //default is visible (true)
 export function updateUserProfile(profile) {
