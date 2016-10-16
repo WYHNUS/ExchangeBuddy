@@ -11,6 +11,7 @@ var UserCtrl = require('../controllers/UserController');
 var GroupCtrl = require('../controllers/GroupController');
 var MailCtrl = require('../controllers/MailController');
 var EventCtrl = require('../controllers/EventController');
+var ChatCtrl = require('../controllers/ChatController');
 
 // Set up token authenticate
 var verifyToken = jwt({secret: config.secret});
@@ -34,6 +35,8 @@ router.get('/verify/:token', MailCtrl.verifyToken);
 
 router.get('/country', verifyToken, CountryCtrl.getAllCountries);
 router.get('/country/:id', verifyToken, CountryCtrl.getCountry);
+
+router.post('/messages', ChatCtrl.getMessages);
 
 router.put('/university', UniCtrl.createUniversity);	// dummy
 router.get('/university', /*verifyToken,*/ UniCtrl.getAllUniversities);
