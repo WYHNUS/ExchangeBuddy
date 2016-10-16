@@ -137,6 +137,7 @@
     "rc-tabs": "^5.8.3",
     "react": "^15.3.2",
     "react-addons-pure-render-mixin": "^15.2.1",
+    "react-cloudinary": "^0.4.0",
     "react-dom": "^15.3.2",
     "react-facebook": "^2.0.6",
     "react-facebook-login": "^3.1.0",
