@@ -50,9 +50,9 @@ class Step1 extends React.Component {
       }) }>
         <Row>
           <Col xs={12}>
-            <TextFormField name="displayName" floatingLabelText="Your name" /*{...this.props.initialValues.displayName}*/ />
+            <TextFormField name="displayName" floatingLabelText="Your name" />
 
-            <SelectFormField name="gender" floatingLabelText="Gender" /*{...this.props.initialValues.gender}*/>
+            <SelectFormField name="gender" floatingLabelText="Gender">
               <MenuItem value="male" primaryText="Male" />
               <MenuItem value="female" primaryText="Female" />
             </SelectFormField>
@@ -60,11 +60,10 @@ class Step1 extends React.Component {
             <AutoCompleteFormField
               name="homeUniName"
               floatingLabelText="Current university"
-              /*{...this.props.initialValues.homeUniName}*/
               openOnFocus={true}
               filter={ filter }
               maxSearchResults={10}
-              dataSource={ universities.map((uni) => uni.name ) } />
+              dataSource={ universities.map((uni) => uni.name) } />
           </Col>
         </Row>
 

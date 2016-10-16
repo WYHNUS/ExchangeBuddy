@@ -10,7 +10,7 @@ import ExchangeTermSelect from '../ExchangeTermSelect';
 
 import { propExistsDeep } from '../../../util/helper';
 
-let universitiesProps;
+let universitiesProps, homeUniName;
 const validate = values => {
   const errors = {};
   const requiredFields = [ 'exchangeUniName', 'exchangeUniYear', 'exchangeTerm' ];
@@ -19,8 +19,12 @@ const validate = values => {
       errors[ field ] = 'Required'
     }
   });
-  if( universitiesProps && universitiesProps.filter(uni => uni.name === values.homeUniName).length === 0 )
-      errors['homeUniName'] = 'University not found'
+  if (universitiesProps && universitiesProps.filter(uni => uni.name === values.exchangeUniName).length === 0 ) {
+    errors['exchangeUniName'] = 'University not found';
+  }
+  if (values.exchangeUniName === homeUniName) {
+    errors['exchangeUniName'] = 'Are you sure your Home University and Exchange University are the same? :)';
+  }
 
   return errors;
 };
@@ -46,6 +50,7 @@ class Step2 extends React.Component {
   render() {
     const { universities, handleNext, handlePrev, handleSubmit, submitting, formState } = this.props;
     universitiesProps = universities;
+    homeUniName = this.props.homeUniName;
 
     // Year of exchange
     const year = new Date().getFullYear();

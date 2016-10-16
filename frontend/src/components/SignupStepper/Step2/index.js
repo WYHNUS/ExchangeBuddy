@@ -13,6 +13,7 @@ import ChildComponent from './Step2';
 // redux
 const mapStateToProps = (state) => {
   return {
+    homeUniName: state.user.signupInfo.homeUniName,
     initialValues: { 
       exchangeUniName: state.user.signupInfo.exchangeUniName,
       exchangeUniYear: state.user.signupInfo.exchangeUniYear,

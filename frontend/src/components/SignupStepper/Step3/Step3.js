@@ -67,9 +67,9 @@ class Step3 extends React.Component {
     if (this.props.homeUniName && this.props.universities) {
       var allUniList = this.props.universities;
       for (var i=0; i<allUniList.length; i++) {
-        console.log(allUniList[i].name);
+        console.log(JSON.parse(allUniList[i].emailDomains));
         if (allUniList[i].name === this.props.homeUniName) {
-          this.state.emailDomains = ["u.nus.edu", "comp.nus.edu"];
+          this.state.emailDomains = JSON.parse(allUniList[i].emailDomains);
         }
       }
     }
