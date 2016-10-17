@@ -81,7 +81,7 @@ class Step2 extends React.Component {
           { years.map(year => <MenuItem key={year} value={year} primaryText={year} />) }
         </SelectFormField>
 
-        <ExchangeTermSelect uniName={ uniName } />
+        <ExchangeTermSelect uniName={ uniName } universities={ this.props.universities }/>
 
         <div style={{ marginTop: 12 }}>
           <PrevButton onTouchTap={ handlePrev } label="Back" disabled={submitting} />
