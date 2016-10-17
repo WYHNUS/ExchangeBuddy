@@ -22,7 +22,7 @@ export const RESET_MY_GROUPS = 'RESET_MY_GROUPS';
 
 export function fetchMyGroups(userId){
 
-	const req = axios.post(`${ROOT_URL}/allEvents`, 
+	const req = axios.post(`${ROOT_URL}/group`, 
 	{
 		userId: userId
 	})

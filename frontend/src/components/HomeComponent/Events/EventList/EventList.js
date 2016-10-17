@@ -22,7 +22,7 @@ export default class EventsList extends React.Component {
 
 	render() {
     const { source, groupId } = this.props;
-    const { groupEvents, loading, error } = this.props.groupEvents;
+    const { homeEvents, loading, error } = this.props.homeEvents;
 
     const EventItem = ({ source, groupEvent }) => {
       if (source == 'Facebook'){
@@ -37,10 +37,11 @@ export default class EventsList extends React.Component {
     };
 
     const showAllEvents = () => this.setState({ showAll: true });
+    //const showAllEvents = () => console.log(homeEvents);
 
     // Before button is clicked, only show 5 events
     // should optimize this to actually pull more events when u click show more
-    const end = this.state.showAll ? groupEvents.length : 5;
+    const end = this.state.showAll ? homeEvents.length : 5;
 
     if(loading) {
       return <div className="container"><h1>Posts</h1><h3>Loading...</h3></div>      
@@ -50,7 +51,7 @@ export default class EventsList extends React.Component {
 
 		return (
 			<div className="event-list">
-        { groupEvents.slice(0, end).map((groupEvent, idx) => 
+        { homeEvents.slice(0, end).map((groupEvent, idx) => 
           <EventItem key={ idx } source={ source } groupEvent={ groupEvent }/> ) }
 
         <div className='row center-xs'>
@@ -65,7 +66,7 @@ export default class EventsList extends React.Component {
 }
 
 EventsList.propTypes = {
-  groupEvents: PropTypes.array.isRequired,
+  homeEvents: PropTypes.object.isRequired,
   source: PropTypes.string.isRequired,
   groupId: PropTypes.string.isRequired,
   fetchEvents: PropTypes.func.isRequired
