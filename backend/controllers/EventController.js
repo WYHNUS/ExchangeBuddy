@@ -6,7 +6,7 @@ exports.createEvent = function(req, res){
         models.Event.create({
             lat: req.body.lat,
             lng: req.body.lng,
-            titel: req.body.titel,
+            title: req.body.title,
             startTime: new Date(req.body.startTime),
             endTime: new Date(req.body.endTime),
             detail: req.body.detail,
@@ -21,6 +21,7 @@ exports.createEvent = function(req, res){
         })
     ]).spread(function(event, user){
         event.setUser(user);
+        event.save();
         res.send({
             success: true
         });
