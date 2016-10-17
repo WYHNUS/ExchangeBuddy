@@ -11,7 +11,7 @@ exports.getGroupIndex = function(req, res) {
 		],
 		attributes: ['id', 'name'],
 		include: [{
-			attributes: ['displayName', 'email'],
+			attributes: ['name', 'email'],
 			model: User,
 			as: 'user',
 			through: {
