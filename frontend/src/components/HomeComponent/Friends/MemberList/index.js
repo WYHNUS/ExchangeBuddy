@@ -32,7 +32,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     user:state.user,
-    groupUsers: state.home.homeFriends.homeFriends
+    homeFriends: state.home.homeFriends
   }
 };
 

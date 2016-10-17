@@ -40,7 +40,7 @@ import {
 	};
 
 
-	{
+{
   "id": 1,
   "name": "a students in a",
   "user": [
@@ -48,6 +48,10 @@ import {
       "id": 5,
       "name": "Lee Kai Yi",
       "profilePictureUrl": null,
+      "University": {
+        "name": "a",
+        "id": 3
+      },
       "chat_group": {
         "createdAt": "2016-10-17T17:00:11.000Z",
         "updatedAt": "2016-10-17T17:00:11.000Z",
@@ -188,7 +192,8 @@ import {
 
 
 	const initialState={
-		homeGroups:{selected:0,homeGroups:[],error:null,loading:false},
+		//selectedGroup:{index:-1,groupId:-1},
+		homeGroups:{selected:-1,homeGroups:[],error:null,loading:false},
 		homeGroupDetails:{homeGroupDetails:{},error:null,loading:false},
 		homeEvents:{homeEvents:[],error:null,loading:false},
 		homeMessages:{homeMessages:homeMessages,error:null,loading:false},
@@ -207,8 +212,10 @@ import {
 
 			case TOGGLE_SELECTED_HOME_GROUP:
 			return {...state, 
+				homeGroups: {...state.homeGroups,selected:action.index}}
+			/*return {...state, 
 				homeGroups: {...state.homeGroups,selected:action.index},
-				homeGroupDetails:{...state.homeGroupDetails, homeGroupDetails:state.homeGroups.homeGroups[action.index]}}
+				homeGroupDetails:{...state.homeGroupDetails, homeGroupDetails:state.homeGroups.homeGroups[action.index]}}*/
 
 
 				case FETCH_HOME_MESSAGES:
@@ -232,27 +239,27 @@ import {
 				return {...state, homeEvents: {homeEvents: [], error: null, loading: false}};
 
 				case FETCH_MY_GROUPS:
-				return {...state, homeGroups: {homeGroups:[], error: null, loading: true}};
+				return {...state, homeGroups: {selected:-1, homeGroups:[], error: null, loading: true}};
 				case FETCH_MY_GROUPS_SUCCESS:
-				return {...state, homeGroups: {homeGroups: action.payload, error: null, loading: false}};
+				return {...state, homeGroups: {selected:0, homeGroups: action.payload, error: null, loading: false}};
 				case FETCH_MY_GROUPS_FAILURE:
 				error = action.payload || {message: action.payload};
-				return {...state, homeGroups: {homeGroups: [], error: error, loading: false}};
+				return {...state, homeGroups: {selected:-1, homeGroups: [], error: error, loading: false}};
 				case RESET_MY_GROUPS:
-				return {...state, homeGroups: {homeGroups: [], error: null, loading: false}};
+				return {...state, homeGroups: {selected:-1, homeGroups: [], error: null, loading: false}};
 
 				case FETCH_CURRENT_GROUP:
-				return {...state, homeGroupDetails: {homeGroupDetails:[], error: null, loading: true},
+				return {...state, homeGroupDetails: {...state.homeGroupDetails, error: null, loading: true},
 				homeFriends: {homeFriends:[], error: null, loading: true}};
 				case FETCH_CURRENT_GROUP_SUCCESS:
 				return {...state, homeGroupDetails: {homeGroupDetails: action.payload, error: null, loading: false},
 				homeFriends: {homeFriends: action.payload, error: null, loading: false}};
 				case FETCH_CURRENT_GROUP_FAILURE:
 				error = action.payload || {message: action.payload};
-				return {...state, homeGroupDetails: {homeGroupDetails: [], error: error, loading: false},
+				return {...state, homeGroupDetails: {homeGroupDetails: {}, error: error, loading: false},
 				homeFriends: {homeFriends: [], error: error, loading: false}};
 				case RESET_CURRENT_GROUP:
-				return {...state, homeGroupDetails: {homeGroupDetails: [], error: null, loading: false},
+				return {...state, homeGroupDetails: {homeGroupDetails: {}, error: null, loading: false},
 				homeFriends: {homeFriends: [], error: null, loading: false}};
 
 				default:

@@ -30,6 +30,7 @@ export function fetchCurrentGroup(id){
 }
 
 export function fetchCurrentGroupSuccess(group){
+	console.log(group);
 	return {
 		type: FETCH_CURRENT_GROUP_SUCCESS,
 		payload: group

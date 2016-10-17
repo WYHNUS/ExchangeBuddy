@@ -59,7 +59,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     homeEvents:state.home.homeEvents,
-    groupId:state.home.homeGroupDetails.homeGroupDetails.id,
+    homeGroupDetails:state.home.homeGroupDetails.homeGroupDetails,
     source: ownProps.source
   };
 };

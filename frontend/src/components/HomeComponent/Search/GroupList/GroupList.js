@@ -13,11 +13,12 @@ class GroupItem extends React.Component {
   render(){
     const {group, heading, toggleHomeTab, 
       toggleSelectedHomeGroup, toggleHomeSearchDrawerVisibility,
-      homeGroupDetails} = this.props;
+      homeGroupDetails, key} = this.props;
+      const {selected} = this.props.homeGroups;
 
       const goToGroup = () => { 
         browserHistory.push(`/home/${group.id}`); 
-        toggleSelectedHomeGroup(group.groupType);
+        toggleSelectedHomeGroup(key);
         toggleHomeTab('events');
         toggleHomeSearchDrawerVisibility(false); 
       };
@@ -25,7 +26,7 @@ class GroupItem extends React.Component {
         <div className="group-body">
         <h5 className="group-heading">{heading}</h5>  
         <ListItem
-        className={group.groupType===homeGroupDetails.groupType?'selected-group':null}
+        className={parseInt(key)===parseInt(selected)?'selected-group':null}
         primaryText={group.name}
         leftAvatar={<Avatar src={ imageUrl } size={ 40 } style={{ objectFit: 'contain', backgroundColor: '#fff'}}/>}
         onTouchTap={goToGroup}
@@ -78,6 +79,7 @@ class GroupItem extends React.Component {
 GroupList.PropTypes={
  user: PropTypes.object.isRequired,
  groups: PropTypes.object.isRequired,
+ homeGroups: PropTypes.object.isRequired,
  toggleHomeSearchDrawerVisibility: PropTypes.func.isRequired,
  toggleSelectedHomeGroup: PropTypes.func.isRequired,
  toggleHomeTab: PropTypes.func.isRequired,

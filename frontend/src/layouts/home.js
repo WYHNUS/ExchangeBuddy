@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import { toggleBottomBarVisibility, 
   toggleHomeSearchDrawerOpenButtonVisibility,
   toggleTopBarBackButtonVisibility } from '../actions/pageVisibility';
-import {fetchMyGroups, fetchMyGroupsSuccess, fetchMyGroupsFailure,
-fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure} from '../actions/home'
-import Header from '../components/Header';
+  import {fetchMyGroups, fetchMyGroupsSuccess, fetchMyGroupsFailure,
+    fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure,
+    toggleSelectedHomeGroup, fetchEvents, fetchEventsSuccess, 
+    fetchEventsFailure, resetEvents} from '../actions/home'
+    import Header from '../components/Header';
 //import SwitchGroupDialog from '../components/SwitchGroupDialog';
 
 class Home extends React.Component{
@@ -16,9 +18,18 @@ class Home extends React.Component{
     this.props.toggleTopBarBackButtonVisibility(true);
 
     //fetchMyGroups(userId)
-    this.props.fetchMyGroups(this.props.userId);
-    //console.log(this.props.params);
-    //console.log(this.props.routes[1]);
+
+    //if user is authenticated, fetch group and point groupDetails to that
+    /*if(this.props.user.isAuthenticated){
+
+    }else{
+
+    }*/
+    
+    this.props.fetchMyGroups(this.props.user.userId);
+
+    //else if user is not authenticated, just fetch selected groupId
+    //this.props.fetchCurrentGroup(1);
   }
 
   componentWillUnmount(){
@@ -29,14 +40,14 @@ class Home extends React.Component{
   render() {
     return (
       <div>
-    {<Header params={ this.props.params } tab={ this.props.routes[2].path } />}
-    <div id="group-container">
-    { this.props.children }
-    </div>
+      {<Header params={ this.props.params } tab={ this.props.routes[2].path } />}
+      <div id="group-container">
+      { this.props.children }
+      </div>
 
-  {/*<SwitchGroupDialog />*/}
-  </div>
-  );
+    {/*<SwitchGroupDialog />*/}
+    </div>
+    );
   }
 
 }
@@ -51,18 +62,25 @@ const mapDispatchToProps = (dispatch) => {
     fetchMyGroups: (userId) => {
       dispatch(fetchMyGroups(userId)).payload.then((response) => {
         if (!response.error) {
+          var selectedIndex = 0;
           dispatch(fetchMyGroupsSuccess(response.data));
+          dispatch(toggleSelectedHomeGroup(selectedIndex))
+          dispatch(fetchEvents(response.data[selectedIndex].id)).payload.then((response) => {
+            if (!response.error) {
+              dispatch(fetchEventsSuccess(response.data));
+            } else {
+              dispatch(fetchEventsFailure(response.error));
+            }
+          });
+          dispatch(fetchCurrentGroup(response.data[selectedIndex].id)).payload.then((response) => {
+            if (!response.error) {
+              dispatch(fetchCurrentGroupSuccess(response.data));
+            } else {
+              dispatch(fetchCurrentGroupFailure(response.error));
+            }
+          });
         } else {
           dispatch(fetchMyGroupsFailure(response.error));
-        }
-      });
-    },
-    fetchCurrentGroup: (id) => {
-      dispatch(fetchCurrentGroup(id)).payload.then((response) => {
-        if (!response.error) {
-          dispatch(fetchCurrentGroupSuccess(response.data));
-        } else {
-          dispatch(fetchCurrentGroupFailure(response.error));
         }
       });
     }
@@ -71,7 +89,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state)=>{
   return {
-    userId:state.user.userObject.userId
+    user:state.user.userObject
   };
 }
 
