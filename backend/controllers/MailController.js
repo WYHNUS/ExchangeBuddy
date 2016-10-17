@@ -25,11 +25,11 @@ exports.sendVerificationEmail = function(user) {
                 console.log(response.statusCode);
                 console.log(response.body);
                 console.log(response.headers);
-                if (res.body.error) {
-                    console.log(res.body + " error on server");
-                    reject(res.body.error);
+                if (response.body.error) {
+                    console.log(response.body + " error on server");
+                    reject(response.body.error);
                 }
-                resolve(res);
+                resolve(response);
             } else {
                 console.log(error);
                 reject(error);
