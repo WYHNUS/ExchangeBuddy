@@ -82,7 +82,10 @@ exports.getAllEvents = function(req, res){
         where: {
             GroupId: req.body.GroupId
         },
-        include: [models.User]
+        include: [{
+            attributes: ['profilePictureUrl', 'name', 'id'],
+            model: User
+        }]
     }).then(function(events){
         res.send(events);
     }).catch(function(err) {
@@ -139,7 +142,10 @@ exports.getComments = function(req, res){
         where: {
             EventId: req.query.eventId
         },
-        include: [models.User]
+        include: [{
+            attributes: ['profilePictureUrl', 'name', 'id'],
+            model: User
+        }]
     }).then(function(comments){
         res.send(comments);
     })
