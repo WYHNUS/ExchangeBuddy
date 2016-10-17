@@ -16,7 +16,7 @@ exports.getGroupIndex = function(req, res) {
 			as: 'user',
 			through: {
 				where: {
-					userId: req.user.id
+					userId: req.body.userId
 				}
 			}
 		}]
