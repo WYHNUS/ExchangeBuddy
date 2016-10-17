@@ -49,7 +49,7 @@ export function fetchEvents(GroupId){
 }
 
 export function fetchEventsSuccess(events){
-	console.log(events);
+	//console.log(events);
 	return {
 		type: FETCH_EVENTS_SUCCESS,
 		payload: events
@@ -57,7 +57,7 @@ export function fetchEventsSuccess(events){
 }
 
 export function fetchEventsFailure(error){
-	console.log(error);
+	//console.log(error);
 	return {
 		type: FETCH_EVENTS_FAILURE,
 		payload: error

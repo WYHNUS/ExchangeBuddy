@@ -45,7 +45,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchEvents: (GroupId) => {
       dispatch(fetchEvents(GroupId)).payload.then((response) => {
-        console.log(response);
+        //console.log(response);
         if (!response.error) {
           dispatch(fetchEventsSuccess(response.data));
         } else {
