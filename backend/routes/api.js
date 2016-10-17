@@ -42,8 +42,24 @@ router.put('/university', UniCtrl.createUniversity);	// dummy
 router.get('/university', /*verifyToken,*/ UniCtrl.getAllUniversities);
 router.get('/university/:id', /*verifyToken,*/ UniCtrl.getUniversity);
 
+
+/*
+get the groups a user currently belongs to
+request:
+{
+    userId: 1
+}
+*/
 router.post('/group', /*verifyToken,*/ GroupCtrl.getGroupIndex);
 router.get('/group/:id', /*verifyToken,*/ GroupCtrl.getGroup);
+
+/*
+Get group members
+request:
+{
+    GroupId: 1
+}
+*/
 router.post('/members', GroupCtrl.getMembers);
 
 
