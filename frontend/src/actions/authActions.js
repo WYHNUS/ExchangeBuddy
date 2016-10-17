@@ -45,7 +45,7 @@ export function attemptLogin(token) {
   //console.log(token);
   return (dispatch) => {
     dispatch(clickedLogin());
-
+    
     request
       .post(ROOT_URL + '/authenticate')
       .send({ facebookToken: token })
