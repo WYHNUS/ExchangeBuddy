@@ -44,7 +44,7 @@ export function requireRegistration(fbToken, user, error) {
 export function attemptLogin(token) {
   return (dispatch) => {
     dispatch(clickedLogin());
-
+    
     request
       .post(ROOT_URL + '/authenticate')
       .send({ facebookToken: token })

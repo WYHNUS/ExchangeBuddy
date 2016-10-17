@@ -25,6 +25,7 @@ const config = {
   // ----------------------------------
   server_host : process.env.HOST_NAME || ip.address(), // use string 'localhost' to prevent exposure on local network
   server_port : process.env.PORT || 3000,
+  backend_host : process.env.SERVER_NAME,
 
   // ----------------------------------
   // Compiler Configuration
@@ -75,7 +76,8 @@ Edit at Your Own Risk
 // N.B.: globals added here must _also_ be added to .eslintrc
 config.globals = {
   'process.env'  : {
-    'NODE_ENV' : JSON.stringify(config.env)
+    'NODE_ENV' : JSON.stringify(config.env),
+    'SERVER_NAME' : JSON.stringify(config.backend_host)
   },
   'NODE_ENV'     : config.env,
   '__DEV__'      : config.env === 'development',
