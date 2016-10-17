@@ -1,7 +1,6 @@
 var models = require('../models');
 
 exports.createEvent = function(req, res){
-    console.log(models.Event.Instance.prototype);
     models.sequelize.Promise.all([
         models.Event.create({
             lat: req.body.lat,
@@ -33,7 +32,7 @@ exports.createEvent = function(req, res){
 exports.deleteEvent = function(req, res){
     models.Event.destroy({
         where: {
-            id: req.body.id
+            id: req.body.EventId
         }
     }).then(function(count){
         if(count > 0){
@@ -61,7 +60,7 @@ exports.updateEvent = function(req, res){
         imgSrc: req.body.imgSrc
     }, {
         where: {
-            id: req.body.id
+            id: req.body.EventId
         }
     }).then(function(response){
         if(response.length > 0){
@@ -95,12 +94,12 @@ exports.goToEvent = function(req, res){
     models.sequelize.Promise.all([
         models.Event.findOne({
             where: {
-                id: req.body.eventId
+                id: req.body.EventId
             }
         }),
         models.User.findOne({
             where: {
-                id: req.body.userId
+                id: req.body.UserId
             }
         })
     ]).spread(function(event, user){
