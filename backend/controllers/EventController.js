@@ -78,7 +78,8 @@ exports.getAllEvents = function(req, res){
     models.Event.findAll({
         where: {
             GroupId: req.body.GroupId
-        }
+        },
+        include: [models.User]
     }).then(function(events){
         res.send(events);
     }).catch(function(err) {
