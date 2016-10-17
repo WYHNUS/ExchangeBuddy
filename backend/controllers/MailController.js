@@ -18,10 +18,23 @@ exports.sendVerificationEmail = function(user) {
         path: '/v3/mail/send',
         body: mail.toJSON(),
     });
-    sg.API(request, function(error, response) {
-        console.log(response.statusCode);
-        console.log(response.body);
-        console.log(response.headers);
+
+    return new Promise(function(resolve, reject) {
+        sg.API(request, function(error, response) {
+            if (error===null) {
+                console.log(response.statusCode);
+                console.log(response.body);
+                console.log(response.headers);
+                if (res.body.error) {
+                    console.log(res.body + " error on server");
+                    reject(res.body.error);
+                }
+                resolve(res);
+            } else {
+                console.log(error);
+                reject(error);
+            }
+        });
     });
 }
 

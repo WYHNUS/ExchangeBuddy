@@ -115,11 +115,22 @@ exports.createUser = function(req, res){
                         groups.map(group => {
                             group[0].addUser(user);
                         });
-                        MailCtrl.sendVerificationEmail(user);
-                        res.status(201)
-                            .json({
-                                status: 'success',
-                                message: 'Verification email sent.'
+                        
+                        MailCtrl.sendVerificationEmail(user)
+                            .then(function(value) {
+                                console.log(value); // Success!
+                                res.status(201)
+                                    .json({
+                                        status: 'success',
+                                        message: 'Verification email sent.'
+                                    });
+                            }, function(reason) {
+                                console.log(reason); // Error!
+                                res.status(400)
+                                    .json({
+                                        status: 'fail',
+                                        message: 'Verification email fail to send.'
+                                    });
                             });
                     });
 
