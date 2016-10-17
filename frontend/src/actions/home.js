@@ -19,7 +19,7 @@ export const FETCH_HOME_MESSAGES_SUCCESS = 'FETCH_HOME_MESSAGES_SUCCESS';
 export const FETCH_HOME_MESSAGES_FAILURE = 'FETCH_HOME_MESSAGES_FAILURE';
 export const RESET_HOME_MESSAGES = 'RESET_HOME_MESSAGES';
 
-const ROOT_URL = 'https://exchangebuddy.com';
+import {ROOT_URL} from '../util/backend';
 //import EventSearch from "facebook-events-by-location-core";	
 /*import meetup from "meetup-api";
 const Meetup = meetup({ "key": '' });*/
