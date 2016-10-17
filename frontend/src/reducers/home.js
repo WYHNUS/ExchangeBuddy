@@ -79,7 +79,7 @@ import {TOGGLE_SELECTED_HOME_GROUP,FETCH_HOME_MESSAGES,FETCH_HOME_MESSAGES_SUCCE
 	[
 	{
 		id:1,
-		title: 'Late night chillaxing at my room :)',
+		name: 'Late night chillaxing at my room :)',
 		detail: 'Bring stuff to chillax with, dun be shy, \
 		just a chill time to come down and have some fun!',
 		imgSrc: imgUrl,
@@ -96,7 +96,7 @@ import {TOGGLE_SELECTED_HOME_GROUP,FETCH_HOME_MESSAGES,FETCH_HOME_MESSAGES_SUCCE
 	},
 	{
 		id:2,
-		title: 'Security Wednesdays #14 - Security Challenges Faced in IoT',
+		name: 'Security Wednesdays #14 - Security Challenges Faced in IoT',
 		detail: 'This talk will discuss the general challenges faced in IoT including \
 		a case study on how we managed to take over a few hundred IoT gateways. We \
 		will also discuss on why developers have difficulty implementing IoT solutions in a secure \

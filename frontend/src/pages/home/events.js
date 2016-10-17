@@ -142,7 +142,7 @@ class Events extends React.Component{
            </div>
            </div>
            <div className='row center-xs'>
-
+           <EventList source="Created"/>
            <div className="col-xs-12 col-md-6">
 
            </div>
