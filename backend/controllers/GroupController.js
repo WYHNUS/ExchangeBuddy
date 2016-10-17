@@ -2,6 +2,7 @@ var models = require('../models');
 var User = models.User;
 var Group = models.Group;
 var ChatMsg = models.ChatMessage;
+var University = models.University;
 
 // Get all groups current user belongs to
 exports.getGroupIndex = function(req, res) {
@@ -61,6 +62,10 @@ exports.getGroup = function(req, res) {
         	attributes: ['id', 'name', 'profilePictureUrl'],
         	model: User,
         	as: 'user',
+			include: [{
+				attributes: ['name', 'id'],
+				model: University
+			}]
         	// through: {
 			// 	where: {
 			// 		userId: req.user.id
