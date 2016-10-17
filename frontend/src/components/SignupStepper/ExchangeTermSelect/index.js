@@ -13,7 +13,7 @@ import ChildComponent from './ExchangeTermSelect';
 
 const mapStateToProps = (state) => {
   return{
-    
+    exchangeUniName: state.user.signupInfo.exchangeUniName
   };
 };
 

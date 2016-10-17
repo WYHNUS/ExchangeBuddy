@@ -1,8 +1,10 @@
+import axios from 'axios';
+
 export const TOGGLE_SELECTED_HOME_GROUP = 'TOGGLE_SELECTED_HOME_GROUP';
 export const TOGGLE_HOME_TAB = 'TOGGLE_HOME_TAB';
 
 //api for fetching fb events
-export const FETCH_FB_EVENTS = 'FETCH_FB_EVENTS';
+/*export const FETCH_FB_EVENTS = 'FETCH_FB_EVENTS';
 export const FETCH_FB_EVENTS_SUCCESS = 'FETCH_FB_EVENTS_SUCCESS';
 export const FETCH_FB_EVENTS_FAILURE = 'FETCH_FB_EVENTS_FAILURE';
 export const RESET_FB_EVENTS = 'RESET_FB_EVENTS';
@@ -11,7 +13,12 @@ export const RESET_FB_EVENTS = 'RESET_FB_EVENTS';
 export const FETCH_MU_EVENTS = 'FETCH_MU_EVENTS';
 export const FETCH_MU_EVENTS_SUCCESS = 'FETCH_MU_EVENTS_SUCCESS';
 export const FETCH_MU_EVENTS_FAILURE = 'FETCH_MU_EVENTS_FAILURE';
-export const RESET_MU_EVENTS = 'RESET_MU_EVENTS';
+export const RESET_MU_EVENTS = 'RESET_MU_EVENTS';*/
+
+export const FETCH_EVENTS = 'FETCH_EVENTS';
+export const FETCH_EVENTS_SUCCESS = 'FETCH_EVENTS_SUCCESS';
+export const FETCH_EVENTS_FAILURE = 'FETCH_EVENTS_FAILURE';
+export const RESET_EVENTS = 'RESET_EVENTS';
 
 //api for fetching messages
 export const FETCH_HOME_MESSAGES = 'FETCH_HOME_MESSAGES';
@@ -23,6 +30,45 @@ import {ROOT_URL} from '../util/backend';
 //import EventSearch from "facebook-events-by-location-core";	
 /*import meetup from "meetup-api";
 const Meetup = meetup({ "key": '' });*/
+
+/************************************************************
+FETCHING EVENTS OF A GROUP
+************************************************************/
+
+export function fetchEvents(GroupId){
+
+	const req = axios.post(`${ROOT_URL}/allEvents`, 
+	{
+		GroupId: GroupId
+	})
+	return {
+		type: FETCH_EVENTS,
+		payload: req
+	};
+
+}
+
+export function fetchEventsSuccess(events){
+	//console.log(events);
+	return {
+		type: FETCH_EVENTS_SUCCESS,
+		payload: events
+	};
+}
+
+export function fetchEventsFailure(error){
+	//console.log(error);
+	return {
+		type: FETCH_EVENTS_FAILURE,
+		payload: error
+	};
+}
+
+export function resetEvents(){
+	return{
+		type: RESET_EVENTS
+	}
+}
 
 /************************************************************
 FETCHING FB EVENTS OF A GROUP

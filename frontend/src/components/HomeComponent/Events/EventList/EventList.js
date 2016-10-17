@@ -16,6 +16,10 @@ export default class EventsList extends React.Component {
     };
   }
 
+  componentWillMount(){
+    this.props.fetchEvents(1);
+  }
+
 	render() {
     const { groupEvents, source, groupId } = this.props;
 
@@ -62,5 +66,6 @@ export default class EventsList extends React.Component {
 EventsList.propTypes = {
   groupEvents: PropTypes.array.isRequired,
   source: PropTypes.string.isRequired,
-  groupId: PropTypes.string.isRequired
+  groupId: PropTypes.string.isRequired,
+  fetchEvents: PropTypes.func.isRequired
 };

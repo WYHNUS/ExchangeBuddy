@@ -8,7 +8,7 @@ import PrevButton from '../PrevButton';
 import NextButton from '../NextButton';
 import ExchangeTermSelect from '../ExchangeTermSelect';
 
-import { propExistsDeep } from '../../../util/helper';
+// import { propExistsDeep } from '../../../util/helper';
 
 let universitiesProps, homeUniName;
 const validate = values => {
@@ -42,6 +42,14 @@ const filter = (searchText, key) => {
 };
 
 class Step2 extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      exUniName: null
+    };
+  }
+
   submitForm (val, props) {
     props.handleNext();
     this.props.saveData(val);
@@ -60,8 +68,8 @@ class Step2 extends React.Component {
       years.push(i);
 
     // Uni name
-    const uniName = propExistsDeep(formState, [ 'signupStep2', 'values', 'exchangeUniName' ]) && formState.signupStep2.values.exchangeUniName;
-
+    // const uniName = propExistsDeep(formState, [ 'signupStep2', 'values', 'exchangeUniName' ]) && formState.signupStep2.values.exchangeUniName;
+    
     return (
       <form onSubmit={ handleSubmit((values) => {
         this.submitForm(values, this.props)
@@ -81,7 +89,7 @@ class Step2 extends React.Component {
           { years.map(year => <MenuItem key={year} value={year} primaryText={year} />) }
         </SelectFormField>
 
-        <ExchangeTermSelect uniName={ uniName } universities={ this.props.universities }/>
+        <ExchangeTermSelect /*uniName={ uniName }*/ universities={ this.props.universities }/>
 
         <div style={{ marginTop: 12 }}>
           <PrevButton onTouchTap={ handlePrev } label="Back" disabled={submitting} />
