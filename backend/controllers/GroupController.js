@@ -84,7 +84,13 @@ exports.getMembers = function(req, res){
 		}
 	}).then(function(group){
 		group.getUser().then(function(users){
-			res.send(users);
+			res.json(
+				users.map(user => ({
+					id: user.id,
+					name: user.name,
+					profilePictureUrl: user.profilePictureUrl
+				}))
+			);
 		})
 	})
 }
