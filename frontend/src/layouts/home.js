@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { toggleBottomBarVisibility, 
   toggleHomeSearchDrawerOpenButtonVisibility,
   toggleTopBarBackButtonVisibility } from '../actions/pageVisibility';
-import {fetchMyGroups, fetchMyGroupsSuccess, fetchMyGroupsFailure} from '../actions/home'
+import {fetchMyGroups, fetchMyGroupsSuccess, fetchMyGroupsFailure,
+fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure} from '../actions/home'
 import Header from '../components/Header';
 //import SwitchGroupDialog from '../components/SwitchGroupDialog';
 
@@ -53,6 +54,15 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(fetchMyGroupsSuccess(response.data));
         } else {
           dispatch(fetchMyGroupsFailure(response.error));
+        }
+      });
+    },
+    fetchCurrentGroup: (id) => {
+      dispatch(fetchCurrentGroup(id)).payload.then((response) => {
+        if (!response.error) {
+          dispatch(fetchCurrentGroupSuccess(response.data));
+        } else {
+          dispatch(fetchCurrentGroupFailure(response.error));
         }
       });
     }

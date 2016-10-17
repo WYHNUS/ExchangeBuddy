@@ -12,7 +12,45 @@ export const RESET_HOME_MESSAGES = 'RESET_HOME_MESSAGES';
 import {ROOT_URL} from '../util/backend';
 
 /************************************************************
-FETCHING EVENTS OF A GROUP
+FETCHING A SINGLE GROUP OF USER (which populates members page also)
+************************************************************/
+
+export const FETCH_CURRENT_GROUP = 'FETCH_CURRENT_GROUP';
+export const FETCH_CURRENT_GROUP_SUCCESS = 'FETCH_CURRENT_GROUP_SUCCESS';
+export const FETCH_CURRENT_GROUP_FAILURE = 'FETCH_CURRENT_GROUP_FAILURE';
+export const RESET_CURRENT_GROUP = 'RESET_CURRENT_GROUP';
+
+export function fetchCurrentGroup(id){
+
+	const req = axios.get(`${ROOT_URL}/group/${id}`)
+	return {
+		type: FETCH_CURRENT_GROUP,
+		payload: req
+	};
+}
+
+export function fetchCurrentGroupSuccess(group){
+	return {
+		type: FETCH_CURRENT_GROUP_SUCCESS,
+		payload: group
+	};
+}
+
+export function fetchCurrentGroupFailure(error){
+	return {
+		type: FETCH_CURRENT_GROUP_FAILURE,
+		payload: error
+	};
+}
+
+export function resetCurrentGroup(){
+	return{
+		type: RESET_CURRENT_GROUP
+	}
+}
+
+/************************************************************
+FETCHING ALL GROUPS OF AUTH USER
 ************************************************************/
 
 export const FETCH_MY_GROUPS = 'FETCH_MY_GROUPS';
@@ -34,7 +72,6 @@ export function fetchMyGroups(userId){
 }
 
 export function fetchMyGroupsSuccess(groups){
-	console.log(groups);
 	return {
 		type: FETCH_MY_GROUPS_SUCCESS,
 		payload: groups

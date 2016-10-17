@@ -5,7 +5,9 @@ import {
 	FETCH_EVENTS, FETCH_EVENTS_SUCCESS, 
 	FETCH_EVENTS_FAILURE, RESET_EVENTS,
 	FETCH_MY_GROUPS, FETCH_MY_GROUPS_SUCCESS,
-	FETCH_MY_GROUPS_FAILURE, RESET_MY_GROUPS} from '../actions/home';
+	FETCH_MY_GROUPS_FAILURE, RESET_MY_GROUPS,
+	FETCH_CURRENT_GROUP, FETCH_CURRENT_GROUP_SUCCESS,
+	FETCH_CURRENT_GROUP_FAILURE, RESET_CURRENT_GROUP} from '../actions/home';
 
 	/*const homeGroups=
 	[
@@ -30,13 +32,33 @@ import {
 		groupType: 3
 	}
 	];*/
-	const homeGroupDetails=
+	/*const homeGroupDetails=
 	{
 		id:'1',
 		name: 'KTH Royal Institute of Technology exchange students -- Spring 2016',
 		groupType:0
 	};
 
+
+	{
+  "id": 1,
+  "name": "a students in a",
+  "user": [
+    {
+      "id": 5,
+      "name": "Lee Kai Yi",
+      "profilePictureUrl": null,
+      "chat_group": {
+        "createdAt": "2016-10-17T17:00:11.000Z",
+        "updatedAt": "2016-10-17T17:00:11.000Z",
+        "groupId": 1,
+        "userId": 5
+      }
+    }
+  ],
+  "ChatMessages": []
+}
+*/
 	const homeFriends=
 	[
 	{
@@ -167,7 +189,7 @@ import {
 
 	const initialState={
 		homeGroups:{selected:0,homeGroups:[],error:null,loading:false},
-		homeGroupDetails:{homeGroupDetails:homeGroupDetails,error:null,loading:false},
+		homeGroupDetails:{homeGroupDetails:{},error:null,loading:false},
 		homeEvents:{homeEvents:[],error:null,loading:false},
 		homeMessages:{homeMessages:homeMessages,error:null,loading:false},
 		homeFriends:{homeFriends:homeFriends,error:null,loading:false},
@@ -218,6 +240,20 @@ import {
 				return {...state, homeGroups: {homeGroups: [], error: error, loading: false}};
 				case RESET_MY_GROUPS:
 				return {...state, homeGroups: {homeGroups: [], error: null, loading: false}};
+
+				case FETCH_CURRENT_GROUP:
+				return {...state, homeGroupDetails: {homeGroupDetails:[], error: null, loading: true},
+				homeFriends: {homeFriends:[], error: null, loading: true}};
+				case FETCH_CURRENT_GROUP_SUCCESS:
+				return {...state, homeGroupDetails: {homeGroupDetails: action.payload, error: null, loading: false},
+				homeFriends: {homeFriends: action.payload, error: null, loading: false}};
+				case FETCH_CURRENT_GROUP_FAILURE:
+				error = action.payload || {message: action.payload};
+				return {...state, homeGroupDetails: {homeGroupDetails: [], error: error, loading: false},
+				homeFriends: {homeFriends: [], error: error, loading: false}};
+				case RESET_CURRENT_GROUP:
+				return {...state, homeGroupDetails: {homeGroupDetails: [], error: null, loading: false},
+				homeFriends: {homeFriends: [], error: null, loading: false}};
 
 				default:
 				return state
