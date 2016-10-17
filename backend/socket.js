@@ -17,32 +17,64 @@ module.exports = function(io){
 
     io.sockets.on('connection', function(socket){
         console.log('connected');
+        /*
+        expected data formate:
+        {
+            user: {
+                id: 1,
+                name: 'hello'
+            },
+            group: {
+                id: 1,
+                name: 'nus'
+            }
+        }
+        */
         socket.on('adduser', function(data){
-            groupsOfUsers[data.group.name].push(data.user.id);
-            socket.user = data.user;
-            socket.room = data.group;
-            socket.join(socket.room.name);
+            try{
+                groupsOfUsers[data.group.name].push(data.user.id);
+                socket.user = data.user;
+                socket.room = data.group;
+                socket.join(socket.room.name);
+            }catch(error){
+                console.log(error);
+            }
+
         });
 
         socket.on('sendchat', function(msg){
-            console.log(socket.room);
-            ChatCtrl.addChatMessage(socket.user, msg, socket.room);
-            io.sockets.in(socket.room.name).emit('updatechat', socket.user.name, msg);
+            try{
+                ChatCtrl.addChatMessage(socket.user, msg, socket.room);
+                io.sockets.in(socket.room.name).emit('updatechat', socket.user.name, msg);
+            }catch(error){
+                console.log(error);
+            }
+
         });
 
         socket.on('switchroom', function(newroom){
-            socket.leave(socket.room.name);
-            groupsOfUsers[socket.room.name].splice(groupsOfUsers[socket.room.name].indexOf(socket.user.id), 1);
+            try{
+                socket.leave(socket.room.name);
+                groupsOfUsers[socket.room.name].splice(groupsOfUsers[socket.room.name].indexOf(socket.user.id), 1);
 
-            socket.join(newroom.name);
-            socket.room = newroom;
-            groupsOfUsers[socket.room.name].push(socket.user.id);
+                socket.join(newroom.name);
+                socket.room = newroom;
+                groupsOfUsers[socket.room.name].push(socket.user.id);
+            }catch(error){
+                console.log(error);
+            }
+
 
         });
 
         socket.on('disconnect', function(){
-            socket.leave(socket.room.name);
-            groupsOfUsers[socket.room.name].splice(groupsOfUsers[socket.room.name].indexOf(socket.user.id), 1);
+            try{
+                socket.leave(socket.room.name);
+                groupsOfUsers[socket.room.name].splice(groupsOfUsers[socket.room.name].indexOf(socket.user.id), 1);
+            }catch(error){
+                console.log(error);
+            }
+
         })
     });
 }
