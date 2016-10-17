@@ -1,6 +1,7 @@
 var models = require('../models');
 
 exports.createEvent = function(req, res){
+    console.log(models.Event.Instance.prototype);
     models.sequelize.Promise.all([
         models.Event.create({
             lat: req.body.lat,
@@ -18,13 +19,13 @@ exports.createEvent = function(req, res){
             }
         })
     ]).spread(function(event, user){
-        event.addUser(user);
+        event.addUserEvent(user);
         res.send({
             success: true
         });
     }).catch(function(err) {
         resError(res, err);
-    });;
+    });
 }
 
 exports.deleteEvent = function(req, res){
@@ -94,7 +95,6 @@ exports.goToEvent = function(req, res){
                 id: req.body.eventId
             }
         }),
-
         models.User.findOne({
             where: {
                 id: req.body.userId
