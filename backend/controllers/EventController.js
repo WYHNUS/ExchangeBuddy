@@ -1,15 +1,24 @@
 var models = require('../models');
 
 exports.createEvent = function(req, res){
-    models.Event.create({
-        lat: req.body.lat,
-        lng: req.body.lng,
-        startTime: new Date(req.body.startTime),
-        endTime: new Date(req.body.endTime),
-        detail: req.body.detail,
-        imgSrc: req.body.imgSrc,
-        GroupId: req.body.GroupId
-    }).then(function(event){
+    models.sequelize.Promise.all([
+        models.Event.create({
+            lat: req.body.lat,
+            lng: req.body.lng,
+            startTime: new Date(req.body.startTime),
+            endTime: new Date(req.body.endTime),
+            detail: req.body.detail,
+            imgSrc: req.body.imgSrc,
+            GroupId: req.body.GroupId
+        },
+
+        models.User.findOne({
+            where: {
+                id: req.body.UserId
+            }
+        })
+    ]).spread(function(event, user){
+        event.addUser(user);
         res.send({
             success: true
         });
