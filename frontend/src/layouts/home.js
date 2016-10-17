@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { toggleBottomBarVisibility, 
   toggleHomeSearchDrawerOpenButtonVisibility,
   toggleTopBarBackButtonVisibility } from '../actions/pageVisibility';
+import {fetchMyGroups, fetchMyGroupsSuccess, fetchMyGroupsFailure} from '../actions/home'
 import Header from '../components/Header';
 //import SwitchGroupDialog from '../components/SwitchGroupDialog';
 
@@ -12,6 +13,9 @@ class Home extends React.Component{
     this.props.toggleBottomBarVisibility(true);
     this.props.toggleHomeSearchDrawerOpenButtonVisibility(true);
     this.props.toggleTopBarBackButtonVisibility(true);
+
+    //fetchMyGroups(userId)
+    this.props.fetchMyGroups(5);
     //console.log(this.props.params);
     //console.log(this.props.routes[1]);
   }
@@ -42,8 +46,23 @@ const mapDispatchToProps = (dispatch) => {
     toggleHomeSearchDrawerOpenButtonVisibility:visibility=>dispatch
     (toggleHomeSearchDrawerOpenButtonVisibility(visibility)),
     toggleTopBarBackButtonVisibility:visibility=>dispatch
-    (toggleTopBarBackButtonVisibility(visibility))
+    (toggleTopBarBackButtonVisibility(visibility)),
+    fetchMyGroups: (userId) => {
+      dispatch(fetchMyGroups(userId)).payload.then((response) => {
+        console.log(response);
+        if (!response.error) {
+          dispatch(fetchMyGroupsSuccess(response.data));
+        } else {
+          dispatch(fetchMyGroupsFailure(response.error));
+        }
+      });
+    }
   };
 };
 
-export default connect(null, mapDispatchToProps)(Home);
+const mapStateToProps = (state)=>{
+  return {
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

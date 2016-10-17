@@ -10,9 +10,6 @@ export const FETCH_HOME_MESSAGES_FAILURE = 'FETCH_HOME_MESSAGES_FAILURE';
 export const RESET_HOME_MESSAGES = 'RESET_HOME_MESSAGES';
 
 import {ROOT_URL} from '../util/backend';
-//import EventSearch from "facebook-events-by-location-core";	
-/*import meetup from "meetup-api";
-const Meetup = meetup({ "key": '' });*/
 
 /************************************************************
 FETCHING EVENTS OF A GROUP
@@ -22,6 +19,42 @@ export const FETCH_MY_GROUPS = 'FETCH_MY_GROUPS';
 export const FETCH_MY_GROUPS_SUCCESS = 'FETCH_MY_GROUPS_SUCCESS';
 export const FETCH_MY_GROUPS_FAILURE = 'FETCH_MY_GROUPS_FAILURE';
 export const RESET_MY_GROUPS = 'RESET_MY_GROUPS';
+
+export function fetchMyGroups(userId){
+
+	const req = axios.post(`${ROOT_URL}/group`, 
+	{
+		userId: userId
+	})
+	return {
+		type: FETCH_MY_GROUPS_SUCCESS,
+		payload: req
+	};
+
+}
+
+export function fetchMyGroupsSuccess(events){
+	//console.log(events);
+	return {
+		type: FETCH_EVENTS_SUCCESS,
+		payload: events
+	};
+}
+
+export function fetchMyGroupsFailure(error){
+	//console.log(error);
+	return {
+		type: FETCH_MY_GROUPS_FAILURE,
+		payload: error
+	};
+}
+
+export function resetMyGroups(){
+	return{
+		type: RESET_MY_GROUPS
+	}
+}
+
 
 //export function fetchMyGroups()
 
