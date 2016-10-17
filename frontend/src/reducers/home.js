@@ -32,9 +32,7 @@ import {TOGGLE_SELECTED_HOME_GROUP,FETCH_HOME_MESSAGES,FETCH_HOME_MESSAGES_SUCCE
 		name: 'KTH Royal Institute of Technology exchange students -- Spring 2016',
 		groupType:0
 	};
-	const homeMessages=
-	[
-	];
+
 	const homeFriends=
 	[
 	{
@@ -71,15 +69,103 @@ import {TOGGLE_SELECTED_HOME_GROUP,FETCH_HOME_MESSAGES,FETCH_HOME_MESSAGES_SUCCE
 		{
 			name: 'National University of Singapore'
 		}
-
 	}
 	]
+
+	const imgUrl = '../res/Exchange-In-Singapore.jpg';
+	const defaultUrl = '../res/user.png';
+
+	const homeEvents=
+	[
+	{
+		id:1,
+		name: 'Late night chillaxing at my room :)',
+		detail: 'Bring stuff to chillax with, dun be shy, \
+		just a chill time to come down and have some fun!',
+		imgSrc: imgUrl,
+		lat:1.2910621,
+		lng:103.7761863,
+		startTime:'2016-04-23T18:25:43.511Z',
+		endTime:'2016-04-23T20:25:43.511Z',
+		user:{
+			name:'Lee Kai Yi',
+			profilePictureUrl:defaultUrl,
+			id:1
+		},
+		group:{}
+	},
+	{
+		id:2,
+		name: 'Security Wednesdays #14 - Security Challenges Faced in IoT',
+		detail: 'This talk will discuss the general challenges faced in IoT including \
+		a case study on how we managed to take over a few hundred IoT gateways. We \
+		will also discuss on why developers have difficulty implementing IoT solutions in a secure \
+		manner, what the common mistakes are and what some key pointers are to prevent them.',
+		imgSrc: null,
+		lat:1.29874,
+		lng:103.77329,
+		startTime:'2016-07-23T18:25:43.511Z',
+		endTime:'2016-07-23T20:25:43.511Z',
+		user:{
+			name:'Lee Kai Yi',
+			profilePictureUrl:defaultUrl,
+			id:1
+		},
+		group:{}
+	}
+	]
+
+	
+
+	const homeMessages=
+	[
+	{//user or eventFB or eventMU
+		type: 'user', 
+		user: {
+			userId: 12341,
+			displayName: 'Lee Kai Yi',
+			userAvatarUrl: defaultUrl
+		},
+		content: 'hello, this is the first msg',
+		createdAt: '2016-07-23T18:25:43.511Z'
+	},
+	{//user or event
+		type: 'eventFB', 
+		user: {
+			userId: 12342,
+			displayName: 'Yanhao',
+			userAvatarUrl: defaultUrl
+		},
+		content: 'hello, this is the first event',
+		createdAt: '2016-07-23T18:25:43.511Z',
+		eventPosting:{
+			id: 1234123,
+			url: 'http://meetup.com',
+			yes_rsvp_count: 4,
+			name: 'cat event',
+			profilePicture: '',
+			coverPicture: '',
+			startTime: '2016-07-23T18:25:43.511Z'
+		}
+	},
+	{//user or event
+		type: 'user', 
+		user: {
+			userId: 123413,
+			displayName: 'Hanming',
+			userAvatarUrl: defaultUrl
+		},
+		content: 'hello, this is the second msg',
+		createdAt: '2016-07-23T18:25:43.511Z'
+	}
+	]
+
 
 	const initialState={
 		homeGroups:{selected:0,homeGroups:homeGroups,error:null,loading:false},
 		homeGroupDetails:{homeGroupDetails:homeGroupDetails,error:null,loading:false},
-		homeEvents:{homeEvents:[],error:null,loading:false},
-		homeMessages:{homeMessages:[],error:null,loading:false},
+		homeEvents:{homeEvents:homeEvents,error:null,loading:false},
+		homeMessages:{homeMessages:homeMessages,error:null,loading:false},
 		homeFriends:{homeFriends:homeFriends,error:null,loading:false},
 		homeTabValue:'events'
 	}

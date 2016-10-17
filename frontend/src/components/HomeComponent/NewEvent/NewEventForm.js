@@ -8,7 +8,7 @@ import moment from 'moment';
 import RaisedButton from 'material-ui/RaisedButton'
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
-//import ImageUpload from '../ImageUpload/index.js'
+import ImageUpload from '../../ImageUpload/index.js'
 import validUrl from 'valid-url'
 
 const handler = (passSnackbarMessage, user, location, dropId) => values => {
@@ -108,30 +108,53 @@ class NewEventForm extends Component {
       <h1>{dropId ? 'Edit event' : 'New event'}</h1>
 
       <div className="row center-xs">
-        <div className="col-xs-10">
+        <div className="col-xs-8">
           <Field name="title" component={TextField} fullWidth={true}
           floatingLabelText="Event Title" floatingLabelStyle={{left: 0}}
           errorStyle={{textAlign: "left"}}
           multiLine={false} />
         </div>
-        <div className="col-xs-10">
+      </div>
+      <div className="row center-xs">
+        <div className="col-xs-8">
           <Field name="details" component={TextField} fullWidth={true}
           floatingLabelText="Event Details" floatingLabelStyle={{left: 0}}
           errorStyle={{textAlign: "left"}}
           multiLine={true} rows={3}/>
         </div>
-
-        <div className="col-xs-10">
-
-          {/*<Field name="imageId" component={ImageUpload} />*/}
+      </div>
+      
+      <div className="row center-xs">
+        <div className="col-xs-8">
+          <Field name="imageUpload" component={ImageUpload}/>
         </div>
-        <div className="col-xs-10">
-          {/*<Field name="startDate" component={} />*/}
-        </div>
-        <DatePicker hintText="Start Date" />
-        <TimePicker hintText="Start Time" />
+      </div>
 
-        <RaisedButton label="Add ending time" />
+      <div className="row center-xs">
+        <div className="col-xs-3">
+        <h5>Start Date/Time</h5>
+        </div>
+        <div className="col-xs-3">
+          <Field name="startDate" component={StartDatePick}/>
+        </div>
+        <div className="col-xs-3">
+          <Field name="startTime" component={StartTimePick}/>
+        </div>
+      </div>
+
+      <div className="row center-xs">
+        <div className="col-xs-3">
+        <h5>End Date/Time</h5>
+        </div>
+        <div className="col-xs-3">
+          <Field name="endDate" component={EndDatePick}/>
+        </div>
+        <div className="col-xs-3">
+          <Field name="endTime" component={EndTimePick}/>
+        </div>
+      </div>
+
+      <div>Insert Google Map Chooser here</div> 
 
         <div className="col-xs-12">
           <RaisedButton type="submit" label="Submit"
@@ -139,9 +162,40 @@ class NewEventForm extends Component {
           disabled={pristine || submitting} primary={true}
           />
         </div>
-        </div>
       </form>
     )
+  }
+}
+
+class StartDatePick extends React.Component{
+  render(){
+    return(
+      <DatePicker hintText="Start Date" />
+      );
+  }
+}
+
+class StartTimePick extends React.Component{
+  render(){
+    return(
+      <TimePicker hintText="Start Time" />
+      );
+  }
+}
+
+class EndDatePick extends React.Component{
+  render(){
+    return(
+      <DatePicker hintText="End Date" />
+      );
+  }
+}
+
+class EndTimePick extends React.Component{
+  render(){
+    return(
+      <TimePicker hintText="End Time" />
+      );
   }
 }
 

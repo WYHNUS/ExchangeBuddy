@@ -5,6 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import EventItemMu from './EventItemMu';
 import EventItemFb from './EventItemFb';
+import EventItemCreated from './EventItemCreated';
 
 export default class EventsList extends React.Component {
   constructor(props) {
@@ -24,6 +25,8 @@ export default class EventsList extends React.Component {
       }
       else if (source == 'Meetup')
         return <EventItemMu groupEvent={ groupEvent } groupId={ groupId } />;
+      else if (source == 'Created' )
+        return <EventItemCreated groupEvent={groupEvent} groupId={groupId}/>
       else
         return null;
     };
@@ -31,6 +34,7 @@ export default class EventsList extends React.Component {
     const showAllEvents = () => this.setState({ showAll: true });
 
     // Before button is clicked, only show 5 events
+    // should optimize this to actually pull more events when u click show more
     const end = this.state.showAll ? groupEvents.length : 5;
 
 		return (
