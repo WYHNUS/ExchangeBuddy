@@ -10,7 +10,7 @@ exports.createEvent = function(req, res){
             detail: req.body.detail,
             imgSrc: req.body.imgSrc,
             GroupId: req.body.GroupId
-        },
+        }),
 
         models.User.findOne({
             where: {
@@ -121,7 +121,8 @@ exports.goToEvent = function(req, res){
 exports.comment = function(req, res){
     models.Comment.create({
         content: req.body.content,
-        EventId: req.body.EventId
+        EventId: req.body.EventId,
+        UserId: req.body.UserId
     }).then(function(comment){
         res.send({
             success: true
@@ -135,7 +136,8 @@ exports.getComments = function(req, res){
     models.Comment.findAll({
         where: {
             EventId: req.query.eventId
-        }
+        },
+        include: [models.User]
     }).then(function(comments){
         res.send(comments);
     })
