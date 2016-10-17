@@ -132,7 +132,7 @@ class NewEventForm extends Component {
 
       <div className="row center-xs">
         <div className="col-xs-3">
-        <h3>Start Date/Time</h3>
+        <h5>Start Date/Time</h5>
         </div>
         <div className="col-xs-3">
           <Field name="startDate" component={StartDatePick}/>
@@ -144,7 +144,7 @@ class NewEventForm extends Component {
 
       <div className="row center-xs">
         <div className="col-xs-3">
-        <h3>End Date/Time</h3>
+        <h5>End Date/Time</h5>
         </div>
         <div className="col-xs-3">
           <Field name="endDate" component={EndDatePick}/>
@@ -154,7 +154,7 @@ class NewEventForm extends Component {
         </div>
       </div>
 
-      <div>Insert Google Map Chooser here</div>
+      <div>Insert Google Map Chooser here</div> 
 
         <div className="col-xs-12">
           <RaisedButton type="submit" label="Submit"
