@@ -42,6 +42,7 @@ export function requireRegistration(fbToken, user, error) {
 }
 
 export function attemptLogin(token) {
+  //console.log(token);
   return (dispatch) => {
     dispatch(clickedLogin());
 

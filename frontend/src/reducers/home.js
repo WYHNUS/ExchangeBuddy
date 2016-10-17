@@ -1,7 +1,9 @@
 import {TOGGLE_SELECTED_HOME_GROUP,FETCH_HOME_MESSAGES,FETCH_HOME_MESSAGES_SUCCESS,
 	FETCH_HOME_MESSAGES_FAILURE,RESET_HOME_MESSAGES,
 	FETCH_FB_EVENTS, FETCH_FB_EVENTS_SUCCESS,
-	FETCH_FB_EVENTS_FAILURE, RESET_FB_EVENTS, TOGGLE_HOME_TAB} from '../actions/home';
+	FETCH_FB_EVENTS_FAILURE, RESET_FB_EVENTS, TOGGLE_HOME_TAB,
+	FETCH_EVENTS, FETCH_EVENTS_SUCCESS, FETCH_EVENTS_FAILURE,
+	RESET_EVENTS} from '../actions/home';
 
 	const homeGroups=
 	[
@@ -75,7 +77,7 @@ import {TOGGLE_SELECTED_HOME_GROUP,FETCH_HOME_MESSAGES,FETCH_HOME_MESSAGES_SUCCE
 	const imgUrl = '../res/Exchange-In-Singapore.jpg';
 	const defaultUrl = '../res/user.png';
 
-	const homeEvents=
+	/*const homeEvents=
 	[
 	{
 		id:1,
@@ -113,7 +115,7 @@ import {TOGGLE_SELECTED_HOME_GROUP,FETCH_HOME_MESSAGES,FETCH_HOME_MESSAGES_SUCCE
 		},
 		group:{}
 	}
-	]
+	]*/
 
 	
 
@@ -164,7 +166,7 @@ import {TOGGLE_SELECTED_HOME_GROUP,FETCH_HOME_MESSAGES,FETCH_HOME_MESSAGES_SUCCE
 	const initialState={
 		homeGroups:{selected:0,homeGroups:homeGroups,error:null,loading:false},
 		homeGroupDetails:{homeGroupDetails:homeGroupDetails,error:null,loading:false},
-		homeEvents:{homeEvents:homeEvents,error:null,loading:false},
+		homeEvents:{homeEvents:[],error:null,loading:false},
 		homeMessages:{homeMessages:homeMessages,error:null,loading:false},
 		homeFriends:{homeFriends:homeFriends,error:null,loading:false},
 		homeTabValue:'events'
@@ -204,6 +206,16 @@ import {TOGGLE_SELECTED_HOME_GROUP,FETCH_HOME_MESSAGES,FETCH_HOME_MESSAGES_SUCCE
 				return {...state, homeEvents: {homeEvents: [], error: error, loading: false}};
 				case RESET_FB_EVENTS:
 				return {...state, homeEvents: {homeEvents: [], error:null, loading: false}}
+
+				case FETCH_EVENTS:
+				return {...state, homeEvents: {homeEvents:[], error: null, loading: true}};
+				case FETCH_EVENTS_SUCCESS:
+				return {...state, homeEvents: {homeEvents: action.payload, error: null, loading: false}};
+				case FETCH_EVENTS_FAILURE:
+				error = action.payload || {message: action.payload};
+				return {...state, homeEvents: {homeEvents: [], error: error, loading: false}};
+				case RESET_EVENTS:
+				return {...state, homeEvents: {homeEvents: [], error: null, loading: false}};
 
 				default:
 				return state

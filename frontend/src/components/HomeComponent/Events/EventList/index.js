@@ -1,6 +1,9 @@
 import React from 'react';
-import { composeWithTracker } from 'react-komposer';
 import Loading from '../../../Loading';
+
+// Action creators
+import { fetchEvents, fetchEventsSuccess, fetchEventsFailure, resetEvents } from '../../../../actions/home';
+
 
 // Component
 import ChildComponent from './EventList';
@@ -40,7 +43,16 @@ import { connect } from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({  }, dispatch),
+    fetchEvents: (GroupId) => {
+      dispatch(fetchEvents(GroupId)).payload.then((response) => {
+        console.log(response);
+        if (!response.error) {
+          dispatch(fetchEventsSuccess(response.data));
+        } else {
+          dispatch(fetchEventsFailure(response.error));
+        }
+      });
+    }
   };
 };
 
