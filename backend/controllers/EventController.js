@@ -6,6 +6,7 @@ exports.createEvent = function(req, res){
         models.Event.create({
             lat: req.body.lat,
             lng: req.body.lng,
+            titel: req.body.titel,
             startTime: new Date(req.body.startTime),
             endTime: new Date(req.body.endTime),
             detail: req.body.detail,
@@ -19,7 +20,7 @@ exports.createEvent = function(req, res){
             }
         })
     ]).spread(function(event, user){
-        event.addUserEvent(user);
+        event.setUser(user);
         res.send({
             success: true
         });
@@ -45,13 +46,14 @@ exports.deleteEvent = function(req, res){
         }
     }).catch(function(err) {
         resError(res, err);
-    });;
+    });
 }
 
 exports.updateEvent = function(req, res){
     models.Event.update({
         lat: req.body.lat,
         lng: req.body.lng,
+        title: req.body.title,
         startTime: new Date(req.body.startTime),
         endTime: new Date(req.body.endTime),
         detail: req.body.detail,

@@ -9,6 +9,10 @@ module.exports = function(sequelize, DataType) {
         lng: {
             type: DataType.DOUBLE()
         },
+        title: {
+            type: DataType.STRING(),
+            allowNull: false
+        },
         startTime: {
             type: DataType.DATE()
         },
@@ -30,6 +34,11 @@ module.exports = function(sequelize, DataType) {
                     through: "user_event",
                     foreignKey: "eventId"
                 });
+
+                Event.belongsTo(models.User, {
+                    onDelete: "CASCADE",
+                    foreignKey: "UserId"
+                })
 
                 Event.belongsTo(models.Group, {
                     onDelete: "CASCADE",
