@@ -26,6 +26,7 @@ const config = {
   server_host : process.env.HOST_NAME || ip.address(), // use string 'localhost' to prevent exposure on local network
   server_port : process.env.PORT || 3000,
   backend_host : process.env.SERVER_NAME,
+  googlemap_apikey: process.env.GOOGLE_MAP_APIKEY,
 
   // ----------------------------------
   // Compiler Configuration
@@ -77,7 +78,8 @@ Edit at Your Own Risk
 config.globals = {
   'process.env'  : {
     'NODE_ENV' : JSON.stringify(config.env),
-    'SERVER_NAME' : JSON.stringify(config.backend_host)
+    'SERVER_NAME' : JSON.stringify(config.backend_host),
+    'GOOGLE_MAP_APIKEY': JSON.stringify(config.googlemap_apikey)
   },
   'NODE_ENV'     : config.env,
   '__DEV__'      : config.env === 'development',

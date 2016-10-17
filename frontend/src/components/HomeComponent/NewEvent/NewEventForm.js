@@ -10,12 +10,13 @@ import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import ImageUpload from '../../ImageUpload/index.js'
 import validUrl from 'valid-url'
+import GoogleMap from 'google-map-react'
 import {postEvents, postEventsSuccess, postEventsFailure} from '../../../actions/home';
 
 const handler = (passSnackbarMessage, user, location, dropId) => values => {
 
   console.log(values);
-  
+
   if(dropId){
     // If edit/:dropId route
     values.dropId = dropId;
@@ -69,13 +70,17 @@ const validate = values => {
 
 
 class NewEventForm extends Component {
+    static defaultProps = {
+    	center: {lat: 59.938043, lng: 30.337157},
+    	zoom: 9,
+    };
 
   constructor(props){
     super(props);
   }
 
   componentDidMount() {
-
+      console.log(process.env);
     const {drops, profileDrops, selectedDrop} = this.props;
     //this.clickedDrop = selectedDrop.selectedDropSrc === "profile" ? profileDrops[selectedDrop.selectedDropIdx] : null;
 
@@ -124,7 +129,7 @@ class NewEventForm extends Component {
           multiLine={true} rows={3}/>
         </div>
       </div>
-      
+
       <div className="row center-xs">
         <div className="col-xs-8">
           <Field name="imageUpload" component={ImageUpload}/>
@@ -155,8 +160,11 @@ class NewEventForm extends Component {
         </div>
       </div>
 
-      <div>Insert Google Map Chooser here</div> 
-
+      <div>Insert Google Map Chooser here</div>
+      <GoogleMap
+	  bootstrapURLKeys = {{key:process.env.GOOGLE_MAP_APIKEY}}
+      defaultCenter={this.props.center}
+      defaultZoom={this.props.zoom}></GoogleMap>
         <div className="col-xs-12">
           <RaisedButton type="submit" label="Submit"
           labelStyle={{fontSize:"1.2rem"}} style={{margin: "2vh 0 5vh", width: "50%"}}

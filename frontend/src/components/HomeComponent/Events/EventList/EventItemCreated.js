@@ -55,13 +55,14 @@ class EventItemCreated extends React.Component{
 				</CardActions>
 				</Card>
 				<GoogleMap
+				bootstrapURLKeys = {{key:process.env.GOOGLE_MAP_APIKEY}}
 				defaultCenter={this.props.center}
 				defaultZoom={this.props.zoom}>
 				</GoogleMap>
 				</div>
-				
+
 				);
 	}
-} 
+}
 
 export default EventItemCreated;
