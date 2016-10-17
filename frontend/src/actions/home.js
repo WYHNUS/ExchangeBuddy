@@ -18,6 +18,17 @@ const Meetup = meetup({ "key": '' });*/
 FETCHING EVENTS OF A GROUP
 ************************************************************/
 
+export const FETCH_MY_GROUPS = 'FETCH_MY_GROUPS';
+export const FETCH_MY_GROUPS_SUCCESS = 'FETCH_MY_GROUPS_SUCCESS';
+export const FETCH_MY_GROUPS_FAILURE = 'FETCH_MY_GROUPS_FAILURE';
+export const RESET_MY_GROUPS = 'RESET_MY_GROUPS';
+
+//export function fetchMyGroups()
+
+/************************************************************
+FETCHING EVENTS OF A GROUP
+************************************************************/
+
 export const FETCH_EVENTS = 'FETCH_EVENTS';
 export const FETCH_EVENTS_SUCCESS = 'FETCH_EVENTS_SUCCESS';
 export const FETCH_EVENTS_FAILURE = 'FETCH_EVENTS_FAILURE';

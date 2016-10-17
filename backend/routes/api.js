@@ -44,9 +44,6 @@ router.get('/university/:id', /*verifyToken,*/ UniCtrl.getUniversity);
 
 router.get('/group', /*verifyToken,*/ GroupCtrl.getGroupIndex);
 router.get('/group/:id', /*verifyToken,*/ GroupCtrl.getGroup);
-
-/*
-*/
 router.post('/members', GroupCtrl.getMembers);
 
 
