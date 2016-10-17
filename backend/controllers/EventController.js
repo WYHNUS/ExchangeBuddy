@@ -84,7 +84,7 @@ exports.getAllEvents = function(req, res){
         },
         include: [{
             attributes: ['profilePictureUrl', 'name', 'id'],
-            model: User
+            model: models.User
         }]
     }).then(function(events){
         res.send(events);
@@ -144,7 +144,7 @@ exports.getComments = function(req, res){
         },
         include: [{
             attributes: ['profilePictureUrl', 'name', 'id'],
-            model: User
+            model: models.User
         }]
     }).then(function(comments){
         res.send(comments);
