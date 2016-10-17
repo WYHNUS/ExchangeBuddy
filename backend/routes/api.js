@@ -46,12 +46,99 @@ router.get('/group', verifyToken, GroupCtrl.getGroupIndex);
 router.get('/group/:id', verifyToken, GroupCtrl.getGroup);
 router.post('/members', GroupCtrl.getMembers);
 
+
+/*
+Retrieve all the events posted in requested groups
+
+POST /allEvents
+request:
+{
+    GroupId: 123
+}
+*/
 router.post('/allEvents', EventCtrl.getAllEvents);
+
+/*
+Create a new event
+
+PUT /event
+request:
+{
+    lat: 1.111,
+    lng: 1.111,
+    title: "hello",
+    startTime: 123456, (milliseconds)
+    endTime: 123456,
+    detail: "hello",
+    GroupId: 1
+    UserId: 1
+}
+*/
 router.put('/event', EventCtrl.createEvent);
+
+/*
+Update an event information
+
+PATCH /event
+request:
+{
+    lat: 1.111,
+    lng: 1.111,
+    title: "hello",
+    startTime: 123456, (milliseconds)
+    endTime: 123456,
+    detail: "hello",
+    EventId: 1
+}
+response:
+{
+ success: true/false
+}
+*/
 router.patch('/event', EventCtrl.updateEvent);
+
+/*
+Delete an event
+
+DELETE /event
+request:
+{
+    EventId: 1
+}
+*/
 router.delete('/event', EventCtrl.deleteEvent);
+
+/*
+Record the user going for an event
+
+POST /goTOEvent
+request:
+{
+    EventId: 1,
+    UserId: 1
+}
+*/
 router.post('/goToEvent', EventCtrl.goToEvent);
+
+/*
+Comment on a event
+
+POST /comment
+requset:
+{
+    content: "this is the content",
+    EventId: 1,
+    UserId: 1
+}
+*/
 router.post('/comment', EventCtrl.comment);
+
+/*
+Retrievee all the comments of an event
+
+GET /comment/:eventId
+
+*/
 router.get('/comment/:eventId', EventCtrl.getComments);
 
 module.exports = router;
