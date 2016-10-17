@@ -1,6 +1,5 @@
 var helper = require('sendgrid').mail;
 var graph = require('fbgraph');
-var uid = require('rand-token').uid;
 
 var models = require('../models');
 var User = models.User;
