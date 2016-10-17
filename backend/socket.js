@@ -17,7 +17,7 @@ module.exports = function(io){
 
     io.sockets.on('connection', function(socket){
         console.log('connected');
-        /*
+        /* adduser
         expected data formate:
         {
             user: {
@@ -52,6 +52,12 @@ module.exports = function(io){
 
         });
 
+        /* switchroom
+        expected data formate:
+        {
+            name: 'nus'
+        }
+        */
         socket.on('switchroom', function(newroom){
             try{
                 socket.leave(socket.room.name);
