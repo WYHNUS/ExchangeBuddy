@@ -7,7 +7,7 @@ import {
 	FETCH_MY_GROUPS, FETCH_MY_GROUPS_SUCCESS,
 	FETCH_MY_GROUPS_FAILURE, RESET_MY_GROUPS} from '../actions/home';
 
-	const homeGroups=
+	/*const homeGroups=
 	[
 	{
 		name: 'KTH Royal Institute of Technology exchange students -- Spring 2016',
@@ -29,7 +29,7 @@ import {
 		id: '4',
 		groupType: 3
 	}
-	];
+	];*/
 	const homeGroupDetails=
 	{
 		id:'1',
@@ -166,7 +166,7 @@ import {
 
 
 	const initialState={
-		homeGroups:{selected:0,homeGroups:homeGroups,error:null,loading:false},
+		homeGroups:{selected:0,homeGroups:[],error:null,loading:false},
 		homeGroupDetails:{homeGroupDetails:homeGroupDetails,error:null,loading:false},
 		homeEvents:{homeEvents:[],error:null,loading:false},
 		homeMessages:{homeMessages:homeMessages,error:null,loading:false},

@@ -15,7 +15,7 @@ class Home extends React.Component{
     this.props.toggleTopBarBackButtonVisibility(true);
 
     //fetchMyGroups(userId)
-    this.props.fetchMyGroups(5);
+    this.props.fetchMyGroups(this.props.userId);
     //console.log(this.props.params);
     //console.log(this.props.routes[1]);
   }
@@ -49,7 +49,6 @@ const mapDispatchToProps = (dispatch) => {
     (toggleTopBarBackButtonVisibility(visibility)),
     fetchMyGroups: (userId) => {
       dispatch(fetchMyGroups(userId)).payload.then((response) => {
-        console.log(response);
         if (!response.error) {
           dispatch(fetchMyGroupsSuccess(response.data));
         } else {
@@ -62,6 +61,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state)=>{
   return {
+    userId:state.user.userObject.userId
   };
 }
 

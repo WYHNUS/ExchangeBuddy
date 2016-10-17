@@ -19,6 +19,7 @@ const initialState = {
   token: null,
   error: null,
   userObject: {
+    userId:5,
     email:'',
     name:'',
     profilePictureUrl:'',

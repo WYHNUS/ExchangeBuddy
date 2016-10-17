@@ -27,17 +27,17 @@ export function fetchMyGroups(userId){
 		userId: userId
 	})
 	return {
-		type: FETCH_MY_GROUPS_SUCCESS,
+		type: FETCH_MY_GROUPS,
 		payload: req
 	};
 
 }
 
-export function fetchMyGroupsSuccess(events){
-	//console.log(events);
+export function fetchMyGroupsSuccess(groups){
+	console.log(groups);
 	return {
-		type: FETCH_EVENTS_SUCCESS,
-		payload: events
+		type: FETCH_MY_GROUPS_SUCCESS,
+		payload: groups
 	};
 }
 
