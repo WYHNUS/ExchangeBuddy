@@ -4,6 +4,9 @@ var Group = models.Group;
 
 module.exports = function(io){
     var groupsOfUsers = {};
+
+    // testing
+    groupsOfUsers['a'] = [];
     var allGroups = [];
     Group.findAll().then(function(groups){
         for(var group of groups){
@@ -15,14 +18,14 @@ module.exports = function(io){
     io.sockets.on('connection', function(socket){
         console.log('connected');
         socket.on('adduser', function(data){
-            console.log(data);
-            groupsOfUsers   [data.group.name].push(data.user.id);
+            groupsOfUsers[data.group.name].push(data.user.id);
             socket.user = data.user;
             socket.room = data.group;
             socket.join(socket.room.name);
         });
 
         socket.on('sendchat', function(msg){
+            console.log(socket.room);
             ChatCtrl.addChatMessage(socket.user, msg, socket.room);
             io.sockets.in(socket.room.name).emit('updatechat', socket.user.name, msg);
         });

@@ -61,11 +61,11 @@ exports.getGroup = function(req, res) {
         	attributes: ['id', 'name', 'profilePictureUrl'],
         	model: User,
         	as: 'user',
-        	through: {
-				where: {
-					userId: req.user.id
-				}
-			}
+        	// through: {
+			// 	where: {
+			// 		userId: req.user.id
+			// 	}
+			// }
         }, {
         	attributes: ['message'],
         	model: ChatMsg
