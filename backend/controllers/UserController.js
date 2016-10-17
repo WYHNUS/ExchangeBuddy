@@ -94,7 +94,7 @@ exports.createUser = function(req, res){
                         },
                         {
                             id: 1,
-                            name: homeUniversity.name + " going abroad -- Year  " + exchange.year + " " + exchange.term
+                            name: homeUniversity.name + " going abroad -- Year " + exchange.year + " " + exchange.term
                         },
                         {
                             id: 2,
@@ -115,7 +115,7 @@ exports.createUser = function(req, res){
                         groups.map(group => {
                             group[0].addUser(user);
                         });
-                        
+
                         MailCtrl.sendVerificationEmail(user)
                             .then(function(value) {
                                 console.log(value); // Success!
