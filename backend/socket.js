@@ -5,8 +5,6 @@ var Group = models.Group;
 module.exports = function(io){
     var groupsOfUsers = {};
 
-    // testing
-    groupsOfUsers['a'] = [];
     var allGroups = [];
     Group.findAll().then(function(groups){
         for(var group of groups){
@@ -14,6 +12,8 @@ module.exports = function(io){
             allGroups.push(group);
         }
     })
+
+    // no error feedback to socket, assume all data format correct
 
     io.sockets.on('connection', function(socket){
         console.log('connected');

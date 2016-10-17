@@ -27,28 +27,6 @@ exports.getGroupIndex = function(req, res) {
 		});
 	});
 
-	// Group.findAll({
-	// 	order: [
-	// 		['updatedAt', 'DESC']
-	// 	],
-	// 	attributes: ['id', 'name'],
-	// 	include: [{
-	// 		attributes: ['name', 'email'],
-	// 		model: User,
-	// 		as: 'user',
-	// 		through: {
-	// 			where: {
-	// 				userId: req.body.userId
-	// 			}
-	// 		}
-	// 	}]
-	// }).then(function(groups) {
-	// 	res.json(groups);
-	// }).catch(function(err) {
-	// 	res.status(500).json({
-	// 		message: err.message
-	// 	});
-	// });
 };
 
 // Show group if user belongs to it
