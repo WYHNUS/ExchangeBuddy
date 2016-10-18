@@ -15,7 +15,7 @@ const MessageFBEvent = ({ message }) => {
 
   return (
     <div className="message-body">
-    <h5 className="message-username">{ user.displayName } posted an event <span className="message-timestamp"> { formatTime(createdAt) }</span></h5>
+    <h5 className="message-username">{ user.name } posted an event <span className="message-timestamp"> { formatTime(createdAt) }</span></h5>
     <Card className="event-item-card" style={{maxWidth: "512px"}}>
     <CardHeader title={ eventPosting.name } subtitle={ `${ moment(eventPosting.startTime).format("D MMM, ddd, hA") }` } avatar={ eventPosting.profilePicture } actAsExpander={ true } showExpandableButton={ true } />
     <CardMedia expandable={true} >
@@ -37,7 +37,7 @@ const MessageMUEvent = ({ message }) => {
 
   return (
     <div className="message-body">
-    <h5 className="message-username">{ user.displayName } posted an event <span className="message-timestamp"> { formatTime(createdAt) }</span></h5>
+    <h5 className="message-username">{ user.name } posted an event <span className="message-timestamp"> { formatTime(createdAt) }</span></h5>
     <Card className="event-item-card" style={{maxWidth: "512px"}}>
     <CardHeader title={ eventPosting.name } actAsExpander={true} showExpandableButton={true} subtitle={ `${ moment(eventPosting.time).format("D MMM, ddd, hA") } - ${eventPosting.yes_rsvp_count} RSVPs` } />
     <CardText className="event-item-text" expandable={true}>
@@ -51,29 +51,30 @@ const MessageMUEvent = ({ message }) => {
     );
 };
 
-const MessageUser = ({ message }) => {
-  const { content, user, createdAt, type, eventPosting, id } = message;
-
-  return (
+class MessageUser extends React.Component{
+  render(){
+    const { message, User, createdAt, id } = this.props.message;
+    return (
     <div className="message-body">
-    <h5 className="message-username">{ user.displayName } <span className="message-timestamp">{ formatTime(createdAt) }</span></h5>
+    <h5 className="message-username">{ User.name } <span className="message-timestamp">{ formatTime(createdAt) }</span></h5>
     <p className="message-content">
-    <Linkify>{ content }</Linkify>
+    <Linkify>{ message }</Linkify>
     </p>
     </div>
     );
-};
+  }
+}
 
-const Message = ({ message, currentUser }) => {
-  const { content, user, createdAt, type, eventPosting, id } = message;
+class Message extends React.Component{
+  render(){
+    const { message, User, createdAt, id } = this.props.message;
+    return (
+      <div>
+      <div className="message-row">
+      <div className="message-avatar">{ UserHelper.getAvatar(User, 40) }</div>
+      <MessageUser message={this.props.message} />
 
-  return (
-    <div>
-    <div className="message-row">
-    <div className="message-avatar">{ UserHelper.getAvatar(user, 40) }</div>
-    <MessageUser message={message} />
-
-    {
+      {
       /*type === "user" ? <MessageUser message={message} />
       : type === "eventFB" ? <MessageFBEvent message={message} />
       : type === "eventMU" ? <MessageMUEvent message={message} />
@@ -82,7 +83,8 @@ const Message = ({ message, currentUser }) => {
     </div>
     </div>
     )
-};
+  }
+}
 
 const chatScrollToLatest = () => {
   $('.messages-container').scrollTop($('.messages-container')[0].scrollHeight);
@@ -94,6 +96,7 @@ export default class MessageList extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props.homeGroupDetails.detailsLoaded);
     if(this.props.homeGroupDetails.detailsLoaded){
       this.props.fetchGroupMessages(this.props.homeGroupDetails.homeGroupDetails.id);
     }
@@ -116,7 +119,7 @@ export default class MessageList extends React.Component {
 
     return (
       <div className="messages-container">
-      { homeMessages.length > 0 && homeMessages.map((message, idx) => <Message message={ message } currentUser={ user } key={ idx } />) }
+      { homeMessages.length > 0 && homeMessages.map((message, idx) => <Message message={ message } key={ idx } />) }
       </div>
       )
   }

@@ -265,14 +265,14 @@ import {
 				homeFriends: {homeFriends: [], error: null, loading: false}};
 
 				case FETCH_GROUP_MESSAGES:
-				return {...state, homeGroups: {selected:-1, homeGroups:[], error: null, loading: true}};
+				return {...state, homeMessages: { homeMessages:[], error: null, loading: true}};
 				case FETCH_GROUP_MESSAGES_SUCCESS:
-				return {...state, homeGroups: {selected:0, homeGroups: action.payload, error: null, loading: false}};
+				return {...state, homeMessages: { homeMessages: action.payload, error: null, loading: false}};
 				case FETCH_GROUP_MESSAGES_FAILURE:
 				error = action.payload || {message: action.payload};
-				return {...state, homeGroups: {selected:-1, homeGroups: [], error: error, loading: false}};
+				return {...state, homeMessages: { homeMessages: [], error: error, loading: false}};
 				case RESET_GROUP_MESSAGES:
-				return {...state, homeGroups: {selected:-1, homeGroups: [], error: null, loading: false}};
+				return {...state, homeMessages: { homeMessages: [], error: null, loading: false}};
 
 				default:
 				return state
