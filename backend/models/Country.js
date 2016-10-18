@@ -18,7 +18,10 @@ module.exports = function(sequelize, DataType) {
 		type: DataType.CHAR(3),
 	},
 	region: {
-		type: DataType.ENUM('Africa', 'Americas', 'Asia', 'Europe', 'Oceania'),
+		type: DataType.STRING(250),
+	},
+	subregion: {
+		type: DataType.TEXT(),
 	},
 	capital: {
 		type: DataType.TEXT(),
@@ -29,11 +32,11 @@ module.exports = function(sequelize, DataType) {
 	lng: {
 		type: DataType.DOUBLE(),
 	},
+	population: {
+		type: DataType.INTEGER(),
+	},
 
 	// Stored as JSON stringified arrays
-	altSpellings: {
-		type: DataType.TEXT(),
-	},
 	currencies: {
 		type: DataType.TEXT(),
 	},
