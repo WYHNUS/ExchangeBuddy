@@ -1,4 +1,6 @@
-import {} from '../actions/stories';
+import {
+	SAVE_JOURNAL_CONTENT
+} from '../actions/stories';
 
 import story1ImgUrl from '../res/SEP-Application.png';
 import story2ImgUrl from '../res/Exchange-In-Singapore.jpg';
@@ -134,7 +136,10 @@ var storyList =
 const initialState=
 {
 	storyDetails:{storyDetails:story1,error:null,loading:false},
-	storyList:{storyList:storyList,error:null,loading:false}
+	storyList:{storyList:storyList,error:null,loading:false},
+	editingJournal: {
+		content: "<p>Share your life events here! :D </p>"
+	}
 }
 
 export function stories(state=initialState, action) 
@@ -144,6 +149,14 @@ export function stories(state=initialState, action)
 
 	switch (action.type) 
 	{
+		case SAVE_JOURNAL_CONTENT:
+			console.log(action.content);
+			return Object.assign({}, state, {
+		        editingJournal: {
+		          content: action.content
+		        }
+		      });
+
 		default:
 		return state
 	}

@@ -5,21 +5,21 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Action creators
-
+import { saveJournalContent } from '../../actions/stories'
 // Component
 import ChildComponent from './JournalForm';
 
 // redux
 const mapStateToProps = (state) => {
   return{
-    journalContent: "initial txt"
+    journalContent: state.stories.editingJournal.content
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
-    // saveData: (val) => dispatch(saveSignupPageOneInfo(val)),
+    saveContent: (val) => dispatch(saveJournalContent(val)),
   };
 };
 

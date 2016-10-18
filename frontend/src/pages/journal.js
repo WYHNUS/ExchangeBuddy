@@ -7,11 +7,8 @@ import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { toggleBottomBarVisibility } from '../actions/pageVisibility';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-// import RaisedButton from 'material-ui/RaisedButton';
 
 import JournalForm from '../components/JournalForm';
-// import TinyMCE from 'react-tinymce';
-// import Editor from 'react-medium-editor';
 
 // require('jquery/dist/jquery.min.js');
 // require('medium-editor/dist/js/medium-editor.js');
@@ -26,14 +23,10 @@ import JournalForm from '../components/JournalForm';
 class Journal extends React.Component{
 	constructor(props) {
 		super(props);
-		// this.handleSubmit = this.handleSubmit.bind(this);
-		// this.state = {journalText:"hello world"};
 	}
 
 	componentDidMount() {
 		this.props.toggleBottomBarVisibility(true);	
-		// this.journalText = "";
-
 		// this.editor = new MediumEditor('.editable', {imageDragging: false});
 		//     $('.editable').mediumInsert({
 		//       editor: this.editor,

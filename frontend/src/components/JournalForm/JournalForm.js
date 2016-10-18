@@ -5,17 +5,13 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { Row, Col } from 'react-flexbox-grid';
 import { EditableField } from '../EditableField';
 
-var content = "";
-
 class JournalForm extends React.Component {
   submitForm(val) {
-    console.log(val);
-    console.log(content);
+    console.log(this.props.journalContent);
   }
 
   handleEditorChange(e) {
-    var content = e.target.getContent();
-    console.log(content);
+    this.props.saveContent(e.target.getContent());
   }
 
   render() {
