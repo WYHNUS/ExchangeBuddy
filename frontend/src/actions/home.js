@@ -186,8 +186,6 @@ POSTING EVENTS TO A GROUP
 ************************************************************/
 
 export const POST_EVENTS = 'POST_EVENTS';
-export const POST_EVENTS_SUCCESS = 'POST_EVENTS_SUCCESS';
-export const POST_EVENTS_FAILURE = 'POST_EVENTS_FAILURE';
 
 export function postEvents(lat, lng, title, startTime, endTime, detail, imgSrc, GroupId, UserId){
 
@@ -208,22 +206,6 @@ export function postEvents(lat, lng, title, startTime, endTime, detail, imgSrc, 
 		payload: req
 	};
 
-}
-
-export function postEventsSuccess(events){
-	console.log(events);
-	return {
-		type: POST_EVENTS_SUCCESS,
-		payload: events
-	};
-}
-
-export function postEventsFailure(error){
-	//console.log(error);
-	return {
-		type: POST_EVENTS_FAILURE,
-		payload: error
-	};
 }
 
 /************************************************************
