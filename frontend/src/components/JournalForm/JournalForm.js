@@ -7,7 +7,7 @@ import { EditableField } from '../EditableField';
 
 class JournalForm extends React.Component {
   submitForm(val) {
-    console.log(this.props.journalContent);
+    this.props.uploadContent(this.props.journalDetails.content, this.props.user.userId);
   }
 
   handleEditorChange(e) {
@@ -15,7 +15,7 @@ class JournalForm extends React.Component {
   }
 
   render() {
-    const {  journalContent, handleSubmit, submitting } = this.props;
+    const {  journalDetails, handleSubmit, submitting } = this.props;
     
     return (
       <form onSubmit={ handleSubmit((values) => {
@@ -23,9 +23,28 @@ class JournalForm extends React.Component {
       }) }>
         <EditableField 
           name="journal" 
-          journalContent={ journalContent }
+          journalContent={ journalDetails.content }
           onBlur={this.handleEditorChange.bind(this)}
         />
+
+        { journalDetails.uploading ?
+          <div className="row center-md center-xs" style={{marginTop: "15px"}}>
+            <p> Posting your journal ... </p>
+          </div>
+          : null
+        }
+        { journalDetails.error ?
+          <div className="row center-md center-xs" style={{marginTop: "15px"}}>
+            <p> An error has occurred: {journalDetails.error} </p>
+          </div>
+          : null
+        }
+        { journalDetails.published ?
+          <div className="row center-md center-xs" style={{marginTop: "15px"}}>
+            <p> Your journal has been posted successfully. :) </p>
+          </div>
+          : null
+        }
 
         <div className="row center-md center-xs" style={{marginTop: "18px"}}>
           <Col xs={8} md={3} className="info-container-col">

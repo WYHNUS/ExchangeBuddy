@@ -1,5 +1,6 @@
 import {
-	SAVE_JOURNAL_CONTENT
+	SAVE_JOURNAL_CONTENT, 
+	CLICKED_UPLOAD, UPLOAD_CONTENT_SUCCESS, UPLOAD_CONTENT_FAIL
 } from '../actions/stories';
 
 import story1ImgUrl from '../res/SEP-Application.png';
@@ -138,7 +139,10 @@ const initialState=
 	storyDetails:{storyDetails:story1,error:null,loading:false},
 	storyList:{storyList:storyList,error:null,loading:false},
 	editingJournal: {
-		content: "<p>Share your life events here! :D </p>"
+		content: "<p>Share your life events here! :D </p>",
+		error: null, 
+		uploading: false,
+		published: false
 	}
 }
 
@@ -153,9 +157,42 @@ export function stories(state=initialState, action)
 			console.log(action.content);
 			return Object.assign({}, state, {
 		        editingJournal: {
-		          content: action.content
+					content: action.content,
+					error: null, 
+					uploading: false,
+					published: false
 		        }
 		      });
+
+		case CLICKED_UPLOAD:
+			return Object.assign({}, state, {
+		        editingJournal: {
+					content: state.editingJournal.content,
+					error: null, 
+					uploading: true,
+					published: false
+		        }
+			});
+
+		case UPLOAD_CONTENT_SUCCESS:
+			return Object.assign({}, state, {
+				editingJournal: {
+					content: state.editingJournal.content,
+					error: null, 
+					uploading: false,
+					published: true
+		        }
+			});
+
+		case UPLOAD_CONTENT_FAIL:
+			return Object.assign({}, state, {
+				editingJournal: {
+					content: state.editingJournal.content,
+					error: action.error, 
+					uploading: false,
+					published: false
+		        }
+			});
 
 		default:
 		return state

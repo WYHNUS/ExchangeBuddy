@@ -5,14 +5,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Action creators
-import { saveJournalContent } from '../../actions/stories'
+import { saveJournalContent, uploadContentToServer, uploadContentSuccess, uploadContentFail } from '../../actions/stories'
 // Component
 import ChildComponent from './JournalForm';
 
 // redux
 const mapStateToProps = (state) => {
   return{
-    journalContent: state.stories.editingJournal.content
+    journalDetails: state.stories.editingJournal,
+    user: state.user.userObject
   };
 };
 
@@ -20,6 +21,15 @@ const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
     saveContent: (val) => dispatch(saveJournalContent(val)),
+    uploadContent: (content) => {
+      dispatch(uploadContentToServer(content)).then((response) => {
+        if (!response.error) {
+          dispatch(uploadContentSuccess(response.data));
+        } else {
+          dispatch(uploadContentFail(response.error));
+        }
+      })
+    },
   };
 };
 
