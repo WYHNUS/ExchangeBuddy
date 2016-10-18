@@ -2,13 +2,12 @@ var models = require('../models');
 var ChatMessage = models.ChatMessage;
 
 exports.addChatMessage = function(user, msg, group){
-    ChatMessage.create({
+    return ChatMessage.create({
         message: msg,
         UserId: user.id,
         GroupId: group.id
-    }).then(function(chat){
-        return chat;
-    });
+    })
+    
 }
 
 exports.getMessages = function(req, res){

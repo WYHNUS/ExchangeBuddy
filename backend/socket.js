@@ -4,7 +4,7 @@ var Group = models.Group;
 
 module.exports = function(io){
     var groupsOfUsers = {};
-
+    groupsOfUsers['nus'] =[];
     var allGroups = [];
     Group.findAll().then(function(groups){
         for(var group of groups){
@@ -44,8 +44,20 @@ module.exports = function(io){
 
         socket.on('sendchat', function(msg){
             try{
-                var msg = ChatCtrl.addChatMessage(socket.user, msg, socket.room);
-                io.sockets.in(socket.room.name).emit('updatechat', msg);
+                ChatCtrl.addChatMessage(socket.user, msg, socket.room).then(function(chat){
+                    chat.getUser().then(function(user){
+                        var plain_chat = chat.get({
+                            plain: true
+                        });
+                        var plain_user = user.get({
+                            plain: true
+                        })
+                        plain_chat.user = plain_user;
+
+                        io.sockets.in(socket.room.name).emit('updatechat', plain_chat);
+                    })
+                });
+
             }catch(error){
                 console.log(error);
             }
