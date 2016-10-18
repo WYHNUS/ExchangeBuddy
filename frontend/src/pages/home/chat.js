@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import { showSnackbar } from '../../actions/messageSnackbar';
 import { pageVisibility } from '../../actions/pageVisibility';
 import {updateGroupMessageFromSocket} from '../../actions/home';
+import {toggleHomeTab} from '../../actions/home';
 
 import SubmitForm from '../../components/HomeComponent/Chat/SubmitForm';
 import MessageList from '../../components/HomeComponent/Chat/MessageList';
@@ -24,6 +25,7 @@ socket.on('updatechat', function(msg){
 class Chat extends React.Component{
 
 	componentWillMount(){
+		this.props.toggleHomeTab('chat');
 
 		//if there is group id to join
 		if(this.props.homeGroupDetails.detailsLoaded){
@@ -71,7 +73,9 @@ const mapDispatchToProps = (dispatch) => {
 		actions: bindActionCreators({ showSnackbar }, dispatch),
 		updateGroupMessageFromSocket:(message)=>{
 			dispatch(updateGroupMessageFromSocket(message))
-		}
+		},
+		toggleHomeTab:(tab)=>dispatch(toggleHomeTab(tab))
+
 	};
 };
 

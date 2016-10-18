@@ -108,6 +108,7 @@ const items = [
 
 class Events extends React.Component{
 	componentWillMount(){
+    this.props.toggleHomeTab('events')
 		//fetchHomeEvenets(groupId)
         //fetchFbEvents(123,[1231,12341]);
         //fetchMuEvents(university, country);
@@ -185,7 +186,9 @@ const mapDispatchToProps = (dispatch) => {
 
           fetchMuEvents:(university, country)=>{
             dispatch(fetchMuEvents(university,country))
-        }
+        },
+
+        toggleHomeTab:(tab)=>dispatch(toggleHomeTab(tab))
     }
 }
 
