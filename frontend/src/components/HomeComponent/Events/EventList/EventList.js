@@ -17,12 +17,13 @@ export default class EventsList extends React.Component {
   }
 
   componentWillMount(){
-    this.props.fetchEvents(1);
+    //this.props.fetchEvents(this.props.groupId);
   }
 
 	render() {
-    const { source, groupId } = this.props;
+    const { source } = this.props;
     const { homeEvents, loading, error } = this.props.homeEvents;
+    const {groupId} = this.props.homeGroupDetails;
 
     const EventItem = ({ source, groupEvent }) => {
       if (source == 'Facebook'){
@@ -68,6 +69,6 @@ export default class EventsList extends React.Component {
 EventsList.propTypes = {
   homeEvents: PropTypes.object.isRequired,
   source: PropTypes.string.isRequired,
-  groupId: PropTypes.string.isRequired,
-  fetchEvents: PropTypes.func.isRequired
+  homeGroupDetails: PropTypes.object.isRequired,
+  //fetchEvents: PropTypes.func.isRequired
 };

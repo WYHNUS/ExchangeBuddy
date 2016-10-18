@@ -13,11 +13,13 @@ class GroupItem extends React.Component {
   render(){
     const {group, heading, toggleHomeTab, 
       toggleSelectedHomeGroup, toggleHomeSearchDrawerVisibility,
-      homeGroupDetails} = this.props;
+      homeGroupDetails, key, index, fetchNewGroup} = this.props;
+      const {selected} = this.props.homeGroups;
 
       const goToGroup = () => { 
-        browserHistory.push(`/home/${group.id}`); 
-        toggleSelectedHomeGroup(group.groupType);
+        browserHistory.push(`/home/${group.id}`);
+        fetchNewGroup(group.id); 
+        toggleSelectedHomeGroup(index);
         toggleHomeTab('events');
         toggleHomeSearchDrawerVisibility(false); 
       };
@@ -25,7 +27,7 @@ class GroupItem extends React.Component {
         <div className="group-body">
         <h5 className="group-heading">{heading}</h5>  
         <ListItem
-        className={group.groupType===homeGroupDetails.groupType?'selected-group':null}
+        className={parseInt(index)===parseInt(selected)?'selected-group':null}
         primaryText={group.name}
         leftAvatar={<Avatar src={ imageUrl } size={ 40 } style={{ objectFit: 'contain', backgroundColor: '#fff'}}/>}
         onTouchTap={goToGroup}
@@ -62,11 +64,12 @@ class GroupItem extends React.Component {
 
    render() {
     const {groups, user, toggleHomeSearchDrawerVisibility, toggleSelectedHomeGroup} = this.props;
+    var index =0;
     return(
       <div>
       <List className="groups-container">
       { groups.length > 0 && groups.map((group, idx) => 
-        <Group group={group} {...this.props} key={idx}/>
+        <Group group={group} {...this.props} key={idx} index={index++}/>
         /*<Group group={ group } currentUser={ user } key={ idx } 
         handleClose={toggleHomeSearchDrawerVisibility} toggleSelectedHomeGroup={toggleSelectedHomeGroup} />*/) }
       </List>
@@ -78,8 +81,10 @@ class GroupItem extends React.Component {
 GroupList.PropTypes={
  user: PropTypes.object.isRequired,
  groups: PropTypes.object.isRequired,
+ homeGroups: PropTypes.object.isRequired,
  toggleHomeSearchDrawerVisibility: PropTypes.func.isRequired,
  toggleSelectedHomeGroup: PropTypes.func.isRequired,
  toggleHomeTab: PropTypes.func.isRequired,
- homeGroupDetails: PropTypes.object.isRequired
+ homeGroupDetails: PropTypes.object.isRequired,
+ fetchNewGroup: PropTypes.func.isRequired
 }

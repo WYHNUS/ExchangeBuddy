@@ -127,8 +127,15 @@ export default class Header extends React.Component {
   };
 
   render() {
-    const { user, uni, group, actions, params, homeGroupDetails, homeTabValue } = this.props;
-    //params=221241432;
+    const { user, uni, group, actions, params, homeTabValue } = this.props;
+    const { homeGroupDetails, loading, error } = this.props.homeGroupDetails;
+    
+
+    if(loading) {
+      return <div className="container"><h1>Group</h1><h3>Loading...</h3></div>      
+    } else if(error) {
+      return <div className="alert alert-danger">Error: {error.message}</div>
+    }
 
     return (
       <div
@@ -150,7 +157,7 @@ export default class Header extends React.Component {
             </Col>
 
             <Col xs={12} md={8} id="header-title">
-              <h2 id="uni-name">{ homeGroupDetails.homeGroupDetails.name}</h2>
+              <h2 id="uni-name">{ homeGroupDetails.name}</h2>
               <p id="uni-description">{ /*`${ group.term } ${ group.year } - ${ group.users.length } ${ pluralizer(group.users.length, 'Member', 'Members') }`*/ }</p>
             </Col>
 
