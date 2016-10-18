@@ -17,7 +17,11 @@ exports.getMessages = function(req, res){
     ChatMessage.findAll({
         where: {
             GroupId: req.body.GroupId
-        }
+        },
+        include: [{
+            model: models.User,
+            attributes: ['name', 'profilePictureUrl', 'id']
+        }]
     }).then(function(messages){
         res.send(messages);
     })
