@@ -1,15 +1,57 @@
 import axios from 'axios';
+import {ROOT_URL} from '../util/backend';
 
 export const TOGGLE_SELECTED_HOME_GROUP = 'TOGGLE_SELECTED_HOME_GROUP';
 export const TOGGLE_HOME_TAB = 'TOGGLE_HOME_TAB';
 
-//api for fetching messages
-export const FETCH_HOME_MESSAGES = 'FETCH_HOME_MESSAGES';
-export const FETCH_HOME_MESSAGES_SUCCESS = 'FETCH_HOME_MESSAGES_SUCCESS';
-export const FETCH_HOME_MESSAGES_FAILURE = 'FETCH_HOME_MESSAGES_FAILURE';
-export const RESET_HOME_MESSAGES = 'RESET_HOME_MESSAGES';
+/************************************************************
+FETCHING INITIAL CHATS OF A GROUP, UPDATING CHAT
+************************************************************/
 
-import {ROOT_URL} from '../util/backend';
+export const FETCH_GROUP_MESSAGES = 'FETCH_GROUP_MESSAGES';
+export const FETCH_GROUP_MESSAGES_SUCCESS = 'FETCH_GROUP_MESSAGES_SUCCESS';
+export const FETCH_GROUP_MESSAGES_FAILURE = 'FETCH_GROUP_MESSAGES_FAILURE';
+export const RESET_GROUP_MESSAGES = 'RESET_GROUP_MESSAGES';
+export const UPDATE_GROUP_MESSAGE_FROM_SOCKET = 'UPDATE_GROUP_MESSAGE_FROM_SOCKET';
+
+export function fetchGroupMessages(GroupId){
+
+	const req = axios.post(`${ROOT_URL}/messages`, 
+	{
+		GroupId: GroupId
+	})
+	return {
+		type: FETCH_GROUP_MESSAGES,
+		payload: req
+	};
+}
+
+export function fetchGroupMessagesSuccess(group){
+	return {
+		type: FETCH_GROUP_MESSAGES_SUCCESS,
+		payload: group
+	};
+}
+
+export function fetchGroupMessagesFailure(error){
+	return {
+		type: FETCH_GROUP_MESSAGES_FAILURE,
+		payload: error
+	};
+}
+
+export function resetGroupMessages(message){
+	return{
+		type: RESET_GROUP_MESSAGES
+	}
+}
+
+export function updateGroupMessageFromSocket(message){
+	return {
+		type: UPDATE_GROUP_MESSAGE_FROM_SOCKET,
+		payload: message
+	};
+}
 
 /************************************************************
 FETCHING A SINGLE GROUP OF USER (which populates members page also)
@@ -183,45 +225,6 @@ export function postEventsFailure(error){
 		payload: error
 	};
 }
-
-/************************************************************
-FETCHING HOME MESSAGES OF A GROUP
-************************************************************/
-
-
-export function fetchHomeMessages(groupId) {
-	const request = axios({
-		method: 'get',
-		url: `${ROOT_URL}/home/messages${groupId}`,
-		headers: []
-	});
-
-	return {
-		type: FETCH_HOME_MESSAGES,
-		payload: request
-	};
-}
-
-export function fetchHomeMessagesSuccess(messages) {
-	return {
-		type: FETCH_HOME_MESSAGES_SUCCESS,
-		payload: messages
-	};
-}
-
-export function fetchHomeMessagesError(error) {
-	return {
-		type: FETCH_HOME_MESSAGES_FAILURE,
-		payload: error
-	};
-}
-
-export function resetHomeMessages(){
-	return{
-		type: RESET_HOME_MESSAGES
-	}
-}
-
 
 /************************************************************
 TOGGLING BETWEEN GROUPS

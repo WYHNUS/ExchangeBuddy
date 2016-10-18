@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 import IconButton from 'material-ui/IconButton';
@@ -7,16 +7,17 @@ import $ from "jquery";
 
 import * as UserHelper from '../../../../util/user';
 
-const submitForm = (groupId, callback) => (values) => {
+const submitForm = (callback, socket, updateGroupMessageFromSocket) => (values) => {
   //const params = { userToken: Meteor.userToken(), userId: Meteor.userId(), groupId: groupId, content: values.message, type: "user" };
-  console.log({
+  /*console.log({
     userToken: 13829471,
     userId: 1,
-    groupId: groupId,
     content: values.message,
     type: "user"
-  })
+  })*/
   callback();
+  socket.emit('sendchat',values.message);
+
   /*Meteor.call('GroupChatMessage.sendToGroup', params, (err, success) => {
     if (err)
       console.log("Error in invoking GroupChatMessage.sendToGroup: " + err);
@@ -36,11 +37,11 @@ class SubmitForm extends Component {
   }
 
   render() {
-    const { handleSubmit, pristine, reset, submitting, user, groupId } = this.props;
+    const { handleSubmit, pristine, reset, submitting, user, socket, updateGroupMessageFromSocket } = this.props;
 
     //console.log(handleSubmit);
 
-    const submitHandler = handleSubmit(submitForm(groupId, reset));
+    const submitHandler = handleSubmit(submitForm(reset, socket, updateGroupMessageFromSocket));
 
     return (
       <form onSubmit={ submitHandler }>
@@ -64,6 +65,11 @@ class SubmitForm extends Component {
     )
   }
 }
+
+SubmitForm.propTypes = {
+  socket: PropTypes.object.isRequired
+};
+
 
 // Decorate with redux-form
 export default reduxForm({
