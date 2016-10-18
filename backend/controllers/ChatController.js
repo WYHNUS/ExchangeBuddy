@@ -7,9 +7,7 @@ exports.addChatMessage = function(user, msg, group){
         UserId: user.id,
         GroupId: group.id
     }).then(function(chat){
-        res.send({
-            status: 'success'
-        });
+        return chat;
     });
 }
 

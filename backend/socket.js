@@ -44,8 +44,8 @@ module.exports = function(io){
 
         socket.on('sendchat', function(msg){
             try{
-                ChatCtrl.addChatMessage(socket.user, msg, socket.room);
-                io.sockets.in(socket.room.name).emit('updatechat', socket.user.name, msg);
+                var msg = ChatCtrl.addChatMessage(socket.user, msg, socket.room);
+                io.sockets.in(socket.room.name).emit('updatechat', msg);
             }catch(error){
                 console.log(error);
             }
