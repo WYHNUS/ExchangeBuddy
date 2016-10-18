@@ -34,11 +34,16 @@ export function uploadContentToServer(content, id) {
 				journalContent: content
 			})
 			.end(function(err, res){
+				console.log(err);
 				console.log(res);
-				if(res.body.status === "success"){
-					dispatch(uploadContentSuccess(res.body.message));
+				if (err) {
+					dispatch(uploadContentFail(err));
 				} else {
-					dispatch(uploadContentFail(res.body.message));
+					if (res.body.status === "success") {
+						dispatch(uploadContentSuccess(res.body.message));
+					} else {
+						dispatch(uploadContentFail(res.body.message));
+					}
 				}
 			});
   	}

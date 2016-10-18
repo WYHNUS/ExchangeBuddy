@@ -23,7 +23,7 @@ class JournalForm extends React.Component {
       }) }>
         <EditableField 
           name="journal" 
-          journalContent={ journalDetails.content }
+          content={ journalDetails.content }
           onBlur={this.handleEditorChange.bind(this)}
         />
 
@@ -35,7 +35,7 @@ class JournalForm extends React.Component {
         }
         { journalDetails.error ?
           <div className="row center-md center-xs" style={{marginTop: "15px"}}>
-            <p> An error has occurred: {journalDetails.error} </p>
+            <p> An error has occurred. </p>
           </div>
           : null
         }

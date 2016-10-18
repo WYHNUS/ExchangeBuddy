@@ -23,6 +23,7 @@ const mapDispatchToProps = (dispatch) => {
     saveContent: (val) => dispatch(saveJournalContent(val)),
     uploadContent: (content) => {
       dispatch(uploadContentToServer(content)).then((response) => {
+        console.log(response);
         if (!response.error) {
           dispatch(uploadContentSuccess(response.data));
         } else {
