@@ -89,7 +89,7 @@ module.exports = function(sequelize, DataType) {
 
                 User.hasMany(models.ChatMessage);
 
-                User.hasMany(models.Blog);
+                User.hasMany(models.Journal);
             }
         },
         instanceMethods: {

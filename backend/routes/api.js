@@ -8,6 +8,7 @@ var CountryCtrl = require('../controllers/CountryController');
 var UniCtrl = require('../controllers/UniversityController');
 var AuthCtrl = require('../controllers/AuthenticateController');
 var UserCtrl = require('../controllers/UserController');
+var JournalCtrl = require('../controllers/JournalController')
 var GroupCtrl = require('../controllers/GroupController');
 var MailCtrl = require('../controllers/MailController');
 var EventCtrl = require('../controllers/EventController');
@@ -42,6 +43,9 @@ router.put('/university', UniCtrl.createUniversity);	// dummy
 router.get('/university', /*verifyToken,*/ UniCtrl.getAllUniversities);
 router.get('/university/:id', /*verifyToken,*/ UniCtrl.getUniversity);
 
+router.get('/allStories', /*verifyToken,*/ JournalCtrl.getAllJournals);
+router.get('/story', /*verifyToken,*/ JournalCtrl.getJournal);
+router.put('/journal', /*verifyToken,*/ JournalCtrl.createUniversity);    // dummy
 
 /*
 get the groups a user currently belongs to
