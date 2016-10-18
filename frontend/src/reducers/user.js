@@ -20,7 +20,7 @@ const initialState = {
   error: null,
   userObject: {
     userId:5,
-    email:'',
+    email:'Lee Kai Yi',
     name:'',
     profilePictureUrl:'',
     gender:'',

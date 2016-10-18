@@ -13,6 +13,9 @@ import MessageList from '../../components/HomeComponent/Chat/MessageList';
 import {ROOT_URL} from '../../util/backend';
 
 var socket = io.connect(ROOT_URL);
+socket.on('updatechat', function(name, msg){
+	console.log(name, msg);
+})
 
 class Chat extends React.Component{
 
@@ -21,18 +24,21 @@ class Chat extends React.Component{
 		//if there is group id to join
 		if(this.props.homeGroupDetails.detailsLoaded){
 			
-			socket.emit('adduser',
+			var emittedobj = 
 			{
 				group:
 				{
-					name: this.props.homeGroupDetails.homeGroupDetails.name
+					name: this.props.homeGroupDetails.homeGroupDetails.name,
+					id: parseInt(this.props.homeGroupDetails.homeGroupDetails.id)
 				},
 				user:
 				{
-					id:parseInt(this.props.user.userObject.userId)
+					id:parseInt(this.props.user.userObject.userId),
+					name: this.props.user.userObject.name
 				}
 			}
-			);
+
+			socket.emit('adduser',emittedobj);
 		}
 		
 	}
@@ -58,7 +64,10 @@ class Chat extends React.Component{
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		actions: bindActionCreators({ showSnackbar }, dispatch)
+		actions: bindActionCreators({ showSnackbar }, dispatch),
+		updateGroupMessageFromSocket:(message)=>{
+			dispatch(updateGroupMessageFromSocket(message))
+		}
 	};
 };
 
