@@ -14,7 +14,11 @@ import {ROOT_URL} from '../../util/backend';
 
 var socket = io.connect(ROOT_URL);
 socket.on('updatechat', function(name, msg){
-	console.log(name, msg);
+	console.log('name', name,'msg', msg);
+})
+
+socket.on('updatechat', function(msg){
+	console.log('msg2', msg);
 })
 
 class Chat extends React.Component{

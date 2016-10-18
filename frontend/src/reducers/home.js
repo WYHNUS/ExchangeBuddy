@@ -150,7 +150,7 @@ import {
 
 	
 
-	const homeMessages=
+	/*const homeMessages=
 	[
 	{//user or eventFB or eventMU
 		type: 'user', 
@@ -191,7 +191,7 @@ import {
 		content: 'hello, this is the second msg',
 		createdAt: '2016-07-23T18:25:43.511Z'
 	}
-	]
+	]*/
 
 
 	const initialState={
