@@ -40,7 +40,7 @@ class BottomBar extends Component {
 
   goToURL(url) {
     if(url==='/home'){
-      console.log('/home');
+      //console.log('/home');
       return ()=>{browserHistory.push(url);this.props.toggleHomeTab('events');}
     }else{
       return ()=>browserHistory.push(url);

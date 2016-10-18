@@ -1,7 +1,6 @@
 var models = require('../models');
 
 exports.createEvent = function(req, res){
-    console.log(models.Event.Instance.prototype);
     models.sequelize.Promise.all([
         models.Event.create({
             lat: req.body.lat,
@@ -33,7 +32,7 @@ exports.createEvent = function(req, res){
 exports.deleteEvent = function(req, res){
     models.Event.destroy({
         where: {
-            id: req.body.id
+            id: req.body.EventId
         }
     }).then(function(count){
         if(count > 0){
@@ -61,7 +60,7 @@ exports.updateEvent = function(req, res){
         imgSrc: req.body.imgSrc
     }, {
         where: {
-            id: req.body.id
+            id: req.body.EventId
         }
     }).then(function(response){
         if(response.length > 0){
@@ -83,7 +82,10 @@ exports.getAllEvents = function(req, res){
         where: {
             GroupId: req.body.GroupId
         },
-        include: [models.User]
+        include: [{
+            attributes: ['profilePictureUrl', 'name', 'id'],
+            model: models.User
+        }]
     }).then(function(events){
         res.send(events);
     }).catch(function(err) {
@@ -95,12 +97,12 @@ exports.goToEvent = function(req, res){
     models.sequelize.Promise.all([
         models.Event.findOne({
             where: {
-                id: req.body.eventId
+                id: req.body.EventId
             }
         }),
         models.User.findOne({
             where: {
-                id: req.body.userId
+                id: req.body.UserId
             }
         })
     ]).spread(function(event, user){
@@ -140,7 +142,10 @@ exports.getComments = function(req, res){
         where: {
             EventId: req.query.eventId
         },
-        include: [models.User]
+        include: [{
+            attributes: ['profilePictureUrl', 'name', 'id'],
+            model: models.User
+        }]
     }).then(function(comments){
         res.send(comments);
     })

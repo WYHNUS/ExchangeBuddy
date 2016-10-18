@@ -19,15 +19,18 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    actions: bindActionCreators({  }, dispatch),
-  };
+	return {
+		updateGroupMessageFromSocket:(message)=>{
+			dispatch(updateGroupMessageFromSocket(message))
+		}
+	};
 };
 
-const mapStateToProps = (state) => {
-  return {
-  	user:state.user
-  };
+const mapStateToProps = (state, ownProps) => {
+	return {
+		user:state.user,
+		socket: ownProps.socket
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChildComponent);

@@ -7,9 +7,14 @@ import { bindActionCreators } from 'redux';
 import { showSnackbar } from '../../actions/messageSnackbar';
 import { pageVisibility } from '../../actions/pageVisibility';
 import MemberList from '../../components/HomeComponent/Friends/MemberList';
+import {toggleHomeTab} from '../../actions/home'
 
 
 class Friends extends React.Component{
+
+	componentWillMount(){
+		this.props.toggleHomeTab('friends');
+	}
 
 	render(){
 		return(
@@ -24,6 +29,7 @@ class Friends extends React.Component{
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({ showSnackbar }, dispatch),
+    toggleHomeTab:(tab)=>dispatch(toggleHomeTab(tab))
   };
 };
 

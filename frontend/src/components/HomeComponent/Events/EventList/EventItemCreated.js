@@ -31,8 +31,8 @@ class EventItemCreated extends React.Component{
 			<Card className="event-item-card col-xs" initiallyExpanded={true}>
 			<CardHeader
 			className="event-item-header"
-			title={ groupEvent.name }
-			subtitle={ `${ moment(groupEvent.startTime).format("D MMM, ddd, hA") } - by ${groupEvent.user.name}` }
+			title={ groupEvent.title }
+			subtitle={ `${ moment(groupEvent.startTime).format("D MMM, ddd, hA") } - by ${groupEvent.User.name}` }
 			avatar={ groupEvent.imgSrc }
 			actAsExpander={ true }
 			showExpandableButton={ true }
@@ -55,13 +55,14 @@ class EventItemCreated extends React.Component{
 				</CardActions>
 				</Card>
 				<GoogleMap
+				bootstrapURLKeys = {{key:process.env.GOOGLE_MAP_APIKEY}}
 				defaultCenter={this.props.center}
 				defaultZoom={this.props.zoom}>
 				</GoogleMap>
 				</div>
-				
+
 				);
 	}
-} 
+}
 
 export default EventItemCreated;

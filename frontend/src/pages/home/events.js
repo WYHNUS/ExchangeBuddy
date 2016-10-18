@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { showSnackbar } from '../../actions/messageSnackbar';
 import { pageVisibility } from '../../actions/pageVisibility';
+import {toggleHomeTab} from '../../actions/home';
 import RaisedButton from 'material-ui/RaisedButton';
 import MenuItem from 'material-ui/MenuItem';
 import { browserHistory } from 'react-router';
@@ -108,6 +109,7 @@ const items = [
 
 class Events extends React.Component{
 	componentWillMount(){
+    this.props.toggleHomeTab('events')
 		//fetchHomeEvenets(groupId)
         //fetchFbEvents(123,[1231,12341]);
         //fetchMuEvents(university, country);
@@ -185,7 +187,9 @@ const mapDispatchToProps = (dispatch) => {
 
           fetchMuEvents:(university, country)=>{
             dispatch(fetchMuEvents(university,country))
-        }
+        },
+
+        toggleHomeTab:(tab)=>dispatch(toggleHomeTab(tab))
     }
 }
 

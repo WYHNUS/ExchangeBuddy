@@ -2,31 +2,31 @@ var models = require('../models');
 var User = models.User;
 var Group = models.Group;
 var ChatMsg = models.ChatMessage;
+var University = models.University;
 
 // Get all groups current user belongs to
 exports.getGroupIndex = function(req, res) {
-	Group.findAll({
-		order: [
-			['updatedAt', 'DESC']
-		],
-		attributes: ['id', 'name'],
-		include: [{
-			attributes: ['displayName', 'email'],
-			model: User,
-			as: 'user',
-			through: {
-				where: {
-					userId: req.user.id
-				}
-			}
-		}]
-	}).then(function(groups) {
-		res.json(groups);
+	User.findOne({
+		where: {
+			id: req.body.userId
+		}
+	}).then(function(user){
+		user.getGroup().then(function(groups){
+			models.sequelize.Promise.all(
+				groups.map(group => group.countUser())
+			).spread(function(c0, c1, c2){
+				groups[0].dataValues.number = c0;
+				groups[1].dataValues.number = c1;
+				groups[2].dataValues.number = c2;
+				res.send(groups);
+			})
+		})
 	}).catch(function(err) {
 		res.status(500).json({
 			message: err.message
 		});
 	});
+
 };
 
 // Show group if user belongs to it
@@ -37,14 +37,18 @@ exports.getGroup = function(req, res) {
         },
         attributes: ['id', 'name'],
         include: [{
-        	attributes: ['id', 'displayName', 'profilePictureUrl'],
+        	attributes: ['id', 'name', 'profilePictureUrl'],
         	model: User,
         	as: 'user',
-        	through: {
-				where: {
-					userId: req.user.id
-				}
-			}
+			include: [{
+				attributes: ['name', 'id'],
+				model: University
+			}]
+        	// through: {
+			// 	where: {
+			// 		userId: req.user.id
+			// 	}
+			// }
         }, {
         	attributes: ['message'],
         	model: ChatMsg
@@ -63,7 +67,13 @@ exports.getMembers = function(req, res){
 		}
 	}).then(function(group){
 		group.getUser().then(function(users){
-			res.send(users);
+			res.json(
+				users.map(user => ({
+					id: user.id,
+					name: user.name,
+					profilePictureUrl: user.profilePictureUrl
+				}))
+			);
 		})
 	})
 }

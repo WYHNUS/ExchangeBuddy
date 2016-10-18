@@ -8,14 +8,30 @@ import moment from 'moment';
 import RaisedButton from 'material-ui/RaisedButton'
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
-import ImageUpload from '../../ImageUpload/index.js'
+import ImageUpload from '../../../ImageUpload/index.js'
 import validUrl from 'valid-url'
+import GoogleMap from 'google-map-react';
 
-const handler = (passSnackbarMessage, user, location, dropId) => values => {
+const newEventForm = (user, location, id, postEvents) => values => {
 
-  console.log(values);
-  
-  if(dropId){
+  //console.log(values);
+  values.startTime=Date();
+  value.endTime=Date();
+
+  console.log('postEvents');
+  postEvents(
+    1.34132,
+    109.3214,
+    values.title,
+    values.startTime,
+    values.endTime,
+    values.details,
+    null,
+    id,
+    user.id
+     );
+
+  /*if(dropId){
     // If edit/:dropId route
     values.dropId = dropId;
     values.userId = user.userId;
@@ -29,7 +45,7 @@ const handler = (passSnackbarMessage, user, location, dropId) => values => {
   } else if (navigator.geolocation) {
     passSnackbarMessage('Getting location and submitting..')
     navigator.geolocation.getCurrentPosition(position=>{
-      /*socketHandler.post({
+      socketHandler.post({
         userID: user.userId,
         emoji: values.emojiUni,
         title: values.title,
@@ -40,11 +56,11 @@ const handler = (passSnackbarMessage, user, location, dropId) => values => {
         latitude: position.coords.latitude,
         date: moment(),
         anonymous: values.anonymous ? 1 : 0
-      });*/
+      });
       browserHistory.push('/drops')
     });
   }
-
+*/
 }
 
 const validate = values => {
@@ -68,14 +84,17 @@ const validate = values => {
 
 
 class NewEventForm extends Component {
+    static defaultProps = {
+    	center: {lat: 59.938043, lng: 30.337157},
+    	zoom: 9,
+    };
 
   constructor(props){
     super(props);
   }
 
   componentDidMount() {
-
-    const {drops, profileDrops, selectedDrop} = this.props;
+    
     //this.clickedDrop = selectedDrop.selectedDropSrc === "profile" ? profileDrops[selectedDrop.selectedDropIdx] : null;
 
     /*if(this.props.route.path === "add"){
@@ -94,18 +113,19 @@ class NewEventForm extends Component {
     }*/
   }
 
-  componentDidUpdate(prevProps) {
+  /*componentDidUpdate(prevProps) {
     // Clear form if going from edit to add message route
     if(prevProps.routes[1].path.substring(0,4) === "edit" && this.props.route.path === "add")
       this.props.initialize({})
-  }
+  }*/
 
   render() {
-    const { handleSubmit, pristine, passSnackbarMessage, submitting, dropId, user, location } = this.props;
+    const { handleSubmit, pristine, reset, submitting, location, user, postEvents } = this.props;
+    const {id,name} = this.props.homeGroupDetails;
 
     return (
-      <form onSubmit={ handleSubmit(handler(passSnackbarMessage, user, location, dropId)) }>
-      <h1>{dropId ? 'Edit event' : 'New event'}</h1>
+      <form onSubmit={ handleSubmit(newEventForm(user, location, id, postEvents)) }>
+      <h1>{id ? 'Edit event' : 'New event'}</h1>
 
       <div className="row center-xs">
         <div className="col-xs-8">
@@ -123,7 +143,7 @@ class NewEventForm extends Component {
           multiLine={true} rows={3}/>
         </div>
       </div>
-      
+
       <div className="row center-xs">
         <div className="col-xs-8">
           <Field name="imageUpload" component={ImageUpload}/>
@@ -154,8 +174,11 @@ class NewEventForm extends Component {
         </div>
       </div>
 
-      <div>Insert Google Map Chooser here</div> 
-
+      <div>Insert Google Map Chooser here</div>
+      <GoogleMap
+	     bootstrapURLKeys = {{key:process.env.GOOGLE_MAP_APIKEY}}
+      defaultCenter={this.props.center}
+      defaultZoom={this.props.zoom}></GoogleMap>
         <div className="col-xs-12">
           <RaisedButton type="submit" label="Submit"
           labelStyle={{fontSize:"1.2rem"}} style={{margin: "2vh 0 5vh", width: "50%"}}
@@ -199,15 +222,22 @@ class EndTimePick extends React.Component{
   }
 }
 
+NewEventForm.propTypes = {
+  homeGroupDetails: PropTypes.object.isRequired,
+  postEvents: PropTypes.func.isRequired
+};
+
+
+
+export default reduxForm({
+  form: 'newEventForm',
+  validate
+})(NewEventForm);
+
 // Decorate with redux-form
-NewEventForm = reduxForm({
+/*NewEventForm = reduxForm({
   form: 'newEventForm',
   validate
 })(NewEventForm)
-
-/*AddForm.PropTypes = {
-  user: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
-}*/
-
 export default NewEventForm;
+*/

@@ -58,8 +58,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    groupEvents:state.home.homeEvents.homeEvents,
-    groupId:state.home.homeGroupDetails.homeGroupDetails.id,
+    homeEvents:state.home.homeEvents,
+    homeGroupDetails:state.home.homeGroupDetails.homeGroupDetails,
     source: ownProps.source
   };
 };
