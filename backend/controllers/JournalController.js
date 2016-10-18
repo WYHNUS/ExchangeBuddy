@@ -1,7 +1,7 @@
 var models = require('../models');
 
 // user create journal
-exports.getJournal = function(req, res) {
+exports.createJournal = function(req, res) {
     var isJournalPublic = true;
     if (!!req.body.isPublic) {
         isJournalPublic = req.body.isPublic;

@@ -45,7 +45,7 @@ router.get('/university/:id', /*verifyToken,*/ UniCtrl.getUniversity);
 
 router.get('/allStories', /*verifyToken,*/ JournalCtrl.getAllJournals);
 router.get('/story', /*verifyToken,*/ JournalCtrl.getJournal);
-router.put('/journal', /*verifyToken,*/ JournalCtrl.createUniversity);    // dummy
+router.put('/journal', /*verifyToken,*/ JournalCtrl.createJournal);    // dummy
 
 /*
 get the groups a user currently belongs to
