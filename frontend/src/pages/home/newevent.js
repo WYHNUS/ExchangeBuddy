@@ -18,9 +18,7 @@ class NewEvent extends Component {
     return (
       <div className="row center-xs new-event-container">
         <div className="col-xs-12">
-          <NewEventForm
-            {...this.props}
-            />
+          <NewEventForm/>
         </div>
       </div>
     )
