@@ -198,5 +198,3 @@ export function stories(state=initialState, action)
 		return state
 	}
 }
-
-
