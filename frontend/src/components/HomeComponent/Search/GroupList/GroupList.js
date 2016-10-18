@@ -13,12 +13,12 @@ class GroupItem extends React.Component {
   render(){
     const {group, heading, toggleHomeTab, 
       toggleSelectedHomeGroup, toggleHomeSearchDrawerVisibility,
-      homeGroupDetails, key} = this.props;
+      homeGroupDetails, key, index} = this.props;
       const {selected} = this.props.homeGroups;
 
       const goToGroup = () => { 
         browserHistory.push(`/home/${group.id}`); 
-        toggleSelectedHomeGroup(key);
+        toggleSelectedHomeGroup(index);
         toggleHomeTab('events');
         toggleHomeSearchDrawerVisibility(false); 
       };
@@ -26,7 +26,7 @@ class GroupItem extends React.Component {
         <div className="group-body">
         <h5 className="group-heading">{heading}</h5>  
         <ListItem
-        className={parseInt(key)===parseInt(selected)?'selected-group':null}
+        className={parseInt(index)===parseInt(selected)?'selected-group':null}
         primaryText={group.name}
         leftAvatar={<Avatar src={ imageUrl } size={ 40 } style={{ objectFit: 'contain', backgroundColor: '#fff'}}/>}
         onTouchTap={goToGroup}
@@ -63,11 +63,12 @@ class GroupItem extends React.Component {
 
    render() {
     const {groups, user, toggleHomeSearchDrawerVisibility, toggleSelectedHomeGroup} = this.props;
+    var index =0;
     return(
       <div>
       <List className="groups-container">
       { groups.length > 0 && groups.map((group, idx) => 
-        <Group group={group} {...this.props} key={idx}/>
+        <Group group={group} {...this.props} key={idx} index={index++}/>
         /*<Group group={ group } currentUser={ user } key={ idx } 
         handleClose={toggleHomeSearchDrawerVisibility} toggleSelectedHomeGroup={toggleSelectedHomeGroup} />*/) }
       </List>
