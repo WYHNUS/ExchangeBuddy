@@ -5,13 +5,14 @@ export const TOGGLE_SELECTED_HOME_GROUP = 'TOGGLE_SELECTED_HOME_GROUP';
 export const TOGGLE_HOME_TAB = 'TOGGLE_HOME_TAB';
 
 /************************************************************
-FETCHING INITIAL CHATS OF A GROUP
+FETCHING INITIAL CHATS OF A GROUP, UPDATING CHAT
 ************************************************************/
 
 export const FETCH_GROUP_MESSAGES = 'FETCH_GROUP_MESSAGES';
 export const FETCH_GROUP_MESSAGES_SUCCESS = 'FETCH_GROUP_MESSAGES_SUCCESS';
 export const FETCH_GROUP_MESSAGES_FAILURE = 'FETCH_GROUP_MESSAGES_FAILURE';
 export const RESET_GROUP_MESSAGES = 'RESET_GROUP_MESSAGES';
+export const UPDATE_GROUP_MESSAGE_FROM_SOCKET = 'UPDATE_GROUP_MESSAGE_FROM_SOCKET';
 
 export function fetchGroupMessages(GroupId){
 
@@ -39,10 +40,17 @@ export function fetchGroupMessagesFailure(error){
 	};
 }
 
-export function resetGroupMessages(){
+export function resetGroupMessages(message){
 	return{
 		type: RESET_GROUP_MESSAGES
 	}
+}
+
+export function updateGroupMessageFromSocket(message){
+	return {
+		type: UPDATE_GROUP_MESSAGE_FROM_SOCKET,
+		payload: message
+	};
 }
 
 /************************************************************

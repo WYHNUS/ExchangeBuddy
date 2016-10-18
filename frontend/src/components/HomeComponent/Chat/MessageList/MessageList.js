@@ -96,7 +96,6 @@ export default class MessageList extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.homeGroupDetails.detailsLoaded);
     if(this.props.homeGroupDetails.detailsLoaded){
       this.props.fetchGroupMessages(this.props.homeGroupDetails.homeGroupDetails.id);
     }

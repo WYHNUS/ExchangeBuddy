@@ -6,26 +6,35 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { showSnackbar } from '../../actions/messageSnackbar';
 import { pageVisibility } from '../../actions/pageVisibility';
+import {updateGroupMessageFromSocket} from '../../actions/home';
 
 import SubmitForm from '../../components/HomeComponent/Chat/SubmitForm';
 import MessageList from '../../components/HomeComponent/Chat/MessageList';
+import {ROOT_URL} from '../../util/backend';
+
+var socket = io.connect(ROOT_URL);
 
 class Chat extends React.Component{
 
 	componentWillMount(){
-		/*var socket = io.connect("http://localhost:3001");
-		socket.emit('adduser',
-		{
-			group:
+
+		//if there is group id to join
+		if(this.props.homeGroupDetails.detailsLoaded){
+			
+			socket.emit('adduser',
 			{
-				name: 'alkdsjfhaldsjkafhlkdsj'
-			},
-			user:
-			{
-				id:1	
+				group:
+				{
+					name: this.props.homeGroupDetails.homeGroupDetails.name
+				},
+				user:
+				{
+					id:parseInt(this.props.user.userObject.userId)
+				}
 			}
+			);
 		}
-		);*/
+		
 	}
 
 	componentDidMount(){
@@ -33,17 +42,17 @@ class Chat extends React.Component{
 	}
 
 	componentWillUnmount(){
-		
+		socket.emit('disconnect');
 	}
 
 	render(){
 		return(
-		<Grid>
-		<div className="chat-container">
-		<MessageList groupId={ parseInt(this.props.params.id) } />
-		<SubmitForm groupId={ parseInt(this.props.params.id) } />
-		</div>
-		</Grid>);
+			<Grid>
+			<div className="chat-container">
+			<MessageList />
+			<SubmitForm socket={socket}/>
+			</div>
+			</Grid>);
 	}
 }
 
@@ -55,7 +64,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state)=>{
 	return {
-		params: state.home.homeGroupDetails.homeGroupDetails
+		homeGroupDetails: state.home.homeGroupDetails,
+		user: state.user
 	};
 }
 
