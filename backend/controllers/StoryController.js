@@ -79,13 +79,17 @@ exports.getAllStories = function(req, res){
         where: {
             isPublic: true
         },
-        attributes: ['id', 'title'],
+        attributes: ['id', 'title', 'createdAt'],
         include: [{
             model: models.User,
             attributes: ['id', 'name', 'profilePictureUrl']
         }]
     }).then(function(stories){
-        res.json(stories);
+        return res.status(200)
+            .json({
+                status: 'success',
+                message: stories
+            });
     }).catch(function(err) {
         resError(res, err);
     });

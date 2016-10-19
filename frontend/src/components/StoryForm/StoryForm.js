@@ -6,18 +6,15 @@ import { Row, Col } from 'react-flexbox-grid';
 import { TextFormField } from '../Field';
 import { EditableField } from '../EditableField';
 
-var currentContent = "";
 
 class StoryForm extends React.Component {
   submitForm(val) {
-    this.props.saveContent(currentContent);
-    this.props.uploadContent(val.storyTitle, currentContent, /*this.props.storyDetails.content,*/ this.props.user.id);
+    this.props.uploadContent(val.storyTitle, this.props.storyDetails.content, this.props.user.id);
   }
 
-  // handleEditorChange(e) {
-  //   console.log(e.startContent);
-  //   this.props.saveContent(e.target.getContent());
-  // }
+  handleEditorChange(e) {
+    this.props.saveContent(e.target.getContent());
+  }
 
   render() {
     const {  storyDetails, handleSubmit, submitting } = this.props;
@@ -32,16 +29,10 @@ class StoryForm extends React.Component {
       }) }>
         <TextFormField name="storyTitle" floatingLabelText="Title"/>
 
-        <EditableField 
+        <EditableField
           name="story" 
           content={ storyDetails.content }
-          extraConfig={ function (ed) {
-              ed.on("change", function () {
-                  currentContent = ed.startContent;
-                  // this.handleEditorChange(ed);
-              })
-          }}
-          /*onBlur={this.handleEditorChange.bind(this)}*/
+          onChange={ this.handleEditorChange.bind(this) }
         />
 
         { storyDetails.uploading ?

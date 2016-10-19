@@ -140,7 +140,7 @@ const initialState=
 	error: null,
 	fetching: false,
 	storyDetails: story1,
-	storyList: storyList,
+	storyList: [],//storyList,
 	editingStory: {
 		title: null,
 		content: "<p>Share your life events here! :D </p>",
@@ -161,9 +161,7 @@ export function stories(state=initialState, action)
 
 		case FETCH_STORIES_SUCCESS:
 			return Object.assign({}, state, {
-		        storyList:{
-					storyList: action.stories
-				},
+		        storyList: action.stories,
 				error: null,
 				fetching: false
 		    });
@@ -178,7 +176,7 @@ export function stories(state=initialState, action)
 		case SAVE_STORY_CONTENT:
 			return Object.assign({}, state, {
 		        editingStory: {
-					title: action.title,
+					title: state.editingStory.title,
 					content: action.content,
 					error: null, 
 					uploading: false,

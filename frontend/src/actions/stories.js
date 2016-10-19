@@ -39,7 +39,7 @@ export function fetchAllStories() {
 					dispatch(fetchAllStoriesFail(err));
 				} else {
 					if (res.body.status === "success") {
-						dispatch(fetchAllStoriesSuccess(res.data));
+						dispatch(fetchAllStoriesSuccess(res.body.message));
 					} else {
 						dispatch(fetchAllStoriesFail(res.body.message));
 					}
@@ -50,8 +50,8 @@ export function fetchAllStories() {
 
 
 /*	Edit and upload one story 	*/
-export function saveStoryContent(title, content) {
-	return { type: SAVE_STORY_CONTENT, title, content }
+export function saveStoryContent(content) {
+	return { type: SAVE_STORY_CONTENT, content }
 }
 
 export function clickedUpload() {
@@ -67,9 +67,9 @@ export function uploadContentFail(error) {
 }
 
 export function uploadContentToServer(title, content, id) {
-	console.log(title);
-	console.log(content);
-	console.log(id);
+	// console.log(title);
+	// console.log(content);
+	// console.log(id);
 	return (dispatch) => {
 	    dispatch(clickedUpload());
 

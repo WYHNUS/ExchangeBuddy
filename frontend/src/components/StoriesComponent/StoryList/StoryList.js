@@ -30,24 +30,23 @@ const styles={
 
 class Story extends React.Component{
 	componentDidMount(){
-		// fetchAllStories();
 	}
 
 	render(){
-		const { id, title, tags, favorites, status, author, storyImgUrl, createdAt } = this.props.story;
+		const { id, title, /*tags, favorites, status, storyImgUrl,*/ User, createdAt } = this.props.story;
 		return (
 			<GridTile
-			key={storyImgUrl}
-			title={title}
-			actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-			subtitle={
-				<span>
-				<div><span>{IconsHelper.smallWhiteMaterialIcon("perm_identity")} by <b>{author.displayName}</b></span></div>
-				<div><span>{moment(createdAt).fromNow()}</span></div>
-				</span>
-			}
-			titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
-			<img src={storyImgUrl} />
+				key={id}
+				title={title}
+				actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+				subtitle={
+					<span>
+					<div><span>{IconsHelper.smallWhiteMaterialIcon("perm_identity")} by <b>{User.name}</b></span></div>
+					<div><span>{moment(createdAt).fromNow()}</span></div>
+					</span>
+				}
+				titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
+				<img src={storyImgUrl} />
 			</GridTile>
 		)
 	}
@@ -60,7 +59,7 @@ export default class StoryList extends React.Component {
 	}
 
 	componentDidMount() {
-
+		this.props.fetchAllStories();
 	}
 
 	render() {
