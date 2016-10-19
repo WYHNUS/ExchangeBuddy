@@ -15,6 +15,9 @@ export const Checked_Session_Status = 'Checked_Session_Status';
 export const Clicked_Logout = 'Clicked_Logout';
 export const Logout_Success = 'Logout_Success';
 
+export const VERIFY_TOKEN_SUCCESS = 'VERIFY_TOKEN_SUCCESS';
+export const VERIFY_TOKEN_FAIL = 'VERIFY_TOKEN_FAIL';
+
 // Note: Considered creating a new actions file for navigation
 //              related actions. For now, will leave these here.
 export const Navigate_Away_From_Auth_Form = 'Navigate_Away_From_Auth_Form';
@@ -60,6 +63,33 @@ export function attemptLogin(token) {
           } else {
             dispatch(loginFail({error:res.body.message}));
           }
+        }
+      })
+  }
+}
+
+/*    verification of token received via email    */
+
+export function verifyTokenSuccess(user) {
+  return { type: VERIFY_TOKEN_SUCCESS, user };
+}
+
+export function verifyTokenFail(error) {
+  return { type: VERIFY_TOKEN_FAIL, error };
+}
+
+export function verifyToken(token) {
+  return (dispatch) => {
+    request
+      .get(ROOT_URL + '/verify/' + token)
+      // .query({ token: token })
+      .end(function(err,res){
+        console.log(res);
+        console.log(err);
+        if(res.body.status === "success"){
+          dispatch(verifyTokenSuccess(res.body.user));
+        } else {
+          dispatch(verifyTokenFail(res.body.message));
         }
       })
   }

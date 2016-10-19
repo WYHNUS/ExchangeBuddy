@@ -19,7 +19,7 @@ const validUniEmail = (value) => {
   const domain = value.substr(value.indexOf('@') + 1);
 
   // TEMP: If no emailDomains, then just allow any domain.
-  if (!uniEmailDomains)
+  if (!uniEmailDomains || uniEmailDomains.length < 1)
     return true;
 
   // Checks for valid email domains.
@@ -67,7 +67,6 @@ class Step3 extends React.Component {
     if (this.props.homeUniName && this.props.universities) {
       var allUniList = this.props.universities;
       for (var i=0; i<allUniList.length; i++) {
-        console.log(JSON.parse(allUniList[i].emailDomains));
         if (allUniList[i].name === this.props.homeUniName) {
           this.state.emailDomains = JSON.parse(allUniList[i].emailDomains);
         }
@@ -93,7 +92,7 @@ class Step3 extends React.Component {
         <p style={{ fontSize: "15px" }}>To complete your registration, please enter your email address at <strong>{ homeUniName }</strong>.</p>
         <p style={{ fontSize: "15px" }}>We will be sending a verification email to confirm your place at the university.</p>
 
-        { this.state.emailDomains ?
+        { (this.state.emailDomains && this.state.emailDomains.length > 0) ?
           <p className="small-text">Email domains allowed: { this.state.emailDomains.map(x => `@${x}`).join(', ') }</p> :
           null
         }
