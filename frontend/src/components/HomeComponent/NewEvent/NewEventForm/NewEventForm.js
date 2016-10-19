@@ -19,9 +19,9 @@ const newEventForm = (callback, userId, location, id, postEvents) => (values) =>
   //value.endTime=Date();
   callback();
 
-  console.log('group',id,'user', userId);
+  console.log(values);
 
-  postEvents(
+  /*postEvents(
     1.34132,
     109.3214,
     values.title,
@@ -32,7 +32,7 @@ const newEventForm = (callback, userId, location, id, postEvents) => (values) =>
     id,
     userId
      );
-
+*/
   /*if(dropId){
     // If edit/:dropId route
     values.dropId = dropId;
@@ -65,35 +65,46 @@ const newEventForm = (callback, userId, location, id, postEvents) => (values) =>
 */
 }
 
-/*const validate = values => {
+const validate = values => {
   const errors = {};
-  const requiredFields = [ 'title' ];
+  const requiredFields = [ 'title', 'details' ];
   requiredFields.forEach(field => {
     if (!values[ field ]) {
       errors[ field ] = 'Required'
     }
   });
-  const urlFields = [ 'soundCloudUrl', 'videoUrl' ];
+  /*const urlFields = [ 'soundCloudUrl', 'videoUrl' ];
   urlFields.forEach(field => {
     const str = values[field];
     if(str && str.length > 0 && !validUrl.isUri(str)){
       errors[ field ] = 'Invalid Link'
     }
-  })
+  })*/
 
   return errors;
 }
-*/
+
 
 class NewEventForm extends Component {
     static defaultProps = {
     	center: {lat: 59.938043, lng: 30.337157},
-    	zoom: 9,
+    	zoom: 9
     };
 
   constructor(props){
     super(props);
+    const minDate = new Date();
+    this.state={
+      minDate:minDate
+    }
+    this.updateMinDate=this.updateMinDate.bind(this);
   }
+
+  updateMinDate(date){
+    this.setState({...this.state, minDate:date});
+    console.log(this.state.minDate);
+  }
+
 
   componentDidMount() {
     
@@ -155,28 +166,34 @@ class NewEventForm extends Component {
         </div>
       </div>
 
+      <div className='row center-xs'>
+      <div className='col-xs-12 col-md-6'>
       <div className="row center-xs">
-        <div className="col-xs-3">
+        <div className="col-xs-4">
         <h5>Start Date/Time</h5>
         </div>
-        <div className="col-xs-3">
-          <Field name="startDate" component={StartDatePick}/>
+        <div className="col-xs-4">
+          <Field name="startDate" component={StartDatePick} updateMinDate={this.updateMinDate}/>
         </div>
-        <div className="col-xs-3">
+        <div className="col-xs-4">
           <Field name="startTime" component={StartTimePick}/>
         </div>
       </div>
+      </div>
 
+      <div className='col-xs-12 col-md-6'>
       <div className="row center-xs">
-        <div className="col-xs-3">
+        <div className="col-xs-4">
         <h5>End Date/Time</h5>
         </div>
-        <div className="col-xs-3">
-          <Field name="endDate" component={EndDatePick}/>
+        <div className="col-xs-4">
+          <Field name="endDate" component={EndDatePick} minDate={this.state.minDate}/>
         </div>
-        <div className="col-xs-3">
+        <div className="col-xs-4">
           <Field name="endTime" component={EndTimePick}/>
         </div>
+      </div>
+      </div>
       </div>
 
       <div>Insert Google Map Chooser here</div>
@@ -196,33 +213,74 @@ class NewEventForm extends Component {
 }
 
 class StartDatePick extends React.Component{
+  constructor(props){
+    super(props);
+    const minDate = new Date();
+    this.state={
+      minDate:minDate
+    }
+  }
   render(){
+    const {value,onChange} = this.props.input;
+    const{updateMinDate}=this.props;
     return(
-      <DatePicker hintText="Start Date" />
+      <DatePicker 
+      className='new-event-date-chooser' 
+      hintText="Start Date"
+      onChange={(x,newdate)=>{
+        onChange(newdate);
+        updateMinDate(newdate);
+      }}
+      minDate={this.state.minDate}
+      />
       );
   }
 }
 
+//onDismiss={()=>onChange()} 
+
+
 class StartTimePick extends React.Component{
   render(){
+    const {value,onChange} = this.props.input
     return(
-      <TimePicker hintText="Start Time" />
+      <TimePicker 
+      className='new-event-time-chooser' 
+      hintText="Start Time"
+      onChange={(x,newdate)=>{
+        onChange(newdate);
+      }}/>
       );
   }
 }
 
 class EndDatePick extends React.Component{
   render(){
+    const {value,onChange} = this.props.input;
+    const{minDate} = this.props;
     return(
-      <DatePicker hintText="End Date" />
+      <DatePicker 
+      className='new-event-date-chooser' 
+      hintText="End Date" 
+      onChange={(x,newdate)=>{
+        onChange(newdate);
+      }}
+      minDate={minDate}
+      />
       );
   }
 }
 
 class EndTimePick extends React.Component{
   render(){
+    const {value,onChange} = this.props.input
     return(
-      <TimePicker hintText="End Time" />
+      <TimePicker 
+      className='new-event-time-chooser' 
+      hintText="End Time" 
+      onChange={(x,newdate)=>{
+        onChange(newdate);
+      }}/>
       );
   }
 }
@@ -236,7 +294,7 @@ NewEventForm.propTypes = {
 
 export default reduxForm({
   form: 'newEventForm'
-  //,validate
+  ,validate
 })(NewEventForm);
 
 // Decorate with redux-form
