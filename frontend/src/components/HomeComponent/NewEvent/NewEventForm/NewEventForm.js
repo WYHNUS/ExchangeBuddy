@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 import { browserHistory } from 'react-router'
 import request from 'superagent'
-import { TextField, Toggle } from 'redux-form-material-ui'
+import { TextField, Toggle} from 'redux-form-material-ui'
 import moment from 'moment';
 import RaisedButton from 'material-ui/RaisedButton'
 import DatePicker from 'material-ui/DatePicker';
@@ -17,9 +17,39 @@ const newEventForm = (callback, userId, location, id, postEvents) => (values) =>
   //console.log(values);
   //values.startTime=Date();
   //value.endTime=Date();
-  callback();
 
-  console.log(values);
+  const errors = [];
+  const dateFields = ['startDate', 'startTime', 'endDate', 'endTime'];
+  var allDateFieldsFilled = true;
+  dateFields.forEach(field => {
+    if (!values[ field ]) {
+      errors.push(`Please fill up ${field}`);
+      allDateFieldsFilled=false;
+    }
+  });
+  //logic to check if end time is more than start time
+  if(allDateFieldsFilled){
+    //console.log(moment(values['endDate']).isAfter(moment(values['startDate']),'day'));
+    if(!moment(values['endDate']).isAfter(moment(values['startDate']),'day')){
+      var beginning = moment(values['startTime']);
+      var ending = moment(values['endTime']);
+      //console.log(beginning, ending);
+      if(ending.isBefore(beginning)){
+        errors.push('Start time is later than End time...') 
+      }
+    }
+  }
+
+  console.log(errors);
+
+  if(errors.length===0){
+    callback();
+    console.log('all ok');
+  
+  }
+
+  
+  //console.log(values);
 
   /*postEvents(
     1.34132,
@@ -73,6 +103,26 @@ const validate = values => {
       errors[ field ] = 'Required'
     }
   });
+
+  //logic to check for date fields
+  /*const dateFields = ['startDate', 'startTime', 'endDate', 'endTime'];
+  var allDateFieldsFilled = true;
+  dateFields.forEach(field => {
+    if (!values[ field ]) {
+      errors[ field ] = 'Required';
+      allDateFieldsFilled=false;
+    }
+  });
+  //logic to check if end time is more than start time
+  if(allDateFieldsFilled){
+    if(values['startDate']===values['endDate']){
+      if(values['startTime']>values['endTime']){
+        errors['startTime'] = 'More than End Time';
+        errors['endTime'] = 'Less than Start Time';   
+      }
+    }
+  }*/
+
   /*const urlFields = [ 'soundCloudUrl', 'videoUrl' ];
   urlFields.forEach(field => {
     const str = values[field];
@@ -102,7 +152,7 @@ class NewEventForm extends Component {
 
   updateMinDate(date){
     this.setState({...this.state, minDate:date});
-    console.log(this.state.minDate);
+    //console.log(this.state.minDate);
   }
 
 
@@ -173,10 +223,13 @@ class NewEventForm extends Component {
         <h5>Start Date/Time</h5>
         </div>
         <div className="col-xs-4">
-          <Field name="startDate" component={StartDatePick} updateMinDate={this.updateMinDate}/>
+          <Field name="startDate" component={StartDatePick} 
+          errorStyle={{textAlign: "left"}}
+          updateMinDate={this.updateMinDate}/>
         </div>
         <div className="col-xs-4">
-          <Field name="startTime" component={StartTimePick}/>
+          <Field name="startTime" component={StartTimePick}
+          errorStyle={{textAlign: "left"}}/>
         </div>
       </div>
       </div>
@@ -187,10 +240,13 @@ class NewEventForm extends Component {
         <h5>End Date/Time</h5>
         </div>
         <div className="col-xs-4">
-          <Field name="endDate" component={EndDatePick} minDate={this.state.minDate}/>
+          <Field name="endDate" component={EndDatePick} 
+          errorStyle={{textAlign: "left"}}
+          minDate={this.state.minDate}/>
         </div>
         <div className="col-xs-4">
-          <Field name="endTime" component={EndTimePick}/>
+          <Field name="endTime" component={EndTimePick}
+          errorStyle={{textAlign: "left"}}/>
         </div>
       </div>
       </div>
