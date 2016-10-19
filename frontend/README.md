@@ -6,6 +6,8 @@ This project was bootstrapped with [react-redux-starter-kit](https://github.com/
 
 1. Install Node.js (v4.5)
 2. Now install dependency. 'npm install'.
+3. Create a `.env` file based on `.env.example` in order to populate the environment variables.
+4. The server by default is running on port 3000.
 
 ## Build & development
 

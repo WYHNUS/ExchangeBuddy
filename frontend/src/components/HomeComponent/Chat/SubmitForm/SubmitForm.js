@@ -16,14 +16,7 @@ const submitForm = (callback, socket, updateGroupMessageFromSocket) => (values) 
     type: "user"
   })*/
   callback();
-  socket.emit('sendchat',values.message);
-
-  /*Meteor.call('GroupChatMessage.sendToGroup', params, (err, success) => {
-    if (err)
-      console.log("Error in invoking GroupChatMessage.sendToGroup: " + err);
-    else
-      callback();
-  });*/
+  socket.send(values.message);
 };
 
 const handleKeyPress = (submitHandler) => (event) => {

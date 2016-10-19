@@ -6,7 +6,7 @@ export default class UniversitySearchList extends React.Component {
 	render() {
 		return(
 			<div>
-			UniversitySearchList
+			{/*UniversitySearchList*/}
 			</div>
 			);
 	}

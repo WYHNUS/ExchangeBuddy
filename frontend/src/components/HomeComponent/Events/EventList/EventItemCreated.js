@@ -40,21 +40,27 @@ class EventItemCreated extends React.Component{
 			<CardMedia expandable={true} >
 			<img src={ groupEvent.imgSrc } />
 			</CardMedia>
-			<CardText expandable={true}>
+			<CardText className="event-item-card-text" expandable={true}>
 			{ cardText }
 			</CardText>
 			<CardActions expandable={true}>
 			<div className="row center-xs">
 			{ /*Meteor.user()*/
 				true ?
-				<div className='col-xs-4'>
-				<RaisedButton primary={true} style={{margin: "3px 6px"}} label="Post to Chat" onTouchTap={ ()=> postToChat(groupEvent, parseInt(groupId), cardText) } />
+				<div className='row center-xs'>
+					<div className='col-xs-6'>
+					<RaisedButton primary={true} style={{margin: "1px 6px"}} label="Post to Chat" onTouchTap={ ()=> postToChat(groupEvent, parseInt(groupId), cardText) } />
+				</div>
+				<div className='col-xs-6'>
+				<RaisedButton primary={true} style={{margin: "1px 6px"}} label="Go" onTouchTap={ ()=> postToChat(groupEvent, parseInt(groupId), cardText) } />
+				</div>
 				</div>
 				: null }
 				</div>
 				</CardActions>
 				</Card>
 				<GoogleMap
+				//className="event-item-card-map"
 				bootstrapURLKeys = {{key:process.env.GOOGLE_MAP_APIKEY}}
 				defaultCenter={this.props.center}
 				defaultZoom={this.props.zoom}>

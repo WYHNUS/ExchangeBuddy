@@ -12,25 +12,37 @@ import {toggleHomeTab} from '../../actions/home';
 import SubmitForm from '../../components/HomeComponent/Chat/SubmitForm';
 import MessageList from '../../components/HomeComponent/Chat/MessageList';
 import {ROOT_URL} from '../../util/backend';
+import Socket from '../../util/socket';
 
-var socket = io.connect(ROOT_URL);
-socket.on('updatechat', function(name, msg){
-	console.log('name', name,'msg', msg);
-})
+/*var socket = io.connect(ROOT_URL);
 
 socket.on('updatechat', function(msg){
 	console.log('msg2', msg);
-})
+})*/
+
+
+const socket = new Socket();
+
 
 class Chat extends React.Component{
 
 	componentWillMount(){
-		this.props.toggleHomeTab('chat');
+		this.props.toggleHomeTab('chat');		
+	}
 
+	componentDidMount(){
 		//if there is group id to join
 		if(this.props.homeGroupDetails.detailsLoaded){
+
+			socket.setup(
+				this.props.homeGroupDetails.homeGroupDetails.name,
+				parseInt(this.props.homeGroupDetails.homeGroupDetails.id),
+				this.props.user.userObject.name,
+				parseInt(this.props.user.userObject.userId),
+				this.chatReceive.bind(this)
+			)
 			
-			var emittedobj = 
+			/*var emittedobj = 
 			{
 				group:
 				{
@@ -44,17 +56,19 @@ class Chat extends React.Component{
 				}
 			}
 
-			socket.emit('adduser',emittedobj);
+			socket.emit('adduser',emittedobj);*/
 		}
-		
 	}
 
-	componentDidMount(){
 
+	chatReceive(data){
+		console.log('rceived data', data);
+		this.props.updateGroupMessageFromSocket(data);
 	}
 
 	componentWillUnmount(){
-		socket.emit('disconnect');
+		//socket.emit('disconnect');
+		socket.uninstall();
 	}
 
 	render(){
