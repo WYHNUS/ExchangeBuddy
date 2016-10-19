@@ -12,23 +12,25 @@ import ImageUpload from '../../../ImageUpload/index.js'
 import validUrl from 'valid-url'
 import GoogleMap from 'google-map-react';
 
-const newEventForm = (user, location, id, postEvents) => values => {
+const newEventForm = (callback, userId, location, id, postEvents) => (values) => {
 
   //console.log(values);
-  values.startTime=Date();
-  value.endTime=Date();
+  //values.startTime=Date();
+  //value.endTime=Date();
+  callback();
 
-  console.log('postEvents');
+  console.log('group',id,'user', userId);
+
   postEvents(
     1.34132,
     109.3214,
     values.title,
-    values.startTime,
-    values.endTime,
+    Date(),//values.startTime,
+    Date(),//values.endTime,
     values.details,
     null,
     id,
-    user.id
+    userId
      );
 
   /*if(dropId){
@@ -63,7 +65,7 @@ const newEventForm = (user, location, id, postEvents) => values => {
 */
 }
 
-const validate = values => {
+/*const validate = values => {
   const errors = {};
   const requiredFields = [ 'title' ];
   requiredFields.forEach(field => {
@@ -81,7 +83,7 @@ const validate = values => {
 
   return errors;
 }
-
+*/
 
 class NewEventForm extends Component {
     static defaultProps = {
@@ -121,10 +123,13 @@ class NewEventForm extends Component {
 
   render() {
     const { handleSubmit, pristine, reset, submitting, location, user, postEvents } = this.props;
-    const {id,name} = this.props.homeGroupDetails;
+    const {userId} = user.userObject; 
+    const {id} = this.props.homeGroupDetails.homeGroupDetails;
+
+    const submitHandler = handleSubmit(newEventForm(reset, userId, location, id, postEvents));
 
     return (
-      <form onSubmit={ handleSubmit(newEventForm(user, location, id, postEvents)) }>
+      <form onSubmit={ submitHandler }>
       <h1>{id ? 'Edit event' : 'New event'}</h1>
 
       <div className="row center-xs">
@@ -176,7 +181,7 @@ class NewEventForm extends Component {
 
       <div>Insert Google Map Chooser here</div>
       <GoogleMap
-	     bootstrapURLKeys = {{key:process.env.GOOGLE_MAP_APIKEY}}
+	    bootstrapURLKeys = {{key:process.env.GOOGLE_MAP_APIKEY}}
       defaultCenter={this.props.center}
       defaultZoom={this.props.zoom}></GoogleMap>
         <div className="col-xs-12">
@@ -230,8 +235,8 @@ NewEventForm.propTypes = {
 
 
 export default reduxForm({
-  form: 'newEventForm',
-  validate
+  form: 'newEventForm'
+  //,validate
 })(NewEventForm);
 
 // Decorate with redux-form
