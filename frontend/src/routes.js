@@ -24,6 +24,7 @@ import Story from './pages/stories/story';
 import EditStory from './pages/editStory';
 import NotLoggedIn from './pages/notloggedin';
 import Signup from './pages/signup';
+import Verify from './pages/verify';
 import Settings from './pages/settings';
 import NewEvent from './pages/home/newevent';
 
@@ -80,6 +81,9 @@ export const getRoutes = (store) =>{
     <Route path="profile(/:userId)" component={ Profile } />
     <Route path="notloggedin" component={NotLoggedIn}/>
     <Route path="signup" component={Signup}/>
+    <Route path="verify">
+      <Route path=":token" component={Verify}/>
+    </Route>
     <Route path='settings' component={Settings}/>
     <Route path="*" component={NotFound}/>
   </Route>

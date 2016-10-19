@@ -2,6 +2,7 @@ import {
   Clicked_Login, Login_Success, Login_Fail, Not_Registered,
   Started_Session_Check, Checked_Session_Status,
   Clicked_Logout, Logout_Success,
+  VERIFY_TOKEN_SUCCESS, VERIFY_TOKEN_FAIL,
   Navigate_Away_From_Auth_Form
 } from '../actions/authActions';
 
@@ -45,6 +46,20 @@ const initialState = {
 
 export function user(state = initialState , action) {
   switch (action.type){
+    case VERIFY_TOKEN_SUCCESS:
+      console.log(action.user);
+      return Object.assign({}, state, {
+        isAuthenticated: true,
+        userObject: action.user,
+        error: null
+      });
+
+    case VERIFY_TOKEN_FAIL:
+      return Object.assign({}, state, {
+        isAuthenticated: false,
+        error: action.error
+      });
+
     case SAVE_SIGNUP_PAGE_ONE_INFO:
       return Object.assign({}, state, {
         signupInfo: {

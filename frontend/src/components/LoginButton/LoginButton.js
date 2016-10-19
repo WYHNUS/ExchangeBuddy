@@ -6,21 +6,6 @@ import FacebookLogin from 'react-facebook-login';
 
 const responseFacebook = (attemptLogin) => (response) => {attemptLogin(response.accessToken)};
 
-  /*Meteor.call('User.loginFacebook', response, (error, { user, token }) => {
-    if (error || !user || !token) {
-      if (error)
-        console.log("Error in invoking User.loginFacebook: " + error);
-
-      actions.showSnackbar("Could not login to Facebook.");
-    } else {
-      setUserSession(user, token);
-      browserHistory.push('/signup');
-
-      // Temp
-      actions.showSnackbar("Logged in!");
-    }
-  })*/
-
 // const LoginButton = ({ actions }) => (
 export default class LoginButton extends Component {
   constructor(props){

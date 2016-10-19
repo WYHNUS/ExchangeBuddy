@@ -48,13 +48,14 @@ exports.verifyToken = function(req, res){
             user.isEmailVerified = true;
             user.save().then(function(){
                 res.send({
-                    status: 'success'
+                    status: 'success',
+                    user: user
                 });
             });
-
         }else{
-            res.send({
-                status: 'verification failed'
+            res.status(422).json({
+                status: 'fail',
+                message: 'verification failed'
             });
         }
 
