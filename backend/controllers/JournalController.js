@@ -2,6 +2,13 @@ var models = require('../models');
 
 // user create journal
 exports.createJournal = function(req, res) {
+    if (!req.body.userId) {
+        res.status(400)
+            .json({
+                status: 'fail',
+                message: 'Invalid authenticate data.'
+            });
+    }
     var isJournalPublic = true;
     if (!!req.body.isPublic) {
         isJournalPublic = req.body.isPublic;
