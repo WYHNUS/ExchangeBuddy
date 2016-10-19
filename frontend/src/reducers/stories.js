@@ -1,6 +1,7 @@
 import {
 	SAVE_STORY_CONTENT, 
-	CLICKED_UPLOAD, UPLOAD_CONTENT_SUCCESS, UPLOAD_CONTENT_FAIL
+	CLICKED_UPLOAD, UPLOAD_CONTENT_SUCCESS, UPLOAD_CONTENT_FAIL,
+	CLICKED_FETCH, FETCH_STORIES_SUCCESS, FETCH_STORIES_FAIL
 } from '../actions/stories';
 
 import story1ImgUrl from '../res/SEP-Application.png';
@@ -136,8 +137,10 @@ var storyList =
 
 const initialState=
 {
-	storyDetails:{storyDetails:story1,error:null,loading:false},
-	storyList:{storyList:storyList,error:null,loading:false},
+	error: null,
+	fetching: false,
+	storyDetails: story1,
+	storyList: storyList,
 	editingStory: {
 		title: null,
 		content: "<p>Share your life events here! :D </p>",
@@ -151,6 +154,27 @@ export function stories(state=initialState, action)
 {
 	switch (action.type) 
 	{
+		case CLICKED_FETCH: 
+			return Object.assign({}, state, {
+				fetching: true
+		    });
+
+		case FETCH_STORIES_SUCCESS:
+			return Object.assign({}, state, {
+		        storyList:{
+					storyList: action.stories
+				},
+				error: null,
+				fetching: false
+		    });
+
+		case FETCH_STORIES_FAIL:
+			return Object.assign({}, state, {
+				error: action.error,
+				fetching: false
+		    });
+
+
 		case SAVE_STORY_CONTENT:
 			console.log(action.content);
 			return Object.assign({}, state, {
@@ -161,7 +185,7 @@ export function stories(state=initialState, action)
 					uploading: false,
 					published: false
 		        }
-		      });
+		    });
 
 		case CLICKED_UPLOAD:
 			return Object.assign({}, state, {

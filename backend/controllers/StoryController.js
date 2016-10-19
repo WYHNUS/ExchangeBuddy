@@ -40,7 +40,7 @@ exports.getStory = function(req, res) {
         },
         include: [{
             model: models.User,
-            attributes: ['id']
+            attributes: ['id', 'name', 'profilePictureUrl']
         }]
     }).then(function(story){
         if (!!story) {
@@ -70,7 +70,12 @@ exports.getAllStories = function(req, res){
     models.Story.findAll({
         where: {
             isPublic: true
-        }
+        },
+        attributes: ['id', 'title'],
+        include: [{
+            model: models.User,
+            attributes: ['id', 'name', 'profilePictureUrl']
+        }]
     }).then(function(stories){
         res.json(stories);
     }).catch(function(err) {

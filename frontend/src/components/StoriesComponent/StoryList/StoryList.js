@@ -29,79 +29,62 @@ const styles={
 }
 
 class Story extends React.Component{
-	//`/home/${state.home.homeGroupDetails.homeGroupDetails.id}`
-	//'#content'
-	//$(`#content_${this.props.story.id}`).append(this.props.story.content);
-/*actionPosition="left"
-titlePosition="top"*/
-componentDidMount(){
-}
+	componentDidMount(){
+		// fetchAllStories();
+	}
 
-//person_pin
-
-render(){
-	const { id, title, tags, favorites, status, author, storyImgUrl, createdAt } = this.props.story;
-	return (
-		<GridTile
-		key={storyImgUrl}
-		title={title}
-		actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-		subtitle={
-			<span>
-			<div><span>{IconsHelper.smallWhiteMaterialIcon("perm_identity")} by <b>{author.displayName}</b></span></div>
-			<div><span>{moment(createdAt).fromNow()}</span></div>
-			</span>
-		}
-		titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
-		<img src={storyImgUrl} />
-		</GridTile>
-		
+	render(){
+		const { id, title, tags, favorites, status, author, storyImgUrl, createdAt } = this.props.story;
+		return (
+			<GridTile
+			key={storyImgUrl}
+			title={title}
+			actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+			subtitle={
+				<span>
+				<div><span>{IconsHelper.smallWhiteMaterialIcon("perm_identity")} by <b>{author.displayName}</b></span></div>
+				<div><span>{moment(createdAt).fromNow()}</span></div>
+				</span>
+			}
+			titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
+			<img src={storyImgUrl} />
+			</GridTile>
 		)
+	}
 }
 
-/*<div>	<div className="story-avatar">{ UserHelper.getAvatar(author, 40) }</div>
-		<div>{ title }</div>
-		</div>*/
 
+export default class StoryList extends React.Component {
+	constructor(props) {
+		super(props);
+	}
+
+	componentDidMount() {
 
 	}
 
+	render() {
+		const { stories, user } = this.props;
 
-	export default class StoryList extends React.Component {
-		constructor(props) {
-			super(props);
-		}
-
-		componentDidMount() 
-	{//chatScrollToLatest();
+		return (
+			<div>
+				<div style={styles.stories_list_root}>
+				<GridList
+					className="stories-container"
+					cols={1}
+					cellHeight={400}
+					padding={1}
+					style={styles.stories_list_grid}
+				>
+					{ stories.length > 0 && stories.map((story, idx) =>
+						( <Story story={story} key={ idx }/> ) 
+					)}
+				</GridList>
+				
+				</div>
+			</div>
+			)
 	}
-
-	componentDidUpdate() 
-{//chatScrollToLatest();
-}
-
-render() {
-	const { stories, user } = this.props;
-
-	return (
-		<div>
-		<div 
-		style={styles.stories_list_root}>
-		<GridList
-		className="stories-container"
-		cols={1}
-		cellHeight={400}
-		padding={1}
-		style={styles.stories_list_grid}
-		>
-		{ stories.length > 0 && stories.map((story, idx) => (
-			<Story story={story} key={ idx }/>)) }
-		</GridList>
-		
-		</div>
-		</div>
-		)
-}
 }
 
 
