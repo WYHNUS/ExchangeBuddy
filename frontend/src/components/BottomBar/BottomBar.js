@@ -21,7 +21,7 @@ function urlToIdx(url) {
     return 0;
     case 'wiki':
     return 1;
-    case 'journal':
+    case 'editStory':
     return 2;
     case 'stories':
     return 3;
@@ -61,7 +61,7 @@ class BottomBar extends Component {
         <BottomNavigation selectedIndex={tabIdx}>
         <BottomNavigationItem onTouchTap={this.goToURL('/home')} label="Home" icon={IconsHelper.materialIcon("home")} />
         <BottomNavigationItem onTouchTap={this.goToURL('/wiki')} label="Wiki" icon={IconsHelper.materialIcon("info")} />
-        <BottomNavigationItem onTouchTap={this.goToURL('/journal')} label="NewStory" icon={IconsHelper.materialIcon("create")} />
+        <BottomNavigationItem onTouchTap={this.goToURL('/editStory')} label="NewStory" icon={IconsHelper.materialIcon("create")} />
         <BottomNavigationItem onTouchTap={this.goToURL('/stories')} label="Stories" icon={IconsHelper.materialIcon("library_books")} />
         <BottomNavigationItem onTouchTap={this.goToURL('/profile')} label="Profile" icon={IconsHelper.materialIcon("account_circle")} />
         </BottomNavigation>

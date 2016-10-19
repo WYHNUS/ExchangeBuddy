@@ -1,6 +1,7 @@
 import {
-	SAVE_JOURNAL_CONTENT, 
-	CLICKED_UPLOAD, UPLOAD_CONTENT_SUCCESS, UPLOAD_CONTENT_FAIL
+	SAVE_STORY_CONTENT, 
+	CLICKED_UPLOAD, UPLOAD_CONTENT_SUCCESS, UPLOAD_CONTENT_FAIL,
+	CLICKED_FETCH, FETCH_STORIES_SUCCESS, FETCH_STORIES_FAIL
 } from '../actions/stories';
 
 import story1ImgUrl from '../res/SEP-Application.png';
@@ -136,9 +137,12 @@ var storyList =
 
 const initialState=
 {
-	storyDetails:{storyDetails:story1,error:null,loading:false},
-	storyList:{storyList:storyList,error:null,loading:false},
-	editingJournal: {
+	error: null,
+	fetching: false,
+	storyDetails: story1,
+	storyList: storyList,
+	editingStory: {
+		title: null,
 		content: "<p>Share your life events here! :D </p>",
 		error: null, 
 		uploading: false,
@@ -148,26 +152,46 @@ const initialState=
 
 export function stories(state=initialState, action) 
 {
-
-	let error;
-
 	switch (action.type) 
 	{
-		case SAVE_JOURNAL_CONTENT:
+		case CLICKED_FETCH: 
+			return Object.assign({}, state, {
+				fetching: true
+		    });
+
+		case FETCH_STORIES_SUCCESS:
+			return Object.assign({}, state, {
+		        storyList:{
+					storyList: action.stories
+				},
+				error: null,
+				fetching: false
+		    });
+
+		case FETCH_STORIES_FAIL:
+			return Object.assign({}, state, {
+				error: action.error,
+				fetching: false
+		    });
+
+
+		case SAVE_STORY_CONTENT:
 			console.log(action.content);
 			return Object.assign({}, state, {
-		        editingJournal: {
+		        editingStory: {
+					title: action.title,
 					content: action.content,
 					error: null, 
 					uploading: false,
 					published: false
 		        }
-		      });
+		    });
 
 		case CLICKED_UPLOAD:
 			return Object.assign({}, state, {
-		        editingJournal: {
-					content: state.editingJournal.content,
+		        editingStory: {
+					title: state.editingStory.title,
+					content: state.editingStory.content,
 					error: null, 
 					uploading: true,
 					published: false
@@ -176,8 +200,9 @@ export function stories(state=initialState, action)
 
 		case UPLOAD_CONTENT_SUCCESS:
 			return Object.assign({}, state, {
-				editingJournal: {
-					content: state.editingJournal.content,
+				editingStory: {
+					title: state.editingStory.title,
+					content: state.editingStory.content,
 					error: null, 
 					uploading: false,
 					published: true
@@ -186,8 +211,9 @@ export function stories(state=initialState, action)
 
 		case UPLOAD_CONTENT_FAIL:
 			return Object.assign({}, state, {
-				editingJournal: {
-					content: state.editingJournal.content,
+				editingStory: {
+					title: state.editingStory.title,
+					content: state.editingStory.content,
 					error: action.error, 
 					uploading: false,
 					published: false
