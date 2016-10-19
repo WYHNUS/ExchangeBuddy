@@ -5,7 +5,7 @@ import Loading from '../../../Loading';
 import ChildComponent from './NewEventForm';
 
 import {postEvents} from '../../../../actions/home'
-import {showSnackbar, hideSnackbar} from '../../../../actions/messageSnackbar';
+import {showSnackbar} from '../../../../actions/messageSnackbar';
 
 // Redux
 import { connect } from 'react-redux';
@@ -24,7 +24,8 @@ const mapDispatchToProps = (dispatch) => {
 					dispatch(showSnackbar(response.error));
 				}
 			});
-		}
+		},
+		showSnackbar:(message)=>{dispatch(showSnackbar(message))}
 	};
 };
 

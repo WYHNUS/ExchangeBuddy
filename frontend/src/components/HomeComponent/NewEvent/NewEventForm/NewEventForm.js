@@ -12,7 +12,7 @@ import ImageUpload from '../../../ImageUpload/index.js'
 import validUrl from 'valid-url'
 import GoogleMap from 'google-map-react';
 
-const newEventForm = (callback, userId, location, id, postEvents) => (values) => {
+const newEventForm = (callback, userId, location, id, postEvents, showSnackbar) => (values) => {
 
   //console.log(values);
   //values.startTime=Date();
@@ -40,12 +40,15 @@ const newEventForm = (callback, userId, location, id, postEvents) => (values) =>
     }
   }
 
-  console.log(errors);
-
+  //if there are some errors, show them!
   if(errors.length===0){
     callback();
-    console.log('all ok');
-  
+    showSnackbar('Event created!');
+    //browserHistory.push(`home/${id}/events`);
+    browserHistory.push('login');
+  }else{
+    showSnackbar(errors[0]);
+    console.log(errors);
   }
 
   
@@ -183,18 +186,24 @@ class NewEventForm extends Component {
   }*/
 
   render() {
-    const { handleSubmit, pristine, reset, submitting, location, user, postEvents } = this.props;
+    const { handleSubmit, pristine, reset, submitting, location, user, postEvents, showSnackbar } = this.props;
     const {userId} = user.userObject; 
     const {id} = this.props.homeGroupDetails.homeGroupDetails;
 
-    const submitHandler = handleSubmit(newEventForm(reset, userId, location, id, postEvents));
+    const submitHandler = handleSubmit(newEventForm(reset, userId, location, id, postEvents, showSnackbar));
 
     return (
       <form onSubmit={ submitHandler }>
       <h1>{id ? 'Edit event' : 'New event'}</h1>
 
       <div className="row center-xs">
-        <div className="col-xs-8">
+        <div className="col-xs-11 col-md-8">
+          <Field name="imageUpload" component={ImageUpload}/>
+        </div>
+      </div>
+
+      <div className="row center-xs">
+        <div className="col-xs-11 col-md-8">
           <Field name="title" component={TextField} fullWidth={true}
           floatingLabelText="Event Title" floatingLabelStyle={{left: 0}}
           errorStyle={{textAlign: "left"}}
@@ -202,7 +211,7 @@ class NewEventForm extends Component {
         </div>
       </div>
       <div className="row center-xs">
-        <div className="col-xs-8">
+        <div className="col-xs-11 col-md-8">
           <Field name="details" component={TextField} fullWidth={true}
           floatingLabelText="Event Details" floatingLabelStyle={{left: 0}}
           errorStyle={{textAlign: "left"}}
@@ -210,14 +219,8 @@ class NewEventForm extends Component {
         </div>
       </div>
 
-      <div className="row center-xs">
-        <div className="col-xs-8">
-          <Field name="imageUpload" component={ImageUpload}/>
-        </div>
-      </div>
-
       <div className='row center-xs'>
-      <div className='col-xs-12 col-md-6'>
+      <div className='col-xs-11 col-md-6'>
       <div className="row center-xs">
         <div className="col-xs-4">
         <h5>Start Date/Time</h5>
@@ -233,8 +236,7 @@ class NewEventForm extends Component {
         </div>
       </div>
       </div>
-
-      <div className='col-xs-12 col-md-6'>
+      <div className='col-xs-11 col-md-6'>
       <div className="row center-xs">
         <div className="col-xs-4">
         <h5>End Date/Time</h5>
@@ -343,7 +345,8 @@ class EndTimePick extends React.Component{
 
 NewEventForm.propTypes = {
   homeGroupDetails: PropTypes.object.isRequired,
-  postEvents: PropTypes.func.isRequired
+  postEvents: PropTypes.func.isRequired,
+  showSnackbar: PropTypes.func.isRequired
 };
 
 

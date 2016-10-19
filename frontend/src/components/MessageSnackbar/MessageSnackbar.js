@@ -6,6 +6,8 @@ const MessageSnackbar = ({ actions, open, message }) =>
     open={ open }
     message={ message }
     autoHideDuration={2000}
-    onRequestClose={ actions.hideSnackbar } />;
+    onRequestClose={ actions.hideSnackbar } 
+    />;
+    /*style="z-index: 100" */
 
 export default MessageSnackbar;
