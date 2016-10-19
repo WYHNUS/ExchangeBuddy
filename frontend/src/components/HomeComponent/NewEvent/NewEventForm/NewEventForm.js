@@ -88,12 +88,23 @@ const validate = values => {
 class NewEventForm extends Component {
     static defaultProps = {
     	center: {lat: 59.938043, lng: 30.337157},
-    	zoom: 9,
+    	zoom: 9
     };
 
   constructor(props){
     super(props);
+    const minDate = new Date();
+    this.state={
+      minDate:minDate
+    }
+    this.updateMinDate=this.updateMinDate.bind(this);
   }
+
+  updateMinDate(date){
+    this.setState({...this.state, minDate:date});
+    console.log(this.state.minDate);
+  }
+
 
   componentDidMount() {
     
@@ -162,7 +173,7 @@ class NewEventForm extends Component {
         <h5>Start Date/Time</h5>
         </div>
         <div className="col-xs-4">
-          <Field name="startDate" component={StartDatePick}/>
+          <Field name="startDate" component={StartDatePick} updateMinDate={this.updateMinDate}/>
         </div>
         <div className="col-xs-4">
           <Field name="startTime" component={StartTimePick}/>
@@ -176,7 +187,7 @@ class NewEventForm extends Component {
         <h5>End Date/Time</h5>
         </div>
         <div className="col-xs-4">
-          <Field name="endDate" component={EndDatePick}/>
+          <Field name="endDate" component={EndDatePick} minDate={this.state.minDate}/>
         </div>
         <div className="col-xs-4">
           <Field name="endTime" component={EndTimePick}/>
@@ -202,15 +213,25 @@ class NewEventForm extends Component {
 }
 
 class StartDatePick extends React.Component{
+  constructor(props){
+    super(props);
+    const minDate = new Date();
+    this.state={
+      minDate:minDate
+    }
+  }
   render(){
-    const {value,onChange} = this.props.input
+    const {value,onChange} = this.props.input;
+    const{updateMinDate}=this.props;
     return(
       <DatePicker 
       className='new-event-date-chooser' 
       hintText="Start Date"
       onChange={(x,newdate)=>{
         onChange(newdate);
+        updateMinDate(newdate);
       }}
+      minDate={this.state.minDate}
       />
       );
   }
@@ -235,14 +256,17 @@ class StartTimePick extends React.Component{
 
 class EndDatePick extends React.Component{
   render(){
-    const {value,onChange} = this.props.input
+    const {value,onChange} = this.props.input;
+    const{minDate} = this.props;
     return(
       <DatePicker 
       className='new-event-date-chooser' 
       hintText="End Date" 
       onChange={(x,newdate)=>{
         onChange(newdate);
-      }}/>
+      }}
+      minDate={minDate}
+      />
       );
   }
 }
