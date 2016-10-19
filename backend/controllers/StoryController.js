@@ -1,7 +1,7 @@
 var models = require('../models');
 
-// user create journal
-exports.createJournal = function(req, res) {
+// user create story
+exports.createStory = function(req, res) {
     if (!req.body.userId) {
         res.status(400)
             .json({
@@ -9,47 +9,47 @@ exports.createJournal = function(req, res) {
                 message: 'Invalid authenticate data.'
             });
     }
-    var isJournalPublic = true;
+    var isStoryPublic = true;
     if (!!req.body.isPublic) {
-        isJournalPublic = req.body.isPublic;
+        isStoryPublic = req.body.isPublic;
     }
-    models.Journal.create({
-        content: req.body.journalContent,
-        isPublic: req.body.isJournalPublic,
+    models.Story.create({
+        content: req.body.storyContent,
+        isPublic: isStoryPublic,
         UserId: req.body.userId
-    }).then(function(journal) {
-        res.json(journal);
+    }).then(function(story) {
+        res.json(story);
     }).catch(function(err) {
         resError(res, err);
     });
 }
 
-// get journal with specified journal id
-exports.getJournal = function(req, res) {
-    models.Journal.findOne({
+// get story with specified story id
+exports.getStory = function(req, res) {
+    models.Story.findOne({
         where: {
-            id: req.body.journalId
+            id: req.body.storyId
         },
         include: [{
             model: models.User,
             attributes: ['id']
         }]
-    }).then(function(journal){
-        if (!!journal) {
-            if (!journal.isPublic && journal.UserId === req.body.userId) {
-                res.json(journals);
+    }).then(function(story){
+        if (!!story) {
+            if (!story.isPublic && story.UserId === req.body.userId) {
+                res.json(story);
             } else {
                 res.status(401)
                     .json({
                         status: 'fail',
-                        message: 'Sorry, you are not allowed to view this journal. :o'
+                        message: 'Sorry, you are not allowed to view this story. :o'
                     });
             }
         } else {
             res.status(404)
                 .json({
                     status: 'fail',
-                    message: 'Journal not found.'
+                    message: 'Story not found.'
                 });
         }
     }).catch(function(err) {
@@ -57,14 +57,14 @@ exports.getJournal = function(req, res) {
     });
 }
 
-// get all journals id belongs to all people
-exports.getAllJournals = function(req, res){
-    models.Journal.findAll({
+// get all public stories id belongs to all people
+exports.getAllStories = function(req, res){
+    models.Story.findAll({
         where: {
             isPublic: true
         }
-    }).then(function(journals){
-        res.json(journals);
+    }).then(function(stories){
+        res.json(stories);
     }).catch(function(err) {
         resError(res, err);
     });

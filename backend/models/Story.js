@@ -2,7 +2,7 @@
 var config = require('../config/config');
 
 module.exports = function(sequelize, DataType) {
-  var Journal = sequelize.define('Journal', {
+  var Story = sequelize.define('Story', {
     content: {
       type: DataType.TEXT(),
     },
@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataType) {
   }, {
     classMethods: {
       associate: function(models) {
-        Journal.belongsTo(models.User, {
+        Story.belongsTo(models.User, {
           onDelete: 'CASCADE',
           foreignKey: {
             allowNull: false
@@ -24,5 +24,5 @@ module.exports = function(sequelize, DataType) {
     }
   });
 
-  return Journal;
+  return Story;
 };

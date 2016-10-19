@@ -28,7 +28,7 @@ export function uploadContentToServer(content, id) {
 	return (dispatch) => {
 	    dispatch(clickedUpload());
 
-	    request.post(ROOT_URL + '/uploadStory')
+	    request.put(ROOT_URL + '/story')
 			.send({
 				userId: id,
 				storyContent: content
