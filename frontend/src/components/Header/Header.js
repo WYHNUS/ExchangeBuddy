@@ -9,6 +9,7 @@ import Helmet from "react-helmet";
 
 //import HeaderProfile from './HeaderProfile';
 import * as IconsHelper from '../../util/icons';
+import defaultUni from '../../res/default_uni.jpg';
 
 
 /*import * as Colors from 'material-ui/styles/colors';
@@ -147,36 +148,38 @@ export default class Header extends React.Component {
           backgroundPosition: 'center center',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',*/
+          backgroundImage: `linear-gradient(to bottom, rgba(25,25,25,0.5) 0%,rgba(0,0,0,0.9) 100%),
+            url('${defaultUni}')`,
+          backgroundColor: "#000000",
+          backgroundPosition: 'center center',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat'
         }}>
 
-        <Grid>
-          <Row id="header-row">
+          <div className="row center-xs">
 
-            <Col xs={6} md={2} id="logo-image">
-              { /*ImagesHelper.makeScale(Meteor.settings.public.logoImageId, 180, "exchangebuddy-logo")*/ }
-            </Col>
+            {/*<div className="col-xs-6 col-md-2" id="logo-image">
+              { ImagesHelper.makeScale(Meteor.settings.public.logoImageId, 180, "exchangebuddy-logo") }
+            </div>*/}
 
-            <Col xs={12} md={8} id="header-title">
+            <div className='col-xs-12 col-md-8 col-lg-8' id="header-title">
               <h2 id="uni-name">{ homeGroupDetails.name}</h2>
               <p id="uni-description">{ /*`${ group.term } ${ group.year } - ${ group.users.length } ${ pluralizer(group.users.length, 'Member', 'Members') }`*/ }</p>
-            </Col>
+            </div>
 
-            <Col xs={6} md={2}>
-              {/*<HeaderProfile user={ user } uni={ uni } group={ group } actions={ actions } />*/}
-            </Col>
-          </Row>
-        </Grid>
-        <Grid>
-          <div className="row center-xs center-md" >{/*id="header-tab-row"*/}
-            <Col xs={12} md={8} id="header-tab-col">
-            <Tabs inkBarStyle={{ backgroundColor: "#fff" }} value={homeTabValue} onChange={this.handleChange} >
+            {/*<div className="col-xs-6 col-md-2">
+              {<HeaderProfile user={ user } uni={ uni } group={ group } actions={ actions } />}
+            </div>*/}
+          </div>
+          <div className="row bottom-xs bottom-md center-xs" >{/*id="header-tab-row"*/}
+            <div className='col-xs-12 col-md-8' id="header-tab-col">
+            <Tabs inkBarStyle={{ backgroundColor: "#fff" }} className="header-tab-parent" value={homeTabValue} onChange={this.handleChange} >
               <Tab value='events' icon={IconsHelper.materialIcon("library_books")} label="EVENTS" className="header-tab" onActive={ gotourl(params.id, "events") } />
               <Tab value='chat' icon={IconsHelper.materialIcon("chat")} label="CHAT" className="header-tab" onActive={ gotourl(params.id, "chat") } />
               <Tab value='friends' icon={IconsHelper.materialIcon("people")} label="FRIENDS" className="header-tab" onActive={ gotourl(params.id, "friends") } />
             </Tabs>
-            </Col>
+            </div>
           </div>
-        </Grid>
       </div>
     );
   }

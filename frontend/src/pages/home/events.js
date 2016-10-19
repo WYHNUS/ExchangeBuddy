@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Grid, Row, Col } from 'react-flexbox-grid';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { showSnackbar } from '../../actions/messageSnackbar';
@@ -128,14 +126,12 @@ class Events extends React.Component{
         return(
            <div>
            <div className='row center-xs middle-xs'>
-           <div className="col-xs-6">
-           <SelectField
+           {/*<SelectField
            value={this.state.value}
            onChange={this.handleChange}>
            {items}
-           </SelectField>
-           </div>
-           <div className="col-xs-6">
+           </SelectField>*/}
+           <div className="col-xs-12 col-md-6">
            <RaisedButton
            label='New Event'
            onTouchTap={ () => browserHistory.push(`/home/${id}/events/new`)}
