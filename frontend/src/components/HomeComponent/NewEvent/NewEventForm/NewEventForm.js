@@ -44,8 +44,7 @@ const newEventForm = (callback, userId, location, id, postEvents, showSnackbar) 
   if(errors.length===0){
     callback();
     showSnackbar('Event created!');
-    //browserHistory.push(`home/${id}/events`);
-    browserHistory.push('login');
+    browserHistory.push(`/home/${id}/events`);
   }else{
     showSnackbar(errors[0]);
     console.log(errors);
