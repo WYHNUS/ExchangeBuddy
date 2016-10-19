@@ -1,5 +1,5 @@
 import {
-	SAVE_JOURNAL_CONTENT, 
+	SAVE_STORY_CONTENT, 
 	CLICKED_UPLOAD, UPLOAD_CONTENT_SUCCESS, UPLOAD_CONTENT_FAIL
 } from '../actions/stories';
 
@@ -138,7 +138,7 @@ const initialState=
 {
 	storyDetails:{storyDetails:story1,error:null,loading:false},
 	storyList:{storyList:storyList,error:null,loading:false},
-	editingJournal: {
+	editingStory: {
 		content: "<p>Share your life events here! :D </p>",
 		error: null, 
 		uploading: false,
@@ -153,10 +153,10 @@ export function stories(state=initialState, action)
 
 	switch (action.type) 
 	{
-		case SAVE_JOURNAL_CONTENT:
+		case SAVE_STORY_CONTENT:
 			console.log(action.content);
 			return Object.assign({}, state, {
-		        editingJournal: {
+		        editingStory: {
 					content: action.content,
 					error: null, 
 					uploading: false,
@@ -166,8 +166,8 @@ export function stories(state=initialState, action)
 
 		case CLICKED_UPLOAD:
 			return Object.assign({}, state, {
-		        editingJournal: {
-					content: state.editingJournal.content,
+		        editingStory: {
+					content: state.editingStory.content,
 					error: null, 
 					uploading: true,
 					published: false
@@ -176,8 +176,8 @@ export function stories(state=initialState, action)
 
 		case UPLOAD_CONTENT_SUCCESS:
 			return Object.assign({}, state, {
-				editingJournal: {
-					content: state.editingJournal.content,
+				editingStory: {
+					content: state.editingStory.content,
 					error: null, 
 					uploading: false,
 					published: true
@@ -186,8 +186,8 @@ export function stories(state=initialState, action)
 
 		case UPLOAD_CONTENT_FAIL:
 			return Object.assign({}, state, {
-				editingJournal: {
-					content: state.editingJournal.content,
+				editingStory: {
+					content: state.editingStory.content,
 					error: action.error, 
 					uploading: false,
 					published: false

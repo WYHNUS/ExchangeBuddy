@@ -1,6 +1,6 @@
 import request from 'superagent';
 
-export const SAVE_JOURNAL_CONTENT = 'SAVE_JOURNAL_CONTENT';
+export const SAVE_STORY_CONTENT = 'SAVE_STORY_CONTENT';
 
 export const CLICKED_UPLOAD = 'CLICKED_UPLOAD';
 export const UPLOAD_CONTENT_SUCCESS = 'UPLOAD_CONTENT_SUCCESS';
@@ -8,8 +8,8 @@ export const UPLOAD_CONTENT_FAIL = 'UPLOAD_CONTENT_FAIL';
 
 import {ROOT_URL} from '../util/backend';
 
-export function saveJournalContent(content) {
-	return { type: SAVE_JOURNAL_CONTENT, content }
+export function saveStoryContent(content) {
+	return { type: SAVE_STORY_CONTENT, content }
 }
 
 export function clickedUpload() {
@@ -28,10 +28,10 @@ export function uploadContentToServer(content, id) {
 	return (dispatch) => {
 	    dispatch(clickedUpload());
 
-	    request.post(ROOT_URL + '/uploadJournal')
+	    request.post(ROOT_URL + '/uploadStory')
 			.send({
 				userId: id,
-				journalContent: content
+				storyContent: content
 			})
 			.end(function(err, res){
 				console.log(err);

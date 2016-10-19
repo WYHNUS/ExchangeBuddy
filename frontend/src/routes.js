@@ -21,7 +21,7 @@ import Profile from './pages/profile';
 import Wiki from './pages/wiki';
 import Stories from './pages/stories/stories';
 import Story from './pages/stories/story';
-import Journal from './pages/journal';
+import EditStory from './pages/editStory';
 import NotLoggedIn from './pages/notloggedin';
 import Signup from './pages/signup';
 import Settings from './pages/settings';
@@ -71,7 +71,7 @@ export const getRoutes = (store) =>{
         <Route path="friends" component={Friends}/>
       </Route>
     </Route>
-    <Route path="journal" component={Journal} onEnter={authRequired}/>
+    <Route path="editStory" component={EditStory} onEnter={authRequired}/>
     <Route path="stories">
       <IndexRoute component={Stories}/>
       <Route path=":id" component={Story}/>

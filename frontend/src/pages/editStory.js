@@ -1,14 +1,14 @@
 // load theme styles with webpack 
-require('medium-editor/dist/css/medium-editor.min.css');
-require('medium-editor/dist/css/themes/default.min.css');
-require('medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.min.css');
+// require('medium-editor/dist/css/medium-editor.min.css');
+// require('medium-editor/dist/css/themes/default.min.css');
+// require('medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.min.css');
 
 import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { toggleBottomBarVisibility } from '../actions/pageVisibility';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 
-import JournalForm from '../components/JournalForm';
+import StoryForm from '../components/StoryForm';
 
 // require('jquery/dist/jquery.min.js');
 // require('medium-editor/dist/js/medium-editor.js');
@@ -20,7 +20,7 @@ import JournalForm from '../components/JournalForm';
 // require('medium-editor-insert-plugin/dist/js/medium-editor-insert-plugin.min.js');
 
 
-class Journal extends React.Component{
+class Story extends React.Component{
 	constructor(props) {
 		super(props);
 	}
@@ -49,7 +49,7 @@ class Journal extends React.Component{
 	render() {
 		return (
 			<div>
-				<JournalForm />
+				<StoryForm />
 			</div>
 		);
 	}
@@ -61,4 +61,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(null, mapDispatchToProps)(Journal);
+export default connect(null, mapDispatchToProps)(Story);

@@ -5,14 +5,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Action creators
-import { saveJournalContent, uploadContentToServer, uploadContentSuccess, uploadContentFail } from '../../actions/stories'
+import { saveStoryContent, uploadContentToServer, uploadContentSuccess, uploadContentFail } from '../../actions/stories'
 // Component
-import ChildComponent from './JournalForm';
+import ChildComponent from './StoryForm';
 
 // redux
 const mapStateToProps = (state) => {
   return{
-    journalDetails: state.stories.editingJournal,
+    storyDetails: state.stories.editingStory,
     user: state.user.userObject
   };
 };
@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
-    saveContent: (val) => dispatch(saveJournalContent(val)),
+    saveContent: (val) => dispatch(saveStoryContent(val)),
     uploadContent: (content) => {
       dispatch(uploadContentToServer(content)).then((response) => {
         console.log(response);
@@ -34,6 +34,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const JournalForm = connect(mapStateToProps, mapDispatchToProps)(ChildComponent);
+const StoryForm = connect(mapStateToProps, mapDispatchToProps)(ChildComponent);
 
-export default JournalForm;
+export default StoryForm;
