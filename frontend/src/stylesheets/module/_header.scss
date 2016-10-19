@@ -85,11 +85,12 @@ $headerStickyHeight: 95px;
 
 #header-profile-logo { margin-top: 12px; }
 
-#header-tab-row {
-  position: absolute;
+.header-tab-row {
+/*  position: absolute;
   left: 0;
   bottom: 0;
-  width: 100%;
+  width: 100%;*/
+  /*height: 100%;*/
 }
 
 #header-tab-col {
@@ -97,11 +98,14 @@ $headerStickyHeight: 95px;
   > div > div { background-color: rgba(255,255,255,0) !important; }
 }
 
+.header-tab-parent{
+}
+
 .header-tab > div > div {
   flex-direction: row !important; font-size: 18px !important;
   span { margin-bottom: 0 !important; margin-right: 5px; }
 
-  @include media-xs-only {
+  @include media-xxs-only {
     span { margin-right: 0; }
     &:not(span) { font-size: 0 !important; }
   }

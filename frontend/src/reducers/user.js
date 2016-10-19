@@ -19,8 +19,8 @@ const initialState = {
   token: null,
   error: null,
   userObject: {
-    userId:5,
-    email:'Lee Kai Yi',
+    userId:1,
+    email:'kaiyisg@yahoo.com.sg',
     name:'',
     profilePictureUrl:'',
     gender:'',

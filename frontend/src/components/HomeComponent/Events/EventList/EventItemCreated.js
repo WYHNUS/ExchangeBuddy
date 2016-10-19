@@ -46,7 +46,13 @@ class EventItemCreated extends React.Component{
 			</CardMedia>
 			<CardText>
 			<div className="col-xs-12">
-	        {Icons.FAFixedWidth('clock-o')}<strong>&nbsp; {`${ moment(groupEvent.startTime).format("D MMM, ddd, hA") }`}</strong>
+	        {Icons.icon('watch_later')}<strong>&nbsp; {`${ moment(groupEvent.startTime).format("D MMM, ddd, hA") }`}</strong>
+	        </div>
+	        <div className="col-xs-12">
+	        {Icons.icon('place')}<strong>&nbsp; {}</strong>
+	        </div>
+	        <div className="col-xs-12">
+	        {Icons.icon('group')}<strong>&nbsp; {}</strong>
 	        </div>
 			</CardText>
 			<CardText className="event-item-card-text" expandable={true}>
