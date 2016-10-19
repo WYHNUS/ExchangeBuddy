@@ -176,7 +176,6 @@ export function stories(state=initialState, action)
 
 
 		case SAVE_STORY_CONTENT:
-			console.log(action.content);
 			return Object.assign({}, state, {
 		        editingStory: {
 					title: action.title,

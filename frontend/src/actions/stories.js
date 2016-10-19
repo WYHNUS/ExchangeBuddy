@@ -67,6 +67,9 @@ export function uploadContentFail(error) {
 }
 
 export function uploadContentToServer(title, content, id) {
+	console.log(title);
+	console.log(content);
+	console.log(id);
 	return (dispatch) => {
 	    dispatch(clickedUpload());
 

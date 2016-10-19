@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TinyMCE from 'react-tinymce';
 
-export const EditableField = ({ name, content, ...rest }) => {
+export const EditableField = ({ name, content, extraConfig, ...rest }) => {
   return <TinyMCE
     name={name}
     content= {content}
@@ -18,6 +18,7 @@ export const EditableField = ({ name, content, ...rest }) => {
 		plugins: 'link image media imagetools autoresize',
 		toolbar: 'fontselect fontsizeselect | undo redo | bold italic | alignleft aligncenter alignright | link image',
 		fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
+		setup: extraConfig,
     }}
     {...rest} />
 };
