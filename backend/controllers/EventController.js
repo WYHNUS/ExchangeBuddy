@@ -1,4 +1,5 @@
 var models = require('../models');
+var q = require('q');
 
 exports.createEvent = function(req, res){
     models.sequelize.Promise.all([
@@ -87,7 +88,18 @@ exports.getAllEvents = function(req, res){
             model: models.User
         }]
     }).then(function(events){
-        res.send(events);
+        var deferred = q.defer();
+        var promises = events.map(event => event.getUserEvent());
+        models.sequelize.Promise.all(promises).then(function(userEvents){
+            for(var i = 0; i < userEvents.length; i++){
+                events[i].setDataValue("going", userEvents[i]);
+            }
+            deferred.resolve(events)
+        })
+
+        deferred.promise.then(function(allEvents){
+            res.send(allEvents);
+        })
     }).catch(function(err) {
         resError(res, err);
     });
