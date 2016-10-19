@@ -28,6 +28,9 @@ const styles={
 	}
 }
 
+// dummy one image ...
+let storyImgUrl = "http://i.imgur.com/RRUe0Mo.png";
+
 class Story extends React.Component{
 	componentDidMount(){
 	}
@@ -64,21 +67,24 @@ export default class StoryList extends React.Component {
 
 	render() {
 		const { stories, user } = this.props;
-
+		console.log(stories.length);
 		return (
 			<div>
 				<div style={styles.stories_list_root}>
-				<GridList
-					className="stories-container"
-					cols={1}
-					cellHeight={400}
-					padding={1}
-					style={styles.stories_list_grid}
-				>
-					{ stories.length > 0 && stories.map((story, idx) =>
-						( <Story story={story} key={ idx }/> ) 
-					)}
-				</GridList>
+				{ stories.length > 0 ?
+					<GridList
+						className="stories-container"
+						cols={1}
+						cellHeight={400}
+						padding={1}
+						style={styles.stories_list_grid}
+					>
+						{ stories.length > 0 && stories.map((story, idx) =>
+							( <Story story={story} key={ idx }/> ) 
+						)}
+					</GridList>
+					: null
+				}
 				
 				</div>
 			</div>
