@@ -5,24 +5,12 @@ import RaisedButton from 'material-ui/RaisedButton';
 import ReactHtmlParser from 'react-html-parser';
 import truncate from 'truncate';
 import Linkify from 'react-linkify';
+import { browserHistory } from 'react-router';
 
 import { formatTime } from '../../../util/helper';
 import * as UserHelper from '../../../util/user';
 import $ from 'jquery';
 
-/*
-	id:1,
-	title: 'For NUS Students: Starting the Application Process',
-	tags: ['application','Chem Eng','NUS','SEP'],
-	favorites: 20,
-	status: 'published',
-	author:{
-		diplayName: "Lee Min Han",
-		userId:1
-	},
-	storyImgUrl: story1ImgUrl,
-	createdAt: 'Thu Oct 13 2016 14:45:36 GMT+0800 (SGT)'
-	*/
 
 export default class StoryDetails extends React.Component {
 	constructor(props) {
@@ -30,8 +18,10 @@ export default class StoryDetails extends React.Component {
 	}
 
 	componentDidMount() 
-	{//chatScrollToLatest();
-		$('#content').append(this.props.storyDetails.content);
+	{
+		console.log(this.props.routeParams);	// not working don't know why...
+		// this.props.fetchStory(this.props.routeParams.id, this.user.userObject.userId);
+		// $('#content').append(this.props.storyDetails.content);
 	}
 
 	componentDidUpdate() 
@@ -39,7 +29,7 @@ export default class StoryDetails extends React.Component {
 	}
 
 	render() {
-		const { user } = this.props;
+		const { user, location } = this.props;
 		const { id, title, tags, favorites, status, author, 
 			storyImgUrl, createdAt } = this.props.storyDetails;
 

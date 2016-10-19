@@ -3,14 +3,14 @@ var models = require('../models');
 // user create story
 exports.createStory = function(req, res) {
     if (!req.body.userId) {
-        res.status(400)
+        return res.status(401)
             .json({
                 status: 'fail',
                 message: 'Please login first.'
             });
     }
     if (!req.body.storyTitle | !req.body.storyContent) {
-        res.status(400)
+        return res.status(400)
             .json({
                 status: 'fail',
                 message: 'Invalid story data.'
@@ -26,7 +26,11 @@ exports.createStory = function(req, res) {
         isPublic: isStoryPublic,
         UserId: req.body.userId
     }).then(function(story) {
-        res.json(story);
+        return res.status(200)
+            .json({
+                status: 'success',
+                message: story
+            });
     }).catch(function(err) {
         resError(res, err);
     });
@@ -45,16 +49,20 @@ exports.getStory = function(req, res) {
     }).then(function(story){
         if (!!story) {
             if (!story.isPublic && story.UserId === req.body.userId) {
-                res.json(story);
+                return res.status(200)
+                    .json({
+                        status: 'success',
+                        message: story
+                    });
             } else {
-                res.status(401)
+                return res.status(401)
                     .json({
                         status: 'fail',
                         message: 'Sorry, you are not allowed to view this story. :o'
                     });
             }
         } else {
-            res.status(404)
+            return res.status(404)
                 .json({
                     status: 'fail',
                     message: 'Story not found.'
@@ -71,13 +79,17 @@ exports.getAllStories = function(req, res){
         where: {
             isPublic: true
         },
-        attributes: ['id', 'title'],
+        attributes: ['id', 'title', 'createdAt'],
         include: [{
             model: models.User,
             attributes: ['id', 'name', 'profilePictureUrl']
         }]
     }).then(function(stories){
-        res.json(stories);
+        return res.status(200)
+            .json({
+                status: 'success',
+                message: stories
+            });
     }).catch(function(err) {
         resError(res, err);
     });

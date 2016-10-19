@@ -1,7 +1,8 @@
 import {
 	SAVE_STORY_CONTENT, 
 	CLICKED_UPLOAD, UPLOAD_CONTENT_SUCCESS, UPLOAD_CONTENT_FAIL,
-	CLICKED_FETCH, FETCH_STORIES_SUCCESS, FETCH_STORIES_FAIL
+	CLICKED_FETCH, FETCH_STORIES_SUCCESS, FETCH_STORIES_FAIL,
+	FETCH_SINGLE_STORY_SUCCESS, FETCH_SINGLE_STORY_FAIL
 } from '../actions/stories';
 
 import story1ImgUrl from '../res/SEP-Application.png';
@@ -140,7 +141,7 @@ const initialState=
 	error: null,
 	fetching: false,
 	storyDetails: story1,
-	storyList: storyList,
+	storyList: [],//storyList,
 	editingStory: {
 		title: null,
 		content: "<p>Share your life events here! :D </p>",
@@ -154,6 +155,14 @@ export function stories(state=initialState, action)
 {
 	switch (action.type) 
 	{
+		case FETCH_SINGLE_STORY_SUCCESS:
+			return Object.assign({}, state, {
+				storyDetails: action.story,
+				error: null,
+				fetching: false
+		    });
+
+
 		case CLICKED_FETCH: 
 			return Object.assign({}, state, {
 				fetching: true
@@ -161,13 +170,12 @@ export function stories(state=initialState, action)
 
 		case FETCH_STORIES_SUCCESS:
 			return Object.assign({}, state, {
-		        storyList:{
-					storyList: action.stories
-				},
+		        storyList: action.stories,
 				error: null,
 				fetching: false
 		    });
 
+		case FETCH_SINGLE_STORY_FAIL:
 		case FETCH_STORIES_FAIL:
 			return Object.assign({}, state, {
 				error: action.error,
@@ -176,10 +184,9 @@ export function stories(state=initialState, action)
 
 
 		case SAVE_STORY_CONTENT:
-			console.log(action.content);
 			return Object.assign({}, state, {
 		        editingStory: {
-					title: action.title,
+					title: state.editingStory.title,
 					content: action.content,
 					error: null, 
 					uploading: false,

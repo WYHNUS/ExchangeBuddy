@@ -75,7 +75,7 @@ export const getRoutes = (store) =>{
     <Route path="editStory" component={EditStory} onEnter={authRequired}/>
     <Route path="stories">
       <IndexRoute component={Stories}/>
-      <Route path=":id" component={Story}/>
+      <Route path="/story/:id" component={Story}/>
     </Route>
     <Route path="wiki" component={Wiki}/>
     <Route path="profile(/:userId)" component={ Profile } />
