@@ -9,12 +9,13 @@ import {Link, browserHistory} from 'react-router';
 import { formatTime } from '../../../util/helper';
 import * as UserHelper from '../../../util/user';
 import * as IconsHelper from '../../../util/icons';
-import $ from 'jquery';
-var moment = require('moment');
 
 import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+
+import $ from 'jquery';
+var moment = require('moment');
 
 const styles={
 	stories_list_grid: {
@@ -35,13 +36,21 @@ class Story extends React.Component{
 	componentDidMount(){
 	}
 
+	clickHandler(e) {
+		console.log(this.props.story.id);
+		browserHistory.push('/stories/' + this.props.story.id);
+	}
+
 	render(){
 		const { id, title, /*tags, favorites, status, storyImgUrl,*/ User, createdAt } = this.props.story;
 		return (
 			<GridTile
 				key={id}
 				title={title}
-				actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+				actionIcon={ 
+					<IconButton><StarBorder color="white" /></IconButton> 
+				}
+				onClick={this.clickHandler.bind(this)}
 				subtitle={
 					<span>
 					<div><span>{IconsHelper.smallWhiteMaterialIcon("perm_identity")} by <b>{User.name}</b></span></div>
@@ -67,7 +76,7 @@ export default class StoryList extends React.Component {
 
 	render() {
 		const { stories, user } = this.props;
-		console.log(stories.length);
+		
 		return (
 			<div>
 				<div style={styles.stories_list_root}>
