@@ -56,7 +56,8 @@ class TopBar extends Component {
         iconElementRight={<IconButton
           className={this.setElementClass()}
           onClick={()=>this.props.toggleHomeSearchDrawerVisibility(true)}>
-          {IconsHelper.materialIcon("filter_list")}
+          {/*IconsHelper.materialIcon("filter_list")*/}
+          {IconsHelper.icon('menu')}
           </IconButton>}
   			showMenuIconButton={this.props.pageVisibility.topBarBackButtonVisibility}
 			/>

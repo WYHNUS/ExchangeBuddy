@@ -1,7 +1,7 @@
 import React from 'react';
 import FontIcon from 'material-ui/FontIcon';
 
-export const FAFixedWidth = iconName => <i className={`fa fa-${iconName} fa-fw`} aria-hidden="true"></i>
+/*export const FAFixedWidth = iconName => <i className={`fa fa-${iconName} fa-fw`} aria-hidden="true"></i>*/
 
 export const icon = (className, style={}) => {
   if (className && className.substr(0,3) == "fa ")
