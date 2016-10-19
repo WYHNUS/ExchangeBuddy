@@ -8,7 +8,7 @@ import { EditableField } from '../EditableField';
 
 class StoryForm extends React.Component {
   submitForm(val) {
-    this.props.uploadContent(val.storyTitle, this.props.storyDetails.content, this.props.user.userId);
+    this.props.uploadContent(val.storyTitle, this.props.storyDetails.content, this.props.user.id);
   }
 
   handleEditorChange(e) {

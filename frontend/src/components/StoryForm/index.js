@@ -21,15 +21,15 @@ const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
     saveContent: (val) => dispatch(saveStoryContent(val)),
-    uploadContent: (title, content) => {
-      dispatch(uploadContentToServer(title, content)).then((response) => {
-        console.log(response);
-        if (!response.error) {
-          dispatch(uploadContentSuccess(response.data));
-        } else {
-          dispatch(uploadContentFail(response.error));
-        }
-      })
+    uploadContent: (title, content, id) => {
+      dispatch(uploadContentToServer(title, content, id));//.then((response) => {
+      //   console.log(response);
+      //   if (!response.error) {
+      //     dispatch(uploadContentSuccess(response.data));
+      //   } else {
+      //     dispatch(uploadContentFail(response.error));
+      //   }
+      // })
     },
   };
 };

@@ -22,7 +22,7 @@ import $ from 'jquery';
 	},
 	storyImgUrl: story1ImgUrl,
 	createdAt: 'Thu Oct 13 2016 14:45:36 GMT+0800 (SGT)'
-	*/
+*/
 
 export default class StoryDetails extends React.Component {
 	constructor(props) {
