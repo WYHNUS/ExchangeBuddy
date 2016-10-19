@@ -1,16 +1,16 @@
 .event-title {
-  text-align: center;
+	text-align: center;
 }
 
 .event-item-card {
-  padding-bottom: 3% !important;
-  margin-bottom: 3% !important;
-  max-width: 600px!important;
-  z-index: 0!important;
+	padding-bottom: 3% !important;
+	margin-bottom: 3% !important;
+	max-width: 600px!important;
+	z-index: 0!important;
 }
 
 .event-item-text > p >img {
-  max-width: 100%;
+	max-width: 100%;
 }
 
 .event-item-button{
@@ -22,8 +22,17 @@
 		float: left;
 		text-align: left;	
 	}
+
+	.event-item-card-text{
+		text-align: left;
+	}
+
+	.event-item-card-map{
+		height: 100px;
+	}
 	
 }
+
 
 .new-event-container{
 	margin-bottom: 54px!important;

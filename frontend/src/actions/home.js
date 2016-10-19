@@ -189,7 +189,7 @@ export const POST_EVENTS = 'POST_EVENTS';
 
 export function postEvents(lat, lng, title, startTime, endTime, detail, imgSrc, GroupId, UserId){
 
-	const req = axios.put(`${ROOT_URL}/events`, 
+	var obj = 
 	{
 		lat: lat,
 		lng: lng,
@@ -200,7 +200,10 @@ export function postEvents(lat, lng, title, startTime, endTime, detail, imgSrc, 
 		imgSrc: imgSrc,
 		GroupId: GroupId,
 		UserId: UserId
-	})
+	}
+	console.log(obj);
+
+	const req = axios.put(`${ROOT_URL}/event`, obj);
 	return {
 		type: POST_EVENTS,
 		payload: req

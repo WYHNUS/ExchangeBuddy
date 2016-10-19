@@ -49,10 +49,10 @@ module.exports = function(io){
                         var plain_chat = chat.get({
                             plain: true
                         });
-                        var plain_user = user.get({
-                            plain: true
-                        })
-                        plain_chat.user = plain_user;
+                        plain_chat.User = {};
+                        plain_chat.User.name = user.name;
+                        plain_chat.User.profilePictureUrl = user.profilePictureUrl;
+                        plain_chat.User.id = user.id;
 
                         io.sockets.in(socket.room.name).emit('updatechat', plain_chat);
                     })
