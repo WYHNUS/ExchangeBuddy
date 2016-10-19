@@ -8,4 +8,6 @@ export default getMuiTheme({
     accent1Color: "#1C96B9",
     pickerHeaderColor: "#3A4B6E",
   },
+  datePicker: {
+  }
 });
