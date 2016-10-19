@@ -1,5 +1,3 @@
-var moment=require('moment');
-
 import React, {PropTypes} from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactHtmlParser from 'react-html-parser';
@@ -37,8 +35,7 @@ class Story extends React.Component{
 	}
 
 	clickHandler(e) {
-		console.log(this.props.story.id);
-		browserHistory.push('/stories/' + this.props.story.id);
+		browserHistory.push('/story/' + this.props.story.id);
 	}
 
 	render(){

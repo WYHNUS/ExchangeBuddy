@@ -1,7 +1,8 @@
 import {
 	SAVE_STORY_CONTENT, 
 	CLICKED_UPLOAD, UPLOAD_CONTENT_SUCCESS, UPLOAD_CONTENT_FAIL,
-	CLICKED_FETCH, FETCH_STORIES_SUCCESS, FETCH_STORIES_FAIL
+	CLICKED_FETCH, FETCH_STORIES_SUCCESS, FETCH_STORIES_FAIL,
+	FETCH_SINGLE_STORY_SUCCESS, FETCH_SINGLE_STORY_FAIL
 } from '../actions/stories';
 
 import story1ImgUrl from '../res/SEP-Application.png';
@@ -154,6 +155,14 @@ export function stories(state=initialState, action)
 {
 	switch (action.type) 
 	{
+		case FETCH_SINGLE_STORY_SUCCESS:
+			return Object.assign({}, state, {
+				storyDetails: action.story,
+				error: null,
+				fetching: false
+		    });
+
+
 		case CLICKED_FETCH: 
 			return Object.assign({}, state, {
 				fetching: true
@@ -166,6 +175,7 @@ export function stories(state=initialState, action)
 				fetching: false
 		    });
 
+		case FETCH_SINGLE_STORY_FAIL:
 		case FETCH_STORIES_FAIL:
 			return Object.assign({}, state, {
 				error: action.error,
