@@ -21,8 +21,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
     saveContent: (val) => dispatch(saveStoryContent(val)),
-    uploadContent: (content) => {
-      dispatch(uploadContentToServer(content)).then((response) => {
+    uploadContent: (title, content) => {
+      dispatch(uploadContentToServer(title, content)).then((response) => {
         console.log(response);
         if (!response.error) {
           dispatch(uploadContentSuccess(response.data));

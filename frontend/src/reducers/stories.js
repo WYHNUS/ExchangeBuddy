@@ -139,6 +139,7 @@ const initialState=
 	storyDetails:{storyDetails:story1,error:null,loading:false},
 	storyList:{storyList:storyList,error:null,loading:false},
 	editingStory: {
+		title: null,
 		content: "<p>Share your life events here! :D </p>",
 		error: null, 
 		uploading: false,
@@ -148,15 +149,13 @@ const initialState=
 
 export function stories(state=initialState, action) 
 {
-
-	let error;
-
 	switch (action.type) 
 	{
 		case SAVE_STORY_CONTENT:
 			console.log(action.content);
 			return Object.assign({}, state, {
 		        editingStory: {
+					title: action.title,
 					content: action.content,
 					error: null, 
 					uploading: false,
@@ -167,6 +166,7 @@ export function stories(state=initialState, action)
 		case CLICKED_UPLOAD:
 			return Object.assign({}, state, {
 		        editingStory: {
+					title: state.editingStory.title,
 					content: state.editingStory.content,
 					error: null, 
 					uploading: true,
@@ -177,6 +177,7 @@ export function stories(state=initialState, action)
 		case UPLOAD_CONTENT_SUCCESS:
 			return Object.assign({}, state, {
 				editingStory: {
+					title: state.editingStory.title,
 					content: state.editingStory.content,
 					error: null, 
 					uploading: false,
@@ -187,6 +188,7 @@ export function stories(state=initialState, action)
 		case UPLOAD_CONTENT_FAIL:
 			return Object.assign({}, state, {
 				editingStory: {
+					title: state.editingStory.title,
 					content: state.editingStory.content,
 					error: action.error, 
 					uploading: false,

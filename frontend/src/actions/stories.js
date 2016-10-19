@@ -8,8 +8,8 @@ export const UPLOAD_CONTENT_FAIL = 'UPLOAD_CONTENT_FAIL';
 
 import {ROOT_URL} from '../util/backend';
 
-export function saveStoryContent(content) {
-	return { type: SAVE_STORY_CONTENT, content }
+export function saveStoryContent(title, content) {
+	return { type: SAVE_STORY_CONTENT, title, content }
 }
 
 export function clickedUpload() {
@@ -24,13 +24,14 @@ export function uploadContentFail(error) {
     return { type: UPLOAD_CONTENT_FAIL, error };
 }
 
-export function uploadContentToServer(content, id) {
+export function uploadContentToServer(title, content, id) {
 	return (dispatch) => {
 	    dispatch(clickedUpload());
 
 	    request.put(ROOT_URL + '/story')
 			.send({
 				userId: id,
+				storyTitle: title,
 				storyContent: content
 			})
 			.end(function(err, res){

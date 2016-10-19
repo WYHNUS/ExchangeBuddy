@@ -6,7 +6,14 @@ exports.createStory = function(req, res) {
         res.status(400)
             .json({
                 status: 'fail',
-                message: 'Invalid authenticate data.'
+                message: 'Please login first.'
+            });
+    }
+    if (!req.body.storyTitle | !req.body.storyContent) {
+        res.status(400)
+            .json({
+                status: 'fail',
+                message: 'Invalid story data.'
             });
     }
     var isStoryPublic = true;
@@ -14,6 +21,7 @@ exports.createStory = function(req, res) {
         isStoryPublic = req.body.isPublic;
     }
     models.Story.create({
+        title: req.body.storyTitle,
         content: req.body.storyContent,
         isPublic: isStoryPublic,
         UserId: req.body.userId

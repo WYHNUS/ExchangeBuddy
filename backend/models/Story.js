@@ -3,6 +3,10 @@ var config = require('../config/config');
 
 module.exports = function(sequelize, DataType) {
   var Story = sequelize.define('Story', {
+    title: {
+      type: DataType.STRING(255),
+    },
+
     content: {
       type: DataType.TEXT(),
     },
