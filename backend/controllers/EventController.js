@@ -145,6 +145,33 @@ exports.goToEvent = function(req, res){
     });
 }
 
+exports.unGoToEvent = function(req, res){
+    models.sequelize.Promise.all([
+        models.Event.findOne({
+            where: {
+                id: req.body.EventId
+            }
+        }),
+        models.User.findOne({
+            where: {
+                id: req.body.UserId
+            }
+        })
+    ]).spread(function(event, user){
+        if(!!event && !!user){
+            event.removeUserEvent(user);
+            res.send({
+                success: true
+            });
+        }else{
+            res.send({
+                success: false,
+                error: "user or event doesn't exist"
+            })
+        }
+    })
+}
+
 exports.comment = function(req, res){
     models.Comment.create({
         content: req.body.content,

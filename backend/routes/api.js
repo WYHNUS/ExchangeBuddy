@@ -149,6 +149,7 @@ request:
     UserId: 1
 }
 */
+router.post('/unattend', EventCtrl.unGoToEvent);
 router.post('/goToEvent', EventCtrl.goToEvent);
 
 /*
