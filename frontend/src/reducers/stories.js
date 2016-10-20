@@ -51,9 +51,9 @@ var story1 =
 	tags: ['application','Chem Eng','NUS','SEP'],
 	favorites: 20,
 	status: 'published',
-	author:{
-		displayName: "Lee Min Han",
-		userId:1
+	User:{
+		name: "ExchangeBuddy",
+		id:2
 	},
 	title: 'For NUS Students: Starting the Application Process',
 	storyImgUrl: story1ImgUrl,
@@ -93,9 +93,9 @@ var story2=
 	tags: ['exchange','guide','Singapore','SEP'],
 	favorites: 40,
 	status: 'published',
-	author:{
-		displayName: "ExchangeBuddy",
-		userId:2
+	User:{
+		name: "ExchangeBuddy",
+		id:2
 	},
 	title: 'Exchange in Singapore - All you need to know',
 	storyImgUrl: story2ImgUrl,

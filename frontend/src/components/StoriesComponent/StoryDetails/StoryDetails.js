@@ -1,4 +1,4 @@
-// var moment=require('moment');
+var moment=require('moment');
 
 import React, {PropTypes} from 'react';
 // import RaisedButton from 'material-ui/RaisedButton';
@@ -7,7 +7,7 @@ import React, {PropTypes} from 'react';
 // import Linkify from 'react-linkify';
 import { browserHistory } from 'react-router';
 
-// import { formatTime } from '../../../util/helper';
+import { formatTime } from '../../../util/helper';
 import * as UserHelper from '../../../util/user';
 // import $ from 'jquery';
 
@@ -30,11 +30,17 @@ export default class StoryDetails extends React.Component {
 		}
 
 		return (
-			<div>
-				<div className="stories-container">
+			<div className="text-content-wrapper">
+				<div className="user-profile-container">
+					<div xs={8} className="story-avatar">{ UserHelper.getAvatar(User, 40) }</div>
+					<div className="author-details">
+						<div>{ User.name }</div>
+						<div><span>{moment(createdAt).fromNow()}</span></div>
+					</div>
+				</div>
+				<div className="story-container">
 					<div className="story-row">
-						<div className="story-avatar">{ UserHelper.getAvatar(User, 40) }</div>
-						<div>{ title }</div>
+						<h1 className="title">{ title }</h1>
 						<div id="content">{}</div>
 					</div>
 				</div>

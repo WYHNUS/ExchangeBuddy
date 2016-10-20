@@ -86,7 +86,7 @@ export default class StoryList extends React.Component {
 						style={styles.stories_list_grid}
 					>
 						{ stories.length > 0 && stories.map((story, idx) =>
-							( <Story story={story} key={ idx }/> ) 
+							( <Story story={story} key={ idx } /> ) 
 						)}
 					</GridList>
 					: null
