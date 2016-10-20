@@ -21,7 +21,7 @@ export default class StoryDetails extends React.Component {
 		const { user, fetching_result } = this.props;
 		const { 
 			id, title, content, User, 
-			tags, favorites, status, storyImgUrl, 
+			/*tags, favorites, status, storyImgUrl,*/ 
 			createdAt, updatedAt 
 		} = this.props.storyDetails;
 
@@ -35,7 +35,6 @@ export default class StoryDetails extends React.Component {
 					<div className="story-row">
 						<div className="story-avatar">{ UserHelper.getAvatar(User, 40) }</div>
 						<div>{ title }</div>
-						<div>{ favorites }</div>
 						<div id="content">{}</div>
 					</div>
 				</div>

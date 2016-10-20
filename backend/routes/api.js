@@ -55,7 +55,7 @@ router.get('/university', /*verifyToken,*/ UniCtrl.getAllUniversities);
 router.get('/university/:id', /*verifyToken,*/ UniCtrl.getUniversity);
 
 router.get('/allStories', /*verifyToken,*/ StoryCtrl.getAllStories);
-router.post('/viewStory', /*verifyToken,*/ StoryCtrl.getStory);
+router.post('/story/:id', /*verifyToken,*/ StoryCtrl.getStory);
 router.put('/story', /*verifyToken,*/ StoryCtrl.createStory);
 
 /*

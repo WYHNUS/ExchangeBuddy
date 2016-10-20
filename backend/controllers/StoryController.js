@@ -40,7 +40,7 @@ exports.createStory = function(req, res) {
 exports.getStory = function(req, res) {
     models.Story.findOne({
         where: {
-            id: req.body.storyId
+            id: req.params.id
         },
         include: [{
             model: models.User,
