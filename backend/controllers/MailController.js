@@ -90,10 +90,8 @@ exports.sendVerificationEmail = function(user) {
         }else{
             var createdAt = token.createdAt.getTime();
             var now = Date.now();
-            console.log(createdAt);
-            console.log(now);
-            console.log(now - createdAt);
-            if(now - createdAt >= 180000){ // disable time 3 mins
+            var disableTime = (process.env.MAIL_DISABLE_TIME || 180000)
+            if(now - createdAt >= disableTime){ // disable time 3 mins
                 token.setDataValue("createdAt", new Date(now));
                 token.save();
 
