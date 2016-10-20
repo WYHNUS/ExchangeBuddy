@@ -142,7 +142,7 @@ router.delete('/event', EventCtrl.deleteEvent);
 /*
 Record the user going for an event
 
-POST /goTOEvent
+POST /goToEvent
 request:
 {
     EventId: 1,

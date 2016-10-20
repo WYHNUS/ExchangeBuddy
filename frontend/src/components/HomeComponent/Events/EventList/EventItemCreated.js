@@ -6,6 +6,10 @@ var moment = require('moment');
 import GoogleMap from 'google-map-react';
 import eventimg from '../../../../res/event-img.jpg';
 import * as Icons from '../../../../util/icons';
+import {Link, browserHistory} from 'react-router';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import {MemberTile} from '../../Friends/MemberList/MemberList'
 
 const postToChat = (groupEvent, groupId, cardText) => {
 	const {name, coverPicture, startTime, id } = groupEvent;
@@ -20,16 +24,46 @@ const postToChat = (groupEvent, groupId, cardText) => {
 }
 
 class EventItemCreated extends React.Component{
+	state = {
+		open: false,
+	};
+	handleOpen = () => {
+		this.setState({open: true});
+	};
+
+	handleClose = () => {
+		this.setState({open: false});
+	};
 	static defaultProps = {
 		center: {lat: 59.938043, lng: 30.337157},
 		zoom: 9,
 	};
 
 	render() {
+		const actions = [
+		<FlatButton
+		label="Cancel"
+		primary={true}
+		keyboardFocused={true}
+		onTouchTap={this.handleClose}
+		/>
+		];
 		const {groupEvent,groupId} = this.props;
 		const cardText = truncate(groupEvent.detail, 300);
 		return (
 			<div className='row center-xs'>
+
+			<Dialog
+			title={`${groupEvent.going.length} going for ${groupEvent.title}`}
+			actions={actions}
+			modal={false}
+			open={this.state.open}
+			onRequestClose={this.handleClose}
+			autoScrollBodyContent={true}
+			>
+			{groupEvent.going.map((user, idx) => <MemberTile user={ user } />)}
+			</Dialog>
+
 			<Card className="event-item-card col-xs-10" initiallyExpanded={true}>
 			{/*<CardHeader
 			className="event-item-header"
@@ -38,22 +72,25 @@ class EventItemCreated extends React.Component{
 			avatar={ groupEvent.imgSrc }
 			actAsExpander={ true }
 			showExpandableButton={ true }
-			/>*/}
-			<CardMedia
-			overlay={<CardTitle title={groupEvent.title} subtitle={`by ${groupEvent.User.name}`}/>} >
-			{/*<img src={ groupEvent.imgSrc } />*/}
-			<img src={ eventimg } />
-			</CardMedia>
-			<CardText>
-			<div className="col-xs-12">
-	        {Icons.icon('watch_later')}<strong>&nbsp; {`${ moment(groupEvent.startTime).format("D MMM, ddd, hA") }`}</strong>
-	        </div>
-	        <div className="col-xs-12">
-	        {Icons.icon('place')}<strong>&nbsp; {}</strong>
-	        </div>
-	        <div className="col-xs-12">
-	        {Icons.icon('group')}<strong>&nbsp; {}</strong>
-	        </div>
+		/>*/}
+		<CardMedia
+		overlay={<CardTitle 
+			title={groupEvent.title} 
+			subtitle={ <Link style={{color:"#FFFFFF"}} to={`/profile/${groupEvent.User.id}`}>{`by ${groupEvent.User.name}`}</Link>}/>} >
+		{/*<img src={ groupEvent.imgSrc } />*/}
+		<img src={ eventimg } />
+		</CardMedia>
+		<CardText>
+		<div className="col-xs-12 event-item-info">
+		{Icons.icon('watch_later')}<span>&nbsp; {
+			`${moment(groupEvent.startTime).format("D MMM, ddd, hA")} to ${moment(groupEvent.endTime).format("D MMM, ddd, hA")}`}</span>
+			</div>
+			<div className="col-xs-12 event-item-info">
+			{Icons.icon('place')}<span>&nbsp; {}</span>
+			</div>
+			<div className="col-xs-12 event-item-info">
+			{Icons.icon('group')}<span>&nbsp; <span id='link' onClick={this.handleOpen}>{`${groupEvent.going.length} people going`}</span></span>
+			</div>
 			</CardText>
 			<CardText className="event-item-card-text" expandable={true}>
 			{ cardText }
@@ -63,7 +100,7 @@ class EventItemCreated extends React.Component{
 			{/*<div className='col-xs-6'>
 				<RaisedButton primary={true} style={{margin: "1px 6px"}} label="Post to Chat" onTouchTap={ ()=> postToChat(groupEvent, parseInt(groupId), cardText) } />
 				</div>
-				*/}
+			*/}
 
 			{ /*Meteor.user()*/
 				true ?

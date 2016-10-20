@@ -14,10 +14,6 @@ import GoogleMap from 'google-map-react';
 
 const newEventForm = (callback, userId, location, id, postEvents, showSnackbar) => (values) => {
 
-  //console.log(values);
-  //values.startTime=Date();
-  //value.endTime=Date();
-
   const errors = [];
   const dateFields = ['startDate', 'startTime', 'endDate', 'endTime'];
   var allDateFieldsFilled = true;
@@ -43,8 +39,20 @@ const newEventForm = (callback, userId, location, id, postEvents, showSnackbar) 
   //if there are some errors, show them!
   if(errors.length===0){
     callback();
+     postEvents(
+    1.34132,
+    109.3214,
+    values.title,
+    values.startTime,
+    values.endTime,
+    values.details,
+    null,
+    id,
+    userId
+     );
     showSnackbar('Event created!');
     browserHistory.push(`/home/${id}/events`);
+
   }else{
     showSnackbar(errors[0]);
     console.log(errors);
@@ -53,18 +61,8 @@ const newEventForm = (callback, userId, location, id, postEvents, showSnackbar) 
   
   //console.log(values);
 
-  /*postEvents(
-    1.34132,
-    109.3214,
-    values.title,
-    Date(),//values.startTime,
-    Date(),//values.endTime,
-    values.details,
-    null,
-    id,
-    userId
-     );
-*/
+
+
   /*if(dropId){
     // If edit/:dropId route
     values.dropId = dropId;
@@ -99,42 +97,30 @@ const newEventForm = (callback, userId, location, id, postEvents, showSnackbar) 
 
 const validate = values => {
   const errors = {};
-  const requiredFields = [ 'title', 'details' ];
+  const requiredFields = [ 'title', 'details', 'address' ];
   requiredFields.forEach(field => {
     if (!values[ field ]) {
       errors[ field ] = 'Required'
     }
   });
 
-  //logic to check for date fields
-  /*const dateFields = ['startDate', 'startTime', 'endDate', 'endTime'];
-  var allDateFieldsFilled = true;
-  dateFields.forEach(field => {
-    if (!values[ field ]) {
-      errors[ field ] = 'Required';
-      allDateFieldsFilled=false;
-    }
-  });
-  //logic to check if end time is more than start time
-  if(allDateFieldsFilled){
-    if(values['startDate']===values['endDate']){
-      if(values['startTime']>values['endTime']){
-        errors['startTime'] = 'More than End Time';
-        errors['endTime'] = 'Less than Start Time';   
-      }
-    }
-  }*/
-
-  /*const urlFields = [ 'soundCloudUrl', 'videoUrl' ];
-  urlFields.forEach(field => {
-    const str = values[field];
-    if(str && str.length > 0 && !validUrl.isUri(str)){
-      errors[ field ] = 'Invalid Link'
-    }
-  })*/
-
   return errors;
 }
+
+var INITIAL_LOCATION = {
+  address: 'London, United Kingdom',
+  position: {
+    latitude: 51.5085300,
+    longitude: -0.1257400
+  }
+};
+
+var ATLANTIC_OCEAN = {
+  latitude: 29.532804,
+  longitude: -55.491477
+};
+
+var INITIAL_MAP_ZOOM_LEVEL = 8;
 
 
 class NewEventForm extends Component {
@@ -145,11 +131,16 @@ class NewEventForm extends Component {
 
   constructor(props){
     super(props);
+    // const geocoder = new google.maps.Geocoder();
+    // console.log(geocoder);
     const minDate = new Date();
     this.state={
-      minDate:minDate
+      minDate:minDate,
+      isGeocodingError: false,
+      foundAddress: INITIAL_LOCATION.address
     }
     this.updateMinDate=this.updateMinDate.bind(this);
+    this.setMapElementReference=this.setMapElementReference.bind(this);
   }
 
   updateMinDate(date){
@@ -157,8 +148,63 @@ class NewEventForm extends Component {
     //console.log(this.state.minDate);
   }
 
+  setMapElementReference(mapElementReference){
+    this.mapElement = mapElementReference;
+  }
+
 
   componentDidMount() {
+    this.map = new google.maps.Map(this.mapElement, {
+        zoom: INITIAL_MAP_ZOOM_LEVEL,
+        center: {
+          lat: INITIAL_LOCATION.position.latitude,
+          lng: INITIAL_LOCATION.position.longitude
+        }
+      });
+
+    this.marker = new google.maps.Marker({
+        map: this.map,
+        position: {
+          lat: INITIAL_LOCATION.position.latitude,
+          lng: INITIAL_LOCATION.position.longitude
+        }
+    });
+    this.geocoder = new google.maps.Geocoder();
+  }
+
+  geocodeAddress(address) {
+    this.geocoder.geocode({ 'address': address }, function handleResults(results, status) {
+
+      if (status === google.maps.GeocoderStatus.OK) {
+
+        this.setState({
+          foundAddress: results[0].formatted_address,
+          isGeocodingError: false
+        });
+
+        this.map.setCenter(results[0].geometry.location);
+        this.marker.setPosition(results[0].geometry.location);
+
+        return;
+      }
+
+      this.setState({
+        foundAddress: null,
+        isGeocodingError: true
+      });
+
+      this.map.setCenter({
+        lat: ATLANTIC_OCEAN.latitude,
+        lng: ATLANTIC_OCEAN.longitude
+      });
+
+      this.marker.setPosition({
+        lat: ATLANTIC_OCEAN.latitude,
+        lng: ATLANTIC_OCEAN.longitude
+      });
+
+    }.bind(this));
+  }
     
     //this.clickedDrop = selectedDrop.selectedDropSrc === "profile" ? profileDrops[selectedDrop.selectedDropIdx] : null;
 
@@ -176,7 +222,6 @@ class NewEventForm extends Component {
         this.props.initialize(res.body);
       })
     }*/
-  }
 
   /*componentDidUpdate(prevProps) {
     // Clear form if going from edit to add message route
@@ -252,18 +297,27 @@ class NewEventForm extends Component {
       </div>
       </div>
       </div>
-
-      <div>Insert Google Map Chooser here</div>
-      <GoogleMap
+      {/*<GoogleMap
 	    bootstrapURLKeys = {{key:process.env.GOOGLE_MAP_APIKEY}}
       defaultCenter={this.props.center}
-      defaultZoom={this.props.zoom}></GoogleMap>
-        <div className="col-xs-12">
-          <RaisedButton type="submit" label="Submit"
-          labelStyle={{fontSize:"1.2rem"}} style={{margin: "2vh 0 5vh", width: "50%"}}
-          disabled={pristine || submitting} primary={true}
-          />
+      defaultZoom={this.props.zoom}></GoogleMap>*/}
+      <div className="map" ref={this.setMapElementReference}></div>
+
+      <div className="row center-xs">
+        <div className="col-xs-11 col-md-8">
+          <Field name="address" component={TextField} fullWidth={true}
+          floatingLabelText="Address" floatingLabelStyle={{left: 0}}
+          errorStyle={{textAlign: "left"}}
+          multiLine={false} />
         </div>
+      </div>
+
+      <div className="col-xs-12">
+        <RaisedButton type="submit" label="Submit"
+        labelStyle={{fontSize:"1.2rem"}} style={{margin: "2vh 0 5vh", width: "50%"}}
+        disabled={pristine || submitting} primary={true}
+        />
+      </div>
       </form>
     )
   }
