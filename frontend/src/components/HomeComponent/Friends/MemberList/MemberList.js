@@ -45,7 +45,7 @@ const gotoProfile = (userId) => () => {
   browserHistory.push(`/profile/${userId}`);
 }
 
-const MemberTile = ({ user }) => (
+export const MemberTile = ({ user }) => (
   <Col xs={12} sm={6} md={4}>
   <ListItem primaryText={ user.name }
   secondaryText={ user.University.name }
