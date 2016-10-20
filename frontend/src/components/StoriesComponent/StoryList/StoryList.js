@@ -35,7 +35,7 @@ class Story extends React.Component{
 	}
 
 	clickHandler(e) {
-		browserHistory.push('/story/' + this.props.story.id);
+		browserHistory.push('/stories/' + this.props.story.id);
 	}
 
 	render(){

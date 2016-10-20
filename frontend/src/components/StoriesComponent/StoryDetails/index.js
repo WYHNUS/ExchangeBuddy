@@ -9,19 +9,21 @@ import { fetchOneStory, fetchStorySuccess, fetchStoryFail } from '../../../actio
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+const mapStateToProps = (state) => {
+	return {
+		storyDetails: state.stories.storyDetails,
+		fetching_result: state.stories.fetching_result,
+		user: state.user.userObject,
+		id: parseInt(state.routing.locationBeforeTransitions.pathname.split("/")[2])
+	};
+};
+
 const mapDispatchToProps = (dispatch) => {
 	return {
 		actions: bindActionCreators({  }, dispatch),
 		fetchStory: (storyId, userId) => {
 	    	dispatch(fetchOneStory(storyId, userId));
-	    }
-	};
-};
-
-const mapStateToProps = (state) => {
-	return {
-		storyDetails: state.stories.storyDetails,
-		user:state.user.userObject
+	    },
 	};
 };
 

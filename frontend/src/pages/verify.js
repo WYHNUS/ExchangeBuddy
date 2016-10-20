@@ -11,7 +11,7 @@ class Verify extends React.Component{
 
 	componentDidMount() {
 		// this.props.toggleBottomBarVisibility(true);
-		console.log(this.props.routeParams.token);
+		console.log(this);
 		this.props.verifyToken(this.props.routeParams.token);
 	}
 
@@ -53,7 +53,7 @@ class Verify extends React.Component{
 }
 
 // redux
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {
   	error: state.user.error,
     isVerified: state.user.isAuthenticated,

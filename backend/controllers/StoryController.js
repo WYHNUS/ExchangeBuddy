@@ -48,7 +48,7 @@ exports.getStory = function(req, res) {
         }]
     }).then(function(story){
         if (!!story) {
-            if (!story.isPublic && story.UserId === req.body.userId) {
+            if (story.isPublic && story.UserId === req.body.userId) {
                 return res.status(200)
                     .json({
                         status: 'success',

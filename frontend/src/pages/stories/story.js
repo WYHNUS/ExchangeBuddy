@@ -15,16 +15,14 @@ class Story extends React.Component{
 	render() {
 		return (
 			<div>
-			<StoryDetails/>
+				<StoryDetails/>
 			</div>
 			);
 	}
-
 }
 
 const mapStateToProps = (state )=>{
 	return{
-		story: Story
 	};
 }
 

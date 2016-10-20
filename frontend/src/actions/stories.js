@@ -36,8 +36,8 @@ export function fetchOneStory(storyId, userId) {
 	return (dispatch) => {
 	    dispatch(clickedFetch());
 
-	    request.get(ROOT_URL + '/story')
-	    	.query({ 
+	    request.post(ROOT_URL + '/viewStory')
+	    	.send({ 
 	    		storyId: storyId, 
 	    		userId: userId 
 	    	}).end(function(err, res){

@@ -140,6 +140,7 @@ const initialState=
 {
 	error: null,
 	fetching: false,
+	fetching_result: false,
 	storyDetails: story1,
 	storyList: [],//storyList,
 	editingStory: {
@@ -159,12 +160,14 @@ export function stories(state=initialState, action)
 			return Object.assign({}, state, {
 				storyDetails: action.story,
 				error: null,
-				fetching: false
+				fetching: false,
+				fetching_result: true
 		    });
 
 
 		case CLICKED_FETCH: 
 			return Object.assign({}, state, {
+				fetching_result: false,
 				fetching: true
 		    });
 
