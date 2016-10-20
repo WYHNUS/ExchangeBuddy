@@ -96,7 +96,7 @@ exports.getAllEvents = function(req, res){
 
                     name: user.name,
                     id: user.id,
-                    profilePictureUrl: user.profilePictureUrl
+                    profilePictureUrl: user.profilePictureUrl,
                     UniversityId: user.UniversityId
 
                 }
