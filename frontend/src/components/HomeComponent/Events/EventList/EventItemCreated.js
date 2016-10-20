@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import truncate from 'truncate';
@@ -10,8 +10,10 @@ import {Link, browserHistory} from 'react-router';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import {MemberTile} from '../../Friends/MemberList/MemberList'
+import axios from 'axios';
+import {ROOT_URL} from '../../../../util/backend';
 
-const postToChat = (groupEvent, groupId, cardText) => {
+/*const postToChat = (groupEvent, groupId, cardText) => {
 	const {name, coverPicture, startTime, id } = groupEvent;
 	const profilePicture = groupEvent.venue.profilePicture || groupEvent.profilePicture;
 	const eventPosting = { name, profilePicture, coverPicture, startTime, id };
@@ -20,6 +22,24 @@ const postToChat = (groupEvent, groupId, cardText) => {
 	Meteor.call('GroupChatMessage.sendToGroup', params, (err, success) => {
 		if(err)
 			console.log(err)
+	})
+}*/
+
+const goForAnEvent = (EventId, UserId, showSnackbar,goForAnEventSuccessUpdate) =>{
+	//console.log(EventId, UserId, showSnackbar);
+	const req = axios.post(`${ROOT_URL}/goToEvent`, 
+	{
+		EventId: EventId,
+		UserId:UserId
+	}).then((response)=>{
+		if (!response.error){
+			showSnackbar("Registered for event");
+			goForAnEventSuccessUpdate(EventId);
+		}else{
+			showSnackbar("Error registering for event");
+		}
+		//
+		//console.log(response);
 	})
 }
 
@@ -48,7 +68,7 @@ class EventItemCreated extends React.Component{
 		onTouchTap={this.handleClose}
 		/>
 		];
-		const {groupEvent,groupId} = this.props;
+		const {groupEvent,groupId, showSnackbar, user, goForAnEventSuccessUpdate} = this.props;
 		const cardText = truncate(groupEvent.detail, 300);
 		return (
 			<div className='row center-xs'>
@@ -107,7 +127,9 @@ class EventItemCreated extends React.Component{
 				<div className='row center-xs'>
 				
 				<div className='col-xs-6 col-md-4'>
-				<RaisedButton primary={true} style={{margin: "1px 6px"}} label="Go" onTouchTap={ ()=> postToChat(groupEvent, parseInt(groupId), cardText) } />
+				<RaisedButton primary={true} style={{margin: "1px 6px"}} label="Go for event" 
+				onTouchTap={ ()=> 
+					goForAnEvent(groupEvent.id, user.userObject.userId, showSnackbar, goForAnEventSuccessUpdate)} />
 				</div>
 				</div>
 				: null }
@@ -119,5 +141,15 @@ class EventItemCreated extends React.Component{
 				);
 	}
 }
+
+
+EventItemCreated.propTypes = {
+  groupEvent: PropTypes.object.isRequired,
+  groupId: PropTypes.number.isRequired,
+  showSnackbar: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  goForAnEventSuccessUpdate: PropTypes.func.isRequired
+  //fetchEvents: PropTypes.func.isRequired
+};
 
 export default EventItemCreated;
