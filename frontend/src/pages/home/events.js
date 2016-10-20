@@ -13,12 +13,12 @@ import * as IconsHelper from '../../util/icons'
 import EventList from '../../components/HomeComponent/Events/EventList';
 
 import {fetchFbEvents, fetchFbEventsSuccess, 
-    fetchFbEventsFailure, fetchMuEvents} from '../../actions/home';
+  fetchFbEventsFailure, fetchMuEvents} from '../../actions/home';
 
-    import SelectField from 'material-ui/SelectField';
+  import SelectField from 'material-ui/SelectField';
 
 
-    var date=new Date();
+  var date=new Date();
     /*var fbseed = 
     [
     {
@@ -85,16 +85,16 @@ var meetupseed =
 
 const university = 
 {
-    lat:1.2966426,
-    lng:103.7742052,
-    city: 'Singapore',
-    country: 'Singapore',
-    countryCode: 'SGP'
+  lat:1.2966426,
+  lng:103.7742052,
+  city: 'Singapore',
+  country: 'Singapore',
+  countryCode: 'SGP'
 };
 
 const country = 
 {
-    capital: "Singapore"
+  capital: "Singapore"
 }
 
 const items = [
@@ -111,49 +111,48 @@ class Events extends React.Component{
 		//fetchHomeEvenets(groupId)
         //fetchFbEvents(123,[1231,12341]);
         //fetchMuEvents(university, country);
-    }
+      }
 
-    constructor(props) {
+      constructor(props) {
         super(props);
         this.state = {value: 1};
-    }
+      }
 
-    handleChange = (event, index, value) => this.setState({value});
+      handleChange = (event, index, value) => this.setState({value});
 
 
-    render(){
+      render(){
         const {id} = this.props.homeGroupDetails.homeGroupDetails;
         return(
-           <div>
-           <div className='row center-xs middle-xs'>
+         <div>
            {/*<SelectField
            value={this.state.value}
            onChange={this.handleChange}>
            {items}
-           </SelectField>*/}
-           <div className="col-xs-12 col-md-6">
-           <RaisedButton
-           label='New Event'
-           onTouchTap={ () => browserHistory.push(`/home/${id}/events/new`)}
-           secondary={true}
-           icon={IconsHelper.materialIcon("add")}/>
-           </div>
-           </div>
-           <div className='row center-xs'>
-           <EventList source="Created"/>
-           <div className="col-xs-12 col-md-6">
+         </SelectField>*/}
+         <div className='row center-xs'>
+         <div className='col-xs event-item-button'>
+         <RaisedButton
+         className="event-item-button-add"
+         label='New Event'
+         onTouchTap={ () => browserHistory.push(`/home/${id}/events/new`)}
+         secondary={true}
+         icon={IconsHelper.materialIcon("add")}/>
+         </div>
+         </div>
 
-           </div>
+         <div className='row center-xs'>
+         <EventList source="Created"/>
 
-           </div>
-           
-           </div>
-           );
+         </div>
+
+         </div>
+         );
+      }
     }
-}
 
-/*<EventList source="Created" groupId={ id } groupEvents={fbseed} />*/
-/*<EventList event={seed}*/
+    /*<EventList source="Created" groupId={ id } groupEvents={fbseed} />*/
+    /*<EventList event={seed}*/
 /*<Row>
            <Col xs={12} md={6}>
            <h3 className="event-title pinline"> <span>Facebook Events</span> </h3>
@@ -165,29 +164,29 @@ class Events extends React.Component{
            </Col>
            </Row>*/
 
-const mapStateToProps = (state )=>{
-	return{
-		homeGroupDetails: state.home.homeGroupDetails
-	};
-}
+           const mapStateToProps = (state )=>{
+             return{
+              homeGroupDetails: state.home.homeGroupDetails
+            };
+          }
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		actions: bindActionCreators({ showSnackbar }, dispatch),
+          const mapDispatchToProps = (dispatch) => {
+           return {
+            actions: bindActionCreators({ showSnackbar }, dispatch),
 
-        fetchFbEvents:(countryCode, uniLatLng)=>{
-          dispatch(fetchFbEvents(countryCode, uniLatLng)).then((response) => {
-            !response.error ? dispatch(fetchFbEventsSuccess(response.payload)) : 
-            dispatch(fetchFbEventsFailure(response.payload));
-        })},
+            fetchFbEvents:(countryCode, uniLatLng)=>{
+              dispatch(fetchFbEvents(countryCode, uniLatLng)).then((response) => {
+                !response.error ? dispatch(fetchFbEventsSuccess(response.payload)) : 
+                dispatch(fetchFbEventsFailure(response.payload));
+              })},
 
-          fetchMuEvents:(university, country)=>{
-            dispatch(fetchMuEvents(university,country))
-        },
+              fetchMuEvents:(university, country)=>{
+                dispatch(fetchMuEvents(university,country))
+              },
 
-        toggleHomeTab:(tab)=>dispatch(toggleHomeTab(tab))
-    }
-}
+              toggleHomeTab:(tab)=>dispatch(toggleHomeTab(tab))
+            }
+          }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Events);
+          export default connect(mapStateToProps, mapDispatchToProps)(Events);

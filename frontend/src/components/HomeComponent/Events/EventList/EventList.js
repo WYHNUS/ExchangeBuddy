@@ -66,7 +66,12 @@ export default class EventsList extends React.Component {
         <div className='row center-xs'>
           <div className='col-xs event-item-button'>
             { this.state.showAll ? null
-              : <RaisedButton style={{display:"block"}} label="Show all events" primary={true} onTouchTap={ showAllEvents } /> }
+              : <RaisedButton 
+              className="event-item-button-add" 
+              style={{display:"block"}} 
+              label="Show all events" 
+              primary={true} 
+              onTouchTap={ showAllEvents } /> }
           </div>
         </div>
 			</div>
