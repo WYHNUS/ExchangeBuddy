@@ -3,6 +3,17 @@ var router = express.Router();
 var jwt = require('express-jwt');
 var config = require('../config/config');
 
+var multer  =   require('multer');
+var storage =   multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, '../public/uploads');
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname + '-' + Date.now());
+  }
+});
+var upload = multer({ storage : storage}).single('userPhoto');
+
 var models  = require('../models');
 var CountryCtrl = require('../controllers/CountryController');
 var UniCtrl = require('../controllers/UniversityController');
@@ -131,13 +142,14 @@ router.delete('/event', EventCtrl.deleteEvent);
 /*
 Record the user going for an event
 
-POST /goTOEvent
+POST /goToEvent
 request:
 {
     EventId: 1,
     UserId: 1
 }
 */
+router.post('/unattend', EventCtrl.unGoToEvent);
 router.post('/goToEvent', EventCtrl.goToEvent);
 
 /*
@@ -160,5 +172,14 @@ GET /comment/:eventId
 
 */
 router.get('/comment/:eventId', EventCtrl.getComments);
+
+router.post('/uploadPhoto', function(req, res, err){
+    upload(req,res,function(err) {
+        if(err) {
+            return res.end("Error uploading file.");
+        }
+        res.end("File is uploaded");
+    });
+})
 
 module.exports = router;

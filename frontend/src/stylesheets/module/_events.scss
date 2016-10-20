@@ -7,6 +7,30 @@
 	margin-bottom: 3% !important;
 	max-width: 600px!important;
 	z-index: 0!important;
+	padding-left: 0px!important;
+	padding-right: 0px!important;
+
+	.event-item-info{
+		text-align: left;
+		color:darkgrey;
+		>span{
+			font-size: 14px!important;
+			color: darkgrey!important;
+			height: 17px;
+			vertical-align: middle;
+		}
+	}
+
+	#link{
+		cursor: pointer;
+		text-decoration: underline;
+		font-weight: bold;
+	}
+
+	.event-item-card-text{
+		text-align: left!important;
+		padding-top: 0px!important;
+	}
 }
 
 .event-item-text > p >img {
@@ -15,6 +39,11 @@
 
 .event-item-button{
 	max-width: 600px!important;
+	.event-item-button-add{
+		width:584px;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
 }
 
 .event-item-header{
@@ -23,10 +52,6 @@
 		text-align: left;	
 	}
 	
-}
-
-.event-item-card-text{
-	text-align: left!important;
 }
 
 .event-item-card-map{

@@ -5,6 +5,41 @@ export const TOGGLE_SELECTED_HOME_GROUP = 'TOGGLE_SELECTED_HOME_GROUP';
 export const TOGGLE_HOME_TAB = 'TOGGLE_HOME_TAB';
 
 /************************************************************
+GOING AND UNGOING FOR AN EVENT
+************************************************************/
+//export const GO_FOR_AN_EVENT = 'GO_FOR_AN_EVENT';
+export const GO_FOR_AN_EVENT_SUCCESS_UPDATE = 'GO_FOR_AN_EVENT_SUCCESS_UPDATE';
+//export const GO_FOR_AN_EVENT_FAILURE = 'GO_FOR_AN_EVENT_FAILURE';
+export const UNGO_FOR_AN_EVENT_SUCCESS_UPDATE = 'UNGO_FOR_AN_EVENT_SUCCESS_UPDATE';
+//export const UNGO_FOR_AN_EVENT_SUCCESS = 'UNGO_FOR_AN_EVENT_SUCCESS';
+//export const UNGO_FOR_AN_EVENT_FAILURE = 'UNGO_FOR_AN_EVENT_FAILURE';
+
+export function goForAnEventSuccessUpdate(EventId, UserId){
+	console.log(EventId);
+	return{
+		type: GO_FOR_AN_EVENT_SUCCESS_UPDATE,
+		payload:{
+			EventId:EventId,
+			UserId: UserId
+		}
+	}
+}
+
+export function ungoForAnEventSuccessUpdate(EventId, UserId){
+	console.log(EventId);
+	return{
+		type: UNGO_FOR_AN_EVENT_SUCCESS_UPDATE,
+		payload:{
+			EventId:EventId,
+			UserId: UserId
+		}
+	}
+}
+
+
+
+
+/************************************************************
 FETCHING INITIAL CHATS OF A GROUP, UPDATING CHAT
 ************************************************************/
 

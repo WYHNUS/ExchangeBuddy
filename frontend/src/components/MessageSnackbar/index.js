@@ -10,8 +10,8 @@ import ChildComponent from './MessageSnackbar';
 
 const mapStateToProps = (state) => {
   return {
-    open: state.messageSnackbarOpen,
-    message: state.messageSnackbarMessage
+    open: state.messageSnackbar.messageSnackbarOpen,
+    message: state.messageSnackbar.messageSnackbarMessage
   };
 };
 

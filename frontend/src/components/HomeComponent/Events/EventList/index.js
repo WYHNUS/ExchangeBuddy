@@ -2,7 +2,9 @@ import React from 'react';
 import Loading from '../../../Loading';
 
 // Action creators
-import { fetchEvents, fetchEventsSuccess, fetchEventsFailure, resetEvents } from '../../../../actions/home';
+import { resetEvents, goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate,
+  fetchEvents , fetchEventsFailure, fetchEventsSuccess} from '../../../../actions/home';
+  import { showSnackbar } from '../../../../actions/messageSnackbar';
 
 
 // Component
@@ -52,6 +54,24 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(fetchEventsFailure(response.error));
         }
       });
+    },
+    showSnackbar:(message)=>{
+      dispatch(showSnackbar(message))
+    },
+    goForAnEventSuccessUpdate:(EventId, UserId)=>{
+      dispatch(goForAnEventSuccessUpdate(EventId, UserId))
+    },
+    ungoForAnEventSuccessUpdate:(EventId, UserId)=>{
+      dispatch(ungoForAnEventSuccessUpdate(EventId, UserId))
+    },
+    fetchEvents:(GroupId)=>{
+      dispatch(fetchEvents(GroupId)).payload.then((response) => {
+        if (!response.error) {
+          dispatch(fetchEventsSuccess(response.data));
+        } else {
+          dispatch(fetchEventsFailure(response.error));
+        }
+      });
     }
   };
 };
@@ -60,7 +80,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     homeEvents:state.home.homeEvents,
     homeGroupDetails:state.home.homeGroupDetails.homeGroupDetails,
-    source: ownProps.source
+    source: ownProps.source,
+    user: state.user,
   };
 };
 

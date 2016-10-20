@@ -91,13 +91,16 @@ exports.getAllEvents = function(req, res){
         var deferred = q.defer();
         var promises = events.map(event => event.getUserEvent());
         models.sequelize.Promise.all(promises).then(function(userEvents){
-            userEvents = userEvents.map(users => (users.map(user => ({
+            userEvents = userEvents.map(users => (users.map(user => (
+                {
 
                     name: user.name,
                     id: user.id,
-                    profilePictureUrl: user.profilePictureUrl
+                    profilePictureUrl: user.profilePictureUrl,
+                    UniversityId: user.UniversityId
 
-            }))));
+                }
+            ))));
             for(var i = 0; i < userEvents.length; i++){
                 events[i].setDataValue("going", userEvents[i]);
             }
@@ -140,6 +143,33 @@ exports.goToEvent = function(req, res){
     }).catch(function(err) {
         resError(res, err);
     });
+}
+
+exports.unGoToEvent = function(req, res){
+    models.sequelize.Promise.all([
+        models.Event.findOne({
+            where: {
+                id: req.body.EventId
+            }
+        }),
+        models.User.findOne({
+            where: {
+                id: req.body.UserId
+            }
+        })
+    ]).spread(function(event, user){
+        if(!!event && !!user){
+            event.removeUserEvent(user);
+            res.send({
+                success: true
+            });
+        }else{
+            res.send({
+                success: false,
+                error: "user or event doesn't exist"
+            })
+        }
+    })
 }
 
 exports.comment = function(req, res){
