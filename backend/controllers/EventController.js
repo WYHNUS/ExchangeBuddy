@@ -6,6 +6,7 @@ exports.createEvent = function(req, res){
         models.Event.create({
             lat: req.body.lat,
             lng: req.body.lng,
+            location: req.body.location,
             title: req.body.title,
             startTime: new Date(req.body.startTime),
             endTime: new Date(req.body.endTime),
@@ -54,6 +55,7 @@ exports.updateEvent = function(req, res){
     models.Event.update({
         lat: req.body.lat,
         lng: req.body.lng,
+        location: req.body.location,
         title: req.body.title,
         startTime: new Date(req.body.startTime),
         endTime: new Date(req.body.endTime),

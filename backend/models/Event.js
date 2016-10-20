@@ -9,6 +9,9 @@ module.exports = function(sequelize, DataType) {
         lng: {
             type: DataType.DOUBLE()
         },
+        location: {
+            type: DataType.STRING()
+        },
         title: {
             type: DataType.STRING(),
             allowNull: false
