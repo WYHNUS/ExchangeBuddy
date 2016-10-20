@@ -23,13 +23,13 @@ exports.getUser = function(req, res) {
 };
 
 exports.createUser = function(req, res){
-    if (!req.body.facebookToken) {
-        return res.status(400)
-            .json({
-                status: 'fail',
-                message: 'Invalid authenticate data.'
-            });
-    }
+    // if (!req.body.facebookToken) {
+    //     return res.status(400)
+    //         .json({
+    //             status: 'fail',
+    //             message: 'Invalid authenticate data.'
+    //         });
+    // }
     var facebookToken = req.body.facebookToken;
 
     models.sequelize.Promise.all([
@@ -128,7 +128,7 @@ exports.createUser = function(req, res){
                                 res.status(400)
                                     .json({
                                         status: 'fail',
-                                        message: 'Verification email fail to send.'
+                                        message: reason
                                     });
                             });
                     });
