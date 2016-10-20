@@ -21,21 +21,23 @@ export default class EventsList extends React.Component {
   }
 
 	render() {
-    const { source } = this.props;
+    const { source, showSnackbar, user,goForAnEventSuccessUpdate } = this.props;
     const { homeEvents, loading, error } = this.props.homeEvents;
     const {groupId} = this.props.homeGroupDetails;
 
-    const EventItem = ({ source, groupEvent }) => {
+    /*const EventItem = ({ key, source, groupEvent }) => {
       if (source == 'Facebook'){
         return <EventItemFb groupEvent={ groupEvent } groupId={ groupId } />;
       }
       else if (source == 'Meetup')
         return <EventItemMu groupEvent={ groupEvent } groupId={ groupId } />;
       else if (source == 'Created' )
-        return <EventItemCreated groupEvent={groupEvent} groupId={groupId}/>
+        return <EventItemCreated key={key} groupEvent={groupEvent} groupId={groupId} 
+      showSnackbar={showSnackbar} user={user} 
+      goForAnEventSuccessUpdate={goForAnEventSuccessUpdate}/>
       else
         return null;
-    };
+    };*/
 
     const showAllEvents = () => this.setState({ showAll: true });
     //const showAllEvents = () => console.log(homeEvents);
@@ -53,7 +55,10 @@ export default class EventsList extends React.Component {
 		return (
 			<div className="event-list">
         { homeEvents.slice(0, end).map((groupEvent, idx) => 
-          <EventItem key={ idx } source={ source } groupEvent={ groupEvent }/> ) }
+            <EventItemCreated key={idx} groupEvent={groupEvent} groupId={groupId} 
+              showSnackbar={showSnackbar} user={user} 
+              goForAnEventSuccessUpdate={goForAnEventSuccessUpdate}/>
+          /*<EventItem key={ idx } source={ source } groupEvent={ groupEvent }/>*/ ) }
 
         <div className='row center-xs'>
           <div className='col-xs event-item-button'>
@@ -70,5 +75,8 @@ EventsList.propTypes = {
   homeEvents: PropTypes.object.isRequired,
   source: PropTypes.string.isRequired,
   homeGroupDetails: PropTypes.object.isRequired,
+  showSnackbar: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  goForAnEventSuccessUpdate: PropTypes.func.isRequired
   //fetchEvents: PropTypes.func.isRequired
 };

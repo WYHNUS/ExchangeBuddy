@@ -122,7 +122,7 @@ class Events extends React.Component{
 
 
     render(){
-        const {id} = this.props.homeGroupDetails;
+        const {id} = this.props.homeGroupDetails.homeGroupDetails;
         return(
            <div>
            <div className='row center-xs middle-xs'>
@@ -167,7 +167,7 @@ class Events extends React.Component{
 
 const mapStateToProps = (state )=>{
 	return{
-		homeGroupDetails: state.home.homeGroupDetails.homeGroupDetails
+		homeGroupDetails: state.home.homeGroupDetails
 	};
 }
 

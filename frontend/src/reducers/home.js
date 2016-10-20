@@ -10,7 +10,8 @@ import {
 	FETCH_CURRENT_GROUP_FAILURE, RESET_CURRENT_GROUP,
 	FETCH_GROUP_MESSAGES, FETCH_GROUP_MESSAGES_SUCCESS,
 	FETCH_GROUP_MESSAGES_FAILURE, RESET_GROUP_MESSAGES,
-	UPDATE_GROUP_MESSAGE_FROM_SOCKET} from '../actions/home';
+	UPDATE_GROUP_MESSAGE_FROM_SOCKET,
+	GO_FOR_AN_EVENT_SUCCESS_UPDATE} from '../actions/home';
 
 	/*const homeGroups=
 	[
@@ -276,6 +277,9 @@ import {
 				return {...state, homeMessages: { homeMessages: [], error: null, loading: false}};
 				case UPDATE_GROUP_MESSAGE_FROM_SOCKET:
 				return {...state, homeMessages: { homeMessages: state.homeMessages.homeMessages.concat([action.payload]), error: null, loading: false}};
+
+				case GO_FOR_AN_EVENT_SUCCESS_UPDATE:
+				return {...state}
 
 				default:
 				return state
