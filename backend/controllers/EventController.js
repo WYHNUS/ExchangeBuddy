@@ -91,13 +91,16 @@ exports.getAllEvents = function(req, res){
         var deferred = q.defer();
         var promises = events.map(event => event.getUserEvent());
         models.sequelize.Promise.all(promises).then(function(userEvents){
-            userEvents = userEvents.map(users => (users.map(user => ({
+            userEvents = userEvents.map(users => (users.map(user => (
+                {
 
                     name: user.name,
                     id: user.id,
                     profilePictureUrl: user.profilePictureUrl
+                    UniversityId: user.UniversityId
 
-            }))));
+                }
+            ))));
             for(var i = 0; i < userEvents.length; i++){
                 events[i].setDataValue("going", userEvents[i]);
             }
