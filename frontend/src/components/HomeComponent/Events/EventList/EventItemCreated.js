@@ -25,18 +25,40 @@ import {ROOT_URL} from '../../../../util/backend';
 	})
 }*/
 
-const goForAnEvent = (EventId, UserId, showSnackbar,goForAnEventSuccessUpdate) =>{
+const goForAnEvent = (EventId, UserId, showSnackbar,goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents) =>{
 	//console.log(EventId, UserId, showSnackbar);
 	const req = axios.post(`${ROOT_URL}/goToEvent`, 
 	{
 		EventId: EventId,
 		UserId:UserId
 	}).then((response)=>{
-		if (!response.error){
+		//console.log(homeGroupDetails.id);
+		if ((!response.error)&&homeGroupDetails.id){
 			showSnackbar("Registered for event");
-			goForAnEventSuccessUpdate(EventId);
+			//goForAnEventSuccessUpdate(EventId, UserId);
+			fetchEvents(homeGroupDetails.id);
 		}else{
 			showSnackbar("Error registering for event");
+		}
+		//
+		//console.log(response);
+	})
+}
+
+const ungoForAnEvent = (EventId, UserId, showSnackbar,ungoForAnEventSuccessUpdate, homeGroupDetails, fetchEvents) =>{
+	//console.log(EventId, UserId, showSnackbar);
+	const req = axios.post(`${ROOT_URL}/unattend`, 
+	{
+		EventId: EventId,
+		UserId:UserId
+	}).then((response)=>{
+		//console.log(homeGroupDetails.id);
+		if  ((!response.error)&&homeGroupDetails.id){
+			showSnackbar("Unregistered for event");
+			//ungoForAnEventSuccessUpdate(EventId, UserId);
+			fetchEvents(homeGroupDetails.id);
+		}else{
+			showSnackbar("Error unregistering for event");
 		}
 		//
 		//console.log(response);
@@ -68,7 +90,9 @@ class EventItemCreated extends React.Component{
 		onTouchTap={this.handleClose}
 		/>
 		];
-		const {groupEvent,groupId, showSnackbar, user, goForAnEventSuccessUpdate} = this.props;
+		const {groupEvent,homeGroupDetails, showSnackbar, user, 
+			goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate,
+			fetchEvents} = this.props;
 		const cardText = truncate(groupEvent.detail, 300);
 		return (
 			<div className='row center-xs'>
@@ -118,7 +142,7 @@ class EventItemCreated extends React.Component{
 			<CardActions expandable={true}>
 			<div className="row center-xs">
 			{/*<div className='col-xs-6'>
-				<RaisedButton primary={true} style={{margin: "1px 6px"}} label="Post to Chat" onTouchTap={ ()=> postToChat(groupEvent, parseInt(groupId), cardText) } />
+				<RaisedButton primary={true} style={{margin: "1px 6px"}} label="Post to Chat" onTouchTap={ ()=> postToChat(groupEvent, parseInt(homeGroupDetails), cardText) } />
 				</div>
 			*/}
 
@@ -129,8 +153,14 @@ class EventItemCreated extends React.Component{
 				<div className='col-xs-6 col-md-4'>
 				<RaisedButton primary={true} style={{margin: "1px 6px"}} label="Go for event" 
 				onTouchTap={ ()=> 
-					goForAnEvent(groupEvent.id, user.userObject.userId, showSnackbar, goForAnEventSuccessUpdate)} />
+					goForAnEvent(groupEvent.id, user.userObject.userId, showSnackbar, goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents)} />
 				</div>
+				<div className='col-xs-6 col-md-4'>
+				<RaisedButton primary={true} style={{margin: "1px 6px"}} label="Ungo for event" 
+				onTouchTap={ ()=> 
+					ungoForAnEvent(groupEvent.id, user.userObject.userId, showSnackbar, ungoForAnEventSuccessUpdate, homeGroupDetails, fetchEvents)} />
+				</div>
+
 				</div>
 				: null }
 				</div>
@@ -145,11 +175,12 @@ class EventItemCreated extends React.Component{
 
 EventItemCreated.propTypes = {
   groupEvent: PropTypes.object.isRequired,
-  groupId: PropTypes.number.isRequired,
+  homeGroupDetails: PropTypes.object.isRequired,
   showSnackbar: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  goForAnEventSuccessUpdate: PropTypes.func.isRequired
-  //fetchEvents: PropTypes.func.isRequired
+  goForAnEventSuccessUpdate: PropTypes.func.isRequired,
+  ungoForAnEventSuccessUpdate: PropTypes.func.isRequired,
+  fetchEvents: PropTypes.func.isRequired
 };
 
 export default EventItemCreated;

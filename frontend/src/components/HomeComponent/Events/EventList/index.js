@@ -2,9 +2,9 @@ import React from 'react';
 import Loading from '../../../Loading';
 
 // Action creators
-import { fetchEvents, fetchEventsSuccess, fetchEventsFailure, 
-  resetEvents, goForAnEventSuccessUpdate } from '../../../../actions/home';
-import { showSnackbar } from '../../../../actions/messageSnackbar';
+import { resetEvents, goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate,
+  fetchEvents , fetchEventsFailure, fetchEventsSuccess} from '../../../../actions/home';
+  import { showSnackbar } from '../../../../actions/messageSnackbar';
 
 
 // Component
@@ -58,8 +58,20 @@ const mapDispatchToProps = (dispatch) => {
     showSnackbar:(message)=>{
       dispatch(showSnackbar(message))
     },
-    goForAnEventSuccessUpdate:(EventId)=>{
-      dispatch(goForAnEventSuccessUpdate(EventId))
+    goForAnEventSuccessUpdate:(EventId, UserId)=>{
+      dispatch(goForAnEventSuccessUpdate(EventId, UserId))
+    },
+    ungoForAnEventSuccessUpdate:(EventId, UserId)=>{
+      dispatch(ungoForAnEventSuccessUpdate(EventId, UserId))
+    },
+    fetchEvents:(GroupId)=>{
+      dispatch(fetchEvents(GroupId)).payload.then((response) => {
+        if (!response.error) {
+          dispatch(fetchEventsSuccess(response.data));
+        } else {
+          dispatch(fetchEventsFailure(response.error));
+        }
+      });
     }
   };
 };

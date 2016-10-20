@@ -10,16 +10,28 @@ GOING AND UNGOING FOR AN EVENT
 //export const GO_FOR_AN_EVENT = 'GO_FOR_AN_EVENT';
 export const GO_FOR_AN_EVENT_SUCCESS_UPDATE = 'GO_FOR_AN_EVENT_SUCCESS_UPDATE';
 //export const GO_FOR_AN_EVENT_FAILURE = 'GO_FOR_AN_EVENT_FAILURE';
-export const UNGO_FOR_AN_EVENT = 'UNGO_FOR_AN_EVENT';
+export const UNGO_FOR_AN_EVENT_SUCCESS_UPDATE = 'UNGO_FOR_AN_EVENT_SUCCESS_UPDATE';
 //export const UNGO_FOR_AN_EVENT_SUCCESS = 'UNGO_FOR_AN_EVENT_SUCCESS';
 //export const UNGO_FOR_AN_EVENT_FAILURE = 'UNGO_FOR_AN_EVENT_FAILURE';
 
-export function goForAnEventSuccessUpdate(EventId){
+export function goForAnEventSuccessUpdate(EventId, UserId){
 	console.log(EventId);
 	return{
 		type: GO_FOR_AN_EVENT_SUCCESS_UPDATE,
 		payload:{
-			EventId:EventId
+			EventId:EventId,
+			UserId: UserId
+		}
+	}
+}
+
+export function ungoForAnEventSuccessUpdate(EventId, UserId){
+	console.log(EventId);
+	return{
+		type: UNGO_FOR_AN_EVENT_SUCCESS_UPDATE,
+		payload:{
+			EventId:EventId,
+			UserId: UserId
 		}
 	}
 }

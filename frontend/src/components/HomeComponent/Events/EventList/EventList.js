@@ -21,9 +21,9 @@ export default class EventsList extends React.Component {
   }
 
 	render() {
-    const { source, showSnackbar, user,goForAnEventSuccessUpdate } = this.props;
+    const { source, showSnackbar, user,
+      goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate } = this.props;
     const { homeEvents, loading, error } = this.props.homeEvents;
-    const {groupId} = this.props.homeGroupDetails;
 
     /*const EventItem = ({ key, source, groupEvent }) => {
       if (source == 'Facebook'){
@@ -55,9 +55,12 @@ export default class EventsList extends React.Component {
 		return (
 			<div className="event-list">
         { homeEvents.slice(0, end).map((groupEvent, idx) => 
-            <EventItemCreated key={idx} groupEvent={groupEvent} groupId={groupId} 
+            <EventItemCreated key={idx} groupEvent={groupEvent} 
+              homeGroupDetails={this.props.homeGroupDetails} 
               showSnackbar={showSnackbar} user={user} 
-              goForAnEventSuccessUpdate={goForAnEventSuccessUpdate}/>
+              goForAnEventSuccessUpdate={goForAnEventSuccessUpdate}
+              ungoForAnEventSuccessUpdate={ungoForAnEventSuccessUpdate}
+              fetchEvents={this.props.fetchEvents}/>
           /*<EventItem key={ idx } source={ source } groupEvent={ groupEvent }/>*/ ) }
 
         <div className='row center-xs'>
@@ -77,6 +80,8 @@ EventsList.propTypes = {
   homeGroupDetails: PropTypes.object.isRequired,
   showSnackbar: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  goForAnEventSuccessUpdate: PropTypes.func.isRequired
+  goForAnEventSuccessUpdate: PropTypes.func.isRequired,
+  ungoForAnEventSuccessUpdate: PropTypes.func.isRequired,
+  fetchEvents:PropTypes.func.isRequired
   //fetchEvents: PropTypes.func.isRequired
 };
