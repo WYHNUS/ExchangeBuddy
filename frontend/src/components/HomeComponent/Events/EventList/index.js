@@ -5,6 +5,7 @@ import Loading from '../../../Loading';
 import { resetEvents, goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate,
   fetchEvents , fetchEventsFailure, fetchEventsSuccess} from '../../../../actions/home';
   import { showSnackbar } from '../../../../actions/messageSnackbar';
+import {fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure} from '../../../../actions/utilityInfo'
 
 
 // Component
@@ -72,7 +73,14 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(fetchEventsFailure(response.error));
         }
       });
+    },
+    fetchAllUniversitiesSuccess:(data) => {
+      dispatch(fetchAllUniversitiesSuccess(data));
+    },
+    fetchAllUniversitiesFailure:(data)=>{
+      dispatch(fetchAllUniversitiesFailure(data));
     }
+
   };
 };
 
@@ -82,6 +90,7 @@ const mapStateToProps = (state, ownProps) => {
     homeGroupDetails:state.home.homeGroupDetails.homeGroupDetails,
     source: ownProps.source,
     user: state.user,
+    universities: state.utilityInfo.universitiesList.universities
   };
 };
 

@@ -12,6 +12,7 @@ import FlatButton from 'material-ui/FlatButton';
 import {MemberTile} from '../../Friends/MemberList/MemberList'
 import axios from 'axios';
 import {ROOT_URL} from '../../../../util/backend';
+import {fetchAllUniversities} from '../../../../actions/utilityInfo'
 
 /*const postToChat = (groupEvent, groupId, cardText) => {
 	const {name, coverPicture, startTime, id } = groupEvent;
@@ -65,6 +66,52 @@ const ungoForAnEvent = (EventId, UserId, showSnackbar,ungoForAnEventSuccessUpdat
 	})
 }
 
+const updateGoingListWithUniversities=({goingArray, universities})=>{
+	console.log(goingArray,universities);
+	var finalArray = [];
+	for(var j=0;j<goingArray.length;j++){
+		var uniName = "";
+		for(var i=0;i<universities.length;i++){
+			if(universities[i].id===goingArray[j].UniversityId){
+				uniName = universities[i].name;
+				break;
+			}
+		}
+		goingArray[j].University = 
+		{
+			name: uniName,
+			id: user.UniversityId
+		};
+		finalArray.push(goingArray[j]);
+	}
+	
+	return (finalArray.map((user, idx)=>{<MemberTile user={ user } />}))
+}
+
+/*groupEvent.going.map((user, idx) => <MemberTile user={ user } />)*/
+
+//fetch and store universities if they are not already fetched
+class EventItemUsers extends React.Component{
+	render(){
+		const {groupEvent, universities, fetchAllUniversitiesSuccess, 
+			fetchAllUniversitiesFailure, showSnackbar} = this.props;
+		if(universities.length<2){
+			fetchAllUniversities().payload.then((response) => {
+	        if (!response.error) {
+	          fetchAllUniversitiesSuccess(response.data);
+	          return (updateGoingListWithUniversities(groupEvent.going,universities));
+	        } else {
+	          fetchAllUniversitiesFailure(response.error);
+	          showSnackbar(response.error);
+	          return (<h2>Error opening attendees</h2>)
+		        }
+	      })
+		}else{
+			return (updateGoingListWithUniversities(groupEvent.going,universities));
+		}
+	}
+}
+
 class EventItemCreated extends React.Component{
 	state = {
 		open: false,
@@ -90,9 +137,11 @@ class EventItemCreated extends React.Component{
 		onTouchTap={this.handleClose}
 		/>
 		];
+
 		const {groupEvent,homeGroupDetails, showSnackbar, user, 
 			goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate,
-			fetchEvents} = this.props;
+			fetchEvents, fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure,
+			universities} = this.props;
 		const cardText = truncate(groupEvent.detail, 300);
 		return (
 			<div className='row center-xs'>
@@ -105,7 +154,13 @@ class EventItemCreated extends React.Component{
 			onRequestClose={this.handleClose}
 			autoScrollBodyContent={true}
 			>
-			{groupEvent.going.map((user, idx) => <MemberTile user={ user } />)}
+			{<EventItemUsers
+				groupEvent={groupEvent}
+				universities={universities}
+				fetchAllUniversitiesSuccess={fetchAllUniversitiesSuccess}
+				fetchAllUniversitiesFailure={fetchAllUniversitiesFailure}
+				showSnackbar={showSnackbar}
+				/>}
 			</Dialog>
 
 			<Card className="event-item-card col-xs-10" initiallyExpanded={true}>
@@ -180,7 +235,10 @@ EventItemCreated.propTypes = {
   user: PropTypes.object.isRequired,
   goForAnEventSuccessUpdate: PropTypes.func.isRequired,
   ungoForAnEventSuccessUpdate: PropTypes.func.isRequired,
-  fetchEvents: PropTypes.func.isRequired
+  fetchEvents: PropTypes.func.isRequired,
+  fetchAllUniversitiesSuccess:PropTypes.func.isRequired,
+  fetchAllUniversitiesFailure:PropTypes.func.isRequired,
+  universities:PropTypes.array.isRequired
 };
 
 export default EventItemCreated;

@@ -37,7 +37,7 @@ export default class ProfilePaper extends React.Component {
                   <Row>
                     <Col xs={12} sm={4} className="table-header">On exchange to</Col>
                     <Col xs={12} sm={8} className="table-cell">
-                      { userExchangeUniversities.map(uni => <p>{ uni.name }</p>) }
+                      { userExchangeUniversities.map((uni, idx) => {<p key={idx}>{ uni.name }</p>}) }
                       { /*userExchangeUniversities.name*/ }
                     </Col>
                   </Row>

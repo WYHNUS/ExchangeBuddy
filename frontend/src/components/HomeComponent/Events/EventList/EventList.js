@@ -22,7 +22,8 @@ export default class EventsList extends React.Component {
 
 	render() {
     const { source, showSnackbar, user,
-      goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate } = this.props;
+      goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate,
+      fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure, universities } = this.props;
     const { homeEvents, loading, error } = this.props.homeEvents;
 
     /*const EventItem = ({ key, source, groupEvent }) => {
@@ -60,7 +61,10 @@ export default class EventsList extends React.Component {
               showSnackbar={showSnackbar} user={user} 
               goForAnEventSuccessUpdate={goForAnEventSuccessUpdate}
               ungoForAnEventSuccessUpdate={ungoForAnEventSuccessUpdate}
-              fetchEvents={this.props.fetchEvents}/>
+              fetchEvents={this.props.fetchEvents}
+              fetchAllUniversitiesSuccess={fetchAllUniversitiesSuccess}
+              fetchAllUniversitiesFailure={fetchAllUniversitiesFailure}
+              universities={universities}/>
           /*<EventItem key={ idx } source={ source } groupEvent={ groupEvent }/>*/ ) }
 
         <div className='row center-xs'>
@@ -87,6 +91,9 @@ EventsList.propTypes = {
   user: PropTypes.object.isRequired,
   goForAnEventSuccessUpdate: PropTypes.func.isRequired,
   ungoForAnEventSuccessUpdate: PropTypes.func.isRequired,
-  fetchEvents:PropTypes.func.isRequired
+  fetchEvents:PropTypes.func.isRequired,
+  fetchAllUniversitiesSuccess:PropTypes.func.isRequired,
+  fetchAllUniversitiesFailure:PropTypes.func.isRequired,
+  universities:PropTypes.array.isRequired
   //fetchEvents: PropTypes.func.isRequired
 };
