@@ -26,13 +26,13 @@ const Search = React.createClass({
 			onRequestChange={(open) => this.props.toggleHomeSearchDrawerVisibility(open)}>
 
 			<div className="row center-xs">
-			<SearchBar/>
+			{/*<SearchBar/>*/}
 			</div>
 			<div className="row center-xs">
 			<GroupList/>
 			</div>
 			<div className="row center-xs">
-			<UniversitySearchList/>
+			{/*<UniversitySearchList/>*/}
 			</div>
 
 			

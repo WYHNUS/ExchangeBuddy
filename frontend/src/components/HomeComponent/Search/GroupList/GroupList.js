@@ -29,9 +29,10 @@ class GroupItem extends React.Component {
         <ListItem
         className={parseInt(index)===parseInt(selected)?'selected-group':null}
         primaryText={group.name}
-        leftAvatar={<Avatar src={ imageUrl } size={ 40 } style={{ objectFit: 'contain', backgroundColor: '#fff'}}/>}
         onTouchTap={goToGroup}
         />
+        {/*
+        leftAvatar={<Avatar src={ imageUrl } size={ 40 } style={{ objectFit: 'contain', backgroundColor: '#fff'}}/>}*/}
         </div>
         );
     }
