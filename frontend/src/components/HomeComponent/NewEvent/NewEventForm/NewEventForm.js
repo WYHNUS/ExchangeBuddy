@@ -50,8 +50,9 @@ const newEventForm = (callback, userId, location, id, postEvents, showSnackbar) 
     id,
     userId
      );
-    showSnackbar('Event created!');
+    
     browserHistory.push(`/home/${id}/events`);
+    showSnackbar('Event created!');
 
   }else{
     showSnackbar(errors[0]);
@@ -108,10 +109,10 @@ const validate = values => {
 }
 
 var INITIAL_LOCATION = {
-  address: 'London, United Kingdom',
+  address: 'National University of Singapore',
   position: {
-    latitude: 51.5085300,
-    longitude: -0.1257400
+    latitude: 1.3224,
+    longitude: 103.8198
   }
 };
 
@@ -122,30 +123,37 @@ var ATLANTIC_OCEAN = {
 
 var INITIAL_MAP_ZOOM_LEVEL = 8;
 
-
 class NewEventForm extends Component {
-    static defaultProps = {
-    	center: {lat: 59.938043, lng: 30.337157},
-    	zoom: 9
-    };
 
   constructor(props){
     super(props);
-    // const geocoder = new google.maps.Geocoder();
+    //const geocoder = new google.maps.Geocoder();
     // console.log(geocoder);
     const minDate = new Date();
     this.state={
       minDate:minDate,
       isGeocodingError: false,
-      foundAddress: INITIAL_LOCATION.address
+      foundAddress: INITIAL_LOCATION.address,
+      position:null
     }
     this.updateMinDate=this.updateMinDate.bind(this);
+    this.updateMap=this.updateMap.bind(this);
     this.setMapElementReference=this.setMapElementReference.bind(this);
+    this.setSearchInputElementReference=this.setSearchInputElementReference.bind(this);
+  }
+
+  setSearchInputElementReference(inputReference) {
+    this.searchInputElement = inputReference;
   }
 
   updateMinDate(date){
     this.setState({...this.state, minDate:date});
     //console.log(this.state.minDate);
+  }
+
+  updateMap(isGeocodingError, foundAddress, position){
+    this.setState({...this.state, isGeocodingError:isGeocodingError, 
+      foundAddress:foundAddress, position:position})
   }
 
   setMapElementReference(mapElementReference){
@@ -159,7 +167,13 @@ class NewEventForm extends Component {
         center: {
           lat: INITIAL_LOCATION.position.latitude,
           lng: INITIAL_LOCATION.position.longitude
-        }
+        },
+        zoomControl: true,
+        mapTypeControl: false,
+        scaleControl: false,
+        streetViewControl: false,
+        rotateControl: true,
+        fullscreenControl: false
       });
 
     this.marker = new google.maps.Marker({
@@ -170,11 +184,14 @@ class NewEventForm extends Component {
         }
     });
     this.geocoder = new google.maps.Geocoder();
+    console.log(this.map,this.marker, this.geocoder);
   }
 
   geocodeAddress(address) {
+    console.log('address', address);
     this.geocoder.geocode({ 'address': address }, function handleResults(results, status) {
 
+      console.log(results);
       if (status === google.maps.GeocoderStatus.OK) {
 
         this.setState({
@@ -240,11 +257,11 @@ class NewEventForm extends Component {
       <form onSubmit={ submitHandler }>
       <h1>{id ? 'Edit event' : 'New event'}</h1>
 
-      <div className="row center-xs">
+      {/*<div className="row center-xs">
         <div className="col-xs-11 col-md-8">
           <Field name="imageUpload" component={ImageUpload}/>
         </div>
-      </div>
+      </div>*/}
 
       <div className="row center-xs">
         <div className="col-xs-11 col-md-8">
@@ -301,16 +318,33 @@ class NewEventForm extends Component {
 	    bootstrapURLKeys = {{key:process.env.GOOGLE_MAP_APIKEY}}
       defaultCenter={this.props.center}
       defaultZoom={this.props.zoom}></GoogleMap>*/}
+      <div>
+      {
+        this.state.isGeocodingError 
+        ? 
+        <p className="bg-danger">Address not found.</p>
+        :
+        <p className="bg-info">{this.state.foundAddress}</p>
+      }
+      </div>
       <div className="map" ref={this.setMapElementReference}></div>
 
       <div className="row center-xs">
         <div className="col-xs-11 col-md-8">
-          <Field name="address" component={TextField} fullWidth={true}
+          {/*<Field name="address" component={TextField} fullWidth={true}
           floatingLabelText="Address" floatingLabelStyle={{left: 0}}
           errorStyle={{textAlign: "left"}}
-          multiLine={false} />
+          multiLine={false} />*/}
+          <TextField ref={this.setSearchInputElementReference} hintText="Enter Location"/>
+          <RaisedButton label="Find Location"
+          labelStyle={{fontSize:"1.2rem"}} style={{margin: "2vh 0 5vh", width: "50%"}}
+          disabled={submitting} primary={true}
+          onTouchTap={()=>{this.geocodeAddress(this.searchInputElement.value)}}
+          />
         </div>
       </div>
+
+
 
       <div className="col-xs-12">
         <RaisedButton type="submit" label="Submit"

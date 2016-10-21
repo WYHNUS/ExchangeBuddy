@@ -67,7 +67,7 @@ const ungoForAnEvent = (EventId, UserId, showSnackbar,ungoForAnEventSuccessUpdat
 }
 
 const updateGoingListWithUniversities=({goingArray, universities})=>{
-	console.log(goingArray,universities);
+	//
 	var finalArray = [];
 	for(var j=0;j<goingArray.length;j++){
 		var uniName = "";
@@ -95,18 +95,21 @@ class EventItemUsers extends React.Component{
 	render(){
 		const {groupEvent, universities, fetchAllUniversitiesSuccess, 
 			fetchAllUniversitiesFailure, showSnackbar} = this.props;
+			//console.log(groupEvent, universities)
 		if(universities.length<2){
 			fetchAllUniversities().payload.then((response) => {
 	        if (!response.error) {
 	          fetchAllUniversitiesSuccess(response.data);
-	          return (updateGoingListWithUniversities(groupEvent.going,universities));
+	          console.log(groupEvent.going,response.data);
+	          return (updateGoingListWithUniversities(groupEvent.going,response.data));
 	        } else {
 	          fetchAllUniversitiesFailure(response.error);
 	          showSnackbar(response.error);
 	          return (<h2>Error opening attendees</h2>)
-		        }
+		    }
 	      })
 		}else{
+			//console.log(groupEvent.going,universities);
 			return (updateGoingListWithUniversities(groupEvent.going,universities));
 		}
 	}
