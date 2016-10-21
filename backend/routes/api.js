@@ -44,6 +44,7 @@ router.get('/me', verifyToken, function(req, res) {
 router.get('/user/:id', /*verifyToken,*/ UserCtrl.getUser);
 router.put('/verificationemail', UserCtrl.createUser);
 router.get('/verify/:token', MailCtrl.verifyToken);
+router.get('/resendVerificationMail/:userId', MailCtrl.resend);
 
 router.get('/country', /*verifyToken,*/ CountryCtrl.getAllCountries);
 router.get('/country/:id', /*verifyToken,*/ CountryCtrl.getCountry);
