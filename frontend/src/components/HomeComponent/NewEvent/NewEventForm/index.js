@@ -4,7 +4,7 @@ import Loading from '../../../Loading';
 // Component
 import ChildComponent from './NewEventForm';
 
-import {postEvents} from '../../../../actions/home'
+import {postEvents, fetchEvents, fetchEventsSuccess, fetchEventsFailure} from '../../../../actions/home'
 import {showSnackbar} from '../../../../actions/messageSnackbar';
 
 // Redux
@@ -19,13 +19,20 @@ const mapDispatchToProps = (dispatch) => {
 				if (!response.error) {
 					console.log(response.data);
 					dispatch(showSnackbar('Posted an event!'));
+					dispatch(fetchEvents(GroupId)).payload.then((response) => {
+						if (!response.error) {
+							dispatch(fetchEventsSuccess(response.data));
+						} else {
+							dispatch(fetchEventsFailure(response.error));
+						}
+					});
 				} else {
 					console.log(response.error);
 					dispatch(showSnackbar('Error in posting event'));
 				}
 			});
 		},
-		showSnackbar:(message)=>{dispatch(showSnackbar(message))}
+		showSnackbar:(message)=>{dispatch(showSnackbar(message))},
 	};
 };
 

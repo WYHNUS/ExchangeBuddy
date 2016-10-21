@@ -12,7 +12,7 @@ import ImageUpload from '../../../ImageUpload/index.js'
 import validUrl from 'valid-url'
 import GoogleMap from 'google-map-react';
 
-const newEventForm = (callback, userId, isGeocodingError, foundAddress, position, id, postEvents, showSnackbar) => (values) => {
+const newEventForm = (callback, userId, isGeocodingError, foundAddress, position, id, postEvents, showSnackbar, fetchEvents) => (values) => {
 
   const errors = [];
   const dateFields = ['startDate', 'startTime', 'endDate', 'endTime'];
@@ -46,20 +46,18 @@ const newEventForm = (callback, userId, isGeocodingError, foundAddress, position
   if(errors.length===0){
     callback();
      postEvents(
-    position.latitude,
-    position.longitude,
-    foundAddress,
-    values.title,
-    values.startTime,
-    values.endTime,
-    values.details,
-    null,
-    id,
-    userId
-     );
-    
+      position.latitude,
+      position.longitude,
+      foundAddress,
+      values.title,
+      values.startTime,
+      values.endTime,
+      values.details,
+      null,
+      id,
+      userId
+       );
     browserHistory.push(`/home/${id}/events`);
-    showSnackbar('Event created!');
 
   }else{
     showSnackbar(errors[0]);
@@ -189,19 +187,17 @@ class NewEventForm extends Component {
         }
     });
     this.geocoder = new google.maps.Geocoder();
-    console.log(this.map,this.marker, this.geocoder);
+    //console.log(this.map,this.marker, this.geocoder);
   }
 
   geocodeAddress(address) {
     //console.log('address', address);
+    this.setState({isGeocodingError: true});
     this.geocoder.geocode({ 'address': address }, function handleResults(results, status) {
 
       console.log(results);
       if (status === google.maps.GeocoderStatus.OK) {
-
-        //console.log(this.state);
         this.setState({
-          ...this.state,
           foundAddress: results[0].formatted_address,
           isGeocodingError: false,
           position:{
@@ -209,11 +205,8 @@ class NewEventForm extends Component {
             longitude:results[0].geometry.location.lng(),
           }
         });
-        console.log(this.state);
-
         this.map.setCenter(results[0].geometry.location);
         this.marker.setPosition(results[0].geometry.location);
-
         return;
       }
 
@@ -259,7 +252,7 @@ class NewEventForm extends Component {
   }*/
 
   render() {
-    const { handleSubmit, pristine, reset, submitting, user, postEvents, showSnackbar } = this.props;
+    const { handleSubmit, pristine, reset, submitting, user, postEvents, showSnackbar, fetchEvents } = this.props;
     const {userId} = user.userObject; 
     const {id} = this.props.homeGroupDetails.homeGroupDetails;
 
@@ -272,7 +265,8 @@ class NewEventForm extends Component {
         this.state.position, 
         id, 
         postEvents, 
-        showSnackbar));
+        showSnackbar, 
+        fetchEvents));
 
     return (
       <form onSubmit={ submitHandler }>
@@ -358,7 +352,7 @@ class NewEventForm extends Component {
           multiLine={false} />*/}
           <TextField ref={this.setSearchInputElementReference} hintText="Enter Location"/>
           <RaisedButton label="Find Location"
-          labelStyle={{fontSize:"1.2rem"}} style={{margin: "2vh 0 5vh", width: "50%"}}
+          labelStyle={{fontSize:"1.2rem"}}
           disabled={submitting} primary={true}
           onTouchTap={()=>{
             this.geocodeAddress(this.searchInputElement.refs.component.input.value);
@@ -456,7 +450,8 @@ class EndTimePick extends React.Component{
 NewEventForm.propTypes = {
   homeGroupDetails: PropTypes.object.isRequired,
   postEvents: PropTypes.func.isRequired,
-  showSnackbar: PropTypes.func.isRequired
+  showSnackbar: PropTypes.func.isRequired,
+  fetchEvents: PropTypes.func.isRequired
 };
 
 
