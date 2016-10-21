@@ -25,6 +25,14 @@
 		cursor: pointer;
 		text-decoration: underline;
 		font-weight: bold;
+		color: darkgrey;
+	}
+	.a{
+		#location-link{
+			margin-left: 3px;
+			font-weight: bold;
+			color: darkgrey;
+		}
 	}
 
 	.event-item-card-text{
@@ -78,5 +86,5 @@
 .map{
 	height: 200px;
 /*	padding-left: 10px;
-	padding-right: 10px;*/
+padding-right: 10px;*/
 }

@@ -12,7 +12,7 @@ import ImageUpload from '../../../ImageUpload/index.js'
 import validUrl from 'valid-url'
 import GoogleMap from 'google-map-react';
 
-const newEventForm = (callback, userId, location, id, postEvents, showSnackbar) => (values) => {
+const newEventForm = (callback, userId, isGeocodingError, foundAddress, position, id, postEvents, showSnackbar) => (values) => {
 
   const errors = [];
   const dateFields = ['startDate', 'startTime', 'endDate', 'endTime'];
@@ -36,12 +36,19 @@ const newEventForm = (callback, userId, location, id, postEvents, showSnackbar) 
     }
   }
 
+  if(isGeocodingError){
+    errors.push('Please enter a valid address before submitting')
+  }
+
+  //logic to check if you have actually found an address!
+
   //if there are some errors, show them!
   if(errors.length===0){
     callback();
      postEvents(
-    1.34132,
-    109.3214,
+    position.latitude,
+    position.longitude,
+    foundAddress,
     values.title,
     values.startTime,
     values.endTime,
@@ -109,10 +116,10 @@ const validate = values => {
 }
 
 var INITIAL_LOCATION = {
-  address: 'National University of Singapore',
+  address: '20 Lower Kent Ridge Rd, Singapore',
   position: {
-    latitude: 1.3224,
-    longitude: 103.8198
+    latitude: 1.298926,
+    longitude: 103.776104
   }
 };
 
@@ -127,14 +134,12 @@ class NewEventForm extends Component {
 
   constructor(props){
     super(props);
-    //const geocoder = new google.maps.Geocoder();
-    // console.log(geocoder);
     const minDate = new Date();
     this.state={
       minDate:minDate,
       isGeocodingError: false,
       foundAddress: INITIAL_LOCATION.address,
-      position:null
+      position:INITIAL_LOCATION.position
     }
     this.updateMinDate=this.updateMinDate.bind(this);
     this.updateMap=this.updateMap.bind(this);
@@ -188,16 +193,23 @@ class NewEventForm extends Component {
   }
 
   geocodeAddress(address) {
-    console.log('address', address);
+    //console.log('address', address);
     this.geocoder.geocode({ 'address': address }, function handleResults(results, status) {
 
       console.log(results);
       if (status === google.maps.GeocoderStatus.OK) {
 
+        //console.log(this.state);
         this.setState({
+          ...this.state,
           foundAddress: results[0].formatted_address,
-          isGeocodingError: false
+          isGeocodingError: false,
+          position:{
+            latitude:results[0].geometry.location.lat(),
+            longitude:results[0].geometry.location.lng(),
+          }
         });
+        console.log(this.state);
 
         this.map.setCenter(results[0].geometry.location);
         this.marker.setPosition(results[0].geometry.location);
@@ -247,11 +259,20 @@ class NewEventForm extends Component {
   }*/
 
   render() {
-    const { handleSubmit, pristine, reset, submitting, location, user, postEvents, showSnackbar } = this.props;
+    const { handleSubmit, pristine, reset, submitting, user, postEvents, showSnackbar } = this.props;
     const {userId} = user.userObject; 
     const {id} = this.props.homeGroupDetails.homeGroupDetails;
 
-    const submitHandler = handleSubmit(newEventForm(reset, userId, location, id, postEvents, showSnackbar));
+    const submitHandler = handleSubmit(
+      newEventForm(
+        reset, 
+        userId, 
+        this.state.isGeocodingError,
+        this.state.foundAddress, 
+        this.state.position, 
+        id, 
+        postEvents, 
+        showSnackbar));
 
     return (
       <form onSubmit={ submitHandler }>
@@ -281,7 +302,7 @@ class NewEventForm extends Component {
       </div>
 
       <div className='row center-xs'>
-      <div className='col-xs-11 col-md-6'>
+      <div className='col-xs-8 col-md-4'>
       <div className="row center-xs">
         <div className="col-xs-4">
         <h5>Start Date/Time</h5>
@@ -297,7 +318,7 @@ class NewEventForm extends Component {
         </div>
       </div>
       </div>
-      <div className='col-xs-11 col-md-6'>
+      <div className='col-xs-8 col-md-4'>
       <div className="row center-xs">
         <div className="col-xs-4">
         <h5>End Date/Time</h5>
@@ -339,7 +360,9 @@ class NewEventForm extends Component {
           <RaisedButton label="Find Location"
           labelStyle={{fontSize:"1.2rem"}} style={{margin: "2vh 0 5vh", width: "50%"}}
           disabled={submitting} primary={true}
-          onTouchTap={()=>{this.geocodeAddress(this.searchInputElement.value)}}
+          onTouchTap={()=>{
+            this.geocodeAddress(this.searchInputElement.refs.component.input.value);
+          }}
           />
         </div>
       </div>

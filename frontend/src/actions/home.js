@@ -222,12 +222,13 @@ POSTING EVENTS TO A GROUP
 
 export const POST_EVENTS = 'POST_EVENTS';
 
-export function postEvents(lat, lng, title, startTime, endTime, detail, imgSrc, GroupId, UserId){
+export function postEvents(lat, lng, location, title, startTime, endTime, detail, imgSrc, GroupId, UserId){
 
 	var obj = 
 	{
 		lat: lat,
 		lng: lng,
+		location:location,
 		title: title,
 		startTime: startTime,
 		endTime: endTime,
@@ -236,7 +237,7 @@ export function postEvents(lat, lng, title, startTime, endTime, detail, imgSrc, 
 		GroupId: GroupId,
 		UserId: UserId
 	}
-	console.log(obj);
+	//console.log(obj);
 
 	const req = axios.put(`${ROOT_URL}/event`, obj);
 	return {

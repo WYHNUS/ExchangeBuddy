@@ -12,16 +12,16 @@ import { connect } from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		postEvents:(lat, lng, title, startTime, endTime, detail, imgSrc, GroupId, UserId)=>{
-			dispatch(postEvents(lat, lng, title, startTime, endTime, detail, imgSrc, GroupId, UserId))
+		postEvents:(lat, lng, location, title, startTime, endTime, detail, imgSrc, GroupId, UserId)=>{
+			dispatch(postEvents(lat, lng, location, title, startTime, endTime, detail, imgSrc, GroupId, UserId))
 			.payload.then((response) => {
 				console.log(response);
 				if (!response.error) {
 					console.log(response.data);
-					dispatch(showSnackbar(response.data));
+					dispatch(showSnackbar('Posted an event!'));
 				} else {
 					console.log(response.error);
-					dispatch(showSnackbar(response.error));
+					dispatch(showSnackbar('Error in posting event'));
 				}
 			});
 		},
