@@ -197,12 +197,12 @@ import {
 
 	const initialState={
 		//selectedGroup:{index:-1,groupId:-1},
-		homeGroups:{selected:-1,homeGroups:[],error:null,loading:false},
+		homeGroups:{groupsLoaded:false,selected:-1,homeGroups:[],error:null,loading:false},
 		homeGroupDetails:{detailsLoaded:false,homeGroupDetails:{},error:null,loading:false},
 		homeEvents:{homeEvents:[],error:null,loading:false},
 		homeMessages:{homeMessages:[],error:null,loading:false},
 		homeFriends:{homeFriends:[],error:null,loading:false},
-		homeTabValue:'events'
+		homeTabValue:'events',
 	}
 
 
@@ -243,14 +243,14 @@ import {
 				return {...state, homeEvents: {homeEvents: [], error: null, loading: false}};
 
 				case FETCH_MY_GROUPS:
-				return {...state, homeGroups: {selected:-1, homeGroups:[], error: null, loading: true}};
+				return {...state, homeGroups: {groupsLoaded:false, selected:-1, homeGroups:[], error: null, loading: true}};
 				case FETCH_MY_GROUPS_SUCCESS:
-				return {...state, homeGroups: {selected:0, homeGroups: action.payload, error: null, loading: false}};
+				return {...state, homeGroups: {groupsLoaded:true, selected:0, homeGroups: action.payload, error: null, loading: false}};
 				case FETCH_MY_GROUPS_FAILURE:
 				error = action.payload || {message: action.payload};
-				return {...state, homeGroups: {selected:-1, homeGroups: [], error: error, loading: false}};
+				return {...state, homeGroups: {groupsLoaded:false, selected:-1, homeGroups: [], error: error, loading: false}};
 				case RESET_MY_GROUPS:
-				return {...state, homeGroups: {selected:-1, homeGroups: [], error: null, loading: false}};
+				return {...state, homeGroups: {groupsLoaded:false, selected:-1, homeGroups: [], error: null, loading: false}};
 
 				case FETCH_CURRENT_GROUP:
 				return {...state, homeGroupDetails: {...state.homeGroupDetails, error: null, loading: true, detailsLoaded:false},

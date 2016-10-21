@@ -8,6 +8,7 @@ import { toggleBottomBarVisibility,
     toggleSelectedHomeGroup, fetchEvents, fetchEventsSuccess, 
     fetchEventsFailure, resetEvents} from '../actions/home'
     import Header from '../components/Header';
+import {browserHistory} from 'react-router';
 //import SwitchGroupDialog from '../components/SwitchGroupDialog';
 
 class Home extends React.Component{
@@ -38,11 +39,12 @@ class Home extends React.Component{
   }
 
   render() {
+    const{homeGroupsLoaded} = this.props;
     return (
       <div>
       {<Header params={ this.props.params } tab={ this.props.routes[2].path } />}
       <div id="group-container">
-      { this.props.children }
+      { homeGroupsLoaded?(this.props.children):(<h1>Loading home groups...</h1>) }
       </div>
 
     {/*<SwitchGroupDialog />*/}
@@ -64,6 +66,7 @@ const mapDispatchToProps = (dispatch) => {
         if (!response.error) {
           var selectedIndex = 0;
           dispatch(fetchMyGroupsSuccess(response.data));
+          browserHistory.push(`/home/${response.data[0].id}`)
           dispatch(toggleSelectedHomeGroup(selectedIndex))
           dispatch(fetchEvents(response.data[selectedIndex].id)).payload.then((response) => {
             if (!response.error) {
@@ -89,7 +92,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state)=>{
   return {
-    user:state.user.userObject
+    user:state.user.userObject,
+    homeGroupsLoaded: state.home.homeGroups.groupsLoaded
   };
 }
 

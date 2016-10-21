@@ -52,7 +52,7 @@ export const getRoutes = (store) =>{
     // Now you can access the store object here.
     const state = store.getState();
     replace({
-      pathname: `/home/${state.home.homeGroupDetails.homeGroupDetails.id}`, //should be state.user.defaultGroupId
+      pathname: `/home/default`, //should be state.user.defaultGroupId
       state: { nextPathname: nextState.location.pathname }
     });
   }
