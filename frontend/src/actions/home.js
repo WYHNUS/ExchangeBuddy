@@ -64,7 +64,7 @@ export function fetchGroupMessages(GroupId){
 export function fetchGroupMessagesSuccess(group){
 	return {
 		type: FETCH_GROUP_MESSAGES_SUCCESS,
-		payload: group
+		payload: group.reverse()
 	};
 }
 

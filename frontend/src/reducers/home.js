@@ -276,7 +276,7 @@ import {
 				case RESET_GROUP_MESSAGES:
 				return {...state, homeMessages: { homeMessages: [], error: null, loading: false}};
 				case UPDATE_GROUP_MESSAGE_FROM_SOCKET:
-				return {...state, homeMessages: { homeMessages: state.homeMessages.homeMessages.concat([action.payload]), error: null, loading: false}};
+				return {...state, homeMessages: { homeMessages: [action.payload].concat(state.homeMessages.homeMessages), error: null, loading: false}};
 
 				case GO_FOR_AN_EVENT_SUCCESS_UPDATE:
 				var EventId = action.payload.EventId;
