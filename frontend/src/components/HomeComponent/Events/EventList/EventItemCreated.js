@@ -38,9 +38,9 @@ const styles = {
 };
 
 const paperStyle = {
-  width: 100,
-  textAlign: 'center',
-  display: 'inline-block',
+	width: 100,
+	textAlign: 'center',
+	display: 'inline-block',
 };
 
 
@@ -206,7 +206,7 @@ class EventItemCreated extends React.Component{
 				}
 				</Dialog>
 
-				<Card className="event-item-card col-xs-10" initiallyExpanded={true}>
+				<Card className="event-item-card col-xs-11 col-md-11" initiallyExpanded={true}>
 				<CardTitle 
 				title={ groupEvent.title }
 				subtitle={  <Link id='link' to={`/profile/${groupEvent.User.id}`}>{`by ${groupEvent.User.name}`}</Link>} />
@@ -234,36 +234,24 @@ class EventItemCreated extends React.Component{
 						true ?
 						<div className='row center-xs'>
 						<div className='col-xs-6 col-md-4'>
-							{/*<SelectField
-							value={this.state.value}
-							onChange={this.handleChangeGoing}
-							>
-							<MenuItem value={1} primaryText="Not going" />
-							<MenuItem value={2} primaryText="Going" />
-						</SelectField>*/}
+						<Paper style={paperStyle} zDepth={1}>
+						<Checkbox
+						className='event-item-card-going-button'
+						label="GOING"
+						checked={this.state.userIsGoing}
+						onTouchTap={()=>this.handleChangeGoing()}
+						/>
+						</Paper>
 
-						{/*<RaisedButton
-						onTouchTap={this.handleGoingTouchTap}
-						label={this.state.userIsGoing?("NOT GOING"):("GOING")}
-					/>*/}
-					<Paper style={paperStyle} zDepth={1}>
-					<Checkbox
-					className='event-item-card-going-button'
-					label="GOING"
-					checked={this.state.userIsGoing}
-					onTouchTap={()=>this.handleChangeGoing()}
-					/>
-					</Paper>
+						</div>
 
-					</div>
+						</div>
+						: null }
+						</CardActions>
+						</Card>
+						</div>
 
-					</div>
-					: null }
-					</CardActions>
-					</Card>
-					</div>
-
-					);
+						);
 		}
 	}
 

@@ -105,7 +105,7 @@ $headerStickyHeight: 95px;
   flex-direction: row !important; font-size: 18px !important;
   span { margin-bottom: 0 !important; margin-right: 5px; }
 
-  @include media-xxs-only {
+  @include media-xxxs-only {
     span { margin-right: 0; }
     &:not(span) { font-size: 0 !important; }
   }

@@ -42,8 +42,12 @@
 
 /* Media Queries */
 
-@mixin media-xxs-only {
+@mixin media-xxxs-only {
   @media (max-width: 364px) { @content };
+}
+
+@mixin media-xxs-only {
+  @media (max-width: 500px) { @content };
 }
 
 @mixin media-xs-only {

@@ -302,7 +302,7 @@ class NewEventForm extends Component {
       </div>
 
       <div className='row center-xs'>
-      <div className='col-xs-8 col-md-4'>
+      <div className='col-xs-12 col-md-4'>
       <div className="row center-xs">
         <div className="col-xs-4">
         <h5>Start Date/Time</h5>
@@ -318,7 +318,7 @@ class NewEventForm extends Component {
         </div>
       </div>
       </div>
-      <div className='col-xs-8 col-md-4'>
+      <div className='col-xs-12 col-md-4'>
       <div className="row center-xs">
         <div className="col-xs-4">
         <h5>End Date/Time</h5>

@@ -67,17 +67,17 @@ export default class EventsList extends React.Component {
               universities={universities}/>
           /*<EventItem key={ idx } source={ source } groupEvent={ groupEvent }/>*/ ) }
 
-        <div className='row center-xs'>
-          <div className='col-xs event-item-button'>
-            { this.state.showAll ? null
-              : <RaisedButton 
-              className="event-item-button-add" 
-              style={{display:"block"}} 
-              label="Show all events" 
-              primary={true} 
-              onTouchTap={ showAllEvents } /> }
-          </div>
-        </div>
+        {/*<div className='row center-xs'>
+                  <div className='col-xs event-item-button'>
+                    { this.state.showAll ? null
+                      : <RaisedButton 
+                      className="event-item-button-add" 
+                      style={{display:"block"}} 
+                      label="Show all events" 
+                      primary={true} 
+                      onTouchTap={ showAllEvents } /> }
+                  </div>
+                </div>*/}
 			</div>
 		);
 	}
