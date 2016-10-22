@@ -118,7 +118,7 @@ class Step3 extends React.Component {
           name="homeUniEmail"
           floatingLabelText="Your university email address" />
 
-        { this.props.isEmailSent ? <p>Verification email sent!</p> : null }
+        { this.props.isEmailSent ? <p>Verification email sent! Check your mail to start connecting with people!</p> : null }
         { this.props.authEmailError ? <p>{ this.props.authEmailError }</p> : null}
 
         <div style={{ marginTop: 12 }}>

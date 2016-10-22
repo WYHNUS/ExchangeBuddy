@@ -6,13 +6,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { showSnackbar } from '../../actions/messageSnackbar';
 import { pageVisibility } from '../../actions/pageVisibility';
-import {updateGroupMessageFromSocket} from '../../actions/home';
+import {updateGroupMessageFromSocket,resetGroupMessages} from '../../actions/home';
 import {toggleHomeTab} from '../../actions/home';
 
 import SubmitForm from '../../components/HomeComponent/Chat/SubmitForm';
 import MessageList from '../../components/HomeComponent/Chat/MessageList';
 import {ROOT_URL} from '../../util/backend';
 import Socket from '../../util/socket';
+
+import {browserHistory} from 'react-router';
 
 /*var socket = io.connect(ROOT_URL);
 
@@ -27,7 +29,8 @@ const socket = new Socket();
 class Chat extends React.Component{
 
 	componentWillMount(){
-		this.props.toggleHomeTab('chat');		
+		this.props.toggleHomeTab('chat');	
+		this.props.resetGroupMessages();	
 	}
 
 	componentDidMount(){
@@ -38,7 +41,7 @@ class Chat extends React.Component{
 				this.props.homeGroupDetails.homeGroupDetails.name,
 				parseInt(this.props.homeGroupDetails.homeGroupDetails.id),
 				this.props.user.userObject.name,
-				parseInt(this.props.user.userObject.userId),
+				parseInt(this.props.user.userObject.id),
 				this.chatReceive.bind(this)
 			)
 			
@@ -88,7 +91,8 @@ const mapDispatchToProps = (dispatch) => {
 		updateGroupMessageFromSocket:(message)=>{
 			dispatch(updateGroupMessageFromSocket(message))
 		},
-		toggleHomeTab:(tab)=>dispatch(toggleHomeTab(tab))
+		toggleHomeTab:(tab)=>dispatch(toggleHomeTab(tab)),
+		resetGroupMessages:()=>{dispatch(resetGroupMessages())}
 
 	};
 };
@@ -96,7 +100,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state)=>{
 	return {
 		homeGroupDetails: state.home.homeGroupDetails,
-		user: state.user
+		user: state.user,
+		homeMessages: state.home.homeMessages
 	};
 }
 

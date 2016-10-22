@@ -1,10 +1,31 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import * as IconsHelper from '../../../util/icons';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
+import { Row, Col } from 'react-flexbox-grid';
+import {browserHistory} from 'react-router';
+
+import ChiThanh from '../../../res/about/ChiThanh.jpg';
+import EugeneNg from '../../../res/about/EugeneNg.jpg';
+import IrvinLim from '../../../res/about/IrvinLim.jpg';
+import KaiYiLee from '../../../res/about/KaiYiLee.jpg';
+import KiatHan from '../../../res/about/KiatHan.jpg';
+import LeonMak from '../../../res/about/LeonMak.jpg';
+import SueMae from '../../../res/about/SueMae.jpg';
+import WangYanHao from '../../../res/about/WangYanHao.jpg';
+import ZhangHanMing from '../../../res/about/ZhangHanMing.jpg';
 
 export default class SettingsList extends React.Component {
+
+	logout(){
+		//this.props.attemptLogout();
+		this.props.clearUser();
+		browserHistory.push('/');
+	}
+
 	render() {
 
 		return (
@@ -19,12 +40,124 @@ export default class SettingsList extends React.Component {
 			showExpandableButton={ true } />
 			<CardText expandable={true}>
 			<div className="settings-info">
-			<h1>About Exchange Buddy</h1>
-			<p>We are a group of passionate students who have always wished that we could find friends and information for our <strong>Overseas Exchange Programme</strong>. That is why we decided to <strong>group</strong> you with your friends and create <strong>ExchangeBuddy</strong>!</p>
-			<p><strong>Exchange Buddy</strong> provides a platform for exchange students to find friends, information and events at the exchange university easily and quickly even before you travel.</p>
-			<h1>About The Team</h1>
-			<p>The first iteration of this application is developed by four students, <strong>Irvin Lim, Leon Mak, Eugene Ng and Lam Chi Thanh</strong></p>
-			<p>The current iteration of this application is developed by four students, <strong>Yan Hao, Hanming, Eugene Ng and Kai Yi</strong></p>
+
+			<h1>About</h1>
+			<p id='about-info'>ExchangeBuddy is for students, by students. We are here to provide you with a better exchange experience by providing you with information and a network for you to interact and know other students on exchange! Believe at ExchangeBuddy, we know that exchange is a once in a lifetime experience and we want you to get the BEST out of it!</p>
+
+			<h2>The Team</h2>
+			<div className="single-profile">
+			<div className="crop row center-xs">
+			<img src={EugeneNg} alt="Eugene Ng" />
+			</div>
+			<div className="row center-xs">
+			<h1>Eugene Ng</h1>
+			</div>
+			<div className="row center-xs">
+			<h2>[Lead Guide]</h2>
+			</div>
+			<div className="row center-xs">
+			<p>"Dream big, do big, make it happen"</p>
+			</div>
+			</div>
+
+			<div className="single-profile">
+			<div className="crop row center-xs">
+			<img src={WangYanHao} alt="WangYanHao" />
+			</div>
+			<div className="row center-xs">
+			<h1>Wang Yan Hao</h1>
+			</div>
+			<div className="row center-xs">
+			<h2>[Full Stack Guru]</h2>
+			</div>
+			<div className="row center-xs">
+			<p>"I love to party, but coding needs me more"</p>
+			</div>
+			</div>
+
+			<div className="single-profile">
+			<div className="crop row center-xs">
+			<img src={KaiYiLee} alt="KaiYiLee" />
+			</div>
+			<div className="row center-xs">
+			<h1>Lee Kai Yi</h1>
+			</div>
+			<div className="row center-xs">
+			<h2>[What you see if what i build]</h2>
+			</div>
+			<div className="row center-xs">
+			<p>"Throw me something to do, and that will be my life"</p>
+			</div>
+			</div>
+
+			<div className="single-profile">
+			<div className="crop row center-xs">
+			<img src={ZhangHanMing} alt="ZhangHanMing" />
+			</div>
+			<div className="row center-xs">
+			<h1>Zhang Han Ming</h1>
+			</div>
+			<div className="row center-xs">
+			<h2>[Backend magician]</h2>
+			</div>
+			<div className="row center-xs">
+			<p>"Logic don't create wonders, magic does"</p>
+			</div>
+			</div>
+			
+			<div className="single-profile">
+			<div className="crop row center-xs">
+			<img src={SueMae} alt="SueMae" />
+			</div>
+			<div className="row center-xs">
+			<h1>Sue Mae</h1>
+			</div>
+			<div className="row center-xs">
+			<h2>[Market lady]</h2>
+			</div>
+			<div className="row center-xs">
+			<p>"I get people talking in the market"</p>
+			</div>
+			</div>
+
+			<div className="single-profile">
+			<div className="crop row center-xs">
+			<img src={KiatHan} alt="KiatHan" />
+			</div>
+			<div className="row center-xs">
+			<h1>KiatHan</h1>
+			</div>
+			<div className="row center-xs">
+			<h2>[Weight lifter]</h2>
+			</div>
+			<div className="row center-xs">
+			<p>"I support the team in areas they need help in"</p>
+			</div>
+			</div>
+
+			<div className="single-profile">
+			<div className="row center-xs">
+			<div className="crop">
+			<img src={IrvinLim} alt="IrvinLim" />
+			</div>
+			<div className="crop">
+			<img src={LeonMak} alt="LeonMak" />
+			</div>
+			<div className="crop">
+			<img src={ChiThanh} alt="ChiThanh" />
+			</div>
+			</div>
+			<div className="row center-xs">
+			<h1>Irvin, Leon, and Thanh</h1>
+			</div>
+			<div className="row center-xs">
+			<h2>[3 musketeers]</h2>
+			</div>
+			<div className="row center-xs">
+			<p>"We set the foundation for the rest to build"</p>
+			</div>
+			</div>
+
 			</div>
 			</CardText>
 			</Card>
@@ -78,11 +211,22 @@ export default class SettingsList extends React.Component {
 			</Card>
 			</div>
 
-			{/*<List>
-			<ListItem primaryText="About" leftIcon={IconsHelper.icon("person")} />
-			<ListItem primaryText="Privacy Policy" leftIcon={IconsHelper.icon("person")} />
-		</List>*/}
-		</div>
-		)
+			<div className='row center-xs'>
+			<RaisedButton 
+			className="settings-item-card-button" 
+			label="Logout" 
+			primary={false} 
+			type="cancel" 
+			onTouchTap={()=>this.logout()}/>
+			</div>
+			</div>
+			)
 }
 }
+
+
+SettingsList.propTypes = {
+  attemptLogout: PropTypes.func.isRequired,
+  clearUser: PropTypes.func.isRequired
+};
+

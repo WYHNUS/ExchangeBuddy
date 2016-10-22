@@ -30,10 +30,7 @@ class Home extends React.Component{
 
     }*/
     
-    this.props.fetchMyGroups(this.props.user.userId);
-
-    //else if user is not authenticated, just fetch selected groupId
-    //this.props.fetchCurrentGroup(1);
+    this.props.fetchMyGroups(this.props.user.id);
   }
 
   componentWillUnmount(){

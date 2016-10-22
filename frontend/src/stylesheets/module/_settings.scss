@@ -9,7 +9,42 @@
 
 .settings-item-card{
 	margin-top: 10px!important;
-	margin-bottom: 10px!important;	
+	margin-bottom: 10px!important;
+	.crop {
+		img{
+			height: 200px;
+		}
+	}
+	#about-info{
+		margin-bottom: 50px;
+	}
+	.single-profile{
+		>div>h1{
+			margin-top: 0px;
+			margin-bottom: 0px;
+		}
+		>div>h2{
+			margin-top: 0px;
+			margin-bottom: 0px;
+		}
+		>div>p{
+			margin-top: 0px;
+			margin-bottom: 30px;
+		}
+	}
+
+}
+
+.settings-item-card-button{
+	margin-top: 100px;
+	width:500px;
+	>button{
+		background-color:crimson!important;
+		>div>div>span{
+			color: white!important;
+		}
+	}
+
 }
 
 

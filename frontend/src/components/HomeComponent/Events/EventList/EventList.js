@@ -55,7 +55,9 @@ export default class EventsList extends React.Component {
 
 		return (
 			<div className="event-list">
-        { homeEvents.slice(0, end).map((groupEvent, idx) => 
+        { 
+          (homeEvents.length>0)?
+          (homeEvents.slice(0, end).map((groupEvent, idx) => 
             <EventItemCreated key={idx} groupEvent={groupEvent} 
               homeGroupDetails={this.props.homeGroupDetails} 
               showSnackbar={showSnackbar} user={user} 
@@ -64,8 +66,13 @@ export default class EventsList extends React.Component {
               fetchEvents={this.props.fetchEvents}
               fetchAllUniversitiesSuccess={fetchAllUniversitiesSuccess}
               fetchAllUniversitiesFailure={fetchAllUniversitiesFailure}
-              universities={universities}/>
-          /*<EventItem key={ idx } source={ source } groupEvent={ groupEvent }/>*/ ) }
+              universities={universities}
+              />
+              )
+          ):
+          (<h2>Add a new event and meet new people!</h2>)
+        }
+          {/*<EventItem key={ idx } source={ source } groupEvent={ groupEvent }/>*/}
 
         {/*<div className='row center-xs'>
                   <div className='col-xs event-item-button'>

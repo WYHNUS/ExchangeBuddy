@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
 import truncate from 'truncate';
 var moment = require('moment');
 import GoogleMap from 'google-map-react';
@@ -95,7 +94,7 @@ class EventItemCreated extends React.Component{
 		const {user, groupEvent} = this.props;
 		var isGoing = false;
 		for(var i=0;i<groupEvent.going.length;i++){
-			if(groupEvent.going[i].id===user.userObject.userId){
+			if(groupEvent.going[i].id===user.userObject.id){
 				isGoing=true;
 			}
 		}
@@ -125,6 +124,7 @@ class EventItemCreated extends React.Component{
 	};
 
 	goForAnEvent(EventId, UserId, showSnackbar,goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents){
+		//console.log(EventId, UserId);
 		const req = axios.post(`${ROOT_URL}/goToEvent`, 
 		{
 			EventId: EventId,
@@ -145,6 +145,7 @@ class EventItemCreated extends React.Component{
 
 	ungoForAnEvent(EventId, UserId, showSnackbar,ungoForAnEventSuccessUpdate, homeGroupDetails, fetchEvents){
 		//console.log(EventId, UserId, showSnackbar);
+		//console.log(EventId, UserId);
 		const req = axios.post(`${ROOT_URL}/unattend`, 
 		{
 			EventId: EventId,
@@ -166,10 +167,10 @@ class EventItemCreated extends React.Component{
 	handleChangeGoing(){
 		const {groupEvent,homeGroupDetails, showSnackbar, user, goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate,fetchEvents} = this.props;
 		if(this.state.userIsGoing){
-			this.ungoForAnEvent(groupEvent.id, user.userObject.userId, showSnackbar, goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents);
+			this.ungoForAnEvent(groupEvent.id, user.userObject.id, showSnackbar, goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents);
 		}
 		else{
-			this.goForAnEvent(groupEvent.id, user.userObject.userId, showSnackbar, goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents);
+			this.goForAnEvent(groupEvent.id, user.userObject.id, showSnackbar, goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents);
 		}
 	}
 
