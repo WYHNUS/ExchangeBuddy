@@ -21,13 +21,13 @@ class TopBar extends Component {
 		browserHistory.goBack();
 	}
 
-  setElementClass(){
+  /*setElementClass(){
     if(this.props.pageVisibility.homeSearchDrawerOpenButtonVisibility){
       return "filter-list-visible";
     }else{
       return "filter-list-invisible";
     }
-  }
+  }*/
 
   getIconElementLeft(){
     const{topBarSettingsButton, topBarBackButtonVisibility} = this.props.pageVisibility;
@@ -43,6 +43,20 @@ class TopBar extends Component {
         <IconButton
         onClick={this.navigateBack}>
         {IconsHelper.materialIcon("chevron_left")}
+        </IconButton>
+        )
+    }else{
+      return (<div style={{margin:"24px"}}></div>)
+    }
+  }
+
+  getIconElementRight(){
+    const{homeSearchDrawerOpenButtonVisibility} = this.props.pageVisibility
+    if(homeSearchDrawerOpenButtonVisibility){
+      return(
+        <IconButton
+        onClick={()=>this.props.toggleHomeSearchDrawerVisibility(true)}>
+        {IconsHelper.icon('menu')}
         </IconButton>
         )
     }else{
@@ -75,12 +89,7 @@ class TopBar extends Component {
           style={{textAlign:"center"}}
           onTitleTouchTap={handleTouchTap}
           iconElementLeft={ this.getIconElementLeft() }
-          iconElementRight={<IconButton
-            className={this.setElementClass()}
-            onClick={()=>this.props.toggleHomeSearchDrawerVisibility(true)}>
-          {/*IconsHelper.materialIcon("filter_list")*/}
-          {IconsHelper.icon('menu')}
-          </IconButton>}
+          iconElementRight={ this.getIconElementRight()}
           showMenuIconButton={true}
           />)
         :

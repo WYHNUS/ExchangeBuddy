@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
-import { toggleBottomBarVisibility, toggleTopBarVisibility } from '../actions/pageVisibility';
+import { toggleBottomBarVisibility, toggleTopBarVisibility,
+toggleTopBarSettingsButtonVisibility } from '../actions/pageVisibility';
 import ProfilePaper from '../components/ProfilePaper';
 
 class Profile extends React.Component{
@@ -8,6 +9,10 @@ class Profile extends React.Component{
 	componentDidMount() {
 		this.props.toggleBottomBarVisibility(true);
 		this.props.toggleTopBarVisibility(true);
+		this.props.toggleTopBarSettingsButtonVisibility(true);
+	}
+	componentWillUnmount(){
+		this.props.toggleTopBarSettingsButtonVisibility(false);
 	}
 
 	render() {
@@ -22,7 +27,8 @@ class Profile extends React.Component{
 const mapDispatchToProps = (dispatch) => {
 	return {
 		toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility)),
-		toggleTopBarVisibility: visibility=>dispatch(toggleTopBarVisibility(visibility))
+		toggleTopBarVisibility: visibility=>dispatch(toggleTopBarVisibility(visibility)),
+		toggleTopBarSettingsButtonVisibility: visibility=>dispatch(toggleTopBarSettingsButtonVisibility(visibility))
 	};
 };
 
