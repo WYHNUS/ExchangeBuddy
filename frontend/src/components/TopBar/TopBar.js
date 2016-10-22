@@ -22,56 +22,74 @@ class TopBar extends Component {
 	}
 
   setElementClass(){
-      if(this.props.pageVisibility.homeSearchDrawerOpenButtonVisibility){
-        return "filter-list-visible";
-      }else{
-        return "filter-list-invisible";
-      }
+    if(this.props.pageVisibility.homeSearchDrawerOpenButtonVisibility){
+      return "filter-list-visible";
+    }else{
+      return "filter-list-invisible";
     }
+  }
 
-	render(){
+  getIconElementLeft(){
+    const{topBarSettingsButton, topBarBackButtonVisibility} = this.props.pageVisibility;
+    if((topBarSettingsButton)&&(!topBarBackButtonVisibility)){
+      return (
+        <IconButton
+        onClick={()=>browserHistory.push('/settings')}>
+        {IconsHelper.materialIcon("settings")}
+        </IconButton>
+        )
+    }else if ((!topBarSettingsButton)&&(topBarBackButtonVisibility)){
+      return(
+        <IconButton
+        onClick={this.navigateBack}>
+        {IconsHelper.materialIcon("chevron_left")}
+        </IconButton>
+        )
+    }else{
+      return (<div style={{margin:"24px"}}></div>)
+    }
+  }
+
+  render(){
     const appClass = classNames({
-      'back-btn': this.props.pageVisibility.topBarBackButtonVisibility,
+      'back-btn': this.props.pageVisibility.topBarSettingsButton,
       'app-bar': true,
     });
 
     /*setElementClass(){
       if(this.props.)
       className={`page-${ makeRouteSlug(this.props.routes) }`}
-    }*/
+  }*/
 
     /*getIconElementLeft(){
       return()
     }*/
     const{topBarVisibility} = this.props.pageVisibility;
 
-		return(
+    return(
       <div>
       {topBarVisibility?
         (<AppBar
-        className={appClass}
-        title={<span id="app-title">{<img src={src}/>}</span>}
-        style={{textAlign:"center"}}
-        onTitleTouchTap={handleTouchTap}
-        iconElementLeft={<IconButton
-          onClick={/*this.navigateBack*/()=>browserHistory.push('/settings')}>
-          {IconsHelper.materialIcon("settings")}
-          </IconButton>}
-        iconElementRight={<IconButton
-          className={this.setElementClass()}
-          onClick={()=>this.props.toggleHomeSearchDrawerVisibility(true)}>
+          className={appClass}
+          title={<span id="app-title">{<img src={src}/>}</span>}
+          style={{textAlign:"center"}}
+          onTitleTouchTap={handleTouchTap}
+          iconElementLeft={ this.getIconElementLeft() }
+          iconElementRight={<IconButton
+            className={this.setElementClass()}
+            onClick={()=>this.props.toggleHomeSearchDrawerVisibility(true)}>
           {/*IconsHelper.materialIcon("filter_list")*/}
           {IconsHelper.icon('menu')}
           </IconButton>}
-        showMenuIconButton={this.props.pageVisibility.topBarBackButtonVisibility}
-        />)
+          showMenuIconButton={true}
+          />)
         :
         (<div></div>)
       }
-			
+
       </div>
-			)
-	}
+      )
+  }
 }
 
 TopBar.propTypes = {
