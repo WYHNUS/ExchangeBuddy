@@ -12,76 +12,14 @@ import * as IconsHelper from '../../util/icons'
 
 import EventList from '../../components/HomeComponent/Events/EventList';
 
-import {fetchFbEvents, fetchFbEventsSuccess, 
-  fetchFbEventsFailure, fetchMuEvents} from '../../actions/home';
+import {
+  fetchFbEvents, fetchFbEventsSuccess, 
+  fetchFbEventsFailure, fetchMuEvents
+} from '../../actions/home';
 
-  import SelectField from 'material-ui/SelectField';
+import SelectField from 'material-ui/SelectField';
 
-
-  var date=new Date();
-    /*var fbseed = 
-    [
-    {
-        id: 1234123,
-        url: 'http://Facebook.com',
-        yes_rsvp_count: 4,
-        name: 'cat event',
-        coverPicture: '',
-        startTime: date,
-        stats:{
-         attending: 5
-     },
-     venue:{
-         profilePicture: ''
-     }
- },
- {
-    id: 1234123,
-    url: 'http://Facebook.com',
-    yes_rsvp_count: 4,
-    name: 'cat event',
-    coverPicture: '',
-    startTime: date,
-    stats:{
-    	attending: 6
-    },
-    venue:{
-    	profilePicture: ''
-    }
-}
-]
-
-var meetupseed = 
-[
-{
-    id: 1234123,
-    url: 'http://meetup.com',
-    yes_rsvp_count: 4,
-    name: 'cat event',
-    coverPicture: '',
-    startTime: date,
-    stats:{
-    	attending: 5
-    },
-    venue:{
-    	profilePicture: ''
-    }
-},
-{
-    id: 1234123,
-    url: 'http://meetup.com',
-    yes_rsvp_count: 4,
-    name: 'cat event',
-    coverPicture: '',
-    startTime: date,
-    stats:{
-    	attending: 6
-    },
-    venue:{
-    	profilePicture: ''
-    }
-}
-]*/
+var date=new Date();
 
 const university = 
 {
@@ -98,9 +36,9 @@ const country =
 }
 
 const items = [
-<MenuItem key={1} value={1} primaryText="Most Recent" />,
-<MenuItem key={2} value={2} primaryText="Most Stars" />,
-<MenuItem key={3} value={3} primaryText="Most Comments" />
+  <MenuItem key={1} value={1} primaryText="Most Recent" />,
+  <MenuItem key={2} value={2} primaryText="Most Stars" />,
+  <MenuItem key={3} value={3} primaryText="Most Comments" />
 ];
 
 
