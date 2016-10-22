@@ -1,5 +1,6 @@
 import {TOGGLE_BOTTOM_BAR_VISIBILITY, 
-	TOGGLE_TOP_BAR_BACK_BUTTON, 
+	TOGGLE_TOP_BAR_BACK_BUTTON,
+	TOGGLE_TOP_BAR_SETTINGS_BUTTON, 
 	TOGGLE_HOME_SEARCH_DRAWER,
 TOGGLE_HOME_SEARCH_DRAWER_BUTTON_VISIBILITY,
 TOGGLE_TOP_BAR_VISIBILITY} from '../actions/pageVisibility';
@@ -10,7 +11,8 @@ const initialState = {
 	topBarBackButtonVisibility: false,
 	homeSearchDrawerOpen: false,
 	homeSearchDrawerOpenButtonVisibility: false,
-	topBarVisibility:false
+	topBarVisibility:false,
+	topBarSettingsButton:false
 }
 
 export function pageVisibility(state=initialState, action) {
@@ -35,6 +37,10 @@ export function pageVisibility(state=initialState, action) {
 		case TOGGLE_TOP_BAR_VISIBILITY:
 		return Object.assign({}, state,{
 			topBarVisibility:action.visibility
+		})
+		case TOGGLE_TOP_BAR_SETTINGS_BUTTON:
+		return Object.assign({}, state,{
+			topBarSettingsButton:action.visibility
 		})
 		default:
 		return state
