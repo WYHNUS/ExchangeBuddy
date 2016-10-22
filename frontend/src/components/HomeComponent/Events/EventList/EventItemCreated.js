@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
 import truncate from 'truncate';
 var moment = require('moment');
 import GoogleMap from 'google-map-react';
