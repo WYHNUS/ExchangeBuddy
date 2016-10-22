@@ -18,7 +18,10 @@ const Search = React.createClass({
 		return(
 			<Drawer 
 			className="groupSearchLayout"
-			width={window.innerWidth/3*2} 
+			width={
+				((window.innerWidth/3*2)>500)?
+				500:(window.innerWidth/3*2)
+			} 
 			openSecondary={true} 
 			open={this.props.homeSearchDrawerOpen}
 			disableSwipeToOpen={false}
@@ -27,6 +30,9 @@ const Search = React.createClass({
 
 			<div className="row center-xs">
 			{/*<SearchBar/>*/}
+			</div>
+			<div className="row center-xs">
+			<h2>Your groups</h2>
 			</div>
 			<div className="row center-xs">
 			<GroupList/>
