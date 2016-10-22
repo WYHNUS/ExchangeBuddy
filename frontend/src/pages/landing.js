@@ -34,6 +34,8 @@ class Landing extends React.Component{
   }
 
   render(){
+
+    const{user}=this.props;
     return(
       <div id="landing-container" style={landingContainerStyle}>
       <div id="welcome-header" style={landingImg}>
@@ -48,7 +50,7 @@ class Landing extends React.Component{
           </div>
         </div>
 
-        { !true ?
+        {!user.isAuthenticated ?
           <div id="login-button">
             <LoginButton />
           </div>
@@ -59,9 +61,9 @@ class Landing extends React.Component{
             style={{ maxWidth: 250, margin: '0 auto', height: 50 }}
             labelStyle={{ fontSize: "16px", padding: '0 20px' }} />
         }
-        <div id="login-button">
+        {/*<div id="login-button">
           <LoginButton />
-        </div>
+        </div>*/}
 
         <div id="feature-list">
           <div className="row feature-row center-xs">
@@ -84,4 +86,10 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Landing);
+const mapStateToProps = (state )=>{
+  return{
+    user: state.user.userObject
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);
