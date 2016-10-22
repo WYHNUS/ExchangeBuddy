@@ -12,12 +12,12 @@
 }
 
 #welcome-header {
-  min-height: 804px; position: relative; background-size: cover !important;
+  min-height: 804px; position: relative; background-size: cover !important; padding-top: 64px;
 }
 
 #welcome-main-container {
   display: flex; flex-direction: column; justify-content: space-around; height: 80vh; padding: 10vh 20px;
-  @include media-xs-only { /*height: 120vh;*/ }
+@include media-xs-only { /*height: 120vh;*/ }
 }
 
 #welcome-header-title {
@@ -28,9 +28,14 @@
     @include media-xs-only { font-size: 44px; }
   }
 
-  .app-subtitle {
-    font-family:'Lato', sans-serif; color: #fff; opacity: 0.75; font-size: 1.4rem; padding: 0 10px; margin-bottom: 10px;
+  #app-subtitle-container{
+    background: rgba(0,0,0,0.6);
+    .app-subtitle {
+      font-family:'Lato', sans-serif; color: #fff; opacity: 0.75; font-size: 1.4rem; padding: 0 10px; margin-bottom: 10px;
+    }
   }
+
+  
 }
 
 #welcome-body {

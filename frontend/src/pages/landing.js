@@ -41,9 +41,11 @@ class Landing extends React.Component{
       <div id="welcome-main-container">
         <div id="welcome-header-title">
           <h2 id="app-title">Find out who else is on an adventure</h2>
+          <div id='app-subtitle-container'>
           <p className="app-subtitle">Find your travel buddies from over 900 universities on ExchangeBuddy!</p>
           <p className="app-subtitle">Share tips for the trip, by students, for students.</p>
           <p className="app-subtitle">Forget the messy Facebook groups and Google forms, all you need is right here.</p>
+          </div>
         </div>
 
         { !true ?
