@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import Paper from 'material-ui/Paper';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
@@ -12,6 +12,11 @@ const text_header_style = {
 };
 
 export default class ProfilePaper extends React.Component {
+
+  componentWillMount(){
+    this.props.fetchProfile(1);
+  }
+
   render() {
     const { user, userExchangeUniversities, userHomeUniversity } = this.props;
 
@@ -56,3 +61,9 @@ export default class ProfilePaper extends React.Component {
     )
   }
 }
+
+ProfilePaper.propTypes = {
+  fetchProfile: PropTypes.func.isRequired,
+  userProfile: PropTypes.object.isRequired
+};
+
