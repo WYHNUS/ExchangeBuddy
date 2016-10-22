@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 // Component
 import ChildComponent from './ProfilePaper';
 
+import { fetchProfile, fetchProfileSuccess, fetchProfileFailure } from '../../actions/profile';
+
 /*// react-komposer
 const composer = (props, onData) => {
   const { userId } = props;
@@ -51,13 +53,24 @@ const mapStateToProps = (state) => {
   return {
     user: state.profile.user.user,
     userHomeUniversity: state.profile.userHomeUniversity.userHomeUniversity,
-    userExchangeUniversities: state.profile.userExchangeUniversities.userExchangeUniversities
+    userExchangeUniversities: state.profile.userExchangeUniversities.userExchangeUniversities,
+    userObject: state.user.userObject,
+    userProfile: state.user.userProfile
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
+    fetchProfile:(userId)=>{
+      dispatch(fetchProfile(userId)).payload.then((response) => {
+        if (!response.error) {
+          dispatch(fetchProfileSuccess(response.data));
+        } else {
+          dispatch(fetchProfileFailure(response.error));
+        }
+      });
+    },
   };
 };
 
