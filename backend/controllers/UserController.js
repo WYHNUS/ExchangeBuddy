@@ -14,9 +14,16 @@ exports.getUser = function(req, res) {
         where: {
             id: req.params.id
         },
-        attributes: ['id', 'email', 'name', 'profilePictureUrl', 'bio']
+        include: [{
+            model: University
+        }],
+        attributes: ['id', 'email', 'name', 'profilePictureUrl', 'bio', 'UniversityId']
     }).then(function(user) {
-        res.json(user);
+        user.getExchangeEvent().then(function(exchanges){
+            user.setDataValue("Exchanges", exchanges);
+            res.json(user);
+        })
+
     }).catch(function(err) {
         resError(res, err);
     });
