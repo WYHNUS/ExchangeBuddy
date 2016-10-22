@@ -1,6 +1,8 @@
 import {createStore, compose, applyMiddleware} from 'redux';
 import thunkMiddleware from 'redux-thunk';
+import throttle from 'lodash/throttle';
 import rootReducer from '../reducers/rootReducer';
+import { saveState } from '../util/localStorage';
 
 export default function configureStore(initialState) {
   const middewares = [
@@ -11,8 +13,14 @@ export default function configureStore(initialState) {
     thunkMiddleware,
   ];
 
-  return createStore(rootReducer, initialState, compose(
-    applyMiddleware(...middewares)
+  const store = createStore(rootReducer, initialState, compose(
+      applyMiddleware(...middewares)
     )
   );
+
+  store.subscribe(throttle(() => {
+    saveState(store.getState());
+  }, 1000));
+
+  return store;
 }

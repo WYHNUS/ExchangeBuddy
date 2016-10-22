@@ -27,6 +27,7 @@ const config = {
   server_port : process.env.PORT || 3000,
   backend_host : process.env.SERVER_NAME,
   googlemap_apikey: process.env.GOOGLE_MAP_APIKEY,
+  google_analytics_id: process.env.GA_ID,
 
   // ----------------------------------
   // Compiler Configuration
@@ -79,7 +80,8 @@ config.globals = {
   'process.env'  : {
     'NODE_ENV' : JSON.stringify(config.env),
     'SERVER_NAME' : JSON.stringify(config.backend_host),
-    'GOOGLE_MAP_APIKEY': JSON.stringify(config.googlemap_apikey)
+    'GOOGLE_MAP_APIKEY': JSON.stringify(config.googlemap_apikey),
+    'GA_ID': JSON.stringify(config.google_analytics_id)
   },
   'NODE_ENV'     : config.env,
   '__DEV__'      : config.env === 'development',

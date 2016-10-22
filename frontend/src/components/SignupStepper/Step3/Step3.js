@@ -1,6 +1,7 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 import validator from 'validator';
+import { browserHistory } from 'react-router';
 
 import { EmailFormField } from '../../Field';
 import NextButton from '../NextButton';
@@ -8,13 +9,14 @@ import PrevButton from '../PrevButton';
 
 export const fields = [ 'homeUniEmail' ];
 
-// import * as SessionHelper from '../../../util/session';
-
 let uniEmailDomains;
 
 const validUniEmail = (value) => {
   if (!validator.isEmail(value))
     return false;
+  else 
+    // temperary disable email check as the list of email domains is not complete
+    return true;
 
   const domain = value.substr(value.indexOf('@') + 1);
 
@@ -63,6 +65,15 @@ class Step3 extends React.Component {
     this.state = {emailDomains:[]};
   }
 
+  checkNeedRedirect() {
+    // IMPROVEMENT: better to check error code status
+    if (this.props.authEmailError === "Email account already registered!") {
+      setTimeout(function() {
+        browserHistory.push('/');
+      }, 1000);
+    }
+  }
+
   componentDidMount() {
     if (this.props.homeUniName && this.props.universities) {
       var allUniList = this.props.universities;
@@ -84,6 +95,10 @@ class Step3 extends React.Component {
     const { homeUniName } = this.props;
     const { isEmailSent, fetching, authEmailError } = this.props;
 
+    if (!!authEmailError) {
+      this.checkNeedRedirect();
+    }
+
     return (
       <form onSubmit={ handleSubmit((values) => {
         this.submitForm(values)
@@ -92,9 +107,11 @@ class Step3 extends React.Component {
         <p style={{ fontSize: "15px" }}>To complete your registration, please enter your email address at <strong>{ homeUniName }</strong>.</p>
         <p style={{ fontSize: "15px" }}>We will be sending a verification email to confirm your place at the university.</p>
 
-        { (this.state.emailDomains && this.state.emailDomains.length > 0) ?
+
+        { /*  temperary disable email check as the list of email domains is not complete
+          (this.state.emailDomains && this.state.emailDomains.length > 0) ?
           <p className="small-text">Email domains allowed: { this.state.emailDomains.map(x => `@${x}`).join(', ') }</p> :
-          null
+          null*/
         }
 
         <EmailFormField

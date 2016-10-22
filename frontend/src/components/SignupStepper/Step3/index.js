@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
   return {
     homeUniName: state.user.signupInfo.homeUniName,
     allSignupInfo: state.user.signupInfo,
-    isEmailSent: state.user.isAuthEmailSent,
+    isEmailSent: state.user.isEmailSent,
     authEmailError: state.user.error
   };
 };

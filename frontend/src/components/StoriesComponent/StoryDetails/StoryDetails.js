@@ -9,7 +9,6 @@ import { browserHistory } from 'react-router';
 
 import { formatTime } from '../../../util/helper';
 import * as UserHelper from '../../../util/user';
-// import $ from 'jquery';
 
 
 export default class StoryDetails extends React.Component {
