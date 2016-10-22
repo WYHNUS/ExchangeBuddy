@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { toggleBottomBarVisibility, 
   toggleHomeSearchDrawerOpenButtonVisibility,
-  toggleTopBarBackButtonVisibility } from '../actions/pageVisibility';
+  toggleTopBarBackButtonVisibility, toggleTopBarVisibility } from '../actions/pageVisibility';
   import {fetchMyGroups, fetchMyGroupsSuccess, fetchMyGroupsFailure,
     fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure,
     toggleSelectedHomeGroup, fetchEvents, fetchEventsSuccess, 
@@ -15,6 +15,7 @@ class Home extends React.Component{
 
   componentDidMount() {
     this.props.toggleBottomBarVisibility(true);
+    this.props.toggleTopBarVisibility(true);
     this.props.toggleHomeSearchDrawerOpenButtonVisibility(true);
     this.props.toggleTopBarBackButtonVisibility(true);
 
@@ -57,6 +58,7 @@ class Home extends React.Component{
 const mapDispatchToProps = (dispatch) => {
   return {
     toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility)),
+    toggleTopBarVisibility: visibility=>dispatch(toggleTopBarVisibility(visibility)),
     toggleHomeSearchDrawerOpenButtonVisibility:visibility=>dispatch
     (toggleHomeSearchDrawerOpenButtonVisibility(visibility)),
     toggleTopBarBackButtonVisibility:visibility=>dispatch

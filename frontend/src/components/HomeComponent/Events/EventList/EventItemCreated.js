@@ -207,9 +207,10 @@ class EventItemCreated extends React.Component{
 				</Dialog>
 
 				<Card className="event-item-card col-xs-11 col-md-11" initiallyExpanded={true}>
-				<CardTitle 
+				<CardTitle
+				className="event-item-card-title" 
 				title={ groupEvent.title }
-				subtitle={  <Link id='link' to={`/profile/${groupEvent.User.id}`}>{`by ${groupEvent.User.name}`}</Link>} />
+				subtitle={  <Link id='link-title' to={`/profile/${groupEvent.User.id}`}>{`by ${groupEvent.User.name}`}</Link>} />
 				<CardText>
 				<div className="col-xs-12 event-item-info">
 				{Icons.icon('watch_later')}<span>&nbsp; {

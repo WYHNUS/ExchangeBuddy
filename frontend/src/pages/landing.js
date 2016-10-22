@@ -8,7 +8,7 @@ import landing from '../res/landing.jpg';
 import LoginButton from '../components/LoginButton';
 
 import { connect } from 'react-redux';
-import { toggleBottomBarVisibility } from '../actions/pageVisibility';
+import { toggleTopBarVisibility, toggleBottomBarVisibility } from '../actions/pageVisibility';
 var request = require('superagent');
 
 
@@ -30,6 +30,7 @@ const landingImg= {
 class Landing extends React.Component{
   componentDidMount() {
     this.props.toggleBottomBarVisibility(false);
+    this.props.toggleTopBarVisibility(false);
   }
 
   render(){
@@ -76,7 +77,8 @@ class Landing extends React.Component{
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility))
+    toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility)),
+    toggleTopBarVisibility: visibility=>dispatch(toggleTopBarVisibility(visibility))
   };
 };
 

@@ -33,7 +33,7 @@ class Chat extends React.Component{
 	componentDidMount(){
 		//if there is group id to join
 		if(this.props.homeGroupDetails.detailsLoaded){
-
+			console.log('setup is called');
 			socket.setup(
 				this.props.homeGroupDetails.homeGroupDetails.name,
 				parseInt(this.props.homeGroupDetails.homeGroupDetails.id),

@@ -8,9 +8,14 @@
 	margin-bottom: 3% !important;
 	max-width: 600px!important;
 	z-index: 0!important;
+	padding: 0px!important;
 
 	@include media-xxs-only {
 		width:100%!important;
+	}
+
+	.event-item-card-title{
+		background: lightgray;
 	}
 
 	.event-item-info{
@@ -22,6 +27,12 @@
 			height: 17px;
 			vertical-align: middle;
 		}
+	}
+
+	#link-title{
+		cursor: pointer;
+		text-decoration: underline;
+		color: black;
 	}
 
 	#link{

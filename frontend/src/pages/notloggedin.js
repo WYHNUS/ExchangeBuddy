@@ -1,11 +1,12 @@
 import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
-import { toggleBottomBarVisibility } from '../actions/pageVisibility';
+import { toggleBottomBarVisibility, toggleTopBarVisibility } from '../actions/pageVisibility';
 
 class NotLoggedIn extends React.Component{
 
 	componentDidMount() {
 		this.props.toggleBottomBarVisibility(false);
+		this.props.toggleTopBarVisibility(false);
 	}
 
 	render() {
@@ -19,7 +20,8 @@ class NotLoggedIn extends React.Component{
 }
 const mapDispatchToProps = (dispatch) => {
 	return {
-		toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility))
+		toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility)),
+		toggleTopBarVisibility: visibility=>dispatch(toggleTopBarVisibility(visibility))
 	};
 };
 

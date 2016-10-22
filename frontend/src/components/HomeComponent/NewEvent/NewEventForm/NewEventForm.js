@@ -12,7 +12,7 @@ import ImageUpload from '../../../ImageUpload/index.js'
 import validUrl from 'valid-url'
 import GoogleMap from 'google-map-react';
 
-const newEventForm = (callback, userId, isGeocodingError, foundAddress, position, id, postEvents, showSnackbar, fetchEvents) => (values) => {
+const newEventForm = (callback, userId, isGeocodingError, foundAddress, position, id, postEvents, showSnackbar) => (values) => {
 
   const errors = [];
   const dateFields = ['startDate', 'startTime', 'endDate', 'endTime'];
@@ -252,7 +252,7 @@ class NewEventForm extends Component {
   }*/
 
   render() {
-    const { handleSubmit, pristine, reset, submitting, user, postEvents, showSnackbar, fetchEvents } = this.props;
+    const { handleSubmit, pristine, reset, submitting, user, postEvents, showSnackbar } = this.props;
     const {userId} = user.userObject; 
     const {id} = this.props.homeGroupDetails.homeGroupDetails;
 
@@ -265,8 +265,7 @@ class NewEventForm extends Component {
         this.state.position, 
         id, 
         postEvents, 
-        showSnackbar, 
-        fetchEvents));
+        showSnackbar));
 
     return (
       <form onSubmit={ submitHandler }>
@@ -450,8 +449,7 @@ class EndTimePick extends React.Component{
 NewEventForm.propTypes = {
   homeGroupDetails: PropTypes.object.isRequired,
   postEvents: PropTypes.func.isRequired,
-  showSnackbar: PropTypes.func.isRequired,
-  fetchEvents: PropTypes.func.isRequired
+  showSnackbar: PropTypes.func.isRequired
 };
 
 

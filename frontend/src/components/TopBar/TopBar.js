@@ -39,19 +39,23 @@ class TopBar extends Component {
       if(this.props.)
       className={`page-${ makeRouteSlug(this.props.routes) }`}
     }*/
-    
+
+    /*getIconElementLeft(){
+      return()
+    }*/
+    const{topBarVisibility} = this.props.pageVisibility;
 
 		return(
       <div>
-      
-			<AppBar
+      {topBarVisibility?
+        (<AppBar
         className={appClass}
-  			title={<span id="app-title">{<img src={src}/>}</span>}
+        title={<span id="app-title">{<img src={src}/>}</span>}
         style={{textAlign:"center"}}
-  			onTitleTouchTap={handleTouchTap}
-  			iconElementLeft={<IconButton
-  				onClick={/*this.navigateBack*/()=>browserHistory.push('/settings')}>
-  				{IconsHelper.materialIcon("settings")}
+        onTitleTouchTap={handleTouchTap}
+        iconElementLeft={<IconButton
+          onClick={/*this.navigateBack*/()=>browserHistory.push('/settings')}>
+          {IconsHelper.materialIcon("settings")}
           </IconButton>}
         iconElementRight={<IconButton
           className={this.setElementClass()}
@@ -59,8 +63,12 @@ class TopBar extends Component {
           {/*IconsHelper.materialIcon("filter_list")*/}
           {IconsHelper.icon('menu')}
           </IconButton>}
-  			showMenuIconButton={this.props.pageVisibility.topBarBackButtonVisibility}
-			/>
+        showMenuIconButton={this.props.pageVisibility.topBarBackButtonVisibility}
+        />)
+        :
+        (<div></div>)
+      }
+			
       </div>
 			)
 	}

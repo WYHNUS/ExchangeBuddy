@@ -2,6 +2,7 @@ export const TOGGLE_BOTTOM_BAR_VISIBILITY = 'TOGGLE_BOTTOM_BAR_VISIBILITY';
 export const TOGGLE_TOP_BAR_BACK_BUTTON = 'TOGGLE_TOP_BAR_BACK_BUTTON';
 export const TOGGLE_HOME_SEARCH_DRAWER = 'TOGGLE_HOME_SEARCH_DRAWER';
 export const TOGGLE_HOME_SEARCH_DRAWER_BUTTON_VISIBILITY = 'TOGGLE_HOME_SEARCH_DRAWER_BUTTON_VISIBILITY';
+export const TOGGLE_TOP_BAR_VISIBILITY = 'TOGGLE_TOP_BAR_VISIBILITY';
 
 export const TOGGLE_HOME_GROUP_UNIVERSITY_SEARCH_LIST = 'TOGGLE_HOME_GROUP_UNIVERSITY_SEARCH_LIST';
 
@@ -9,6 +10,13 @@ export const toggleHomeGroupUniversitySearchList = (open) =>{
 	return{
 		type: TOGGLE_BOTTOM_BAR_VISIBILITY,
 		open
+	}
+}
+
+export function toggleTopBarVisibility(visibility){
+	return{
+		type:TOGGLE_TOP_BAR_VISIBILITY,
+		visibility
 	}
 }
 
