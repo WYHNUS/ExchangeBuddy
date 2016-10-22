@@ -1,20 +1,28 @@
 import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import { toggleBottomBarVisibility, toggleTopBarVisibility } from '../actions/pageVisibility';
 
 class NotLoggedIn extends React.Component{
+	redirect() {
+		setTimeout(function() {
+		  browserHistory.push('/');
+		}, 2000);
+	}
 
 	componentDidMount() {
 		this.props.toggleBottomBarVisibility(false);
-		this.props.toggleTopBarVisibility(false);
+		this.props.toggleTopBarVisibility(true);
+		this.redirect();
 	}
 
 	render() {
 		return (
-			<div>
-			notloggedin
+			<div id="not-logged-in-text-container">
+				<p>You are not logged in yet.</p>
+				<p>Redirecting to the home page for logging in...</p>
 			</div>
-			);
+		);
 	}
 
 }

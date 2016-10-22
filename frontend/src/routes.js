@@ -52,11 +52,11 @@ export const getRoutes = (store) =>{
     const state = store.getState();
 
     /* >>>>>>>>>>>> tmp remove check for development <<<<<<<<<<<< */
-    // if (!state.user.isAuthenticated) {
-    //   replace({ 
-    //     pathname: '/notloggedin'
-    //   });
-    // }
+    if (!state.user.isAuthenticated) {
+      replace({ 
+        pathname: '/notloggedin'
+      });
+    }
   };
 
   const goToDefaultGroup = (nextState, replace)=>{
