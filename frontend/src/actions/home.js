@@ -75,7 +75,7 @@ export function fetchGroupMessagesFailure(error){
 	};
 }
 
-export function resetGroupMessages(message){
+export function resetGroupMessages(){
 	return{
 		type: RESET_GROUP_MESSAGES
 	}

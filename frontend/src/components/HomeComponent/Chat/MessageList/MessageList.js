@@ -97,6 +97,7 @@ export default class MessageList extends React.Component {
 
   componentDidMount() {
     if(this.props.homeGroupDetails.detailsLoaded){
+      //console.log('id', this.props.homeGroupDetails.homeGroupDetails.id);
       this.props.fetchGroupMessages(this.props.homeGroupDetails.homeGroupDetails.id);
     }
     //chatScrollToLatest();
