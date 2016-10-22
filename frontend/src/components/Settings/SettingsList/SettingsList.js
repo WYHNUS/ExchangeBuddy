@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import * as IconsHelper from '../../../util/icons';
@@ -21,6 +21,8 @@ import ZhangHanMing from '../../../res/about/ZhangHanMing.jpg';
 export default class SettingsList extends React.Component {
 
 	logout(){
+		//this.props.attemptLogout();
+		this.props.clearUser();
 		browserHistory.push('/');
 	}
 
@@ -217,12 +219,14 @@ export default class SettingsList extends React.Component {
 			type="cancel" 
 			onTouchTap={()=>this.logout()}/>
 			</div>
+			</div>
+			)
+}
+}
 
-			{/*<List>
-			<ListItem primaryText="About" leftIcon={IconsHelper.icon("person")} />
-			<ListItem primaryText="Privacy Policy" leftIcon={IconsHelper.icon("person")} />
-		</List>*/}
-		</div>
-		)
-}
-}
+
+SettingsList.propTypes = {
+  attemptLogout: PropTypes.func.isRequired,
+  clearUser: PropTypes.func.isRequired
+};
+

@@ -3,7 +3,7 @@ import {
   Started_Session_Check, Checked_Session_Status,
   Clicked_Logout, Logout_Success,
   VERIFY_TOKEN_SUCCESS, VERIFY_TOKEN_FAIL,
-  Navigate_Away_From_Auth_Form
+  Navigate_Away_From_Auth_Form,CLEAR_USER
 } from '../actions/authActions';
 
 import {
@@ -20,8 +20,8 @@ const initialState = {
   token: null,
   error: null,
   userObject: {
-    userId:1,
-    email:'kaiyisg@yahoo.com.sg',
+    userId:-1,
+    email:'',
     name:'',
     profilePictureUrl:'',
     gender:'',
@@ -107,6 +107,17 @@ export function user(state = initialState , action) {
       return Object.assign({}, state, {
         fetchingAuthUpdate: true
       });
+
+    case CLEAR_USER:
+      return Object.assign({}, state,{
+        isLoggedIn:false,
+        fetchingAuthUpdate:false,
+        isAuthenticated:false,
+        isRegistered:true,
+        userObject:{},
+        token:null,
+        error:null
+      })
 
     case Login_Success:
       return Object.assign({}, state, {

@@ -3,6 +3,7 @@ import React from 'react';
 // Redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import {attemptLogout, clearUser} from '../../../actions/authActions'
 
 // Component
 import ChildComponent from './SettingsList';
@@ -16,6 +17,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
+    attemptLogout:()=>{dispatch(attemptLogout())},
+    clearUser:()=>{dispatch(clearUser())}
   };
 };
 

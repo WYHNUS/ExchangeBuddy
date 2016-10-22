@@ -22,6 +22,8 @@ export const VERIFY_TOKEN_FAIL = 'VERIFY_TOKEN_FAIL';
 //              related actions. For now, will leave these here.
 export const Navigate_Away_From_Auth_Form = 'Navigate_Away_From_Auth_Form';
 
+export const CLEAR_USER = 'CLEAR_USER';
+
 /*
  * action creators
  */
@@ -142,6 +144,10 @@ export function attemptLogout(){
       dispatch(logoutSuccess());
     })
   }
+}
+
+export function clearUser(){
+  return {type: CLEAR_USER }
 }
 
 
