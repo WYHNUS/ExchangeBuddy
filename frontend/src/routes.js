@@ -4,6 +4,7 @@ import { render } from 'react-dom';
 import { Router, Route, Redirect, IndexRoute, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
+import { loadState } from './util/localStorage';
 import configureStore from './store/configureStore';
 
 /** ROUTES **/
@@ -29,7 +30,8 @@ import Settings from './pages/settings';
 import NewEvent from './pages/home/newevent';
 
 // Redux
-const store = configureStore();
+const persistedState = loadState();
+const store = configureStore(persistedState);
 
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store);

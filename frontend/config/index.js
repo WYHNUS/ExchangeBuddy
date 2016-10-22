@@ -27,7 +27,7 @@ const config = {
   server_port : process.env.PORT || 3000,
   backend_host : process.env.SERVER_NAME,
   googlemap_apikey: process.env.GOOGLE_MAP_APIKEY,
-  google_analytics_id: process.env.GA_ID
+  google_analytics_id: process.env.GA_ID,
 
   // ----------------------------------
   // Compiler Configuration
