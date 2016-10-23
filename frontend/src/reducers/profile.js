@@ -1,33 +1,4 @@
-import {FETCH_PROFILE, FETCH_PROFILE_SUCCESS, FETCH_PROFILE_FAILURE, RESET_PROFILE} from '../actions/profile';
-
-
-const userGroups=
-[
-{
-	name: 'KTH Royal Institute of Technology exchange students -- Spring 2016',
-	id: '1',
-	groupType: 0
-},
-{
-	name: 'National University of Singapore going abroad -- Spring 2016',
-	id: '2',
-	groupType: 1
-}, 
-{
-	name: 'National University of Singapore students in KTH Royal Institute of Technology',
-	id: '3',
-	groupType: 2
-},
-{
-	name: 'NCST Batch 32',
-	id: '4',
-	groupType: 3
-}
-];
-
-const userHomeUniversity = {name: 'National University of Singapore'};
-const userExchangeUniversities = [{name: 'KTH Royal Institute of Technology'}];
-const user = {id:'1', fbUserId:'asflhkjh', displayName: 'Lee Kai Yi' }
+import {START_FETCHING_PROFILE, FETCH_PROFILE_SUCCESS, FETCH_PROFILE_FAILURE, RESET_PROFILE} from '../actions/profile';
 
 const initialState={
 	//user:{user:user,error:null,loading:false},
@@ -42,7 +13,7 @@ export function profile(state=initialState, action) {
 	let error;
 
 	switch (action.type) {
-		case FETCH_PROFILE:
+		case START_FETCHING_PROFILE:
 		return {...state, userProfile: {userProfile:{}, error: null, loading: true}};
 		case FETCH_PROFILE_SUCCESS:
 		return {...state, userProfile: {userProfile: action.payload, error: null, loading: false}};

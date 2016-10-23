@@ -1,4 +1,5 @@
 import request from 'superagent';
+import cookie from 'react-cookie';
 
 /*
  * action types
@@ -57,7 +58,8 @@ export function attemptLogin(token) {
       .end(function(err,res){
         // console.log(res);
         // console.log(err);
-        if(res.body.status === "success"){
+        if(res.body.status === 'success'){
+          cookie.save('authToken', res.body.token);
           dispatch(loginSuccess(res.body.user, res.body.token));
         } else {
           if (res.status === 404) {
@@ -84,7 +86,6 @@ export function verifyToken(token) {
   return (dispatch) => {
     request
       .get(ROOT_URL + '/verify/' + token)
-      // .query({ token: token })
       .end(function(err,res){
         console.log(res);
         console.log(err);
@@ -116,7 +117,6 @@ export function checkSessionStatus() {
       if(err){
         console.log(err)
       } else {
-        console
         dispatch(checkedSessionStatus(res.body))
       }
     })

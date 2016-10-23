@@ -12,44 +12,6 @@ import { fetchProfileSuccess, fetchProfileFailure } from '../../actions/profile'
 import {fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure} from '../../actions/utilityInfo';
 import {showSnackbar} from '../../actions/messageSnackbar';
 
-/*// react-komposer
-const composer = (props, onData) => {
-  const { userId } = props;
-
-  let user;
-
-  if (userId)
-    Meteor.call('User.get', parseInt(userId), (err, userResult) => {
-      user = userResult;
-      Meteor.call('User.getGroups', user.id, (err, groups) => {
-        const exchangeUniversities = groups.map(group => group.university);
-
-        Meteor.call('University.get', user.homeUniId, (err, homeUni) => {
-          onData(null, {
-            user,
-            userHomeUniversity: homeUni,
-            userExchangeUniversities: exchangeUniversities,
-          });
-        });
-      });
-
-    });
-  else {
-    user = Meteor.user();
-    Meteor.call('User.getGroups', user.id, (err, groups) => {
-      const exchangeUniversities = groups.map(group => group.university);
-
-      Meteor.call('University.get', user.homeUniId, (err, homeUni) => {
-        onData(null, {
-          user,
-          userHomeUniversity: homeUni,
-          userExchangeUniversities: exchangeUniversities,
-        });
-      });
-    });
-  }
-};*/
-
 // redux
 const mapStateToProps = (state) => {
   return {

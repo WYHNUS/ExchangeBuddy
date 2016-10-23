@@ -34,42 +34,45 @@ export default class ProfilePaper extends React.Component {
   };
 
   componentWillMount(){
-    const{fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure, universities, 
-      showSnackbar,userObject, fetchProfileSuccess, fetchProfileFailure, profile}=this.props;
-      fetchProfile(urlToUserid(userObject.id)).payload.then((response)=>{
-        if(!response.error){
-          fetchProfileSuccess(response.data); 
+    const{
+      fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure, universities, 
+      showSnackbar, userObject, 
+      fetchProfileSuccess, fetchProfileFailure, profile}=this.props;
+
+      fetchProfile(urlToUserid(userObject.id)).payload.then((userProfileRes)=>{
+        if(!userProfileRes.error){
+          fetchProfileSuccess(userProfileRes.body); 
           if(universities.length<2){
-            fetchAllUniversities().payload.then((response) => {
-              if (!response.error) {
-                fetchAllUniversitiesSuccess(response.data);
-                var finalArray = UniversityHelper.insertUniversitiesIntoUniversityList(response.data.Exchanges,response.data);
+            fetchAllUniversities().payload.then((uniRes) => {
+              if (!uniRes.error) {
+                fetchAllUniversitiesSuccess(uniRes.data);
+                var finalArray = UniversityHelper.insertUniversitiesIntoUniversityList(uniRes.data.Exchanges,response.data);
                 this.setState({
                   exchangeUniList:finalArray,
                   exchangeUniListLoaded:true
                 });
               } else {
-                fetchAllUniversitiesFailure(response.error);
+                fetchAllUniversitiesFailure(uniRes.error);
                 this.setState({
                   exchangeUniListLoaded:false
                 });
               }
             })
           }else{
-            var finalArray = UniversityHelper.insertUniversitiesIntoUniversityList(response.data.Exchanges,universities);
+            var finalArray = UniversityHelper.insertUniversitiesIntoUniversityList(userProfileRes.body.Exchanges,universities);
             this.setState({
               exchangeUniListLoaded: true,
               exchangeUniList:finalArray
             });
           }
         }else{
-          fetchProfileFailure(response.error);
+          fetchProfileFailure(userProfileRes.error);
         }
       })
     }
 
     render() {
-      const { profile} = this.props;
+      const { profile } = this.props;
 
       return (
         <div className='row' id="profile-paper">

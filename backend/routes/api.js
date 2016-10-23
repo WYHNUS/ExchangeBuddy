@@ -41,7 +41,7 @@ router.get('/me', verifyToken, function(req, res) {
   res.send(req.user);
 });
 
-router.get('/user/:id', /*verifyToken,*/ UserCtrl.getUser);
+router.get('/user/:id', verifyToken, UserCtrl.getUser);
 router.put('/verificationemail', UserCtrl.createUser);
 router.get('/verify/:token', MailCtrl.verifyToken);
 router.get('/resendVerificationMail/:userId', MailCtrl.resend);
@@ -55,7 +55,7 @@ router.put('/university', UniCtrl.createUniversity);	// dummy
 router.get('/university', /*verifyToken,*/ UniCtrl.getAllUniversities);
 router.get('/university/:id', /*verifyToken,*/ UniCtrl.getUniversity);
 
-router.get('/allStories', /*verifyToken,*/ StoryCtrl.getAllStories);
+router.get('/allStories', verifyToken, StoryCtrl.getAllStories);
 router.post('/story/:id', /*verifyToken,*/ StoryCtrl.getStory);
 router.put('/story', /*verifyToken,*/ StoryCtrl.createStory);
 

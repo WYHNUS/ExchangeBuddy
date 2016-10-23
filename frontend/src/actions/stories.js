@@ -1,4 +1,5 @@
 import request from 'superagent';
+import {bearer} from '../util/bearer';
 
 export const SAVE_STORY_CONTENT = 'SAVE_STORY_CONTENT';
 export const RESET_EDITING_STORY = 'RESET_EDITING_STORY';
@@ -18,7 +19,6 @@ export const FETCH_SINGLE_STORY_FAIL = 'FETCH_SINGLE_STORY_FAIL';
 
 
 import {ROOT_URL} from '../util/backend';
-
 
 export function clickedFetch() {
     return { type: CLICKED_FETCH };
@@ -40,7 +40,9 @@ export function fetchOneStory(storyId, userId) {
 	    request.post(ROOT_URL + '/story/' + storyId)
 	    	.send({ 
 	    		userId: userId 
-	    	}).end(function(err, res){
+	    	})
+	    	.use(bearer)
+	    	.end(function(err, res){
 				// console.log(err);
 				// console.log(res);
 				if (err) {
@@ -70,6 +72,7 @@ export function fetchAllStories() {
 	    dispatch(clickedFetch());
 
 	    request.get(ROOT_URL + '/allStories')
+	    	.use(bearer)
 			.end(function(err, res){
 				// console.log(err);
 				// console.log(res);
