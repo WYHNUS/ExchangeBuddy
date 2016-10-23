@@ -79,6 +79,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     fetchAllUniversitiesFailure:(data)=>{
       dispatch(fetchAllUniversitiesFailure(data));
+    },
+    resetEvents:()=>{
+      dispatch(resetEvents());
     }
 
   };

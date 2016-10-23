@@ -14,7 +14,12 @@
 
 .chat-container { display: flex; flex-direction: column; background-color: #fff; height: 100%; }
 
-.messages-container { height: 100%; overflow-x: hidden; overflow-y: auto; max-height: 800px; }
+.messages-container { height: 100%; overflow-x: hidden; overflow-y: auto; max-height: 800px; 
+  >h2{
+    margin-left: 20px;
+  }
+
+}
 
 .message-row {
   display: flex; flex-direction: row; align-items: flex-start; padding: 10px 20px;

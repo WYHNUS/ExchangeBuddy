@@ -63,6 +63,7 @@ class EventItemCreated extends React.Component{
 
 	//fetch and render list of people to display here
 	componentWillMount(){
+		console.log('event class mounted')
 		const{fetchAllUniversitiesSuccess, groupEvent,fetchAllUniversitiesFailure, universities, showSnackbar}=this.props;
 		if(universities.length<2){
 			fetchAllUniversities().payload.then((response) => {
