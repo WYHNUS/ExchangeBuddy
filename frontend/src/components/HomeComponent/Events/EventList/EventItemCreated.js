@@ -18,6 +18,7 @@ import Menu from 'material-ui/Menu';
 import Popover from 'material-ui/Popover';
 import Checkbox from 'material-ui/Checkbox';
 import Paper from 'material-ui/Paper';
+import * as UniversityHelper from '../../../../util/university';
 
 /*const postToChat = (groupEvent, groupId, cardText) => {
 	const {name, coverPicture, startTime, id } = groupEvent;
@@ -67,7 +68,7 @@ class EventItemCreated extends React.Component{
 			fetchAllUniversities().payload.then((response) => {
 				if (!response.error) {
 					fetchAllUniversitiesSuccess(response.data);
-					var finalArray = this.insertUniversitiesIntoList(groupEvent.going,response.data);
+					var finalArray = UniversityHelper.insertUniversitiesIntoList(groupEvent.going,response.data);
 					this.setState({
 						peopleList:finalArray,
 						peopleListLoaded:true
@@ -81,7 +82,7 @@ class EventItemCreated extends React.Component{
 				}
 			})
 		}else{
-			var finalArray = this.insertUniversitiesIntoList(groupEvent.going,universities);
+			var finalArray = UniversityHelper.insertUniversitiesIntoList(groupEvent.going,universities);
 			this.setState({
 				peopleListLoaded: true,
 				peopleList:finalArray
@@ -102,26 +103,6 @@ class EventItemCreated extends React.Component{
 			userIsGoing:isGoing
 		})
 	}
-
-	insertUniversitiesIntoList(goingArray, universities){
-		var finalArray = [];
-		for(var j=0;j<goingArray.length;j++){
-			var uniName = "";
-			for(var i=0;i<universities.length;i++){
-				if(universities[i].id===goingArray[j].UniversityId){
-					uniName = universities[i].name;
-					break;
-				}
-			}
-			goingArray[j].University = 
-			{
-				name: uniName,
-				id: goingArray[j].UniversityId
-			};
-			finalArray.push(goingArray[j]);
-		}
-		return finalArray;
-	};
 
 	goForAnEvent(EventId, UserId, showSnackbar,goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents){
 		//console.log(EventId, UserId);
