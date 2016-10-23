@@ -72,47 +72,45 @@ export default class ProfilePaper extends React.Component {
       const { profile} = this.props;
 
       return (
-        <Grid>
-        <Row id="profile-paper">
-        <Col xs={12} md={3} id="user-image">
+        <div className='row' id="profile-paper">
+        <div className='col-xs-12 col-md-3' id="user-image">
         { UserHelper.getAvatar(profile, 300, { height: "auto", width: "100%" }) }
-        </Col>
+        </div>
 
-        <Col xs={12} md={7} id="user-info">
+        <div className='col-xs-12 col-md-7' id="user-info">
         <h1 style={ text_header_style }>{ profile.name }</h1>
 
         <div className="flex-table-container">
 
-        <Row>
-        <Col xs={12} sm={4} className="table-header">Home University</Col>
-        <Col xs={12} sm={8} className="table-cell">
+        <div className='row'>
+        <div className='col-xs-12 col-md-4 table-header'>Home University</div>
+        <div className='col-xs-12 col-md-8 table-cell'>
         { this.props.profile.University?
           (profile.University.name):
           (<div>Not loaded university name</div>) }
-        </Col>
-        </Row>
+        </div>
+        </div>
 
-        <Row>
-        <Col xs={12} sm={4} className="table-header">On exchange to</Col>
-        <Col xs={12} sm={8} className="table-cell">
+        <div className='row'>
+        <div className='col-xs-12 col-md-4 table-header'>On exchange to</div>
+        <div className='col-xs-12 col-md-8 table-cell'>
         {this.state.exchangeUniListLoaded? 
           (this.state.exchangeUniList.map((uni, idx) => uni.name)):
           (<h2>Error loading list of unis...</h2>)}
         { /*userExchangeUniversities.name*/ }
-        </Col>
-        </Row>
+        </div>
+        </div>
 
-        <Row>
-        <Col xs={12} sm={4} className="table-header">Facebook</Col>
-        <Col xs={12} sm={8} className="table-cell">
+        <div className='row'>
+        <div className='col-xs-12 col-md-4 table-header'>Facebook</div>
+        <div className='col-xs-12 col-md-8 table-cell'>
         <Link to={ `https://facebook.com/${profile.fbUserId}` }>Facebook profile</Link>
-        </Col>
-        </Row>
+        </div>
+        </div>
 
         </div>
-        </Col>
-        </Row>
-        </Grid>
+        </div>
+        </div>
         )
     }
   }
