@@ -5,9 +5,6 @@ import { toggleBottomBarVisibility, toggleTopBarVisibility,
 
 import StoryList from '../../components/StoriesComponent/StoryList';
 
-import story1ImgUrl from '../../res/SEP-Application.png';
-
-
 class Stories extends React.Component{
 
 	componentDidMount() {
@@ -23,9 +20,9 @@ class Stories extends React.Component{
 	render() {
 		return (
 			<div>
-			<StoryList/>
+				<StoryList/>
 			</div>
-			);
+		);
 	}
 
 }

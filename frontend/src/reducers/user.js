@@ -109,16 +109,17 @@ export function user(state = initialState , action) {
       });
 
     case CLEAR_USER:
-      return Object.assign({}, state,{
+      return Object.assign({}, state, {
         isLoggedIn:false,
         fetchingAuthUpdate:false,
         isAuthenticated:false,
         isRegistered:true,
         userObject:{},
+        signupInfo:{},
         token:null,
         error:null
       })
-
+  
     case Login_Success:
       return Object.assign({}, state, {
         isLoggedIn: true,
