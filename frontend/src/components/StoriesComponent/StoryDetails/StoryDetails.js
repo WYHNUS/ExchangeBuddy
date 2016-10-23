@@ -1,10 +1,6 @@
 var moment=require('moment');
 
 import React, {PropTypes} from 'react';
-// import RaisedButton from 'material-ui/RaisedButton';
-// import ReactHtmlParser from 'react-html-parser';
-// import truncate from 'truncate';
-// import Linkify from 'react-linkify';
 import { browserHistory } from 'react-router';
 
 import { formatTime } from '../../../util/helper';

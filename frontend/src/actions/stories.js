@@ -41,8 +41,8 @@ export function fetchOneStory(storyId, userId) {
 	    	.send({ 
 	    		userId: userId 
 	    	}).end(function(err, res){
-				console.log(err);
-				console.log(res);
+				// console.log(err);
+				// console.log(res);
 				if (err) {
 					dispatch(fetchStoryFail(err));
 				} else {
@@ -71,8 +71,8 @@ export function fetchAllStories() {
 
 	    request.get(ROOT_URL + '/allStories')
 			.end(function(err, res){
-				console.log(err);
-				console.log(res);
+				// console.log(err);
+				// console.log(res);
 				if (err) {
 					dispatch(fetchAllStoriesFail(err));
 				} else {
@@ -109,9 +109,6 @@ export function uploadContentFail(error) {
 }
 
 export function uploadContentToServer(title, content, id) {
-	// console.log(title);
-	// console.log(content);
-	// console.log(id);
 	return (dispatch) => {
 	    dispatch(clickedUpload());
 
@@ -122,8 +119,8 @@ export function uploadContentToServer(title, content, id) {
 				storyContent: content
 			})
 			.end(function(err, res){
-				console.log(err);
-				console.log(res);
+				// console.log(err);
+				// console.log(res);
 				if (err) {
 					dispatch(uploadContentFail(err));
 				} else {
