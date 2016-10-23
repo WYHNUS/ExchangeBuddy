@@ -4,7 +4,8 @@ import * as IconsHelper from '../util/icons';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import RaisedButton from 'material-ui/RaisedButton';
-import landing from '../res/landing.jpg';
+import landing from '../res/ExchangeBuddySpread.jpg';
+import ExchangeBuddySpreadIcon from '../res/ExchangeBuddySpreadIcon.png';
 import LoginButton from '../components/LoginButton';
 
 import { connect } from 'react-redux';
@@ -21,8 +22,7 @@ const landingContainerStyle = {
     url(${ImagesHelper.getUrlScale(Meteor.settings.public.landingImageId, 900)}) no-repeat center center `,
 }*/
 const landingImg= {
-  background: `linear-gradient(to top, rgba(25, 25, 25, 0.21) 0%,rgb(0, 0, 0) 215%),
-  url(${landing}) no-repeat center center`,
+  background: `url(${landing}) no-repeat center center`,
 }
 
 //TODO check login logic before deciding which button to serve to users
@@ -38,15 +38,25 @@ class Landing extends React.Component{
     const{user}=this.props;
     return(
       <div id="landing-container" style={landingContainerStyle}>
+      
       <div id="welcome-header" style={landingImg}>
+
+      <div className="row center-xs">
+      <div className='col-xs welcome-icon-container'>
+      <img id="welcome-icon" src={ExchangeBuddySpreadIcon} alt="Icons"/>
+      </div>
+      </div>
+
 
       <div id="welcome-main-container">
         <div id="welcome-header-title">
-          <h2 id="app-title">Find out who else is on an adventure</h2>
+        
+        {/*<h1>Find out who else is on an adventure</h1>*/}
+          {<h2 id="app-title">Find out who else is on an adventure</h2>}
           <div id='app-subtitle-container'>
           <p className="app-subtitle">Find your travel buddies from over 900 universities on ExchangeBuddy!</p>
-          <p className="app-subtitle">Share tips for the trip, by students, for students.</p>
-          <p className="app-subtitle">Forget the messy Facebook groups and Google forms, all you need is right here.</p>
+          {/*<p className="app-subtitle">Share tips for the trip, by students, for students.</p>
+          <p className="app-subtitle">Forget the messy Facebook groups and Google forms, all you need is right here.</p>*/}
           </div>
         </div>
 

@@ -83,7 +83,7 @@ export default class SettingsList extends React.Component {
 			<h1>Lee Kai Yi</h1>
 			</div>
 			<div className="row center-xs">
-			<h2>[What you see if what i build]</h2>
+			<h2>[What you see is what i build]</h2>
 			</div>
 			<div className="row center-xs">
 			<p>"Throw me something to do, and that will be my life"</p>
