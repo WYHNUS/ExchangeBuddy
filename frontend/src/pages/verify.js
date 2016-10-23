@@ -10,23 +10,21 @@ import { verifyToken, verifyTokenSuccess, verifyTokenFail } from '../actions/aut
 class Verify extends React.Component{
 
 	componentDidMount() {
-		// this.props.toggleBottomBarVisibility(true);
-		console.log(this);
 		this.props.verifyToken(this.props.routeParams.token);
+
+		if (this.props.isVerified) {
+			this.redirectLanding();
+		}
 	}
 
-	redirect() {
+	redirectLanding() {
 		setTimeout(function() {
-		  browserHistory.push('/home');
+		  browserHistory.push('/');
 		}, 3000);
 	}
 
 	render() {
 		const { error, isVerified } = this.props; 
-
-		if (isVerified) {
-			this.redirect();
-		}
 
 		return (
 			<div>
@@ -42,7 +40,8 @@ class Verify extends React.Component{
 			        { 	isVerified ? 
 			        		<div>
 					            <p> Your are a verified user! </p>
-					            <p> Redirecting to main page now ... </p>
+					            <p> Please login through the main page now. :) </p>
+								<p> Redirecting to the main page ...  </p>
 				           	</div>
 				      	: null
 			        }
@@ -63,7 +62,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		// toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility)),
 		verifyToken: (token) => {
 			dispatch(verifyToken(token));
 		},

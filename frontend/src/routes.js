@@ -46,7 +46,6 @@ function logPageView() {
 }
 
 export const getRoutes = (store) =>{
-
   const authRequired = (nextState, replace) => {
     // Now you can access the store object here.
     const state = store.getState();
@@ -63,7 +62,7 @@ export const getRoutes = (store) =>{
     // Now you can access the store object here.
     const state = store.getState();
     replace({
-      pathname: `/home/default`, //should be state.user.defaultGroupId
+      pathname: '/home/default', //should be state.user.defaultGroupId
       state: { nextPathname: nextState.location.pathname }
     });
   }

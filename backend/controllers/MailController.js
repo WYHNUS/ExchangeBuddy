@@ -127,8 +127,8 @@ exports.verifyToken = function(req, res){
             if(!!user){
                 if(user.isEmailVerified){
                     res.send({
-                        status: 'fail',
-                        message: "user already verified"
+                        status: 'success',
+                        user: user
                     })
                 }else{
                     user.isEmailVerified = true;
