@@ -53,7 +53,7 @@ const composer = (props, onData) => {
 // redux
 const mapStateToProps = (state) => {
   return {
-    profile: state.profile.user.user,
+    profile: state.profile.userProfile.userProfile,
     userObject: state.user.userObject,
     /*userHomeUniversity: state.profile.userHomeUniversity.userHomeUniversity,
     userExchangeUniversities: state.profile.userExchangeUniversities.userExchangeUniversities,

@@ -30,10 +30,10 @@ const userExchangeUniversities = [{name: 'KTH Royal Institute of Technology'}];
 const user = {id:'1', fbUserId:'asflhkjh', displayName: 'Lee Kai Yi' }
 
 const initialState={
-	user:{user:user,error:null,loading:false},
-	userGroups:{userGroups:userGroups,error:null,loading:false},
-	userHomeUniversity:{userHomeUniversity:userHomeUniversity,error:null,loading:false},
-	userExchangeUniversities:{userExchangeUniversities:userExchangeUniversities,error:null,loading:false},
+	//user:{user:user,error:null,loading:false},
+	//userGroups:{userGroups:userGroups,error:null,loading:false},
+	//userHomeUniversity:{userHomeUniversity:userHomeUniversity,error:null,loading:false},
+	//userExchangeUniversities:{userExchangeUniversities:userExchangeUniversities,error:null,loading:false},
 	userProfile:{userProfile:{}, error:null, loading:false}
 }
 

@@ -57,7 +57,7 @@ export function insertUniversitiesIntoUniversityList(universityArray, universiti
   for(var j=0;j<universityArray.length;j++){
     var uniName = "";
     for(var i=0;i<universities.length;i++){
-      if(universities[i].id===universityArray[j].id){
+      if(universities[i].id===universityArray[j].UniversityId){
         uniName = universities[i].name;
         break;
       }
