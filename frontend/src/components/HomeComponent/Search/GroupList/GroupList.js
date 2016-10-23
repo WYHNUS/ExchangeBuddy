@@ -25,16 +25,16 @@ class GroupItem extends React.Component {
       };
       return (
         <div className="group-body">
-        <h5 className="group-heading">{heading}</h5>  
-        <ListItem
-        className={parseInt(index)===parseInt(selected)?'selected-group':null}
-        primaryText={group.name}
-        onTouchTap={goToGroup}
-        />
-        {/*
-        leftAvatar={<Avatar src={ imageUrl } size={ 40 } style={{ objectFit: 'contain', backgroundColor: '#fff'}}/>}*/}
+          <h5 className="group-heading">{heading}</h5>  
+          <ListItem
+          className={parseInt(index)===parseInt(selected)?'selected-group':null}
+          primaryText={group.name}
+          onTouchTap={goToGroup}
+          />
+          {/*
+          leftAvatar={<Avatar src={ imageUrl } size={ 40 } style={{ objectFit: 'contain', backgroundColor: '#fff'}}/>}*/}
         </div>
-        );
+      );
     }
   }
 

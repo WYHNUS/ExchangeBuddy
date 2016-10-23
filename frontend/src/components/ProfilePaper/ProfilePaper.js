@@ -76,43 +76,44 @@ export default class ProfilePaper extends React.Component {
 
       return (
         <div className='row' id="profile-paper">
-        <div className='col-xs-12 col-md-3' id="user-image">
-        { UserHelper.getAvatar(profile, 300, { height: "auto", width: "100%" }) }
-        </div>
+          <div className='col-xs-12 col-md-3' id="user-image">
+          { UserHelper.getAvatar(profile, 300, { height: "auto", width: "100%" }) }
+          </div>
 
-        <div className='col-xs-12 col-md-7' id="user-info">
-        <h1 style={ text_header_style }>{ profile.name }</h1>
+          <div className='col-xs-12 col-md-7' id="user-info">
+            <h1 style={ text_header_style }>{ profile.name }</h1>
 
-        <div className="flex-table-container">
+            <div className="flex-table-container">
+              <div className='row'>
+                <div className='col-xs-12 col-md-4 table-header'>Home University</div>
+                <div className='col-xs-12 col-md-8 table-cell'>
+                  { 
+                    this.props.profile.University?
+                    (profile.University.name):
+                    (<div>Not loaded university name</div>) 
+                  }
+                </div>
+              </div>
 
-        <div className='row'>
-        <div className='col-xs-12 col-md-4 table-header'>Home University</div>
-        <div className='col-xs-12 col-md-8 table-cell'>
-        { this.props.profile.University?
-          (profile.University.name):
-          (<div>Not loaded university name</div>) }
-        </div>
-        </div>
+              <div className='row'>
+                <div className='col-xs-12 col-md-4 table-header'>On exchange to</div>
+                <div className='col-xs-12 col-md-8 table-cell'>
+                {this.state.exchangeUniListLoaded? 
+                  (this.state.exchangeUniList.map((uni, idx) => uni.name)):
+                  (<h2>Error loading list of unis...</h2>)}
+                { /*userExchangeUniversities.name*/ }
+                </div>
+              </div>
 
-        <div className='row'>
-        <div className='col-xs-12 col-md-4 table-header'>On exchange to</div>
-        <div className='col-xs-12 col-md-8 table-cell'>
-        {this.state.exchangeUniListLoaded? 
-          (this.state.exchangeUniList.map((uni, idx) => uni.name)):
-          (<h2>Error loading list of unis...</h2>)}
-        { /*userExchangeUniversities.name*/ }
-        </div>
-        </div>
-
-        <div className='row'>
-        <div className='col-xs-12 col-md-4 table-header'>Facebook</div>
-        <div className='col-xs-12 col-md-8 table-cell'>
-        <Link to={ `https://facebook.com/${profile.fbUserId}` }>Facebook profile</Link>
-        </div>
-        </div>
-
-        </div>
-        </div>
+              <div className='row'>
+                <div className='col-xs-12 col-md-4 table-header'>Facebook</div>
+                <div className='col-xs-12 col-md-8 table-cell'>
+                  <Link to={ `https://facebook.com/${profile.fbUserId}` }>Facebook profile</Link>
+                </div>
+              </div>
+              
+            </div>
+          </div>
         </div>
         )
     }

@@ -1,5 +1,6 @@
 import request from 'superagent';
 import {bearer} from '../util/bearer';
+import {ROOT_URL} from '../util/backend';
 
 export const SAVE_STORY_CONTENT = 'SAVE_STORY_CONTENT';
 export const RESET_EDITING_STORY = 'RESET_EDITING_STORY';
@@ -17,8 +18,6 @@ export const FETCH_STORIES_FAIL = 'FETCH_STORIES_FAIL';
 export const FETCH_SINGLE_STORY_SUCCESS = 'FETCH_SINGLE_STORY_SUCCESS';
 export const FETCH_SINGLE_STORY_FAIL = 'FETCH_SINGLE_STORY_FAIL';
 
-
-import {ROOT_URL} from '../util/backend';
 
 export function clickedFetch() {
     return { type: CLICKED_FETCH };
@@ -121,6 +120,7 @@ export function uploadContentToServer(title, content, id) {
 				storyTitle: title,
 				storyContent: content
 			})
+			.use(bearer)
 			.end(function(err, res){
 				// console.log(err);
 				// console.log(res);

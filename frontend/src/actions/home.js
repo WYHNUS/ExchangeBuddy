@@ -1,4 +1,5 @@
-import axios from 'axios';
+import request from 'superagent';
+import {bearer} from '../util/bearer';
 import {ROOT_URL} from '../util/backend';
 
 export const TOGGLE_SELECTED_HOME_GROUP = 'TOGGLE_SELECTED_HOME_GROUP';
@@ -50,11 +51,11 @@ export const RESET_GROUP_MESSAGES = 'RESET_GROUP_MESSAGES';
 export const UPDATE_GROUP_MESSAGE_FROM_SOCKET = 'UPDATE_GROUP_MESSAGE_FROM_SOCKET';
 
 export function fetchGroupMessages(GroupId){
+	const req = request
+		.post(ROOT_URL + '/messages')
+		.send({ GroupId: GroupId })
+		.use(bearer);
 
-	const req = axios.post(`${ROOT_URL}/messages`, 
-	{
-		GroupId: GroupId
-	})
 	return {
 		type: FETCH_GROUP_MESSAGES,
 		payload: req
@@ -98,8 +99,10 @@ export const FETCH_CURRENT_GROUP_FAILURE = 'FETCH_CURRENT_GROUP_FAILURE';
 export const RESET_CURRENT_GROUP = 'RESET_CURRENT_GROUP';
 
 export function fetchCurrentGroup(id){
+	const req = request
+		.get(ROOT_URL + '/group/' + id)
+		.use(bearer);
 
-	const req = axios.get(`${ROOT_URL}/group/${id}`)
 	return {
 		type: FETCH_CURRENT_GROUP,
 		payload: req
@@ -136,11 +139,11 @@ export const FETCH_MY_GROUPS_FAILURE = 'FETCH_MY_GROUPS_FAILURE';
 export const RESET_MY_GROUPS = 'RESET_MY_GROUPS';
 
 export function fetchMyGroups(userId){
+	const req = request
+		.post(ROOT_URL + '/group')
+		.send({ userId: userId })
+		.use(bearer);
 
-	const req = axios.post(`${ROOT_URL}/group`, 
-	{
-		userId: userId
-	})
 	return {
 		type: FETCH_MY_GROUPS,
 		payload: req
@@ -182,11 +185,11 @@ export const FETCH_EVENTS_FAILURE = 'FETCH_EVENTS_FAILURE';
 export const RESET_EVENTS = 'RESET_EVENTS';
 
 export function fetchEvents(GroupId){
+	const req = request
+		.post(ROOT_URL + '/allEvents')
+		.send({ GroupId: GroupId })
+		.use(bearer);
 
-	const req = axios.post(`${ROOT_URL}/allEvents`, 
-	{
-		GroupId: GroupId
-	})
 	return {
 		type: FETCH_EVENTS,
 		payload: req
@@ -223,9 +226,7 @@ POSTING EVENTS TO A GROUP
 export const POST_EVENTS = 'POST_EVENTS';
 
 export function postEvents(lat, lng, location, title, startTime, endTime, detail, imgSrc, GroupId, UserId){
-
-	var obj = 
-	{
+	var obj = {
 		lat: lat,
 		lng: lng,
 		location:location,
@@ -236,10 +237,13 @@ export function postEvents(lat, lng, location, title, startTime, endTime, detail
 		imgSrc: imgSrc,
 		GroupId: GroupId,
 		UserId: UserId
-	}
-	//console.log(obj);
+	};
 
-	const req = axios.put(`${ROOT_URL}/event`, obj);
+	const req = request
+		.put(ROOT_URL + '/event')
+		.send({ obj })
+		.use(bearer);
+
 	return {
 		type: POST_EVENTS,
 		payload: req

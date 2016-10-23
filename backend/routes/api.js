@@ -46,18 +46,18 @@ router.put('/verificationemail', UserCtrl.createUser);
 router.get('/verify/:token', MailCtrl.verifyToken);
 router.get('/resendVerificationMail/:userId', MailCtrl.resend);
 
-router.get('/country', /*verifyToken,*/ CountryCtrl.getAllCountries);
-router.get('/country/:id', /*verifyToken,*/ CountryCtrl.getCountry);
+// countries and universities data are public (no need to authenticate)
+router.get('/country', CountryCtrl.getAllCountries);
+router.get('/country/:id', CountryCtrl.getCountry);
 
-router.post('/messages', ChatCtrl.getMessages);
+router.get('/university', UniCtrl.getAllUniversities);
+router.get('/university/:id', UniCtrl.getUniversity);
 
-router.put('/university', UniCtrl.createUniversity);	// dummy
-router.get('/university', /*verifyToken,*/ UniCtrl.getAllUniversities);
-router.get('/university/:id', /*verifyToken,*/ UniCtrl.getUniversity);
+router.post('/messages', verifyToken, ChatCtrl.getMessages);
 
 router.get('/allStories', verifyToken, StoryCtrl.getAllStories);
-router.post('/story/:id', /*verifyToken,*/ StoryCtrl.getStory);
-router.put('/story', /*verifyToken,*/ StoryCtrl.createStory);
+router.post('/story/:id', verifyToken, StoryCtrl.getStory);
+router.put('/story', verifyToken, StoryCtrl.createStory);
 
 /*
 get the groups a user currently belongs to
@@ -66,8 +66,8 @@ request:
     userId: 1
 }
 */
-router.post('/group', /*verifyToken,*/ GroupCtrl.getGroupIndex);
-router.get('/group/:id', /*verifyToken,*/ GroupCtrl.getGroup);
+router.post('/group', verifyToken, GroupCtrl.getGroupIndex);
+router.get('/group/:id', verifyToken, GroupCtrl.getGroup);
 
 /*
 Get group members
@@ -76,7 +76,7 @@ request:
     GroupId: 1
 }
 */
-router.post('/members', GroupCtrl.getMembers);
+router.post('/members', verifyToken, GroupCtrl.getMembers);
 
 
 /*
@@ -88,7 +88,7 @@ request:
     GroupId: 123
 }
 */
-router.post('/allEvents', EventCtrl.getAllEvents);
+router.post('/allEvents', verifyToken, EventCtrl.getAllEvents);
 
 /*
 Create a new event
@@ -106,7 +106,7 @@ request:
     UserId: 1
 }
 */
-router.put('/event', EventCtrl.createEvent);
+router.put('/event', verifyToken, EventCtrl.createEvent);
 
 /*
 Update an event information
@@ -127,7 +127,7 @@ response:
  success: true/false
 }
 */
-router.patch('/event', EventCtrl.updateEvent);
+router.patch('/event', verifyToken, EventCtrl.updateEvent);
 
 /*
 Delete an event
@@ -138,7 +138,7 @@ request:
     EventId: 1
 }
 */
-router.delete('/event', EventCtrl.deleteEvent);
+router.delete('/event', verifyToken, EventCtrl.deleteEvent);
 
 /*
 Record the user going for an event
@@ -150,8 +150,8 @@ request:
     UserId: 1
 }
 */
-router.post('/unattend', EventCtrl.unGoToEvent);
-router.post('/goToEvent', EventCtrl.goToEvent);
+router.post('/unattend', verifyToken, EventCtrl.unGoToEvent);
+router.post('/goToEvent', verifyToken, EventCtrl.goToEvent);
 
 /*
 Comment on a event
@@ -164,7 +164,7 @@ requset:
     UserId: 1
 }
 */
-router.post('/comment', EventCtrl.comment);
+router.post('/comment', verifyToken, EventCtrl.comment);
 
 /*
 Retrievee all the comments of an event
@@ -172,9 +172,9 @@ Retrievee all the comments of an event
 GET /comment/:eventId
 
 */
-router.get('/comment/:eventId', EventCtrl.getComments);
+router.get('/comment/:eventId', verifyToken, EventCtrl.getComments);
 
-router.post('/uploadPhoto', function(req, res, err){
+router.post('/uploadPhoto', verifyToken, function(req, res, err){
     upload(req,res,function(err) {
         if(err) {
             return res.end("Error uploading file.");

@@ -7,6 +7,7 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Row, Col } from 'react-flexbox-grid';
 import {browserHistory} from 'react-router';
+import cookie from 'react-cookie';
 
 import ChiThanh from '../../../res/about/ChiThanh.jpg';
 import EugeneNg from '../../../res/about/EugeneNg.jpg';
@@ -22,7 +23,8 @@ import ExchangeBuddyIcon from '../../../res/ExchangeBuddySpreadIcon.png'
 export default class SettingsList extends React.Component {
 
 	logout(){
-		//this.props.attemptLogout();
+		// clear cookie
+		cookie.remove('authToken');
 		this.props.clearUser();
 		browserHistory.push('/');
 	}

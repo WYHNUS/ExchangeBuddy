@@ -77,10 +77,10 @@ class Chat extends React.Component{
 	render(){
 		return(
 			<Grid>
-			<div className="chat-container">
-			<SubmitForm socket={socket}/>
-			<MessageList />
-			</div>
+				<div className="chat-container">
+					<SubmitForm socket={socket}/>
+					<MessageList />
+				</div>
 			</Grid>);
 	}
 }

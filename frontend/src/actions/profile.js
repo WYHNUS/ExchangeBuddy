@@ -31,18 +31,14 @@ export function fetchProfileFailure(error){
 }
 
 export function fetchProfile(userId){
-	// return (dispatch) => {
-	//     dispatch(clickedFetching());
+	const req = request
+		.get(ROOT_URL + '/user/' + userId)
+		.use(bearer);
 
-		var query = request
-			.get(ROOT_URL + '/user/' + userId)
-			.use(bearer);
-
-		return {
-			type: START_FETCHING_PROFILE,
-			payload: query
-		};
-	// }
+	return {
+		type: START_FETCHING_PROFILE,
+		payload: req
+	};
 }
 
 export function resetProfile(){

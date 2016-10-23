@@ -8,7 +8,7 @@ import * as UserHelper from '../../../util/user';
 
 
 export default class StoryDetails extends React.Component {
-	componentDidMount() {
+	componentWillMount() {
 		this.props.fetchStory(this.props.id, this.props.user.id);
 	}
 

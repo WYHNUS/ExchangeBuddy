@@ -69,19 +69,19 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(fetchMyGroups(userId)).payload.then((response) => {
         if (!response.error) {
           var selectedIndex = 0;
-          dispatch(fetchMyGroupsSuccess(response.data));
-          browserHistory.push(`/home/${response.data[0].id}`)
+          dispatch(fetchMyGroupsSuccess(response.body));
+          browserHistory.push(`/home/${response.body[0].id}`)
           dispatch(toggleSelectedHomeGroup(selectedIndex))
-          dispatch(fetchEvents(response.data[selectedIndex].id)).payload.then((response) => {
+          dispatch(fetchEvents(response.body[selectedIndex].id)).payload.then((response) => {
             if (!response.error) {
-              dispatch(fetchEventsSuccess(response.data));
+              dispatch(fetchEventsSuccess(response.body));
             } else {
               dispatch(fetchEventsFailure(response.error));
             }
           });
-          dispatch(fetchCurrentGroup(response.data[selectedIndex].id)).payload.then((response) => {
+          dispatch(fetchCurrentGroup(response.body[selectedIndex].id)).payload.then((response) => {
             if (!response.error) {
-              dispatch(fetchCurrentGroupSuccess(response.data));
+              dispatch(fetchCurrentGroupSuccess(response.body));
             } else {
               dispatch(fetchCurrentGroupFailure(response.error));
             }

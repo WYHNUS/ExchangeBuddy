@@ -7,6 +7,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import { TextFormField } from '../Field';
 import { EditableField } from '../EditableField';
 
+var tmpId = -1;
 
 class StoryForm extends React.Component {
   submitForm(val) {
@@ -22,8 +23,11 @@ class StoryForm extends React.Component {
     
     if (published) {
       // handle redirection here if needed
-      browserHistory.push('/stories/' + storyDetails.storyId);
+      tmpId = storyDetails.storyId;
       this.props.cleanUp();
+      setTimeout(function() {
+        browserHistory.push('/stories/' + tmpId);
+      }, 2000);
     }
 
     return (
