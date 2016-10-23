@@ -17,7 +17,7 @@ exports.getUser = function(req, res) {
         include: [{
             model: University
         }],
-        attributes: ['id', 'email', 'name', 'profilePictureUrl', 'bio', 'UniversityId']
+        attributes: ['id', 'email', 'name', 'profilePictureUrl', 'fbUserId', 'bio', 'UniversityId']
     }).then(function(user) {
         user.getExchangeEvent().then(function(exchanges){
             user.setDataValue("Exchanges", exchanges);
@@ -63,7 +63,7 @@ exports.createUser = function(req, res){
                 });
         }
         else if (!!homeUniversity && !!exchangeUniversity) {
-            graph.get("/me?fields=name,id,email&access_token=" + facebookToken, function (error, response) {
+            graph.get("/me?fields=name,id,email,picture&access_token=" + facebookToken, function (error, response) {
                 if (error) {
                     return res.status(400)
                         .json({
@@ -77,6 +77,7 @@ exports.createUser = function(req, res){
                         name: req.body.name,
                         gender: req.body.gender,
                         fbUserId: response.id,
+                        profilePictureUrl: response.picture.data.url,
                         isEmailVerified: 0, // default to false
                         UniversityId: homeUniversity.id,
                     }),
