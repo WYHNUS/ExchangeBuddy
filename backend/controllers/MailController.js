@@ -7,8 +7,19 @@ var sendToken = function(token, user){
     var from_email = new helper.Email('noreply@exchangebuddy.com');
     var to_email = new helper.Email(user.email);
     var subject = 'Verify Your Email on ExchangeBuddy';
-    var content = new helper.Content('text/plain',
-'Please verify your email on ExchangeBuddy by clicking the follwing link.\n http://'+ process.env.HOSTNAME + '/verify/' + token
+    var content = new helper.Content('text/html',
+        '<html><body>' +
+        '<div style="text-align:center; margin: 50px">' +
+            '<p>Welcome to ExchangeBuddy!</p>' +
+            '<p>Please verify your email on ExchangeBuddy by clicking the follwing link.</p>' + 
+            '<a href="http://'+ process.env.HOSTNAME + '/verify/' + token + '" target="_blank" ' +
+            'style="line-height: 28px;padding: 10px 12px;background: #4d90fe;border-color: #3079ed;' +
+            'border-radius: 10px;color: #ffffff;text-decoration: none;">' +
+                'Confirm Email' +
+            '</a>' +
+        '</div>' +
+        '<p> Cheers,</p><p> ExchangeBuddy Team</p>' +
+        '</body></html>'
 );
     var mail = new helper.Mail(from_email, subject, to_email, content);
     var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
