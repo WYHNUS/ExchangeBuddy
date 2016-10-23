@@ -17,7 +17,7 @@ exports.getUser = function(req, res) {
         include: [{
             model: University
         }],
-        attributes: ['id', 'email', 'name', 'profilePictureUrl', 'bio', 'UniversityId']
+        attributes: ['id', 'email', 'name', 'profilePictureUrl', 'fbUserId', 'bio', 'UniversityId']
     }).then(function(user) {
         user.getExchangeEvent().then(function(exchanges){
             user.setDataValue("Exchanges", exchanges);
