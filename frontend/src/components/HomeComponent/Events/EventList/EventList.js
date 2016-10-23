@@ -17,6 +17,7 @@ export default class EventsList extends React.Component {
   }
 
   componentWillMount(){
+    this.props.resetEvents();
     //this.props.fetchEvents(this.props.groupId);
   }
 
@@ -101,6 +102,7 @@ EventsList.propTypes = {
   fetchEvents:PropTypes.func.isRequired,
   fetchAllUniversitiesSuccess:PropTypes.func.isRequired,
   fetchAllUniversitiesFailure:PropTypes.func.isRequired,
-  universities:PropTypes.array.isRequired
+  universities:PropTypes.array.isRequired,
+  resetEvents:PropTypes.func.isRequired
   //fetchEvents: PropTypes.func.isRequired
 };

@@ -45,6 +45,7 @@ const newEventForm = (callback, userId, isGeocodingError, foundAddress, position
   //if there are some errors, show them!
   if(errors.length===0){
     callback();
+    console.log(id,userId)
      postEvents(
       position.latitude,
       position.longitude,
@@ -253,13 +254,13 @@ class NewEventForm extends Component {
 
   render() {
     const { handleSubmit, pristine, reset, submitting, user, postEvents, showSnackbar } = this.props;
-    const {userId} = user.userObject; 
+    //const {userId} = user.userObject; 
     const {id} = this.props.homeGroupDetails.homeGroupDetails;
 
     const submitHandler = handleSubmit(
       newEventForm(
         reset, 
-        userId, 
+        this.props.user.userObject.id, 
         this.state.isGeocodingError,
         this.state.foundAddress, 
         this.state.position, 
