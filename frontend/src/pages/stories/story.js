@@ -5,8 +5,6 @@ toggleTopBarBackButtonVisibility } from '../../actions/pageVisibility';
 
 import StoryDetails from '../../components/StoriesComponent/StoryDetails';
 
-import story1ImgUrl from '../../res/SEP-Application.png';
-
 class Story extends React.Component{
 
 	componentDidMount() {
@@ -24,7 +22,7 @@ class Story extends React.Component{
 			<div>
 				<StoryDetails/>
 			</div>
-			);
+		);
 	}
 }
 
