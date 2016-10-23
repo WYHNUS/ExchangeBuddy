@@ -1,5 +1,5 @@
 import {
-	SAVE_STORY_CONTENT, 
+	SAVE_STORY_CONTENT, RESET_EDITING_STORY,
 	CLICKED_UPLOAD, UPLOAD_CONTENT_SUCCESS, UPLOAD_CONTENT_FAIL,
 	CLICKED_FETCH, FETCH_STORIES_SUCCESS, FETCH_STORIES_FAIL,
 	FETCH_SINGLE_STORY_SUCCESS, FETCH_SINGLE_STORY_FAIL
@@ -10,14 +10,14 @@ const initialState=
 	error: null,
 	fetching: false,
 	fetching_result: false,
+	uploading: false,
+	published: false,
 	storyDetails: {},
 	storyList: [],
 	editingStory: {
+		storyId: null,
 		title: null,
-		content: "<p>Share your life events here! :D </p>",
-		error: null, 
-		uploading: false,
-		published: false
+		content: "<p>Share your life events here! :D </p>"
 	}
 }
 
@@ -59,44 +59,46 @@ export function stories(state=initialState, action)
 			return Object.assign({}, state, {
 		        editingStory: {
 					title: state.editingStory.title,
-					content: action.content,
-					error: null, 
-					uploading: false,
-					published: false
+					content: action.content
 		        }
 		    });
 
 		case CLICKED_UPLOAD:
 			return Object.assign({}, state, {
-		        editingStory: {
-					title: state.editingStory.title,
-					content: state.editingStory.content,
-					error: null, 
-					uploading: true,
-					published: false
-		        }
+				uploading: true,
+				published: false,
+				error: null
 			});
 
 		case UPLOAD_CONTENT_SUCCESS:
 			return Object.assign({}, state, {
+				error: null, 
+				uploading: false,
+				published: true,
 				editingStory: {
-					title: null,
-					content: "<p>Share your life events here! :D </p>",
-					error: null, 
-					uploading: false,
-					published: true
+					storyId: action.story.id
 		        }
 			});
 
 		case UPLOAD_CONTENT_FAIL:
 			return Object.assign({}, state, {
+				uploading: false,
+				published: false,
+				error: action.error
+			});
+
+		case RESET_EDITING_STORY:
+			return Object.assign({}, state, {
+				error: null,
+				fetching: false,
+				fetching_result: false,
+				uploading: false,
+				published: false,
 				editingStory: {
-					title: state.editingStory.title,
-					content: state.editingStory.content,
-					error: action.error, 
-					uploading: false,
-					published: false
-		        }
+					storyId: null,
+					title: null,
+					content: "<p>Share your life events here! :D </p>"
+				}
 			});
 
 		default:

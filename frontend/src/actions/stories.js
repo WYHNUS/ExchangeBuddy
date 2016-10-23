@@ -1,6 +1,7 @@
 import request from 'superagent';
 
 export const SAVE_STORY_CONTENT = 'SAVE_STORY_CONTENT';
+export const RESET_EDITING_STORY = 'RESET_EDITING_STORY';
 
 export const CLICKED_UPLOAD = 'CLICKED_UPLOAD';
 export const UPLOAD_CONTENT_SUCCESS = 'UPLOAD_CONTENT_SUCCESS';
@@ -91,12 +92,16 @@ export function saveStoryContent(content) {
 	return { type: SAVE_STORY_CONTENT, content }
 }
 
+export function resetEditingStory() {
+	return { type: RESET_EDITING_STORY }
+}
+
 export function clickedUpload() {
     return { type: CLICKED_UPLOAD };
 }
 
-export function uploadContentSuccess(stories) {
-    return { type: UPLOAD_CONTENT_SUCCESS, stories };
+export function uploadContentSuccess(story) {
+    return { type: UPLOAD_CONTENT_SUCCESS, story };
 }
 
 export function uploadContentFail(error) {
@@ -123,7 +128,7 @@ export function uploadContentToServer(title, content, id) {
 					dispatch(uploadContentFail(err));
 				} else {
 					if (res.body.status === "success") {
-						dispatch(uploadContentSuccess(res.data));
+						dispatch(uploadContentSuccess(res.body.message));
 					} else {
 						dispatch(uploadContentFail(res.body.message));
 					}

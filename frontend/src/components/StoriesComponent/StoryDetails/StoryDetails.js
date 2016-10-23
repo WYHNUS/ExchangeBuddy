@@ -31,7 +31,7 @@ export default class StoryDetails extends React.Component {
 		return (
 			<div className="text-content-wrapper">
 				<div className="user-profile-container">
-					<div xs={8} className="story-avatar">{ UserHelper.getAvatar(User, 40) }</div>
+					<div className="story-avatar">{ UserHelper.getAvatar(User, 60) }</div>
 					<div className="author-details">
 						<div>{ User.name }</div>
 						<div><span>{moment(createdAt).fromNow()}</span></div>
