@@ -17,6 +17,7 @@ import LeonMak from '../../../res/about/LeonMak.jpg';
 import SueMae from '../../../res/about/SueMae.jpg';
 import WangYanHao from '../../../res/about/WangYanHao.jpg';
 import ZhangHanMing from '../../../res/about/ZhangHanMing.jpg';
+import ExchangeBuddyIcon from '../../../res/ExchangeBuddySpreadIcon.png'
 
 export default class SettingsList extends React.Component {
 
@@ -42,6 +43,9 @@ export default class SettingsList extends React.Component {
 			<div className="settings-info">
 
 			<h1>About</h1>
+			<div className="icon row center-xs">
+			<img src={ExchangeBuddyIcon} alt="icon" />
+			</div>
 			<p id='about-info'>ExchangeBuddy is for students, by students. We are here to provide you with a better exchange experience by providing you with information and a network for you to interact and know other students on exchange! Believe at ExchangeBuddy, we know that exchange is a once in a lifetime experience and we want you to get the BEST out of it!</p>
 
 			<h2>The Team</h2>
