@@ -38,8 +38,8 @@ export default class LoginButton extends Component {
     return (
       <FacebookLogin
         appId={ "580995375434079" }
-        scope="public_profile, email, user_education_history, user_location"
-        fields="name, email, picture, gender, education, location, accessToken"
+        scope="public_profile, user_education_history, user_location"
+        fields="name, email, picture, gender, education, location"
         callback={ responseFacebook(this.props.attemptLogin) } />
     )
   }
