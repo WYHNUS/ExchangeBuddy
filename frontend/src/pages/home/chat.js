@@ -36,14 +36,20 @@ class Chat extends React.Component{
 	componentDidMount(){
 		//if there is group id to join
 		if(this.props.homeGroupDetails.detailsLoaded){
-			console.log('setup is called');
-			socket.setup(
-				this.props.homeGroupDetails.homeGroupDetails.name,
-				parseInt(this.props.homeGroupDetails.homeGroupDetails.id),
-				this.props.user.userObject.name,
-				parseInt(this.props.user.userObject.id),
-				this.chatReceive.bind(this)
-			)
+			if(!socket.isFirstTimeUse){
+				socket.setup(
+					this.props.homeGroupDetails.homeGroupDetails.name,
+					parseInt(this.props.homeGroupDetails.homeGroupDetails.id),
+					this.props.user.userObject.name,
+					parseInt(this.props.user.userObject.id),
+					this.chatReceive.bind(this)
+				)
+			}else{
+				socket.updateRoom(
+					this.props.homeGroupDetails.homeGroupDetails.name
+				)
+			}
+			
 			
 			/*var emittedobj = 
 			{
@@ -71,7 +77,7 @@ class Chat extends React.Component{
 
 	componentWillUnmount(){
 		//socket.emit('disconnect');
-		socket.uninstall();
+		//socket.uninstall();
 	}
 
 	render(){

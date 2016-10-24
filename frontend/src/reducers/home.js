@@ -221,7 +221,6 @@ import {
 				homeGroups: {...state.homeGroups,selected:action.index},
 				homeGroupDetails:{...state.homeGroupDetails, homeGroupDetails:state.homeGroups.homeGroups[action.index]}}*/
 
-
 				case FETCH_HOME_MESSAGES:
 				return {...state, homeMessages: {homeMessages:[], error: null, loading: true}};
 				case FETCH_HOME_MESSAGES_SUCCESS:
