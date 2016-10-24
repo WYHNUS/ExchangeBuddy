@@ -17,7 +17,7 @@ export default class EventsList extends React.Component {
   }
 
   componentWillMount(){
-    this.props.resetEvents();
+    //this.props.resetEvents();
     //this.props.fetchEvents(this.props.groupId);
   }
 
