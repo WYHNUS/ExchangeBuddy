@@ -244,6 +244,10 @@ import {
 				case FETCH_MY_GROUPS:
 				return {...state, homeGroups: {groupsLoaded:false, selected:-1, homeGroups:[], error: null, loading: true}};
 				case FETCH_MY_GROUPS_SUCCESS:
+				//sorting to ensure that the groups are displayed in order
+				action.payload.sort(function(a, b) {
+					return parseInt(a.groupType) - parseInt(b.groupType);
+				});
 				return {...state, homeGroups: {groupsLoaded:true, selected:0, homeGroups: action.payload, error: null, loading: false}};
 				case FETCH_MY_GROUPS_FAILURE:
 				error = action.payload || {message: action.payload};
