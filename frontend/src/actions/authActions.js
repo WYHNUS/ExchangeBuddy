@@ -50,9 +50,9 @@ export function attemptLogin(token) {
   //console.log(token);
   return (dispatch) => {
     dispatch(clickedLogin());
-    
+
     request
-      .post(ROOT_URL + '/authenticate')
+      .post('http://app.exchangebuddy.com/authenticate')
       .send({ facebookToken: token })
       .end(function(err,res){
         // console.log(res);
