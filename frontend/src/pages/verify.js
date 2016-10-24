@@ -11,10 +11,6 @@ class Verify extends React.Component{
 
 	componentDidMount() {
 		this.props.verifyToken(this.props.routeParams.token);
-
-		if (this.props.isVerified) {
-			this.redirectLanding();
-		}
 	}
 
 	redirectLanding() {
@@ -25,6 +21,10 @@ class Verify extends React.Component{
 
 	render() {
 		const { error, isVerified } = this.props; 
+
+		if (this.props.isVerified) {
+			this.redirectLanding();
+		}
 
 		return (
 			<div>
