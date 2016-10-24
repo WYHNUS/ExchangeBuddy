@@ -55,11 +55,19 @@ class Story extends React.Component{
 
 	render() {
 		return (
-			<div>
-				<StoryForm />
+			<div style={{'margin':'50px', 'marginTop':'100px', 'textAlign':'center'}}>
+				<p>We are performing some magic. :)</p>
+				<p>Please have fun through the following link. XD </p>
+				<a href="https://www.facebook.com/exchangebuddy/videos/848304498642703/" target="_blank">
+					Magic!
+				</a>
 			</div>
 		);
 	}
+
+	// <div>
+	// 	<StoryForm />
+	// </div>
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -88,6 +88,7 @@ module.exports = function(io){
         socket.on('disconnect', function(){
             try{
                 socket.leave(socket.room.name);
+                socket.room = null;
                 groupsOfUsers[socket.room.name].splice(groupsOfUsers[socket.room.name].indexOf(socket.user.id), 1);
             }catch(error){
                 console.log(error);
