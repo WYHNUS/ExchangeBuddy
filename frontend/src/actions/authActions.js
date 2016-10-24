@@ -53,7 +53,7 @@ export function attemptLogin(token) {
     dispatch(clickedLogin());
 
     request
-      .post('http://app.exchangebuddy.com/authenticate')
+      .post('http://54.186.208.82:3001/authenticate')
       .send({ facebookToken: token })
       .end(function(err,res){
         // console.log(res);
