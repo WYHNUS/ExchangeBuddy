@@ -55,13 +55,14 @@ class MessageUser extends React.Component{
   render(){
     const { message, User, createdAt, id } = this.props.message;
     return (
-    <div className="message-body">
-    <h5 className="message-username">{ User.name } <span className="message-timestamp">{ formatTime(createdAt) }</span></h5>
-    <p className="message-content">
-    <Linkify>{ message }</Linkify>
-    </p>
-    </div>
-    );
+      User?(<div className="message-body">
+        <h5 className="message-username">{ User.name } <span className="message-timestamp">{ formatTime(createdAt) }</span></h5>
+        <p className="message-content">
+        <Linkify>{ message }</Linkify>
+        </p>
+        </div>):null
+      
+      );
   }
 }
 
@@ -119,7 +120,10 @@ export default class MessageList extends React.Component {
 
     return (
       <div className="messages-container">
-      { homeMessages.length > 0 && homeMessages.map((message, idx) => <Message message={ message } key={ idx } />) }
+      { (homeMessages.length > 0)?
+        (homeMessages.map((message, idx) => <Message message={ message } key={ idx } />))
+        :
+        (<h2>Talk to get to know the people in your group!</h2>) }
       </div>
       )
   }

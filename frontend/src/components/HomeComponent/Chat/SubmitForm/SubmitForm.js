@@ -39,7 +39,7 @@ class SubmitForm extends Component {
     return (
       <form onSubmit={ submitHandler }>
         <div className="message-send-row">
-          <div className="message-user-avatar">{ UserHelper.getAvatar(user, 48) }</div>
+          <div className="message-user-avatar">{ UserHelper.getAvatar(user.userObject, 48) }</div>
 
           <TextFormField
             className="message-send-field"

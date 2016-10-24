@@ -47,13 +47,13 @@ const gotoProfile = (userId) => () => {
 
 export const MemberTile = ({ user }) => (
   <Col xs={12} sm={6} md={4}>
-  <ListItem primaryText={ user.name }
-  secondaryText={ user.University.name }
-  leftAvatar={ getAvatar(user.profilePictureUrl, 40) }
-  onTouchTap={ gotoProfile(user.id) }
-  />
+    <ListItem primaryText={ user.name }
+    secondaryText={ user.University.name }
+    leftAvatar={ getAvatar(user, 40) }
+    onTouchTap={ gotoProfile(user.id) }
+    />
   </Col>
-  );
+);
 
 export default class MemberList extends React.Component {
 
@@ -69,11 +69,10 @@ export default class MemberList extends React.Component {
 
     return(
       <Grid>
-      <Row>
-      { homeFriends.map((user, idx) => <MemberTile key={ idx } user={ user } />) }
-      </Row>
+        <Row>
+          { homeFriends.map((user, idx) => <MemberTile key={ idx } user={ user } />) }
+        </Row>
       </Grid>
-
-      );
+    );
   }
 }

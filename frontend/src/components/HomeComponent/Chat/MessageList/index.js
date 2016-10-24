@@ -17,7 +17,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchGroupMessages: (groupId) => {
       dispatch(fetchGroupMessages(groupId)).payload.then((response) => {
         if (!response.error) {
-          dispatch(fetchGroupMessagesSuccess(response.data));
+          dispatch(fetchGroupMessagesSuccess(response.body));
         } else {
           dispatch(fetchGroupMessagesFailure(response.error));
         }

@@ -20,14 +20,14 @@ import {fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure,
 			fetchNewGroup: (groupId) => {
 				dispatch(fetchEvents(groupId)).payload.then((response) => {
 					if (!response.error) {
-						dispatch(fetchEventsSuccess(response.data));
+						dispatch(fetchEventsSuccess(response.body));
 					} else {
 						dispatch(fetchEventsFailure(response.error));
 					}
 				});
 				dispatch(fetchCurrentGroup(groupId)).payload.then((response) => {
 					if (!response.error) {
-						dispatch(fetchCurrentGroupSuccess(response.data));
+						dispatch(fetchCurrentGroupSuccess(response.body));
 					} else {
 						dispatch(fetchCurrentGroupFailure(response.error));
 					}

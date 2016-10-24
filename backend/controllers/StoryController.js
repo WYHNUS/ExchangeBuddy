@@ -44,7 +44,7 @@ exports.getStory = function(req, res) {
         },
         include: [{
             model: models.User,
-            attributes: ['id', 'name', 'profilePictureUrl']
+            attributes: ['id', 'name', 'profilePictureUrl', 'fbUserId']
         }]
     }).then(function(story){
         if (!!story) {

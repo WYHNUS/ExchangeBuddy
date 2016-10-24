@@ -23,12 +23,12 @@ export const getAvatarUrl = (user, size=64) => {
   if (!user)
     return "";
 
-  const cloudinaryId = user.profilePictureId;
+  const profilePictureUrl = user.profilePictureUrl;
   const fbUserId = user.fbUserId;
 
   // Using native Cloudinary
-  if (cloudinaryId)
-    return AvatarHelper.getUrl(cloudinaryId, size);
+  if (profilePictureUrl)
+    return profilePictureUrl;
   // Using Facebook Graph
   else if (fbUserId)
     return `https://graph.facebook.com/${fbUserId}/picture/?width=${size*2}&height=${size*2}`;
@@ -44,5 +44,3 @@ export const getAvatar = (user, size=64, style) => {
   else
     return <Avatar backgroundColor={ Colors.grey700 } icon={ IconsHelper.materialIcon("person") } />;
 };
-
-/*IconsHelper.materialIcon("person", _.extend({ color: Colors.grey50 }, style))*/

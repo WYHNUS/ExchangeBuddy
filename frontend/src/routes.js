@@ -46,12 +46,10 @@ function logPageView() {
 }
 
 export const getRoutes = (store) =>{
-
   const authRequired = (nextState, replace) => {
     // Now you can access the store object here.
     const state = store.getState();
 
-    /* >>>>>>>>>>>> tmp remove check for development <<<<<<<<<<<< */
     if (!state.user.isAuthenticated) {
       replace({ 
         pathname: '/notloggedin'
@@ -63,7 +61,7 @@ export const getRoutes = (store) =>{
     // Now you can access the store object here.
     const state = store.getState();
     replace({
-      pathname: `/home/default`, //should be state.user.defaultGroupId
+      pathname: '/home/default', //should be state.user.defaultGroupId
       state: { nextPathname: nextState.location.pathname }
     });
   }
@@ -84,12 +82,12 @@ export const getRoutes = (store) =>{
       </Route>
     </Route>
     <Route path="newstory" component={EditStory} onEnter={authRequired}/>
-    <Route path="stories">
+    <Route path="stories" onEnter={authRequired}>
       <IndexRoute component={Stories}/>
       <Route path=":storyId" component={StoryDetails}/>
     </Route>
     {/*<Route path="wiki" component={Wiki}/>*/}
-    <Route path="profile(/:userId)" component={ Profile } />
+    <Route path="profile(/:userId)" component={ Profile } onEnter={authRequired} />
     <Route path="notloggedin" component={NotLoggedIn}/>
     <Route path="signup" component={Signup}/>
     <Route path="verify">

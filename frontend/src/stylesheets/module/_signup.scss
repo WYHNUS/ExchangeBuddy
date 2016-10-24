@@ -12,26 +12,35 @@
 }
 
 #welcome-header {
-  min-height: 804px; position: relative; background-size: cover !important; padding-top: 64px;
+  min-height: 804px; position: relative; background-size: cover !important; /*padding-top: 64px;*/
 }
 
 #welcome-main-container {
-  display: flex; flex-direction: column; justify-content: space-around; height: 80vh; padding: 10vh 20px;
-@include media-xs-only { /*height: 120vh;*/ }
+  display: flex; flex-direction: column; justify-content: space-around; height: 80vh; padding: 0vh 20px;
+  @include media-xs-only { /*height: 120vh;*/ }
 }
 
+.welcome-icon-container{
+  max-width: 750px;
+  #welcome-icon{
+    width:200px;
+  }
+}
+
+
 #welcome-header-title {
-  text-align: center; margin: 0 auto; padding-top: 6rem; max-width: 750px;
+  text-align: center; margin: 0 auto; /*padding-top: 6rem;*/ max-width: 750px;
 
   #app-title {
-    color: #fff; font-family:'Josefin Sans', sans-serif; font-size: 54px; font-weight: bold; letter-spacing: 2px; line-height: 1.125; text-transform: uppercase;
-    @include media-xs-only { font-size: 44px; }
+    color: #000; font-family:'Josefin Sans', sans-serif; font-size: 54px; /*font-weight: bold;*/ letter-spacing: 1px; line-height: 1.125; text-transform: uppercase;
+    @include media-xs-only { font-size: 30px; }
   }
 
   #app-subtitle-container{
-    background: rgba(0,0,0,0.6);
+    /*background: rgba(0,0,0,0.6);*/
     .app-subtitle {
-      font-family:'Lato', sans-serif; color: #fff; opacity: 0.75; font-size: 1.4rem; padding: 0 10px; margin-bottom: 10px;
+      font-family:'Lato', sans-serif; color: #000;  /*opacity: 0.75;*/ font-size: 1.4rem; padding: 0 10px; margin-bottom: 10px;
+      @include media-xs-only { font-size: 16px; }
     }
   }
 
@@ -54,7 +63,7 @@
 }
 
 .feature-row  > div {
-  > span { font-size: 60px !important; border-radius: 18px; color: #fff !important; }
+  > span { font-size: 40px !important; border-radius: 18px; color: #fff !important; }
   > p { font-family: "Lato", sans-serif; font-size: 0.9rem; bottom: -13px; color: #fff !important; }
 }
 

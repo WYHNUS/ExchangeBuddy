@@ -18,9 +18,9 @@ class Profile extends React.Component{
 	render() {
 		return (
 			<div>
-			<ProfilePaper userId={ this.props.user.userId } />
+				<ProfilePaper userId={ this.props.user.userId } />
 			</div>
-			);
+		);
 	}
 
 }

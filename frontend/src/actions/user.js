@@ -1,4 +1,5 @@
 import request from 'superagent';
+import {ROOT_URL} from '../util/backend';
 
 export const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';
 export const SAVE_SIGNUP_PAGE_ONE_INFO = 'SAVE_SIGNUP_PAGE_ONE_INFO';
@@ -9,7 +10,6 @@ export const CLICKED_SIGNUP = 'CLICKED_SIGNUP';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAIL = 'SIGNUP_FAIL';
 
-import {ROOT_URL} from '../util/backend';
 
 //default is visible (true)
 export function updateUserProfile(profile) {

@@ -20,10 +20,9 @@ class Settings extends React.Component{
 	render() {
 		return (
 			<div className="row center-xs">
-			<div className="col-xs">
-			<SettingsList/>
-			
-			</div>
+				<div className="col-xs">
+					<SettingsList/>
+				</div>
 			</div>
 			);
 	}

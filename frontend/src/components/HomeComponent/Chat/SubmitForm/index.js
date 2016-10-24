@@ -5,15 +5,6 @@ import Loading from '../../../Loading';
 // Component
 import ChildComponent from './SubmitForm';
 
-// react-komposer
-/*const composer = (props, onData) => {
-  const user = Meteor.user();
-
-  onData(null, { user });
-};*/
-
-//const ComposedComponent = composeWithTracker(Loading)(ChildComponent);
-
 // Redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';

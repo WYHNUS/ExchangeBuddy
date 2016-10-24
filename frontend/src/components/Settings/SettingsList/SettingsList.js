@@ -7,6 +7,7 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Row, Col } from 'react-flexbox-grid';
 import {browserHistory} from 'react-router';
+import cookie from 'react-cookie';
 
 import ChiThanh from '../../../res/about/ChiThanh.jpg';
 import EugeneNg from '../../../res/about/EugeneNg.jpg';
@@ -17,11 +18,13 @@ import LeonMak from '../../../res/about/LeonMak.jpg';
 import SueMae from '../../../res/about/SueMae.jpg';
 import WangYanHao from '../../../res/about/WangYanHao.jpg';
 import ZhangHanMing from '../../../res/about/ZhangHanMing.jpg';
+import ExchangeBuddyIcon from '../../../res/ExchangeBuddySpreadIcon.png'
 
 export default class SettingsList extends React.Component {
 
 	logout(){
-		//this.props.attemptLogout();
+		// clear cookie
+		cookie.remove('authToken');
 		this.props.clearUser();
 		browserHistory.push('/');
 	}
@@ -42,6 +45,9 @@ export default class SettingsList extends React.Component {
 			<div className="settings-info">
 
 			<h1>About</h1>
+			<div className="icon row center-xs">
+			<img src={ExchangeBuddyIcon} alt="icon" />
+			</div>
 			<p id='about-info'>ExchangeBuddy is for students, by students. We are here to provide you with a better exchange experience by providing you with information and a network for you to interact and know other students on exchange! Believe at ExchangeBuddy, we know that exchange is a once in a lifetime experience and we want you to get the BEST out of it!</p>
 
 			<h2>The Team</h2>
@@ -83,7 +89,7 @@ export default class SettingsList extends React.Component {
 			<h1>Lee Kai Yi</h1>
 			</div>
 			<div className="row center-xs">
-			<h2>[What you see if what i build]</h2>
+			<h2>[What you see is what i build]</h2>
 			</div>
 			<div className="row center-xs">
 			<p>"Throw me something to do, and that will be my life"</p>

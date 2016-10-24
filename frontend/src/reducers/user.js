@@ -15,7 +15,7 @@ const initialState = {
   isAuthenticated: false,
   isEmailSent: false,
   isLoggedIn: false,
-  isRegistered: null,
+  isRegistered: false,
   fetchingAuthUpdate: false,
   token: null,
   error: null,
@@ -26,11 +26,8 @@ const initialState = {
     profilePictureUrl:'',
     gender:'',
     bio:'',
-    website:'',
-    birthday:'',
-    // fbUserId:'',
+    fbUserId:'',
     fbToken:'',
-    // fbTokenExpiresAt:'',
     UniversityId: null
   },
   signupInfo: {
@@ -47,8 +44,9 @@ const initialState = {
 export function user(state = initialState , action) {
   switch (action.type){
     case VERIFY_TOKEN_SUCCESS:
-      console.log(action.user);
       return Object.assign({}, state, {
+        isLoggedIn: true,
+        isRegistered: true,
         isAuthenticated: true,
         userObject: action.user,
         error: null
@@ -57,6 +55,8 @@ export function user(state = initialState , action) {
     case VERIFY_TOKEN_FAIL:
       return Object.assign({}, state, {
         isAuthenticated: false,
+        isLoggedIn: false,
+        isRegistered: false,
         error: action.error
       });
 
@@ -109,16 +109,17 @@ export function user(state = initialState , action) {
       });
 
     case CLEAR_USER:
-      return Object.assign({}, state,{
+      return Object.assign({}, state, {
         isLoggedIn:false,
         fetchingAuthUpdate:false,
         isAuthenticated:false,
-        isRegistered:true,
+        isRegistered:false,
         userObject:{},
+        signupInfo:{},
         token:null,
         error:null
       })
-
+  
     case Login_Success:
       return Object.assign({}, state, {
         isLoggedIn: true,
@@ -136,7 +137,7 @@ export function user(state = initialState , action) {
         isEmailSent: false,
         fetchingAuthUpdate: false,
         isAuthenticated: false,
-        isRegistered: null,
+        isRegistered: false,
         error: action.error.error
       });
 

@@ -1,6 +1,9 @@
 import request from 'superagent';
+import {bearer} from '../util/bearer';
+import {ROOT_URL} from '../util/backend';
 
 export const SAVE_STORY_CONTENT = 'SAVE_STORY_CONTENT';
+export const RESET_EDITING_STORY = 'RESET_EDITING_STORY';
 
 export const CLICKED_UPLOAD = 'CLICKED_UPLOAD';
 export const UPLOAD_CONTENT_SUCCESS = 'UPLOAD_CONTENT_SUCCESS';
@@ -14,9 +17,6 @@ export const FETCH_STORIES_FAIL = 'FETCH_STORIES_FAIL';
 /*	Fetch individual story  */
 export const FETCH_SINGLE_STORY_SUCCESS = 'FETCH_SINGLE_STORY_SUCCESS';
 export const FETCH_SINGLE_STORY_FAIL = 'FETCH_SINGLE_STORY_FAIL';
-
-
-import {ROOT_URL} from '../util/backend';
 
 
 export function clickedFetch() {
@@ -39,9 +39,11 @@ export function fetchOneStory(storyId, userId) {
 	    request.post(ROOT_URL + '/story/' + storyId)
 	    	.send({ 
 	    		userId: userId 
-	    	}).end(function(err, res){
-				console.log(err);
-				console.log(res);
+	    	})
+	    	.use(bearer)
+	    	.end(function(err, res){
+				// console.log(err);
+				// console.log(res);
 				if (err) {
 					dispatch(fetchStoryFail(err));
 				} else {
@@ -69,9 +71,10 @@ export function fetchAllStories() {
 	    dispatch(clickedFetch());
 
 	    request.get(ROOT_URL + '/allStories')
+	    	.use(bearer)
 			.end(function(err, res){
-				console.log(err);
-				console.log(res);
+				// console.log(err);
+				// console.log(res);
 				if (err) {
 					dispatch(fetchAllStoriesFail(err));
 				} else {
@@ -91,12 +94,16 @@ export function saveStoryContent(content) {
 	return { type: SAVE_STORY_CONTENT, content }
 }
 
+export function resetEditingStory() {
+	return { type: RESET_EDITING_STORY }
+}
+
 export function clickedUpload() {
     return { type: CLICKED_UPLOAD };
 }
 
-export function uploadContentSuccess(stories) {
-    return { type: UPLOAD_CONTENT_SUCCESS, stories };
+export function uploadContentSuccess(story) {
+    return { type: UPLOAD_CONTENT_SUCCESS, story };
 }
 
 export function uploadContentFail(error) {
@@ -104,9 +111,6 @@ export function uploadContentFail(error) {
 }
 
 export function uploadContentToServer(title, content, id) {
-	// console.log(title);
-	// console.log(content);
-	// console.log(id);
 	return (dispatch) => {
 	    dispatch(clickedUpload());
 
@@ -116,14 +120,15 @@ export function uploadContentToServer(title, content, id) {
 				storyTitle: title,
 				storyContent: content
 			})
+			.use(bearer)
 			.end(function(err, res){
-				console.log(err);
-				console.log(res);
+				// console.log(err);
+				// console.log(res);
 				if (err) {
 					dispatch(uploadContentFail(err));
 				} else {
 					if (res.body.status === "success") {
-						dispatch(uploadContentSuccess(res.data));
+						dispatch(uploadContentSuccess(res.body.message));
 					} else {
 						dispatch(uploadContentFail(res.body.message));
 					}

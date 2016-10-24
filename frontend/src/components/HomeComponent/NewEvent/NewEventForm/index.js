@@ -17,11 +17,10 @@ const mapDispatchToProps = (dispatch) => {
 			.payload.then((response) => {
 				console.log(response);
 				if (!response.error) {
-					console.log(response.data);
 					dispatch(showSnackbar('Posted an event!'));
 					dispatch(fetchEvents(GroupId)).payload.then((response) => {
 						if (!response.error) {
-							dispatch(fetchEventsSuccess(response.data));
+							dispatch(fetchEventsSuccess(response.body));
 						} else {
 							dispatch(fetchEventsFailure(response.error));
 						}

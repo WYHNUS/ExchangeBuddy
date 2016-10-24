@@ -32,7 +32,12 @@ export default function configureStore(initialState) {
   }
 
   store.subscribe(throttle(() => {
-    saveState(store.getState());
+    saveState({
+      home: store.getState().home,
+      user: store.getState().user,
+      utilityInfo: store.getState().utilityInfo,
+      stories: store.getState().stories
+    });
   }, 1000));
 
   return store;

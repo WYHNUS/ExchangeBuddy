@@ -4,20 +4,20 @@ var q = require('q');
 exports.createEvent = function(req, res){
     models.sequelize.Promise.all([
         models.Event.create({
-            lat: req.body.lat,
-            lng: req.body.lng,
-            location: req.body.location,
-            title: req.body.title,
-            startTime: new Date(req.body.startTime),
-            endTime: new Date(req.body.endTime),
-            detail: req.body.detail,
-            imgSrc: req.body.imgSrc,
-            GroupId: req.body.GroupId
+            lat: req.body.obj.lat,
+            lng: req.body.obj.lng,
+            location: req.body.obj.location,
+            title: req.body.obj.title,
+            startTime: new Date(req.body.obj.startTime),
+            endTime: new Date(req.body.obj.endTime),
+            detail: req.body.obj.detail,
+            imgSrc: req.body.obj.imgSrc,
+            GroupId: req.body.obj.GroupId
         }),
 
         models.User.findOne({
             where: {
-                id: req.body.UserId
+                id: req.body.obj.UserId
             }
         })
     ]).spread(function(event, user){
@@ -27,6 +27,7 @@ exports.createEvent = function(req, res){
             success: true
         });
     }).catch(function(err) {
+        console.log(err);
         resError(res, err);
     });
 }
