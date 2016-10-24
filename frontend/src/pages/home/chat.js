@@ -46,7 +46,8 @@ class Chat extends React.Component{
 				)
 			}else{
 				socket.updateRoom(
-					this.props.homeGroupDetails.homeGroupDetails.name
+					this.props.homeGroupDetails.homeGroupDetails.name,
+					parseInt(this.props.homeGroupDetails.homeGroupDetails.id)
 				)
 			}
 			

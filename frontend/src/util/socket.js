@@ -31,11 +31,12 @@ export default class Socket{
 		socket.on('updatechat', this._eventHandler.bind(this));
 	}
 
-	updateRoom(groupName){
+	updateRoom(groupName, groupId){
 		console.log('update room is called', groupName);
 		var emittedobj = 
 		{
-			name: groupName
+			name: groupName,
+			id: parseInt(groupId)
 		}
 		socket.emit('switchroom',emittedobj);
 	}
@@ -46,6 +47,7 @@ export default class Socket{
 	}
 
 	send(message){
+		console.log('sent msg', message)
 		socket.emit('sendchat',message);
 	}
 

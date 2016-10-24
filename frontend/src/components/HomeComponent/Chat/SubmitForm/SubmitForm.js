@@ -16,7 +16,7 @@ const submitForm = (callback, socket, updateGroupMessageFromSocket) => (values) 
     type: "user"
   })*/
   callback();
-  console.log('socket send msg', values.message);
+  //console.log('socket send msg', values.message);
   socket.send(values.message);
 };
 
