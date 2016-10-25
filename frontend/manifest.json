@@ -1,0 +1,22 @@
+{
+  "short_name": "ExchangeBuddy",
+  "name": "ExchangeBuddy",
+  /*"gcm_sender_id": "593836075156",*/
+  "icons": [
+    {
+      "src": "src/static/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "src/static/favicon.ico",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#4A90E2",
+  "display": "standalone"
+}
