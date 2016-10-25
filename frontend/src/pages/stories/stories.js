@@ -11,7 +11,7 @@ class Stories extends React.Component{
 		this.props.toggleBottomBarVisibility(true);
 		this.props.toggleTopBarVisibility(true);
 		this.props.toggleTopBarSettingsButtonVisibility(true);
-		window.open( "http://www.exchangebuddy.com/experiences/", "_blank");
+		//window.open( "http://www.exchangebuddy.com/experiences/", "_blank");
 	}
 
 	componentWillUnmount(){
@@ -21,10 +21,9 @@ class Stories extends React.Component{
 	render() {
 		return (
 			<div style={{'margin':'50px', 'marginTop':'100px', 'textAlign':'center'}}>
-				<p>We are performing some magic. :)</p>
-				<p>Please have fun through the following link. XD</p>
-				<a href="https://www.facebook.com/exchangebuddy/videos/848304498642703/" target="_blank">
-					Magic
+				<p>Click here to view current stories from our website!</p>
+				<a href="http://www.exchangebuddy.com/experiences/" target="_blank">
+					Stories
 				</a>
 			</div>
 		);
