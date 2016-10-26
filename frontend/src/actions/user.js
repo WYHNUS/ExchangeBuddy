@@ -44,8 +44,8 @@ export function signupFail(error) {
 }
 
 export function submitSignupForm(field, email) {
-	console.log(field);
-	console.log(email);
+	// console.log(field);
+	// console.log(email);
 	return (dispatch) => {
 	    dispatch(clickedSignup());
 
@@ -61,7 +61,7 @@ export function submitSignupForm(field, email) {
 				exchangeUniversity: field.exchangeUniName
 			})
 			.end(function(err, res){
-				console.log(res);
+				// console.log(res);
 				if(res.body.status === "success"){
 					dispatch(signupSuccess(res.body.message));
 				} else {

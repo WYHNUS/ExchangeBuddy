@@ -74,6 +74,16 @@ class Step3 extends React.Component {
     }
   }
 
+  redirectHomePage() {
+    setTimeout(function() {
+      browserHistory.push('/');
+    }, 3000);
+  }
+
+  componentWillUnmount() {
+    this.props.clearUser();
+  }
+
   componentDidMount() {
     if (this.props.homeUniName && this.props.universities) {
       var allUniList = this.props.universities;
@@ -99,6 +109,10 @@ class Step3 extends React.Component {
       this.checkNeedRedirect();
     }
 
+    if (!!isEmailSent) {
+      this.redirectHomePage();
+    }
+
     return (
       <form onSubmit={ handleSubmit((values) => {
         this.submitForm(values)
@@ -118,7 +132,15 @@ class Step3 extends React.Component {
           name="homeUniEmail"
           floatingLabelText="Your university email address" />
 
-        { this.props.isEmailSent ? <p>Verification email sent! Check your mail to start connecting with people!</p> : null }
+        { 
+          this.props.isEmailSent ? 
+          <div> 
+            <p>Verification email sent! Check your mail to start connecting with people!</p> 
+            <p>Redirecting to the main page ... </p>
+          </div> 
+          : null 
+        }
+
         { this.props.authEmailError ? <p>{ this.props.authEmailError }</p> : null}
 
         <div style={{ marginTop: 12 }}>

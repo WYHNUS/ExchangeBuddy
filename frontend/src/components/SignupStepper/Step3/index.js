@@ -12,6 +12,7 @@ import {
 	saveSignupPageThreeInfo, 
 	submitSignupForm, signupSuccess, signupFail
 } from '../../../actions/user';
+import { clearUser } from '../../../actions/authActions';
 // Component
 import ChildComponent from './Step3';
 
@@ -20,6 +21,7 @@ const mapStateToProps = (state) => {
   return {
     homeUniName: state.user.signupInfo.homeUniName,
     allSignupInfo: state.user.signupInfo,
+    submitting: state.user.fetchingAuthUpdate,
     isEmailSent: state.user.isEmailSent,
     authEmailError: state.user.error
   };
@@ -29,14 +31,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
     submitSignupForm: (signupInfo, email) => {
-      dispatch(submitSignupForm(signupInfo, email)).payload.then((response) => {
-        if (!response.error) {
-          dispatch(signupSuccess(response.data));
-        } else {
-          dispatch(signupFail(response.error));
-        }
-      });
-    }
+      dispatch(submitSignupForm(signupInfo, email));
+    },
+    clearUser: clearUser()
   };
 };
 

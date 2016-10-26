@@ -12,7 +12,8 @@ var sendToken = function(token, user){
         '<div style="text-align:center; margin: 50px">' +
             '<p>Welcome to ExchangeBuddy!</p>' +
             '<p>Please verify your email on ExchangeBuddy by clicking the follwing link.</p>' +
-            '<a href="http://app.exchangebuddy.com/verify/' + token + '" target="_blank" ' +
+            // '<a href="http://app.exchangebuddy.com/verify/' + token + '" target="_blank" ' +
+            '<a href=' + process.env.HOSTNAME + '/verify/' + token + '" target="_blank" ' +
             'style="line-height: 28px;padding: 10px 12px;background: #4d90fe;border-color: #3079ed;' +
             'border-radius: 10px;color: #ffffff;text-decoration: none;">' +
                 'Confirm Email' +

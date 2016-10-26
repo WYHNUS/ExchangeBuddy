@@ -53,7 +53,8 @@ export function attemptLogin(token) {
     dispatch(clickedLogin());
 
     request
-      .post('http://54.186.208.82:3001/authenticate')
+      // .post('http://54.186.208.82:3001/authenticate')
+      .post(ROOT_URL + '/authenticate')
       .send({ facebookToken: token })
       .end(function(err,res){
         // console.log(res);
