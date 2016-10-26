@@ -12,7 +12,6 @@ import {
 	saveSignupPageThreeInfo, 
 	submitSignupForm, signupSuccess, signupFail
 } from '../../../actions/user';
-import { clearUser } from '../../../actions/authActions';
 // Component
 import ChildComponent from './Step3';
 
@@ -32,8 +31,7 @@ const mapDispatchToProps = (dispatch) => {
     actions: bindActionCreators({  }, dispatch),
     submitSignupForm: (signupInfo, email) => {
       dispatch(submitSignupForm(signupInfo, email));
-    },
-    clearUser: clearUser()
+    }
   };
 };
 

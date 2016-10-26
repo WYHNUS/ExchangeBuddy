@@ -35,7 +35,6 @@ export default function configureStore(initialState) {
     saveState({
       home: store.getState().home,
       user: store.getState().user,
-      utilityInfo: store.getState().utilityInfo,
       stories: store.getState().stories
     });
   }, 1000));

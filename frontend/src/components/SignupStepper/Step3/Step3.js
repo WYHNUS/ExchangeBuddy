@@ -80,10 +80,6 @@ class Step3 extends React.Component {
     }, 3000);
   }
 
-  componentWillUnmount() {
-    this.props.clearUser();
-  }
-
   componentDidMount() {
     if (this.props.homeUniName && this.props.universities) {
       var allUniList = this.props.universities;
@@ -105,9 +101,9 @@ class Step3 extends React.Component {
     const { homeUniName } = this.props;
     const { isEmailSent, fetching, authEmailError } = this.props;
 
-    if (!!authEmailError) {
-      this.checkNeedRedirect();
-    }
+    // if (!!authEmailError) {
+    //   this.checkNeedRedirect();
+    // }
 
     if (!!isEmailSent) {
       this.redirectHomePage();

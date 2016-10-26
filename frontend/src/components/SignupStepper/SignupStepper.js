@@ -60,7 +60,7 @@ export default class SignupStepper extends React.Component {
             <StepContent>
               <Step1
                 handleNext = { this.handleNext.bind(this) }
-                universities = { this.props.universitiesList.universities } />
+                universities = { universities } />
             </StepContent>
           </Step>
           <Step>
@@ -69,7 +69,7 @@ export default class SignupStepper extends React.Component {
               <Step2
                 handlePrev = { this.handlePrev.bind(this) }
                 handleNext = { this.handleNext.bind(this) }
-                universities = { this.props.universitiesList.universities } />
+                universities = { universities } />
             </StepContent>
           </Step>
           <Step>
@@ -77,7 +77,7 @@ export default class SignupStepper extends React.Component {
             <StepContent>
               <Step3
                 handlePrev = { this.handlePrev.bind(this) }
-                universities = { this.props.universitiesList.universities } />
+                universities = { universities } />
             </StepContent>
           </Step>
         </Stepper>
