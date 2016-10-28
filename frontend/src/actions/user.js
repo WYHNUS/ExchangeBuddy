@@ -67,7 +67,15 @@ export function submitSignupForm(field, email) {
 				if(res.body.status === "success"){
 					dispatch(signupSuccess(res.body.message));
 				} else {
-					dispatch(signupFail({error:res.body.message}));
+					if (res.status === 409) {
+						// email already registered
+						dispatch(signupFail({
+							error: res.body.message + " Please check your email for account verification."
+									+ " OR contact the ExchangeBuddy admin via admin@exchangebuddy.com :) "
+						}));
+					} else {
+						dispatch(signupFail({error:res.body.message}));
+					}
 				}
 			});
   	}

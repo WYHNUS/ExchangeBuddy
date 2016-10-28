@@ -47,11 +47,7 @@ export default class SignupStepper extends React.Component {
   }
 
   render() {
-    const { universities, error, loading } = this.props.universitiesList;
-
-    if (loading) {
-      return <div>Loading</div>
-    }
+    const { universities } = this.props.universitiesList;
 
     return (
         <Stepper activeStep={ this.state.stepIndex } orientation="vertical">

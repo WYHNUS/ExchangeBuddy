@@ -57,7 +57,7 @@ exports.createUser = function(req, res){
         })
     ]).spread(function(homeUniversity, exchangeUniversity, existingUser) {
         if (!!existingUser) {
-            return res.status(500).json({
+            return res.status(409).json({
                     status: 'fail',
                     message: "Email account already registered!"
                 });

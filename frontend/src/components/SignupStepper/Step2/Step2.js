@@ -8,7 +8,6 @@ import PrevButton from '../PrevButton';
 import NextButton from '../NextButton';
 import ExchangeTermSelect from '../ExchangeTermSelect';
 
-// import { propExistsDeep } from '../../../util/helper';
 
 let universitiesProps, homeUniName;
 const validate = values => {
@@ -64,12 +63,10 @@ class Step2 extends React.Component {
     const year = new Date().getFullYear();
     const years = [];
     let i;
-    for ( i = year - 1; i < year + 5; i++ )
+    for ( i = year - 1; i < year + 5; i++ ) {
       years.push(i);
+    }
 
-    // Uni name
-    // const uniName = propExistsDeep(formState, [ 'signupStep2', 'values', 'exchangeUniName' ]) && formState.signupStep2.values.exchangeUniName;
-    
     return (
       <form onSubmit={ handleSubmit((values) => {
         this.submitForm(values, this.props)
@@ -89,7 +86,7 @@ class Step2 extends React.Component {
           { years.map(year => <MenuItem key={year} value={year} primaryText={year} />) }
         </SelectFormField>
 
-        <ExchangeTermSelect /*uniName={ uniName }*/ universities={ this.props.universities }/>
+        <ExchangeTermSelect universities={ this.props.universities }/>
 
         <div style={{ marginTop: 12 }}>
           <PrevButton onTouchTap={ handlePrev } label="Back" disabled={submitting} />

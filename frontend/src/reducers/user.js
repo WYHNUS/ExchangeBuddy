@@ -120,6 +120,15 @@ export function user(state = initialState , action) {
         error: null
       });
 
+    case Login_Fail:
+      return Object.assign({}, state, {
+        isLoggedIn: false,
+        fetchingAuthUpdate: false,
+        // set isRegistered to true to prevent auto redirect to signup page (might have a better way to do this?)
+        isRegistered: true,
+        error: action.error
+      });
+
     case Not_Registered:
       return Object.assign({}, state, {
         isLoggedIn: false,

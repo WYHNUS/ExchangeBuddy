@@ -14,9 +14,6 @@ let uniEmailDomains;
 const validUniEmail = (value) => {
   if (!validator.isEmail(value))
     return false;
-  else 
-    // temperary disable email check as the list of email domains is not complete
-    return true;
 
   const domain = value.substr(value.indexOf('@') + 1);
 
@@ -53,8 +50,9 @@ const validate = (values) => {
     errors['homeUniEmail'] = 'Required';
   else if (!validator.isEmail(homeUniEmail))
     errors['homeUniEmail'] = 'Not valid email';
-  else if (!validUniEmail(homeUniEmail))
-    errors['homeUniEmail'] = 'Please use your university\'s email address.';
+  // temperary disable email check as the list of email domains is not complete
+  // else if (!validUniEmail(homeUniEmail))
+  //   errors['homeUniEmail'] = 'Please use your university\'s email address.';
 
   return errors;
 };
@@ -63,15 +61,6 @@ class Step3 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {emailDomains:[]};
-  }
-
-  checkNeedRedirect() {
-    // IMPROVEMENT: better to check error code status
-    if (this.props.authEmailError === "Email account already registered!") {
-      setTimeout(function() {
-        browserHistory.push('/');
-      }, 1000);
-    }
   }
 
   redirectHomePage() {
@@ -100,10 +89,6 @@ class Step3 extends React.Component {
     const { handlePrev, handleSubmit, submitting } = this.props;
     const { homeUniName } = this.props;
     const { isEmailSent, fetching, authEmailError } = this.props;
-
-    // if (!!authEmailError) {
-    //   this.checkNeedRedirect();
-    // }
 
     if (!!isEmailSent) {
       this.redirectHomePage();
