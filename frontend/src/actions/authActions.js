@@ -79,7 +79,7 @@ export function attemptLogin(token) {
           cookie.save('authToken', res.body.token);
           dispatch(loginSuccess(res.body.user, res.body.token));
         } else {
-          if (res.status === 404) {
+          if (res.status === 401) {
             dispatch(requireRegistration(token, res.body.user, res.body.message));
           } else {
             dispatch(loginFail({error:res.body.message}));

@@ -153,7 +153,7 @@ exports.createUser = function(req, res){
                 });
         }
     }).catch(function(err){
-        console.log('error HERE', err);
+        console.log('error HERE: ', err);
         resError(res, err);
     });
 }

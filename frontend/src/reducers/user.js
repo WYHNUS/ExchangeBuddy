@@ -57,7 +57,6 @@ export function user(state = initialState , action) {
       return Object.assign({}, state, {
         isAuthenticated: false,
         isLoggedIn: false,
-        isRegistered: false,
         error: action.error
       });
 

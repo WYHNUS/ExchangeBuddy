@@ -28,7 +28,8 @@ exports.authenticate = function (req, res) {
             }
         }).then(function (user) {
             if (!user) {
-                return res.status(404).json({
+                // 401 means that the user is unknown
+                return res.status(401).json({
                     status: 'fail',
                     message: 'User not found.',
                     user: {
@@ -44,7 +45,8 @@ exports.authenticate = function (req, res) {
                     token: user.generateJwt()
                 });
             } else {
-                return res.status(401).json({
+                // 403 means that the user is known but not authorized 
+                return res.status(403).json({
                     status: 'fail',
                     message: 'Email account not verified.'
                 });
