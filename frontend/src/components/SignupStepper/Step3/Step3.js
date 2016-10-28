@@ -88,7 +88,7 @@ class Step3 extends React.Component {
   render() {
     const { handlePrev, handleSubmit, submitting } = this.props;
     const { homeUniName } = this.props;
-    const { isEmailSent, fetching, authEmailError } = this.props;
+    const { isEmailSent, authEmailError } = this.props;
 
     if (!!isEmailSent) {
       this.redirectHomePage();
@@ -112,6 +112,8 @@ class Step3 extends React.Component {
         <EmailFormField
           name="homeUniEmail"
           floatingLabelText="Your university email address" />
+
+        { submitting ? <p>Registering user. Please be patient. :)</p> : null }
 
         { 
           this.props.isEmailSent ? 

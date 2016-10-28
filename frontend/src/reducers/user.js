@@ -134,7 +134,9 @@ export function user(state = initialState , action) {
         isLoggedIn: false,
         fetchingAuthUpdate: false,
         isAuthenticated: false,
+        isEmailSent: false,
         isRegistered: false,
+        token: null,
         error: action.error,
         signupInfo: {
           fbToken: action.fbToken,
