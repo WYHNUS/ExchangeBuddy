@@ -1,4 +1,2 @@
 .DS_Store
 npm-debug.log
-backend/bin/key.pem
-frontend/bin/key.pem
