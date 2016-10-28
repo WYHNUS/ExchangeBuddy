@@ -11,12 +11,7 @@ const paths = config.utils_paths
 // (ignoring file requests). If you want to implement universal
 // rendering, you'll want to remove this middleware.
 app.use(require('connect-history-api-fallback')())
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
-    next();
-});
+
 // ------------------------------------
 // Apply Webpack HMR Middleware
 // ------------------------------------
