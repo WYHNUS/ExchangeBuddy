@@ -19,6 +19,8 @@ export function updateUserProfile(profile) {
 	}
 }
 
+
+/*		signup flow		*/
 export function saveSignupPageOneInfo(field) {
 	return { type: SAVE_SIGNUP_PAGE_ONE_INFO, field }
 }
