@@ -53,7 +53,7 @@ class Landing extends React.Component{
       <div>
       <FlatButton
         onClick={()=>browserHistory.push('/settings')}
-        icon={IconsHelper.materialIcon("settings")}>
+        icon={IconsHelper.materialIcon("menu")}>
       </FlatButton>
       </div>
       </div>
@@ -101,7 +101,11 @@ class Landing extends React.Component{
       </div>
     </div>
     <div id="people-quote-list">
-      <div className="row feature-row center-xs">
+      <div className="row center-xs">
+      <h2 id="quote-title">What other exchangers say...</h2>
+      </div>
+      <div className="row center-xs">
+      quotes from people
       </div>
     </div>
     </div>

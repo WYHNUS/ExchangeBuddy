@@ -111,6 +111,10 @@
     @include media-xs-only { min-height: 600px; }
     @include media-sm-up { min-height: 740px; }
     background: #cae8f9;
+    .quote-title{
+      font-size: 44px;
+      @include media-xs-only { font-size: 30px; }
+    }
   }
 
 }
