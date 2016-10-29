@@ -3,9 +3,13 @@ import { reduxForm } from 'redux-form';
 import validator from 'validator';
 import RaisedButton from 'material-ui/RaisedButton';
 import { browserHistory } from 'react-router';
+import FacebookLogin from 'react-facebook-login';
 
 import { EmailFormField } from '../Field';
 import { PasswordFormField } from '../Field';
+
+
+const responseFacebook = (attemptLogin) => (response) => {attemptLogin(response.accessToken)};
 
 const validate = (values) => {
   const errors = {};
@@ -30,26 +34,42 @@ const validate = (values) => {
 class LoginForm extends React.Component {
   submitForm(val) {
     console.log(val);
+    this.props.attemptLogin(val);
   }
 
   render() {
     const { handleSubmit, submitting, isLoggedIn, isAuthenticated, isRegistered, loginError } = this.props;
 
     return (
-      <form onSubmit={ handleSubmit((values) => {
-        this.submitForm(values)
-      }) }>
-        <EmailFormField
-          name="userEmail"
-          floatingLabelText="Your email address" />
+      <div>
+        <form onSubmit={ handleSubmit((values) => {
+          this.submitForm(values)
+        }) }>
+          <EmailFormField
+            name="userEmail"
+            floatingLabelText="Your email address" />
 
-        <PasswordFormField
-          name="userPassword" floatingLabelText="Your password" />
+          <PasswordFormField
+            name="userPassword" floatingLabelText="Your password" />
 
-        <div className="row" style={{marginTop: "18px"}}>
-          <div className="info-container-col signup-button-container">
-            <RaisedButton className="raised-btn" label="Submit" primary={true} type="submit" style={{ width: "100%" }}/>
+          <div className="row" style={{marginTop: "18px"}}>
+            <div className="info-container-col signup-button-container">
+              <RaisedButton className="raised-btn" label="Submit" primary={true} type="submit" style={{ width: "100%" }}/>
+            </div>
           </div>
+        </form>
+
+        <div className="social-network-wrapper">
+          <div style={{marginRight: 40}}><p>Social Network Login :</p></div>
+          <div><FacebookLogin
+            appId={ "580995375434079" }
+            scope="public_profile"
+            fields="name, email"
+            callback={ responseFacebook(this.props.attemptFacebookLogin) }
+            cssClass="facebook-login-button"
+            textButton= ""
+            icon="fa-facebook" 
+          /></div>
         </div>
 
         { submitting ? <p>Logging in... Please be patient. :)</p> : null }
@@ -62,8 +82,8 @@ class LoginForm extends React.Component {
           : null 
         }
 
-        { loginError ? <p>{ loginError }</p> : null}
-      </form>
+        { loginError ? <p>{ loginError }</p> : null }
+      </div>
     );
   }
 }

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 // Action creators
 import { 
-  attemptLogin, loginSuccess, loginFail
+  attemptLogin, attemptFacebookLogin, loginSuccess, loginFail
 } from '../../actions/authActions';
 // Component
 import ChildComponent from './LoginForm';
@@ -31,6 +31,9 @@ const mapDispatchToProps = (dispatch) => {
     actions: bindActionCreators({  }, dispatch),
     attemptLogin: (signupInfo, email) => {
       dispatch(attemptLogin(signupInfo, email));
+    },
+    attemptFacebookLogin: (accessToken) => {
+      dispatch(attemptFacebookLogin(accessToken));
     }
   };
 };

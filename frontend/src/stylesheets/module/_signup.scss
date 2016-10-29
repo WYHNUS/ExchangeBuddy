@@ -67,8 +67,6 @@
   &:hover { background-color: #3d5084 !important; }
 }
 
-
-
 .page-sign-flow {
   min-height: 590px;
   max-width: 300px;
@@ -94,10 +92,19 @@
   .signup-button-container {
     width: 100%;
   }
-
-  h1 { margin: 0; }
-  .signup-right { display: flex; flex-direction: column; justify-content: center; padding: 30px; }
+  .social-network-wrapper {
+    >div { display: inline-block; }
+    .facebook-login-button {
+      width: 25px;
+    }
+    .facebook-login-button:hover {
+      cursor: pointer; 
+    }
+  }
+/*  h1 { margin: 0; }
+  .signup-right { display: flex; flex-direction: column; justify-content: center; padding: 30px; }*/
 }
+
 
 #stepper-img {
   height: 100vh; width: 100%; object-fit: cover;

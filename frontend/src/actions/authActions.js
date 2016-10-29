@@ -91,7 +91,28 @@ export function attemptLogin(field) {
           }
         }
       })
-  }
+  };
+}
+export function attemptFacebookLogin(token) {
+  console.log(token);
+  return (dispatch) => {
+    dispatch(clickedLogin());
+    request
+      .post(ROOT_URL + '/facebookLogin')
+      .send({ 
+        facebookToken: token
+      })
+      .end(function(err,res){
+        // console.log(res);
+        // console.log(err);
+        if(res.body.status === 'success'){
+          cookie.save('authToken', res.body.token);
+          dispatch(loginSuccess(res.body.user, res.body.token));
+        } else {
+          dispatch(loginFail({error:res.body.message}));
+        }
+      })
+  };
 }
 
 
