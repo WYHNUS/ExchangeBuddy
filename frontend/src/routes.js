@@ -27,6 +27,7 @@ import NotLoggedIn from './pages/notloggedin';
 import Signup from './pages/signup';
 import Login from './pages/login';
 import Verify from './pages/verify';
+import IdentifyUniversity from './pages/identifyUniversity';
 import Settings from './pages/settings';
 import NewEvent from './pages/home/newevent';
 
@@ -55,6 +56,10 @@ export const getRoutes = (store) =>{
       replace({ 
         pathname: '/notloggedin'
       });
+    } else if (!state.user.userObject.UniversityId) {
+      replace({ 
+        pathname: '/identifyUniversity'
+      });
     }
   };
 
@@ -69,34 +74,35 @@ export const getRoutes = (store) =>{
 
   return(
   <Route path="/" component={ App }>
-    <IndexRoute component={Landing}/>
-    <Route path="home" onEnter={authRequired}>
-      <IndexRoute onEnter={goToDefaultGroup}/>
-      <Route path=":id" component={Home}> 
-        <IndexRoute component={Friends}/>
+    <IndexRoute component={ Landing }/>
+    <Route path="home" onEnter={ authRequired }>
+      <IndexRoute onEnter={ goToDefaultGroup }/>
+      <Route path=":id" component={ Home }> 
+        <IndexRoute component={ Friends }/>
         <Route path="events">
-          <IndexRoute component={Events}/>
-          <Route path="new" component={NewEvent}/>
+          <IndexRoute component={ Events }/>
+          <Route path="new" component={ NewEvent }/>
         </Route>
-        <Route path="chat" component={Chat}/>
-        <Route path="friends" component={Friends}/>
+        <Route path="chat" component={ Chat }/>
+        <Route path="friends" component={ Friends }/>
       </Route>
     </Route>
-    <Route path="newstory" component={EditStory} onEnter={authRequired}/>
-    <Route path="stories" onEnter={authRequired}>
-      <IndexRoute component={Stories}/>
-      <Route path=":storyId" component={StoryDetails}/>
+    <Route path="newstory" component={ EditStory } onEnter={ authRequired }/>
+    <Route path="stories" onEnter={ authRequired }>
+      <IndexRoute component={ Stories }/>
+      <Route path=":storyId" component={ StoryDetails }/>
     </Route>
     {/*<Route path="wiki" component={Wiki}/>*/}
-    <Route path="profile(/:userId)" component={ Profile } onEnter={authRequired} />
-    <Route path="notloggedin" component={NotLoggedIn}/>
-    <Route path="signup" component={Signup}/>
-    <Route path="login" component={Login}/>
+    <Route path="profile(/:userId)" component={ Profile } onEnter={ authRequired } />
+    <Route path="notloggedin" component={ NotLoggedIn }/>
+    <Route path="signup" component={ Signup }/>
+    <Route path="login" component={ Login }/>
     <Route path="verify">
-      <Route path=":token" component={Verify}/>
+      <Route path=":token" component={ Verify }/>
     </Route>
-    <Route path='settings' component={Settings}/>
-    <Route path="*" component={NotFound}/>
+    <Route path="identifyUniversity" component={ IdentifyUniversity }/>
+    <Route path='settings' component={ Settings }/>
+    <Route path="*" component={ NotFound }/>
   </Route>
   );
 }
