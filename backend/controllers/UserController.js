@@ -1,5 +1,6 @@
 var helper = require('sendgrid').mail;
 var graph = require('fbgraph');
+var md5 = require('md5');
 
 var models = require('../models');
 var User = models.User;
@@ -30,7 +31,7 @@ exports.getUser = function(req, res) {
 };
 
 exports.createUser = function(req, res){
-    if (!req.body.facebookToken) {
+    if (!req.body.facebookToken && !req.body.password) {
         return res.status(400)
             .json({
                 status: 'fail',
@@ -63,7 +64,7 @@ exports.createUser = function(req, res){
                 });
         }
         else if (!!homeUniversity && !!exchangeUniversity) {
-            graph.get("/me?fields=name,id,email,picture&access_token=" + facebookToken, function (error, response) {
+            var create = function (error, response) {
                 if (error) {
                     return res.status(400)
                         .json({
@@ -71,13 +72,17 @@ exports.createUser = function(req, res){
                             message: error.message
                         });
                 }
+
+                var profilePictureUrl = (!!response) ? response.picture.data.url : null;
+                var fbUserId = (!!response) ? response.id : null;
                 models.sequelize.Promise.all([
                     User.create({
                         email: req.body.email,
                         name: req.body.name,
                         gender: req.body.gender,
-                        fbUserId: response.id,
-                        profilePictureUrl: response.picture.data.url,
+                        fbUserId: fbUserId,
+                        profilePictureUrl: profilePictureUrl,
+                        password: md5(req.body.password),
                         isEmailVerified: 0, // default to false
                         UniversityId: homeUniversity.id,
                     }),
@@ -144,7 +149,14 @@ exports.createUser = function(req, res){
                 }).catch(function(err){
                     resError(res, err);
                 });
-            });
+            };
+
+            if(!!facebookToken){
+                graph.get("/me?fields=name,id,email,picture&access_token=" + facebookToken, create);
+            }else{
+                create(null, null);
+            }
+
         } else {
             res.status(400)
                 .json({

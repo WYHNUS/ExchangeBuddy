@@ -34,7 +34,7 @@ router.get('/', function(req, res) {
   });
 });
 
-// Authenticate with Facebook access token
+// Authenticate with Facebook access token or email with password
 router.post('/authenticate', AuthCtrl.authenticate);
 // Verify JSWT
 router.get('/me', verifyToken, function(req, res) {
@@ -67,7 +67,8 @@ request:
 }
 */
 router.patch('/updateUser', verifyToken, UserCtrl.updateUser);
-router.put('/verificationemail', UserCtrl.createUser);
+router.put('/createUser', UserCtrl.createUser);
+
 router.get('/verify/:token', MailCtrl.verifyToken);
 router.get('/resendVerificationMail/:userId', MailCtrl.resend);
 
