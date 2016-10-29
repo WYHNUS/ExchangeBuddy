@@ -46,9 +46,9 @@ class LoginForm extends React.Component {
         <PasswordFormField
           name="userPassword" floatingLabelText="Your password" />
 
-        <div className="row center-md center-xs" style={{marginTop: "18px"}}>
-          <div className="info-container-col">
-            <RaisedButton className="raised-btn" label="Submit" primary={true} type="submit" style={{ margin: 6 }}/>
+        <div className="row" style={{marginTop: "18px"}}>
+          <div className="info-container-col signup-button-container">
+            <RaisedButton className="raised-btn" label="Submit" primary={true} type="submit" style={{ width: "100%" }}/>
           </div>
         </div>
 
