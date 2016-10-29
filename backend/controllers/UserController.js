@@ -75,10 +75,12 @@ exports.createUser = function(req, res){
 
                 var profilePictureUrl = (!!response) ? response.picture.data.url : null;
                 var fbUserId = (!!response) ? response.id : null;
+                var name = (!!response) ? response.name : req.body.name;
+
                 models.sequelize.Promise.all([
                     User.create({
                         email: req.body.email,
-                        name: req.body.name,
+                        name: name,
                         gender: req.body.gender,
                         fbUserId: fbUserId,
                         profilePictureUrl: profilePictureUrl,
