@@ -11,13 +11,18 @@
   min-height: 804px
 }
 
+#welcome-header-container{
+  @include media-xs-only { max-height: 567px; }
+  @include media-sm-up { max-height: 729px; }
+}
+
 #welcome-header {
-  min-height: 804px; position: relative; background-size: cover !important; /*padding-top: 64px;*/
+  min-height: 1200px; position: relative; background-size: cover !important; /*padding-top: 64px;*/
 }
 
 #welcome-main-container {
   display: flex; flex-direction: column; justify-content: space-around; height: 80vh; padding: 0vh 20px;
-  @include media-xs-only { /*height: 120vh;*/ }
+@include media-xs-only { /*height: 120vh;*/ }
 }
 
 .welcome-icon-container{
@@ -63,8 +68,8 @@
 }
 
 .feature-row  > div {
-  > span { font-size: 40px !important; border-radius: 18px; color: #fff !important; }
-  > p { font-family: "Lato", sans-serif; font-size: 0.9rem; bottom: -13px; color: #fff !important; }
+  > span { font-size: 100px !important; border-radius: 18px; color: #000 !important; }
+  > p { font-family: "Lato", sans-serif; font-size: 0.9rem; bottom: -13px; color: #000 !important; }
 }
 
 .page-signup {
@@ -76,3 +81,23 @@
   height: 100vh; width: 100%; object-fit: cover;
   @include media-xs-only { height: 250px; }
 }
+
+#cover-lists{
+  position: absolute;
+  min-width: 100%;
+
+  #feature-list{
+    @include media-xs-only { min-height: 600px; }
+    @include media-sm-up { min-height: 740px; }
+    background: #FFFFFF;
+  }
+
+  #people-quote-list{
+    @include media-xs-only { min-height: 600px; }
+    @include media-sm-up { min-height: 740px; }
+    background: #67ABFF;
+  }
+
+}
+
+

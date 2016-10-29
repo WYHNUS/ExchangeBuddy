@@ -22,7 +22,9 @@ const landingContainerStyle = {
     url(${ImagesHelper.getUrlScale(Meteor.settings.public.landingImageId, 900)}) no-repeat center center `,
 }*/
 const landingImg= {
-  background: `url(${landing}) no-repeat center center`,
+  background: `url(${landing}) no-repeat`,
+  backgroundPosition: "top center",
+  backgroundSize: "cover",
 }
 
 //TODO check login logic before deciding which button to serve to users
@@ -40,6 +42,7 @@ class Landing extends React.Component{
     return(
       <div id="landing-container" style={landingContainerStyle}>
       
+      <div id="welcome-header-container">
       <div id="welcome-header" style={landingImg}>
 
       <div className="row center-xs">
@@ -53,9 +56,10 @@ class Landing extends React.Component{
         <div id="welcome-header-title">
         
         {/*<h1>Find out who else is on an adventure</h1>*/}
-          {<h2 id="app-title">Find out who else is on an adventure</h2>}
+          {<h2 id="app-title">Going for Student Exchange?</h2>}
           <div id='app-subtitle-container'>
-          <p className="app-subtitle">Find your travel buddies from over 900 universities on ExchangeBuddy!</p>
+          <p className="app-subtitle">Connect to our network of over 900 universities!</p>
+          {/*Find your travel buddies from over 900 universities on ExchangeBuddy!*/}
           {/*<p className="app-subtitle">Share tips for the trip, by students, for students.</p>
           <p className="app-subtitle">Forget the messy Facebook groups and Google forms, all you need is right here.</p>*/}
           </div>
@@ -75,17 +79,26 @@ class Landing extends React.Component{
         {/*<div id="login-button">
           <LoginButton />
         </div>*/}
-
-        <div id="feature-list">
-          <div className="row feature-row center-xs">
-              <div className="col-xs">{IconsHelper.materialIcon("library_books")}<p>Exchanger's Stories</p></div>
-              <div className="col-xs">{IconsHelper.materialIcon("group")}<p>Group Chat</p></div>
-              <div className="col-xs">{IconsHelper.materialIcon("event")}<p>Event Listing</p></div>
-          </div>
-        </div>
       </div>
     </div>
-    <div id='feature'></div>
+    </div>
+    <div id='cover-lists'>
+    <div id="feature-list">
+      <div className="row center-xs">
+      <h1>Maximize your exchange experience!</h1>
+      </div>
+      <div className="row feature-row center-xs">
+          <div className="col-xs">{IconsHelper.materialIcon("library_books")}<p>Exchanger's Stories</p></div>
+          <div className="col-xs">{IconsHelper.materialIcon("group")}<p>Group Chat</p></div>
+          <div className="col-xs">{IconsHelper.materialIcon("event")}<p>Event Listing</p></div>
+      </div>
+    </div>
+    <div id="people-quote-list">
+      <div className="row feature-row center-xs">
+      </div>
+    </div>
+    </div>
+    
   </div>
     );
   }
