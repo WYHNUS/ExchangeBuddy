@@ -1,20 +1,21 @@
-import React, {PropTypes} from 'react';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import React, { PropTypes } from 'react';
+import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import truncate from 'truncate';
+import cookie from 'react-cookie';
 
 var moment = require('moment');
 import GoogleMap from 'google-map-react';
 import eventimg from '../../../../res/event-img.jpg';
 import * as Icons from '../../../../util/icons';
-import {Link, browserHistory} from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import {MemberTile} from '../../Friends/MemberList/MemberList'
 
 import request from 'superagent';
-import {bearer} from '../../../../util/bearer';
-import {ROOT_URL} from '../../../../util/backend';
-import {fetchAllUniversities} from '../../../../actions/utilityInfo';
+import { bearer } from '../../../../util/bearer';
+import { ROOT_URL } from '../../../../util/backend';
+import { fetchAllUniversities } from '../../../../actions/utilityInfo';
 import * as UniversityHelper from '../../../../util/university';
 
 import SelectField from 'material-ui/SelectField';
@@ -99,8 +100,8 @@ class EventItemCreated extends React.Component{
 	detectIfUserGoing(){
 		const {user, groupEvent} = this.props;
 		var isGoing = false;
-		for(var i=0;i<groupEvent.going.length;i++){
-			if(groupEvent.going[i].id===user.userObject.id){
+		for (var i=0; i<groupEvent.going.length; i++) {
+			if (groupEvent.going[i].id === user.userObject.id) {
 				isGoing=true;
 			}
 		}
@@ -121,12 +122,18 @@ class EventItemCreated extends React.Component{
 			.end(function(err,res){
 				console.log(err);
 				console.log(res);
+				if (err.status === 401 || res.status === 401) {
+					cookie.remove('authToken');
+					this.props.clearUser();
+					// need to redirect to a new version of login page
+					browserHistory.push('/');
+		        } 
 				//console.log(homeGroupDetails.id);
 				if (!err && !res.error && homeGroupDetails.id){
 					//showSnackbar("Registered for event");
 					//goForAnEventSuccessUpdate(EventId, UserId);
 					fetchEvents(homeGroupDetails.id);
-				}else{
+				} else {
 					showSnackbar("Error registering for event");
 				}
 			});
@@ -143,12 +150,20 @@ class EventItemCreated extends React.Component{
 			})
 			.use(bearer)
 			.end(function(err,res){
+				console.log(err);
+				console.log(res);
+				if (err.status === 401 || res.status === 401) {
+					cookie.remove('authToken');
+					this.props.clearUser();
+					// need to redirect to a new version of login page
+					browserHistory.push('/');
+		        } 
 				//console.log(homeGroupDetails.id);
 				if (!err && !res.error && homeGroupDetails.id){
 					//showSnackbar("Unregistered for event");
 					//ungoForAnEventSuccessUpdate(EventId, UserId);
 					fetchEvents(homeGroupDetails.id);
-				}else{
+				} else {
 					showSnackbar("Error unregistering for event");
 				}
 			});

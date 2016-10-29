@@ -9,8 +9,8 @@ import Link from '../Link';
 
 import * as UserHelper from '../../util/user';
 import * as UniversityHelper from '../../util/university';
-import {fetchAllUniversities} from '../../actions/utilityInfo';
-import{fetchProfile} from '../../actions/profile';
+import { fetchAllUniversities } from '../../actions/utilityInfo';
+import{ fetchProfile } from '../../actions/profile';
 
 const text_header_style = {
   fontSize: "-webkit-xxx-large",
@@ -22,9 +22,9 @@ function urlToUserid(userId) {
   let urlArr = urlFmt.split('/');
   //that means user specified a profile id number
   //if not, return the user's default profile id number
-  if(urlArr.length>1){
+  if (urlArr.length > 1) {
     return urlArr[1];
-  }else{
+  } else {
     return userId;
   }
 }
@@ -48,7 +48,7 @@ export default class ProfilePaper extends React.Component {
 
         if (!userProfileRes.error) {
           fetchProfileSuccess(userProfileRes.body); 
-          if (universities.length<2) {
+          if (universities.length < 2) {
             fetchAllUniversities().payload.then((uniRes) => {
               console.log(uniRes);
 
@@ -81,8 +81,6 @@ export default class ProfilePaper extends React.Component {
           fetchProfileFailure(userProfileRes.error);
         }
       }, (err) => {
-        console.log(err.response);
-        console.log(err.status);
         if (err.status === 401) {
           cookie.remove('authToken');
           this.props.clearUser();

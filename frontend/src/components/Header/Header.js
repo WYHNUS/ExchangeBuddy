@@ -51,9 +51,9 @@ const pathToIdx = () =>{
   var pathArray = window.location.pathname.split("/");
   console.log(pathArray);
   var path;
-  if(pathArray.length>3){
+  if (pathArray.length > 3) {
     path = pathArray[3];
-  }else{
+  } else {
     path='events';
   }
   //console.log(path);
@@ -178,19 +178,19 @@ export default class Header extends React.Component {
 
             {
               !!homeGroupDetails.name ? 
-                (parseInt(homeGroupDetails.groupType) !== 2) ?
-                (
-                  <div className='col-xs-12 col-md-8 col-lg-8' id="header-title">
-                    <h2 id="uni-name">{ homeGroupDetails.name }</h2>
-                    <p id="uni-description">{ /*`${ group.term } ${ group.year } - ${ group.users.length } ${ pluralizer(group.users.length, 'Member', 'Members') }`*/ }</p>
-                  </div>
-                ):
-                (
-                  <div className='col-xs-12 col-md-8 col-lg-8' id="header-title">
-                    <h2 id="uni-name">{ getName(homeGroupDetails.name) }</h2>
-                    <p id="uni-description">{ `${getTerm(homeGroupDetails.name)} ${getYear(homeGroupDetails.name)}`/*`${ group.term } ${ group.year } - ${ group.users.length } ${ pluralizer(group.users.length, 'Member', 'Members') }`*/ }</p>
-                  </div>
-                )
+                (parseInt(homeGroupDetails.groupType) == 2) ?
+                  (
+                    <div className='col-xs-12 col-md-8 col-lg-8' id="header-title">
+                      <h2 id="uni-name">{ homeGroupDetails.name }</h2>
+                      <p id="uni-description">{ /*`${ group.term } ${ group.year } - ${ group.users.length } ${ pluralizer(group.users.length, 'Member', 'Members') }`*/ }</p>
+                    </div>
+                  )
+                : (
+                    <div className='col-xs-12 col-md-8 col-lg-8' id="header-title">
+                      <h2 id="uni-name">{ getName(homeGroupDetails.name) }</h2>
+                      <p id="uni-description">{ `${getTerm(homeGroupDetails.name)} ${getYear(homeGroupDetails.name)}`/*`${ group.term } ${ group.year } - ${ group.users.length } ${ pluralizer(group.users.length, 'Member', 'Members') }`*/ }</p>
+                    </div>
+                  )
               : null
             }
 

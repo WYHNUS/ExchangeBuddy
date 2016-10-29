@@ -1,4 +1,6 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
+import cookie from 'react-cookie';
 import Loading from '../../../Loading';
 
 // Action creators
@@ -7,7 +9,8 @@ import {
   fetchEvents , fetchEventsFailure, fetchEventsSuccess
 } from '../../../../actions/home';
 import { showSnackbar } from '../../../../actions/messageSnackbar';
-import {fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure} from '../../../../actions/utilityInfo';
+import { fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure } from '../../../../actions/utilityInfo';
+import { clearUser } from '../../../../actions/authActions';
 
 
 // Component
@@ -27,43 +30,45 @@ const mapDispatchToProps = (dispatch) => {
         } else {
           dispatch(fetchEventsFailure(response.error));
         }
-      });
-    },
-    showSnackbar:(message)=>{
-      dispatch(showSnackbar(message))
-    },
-    goForAnEventSuccessUpdate:(EventId, UserId)=>{
-      dispatch(goForAnEventSuccessUpdate(EventId, UserId))
-    },
-    ungoForAnEventSuccessUpdate:(EventId, UserId)=>{
-      dispatch(ungoForAnEventSuccessUpdate(EventId, UserId))
-    },
-    fetchEvents:(GroupId)=>{
-      dispatch(fetchEvents(GroupId)).payload.then((response) => {
-        if (!response.error) {
-          dispatch(fetchEventsSuccess(response.body));
+      }, (err) => {
+        if (err.status === 401) {
+          cookie.remove('authToken');
+          dispatch(clearUser());
+          // need to redirect to a new version of login page
+          browserHistory.push('/');
         } else {
-          dispatch(fetchEventsFailure(response.error));
+          dispatch(fetchEventsFailure(err.response.error.message));
         }
       });
     },
-    fetchAllUniversitiesSuccess:(data) => {
+    showSnackbar: (message) => {
+      dispatch(showSnackbar(message))
+    },
+    goForAnEventSuccessUpdate: (EventId, UserId) => {
+      dispatch(goForAnEventSuccessUpdate(EventId, UserId))
+    },
+    ungoForAnEventSuccessUpdate: (EventId, UserId) => {
+      dispatch(ungoForAnEventSuccessUpdate(EventId, UserId))
+    },
+    fetchAllUniversitiesSuccess: (data) => {
       dispatch(fetchAllUniversitiesSuccess(data));
     },
-    fetchAllUniversitiesFailure:(data)=>{
+    fetchAllUniversitiesFailure: (data) => {
       dispatch(fetchAllUniversitiesFailure(data));
     },
-    resetEvents:()=>{
+    resetEvents: () => {
       dispatch(resetEvents());
+    },
+    clearUser: () => {
+      dispatch(clearUser());
     }
-
   };
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    homeEvents:state.home.homeEvents,
-    homeGroupDetails:state.home.homeGroupDetails.homeGroupDetails,
+    homeEvents: state.home.homeEvents,
+    homeGroupDetails: state.home.homeGroupDetails.homeGroupDetails,
     source: ownProps.source,
     user: state.user,
     universities: state.utilityInfo.universitiesList.universities

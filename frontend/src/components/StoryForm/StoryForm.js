@@ -19,7 +19,7 @@ class StoryForm extends React.Component {
   }
 
   render() {
-    const {  storyDetails, handleSubmit, error, uploading, published } = this.props;
+    const { storyDetails, handleSubmit, error, uploading, published } = this.props;
     
     if (published) {
       // handle redirection here if needed
@@ -28,6 +28,8 @@ class StoryForm extends React.Component {
       setTimeout(function() {
         browserHistory.push('/stories/' + tmpId);
       }, 2000);
+    } else if (!this.props.isLoggedin) {
+      browserHistory.push('/');
     }
 
     return (
