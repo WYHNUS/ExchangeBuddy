@@ -52,6 +52,7 @@ export default class Socket{
 	}
 
 	_eventHandler(packet) {
+		//console.log('_eventHandler is called');
 		this.handler(packet);
 	}
 }

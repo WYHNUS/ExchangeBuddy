@@ -149,7 +149,11 @@ export default class Header extends React.Component {
 
     console.log(homeGroupDetails);
     const getBackgroundImg=()=>{
-      return imgArray[1];
+      //console.log(homeGroupDetails.groupType);
+      if(homeGroupDetails.groupType<4){
+        return imgArray[homeGroupDetails.groupType];
+      }
+      return null;
     }
 
     return (
