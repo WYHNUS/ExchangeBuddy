@@ -252,6 +252,25 @@ export default class SettingsList extends React.Component {
 			</div>
 
 			<div className='row center-xs'>
+			<Card className="settings-item-card col-xs" style={{maxWidth: "512px"}}>
+			<CardHeader 
+			className="settings-title"
+			title={ "Credits" } 
+			actAsExpander={ true } 
+			showExpandableButton={ true } />
+			<CardText expandable={true}>
+			<div className="settings-info">
+			<h1>Credits</h1>
+			<h2>Thanks to</h2>
+			<p>Prof Colin and CS3216 Staff</p>
+			<p>Everyone who has contributed on ExchangeBuddy :)</p>
+			<p>Subheader spread images from <a href="https://pixabay.com/">Pixabay</a></p>
+			</div>
+			</CardText>
+			</Card>
+			</div>
+
+			<div className='row center-xs'>
 			{
 				(this.props.user.isLoggedIn)?
 				(<RaisedButton 
