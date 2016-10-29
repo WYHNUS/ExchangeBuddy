@@ -34,6 +34,28 @@ exports.getUniversity = function(req, res){
     });
 };
 
+exports.updateExchange = function(req, res){
+    console.log(models.User.Instance.prototype);
+    models.sequelize.Promise.all([
+        models.User.findOne({
+            where: {
+                id: req.body.userId
+            }
+        }),
+
+        models.University.findOne({
+            where: {
+                id: universityId
+            }
+        })
+    ]).spread(function(user, university){
+        console.log(models.User.Instance.prototype);
+        res.send('ha');
+    }).catch(function(err){
+        resError(res, err);
+    })
+}
+
 function resError(res, err) {
     return res.status(500).json({
         message: err.message
