@@ -15,8 +15,8 @@ class Verify extends React.Component{
 
 	redirectLanding() {
 		setTimeout(function() {
-		  browserHistory.push('/');
-		}, 3000);
+		  browserHistory.push('/home');
+		}, 2000);
 	}
 
 	render() {
@@ -40,8 +40,7 @@ class Verify extends React.Component{
 			        { 	isVerified ? 
 			        		<div>
 					            <p> Your are a verified user! </p>
-					            <p> Please login through the main page now. :) </p>
-								<p> Redirecting to the main page ...  </p>
+								<p> Redirecting to the home page ...  </p>
 				           	</div>
 				      	: null
 			        }

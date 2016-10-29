@@ -47,6 +47,7 @@ export function user(state = initialState , action) {
         isRegistered: true,
         isAuthenticated: true,
         userObject: action.user,
+        token: action.token,
         error: null
       });
 

@@ -71,7 +71,6 @@ class SignupForm extends React.Component {
           isEmailSent ? 
           <div> 
             <p>Verification email sent! Check your mail to start connecting with people!</p> 
-            <p>Redirecting to the main page ... </p>
           </div> 
           : null 
         }

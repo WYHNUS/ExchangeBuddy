@@ -29,8 +29,8 @@ import { ROOT_URL } from '../util/backend';
  */
 
 /*    verification of token received via email    */
-export function verifyTokenSuccess(user) {
-  return { type: VERIFY_TOKEN_SUCCESS, user };
+export function verifyTokenSuccess(user, token) {
+  return { type: VERIFY_TOKEN_SUCCESS, user, token };
 }
 export function verifyTokenFail(error) {
   return { type: VERIFY_TOKEN_FAIL, error };
@@ -43,7 +43,7 @@ export function verifyToken(token) {
         console.log(res);
         console.log(err);
         if(res.body.status === "success"){
-          dispatch(verifyTokenSuccess(res.body.user));
+          dispatch(verifyTokenSuccess(res.body.user, res.body.token));
         } else {
           dispatch(verifyTokenFail(res.body.message));
         }

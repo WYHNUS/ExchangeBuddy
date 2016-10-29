@@ -129,7 +129,8 @@ exports.verifyToken = function(req, res){
                 if(user.isEmailVerified){
                     res.send({
                         status: 'success',
-                        user: user
+                        user: user,
+                        token: user.generateJwt()
                     })
                 }else{
                     user.isEmailVerified = true;
