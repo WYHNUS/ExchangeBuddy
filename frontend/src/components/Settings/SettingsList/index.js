@@ -11,6 +11,7 @@ import ChildComponent from './SettingsList';
 // redux
 const mapStateToProps = (state) => {
   return {
+  	user:state.user
   };
 }
 

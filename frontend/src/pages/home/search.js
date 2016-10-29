@@ -32,7 +32,7 @@ const Search = React.createClass({
 			{/*<SearchBar/>*/}
 			</div>
 			<div className="row center-xs">
-			<h2>Your groups</h2>
+			<h2>My groups</h2>
 			</div>
 			<div className="row center-xs">
 			<GroupList/>

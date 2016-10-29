@@ -12,7 +12,17 @@
 		color: rgb(0,0,0)!important;
 	}
 
+	/*.iconButton-Settings{
+		padding-right: 40px;
+	}*/
 
+	>div>button>div{
+		background:white;
+		>span{
+			color:black;
+		}
+	}
+	
 
 	>div>button>div>span.material-icons{
 		color: rgb(0,0,0)!important;
@@ -20,7 +30,7 @@
 
 	img{
 		margin-bottom: -15px;
-		margin-left: -15px;
+		margin-left: 32px;
 	}
 }
 
