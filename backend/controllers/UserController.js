@@ -160,7 +160,6 @@ exports.createUser = function(req, res){
 
 exports.updateUser = function(req, res){
     User.update({
-        email: req.body.email,
         bio: req.body.bio,
         website: req.body.website,
         birthday: new Date(req.body.birthday),
