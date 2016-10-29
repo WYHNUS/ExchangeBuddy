@@ -15,6 +15,7 @@ import group2Uni from '../../res/group2_uni.jpg';
 import group3Uni from '../../res/group3_uni.jpg';
 
 
+
 /*import * as Colors from 'material-ui/styles/colors';
 import * as ImagesHelper from '../../util/images';
 import * as UniversityHelper from '../../util/university';
@@ -34,11 +35,11 @@ const gotourl = (groupId, tab) => () => {
 const tabToIdx = tab => {
   //console.log(tab,'tab');
   switch(tab) {
-    case 'events':
+    case 'friends':
       return 0;
     case 'chat':
       return 1;
-    case 'friends':
+    case 'events':
       return 2;
     default:
       return 0;
@@ -198,9 +199,9 @@ export default class Header extends React.Component {
           <div className="row bottom-xs bottom-md center-xs" >{/*id="header-tab-row"*/}
             <div className='col-xs-12 col-md-8' id="header-tab-col">
             <Tabs inkBarStyle={{ backgroundColor: "#fff" }} className="header-tab-parent" value={homeTabValue} onChange={this.handleChange} >
-              <Tab value='events' icon={IconsHelper.materialIcon("library_books")} label="EVENTS" className="header-tab" onActive={ gotourl(params.id, "events") } />
-              <Tab value='chat' icon={IconsHelper.materialIcon("chat")} label="CHAT" className="header-tab" onActive={ gotourl(params.id, "chat") } />
               <Tab value='friends' icon={IconsHelper.materialIcon("people")} label="FRIENDS" className="header-tab" onActive={ gotourl(params.id, "friends") } />
+              <Tab value='chat' icon={IconsHelper.materialIcon("chat")} label="CHAT" className="header-tab" onActive={ gotourl(params.id, "chat") } />
+              <Tab value='events' icon={IconsHelper.materialIcon("library_books")} label="EVENTS" className="header-tab" onActive={ gotourl(params.id, "events")}/>
             </Tabs>
             </div>
           </div>

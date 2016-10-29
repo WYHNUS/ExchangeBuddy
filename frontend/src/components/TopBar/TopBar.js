@@ -6,8 +6,9 @@ import * as IconsHelper from '../../util/icons';
 import IconButton from 'material-ui/IconButton';
 
 import {browserHistory} from 'react-router';
-//import * as Icons from '../utils/Icons';
 import classNames from 'classnames';
+
+import FlatButton from 'material-ui/FlatButton';
 
 const src = require('../../static/ExchangeBuddyMini.png');
 
@@ -54,13 +55,17 @@ class TopBar extends Component {
     const{homeSearchDrawerOpenButtonVisibility} = this.props.pageVisibility
     if(homeSearchDrawerOpenButtonVisibility){
       return(
-        <IconButton
-        onClick={()=>this.props.toggleHomeSearchDrawerVisibility(true)}>
-        {IconsHelper.icon('menu')}
-        </IconButton>
+        <FlatButton 
+        label="Groups"
+        onClick={()=>this.props.toggleHomeSearchDrawerVisibility(true)}
+        />
+        /*{<IconButton
+                onClick={()=>this.props.toggleHomeSearchDrawerVisibility(true)}>
+                {IconsHelper.icon('menu')}
+                </IconButton>}*/
         )
     }else{
-      return (<div style={{margin:"24px"}}></div>)
+      return (<div style={{marginLeft:"44px",marginRight:"44px",marginTop:"24px", marginBottom:"24px"}}></div>)
     }
   }
 

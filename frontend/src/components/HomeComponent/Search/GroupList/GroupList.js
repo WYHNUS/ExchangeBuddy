@@ -20,7 +20,7 @@ class GroupItem extends React.Component {
         browserHistory.push(`/home/${group.id}`);
         fetchNewGroup(group.id); 
         toggleSelectedHomeGroup(index);
-        toggleHomeTab('events');
+        toggleHomeTab('friends');
         toggleHomeSearchDrawerVisibility(false); 
       };
       return (

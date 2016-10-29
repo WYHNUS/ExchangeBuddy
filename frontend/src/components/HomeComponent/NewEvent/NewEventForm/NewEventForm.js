@@ -257,6 +257,9 @@ class NewEventForm extends Component {
     //const {userId} = user.userObject; 
     const {id} = this.props.homeGroupDetails.homeGroupDetails;
 
+    //getting event id
+    //const{eventId} = 
+
     const submitHandler = handleSubmit(
       newEventForm(
         reset, 
