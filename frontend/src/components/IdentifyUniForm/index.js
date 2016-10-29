@@ -21,10 +21,7 @@ const mapStateToProps = (state) => {
     universitiesList: state.utilityInfo.universitiesList,
     submitting: state.user.fetchingAuthUpdate,
     error: state.user.error,
-    userAuthData: state.user,
-    initialValues: { 
-      
-    }
+    userAuthData: state.user
   };
 };
 
