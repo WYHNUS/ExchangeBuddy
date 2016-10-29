@@ -26,13 +26,14 @@ exports.authenticateOrCreateByFB = function(req, res){
                 }else{
                     User.create({
                         fbUserId: response.id,
+                        email: response.email,
                         name: response.name,
                         profilePictureUrl: response.picture.data.url,
                         isEmailVerified: 1
-
                     }).then(function(user){
                         res.status(200).json({
                             status: "success",
+                            token: user.generateJwt(),
                             user: user
                         })
                     })
@@ -86,5 +87,12 @@ exports.authenticateByEmail = function (req, res) {
         console.log('error HERE: ', err);
         resError(res, err);
     });
-
 };
+
+
+function resError(res, err) {
+    return res.status(500).json({
+        status: 'fail',
+        message: err.message
+    });
+}

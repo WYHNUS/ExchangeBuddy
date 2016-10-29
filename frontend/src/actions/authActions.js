@@ -96,13 +96,13 @@ export function attemptFacebookLogin(token) {
   return (dispatch) => {
     dispatch(clickedLogin());
     request
-      .post(ROOT_URL + '/facebookLogin')
+      .post(ROOT_URL + '/authenticateOrCreateByFB')
       .send({ 
         facebookToken: token
       })
       .end(function(err,res){
-        // console.log(res);
-        // console.log(err);
+        console.log(res);
+        console.log(err);
         if(res.body.status === 'success'){
           cookie.save('authToken', res.body.token);
           dispatch(loginSuccess(res.body.user, res.body.token));
