@@ -21,7 +21,8 @@ exports.authenticateOrCreateByFB = function(req, res){
                 if(!!existingUser){
                     return res.status(200).json({
                             status: "success",
-                            user: existingUser
+                            user: existingUser,
+                            token: existingUser.generateJwt()
                         });
                 }else{
                     User.create({
@@ -33,8 +34,8 @@ exports.authenticateOrCreateByFB = function(req, res){
                     }).then(function(user){
                         res.status(200).json({
                             status: "success",
-                            token: user.generateJwt(),
-                            user: user
+                            user: user,
+                            token: user.generateJwt()
                         })
                     })
                 }
