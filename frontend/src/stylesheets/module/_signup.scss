@@ -110,14 +110,26 @@
     @include media-sm-up { min-height: 740px; }
     background: #efefef;
     >div>h2{
+      margin-right: 10px;
+      margin-left: 10px;
       font-size: 44px;
       @include media-xs-only { font-size: 30px; } 
     }
     .feature-row{
+      .icon-container{
+        margin-bottom: 30px;
+        #icon-title{
+          margin-top: -10px;
+          font-size: 24px;
+          @include media-xs-only { font-size: 20px; } 
+        }  
+      }
+      
       > div {
-        min-width: 200px!important;
-        > span { font-size: 100px !important; border-radius: 18px; color: #000 !important; }
+        /*min-width: 200px!important;*/
+        > span { font-size: 100px !important; border-radius: 18px; color: grey !important; }
         > p { 
+          margin-top: -5px;
           font-family: "Lato", 
           sans-serif; 
           bottom: -13px; 
@@ -133,7 +145,7 @@
     @include media-xs-only { min-height: 600px; }
     @include media-sm-up { min-height: 740px; }
     background: #cae8f9;
-    .quote-title{
+    #quote-title{
       font-size: 44px;
       @include media-xs-only { font-size: 30px; }
     }

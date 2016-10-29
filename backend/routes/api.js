@@ -34,7 +34,7 @@ router.get('/', function(req, res) {
   });
 });
 
-// Authenticate with Facebook access token
+// Authenticate with Facebook access token or email with password
 router.post('/authenticate', AuthCtrl.authenticate);
 // Verify JSWT
 router.get('/me', verifyToken, function(req, res) {
@@ -45,12 +45,13 @@ router.get('/me', verifyToken, function(req, res) {
 request:
 {
     userId: 1,
-    universityId: 1,
+    exchangeUniversityId: 1,
+    homeUniversityId: 2,
     term: fall/spring,
     year: 2017
 }
 */
-router.patch('/updateExchange', UniCtrl.updateExchange);
+router.patch('/updateUni', UniCtrl.updateUni);
 
 router.get('/user/:id', verifyToken, UserCtrl.getUser);
 
@@ -66,7 +67,8 @@ request:
 }
 */
 router.patch('/updateUser', verifyToken, UserCtrl.updateUser);
-router.put('/verificationemail', UserCtrl.createUser);
+router.put('/createUser', UserCtrl.createUser);
+
 router.get('/verify/:token', MailCtrl.verifyToken);
 router.get('/resendVerificationMail/:userId', MailCtrl.resend);
 

@@ -86,9 +86,22 @@ class Landing extends React.Component{
       <h2>Maximize your exchange experience!</h2>
       </div>
       <div className="row feature-row center-xs">
-          <div className="col-xs">{IconsHelper.materialIcon("library_books")}<p>Exchanger's Stories</p></div>
-          <div className="col-xs">{IconsHelper.materialIcon("group")}<p>Group Chat</p></div>
-          <div className="col-xs">{IconsHelper.materialIcon("event")}<p>Event Listing</p></div>
+          
+          <div className="icon-container col-xs-12 col-md-4 col-lg-4">{IconsHelper.materialIcon("group")}
+          <p id='icon-title'>Know your group</p>
+          <p>Find travel buddies within your different groups</p>
+          </div>
+
+          <div className="icon-container col-xs-12 col-md-4 col-lg-4">{IconsHelper.materialIcon("library_books")}
+          <p id='icon-title'>Read senior's Stories</p>
+          <p>Learn tips and tricks from stories shared by other exchangers</p>
+          </div>
+
+          <div className="icon-container col-xs-12 col-md-4 col-lg-4">{IconsHelper.materialIcon("event")}
+          <p id='icon-title'>Attend and organise events</p>
+          <p>Know people within your group by participating in new events</p>
+          </div>
+
       </div>
     </div>
     <div id="people-quote-list">

@@ -34,8 +34,7 @@ exports.getUniversity = function(req, res){
     });
 };
 
-exports.updateExchange = function(req, res){
-    console.log(req.body);
+exports.updateUni = function(req, res){
     models.sequelize.Promise.all([
         models.User.findOne({
             where: {
@@ -45,7 +44,7 @@ exports.updateExchange = function(req, res){
 
         models.University.findOne({
             where: {
-                id: req.body.universityId
+                id: req.body.exchangeUniversityId
             }
         }),
 
@@ -53,15 +52,22 @@ exports.updateExchange = function(req, res){
             where: {
                 year: req.body.year,
                 term: req.body.term,
-                UniversityId: req.body.universityId
+                UniversityId: req.body.exchangeUniversityId
+            }
+        }),
+
+        models.University.findOne({
+            where: {
+                id: req.body.homeUniversityId
             }
         })
-    ]).spread(function(user, exchangeUniversity, exchange){
+    ]).spread(function(user, exchangeUniversity, exchange, university){
         models.sequelize.Promise.all([
             user.getGroup(),
             user.getUniversity(),
-            user.getExchangeEvent()
-        ]).spread(function(groups, homeUniversity, exchangeEvent){
+            user.getExchangeEvent(),
+            user.setUniversity(university)
+        ]).spread(function(groups, homeUniversity, exchangeEvent, homeUniversity){
             user.removeGroup(groups);
             user.removeExchangeEvent(exchangeEvent);
             user.addExchangeEvent(exchange[0]);
