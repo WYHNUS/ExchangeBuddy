@@ -54,13 +54,16 @@ exports.createUser = function(req, res){
         where: {
             email: req.body.email
         }
-    }).then(function(existingUser){
-        if(!!existingUser){
-            res.send({
-                created: 'false',
-                user: existingUser
-            })
-        }else{
+    }).then(function(existingUser) {
+        if (!!existingUser) {
+            res.status(409)
+                .json({
+                    status: 'fail',
+                    message:'Email account already registered. ' +
+                            'Please check your email for account verification. ' +
+                            'OR contact ExchangeBuddy admins via admin@exchangebuddy.com'
+                });
+        } else {
             User.create({
                 name: req.body.name,
                 email: req.body.email,

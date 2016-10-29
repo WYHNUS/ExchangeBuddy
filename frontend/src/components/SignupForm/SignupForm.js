@@ -76,7 +76,13 @@ class SignupForm extends React.Component {
           : null 
         }
 
-        { authEmailError ? <p>{ authEmailError.error }</p> : null}
+        { 
+          authEmailError ? 
+            authEmailError.error ?
+              <p>{ authEmailError.error }</p> 
+            : <p>{ authEmailError }</p> 
+          : null
+        }
       </form>
     );
   }
