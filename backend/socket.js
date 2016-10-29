@@ -31,6 +31,7 @@ module.exports = function(io){
         }
         */
         socket.on('adduser', function(data){
+            console.log('adding user', data);
             try{
                 groupsOfUsers[data.group.name].push(data.user.id);
                 socket.user = data.user;
@@ -86,6 +87,7 @@ module.exports = function(io){
         });
 
         socket.on('disconnect', function(){
+            console.log('disconnect');
             try{
                 socket.leave(socket.room.name);
                 socket.room = null;

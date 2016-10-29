@@ -336,6 +336,25 @@ class NewEventForm extends Component {
 	    bootstrapURLKeys = {{key:process.env.GOOGLE_MAP_APIKEY}}
       defaultCenter={this.props.center}
       defaultZoom={this.props.zoom}></GoogleMap>*/}
+
+      <div className="row center-xs">
+        <div className="col-xs-11 col-md-8">
+          {/*<Field name="address" component={TextField} fullWidth={true}
+          floatingLabelText="Address" floatingLabelStyle={{left: 0}}
+          errorStyle={{textAlign: "left"}}
+          multiLine={false} />*/}
+          <TextField ref={this.setSearchInputElementReference} hintText="Enter Address"/>
+          <RaisedButton label="Find Address"
+          labelStyle={{fontSize:"1.2rem"}}
+          disabled={submitting} primary={true}
+          onTouchTap={()=>{
+            this.geocodeAddress(this.searchInputElement.refs.component.input.value);
+          }}
+          />
+        </div>
+      </div>
+      
+      <div className="map" ref={this.setMapElementReference}></div>
       <div>
       {
         this.state.isGeocodingError 
@@ -345,24 +364,8 @@ class NewEventForm extends Component {
         <p className="bg-info">{this.state.foundAddress}</p>
       }
       </div>
-      <div className="map" ref={this.setMapElementReference}></div>
 
-      <div className="row center-xs">
-        <div className="col-xs-11 col-md-8">
-          {/*<Field name="address" component={TextField} fullWidth={true}
-          floatingLabelText="Address" floatingLabelStyle={{left: 0}}
-          errorStyle={{textAlign: "left"}}
-          multiLine={false} />*/}
-          <TextField ref={this.setSearchInputElementReference} hintText="Enter Location"/>
-          <RaisedButton label="Find Location"
-          labelStyle={{fontSize:"1.2rem"}}
-          disabled={submitting} primary={true}
-          onTouchTap={()=>{
-            this.geocodeAddress(this.searchInputElement.refs.component.input.value);
-          }}
-          />
-        </div>
-      </div>
+      
 
 
 

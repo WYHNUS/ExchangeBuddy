@@ -68,13 +68,13 @@ class EventItemCreated extends React.Component{
 
 	//fetch and render list of people to display here
 	componentWillMount(){
-		console.log('event class mounted');
+		//console.log('event class mounted', universities);
 		const{fetchAllUniversitiesSuccess, groupEvent, fetchAllUniversitiesFailure, universities, showSnackbar}=this.props;
 		if(universities.length<2){
 			fetchAllUniversities().payload.then((response) => {
 				if (!response.error) {
-					fetchAllUniversitiesSuccess(response.body);
-					var finalArray = UniversityHelper.insertUniversitiesIntoList(groupEvent.going,response.body);
+					fetchAllUniversitiesSuccess(response.data);
+					var finalArray = UniversityHelper.insertUniversitiesIntoList(groupEvent.going,response.data);
 					this.setState({
 						peopleList:finalArray,
 						peopleListLoaded:true
@@ -120,9 +120,8 @@ class EventItemCreated extends React.Component{
 			})
 			.use(bearer)
 			.end(function(err,res){
-				console.log(err);
 				console.log(res);
-				if (err.status === 401 || res.status === 401) {
+				if (res.status === 401) {
 					cookie.remove('authToken');
 					this.props.clearUser();
 					// need to redirect to a new version of login page
@@ -150,9 +149,8 @@ class EventItemCreated extends React.Component{
 			})
 			.use(bearer)
 			.end(function(err,res){
-				console.log(err);
 				console.log(res);
-				if (err.status === 401 || res.status === 401) {
+				if (res.status === 401) {
 					cookie.remove('authToken');
 					this.props.clearUser();
 					// need to redirect to a new version of login page
