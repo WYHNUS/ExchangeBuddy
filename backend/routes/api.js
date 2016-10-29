@@ -3,16 +3,7 @@ var router = express.Router();
 var jwt = require('express-jwt');
 var config = require('../config/config');
 
-var multer  =   require('multer');
-var storage =   multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, '../public/uploads');
-  },
-  filename: function (req, file, callback) {
-    callback(null, file.fieldname + '-' + Date.now());
-  }
-});
-var upload = multer({ storage : storage}).single('userPhoto');
+
 
 var models  = require('../models');
 var CountryCtrl = require('../controllers/CountryController');
@@ -34,7 +25,7 @@ router.get('/', function(req, res) {
   });
 });
 
-// Authenticate with Facebook access token
+// Authenticate with Facebook access token or email with password
 router.post('/authenticate', AuthCtrl.authenticate);
 // Verify JSWT
 router.get('/me', verifyToken, function(req, res) {
@@ -66,8 +57,10 @@ request:
     userId: 1
 }
 */
-router.patch('/updateUser', verifyToken, UserCtrl.updateUser);
-router.put('/verificationemail', UserCtrl.createUser);
+
+router.patch('/updateUser', UserCtrl.updateUser);
+router.put('/createUser', UserCtrl.createUser);
+
 router.get('/verify/:token', MailCtrl.verifyToken);
 router.get('/resendVerificationMail/:userId', MailCtrl.resend);
 

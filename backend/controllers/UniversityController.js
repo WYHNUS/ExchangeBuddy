@@ -70,7 +70,9 @@ exports.updateUni = function(req, res){
         ]).spread(function(groups, homeUniversity, exchangeEvent, homeUniversity){
             user.removeGroup(groups);
             user.removeExchangeEvent(exchangeEvent);
-            user.addExchangeEvent(exchange[0]);
+
+            exchange = exchange[0];
+            user.addExchangeEvent(exchange);
             var defaultGroups = [
                 {
                     id: 0,
