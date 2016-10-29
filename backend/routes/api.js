@@ -41,9 +41,21 @@ router.get('/me', verifyToken, function(req, res) {
   res.send(req.user);
 });
 
+/*
+request:
+{
+    userId: 1,
+    universityId: 1,
+    term: fall/spring,
+    year: 2017
+}
+*/
+router.patch('/updateExchange', UniCtrl.updateExchange);
+
 router.get('/user/:id', verifyToken, UserCtrl.getUser);
 
 /*
+request:
 {
     email: "a@a.com",
     bio: "abc",

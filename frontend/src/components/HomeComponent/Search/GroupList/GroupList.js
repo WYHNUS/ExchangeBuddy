@@ -20,7 +20,7 @@ class GroupItem extends React.Component {
         browserHistory.push(`/home/${group.id}`);
         fetchNewGroup(group.id); 
         toggleSelectedHomeGroup(index);
-        toggleHomeTab('events');
+        toggleHomeTab('friends');
         toggleHomeSearchDrawerVisibility(false); 
       };
       return (
@@ -48,10 +48,10 @@ class GroupItem extends React.Component {
         <div>
         <div className="group-row">
         {
-          groupType === 0 ? <GroupItem {...this.props} heading={"Your Exchange University Group"} />
-          : groupType === 1 ? <GroupItem {...this.props} heading={"Your Home University Group"}/>
-          : groupType === 2 ? <GroupItem {...this.props} heading={"Your Home University Alumni Support Group"}/>
-          : groupType === 3 ? <GroupItem {...this.props} heading={"Your Special Group"}/>
+          groupType === 0 ? <GroupItem {...this.props} heading={"My Exchange University Group"} />
+          : groupType === 1 ? <GroupItem {...this.props} heading={"My Home University Group"}/>
+          : groupType === 2 ? <GroupItem {...this.props} heading={"My Home University Alumni Support Group"}/>
+          : groupType === 3 ? <GroupItem {...this.props} heading={"My Special Group"}/>
           : null
         }
         </div>

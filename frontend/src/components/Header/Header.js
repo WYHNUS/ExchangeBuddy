@@ -9,7 +9,11 @@ import Helmet from "react-helmet";
 
 //import HeaderProfile from './HeaderProfile';
 import * as IconsHelper from '../../util/icons';
-import defaultUni from '../../res/default_uni.jpg';
+import group0Uni from '../../res/group0_uni.jpg';
+import group1Uni from '../../res/group1_uni.jpg';
+import group2Uni from '../../res/group2_uni.jpg';
+import group3Uni from '../../res/group3_uni.jpg';
+
 
 
 /*import * as Colors from 'material-ui/styles/colors';
@@ -17,6 +21,9 @@ import * as ImagesHelper from '../../util/images';
 import * as UniversityHelper from '../../util/university';
 import { pluralizer } from '../../util/helper';
 */
+
+const imgArray=[group0Uni,group1Uni, group2Uni, group3Uni];
+
 const gotourl = (groupId, tab) => () => {
   const queryParams = ['home', groupId];
   if (tab)
@@ -27,12 +34,12 @@ const gotourl = (groupId, tab) => () => {
 
 const tabToIdx = tab => {
   //console.log(tab,'tab');
-  switch (tab) {
-    case 'events':
+  switch(tab) {
+    case 'friends':
       return 0;
     case 'chat':
       return 1;
-    case 'friends':
+    case 'events':
       return 2;
     default:
       return 0;
@@ -127,6 +134,8 @@ export default class Header extends React.Component {
     this.props.toggleHomeTab(value);
   };
 
+  
+
   render() {
     const { user, uni, group, actions, params, homeTabValue } = this.props;
     const { homeGroupDetails, loading, error } = this.props.homeGroupDetails;
@@ -139,6 +148,9 @@ export default class Header extends React.Component {
     }
 
     console.log(homeGroupDetails);
+    const getBackgroundImg=()=>{
+      return imgArray[1];
+    }
 
     return (
       <div
@@ -151,7 +163,7 @@ export default class Header extends React.Component {
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',*/
           backgroundImage: `linear-gradient(to bottom, rgba(25,25,25,0.5) 0%,rgba(0,0,0,0.9) 100%),
-            url('${defaultUni}')`,
+            url('${getBackgroundImg()}')`,
           backgroundColor: "#000000",
           backgroundPosition: 'center center',
           backgroundSize: 'cover',
@@ -189,9 +201,9 @@ export default class Header extends React.Component {
           <div className="row bottom-xs bottom-md center-xs" >{/*id="header-tab-row"*/}
             <div className='col-xs-12 col-md-8' id="header-tab-col">
             <Tabs inkBarStyle={{ backgroundColor: "#fff" }} className="header-tab-parent" value={homeTabValue} onChange={this.handleChange} >
-              <Tab value='events' icon={IconsHelper.materialIcon("library_books")} label="EVENTS" className="header-tab" onActive={ gotourl(params.id, "events") } />
-              <Tab value='chat' icon={IconsHelper.materialIcon("chat")} label="CHAT" className="header-tab" onActive={ gotourl(params.id, "chat") } />
               <Tab value='friends' icon={IconsHelper.materialIcon("people")} label="FRIENDS" className="header-tab" onActive={ gotourl(params.id, "friends") } />
+              <Tab value='chat' icon={IconsHelper.materialIcon("chat")} label="CHAT" className="header-tab" onActive={ gotourl(params.id, "chat") } />
+              <Tab value='events' icon={IconsHelper.materialIcon("library_books")} label="EVENTS" className="header-tab" onActive={ gotourl(params.id, "events")}/>
             </Tabs>
             </div>
           </div>
