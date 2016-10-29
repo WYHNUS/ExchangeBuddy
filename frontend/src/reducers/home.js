@@ -208,7 +208,7 @@ import {
 			detailsLoaded: false,
 			homeGroupDetails: {
 				id: -1,
-				name: '',
+				name: null,
 				groupType: -1
 			},
 			error: null,
