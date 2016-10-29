@@ -71,21 +71,12 @@ class Landing extends React.Component{
           <p className="app-subtitle">Forget the messy Facebook groups and Google forms, all you need is right here.</p>*/}
           </div>
         </div>
-
-        {!user.isAuthenticated ?
-          <div id="login-button">
-            <LoginButton />
-          </div>
-        : <RaisedButton
-            primary={true}
-            label="Go to your group"
-            onTouchTap={ () => /*request('/user/1')*/browserHistory.push('/home')}
-            style={{ maxWidth: 250, margin: '0 auto', height: 50 }}
-            labelStyle={{ fontSize: "16px", padding: '0 20px' }} />
-        }
-        {/*<div id="login-button">
-          <LoginButton />
-        </div>*/}
+        <RaisedButton
+          primary={true}
+          label="Connect"
+          onTouchTap={ () => browserHistory.push('/signup')}
+          style={{ maxWidth: 250, margin: '0 auto', height: 50 }}
+          labelStyle={{ fontSize: "16px", padding: "0 20px" }} />
       </div>
     </div>
     </div>

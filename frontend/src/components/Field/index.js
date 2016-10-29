@@ -12,6 +12,16 @@ export const TextFormField = ({ name, ...rest }) => {
 
 export const EmailFormField = TextFormField;
 
+export const PasswordFormField = ({ name, ...rest }) => {
+    return <Field
+    component={ TextField }
+    name={name}
+    fullWidth={true}
+    type="password"
+    autoComplete="off"
+    {...rest} />
+};
+
 export const SelectFormField = ({ name, ...rest }) =>
   <Field
     component={ SelectField }

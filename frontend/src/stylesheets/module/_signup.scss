@@ -69,7 +69,29 @@
 
 
 
-.page-signup {
+.page-sign-flow {
+  min-height: 590px;
+  max-width: 300px;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
+
+  .hide-text {
+    margin: 0 auto;
+    width: 290px;
+    height: 100px;
+    background: url(../res/ExchangeBuddySpreadIcon.png) no-repeat;
+    background-size: contain;
+  }
+  .sign-flow-nav-tab {
+    text-align: center;
+    .sign-flow-nav-button {
+      margin-left: 30px;
+      margin-right: 30px;
+      font-size: 16px;
+    }
+  }
+
   h1 { margin: 0; }
   .signup-right { display: flex; flex-direction: column; justify-content: center; padding: 30px; }
 }

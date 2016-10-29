@@ -19,7 +19,10 @@ html body {
   h2 { font-size: 1.4rem; }
 }
 
-/*#main { overflow: hidden; min-height: 100vh; }*/
+#root-container {
+  text-align: center;
+  height: 100%;
+}
 .page { min-height: 100vh; background-size: cover; background-position: center center; background-repeat: no-repeat;  }
 
 // Layout
