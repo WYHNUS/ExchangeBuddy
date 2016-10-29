@@ -67,10 +67,7 @@
   &:hover { background-color: #3d5084 !important; }
 }
 
-.feature-row  > div {
-  > span { font-size: 100px !important; border-radius: 18px; color: #000 !important; }
-  > p { font-family: "Lato", sans-serif; font-size: 0.9rem; bottom: -13px; color: #000 !important; }
-}
+
 
 .page-signup {
   h1 { margin: 0; }
@@ -89,13 +86,31 @@
   #feature-list{
     @include media-xs-only { min-height: 600px; }
     @include media-sm-up { min-height: 740px; }
-    background: #FFFFFF;
+    background: #efefef;
+    >div>h2{
+      font-size: 44px;
+      @include media-xs-only { font-size: 30px; } 
+    }
+    .feature-row{
+      > div {
+        min-width: 200px!important;
+        > span { font-size: 100px !important; border-radius: 18px; color: #000 !important; }
+        > p { 
+          font-family: "Lato", 
+          sans-serif; 
+          bottom: -13px; 
+          color: #000 !important; 
+          font-size: 1.2rem; padding: 0 10px; margin-bottom: 10px;
+          @include media-xs-only { font-size: 14px; } 
+        }
+      }
+    } 
   }
 
   #people-quote-list{
     @include media-xs-only { min-height: 600px; }
     @include media-sm-up { min-height: 740px; }
-    background: #67ABFF;
+    background: #cae8f9;
   }
 
 }

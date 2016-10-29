@@ -7,6 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import landing from '../res/ExchangeBuddySpread.jpg';
 import ExchangeBuddySpreadIcon from '../res/ExchangeBuddySpreadIcon.png';
 import LoginButton from '../components/LoginButton';
+import FlatButton from 'material-ui/FlatButton';
 
 import { connect } from 'react-redux';
 import { toggleTopBarVisibility, toggleBottomBarVisibility } from '../actions/pageVisibility';
@@ -45,9 +46,15 @@ class Landing extends React.Component{
       <div id="welcome-header-container">
       <div id="welcome-header" style={landingImg}>
 
-      <div className="row center-xs">
+      <div className="row start-xs">
       <div className='col-xs welcome-icon-container'>
       <img id="welcome-icon" src={ExchangeBuddySpreadIcon} alt="Icons"/>
+      </div>
+      <div>
+      <FlatButton
+        onClick={()=>browserHistory.push('/settings')}
+        icon={IconsHelper.materialIcon("settings")}>
+      </FlatButton>
       </div>
       </div>
 
@@ -85,7 +92,7 @@ class Landing extends React.Component{
     <div id='cover-lists'>
     <div id="feature-list">
       <div className="row center-xs">
-      <h1>Maximize your exchange experience!</h1>
+      <h2>Maximize your exchange experience!</h2>
       </div>
       <div className="row feature-row center-xs">
           <div className="col-xs">{IconsHelper.materialIcon("library_books")}<p>Exchanger's Stories</p></div>
