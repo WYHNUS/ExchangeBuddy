@@ -9,8 +9,9 @@ import { connect } from 'react-redux';
 import ChildComponent from './ProfilePaper';
 
 import { fetchProfileSuccess, fetchProfileFailure } from '../../actions/profile';
-import {fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure} from '../../actions/utilityInfo';
-import {showSnackbar} from '../../actions/messageSnackbar';
+import { fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure } from '../../actions/utilityInfo';
+import { attemptLogout, clearUser } from '../../actions/authActions'
+import { showSnackbar } from '../../actions/messageSnackbar';
 
 // redux
 const mapStateToProps = (state) => {
@@ -41,7 +42,13 @@ const mapDispatchToProps = (dispatch) => {
     },
     showSnackbar:(message)=>{
       dispatch(showSnackbar(message))
-    }
+    },
+    attemptLogout: () => {
+      dispatch(attemptLogout());
+    },
+    clearUser: () => {
+      dispatch(clearUser());
+    },
   };
 };
 

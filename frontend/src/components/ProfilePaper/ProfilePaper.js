@@ -1,7 +1,10 @@
 import React, {PropTypes} from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import { browserHistory } from 'react-router';
+import cookie from 'react-cookie';
 import Paper from 'material-ui/Paper';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+
 import Link from '../Link';
 
 import * as UserHelper from '../../util/user';
@@ -34,39 +37,59 @@ export default class ProfilePaper extends React.Component {
   };
 
   componentWillMount(){
-    const{
+    const {
       fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure, universities, 
       showSnackbar, userObject, 
-      fetchProfileSuccess, fetchProfileFailure, profile}=this.props;
+      fetchProfileSuccess, fetchProfileFailure, profile
+    } = this.props;
 
       fetchProfile(urlToUserid(userObject.id)).payload.then((userProfileRes)=>{
-        if(!userProfileRes.error){
+        console.log(userProfileRes);
+
+        if (!userProfileRes.error) {
           fetchProfileSuccess(userProfileRes.body); 
-          if(universities.length<2){
+          if (universities.length<2) {
             fetchAllUniversities().payload.then((uniRes) => {
+              console.log(uniRes);
+
               if (!uniRes.error) {
                 fetchAllUniversitiesSuccess(uniRes.data);
-                var finalArray = UniversityHelper.insertUniversitiesIntoUniversityList(uniRes.data.Exchanges,response.data);
+                var finalArray = UniversityHelper.insertUniversitiesIntoUniversityList(
+                  userProfileRes.body.Exchanges, uniRes.data
+                );
                 this.setState({
-                  exchangeUniList:finalArray,
-                  exchangeUniListLoaded:true
+                  exchangeUniList: finalArray,
+                  exchangeUniListLoaded: true
                 });
               } else {
                 fetchAllUniversitiesFailure(uniRes.error);
                 this.setState({
-                  exchangeUniListLoaded:false
+                  exchangeUniListLoaded: false
                 });
               }
-            })
-          }else{
-            var finalArray = UniversityHelper.insertUniversitiesIntoUniversityList(userProfileRes.body.Exchanges,universities);
+            });
+          } else {
+            var finalArray = UniversityHelper.insertUniversitiesIntoUniversityList(
+              userProfileRes.body.Exchanges, universities
+            );
             this.setState({
-              exchangeUniListLoaded: true,
-              exchangeUniList:finalArray
+              exchangeUniList: finalArray,
+              exchangeUniListLoaded: true
             });
           }
-        }else{
+        } else {
           fetchProfileFailure(userProfileRes.error);
+        }
+      }, (err) => {
+        console.log(err.response);
+        console.log(err.status);
+        if (err.status === 401) {
+          cookie.remove('authToken');
+          this.props.clearUser();
+          // need to redirect to a new version of login page
+          browserHistory.push('/');
+        } else {
+          fetchProfileFailure(err.response.error.message);
         }
       })
     }

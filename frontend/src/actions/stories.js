@@ -40,7 +40,8 @@ export function fetchOneStory(storyId, userId) {
 	    	.send({ 
 	    		userId: userId 
 	    	})
-	    	.use(bearer)
+	    	// allow all user to access stories
+	    	// .use(bearer)
 	    	.end(function(err, res){
 				// console.log(err);
 				// console.log(res);
@@ -71,7 +72,8 @@ export function fetchAllStories() {
 	    dispatch(clickedFetch());
 
 	    request.get(ROOT_URL + '/allStories')
-	    	.use(bearer)
+	    	// allow all user to access stories
+	    	// .use(bearer)
 			.end(function(err, res){
 				// console.log(err);
 				// console.log(res);
@@ -124,7 +126,9 @@ export function uploadContentToServer(title, content, id) {
 			.end(function(err, res){
 				// console.log(err);
 				// console.log(res);
-				if (err) {
+				if (res.status === 401) {
+					
+				} else if (err) {
 					dispatch(uploadContentFail(err));
 				} else {
 					if (res.body.status === "success") {
