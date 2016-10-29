@@ -9,6 +9,17 @@ var Exchange = models.Exchange;
 var Group = models.Group;
 var MailCtrl = require('./MailController');
 
+var multer  =   require('multer');
+var storage =   multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, '../public/uploads');
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname + '-' + Date.now());
+  }
+});
+var upload = multer({ storage : storage}).single('ProfilePic');
+
 // Show a specific user
 exports.getUser = function(req, res) {
     User.findOne({
@@ -173,6 +184,7 @@ exports.createUser = function(req, res){
 }
 
 exports.updateUser = function(req, res){
+
     User.update({
         bio: req.body.bio,
         website: req.body.website,
