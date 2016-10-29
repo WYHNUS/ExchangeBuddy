@@ -82,7 +82,7 @@ class LoginForm extends React.Component {
           : null 
         }
 
-        { loginError ? <p>{ loginError }</p> : null }
+        { loginError ? <p>{ loginError.error }</p> : null }
       </div>
     );
   }

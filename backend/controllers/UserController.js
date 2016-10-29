@@ -89,7 +89,6 @@ exports.createUser = function(req, res){
         console.log('error HERE: ', err);
         resError(res, err);
     });
-
 }
 
 exports.updateUser = function(req, res){
