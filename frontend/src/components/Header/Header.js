@@ -9,7 +9,10 @@ import Helmet from "react-helmet";
 
 //import HeaderProfile from './HeaderProfile';
 import * as IconsHelper from '../../util/icons';
-import defaultUni from '../../res/default_uni.jpg';
+import group0Uni from '../../res/group0_uni.jpg';
+import group1Uni from '../../res/group1_uni.jpg';
+import group2Uni from '../../res/group2_uni.jpg';
+import group3Uni from '../../res/group3_uni.jpg';
 
 
 /*import * as Colors from 'material-ui/styles/colors';
@@ -17,6 +20,9 @@ import * as ImagesHelper from '../../util/images';
 import * as UniversityHelper from '../../util/university';
 import { pluralizer } from '../../util/helper';
 */
+
+const imgArray=[group0Uni,group1Uni, group2Uni, group3Uni];
+
 const gotourl = (groupId, tab) => () => {
   const queryParams = ['home', groupId];
   if (tab)
@@ -127,6 +133,8 @@ export default class Header extends React.Component {
     this.props.toggleHomeTab(value);
   };
 
+  
+
   render() {
     const { user, uni, group, actions, params, homeTabValue } = this.props;
     const { homeGroupDetails, loading, error } = this.props.homeGroupDetails;
@@ -136,6 +144,10 @@ export default class Header extends React.Component {
       return <div className="container"><h1>Group</h1><h3>Loading...</h3></div>      
     } else if(error) {
       return <div className="alert alert-danger">Error: {error.message}</div>
+    }
+
+    const getBackgroundImg=()=>{
+      return imgArray[1];
     }
 
     return (
@@ -149,7 +161,7 @@ export default class Header extends React.Component {
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',*/
           backgroundImage: `linear-gradient(to bottom, rgba(25,25,25,0.5) 0%,rgba(0,0,0,0.9) 100%),
-            url('${defaultUni}')`,
+            url('${getBackgroundImg()}')`,
           backgroundColor: "#000000",
           backgroundPosition: 'center center',
           backgroundSize: 'cover',
