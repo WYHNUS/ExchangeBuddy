@@ -42,6 +42,18 @@ router.get('/me', verifyToken, function(req, res) {
 });
 
 router.get('/user/:id', verifyToken, UserCtrl.getUser);
+
+/*
+{
+    email: "a@a.com",
+    bio: "abc",
+    website: "a.com",
+    birthday: 1234567 (in milliseconds),
+    name: "haha",
+    userId: 1
+}
+*/
+router.patch('/updateUser', verifyToken, UserCtrl.updateUser);
 router.put('/verificationemail', UserCtrl.createUser);
 router.get('/verify/:token', MailCtrl.verifyToken);
 router.get('/resendVerificationMail/:userId', MailCtrl.resend);
