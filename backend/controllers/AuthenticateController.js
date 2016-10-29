@@ -47,7 +47,7 @@ exports.authenticateOrCreateByFB = function(req, res){
 }
 
 exports.authenticateByEmail = function (req, res) {
-    if (!req.body.password) {
+    if (!req.body.password && !req.body.email) {
         return res.status(400)
             .json({
                 status: 'fail',
