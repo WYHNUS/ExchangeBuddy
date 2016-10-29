@@ -195,13 +195,40 @@ import {
 	]*/
 
 
-	const initialState={
+	const initialState = {
 		//selectedGroup:{index:-1,groupId:-1},
-		homeGroups:{groupsLoaded:false,selected:-1,homeGroups:[],error:null,loading:false},
-		homeGroupDetails:{detailsLoaded:false,homeGroupDetails:{},error:null,loading:false},
-		homeEvents:{homeEvents:[],error:null,loading:false},
-		homeMessages:{homeMessages:[],error:null,loading:false},
-		homeFriends:{homeFriends:[],error:null,loading:false},
+		homeGroups: {
+			groupsLoaded: false,
+			selected: -1,
+			homeGroups: [],
+			error: null,
+			loading: false
+		},
+		homeGroupDetails: {
+			detailsLoaded: false,
+			homeGroupDetails: {
+				id: -1,
+				name: '',
+				groupType: -1
+			},
+			error: null,
+			loading: false
+		},
+		homeEvents: {
+			homeEvents: [],
+			error: null,
+			loading: false
+		},
+		homeMessages: {
+			homeMessages: [],
+			error: null,
+			loading: false
+		},
+		homeFriends: {
+			homeFriends: [],
+			error: null,
+			loading: false
+		},
 		homeTabValue:'events',
 	}
 
