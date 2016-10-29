@@ -16,6 +16,7 @@ app.use(require('connect-history-api-fallback')())
 // Apply Webpack HMR Middleware
 // ------------------------------------
 if (config.env === 'development') {
+
   const compiler = webpack(webpackConfig)
 
   debug('Enable webpack dev and HMR middleware')
