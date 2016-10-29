@@ -17,8 +17,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
-    attemptLogout:()=>{dispatch(attemptLogout())},
-    clearUser:()=>{dispatch(clearUser())}
+    attemptLogout: () => { dispatch(attemptLogout()) },
+    clearUser: () => { dispatch(clearUser()) }
   };
 };
 

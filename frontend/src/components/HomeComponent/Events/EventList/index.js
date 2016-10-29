@@ -9,7 +9,8 @@ import {
   fetchEvents , fetchEventsFailure, fetchEventsSuccess
 } from '../../../../actions/home';
 import { showSnackbar } from '../../../../actions/messageSnackbar';
-import {fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure} from '../../../../actions/utilityInfo';
+import { fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure } from '../../../../actions/utilityInfo';
+import { clearUser } from '../../../../actions/authActions';
 
 
 // Component
@@ -32,7 +33,7 @@ const mapDispatchToProps = (dispatch) => {
       }, (err) => {
         if (err.status === 401) {
           cookie.remove('authToken');
-          this.props.clearUser();
+          dispatch(clearUser());
           // need to redirect to a new version of login page
           browserHistory.push('/');
         } else {
@@ -57,6 +58,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     resetEvents: () => {
       dispatch(resetEvents());
+    },
+    clearUser: () => {
+      dispatch(clearUser());
     }
   };
 };

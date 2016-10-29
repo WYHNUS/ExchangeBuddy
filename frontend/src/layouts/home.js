@@ -14,7 +14,9 @@ import {
   fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure,
   toggleSelectedHomeGroup, fetchEvents, fetchEventsSuccess, 
   fetchEventsFailure, resetEvents
-} from '../actions/home'
+} from '../actions/home';
+import { clearUser } from '../actions/authActions';
+
 import Header from '../components/Header';
 //import SwitchGroupDialog from '../components/SwitchGroupDialog';
 
@@ -87,7 +89,7 @@ const mapDispatchToProps = (dispatch) => {
           }, (err) => {
             if (err.status === 401) {
               cookie.remove('authToken');
-              this.props.clearUser();
+              dispatch(clearUser());
               // need to redirect to a new version of login page
               browserHistory.push('/');
             } else {
@@ -103,7 +105,7 @@ const mapDispatchToProps = (dispatch) => {
           }, (err) => {
             if (err.status === 401) {
               cookie.remove('authToken');
-              this.props.clearUser();
+              dispatch(clearUser());
               // need to redirect to a new version of login page
               browserHistory.push('/');
             } else {
@@ -116,7 +118,7 @@ const mapDispatchToProps = (dispatch) => {
       }, (err) => {
         if (err.status === 401) {
           cookie.remove('authToken');
-          this.props.clearUser();
+          dispatch(clearUser());
           // need to redirect to a new version of login page
           browserHistory.push('/');
         } else {

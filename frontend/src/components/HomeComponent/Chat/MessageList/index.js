@@ -9,6 +9,7 @@ import ChildComponent from './MessageList';
 import { 
   fetchGroupMessages, fetchGroupMessagesSuccess, fetchGroupMessagesFailure
 } from '../../../../actions/home'
+import { clearUser } from '../../../../actions/authActions';
 
 // Redux
 import { bindActionCreators } from 'redux';
@@ -26,7 +27,7 @@ const mapDispatchToProps = (dispatch) => {
       }, (err) => {
         if (err.status === 401) {
           cookie.remove('authToken');
-          this.props.clearUser();
+          dispatch(clearUser());
           // need to redirect to a new version of login page
           browserHistory.push('/');
         } else {

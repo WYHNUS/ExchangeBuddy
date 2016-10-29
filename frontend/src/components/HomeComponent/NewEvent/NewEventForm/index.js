@@ -7,8 +7,9 @@ import Loading from '../../../Loading';
 // Component
 import ChildComponent from './NewEventForm';
 
-import {postEvents, fetchEvents, fetchEventsSuccess, fetchEventsFailure} from '../../../../actions/home'
-import {showSnackbar} from '../../../../actions/messageSnackbar';
+import { postEvents, fetchEvents, fetchEventsSuccess, fetchEventsFailure } from '../../../../actions/home'
+import { showSnackbar } from '../../../../actions/messageSnackbar';
+import { clearUser } from '../../../../actions/authActions';
 
 // Redux
 import { connect } from 'react-redux';
@@ -30,7 +31,7 @@ const mapDispatchToProps = (dispatch) => {
             }, (err) => {
               if (err.status === 401) {
                 cookie.remove('authToken');
-                this.props.clearUser();
+                dispatch(clearUser());
                 // need to redirect to a new version of login page
                 browserHistory.push('/');
               } else {
@@ -44,11 +45,12 @@ const mapDispatchToProps = (dispatch) => {
         }, (err) => {
           if (err.status === 401) {
             cookie.remove('authToken');
-            this.props.clearUser();
+            dispatch(clearUser());
             // need to redirect to a new version of login page
             browserHistory.push('/');
           } else {
-            dispatch(fetchEventsFailure(err.response.error.message));
+            console.log(err.response.error.message);
+            dispatch(showSnackbar(err.response.error.message));
           }
         });
     },

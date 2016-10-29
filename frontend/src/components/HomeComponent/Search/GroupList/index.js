@@ -12,7 +12,8 @@ import { toggleHomeTab } from '../../../../actions/home';
 import {
   fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure,
 	fetchEvents, fetchEventsSuccess, fetchEventsFailure, resetEvents
-} from '../../../../actions/home'
+} from '../../../../actions/home';
+import { clearUser } from '../../../../actions/authActions';
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
@@ -29,7 +30,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       }, (err) => {
         if (err.status === 401) {
           cookie.remove('authToken');
-          this.props.clearUser();
+          dispatch(clearUser());
           // need to redirect to a new version of login page
           browserHistory.push('/');
         } else {
@@ -45,7 +46,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       }, (err) => {
         if (err.status === 401) {
           cookie.remove('authToken');
-          this.props.clearUser();
+          dispatch(clearUser());
           // need to redirect to a new version of login page
           browserHistory.push('/');
         } else {
