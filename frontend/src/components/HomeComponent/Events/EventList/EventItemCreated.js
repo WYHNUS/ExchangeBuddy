@@ -119,6 +119,8 @@ class EventItemCreated extends React.Component{
 			})
 			.use(bearer)
 			.end(function(err,res){
+				console.log(err);
+				console.log(res);
 				//console.log(homeGroupDetails.id);
 				if (!err && !res.error && homeGroupDetails.id){
 					//showSnackbar("Registered for event");

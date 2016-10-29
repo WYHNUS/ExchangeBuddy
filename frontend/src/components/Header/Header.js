@@ -138,6 +138,8 @@ export default class Header extends React.Component {
       return <div className="alert alert-danger">Error: {error.message}</div>
     }
 
+    console.log(homeGroupDetails);
+
     return (
       <div
         id="header"
@@ -161,23 +163,24 @@ export default class Header extends React.Component {
             {/*<div className="col-xs-6 col-md-2" id="logo-image">
               { ImagesHelper.makeScale(Meteor.settings.public.logoImageId, 180, "exchangebuddy-logo") }
             </div>*/}
-            {
-              ((parseInt(homeGroupDetails.groupType)!==2)&&homeGroupDetails.name)?
-              (
-                <div className='col-xs-12 col-md-8 col-lg-8' id="header-title">
-                  <h2 id="uni-name">{ homeGroupDetails.name}</h2>
-                  <p id="uni-description">{ /*`${ group.term } ${ group.year } - ${ group.users.length } ${ pluralizer(group.users.length, 'Member', 'Members') }`*/ }</p>
-                </div>
-              ):
-              (
-                <div className='col-xs-12 col-md-8 col-lg-8' id="header-title">
-                  <h2 id="uni-name">{ getName(homeGroupDetails.name)}</h2>
-                  <p id="uni-description">{ `${getTerm(homeGroupDetails.name)} ${getYear(homeGroupDetails.name)}`/*`${ group.term } ${ group.year } - ${ group.users.length } ${ pluralizer(group.users.length, 'Member', 'Members') }`*/ }</p>
-                </div>
-              )
-            }
 
-            
+            {
+              !!homeGroupDetails.name ? 
+                (parseInt(homeGroupDetails.groupType) !== 2) ?
+                (
+                  <div className='col-xs-12 col-md-8 col-lg-8' id="header-title">
+                    <h2 id="uni-name">{ homeGroupDetails.name }</h2>
+                    <p id="uni-description">{ /*`${ group.term } ${ group.year } - ${ group.users.length } ${ pluralizer(group.users.length, 'Member', 'Members') }`*/ }</p>
+                  </div>
+                ):
+                (
+                  <div className='col-xs-12 col-md-8 col-lg-8' id="header-title">
+                    <h2 id="uni-name">{ getName(homeGroupDetails.name) }</h2>
+                    <p id="uni-description">{ `${getTerm(homeGroupDetails.name)} ${getYear(homeGroupDetails.name)}`/*`${ group.term } ${ group.year } - ${ group.users.length } ${ pluralizer(group.users.length, 'Member', 'Members') }`*/ }</p>
+                  </div>
+                )
+              : null
+            }
 
             {/*<div className="col-xs-6 col-md-2">
               {<HeaderProfile user={ user } uni={ uni } group={ group } actions={ actions } />}
@@ -202,7 +205,6 @@ function getName(homeGroupDetailsName){
 }
 
 function getTerm(homeGroupDetailsName){
-
   return homeGroupDetailsName.trim().split("--")[1].trim().split(" ")[2];
 }
 
