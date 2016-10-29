@@ -35,7 +35,7 @@ exports.getUniversity = function(req, res){
 };
 
 exports.updateExchange = function(req, res){
-    console.log(models.User.Instance.prototype);
+    console.log(req.body);
     models.sequelize.Promise.all([
         models.User.findOne({
             where: {
@@ -45,12 +45,60 @@ exports.updateExchange = function(req, res){
 
         models.University.findOne({
             where: {
-                id: universityId
+                id: req.body.universityId
+            }
+        }),
+
+        models.Exchange.findOrCreate({
+            where: {
+                year: req.body.year,
+                term: req.body.term,
+                UniversityId: req.body.universityId
             }
         })
-    ]).spread(function(user, university){
-        console.log(models.User.Instance.prototype);
-        res.send('ha');
+    ]).spread(function(user, exchangeUniversity, exchange){
+        models.sequelize.Promise.all([
+            user.getGroup(),
+            user.getUniversity(),
+            user.getExchangeEvent()
+        ]).spread(function(groups, homeUniversity, exchangeEvent){
+            user.removeGroup(groups);
+            user.removeExchangeEvent(exchangeEvent);
+            user.addExchangeEvent(exchange[0]);
+            var defaultGroups = [
+                {
+                    id: 0,
+                    name: exchangeUniversity.name + " exchange students -- Year " + exchange.year + " " + exchange.term
+                },
+                {
+                    id: 1,
+                    name: homeUniversity.name + " going abroad -- Year " + exchange.year + " " + exchange.term
+                },
+                {
+                    id: 2,
+                    name: homeUniversity.name + " students in " + exchangeUniversity.name
+                }
+            ];
+
+            var defaultGroupArray = defaultGroups.map(group => {
+                return models.Group.findOrCreate({
+                    where: {
+                        name: group.name,
+                        groupType: group.id,
+                    }
+                });
+            });
+
+            models.sequelize.Promise.all(defaultGroupArray).then(groups => {
+                groups.map(group => {
+                    group[0].addUser(user);
+                })
+            })
+            res.send({
+                status: 'success'
+            })
+        })
+
     }).catch(function(err){
         resError(res, err);
     })

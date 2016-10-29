@@ -46,7 +46,8 @@ request:
 {
     userId: 1,
     universityId: 1,
-    term: fall/spring
+    term: fall/spring,
+    year: 2017
 }
 */
 router.patch('/updateExchange', UniCtrl.updateExchange);
