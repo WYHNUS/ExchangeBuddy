@@ -21,7 +21,7 @@
 }
 
 #welcome-main-container {
-  display: flex; flex-direction: column; justify-content: space-around; height: 80vh; padding: 0vh 20px;
+  display: flex; flex-direction: column; justify-content: space-around; height: 60vh; padding: 0vh 20px;
 @include media-xs-only { /*height: 120vh;*/ }
 }
 
@@ -116,9 +116,8 @@
   min-width: 100%;
 
   #feature-list{
-    @include media-xs-only { min-height: 600px; }
-    @include media-sm-up { min-height: 740px; }
     background: #efefef;
+    min-height: 400px;
     >div>h2{
       margin-right: 10px;
       margin-left: 10px;
@@ -159,6 +158,12 @@
       font-size: 44px;
       @include media-xs-only { font-size: 30px; }
     }
+  }
+
+  #terms-and-services{
+    font-size: 10px;
+    color: black;
+    background: #efefef;
   }
 
 }

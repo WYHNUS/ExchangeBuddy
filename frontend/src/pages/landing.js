@@ -8,6 +8,7 @@ import landing from '../res/ExchangeBuddySpread.jpg';
 import ExchangeBuddySpreadIcon from '../res/ExchangeBuddySpreadIcon.png';
 import LoginButton from '../components/LoginButton';
 import FlatButton from 'material-ui/FlatButton';
+import ReactPaginate from 'react-paginate';
 
 import { connect } from 'react-redux';
 import { toggleTopBarVisibility, toggleBottomBarVisibility } from '../actions/pageVisibility';
@@ -36,6 +37,10 @@ class Landing extends React.Component{
     this.props.toggleTopBarVisibility(false);
     console.log("enter landing page!");
   }
+
+  state = {
+    pageNum: 0
+  };
 
   render(){
 
@@ -93,7 +98,7 @@ class Landing extends React.Component{
           </div>
 
           <div className="icon-container col-xs-12 col-md-4 col-lg-4">{IconsHelper.materialIcon("library_books")}
-          <p id='icon-title'>Read senior's Stories</p>
+          <p id='icon-title'>Read senior's stories</p>
           <p>Learn tips and tricks from stories shared by other exchangers</p>
           </div>
 
@@ -104,13 +109,18 @@ class Landing extends React.Component{
 
       </div>
     </div>
-    <div id="people-quote-list">
+    {/*<div id="people-quote-list">
       <div className="row center-xs">
       <h2 id="quote-title">What other exchangers say...</h2>
       </div>
       <div className="row center-xs">
-      quotes from people
       </div>
+      <h2 id="quote-title">Find more here...</h2>
+      <div>
+      </div>
+    </div>*/}
+    <div id='terms-and-services'>
+      2016 &copy; ExchangeBuddy.com. All Rights Reserved.
     </div>
     </div>
     

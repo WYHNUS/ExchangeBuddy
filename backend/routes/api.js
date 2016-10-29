@@ -3,16 +3,7 @@ var router = express.Router();
 var jwt = require('express-jwt');
 var config = require('../config/config');
 
-var multer  =   require('multer');
-var storage =   multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, '../public/uploads');
-  },
-  filename: function (req, file, callback) {
-    callback(null, file.fieldname + '-' + Date.now());
-  }
-});
-var upload = multer({ storage : storage}).single('userPhoto');
+
 
 var models  = require('../models');
 var CountryCtrl = require('../controllers/CountryController');
@@ -35,7 +26,8 @@ router.get('/', function(req, res) {
 });
 
 // Authenticate with Facebook access token or email with password
-router.post('/authenticate', AuthCtrl.authenticate);
+router.post('/authenticateOrCreateByFB', AuthCtrl.authenticateOrCreateByFB);
+router.post('/authenticateByEmail', AuthCtrl.authenticateByEmail);
 // Verify JSWT
 router.get('/me', verifyToken, function(req, res) {
   res.send(req.user);
@@ -66,7 +58,8 @@ request:
     userId: 1
 }
 */
-router.patch('/updateUser', verifyToken, UserCtrl.updateUser);
+
+router.patch('/updateUser', UserCtrl.updateUser);
 router.put('/createUser', UserCtrl.createUser);
 
 router.get('/verify/:token', MailCtrl.verifyToken);
@@ -199,14 +192,4 @@ GET /comment/:eventId
 
 */
 router.get('/comment/:eventId', verifyToken, EventCtrl.getComments);
-
-router.post('/uploadPhoto', verifyToken, function(req, res, err){
-    upload(req,res,function(err) {
-        if(err) {
-            return res.end("Error uploading file.");
-        }
-        res.end("File is uploaded");
-    });
-})
-
 module.exports = router;
