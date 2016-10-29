@@ -1,15 +1,21 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { toggleBottomBarVisibility, 
+import { browserHistory } from 'react-router';
+import cookie from 'react-cookie';
+
+import { 
+  toggleBottomBarVisibility, 
   toggleHomeSearchDrawerOpenButtonVisibility,
   toggleTopBarBackButtonVisibility, toggleTopBarVisibility, 
-toggleTopBarSettingsButtonVisibility} from '../actions/pageVisibility';
-  import {fetchMyGroups, fetchMyGroupsSuccess, fetchMyGroupsFailure,
-    fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure,
-    toggleSelectedHomeGroup, fetchEvents, fetchEventsSuccess, 
-    fetchEventsFailure, resetEvents} from '../actions/home'
-    import Header from '../components/Header';
-import {browserHistory} from 'react-router';
+  toggleTopBarSettingsButtonVisibility
+} from '../actions/pageVisibility';
+import {
+  fetchMyGroups, fetchMyGroupsSuccess, fetchMyGroupsFailure,
+  fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure,
+  toggleSelectedHomeGroup, fetchEvents, fetchEventsSuccess, 
+  fetchEventsFailure, resetEvents
+} from '../actions/home'
+import Header from '../components/Header';
 //import SwitchGroupDialog from '../components/SwitchGroupDialog';
 
 class Home extends React.Component{
@@ -78,6 +84,15 @@ const mapDispatchToProps = (dispatch) => {
             } else {
               dispatch(fetchEventsFailure(response.error));
             }
+          }, (err) => {
+            if (err.status === 401) {
+              cookie.remove('authToken');
+              this.props.clearUser();
+              // need to redirect to a new version of login page
+              browserHistory.push('/');
+            } else {
+              dispatch(fetchEventsFailure(err.response.error.message));
+            }
           });
           dispatch(fetchCurrentGroup(response.body[selectedIndex].id)).payload.then((response) => {
             if (!response.error) {
@@ -85,9 +100,27 @@ const mapDispatchToProps = (dispatch) => {
             } else {
               dispatch(fetchCurrentGroupFailure(response.error));
             }
+          }, (err) => {
+            if (err.status === 401) {
+              cookie.remove('authToken');
+              this.props.clearUser();
+              // need to redirect to a new version of login page
+              browserHistory.push('/');
+            } else {
+              dispatch(fetchCurrentGroupFailure(err.response.error.message));
+            }
           });
         } else {
           dispatch(fetchMyGroupsFailure(response.error));
+        }
+      }, (err) => {
+        if (err.status === 401) {
+          cookie.remove('authToken');
+          this.props.clearUser();
+          // need to redirect to a new version of login page
+          browserHistory.push('/');
+        } else {
+          dispatch(fetchMyGroupsFailure(err.response.error.message));
         }
       });
     }

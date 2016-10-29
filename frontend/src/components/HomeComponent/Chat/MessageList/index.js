@@ -1,12 +1,14 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
+import cookie from 'react-cookie';
 import Loading from '../../../Loading';
 
 // Component
 import ChildComponent from './MessageList';
 
-import {fetchGroupMessages, fetchGroupMessagesSuccess,
-  fetchGroupMessagesFailure} from '../../../../actions/home'
-
+import { 
+  fetchGroupMessages, fetchGroupMessagesSuccess, fetchGroupMessagesFailure
+} from '../../../../actions/home'
 
 // Redux
 import { bindActionCreators } from 'redux';
@@ -20,6 +22,15 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(fetchGroupMessagesSuccess(response.body));
         } else {
           dispatch(fetchGroupMessagesFailure(response.error));
+        }
+      }, (err) => {
+        if (err.status === 401) {
+          cookie.remove('authToken');
+          this.props.clearUser();
+          // need to redirect to a new version of login page
+          browserHistory.push('/');
+        } else {
+          dispatch(fetchGroupMessagesFailure(err.response.error.message));
         }
       });
     }

@@ -110,11 +110,11 @@ export default class MessageList extends React.Component {
 
   render() {
     const { user } = this.props;
-    const {homeMessages, loading, error} = this.props.homeMessages;
+    const { homeMessages, loading, error } = this.props.homeMessages;
 
-    if(loading) {
+    if (loading) {
       return <div className="container"><h1>Message</h1><h3>Loading...</h3></div>      
-    } else if(error) {
+    } else if (error) {
       return <div className="alert alert-danger">Error: {error.message}</div>
     }
 
