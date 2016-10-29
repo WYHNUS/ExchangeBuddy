@@ -47,7 +47,6 @@ exports.authenticateOrCreateByFB = function(req, res){
 }
 
 exports.authenticateByEmail = function (req, res) {
-    console.log(req.body);
     if (!req.body.password || !req.body.email) {
         return res.status(400)
             .json({
@@ -66,7 +65,7 @@ exports.authenticateByEmail = function (req, res) {
             // 401 means that the user is unknown
             return res.status(401).json({
                 status: 'fail',
-                message: 'User not found.'
+                message: 'Email or password is invalid.'
             });
         }
         if (user.isEmailVerified) {
@@ -79,7 +78,8 @@ exports.authenticateByEmail = function (req, res) {
             // 403 means that the user is known but not authorized
             return res.status(403).json({
                 status: 'fail',
-                message: 'Email account not verified.'
+                message: 'Email account not verified.',
+                user: user
             });
         }
     }).catch(function(err){

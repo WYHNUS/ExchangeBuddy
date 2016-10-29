@@ -8,7 +8,7 @@ export const Clicked_Login = 'Clicked_Login';
 export const Login_Success = 'Login_Success';
 export const Login_Fail = 'Login_Fail';
 
-export const Not_Registered = 'Not_Registered';
+export const Not_Authenticated = 'Not_Authenticated';
 
 export const Clicked_Logout = 'Clicked_Logout';
 export const Logout_Success = 'Logout_Success';
@@ -62,8 +62,8 @@ export function loginSuccess(userObject, token) {
 export function loginFail(error) {
     return { type: Login_Fail, error };
 }
-export function requireRegistration(user, error) {
-    return { type: Not_Registered, user, error };
+export function requireAuthentication(user, error) {
+    return { type: Not_Authenticated, user, error };
 }
 export function attemptLogin(field) {
   console.log(field);
@@ -82,8 +82,8 @@ export function attemptLogin(field) {
           cookie.save('authToken', res.body.token);
           dispatch(loginSuccess(res.body.user, res.body.token));
         } else {
-          if (res.status === 401) {
-            dispatch(requireRegistration(res.body.user, res.body.message));
+          if (res.status === 403) {
+            dispatch(requireAuthentication(res.body.user, res.body.message));
           } else {
             dispatch(loginFail({error:res.body.message}));
           }

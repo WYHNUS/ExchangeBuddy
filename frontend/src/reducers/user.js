@@ -1,5 +1,5 @@
 import {
-  Clicked_Login, Login_Success, Login_Fail, Not_Registered,
+  Clicked_Login, Login_Success, Login_Fail, Not_Authenticated,
   Clicked_Logout, Logout_Success,
   VERIFY_TOKEN_SUCCESS, VERIFY_TOKEN_FAIL,
   Navigate_Away_From_Auth_Form, CLEAR_USER
@@ -135,13 +135,13 @@ export function user(state = initialState , action) {
         error: action.error
       });
 
-    case Not_Registered:
+    case Not_Authenticated:
       return Object.assign({}, state, {
         isLoggedIn: false,
         fetchingAuthUpdate: false,
         isAuthenticated: false,
-        isEmailSent: false,
-        isRegistered: false,
+        isEmailSent: true,
+        isRegistered: true,
         token: null,
         error: action.error,
         signupInfo: {

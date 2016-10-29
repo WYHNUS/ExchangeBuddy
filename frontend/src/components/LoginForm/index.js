@@ -15,10 +15,8 @@ import ChildComponent from './LoginForm';
 const mapStateToProps = (state) => {
   return {
     submitting: state.user.fetchingAuthUpdate,
-    isLoggedIn: state.user.isLoggedIn,
-    isAuthenticated: state.user.isAuthenticated,
-    isRegistered: state.user.isRegistered,
     loginError: state.user.error,
+    userAuthData: state.user,
     initialValues: { 
       userEmail: state.user.signupInfo.email,
       userPassword: state.user.signupInfo.password

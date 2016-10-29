@@ -36,8 +36,17 @@ class LoginForm extends React.Component {
     this.props.attemptLogin(val);
   }
 
+  componentDidUpdate() {
+    const { isLoggedIn, isAuthenticated, token } = this.props.userAuthData;
+    
+    if (isLoggedIn && isAuthenticated && token){
+      browserHistory.push('/home');
+    }
+  }
+
   render() {
-    const { handleSubmit, submitting, isLoggedIn, isAuthenticated, isRegistered, loginError } = this.props;
+    const { handleSubmit, submitting, loginError } = this.props;
+    const { isLoggedIn, isAuthenticated, isRegistered } = this.props.userAuthData;
 
     return (
       <div>
@@ -72,14 +81,6 @@ class LoginForm extends React.Component {
         </div>
 
         { submitting ? <p>Logging in... Please be patient. :)</p> : null }
-
-        { 
-          (isRegistered && !isAuthenticated) ? 
-          <div> 
-            <p>Please check your inbox for verification!  </p>
-          </div> 
-          : null 
-        }
 
         { 
           loginError ? 
