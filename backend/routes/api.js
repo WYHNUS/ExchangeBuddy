@@ -26,7 +26,8 @@ router.get('/', function(req, res) {
 });
 
 // Authenticate with Facebook access token or email with password
-router.post('/authenticate', AuthCtrl.authenticate);
+router.post('/authenticateOrCreateByFB', AuthCtrl.authenticateOrCreateByFB);
+router.post('/authenticateByEmail', AuthCtrl.authenticateByEmail);
 // Verify JSWT
 router.get('/me', verifyToken, function(req, res) {
   res.send(req.user);
@@ -191,14 +192,4 @@ GET /comment/:eventId
 
 */
 router.get('/comment/:eventId', verifyToken, EventCtrl.getComments);
-
-router.post('/uploadPhoto', verifyToken, function(req, res, err){
-    upload(req,res,function(err) {
-        if(err) {
-            return res.end("Error uploading file.");
-        }
-        res.end("File is uploaded");
-    });
-})
-
 module.exports = router;

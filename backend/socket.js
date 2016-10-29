@@ -32,6 +32,7 @@ module.exports = function(io){
         */
         socket.on('adduser', function(data){
             try{
+                console.log("added user");
                 groupsOfUsers[data.group.name].push(data.user.id);
                 socket.user = data.user;
                 socket.room = data.group;
@@ -53,7 +54,7 @@ module.exports = function(io){
                         plain_chat.User.name = user.name;
                         plain_chat.User.profilePictureUrl = user.profilePictureUrl;
                         plain_chat.User.id = user.id;
-
+                        console.log(socket.room.name);
                         io.sockets.in(socket.room.name).emit('updatechat', plain_chat);
                     })
                 });
