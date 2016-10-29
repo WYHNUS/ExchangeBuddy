@@ -1,6 +1,8 @@
 import request from 'superagent';
-import {bearer} from '../util/bearer';
-import {ROOT_URL} from '../util/backend';
+import cookie from 'react-cookie';
+import { bearer } from '../util/bearer';
+import { ROOT_URL } from '../util/backend';
+import { clearUser } from './authActions';
 
 export const SAVE_STORY_CONTENT = 'SAVE_STORY_CONTENT';
 export const RESET_EDITING_STORY = 'RESET_EDITING_STORY';
@@ -127,7 +129,9 @@ export function uploadContentToServer(title, content, id) {
 				// console.log(err);
 				// console.log(res);
 				if (res.status === 401) {
-					
+					// session expired -> require login
+					cookie.remove('authToken');
+					dispatch(clearUser());
 				} else if (err) {
 					dispatch(uploadContentFail(err));
 				} else {

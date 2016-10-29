@@ -2,7 +2,7 @@ import {
   Clicked_Login, Login_Success, Login_Fail, Not_Registered,
   Clicked_Logout, Logout_Success,
   VERIFY_TOKEN_SUCCESS, VERIFY_TOKEN_FAIL,
-  Navigate_Away_From_Auth_Form,CLEAR_USER
+  Navigate_Away_From_Auth_Form, CLEAR_USER
 } from '../actions/authActions';
 
 import {
@@ -19,14 +19,14 @@ const initialState = {
   token: null,
   error: null,
   userObject: {
-    userId:-1,
-    email:'',
-    name:'',
-    profilePictureUrl:'',
-    gender:'',
-    bio:'',
-    fbUserId:'',
-    fbToken:'',
+    userId: -1,
+    email: '',
+    name: '',
+    profilePictureUrl: '',
+    gender: '',
+    bio: '',
+    fbUserId: '',
+    fbToken: '',
     UniversityId: null
   },
   signupInfo: {
@@ -167,11 +167,11 @@ export function user(state = initialState , action) {
         fetchingAuthUpdate:false,
         isAuthenticated:false,
         isEmailSent: false,
-        isRegistered:false,
-        userObject:{},
-        signupInfo:{},
-        token:null,
-        error:null
+        isRegistered: false,
+        userObject: {},
+        signupInfo: {},
+        token: null,
+        error: null
       });
 
     case Navigate_Away_From_Auth_Form:

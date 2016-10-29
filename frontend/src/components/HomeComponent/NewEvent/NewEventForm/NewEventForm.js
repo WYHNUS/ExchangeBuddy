@@ -135,10 +135,10 @@ class NewEventForm extends Component {
     super(props);
     const minDate = new Date();
     this.state={
-      minDate:minDate,
+      minDate: minDate,
       isGeocodingError: false,
       foundAddress: INITIAL_LOCATION.address,
-      position:INITIAL_LOCATION.position
+      position: INITIAL_LOCATION.position
     }
     this.updateMinDate=this.updateMinDate.bind(this);
     this.updateMap=this.updateMap.bind(this);

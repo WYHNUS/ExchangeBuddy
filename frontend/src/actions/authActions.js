@@ -22,7 +22,7 @@ export const Navigate_Away_From_Auth_Form = 'Navigate_Away_From_Auth_Form';
 
 export const CLEAR_USER = 'CLEAR_USER';
 
-import {ROOT_URL} from '../util/backend';
+import { ROOT_URL } from '../util/backend';
 
 /*
  * action creators
@@ -97,12 +97,12 @@ export function clickedLogout() {
 export function logoutSuccess() {
     return { type: Logout_Success };
 }
-export function attemptLogout(){
+export function attemptLogout() {
   return (dispatch) => {
     dispatch(clickedLogout());
     request
       .post('/logout')
-      .end(function(err,res){
+      .end(function(err,res) {
         if(err)
           console.log(err)
         dispatch(logoutSuccess());
@@ -110,12 +110,11 @@ export function attemptLogout(){
   }
 }
 
-
-export function clearUser(){
-  return { type: CLEAR_USER }
+export function clearUser() {
+  return { type: CLEAR_USER };
 }
 
 
 export function navigatedAwayFromAuthFormPage() {
-    return { type: Navigate_Away_From_Auth_Form }
+    return { type: Navigate_Away_From_Auth_Form };
 }

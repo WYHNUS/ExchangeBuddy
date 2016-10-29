@@ -3,7 +3,7 @@ import React from 'react';
 // Redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {attemptLogout, clearUser} from '../../../actions/authActions'
+import { attemptLogout, clearUser } from '../../../actions/authActions'
 
 // Component
 import ChildComponent from './SettingsList';

@@ -81,8 +81,6 @@ export default class ProfilePaper extends React.Component {
           fetchProfileFailure(userProfileRes.error);
         }
       }, (err) => {
-        console.log(err.response);
-        console.log(err.status);
         if (err.status === 401) {
           cookie.remove('authToken');
           this.props.clearUser();

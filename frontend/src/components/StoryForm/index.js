@@ -19,7 +19,8 @@ const mapStateToProps = (state) => {
     uploading: state.stories.uploading,
     published: state.stories.published,
     storyDetails: state.stories.editingStory,
-    user: state.user.userObject
+    user: state.user.userObject,
+    isLoggedin: state.user.isLoggedIn
   };
 };
 
