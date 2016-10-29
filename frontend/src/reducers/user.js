@@ -6,7 +6,7 @@ import {
 } from '../actions/authActions';
 
 import {
-  UPDATE_USER_PROFILE, SAVE_SIGNUP_PAGE_ONE_INFO, SAVE_SIGNUP_PAGE_TWO_INFO,
+  UPDATE_USER_PROFILE, SAVE_SIGNUP_PAGE_ONE_INFO, SAVE_SIGNUP_PAGE_TWO_INFO, SAVE_SIGNUP_INFO,
   CLICKED_SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAIL
 } from '../actions/user';
 
@@ -32,11 +32,8 @@ const initialState = {
   signupInfo: {
     fbToken: '',
     displayName: '',
-    gender: '',
-    homeUniName: '',
-    exchangeUniName: '',
-    exchangeUniYear: '',
-    exchangeTerm: ''
+    email: '',
+    password: ''
   }
 }
 
@@ -84,6 +81,15 @@ export function user(state = initialState , action) {
           exchangeUniName: action.field.exchangeUniName,
           exchangeUniYear: action.field.exchangeUniYear,
           exchangeTerm: action.field.exchangeTerm
+        }
+      });
+
+    case SAVE_SIGNUP_INFO:
+      return Object.assign({}, state, {
+        signupInfo: {
+          displayName: action.field.userName,
+          email: action.field.userEmail,
+          password: action.field.userPassword
         }
       });
 
@@ -139,9 +145,8 @@ export function user(state = initialState , action) {
         token: null,
         error: action.error,
         signupInfo: {
-          fbToken: action.fbToken,
-          displayName: action.user.name,
-          gender: action.user.gender
+          email: action.user.email,
+          password: action.user.password
         }
       });
 

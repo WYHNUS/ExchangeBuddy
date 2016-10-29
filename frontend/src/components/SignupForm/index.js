@@ -16,15 +16,20 @@ const mapStateToProps = (state) => {
   return {
     submitting: state.user.fetchingAuthUpdate,
     isEmailSent: state.user.isEmailSent,
-    authEmailError: state.user.error
+    authEmailError: state.user.error,
+    initialValues: { 
+      userName: state.user.signupInfo.displayName, 
+      userEmail: state.user.signupInfo.email,
+      userPassword: state.user.signupInfo.password
+    }
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
-    submitSignupForm: (signupInfo, email) => {
-      dispatch(submitSignupForm(signupInfo, email));
+    submitSignupForm: (signupInfo) => {
+      dispatch(submitSignupForm(signupInfo));
     }
   };
 };

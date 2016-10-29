@@ -62,16 +62,21 @@ export function loginSuccess(userObject, token) {
 export function loginFail(error) {
     return { type: Login_Fail, error };
 }
-export function requireRegistration(fbToken, user, error) {
-    return { type: Not_Registered, fbToken, user, error };
+export function requireRegistration(user, error) {
+    return { type: Not_Registered, user, error };
 }
-export function attemptLogin(token) {
+export function attemptLogin(field) {
+  console.log(field);
   return (dispatch) => {
     dispatch(clickedLogin());
     request
       // .post('http://54.186.208.82:3001/authenticate')
       .post(ROOT_URL + '/authenticate')
-      .send({ facebookToken: token })
+      .send({ 
+        // facebookToken: token,
+        email: field.email,
+        password: field.password
+      })
       .end(function(err,res){
         // console.log(res);
         // console.log(err);
@@ -80,7 +85,7 @@ export function attemptLogin(token) {
           dispatch(loginSuccess(res.body.user, res.body.token));
         } else {
           if (res.status === 401) {
-            dispatch(requireRegistration(token, res.body.user, res.body.message));
+            dispatch(requireRegistration(res.body.user, res.body.message));
           } else {
             dispatch(loginFail({error:res.body.message}));
           }

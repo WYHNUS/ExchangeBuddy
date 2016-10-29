@@ -38,7 +38,7 @@ const validate = (values) => {
 
 class SignupForm extends React.Component {
   submitForm(val) {
-    console.log(val);
+    this.props.submitSignupForm(val);
   }
 
   render() {

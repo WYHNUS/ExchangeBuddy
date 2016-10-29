@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 // Action creators
 import { 
   attemptLogin, loginSuccess, loginFail
-} from '../../actions/user';
+} from '../../actions/authActions';
 // Component
 import ChildComponent from './LoginForm';
 
@@ -18,7 +18,11 @@ const mapStateToProps = (state) => {
     isLoggedIn: state.user.isLoggedIn,
     isAuthenticated: state.user.isAuthenticated,
     isRegistered: state.user.isRegistered,
-    loginError: state.user.error
+    loginError: state.user.error,
+    initialValues: { 
+      userEmail: state.user.signupInfo.email,
+      userPassword: state.user.signupInfo.password
+    }
   };
 };
 

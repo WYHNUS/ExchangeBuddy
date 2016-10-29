@@ -30,7 +30,12 @@ export function saveSignupPageTwoInfo(field) {
 }
 
 export function saveSignupPageThreeInfo(email) {
-	return { type: SAVE_SIGNUP_PAGE_THREE_INFO, field }
+	return { type: SAVE_SIGNUP_PAGE_THREE_INFO, email }
+}
+
+/*		new signup flow		*/
+export function saveSignupInfo(field) {
+	return { type: SAVE_SIGNUP_INFO, field }
 }
 
 export function clickedSignup() {
@@ -45,22 +50,17 @@ export function signupFail(error) {
     return { type: SIGNUP_FAIL, error };
 }
 
-export function submitSignupForm(field, email) {
-	// console.log(field);
-	// console.log(email);
+export function submitSignupForm(field) {
+	console.log(field);
 	return (dispatch) => {
 	    dispatch(clickedSignup());
+	    dispatch(saveSignupInfo(field));
 
 	    request.put(ROOT_URL + '/verificationemail')
 			.send({
-				facebookToken: field.fbToken,
-				email: email.homeUniEmail,
-				name: field.displayName,
-				gender: field.gender,
-				exchangeYear: field.exchangeUniYear,
-				exchangeSem: field.exchangeTerm,
-				homeUniversity: field.homeUniName,
-				exchangeUniversity: field.exchangeUniName
+				name: field.userName,
+				email: field.userEmail,
+				password: field.userPassword
 			})
 			.end(function(err, res){
 				// console.log(res);
