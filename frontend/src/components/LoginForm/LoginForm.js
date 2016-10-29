@@ -9,7 +9,7 @@ import { EmailFormField } from '../Field';
 import { PasswordFormField } from '../Field';
 
 
-const responseFacebook = (attemptLogin) => (response) => {attemptLogin(response.accessToken)};
+const responseFacebook = (attemptFacebookLogin) => (response) => {attemptFacebookLogin(response.accessToken)};
 
 const validate = (values) => {
   const errors = {};
@@ -33,7 +33,6 @@ const validate = (values) => {
 
 class LoginForm extends React.Component {
   submitForm(val) {
-    console.log(val);
     this.props.attemptLogin(val);
   }
 

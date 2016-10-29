@@ -70,16 +70,14 @@ export function attemptLogin(field) {
   return (dispatch) => {
     dispatch(clickedLogin());
     request
-      // .post('http://54.186.208.82:3001/authenticate')
-      .post(ROOT_URL + '/authenticate')
+      .post(ROOT_URL + '/authenticateByEmail')
       .send({ 
-        // facebookToken: token,
-        email: field.email,
-        password: field.password
+        email: field.userEmail,
+        password: field.userPassword
       })
       .end(function(err,res){
-        // console.log(res);
-        // console.log(err);
+        console.log(res);
+        console.log(err);
         if(res.body.status === 'success'){
           cookie.save('authToken', res.body.token);
           dispatch(loginSuccess(res.body.user, res.body.token));
