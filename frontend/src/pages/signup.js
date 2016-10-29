@@ -34,8 +34,8 @@ class Signup extends React.Component {
             label="Signup"
             className="sign-flow-nav-button disabled" />
           <RaisedButton
-            label="Signin"
-            onTouchTap={ () => browserHistory.push('/signin')}
+            label="Login"
+            onTouchTap={ () => browserHistory.push('/login')}
             className="sign-flow-nav-button enabled" />
         </div>
 
