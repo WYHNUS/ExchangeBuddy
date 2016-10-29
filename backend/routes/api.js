@@ -45,12 +45,13 @@ router.get('/me', verifyToken, function(req, res) {
 request:
 {
     userId: 1,
-    universityId: 1,
+    exchangeUniversityId: 1,
+    homeUniversityId: 2,
     term: fall/spring,
     year: 2017
 }
 */
-router.patch('/updateExchange', UniCtrl.updateExchange);
+router.patch('/updateUni', UniCtrl.updateUni);
 
 router.get('/user/:id', verifyToken, UserCtrl.getUser);
 
