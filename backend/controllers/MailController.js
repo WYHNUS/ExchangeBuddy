@@ -137,7 +137,8 @@ exports.verifyToken = function(req, res){
                     user.save().then(function(){
                         res.send({
                             status: 'success',
-                            user: user
+                            user: user,
+                            token: user.generateJwt()
                         });
                     });
                 }
