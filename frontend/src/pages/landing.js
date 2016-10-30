@@ -6,7 +6,7 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import RaisedButton from 'material-ui/RaisedButton';
 import landing from '../res/ExchangeBuddySpread.jpg';
 import ExchangeBuddySpreadIcon from '../res/ExchangeBuddySpreadIcon.png';
-import LoginButton from '../components/LoginButton';
+//import LoginButton from '../components/LoginButton';
 import FlatButton from 'material-ui/FlatButton';
 import ReactPaginate from 'react-paginate';
 

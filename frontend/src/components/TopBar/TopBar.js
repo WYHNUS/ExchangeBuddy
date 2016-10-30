@@ -13,7 +13,7 @@ import FlatButton from 'material-ui/FlatButton';
 const src = require('../../static/ExchangeBuddyMini.png');
 
 function handleTouchTap(state) {
-	browserHistory.push('/');
+	//browserHistory.push('/');
 }
 
 class TopBar extends Component {

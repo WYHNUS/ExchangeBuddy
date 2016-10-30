@@ -1,4 +1,6 @@
-import {START_FETCHING_PROFILE, FETCH_PROFILE_SUCCESS, FETCH_PROFILE_FAILURE, RESET_PROFILE} from '../actions/profile';
+import {START_FETCHING_PROFILE, FETCH_PROFILE_SUCCESS, FETCH_PROFILE_FAILURE, RESET_PROFILE
+, EDIT_UNIVERSITIES, EDIT_UNIVERSITIES_SUCCESS, EDIT_UNIVERSITIES_FAILURE,
+EDIT_PROFILE, EDIT_PROFILE_SUCCESS, EDIT_PROFILE_FAILURE} from '../actions/profile';
 
 const initialState={
 	//user:{user:user,error:null,loading:false},
@@ -22,6 +24,9 @@ export function profile(state=initialState, action) {
 		return {...state, userProfile: {userProfile: {}, error: error, loading: false}};
 		case RESET_PROFILE:
 		return {...state, userProfile: {userProfile: {}, error: null, loading: false}};
+
+		case EDIT_UNIVERSITIES_SUCCESS:
+		return {...state}
 
 		default:
 		return state
