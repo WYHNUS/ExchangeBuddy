@@ -44,13 +44,13 @@ class Chat extends React.Component{
 					parseInt(this.props.user.userObject.id),
 					this.chatReceive.bind(this)
 				)
-			}else{
+			}else if(!(socket.currentRoom===parseInt(this.props.homeGroupDetails.homeGroupDetails.id))){
 				socket.updateRoom(
 					this.props.homeGroupDetails.homeGroupDetails.name,
 					parseInt(this.props.homeGroupDetails.homeGroupDetails.id)
+					//this.chatReceive.bind(this)
 				)
-			}
-			
+			}		
 			
 			/*var emittedobj = 
 			{

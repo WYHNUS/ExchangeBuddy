@@ -73,6 +73,7 @@ module.exports = function(io){
         }
         */
         socket.on('switchroom', function(newroom){
+            console.log('switchroom', newroom);
             try{
                 socket.leave(socket.room.name);
                 groupsOfUsers[socket.room.name].splice(groupsOfUsers[socket.room.name].indexOf(socket.user.id), 1);
