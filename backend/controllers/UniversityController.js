@@ -71,7 +71,7 @@ exports.updateUni = function(req, res){
                         groupType: defaultGroup.id,
                     }
                 }).then(function(group) {
-                    group.addUser(user);
+                    group[0].addUser(user);
 
                     // return user object
                     models.User.findOne({
@@ -83,7 +83,6 @@ exports.updateUni = function(req, res){
                         }],
                         attributes: ['id', 'email', 'name', 'profilePictureUrl', 'fbUserId', 'bio', 'UniversityId']
                     }).then(function(currentUser) {
-                        console.log(currentUser);
                         return res.status(200).json({
                             status: 'success',
                             user: currentUser
@@ -175,7 +174,7 @@ exports.updateUni = function(req, res){
                     groups.map(group => {
                         group[0].addUser(user);
                     })
-                
+
                     // return user object
                     models.User.findOne({
                         where: {
