@@ -14,10 +14,10 @@ exports.getGroupIndex = function(req, res) {
 		user.getGroup().then(function(groups){
 			models.sequelize.Promise.all(
 				groups.map(group => group.countUser())
-			).spread(function(c0, c1, c2){
-				groups[0].dataValues.number = c0;
-				groups[1].dataValues.number = c1;
-				groups[2].dataValues.number = c2;
+			).then(function(counts){
+				for(var i = 0; i < groups.length; i++){
+					groups[i].dataValues.number = counts[i];
+				}
 				res.send(groups);
 			})
 		})
