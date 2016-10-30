@@ -13,18 +13,16 @@ class Verify extends React.Component{
 		this.props.verifyToken(this.props.routeParams.token);
 	}
 
-	redirectLanding() {
-		setTimeout(function() {
-		  browserHistory.push('/home');
-		}, 2000);
+	componentDidUpdate() {
+		if (this.props.isVerified) {
+			setTimeout(function() {
+			  browserHistory.push('/home');
+			}, 2000);
+		}
 	}
 
 	render() {
 		const { error, isVerified } = this.props; 
-
-		if (this.props.isVerified) {
-			this.redirectLanding();
-		}
 
 		return (
 			<div>

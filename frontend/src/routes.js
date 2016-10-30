@@ -88,7 +88,7 @@ export const getRoutes = (store) =>{
         <Route path="friends" component={ Friends }/>
       </Route>
     </Route>
-    <Route path="newstory" component={ EditStory } onEnter={ authRequired }/>
+    {/*<Route path="newstory" component={ EditStory } onEnter={ authRequired }/>*/}
     <Route path="stories" onEnter={ authRequired }>
       <IndexRoute component={ Stories }/>
       <Route path=":storyId" component={ StoryDetails }/>

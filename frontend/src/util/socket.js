@@ -6,11 +6,13 @@ export default class Socket{
 
 	constructor(){
 		this.isFirstTimeUse = false;
+		this.currentRoom = null;
 	}
 
 	setup(groupName, groupId, userName, userId, handler){
 
 		this.isFirstTimeUse = true;
+		this.currentRoom=parseInt(groupId);
 
 		this.handler = handler;
 		var emittedobj = 
@@ -26,19 +28,22 @@ export default class Socket{
 				name: userName
 			}
 		}
-		console.log('setup is called', emittedobj);
+		console.log('add user is called', emittedobj);
 		socket.emit('adduser',emittedobj);
 		socket.on('updatechat', this._eventHandler.bind(this));
 	}
 
 	updateRoom(groupName, groupId){
+		//this.handler = handler;
 		console.log('update room is called', groupName);
 		var emittedobj = 
 		{
 			name: groupName,
 			id: parseInt(groupId)
 		}
+		this.currentRoom=parseInt(groupId);
 		socket.emit('switchroom',emittedobj);
+		//socket.on('updatechat', this._eventHandler.bind(this));
 	}
 
 	uninstall() {
