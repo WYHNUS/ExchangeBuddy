@@ -210,9 +210,9 @@ class EventItemCreated extends React.Component{
 			return (
 				<div className='row center-xs'>
 
-				<Dialog actions={deleteActions} modal={false} open={this.state.isDialogOpen} onRequestClose={this.closeDeleteDialog}>
+				{/*<Dialog actions={deleteActions} modal={false} open={this.state.isDialogOpen} onRequestClose={this.closeDeleteDialog}>
 		          Delete the event forever?
-		        </Dialog>
+		        </Dialog>*/}
 
 				<Dialog
 				title={`${groupEvent.going.length} going for ${groupEvent.title}`}
@@ -272,14 +272,14 @@ class EventItemCreated extends React.Component{
 							: null 
 						}
 						{
-							<div className="edit-delete-btn">
-						      <IconButton tooltipPosition="bottom-center" tooltip="Edit" onTouchTap={console.log('edit')/*()=>goToEdit(props)*/}>
+							/*<div className="edit-delete-btn">
+						      <IconButton tooltipPosition="bottom-center" tooltip="Edit" onTouchTap={console.log('edit')()=>goToEdit(props)}>
 						        {Icons.icon('mode_edit')}
 						      </IconButton>
-						      <IconButton tooltipPosition="bottom-center" tooltip="Delete" onTouchTap={console.log('delete')/*()=>props.openDialog(1)*/} >
+						      <IconButton tooltipPosition="bottom-center" tooltip="Delete" onTouchTap={console.log('delete')()=>props.openDialog(1)} >
 						        {Icons.icon('delete')}
 						      </IconButton>
-					        </div>
+					        </div>*/
 						}
 					</CardActions>
 				</Card>
