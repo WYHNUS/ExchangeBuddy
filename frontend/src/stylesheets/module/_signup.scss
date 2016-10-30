@@ -22,6 +22,9 @@
 
 #welcome-main-container {
   display: flex; flex-direction: column; justify-content: space-around; height: 60vh; padding: 0vh 20px;
+  @include media-lg-up {
+    height: 600px;
+  }
 @include media-xs-only { /*height: 120vh;*/ }
 }
 
@@ -102,7 +105,7 @@
     }
   }
 /*  h1 { margin: 0; }
-  .signup-right { display: flex; flex-direction: column; justify-content: center; padding: 30px; }*/
+.signup-right { display: flex; flex-direction: column; justify-content: center; padding: 30px; }*/
 }
 
 
@@ -118,6 +121,9 @@
   #feature-list{
     background: #efefef;
     min-height: 400px;
+    @include media-md-up{
+      min-height: 500px;
+    }
     >div>h2{
       margin-right: 10px;
       margin-left: 10px;
