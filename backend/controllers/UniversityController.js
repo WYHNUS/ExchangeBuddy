@@ -58,8 +58,8 @@ exports.updateUni = function(req, res){
         ]).spread(function(user, uni){
             models.sequelize.Promise.all([
                 user.setUniversity(uni)
-            ]).spread(function(homeUniversity){
-
+            ]).spread(function(user){
+                var homeUniversity = uni;
                 var defaultGroup = {
                     id: 4,
                     name: homeUniversity.name + " interested in exchange"
