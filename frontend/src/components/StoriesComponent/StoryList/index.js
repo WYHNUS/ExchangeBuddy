@@ -9,6 +9,8 @@ import { fetchAllStories, fetchAllStoriesSuccess, fetchAllStoriesFailure } from 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import stories from '../../../util/storyData';
+
 const mapDispatchToProps = (dispatch) => {
 	return {
 		actions: bindActionCreators({  }, dispatch),
@@ -20,7 +22,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
 	return {
-		stories: state.stories.storyList,
+		//stories: state.stories.storyList,
+		stories: stories,
 		user: state.user.userObject
 	};
 };

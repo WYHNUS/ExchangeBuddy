@@ -74,8 +74,8 @@ router.get('/university/:id', UniCtrl.getUniversity);
 
 router.post('/messages', verifyToken, ChatCtrl.getMessages);
 
-router.get('/allStories', verifyToken, StoryCtrl.getAllStories);
-router.post('/story/:id', verifyToken, StoryCtrl.getStory);
+router.get('/allStories', /*verifyToken,*/ StoryCtrl.getAllStories);
+router.post('/story/:id', /*verifyToken,*/ StoryCtrl.getStory);
 router.put('/story', verifyToken, StoryCtrl.createStory);
 
 /*

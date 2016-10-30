@@ -8,7 +8,7 @@ import { browserHistory } from 'react-router';
 import cookie from 'react-cookie';
 import Paper from 'material-ui/Paper';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
-import IconButton from 'material-ui/IconButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import Link from '../Link';
 
@@ -139,68 +139,95 @@ export default class ProfilePaper extends React.Component {
     render() {
       const { profile, userObject } = this.props;
 
+      /*const isUser=()={
+        return profile.id===userObject.id;
+      }*/ 
+
+      /*{ height: "auto", width: "100%" }*/
       return (
-        <div className='row' id="profile-paper">
-          <div className='col-xs-12 col-md-3' id="user-image">
-          { UserHelper.getAvatar(profile, 300, { height: "auto", width: "100%" }) }
+        <div>
+        <div id='profile-buffer'></div>
+        <div id="profile-paper">
+
+          <div className='row'>
+          <div className="col-xs-12 profile-pic">
+            {UserHelper.getAvatar(profile, 100)}
           </div>
+          <div className="col-xs-12">
+          <h1 style={ text_header_style }>{ profile.name }</h1>
+          </div>
+          </div>
+          
+          
 
-          <div className='col-xs-12 col-md-7' id="user-info">
-            <h1 style={ text_header_style }>{ profile.name }</h1>
-            {
-              profile.email?
-              (<h2 style={ text_header_style }>{ profile.email }</h2>):
-              null
+          <div className='row center-xs'>
+          <div className="col-xs-12 col-md-6 profile-fb">
+            <a target="_window" href={`https://facebook.com/${profile.fbUserId}`}>Message on Facebook</a>
+          </div>
+          {
+            profile.email?
+            (
+              <div className="col-xs-12 col-md-6 profile-fb">
+                <a target="_window" href={profile.email}>Message through Email</a>
+              </div>
+            ):
+            null
+          }
+          </div>
+          
+          
+          {/*<div className='col-xs-12' id="user-image">
+          {  }
+          </div>*/}
+          
+
+          {/*<div className='row'>
+            {profile.fbUserId?
+              (
+                <div>
+                <div className='col-xs-12 col-md-4 table-header'>Facebook</div>
+                <div className='col-xs-12 col-md-8 table-cell'>
+                  <Link to={ `https://facebook.com/${profile.fbUserId}` }>Facebook profile</Link>
+                </div>
+                </div>
+                )
+              :null
             }
+          </div>*/}
 
-            <div className="flex-table-container">
-              <div className='row'>
-                <div className='col-xs-12 col-md-4 table-header'>Home University</div>
-                <div className='col-xs-12 col-md-8 table-cell'>
-                  { 
-                    this.props.profile.University?
-                    (profile.University.name):
-                    (<div>Not loaded university name</div>) 
-                  }
-                </div>
-              </div>
-
-              <div className='row'>
-                <div className='col-xs-12 col-md-4 table-header'>On exchange to</div>
-                <div className='col-xs-12 col-md-8 table-cell'>
-                {this.state.exchangeUniListLoaded? 
-                  (this.state.exchangeUniList.map((uni, idx) => uni.name)):
-                  (<h2>Error loading list of unis...</h2>)}
-                { /*userExchangeUniversities.name*/ }
-                </div>
-              </div>
-
-              <div className='row'>
-                {profile.fbUserId?
-                  (
-                    <div>
-                    <div className='col-xs-12 col-md-4 table-header'>Facebook</div>
-                    <div className='col-xs-12 col-md-8 table-cell'>
-                      <Link to={ `https://facebook.com/${profile.fbUserId}` }>Facebook profile</Link>
-                    </div>
-                    </div>
-                    )
-                  :null
-                }
-                
-              </div>
-              
+          <div className='row'>
+            <div className='col-xs-12 col-md-4'>Home University</div>
+            <div className='col-xs-12 col-md-8'>
+              { 
+                this.props.profile.University?
+                (profile.University.name):
+                (<div>Not loaded university name</div>) 
+              }
             </div>
           </div>
+
+          <div className='row'>
+            <div className='col-xs-12 col-md-4'>On exchange to</div>
+            <div className='col-xs-12 col-md-8'>
+            {this.state.exchangeUniListLoaded? 
+              (this.state.exchangeUniList.map((uni, idx) => uni.name)):
+              (<h2>Error loading list of unis...</h2>)}
+            </div>
+          </div>
+
+          <div className='row center-xs'>
           {
           (urlToUserid(userObject.id)===userObject.id)?
           (<div className='col-xs-12 col-md-2'>
-          <IconButton tooltipPosition="bottom-center" tooltip="Edit" onTouchTap={()=>browserHistory.push("/profile/me/edit")}>
-            {IconsHelper.icon('mode_edit')}
-          </IconButton>
+          <RaisedButton label="Edit Profile" onTouchTap={()=>browserHistory.push("/profile/me/edit")}/>
           </div>)
           :
-          null}
+          null
+          }
+          </div>
+
+
+        </div>
         </div>
         )
     }
