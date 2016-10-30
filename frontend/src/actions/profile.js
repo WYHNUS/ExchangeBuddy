@@ -50,9 +50,7 @@ export function resetProfile(){
 /************************************************************
 UPDATING A PROFILE
 ************************************************************/
-export const EDIT_PROFILE = 'EDIT_PROFILE'
 export const EDIT_PROFILE_SUCCESS = 'EDIT_PROFILE_SUCCESS';
-export const EDIT_PROFILE_FAILURE = 'EDIT_PROFILE_FAILURE';
 
 
 export function editProfileSuccess(profile){
@@ -62,39 +60,10 @@ export function editProfileSuccess(profile){
 	};
 }
 
-export function editProfileFailure(error){
-	return {
-		type: EDIT_PROFILE_FAILURE,
-		payload: error
-	};
-}
-
-export function editProfile(userId, name, birthday, website, bio, email){
-	var profileObj = {
-		userId: userId,
-		name:name, 
-		birthday:birthday, 
-		website:website, 
-		bio:bio, 
-		email:email
-	}
-	const req = request
-		.patch(ROOT_URL + '/updateUser/')
-		.send(profileObj)
-		.use(bearer);
-
-	return {
-		type: EDIT_PROFILE,
-		payload: req
-	};
-}
-
 /************************************************************
 UPDATING A UNIVERSITY
 ************************************************************/
-export const EDIT_UNIVERSITIES = 'EDIT_UNIVERSITIES'
 export const EDIT_UNIVERSITIES_SUCCESS = 'EDIT_UNIVERSITIES_SUCCESS';
-export const EDIT_UNIVERSITIES_FAILURE = 'EDIT_UNIVERSITIES_FAILURE';
 
 
 export function editUniversitiesSuccess(profile){

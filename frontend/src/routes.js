@@ -30,6 +30,7 @@ import Verify from './pages/verify';
 import IdentifyUniversity from './pages/identifyUniversity';
 import Settings from './pages/settings';
 import NewEvent from './pages/home/newevent';
+import ProfileEdit from './pages/profileEdit';
 
 // Redux
 const persistedState = loadState();
@@ -93,7 +94,10 @@ export const getRoutes = (store) =>{
       <Route path=":storyId" component={ StoryDetails }/>
     </Route>
     {/*<Route path="wiki" component={Wiki}/>*/}
-    <Route path="profile(/:userId)" component={ Profile } onEnter={ authRequired } />
+    <Route path="profile(/:userId)" onEnter={ authRequired }>
+      <IndexRoute component={Profile}/>
+      <Route path="edit" component={ProfileEdit}/>
+    </Route>
     <Route path="notloggedin" component={ NotLoggedIn }/>
     <Route path="signup" component={ Signup }/>
     <Route path="login" component={ Login }/>
