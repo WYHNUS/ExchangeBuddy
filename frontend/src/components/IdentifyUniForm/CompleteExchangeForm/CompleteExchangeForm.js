@@ -80,8 +80,17 @@ class CompleteExchangeForm extends React.Component {
       <form className="select-uni-form" onSubmit={ handleSubmit((values) => {
         this.submitForm(values)
       }) }>
+      {/*anchorOrigin=
+            {{
+              horizontal:"left",vertical:"center"
+            }}
+            targetOrigin=
+            {{
+              horizontal:"left", vertical:"center"
+            }}*/}
 
         <AutoCompleteFormField
+            canAutoPosition={true}
             name="homeUniName"
             floatingLabelText="Current university"
             openOnFocus={true}
@@ -91,6 +100,7 @@ class CompleteExchangeForm extends React.Component {
         />
       
         <AutoCompleteFormField
+          canAutoPosition={true}
           id="exchangeUniName"
           name="exchangeUniName"
           floatingLabelText="Your exchange university"
