@@ -95,12 +95,17 @@
   .signup-button-container {
     width: 100%;
   }
+  .social-before-button{
+    margin-top: 40px;
+  }
   .social-network-wrapper {
     >div { display: inline-block; }
     .facebook-login-button {
-      width: 25px;
+      width:300px;
+      height:30px;
     }
-    .facebook-login-button:hover {
+    .facebook-login-
+    on:hover {
       cursor: pointer; 
     }
   }

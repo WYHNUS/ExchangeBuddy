@@ -12,14 +12,14 @@ class Login extends React.Component {
 		  <div className="page-sign-flow">
 		  	<div className="hide-text"></div>
 		  	<div className="sign-flow-nav-tab">
-		  		<RaisedButton
+	  		<RaisedButton
 	          label="Signup"
 	          onTouchTap={ () => browserHistory.push('/signup')}
-            className="sign-flow-nav-button enabled" />
-		  		<RaisedButton
-            primary={true}
+              className="sign-flow-nav-button enabled" />
+	  		<RaisedButton
+	          primary={true}
 	          label="Login"
-            className="sign-flow-nav-button disabled" />
+              className="sign-flow-nav-button disabled" />
 		  	</div>
 
         <div className="signin-form">

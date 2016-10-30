@@ -49,6 +49,27 @@ class LoginForm extends React.Component {
 
     return (
       <div>
+
+        <div className='social-before-button'>
+          Login with Facebook
+        </div>
+
+        <div className="social-network-wrapper">
+            {/*<div style={{marginRight: 40}}><p>Social Network Login :</p></div>*/}
+            <div><FacebookLogin
+              appId={ "580995375434079" }
+              scope="public_profile"
+              fields="name, email"
+              callback={ responseFacebook(this.props.attemptFacebookLogin) }
+              cssClass="facebook-login-button"
+              textButton= ""
+              icon="fa-facebook" 
+            /></div>
+        </div>
+
+        <div className='social-before-button'>
+          Or Login with email
+        </div>
         <form onSubmit={ handleSubmit((values) => {
           this.submitForm(values)
         }) }>
@@ -65,19 +86,6 @@ class LoginForm extends React.Component {
             </div>
           </div>
         </form>
-
-        <div className="social-network-wrapper">
-          <div style={{marginRight: 40}}><p>Social Network Login :</p></div>
-          <div><FacebookLogin
-            appId={ "580995375434079" }
-            scope="public_profile"
-            fields="name, email"
-            callback={ responseFacebook(this.props.attemptFacebookLogin) }
-            cssClass="facebook-login-button"
-            textButton= ""
-            icon="fa-facebook" 
-          /></div>
-        </div>
 
         { submitting ? <p>Logging in... Please be patient. :)</p> : null }
 
