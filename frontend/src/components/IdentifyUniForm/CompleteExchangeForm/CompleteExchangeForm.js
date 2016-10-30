@@ -50,11 +50,12 @@ const filter = (searchText, key) => {
 
 class CompleteExchangeForm extends React.Component {
   componentDidUpdate() {
-    if (!!this.props.token && !!this.props.user.UniversityId){
+    const { fetchingAuthUpdate, error } = this.props.updateStatus;
+    if (!!this.props.user.UniversityId && !fetchingAuthUpdate && !error) {
       browserHistory.push('/home');
     }
   }
-  
+
   submitForm(val) {
     const { user, universities } = this.props;
     var homeUniId, exchangeUniId;
@@ -72,7 +73,7 @@ class CompleteExchangeForm extends React.Component {
 
   render() {
     const { universities, years, handleSubmit } = this.props;
-    const { submitting, error } = this.props;
+    const { fetchingAuthUpdate, error } = this.props.updateStatus;
     universitiesProps = universities;
 
     return (
@@ -119,11 +120,11 @@ class CompleteExchangeForm extends React.Component {
             type="submit"
             style={{ margin: 6 }}
             label="Submit" 
-            disabled={submitting}
+            disabled={fetchingAuthUpdate}
           />
         </div>
 
-        { submitting ? <p>Logging in... Please be patient. :)</p> : null }
+        { fetchingAuthUpdate ? <p>Updating... Please be patient. :)</p> : null }
 
         { 
           error ? 

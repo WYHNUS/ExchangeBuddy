@@ -35,6 +35,7 @@ exports.getUniversity = function(req, res){
 };
 
 exports.updateUni = function(req, res){
+    console.log(req.body);
     models.sequelize.Promise.all([
         models.User.findOne({
             where: {
@@ -101,12 +102,26 @@ exports.updateUni = function(req, res){
                 groups.map(group => {
                     group[0].addUser(user);
                 })
-            })
-            res.send({
-                status: 'success'
-            })
+            
+                // return user object
+                models.User.findOne({
+                    where: {
+                        id: user.id
+                    },
+                    include: [{
+                        model: models.University
+                    }],
+                    attributes: ['id', 'email', 'name', 'profilePictureUrl', 'fbUserId', 'bio', 'UniversityId']
+                }).then(function(currentUser) {
+                    res.send({
+                        status: 'success',
+                        user: currentUser
+                    });
+                }).catch(function(err) {
+                    resError(res, err);
+                });
+            });
         })
-
     }).catch(function(err){
         resError(res, err);
     })

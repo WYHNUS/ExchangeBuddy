@@ -10,6 +10,10 @@ import {
   CLICKED_SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAIL
 } from '../actions/user';
 
+import {
+  EDIT_UNIVERSITIES, EDIT_UNIVERSITIES_SUCCESS, EDIT_UNIVERSITIES_FAILURE 
+} from '../actions/profile';
+
 const initialState = {
   isAuthenticated: false,
   isEmailSent: false,
@@ -58,32 +62,50 @@ export function user(state = initialState , action) {
         error: action.error
       });
 
+    /*    edit university     */
+    case EDIT_UNIVERSITIES:
+      return Object.assign({}, state, {
+        fetchingAuthUpdate: true,
+        error: null
+      });
+    case EDIT_UNIVERSITIES_SUCCESS:
+      console.log(action.user);
+      return Object.assign({}, state, {
+        fetchingAuthUpdate: false,
+        userObject: action.user,
+        error: null
+      });
+    case EDIT_UNIVERSITIES_FAILURE:
+      console.log(action.error);
+      return Object.assign({}, state, {
+        fetchingAuthUpdate: false,
+        error: action.error
+      });
 
-    /*    signup flow     */
-    case SAVE_SIGNUP_PAGE_ONE_INFO:
-      return Object.assign({}, state, {
-        signupInfo: {
-          fbToken: state.signupInfo.fbToken,
-          displayName: action.field.displayName,
-          gender: action.field.gender,
-          homeUniName: action.field.homeUniName,
-          exchangeUniName: state.signupInfo.exchangeUniName,
-          exchangeUniYear: state.signupInfo.exchangeUniYear,
-          exchangeTerm: state.signupInfo.exchangeTerm
-        }
-      });
-    case SAVE_SIGNUP_PAGE_TWO_INFO:
-      return Object.assign({}, state, {
-        signupInfo: {
-          fbToken: state.signupInfo.fbToken,
-          displayName: state.signupInfo.displayName,
-          gender: state.signupInfo.gender,
-          homeUniName: state.signupInfo.homeUniName,
-          exchangeUniName: action.field.exchangeUniName,
-          exchangeUniYear: action.field.exchangeUniYear,
-          exchangeTerm: action.field.exchangeTerm
-        }
-      });
+    // case SAVE_SIGNUP_PAGE_ONE_INFO:
+    //   return Object.assign({}, state, {
+    //     signupInfo: {
+    //       fbToken: state.signupInfo.fbToken,
+    //       displayName: action.field.displayName,
+    //       gender: action.field.gender,
+    //       homeUniName: action.field.homeUniName,
+    //       exchangeUniName: state.signupInfo.exchangeUniName,
+    //       exchangeUniYear: state.signupInfo.exchangeUniYear,
+    //       exchangeTerm: state.signupInfo.exchangeTerm
+    //     }
+    //   });
+    // case SAVE_SIGNUP_PAGE_TWO_INFO:
+    //   return Object.assign({}, state, {
+    //     signupInfo: {
+    //       fbToken: state.signupInfo.fbToken,
+    //       displayName: state.signupInfo.displayName,
+    //       gender: state.signupInfo.gender,
+    //       homeUniName: state.signupInfo.homeUniName,
+    //       exchangeUniName: action.field.exchangeUniName,
+    //       exchangeUniYear: action.field.exchangeUniYear,
+    //       exchangeTerm: action.field.exchangeTerm
+    //     }
+    //   });
 
     case SAVE_SIGNUP_INFO:
       return Object.assign({}, state, {

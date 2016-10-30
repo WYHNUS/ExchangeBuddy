@@ -63,35 +63,40 @@ export function editProfileSuccess(profile){
 /************************************************************
 UPDATING A UNIVERSITY
 ************************************************************/
+export const EDIT_UNIVERSITIES = 'EDIT_UNIVERSITIES';
 export const EDIT_UNIVERSITIES_SUCCESS = 'EDIT_UNIVERSITIES_SUCCESS';
+export const EDIT_UNIVERSITIES_FAILURE = 'EDIT_UNIVERSITIES_FAILURE';
 
 
-export function editUniversitiesSuccess(profile){
+export function editUniversitiesSuccess(user){
 	return {
 		type: EDIT_UNIVERSITIES_SUCCESS,
-		payload: profile
+		user: user
 	};
 }
 
 export function editUniversitiesFailure(error){
 	return {
 		type: EDIT_UNIVERSITIES_FAILURE,
-		payload: error
+		error: error
 	};
 }
 
-export function editUniversities(userId, homeUniversityId, exchangeUniversityId=null, term=null, year=null) {
+export function editUniversities(userId, homeUniversityId, exchangeUniversityId=null, year=null, term=null) {
 	console.log(userId);
 	console.log(homeUniversityId);
+	console.log(exchangeUniversityId);
+	console.log(term);
+	console.log(year);
 	var profileObj = {
 		userId: userId,
 		homeUniversityId: homeUniversityId,
 		exchangeUniversityId: exchangeUniversityId,
 		term: term,
 		year: year
-	}
+	};
 	const req = request
-		.patch(ROOT_URL + '/updateUni/')
+		.patch(ROOT_URL + '/updateUni')
 		.send(profileObj)
 		.use(bearer);
 
