@@ -12,6 +12,7 @@ import ChildComponent from './CompleteExchangeForm';
 
 const mapStateToProps = (state) => {
   return{
+    token: state.user.token,
   	user: state.user.userObject,
     universities: state.utilityInfo.universitiesList.universities
   };

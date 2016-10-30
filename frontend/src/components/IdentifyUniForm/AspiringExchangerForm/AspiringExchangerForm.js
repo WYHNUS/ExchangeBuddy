@@ -35,6 +35,12 @@ const filter = (searchText, key) => {
 };
 
 class AspiringExchangerForm extends React.Component {
+  componentDidUpdate() {
+    if (!!this.props.token && !!this.props.user.UniversityId){
+      browserHistory.push('/home');
+    }
+  }
+
   submitForm(val) {
     const { user, universities } = this.props;
     for (var i=0; i<universities.length; i++) {

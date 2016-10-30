@@ -49,6 +49,12 @@ const filter = (searchText, key) => {
 };
 
 class CompleteExchangeForm extends React.Component {
+  componentDidUpdate() {
+    if (!!this.props.token && !!this.props.user.UniversityId){
+      browserHistory.push('/home');
+    }
+  }
+  
   submitForm(val) {
     const { user, universities } = this.props;
     var homeUniId, exchangeUniId;
