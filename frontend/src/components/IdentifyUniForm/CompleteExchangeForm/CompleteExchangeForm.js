@@ -50,11 +50,23 @@ const filter = (searchText, key) => {
 
 class CompleteExchangeForm extends React.Component {
   submitForm(val) {
-    this.props.attemptLogin(val);
+    const { user, universities } = this.props;
+    var homeUniId, exchangeUniId;
+    for (var i=0; i<universities.length; i++) {
+      if (universities[i].name === val.homeUniName) {
+        homeUniId = universities[i].id;
+      }
+      if (universities[i].name === val.exchangeUniName) {
+        exchangeUniId = universities[i].id;
+      }
+    }
+
+    this.props.updateUniInfo(user.id, homeUniId, exchangeUniId, val.exchangeUniYear, val.exchangeTerm);
   }
 
   render() {
-    const { universities, years, handleSubmit, submitting, error } = this.props;
+    const { universities, years, handleSubmit } = this.props;
+    const { submitting, error } = this.props;
     universitiesProps = universities;
 
     return (
@@ -92,6 +104,18 @@ class CompleteExchangeForm extends React.Component {
           floatingLabelText="Start month of exchange">
           { monthNames.map(month => <MenuItem key={month} value={month} primaryText={month} />) }
         </SelectFormField>
+
+        <div style={{ marginTop: 12 }}>
+          <RaisedButton
+            disableTouchRipple={true}
+            disableFocusRipple={true}
+            primary={true}
+            type="submit"
+            style={{ margin: 6 }}
+            label="Submit" 
+            disabled={submitting}
+          />
+        </div>
 
         { submitting ? <p>Logging in... Please be patient. :)</p> : null }
 

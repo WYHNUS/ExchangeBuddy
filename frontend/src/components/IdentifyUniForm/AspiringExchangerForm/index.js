@@ -4,11 +4,16 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import {
+	editUniversities, editUniversitiesSuccess, editUniversitiesFailure
+} from '../../../actions/profile';
+
 // Component
 import ChildComponent from './AspiringExchangerForm';
 
 const mapStateToProps = (state) => {
   return{
+  	user: state.user.userObject,
     universities: state.utilityInfo.universitiesList.universities
   };
 };
@@ -17,6 +22,25 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
+    updateUniInfo: (userId, homeUniId) => {
+      dispatch(editUniversities(userId, homeUniId)).payload.then((response) => {
+        console.log(response);
+        if (!response.error) {
+          dispatch(editUniversitiesSuccess(response.body));
+        } else {
+          dispatch(editUniversitiesFailure(response.error));
+        }
+      }, (err) => {
+        if (err.status === 401) {
+          cookie.remove('authToken');
+          dispatch(clearUser());
+          // need to redirect to a new version of login page
+          browserHistory.push('/');
+        } else {
+          dispatch(editUniversitiesFailure(err.response.error.message));
+        }
+      });
+    }
   };
 };
 

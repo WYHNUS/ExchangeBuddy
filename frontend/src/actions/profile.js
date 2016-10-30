@@ -111,13 +111,15 @@ export function editUniversitiesFailure(error){
 	};
 }
 
-export function editUniversities(userId, exchangeUniversityId, homeUniversityId, term, year){
+export function editUniversities(userId, homeUniversityId, exchangeUniversityId=null, term=null, year=null) {
+	console.log(userId);
+	console.log(homeUniversityId);
 	var profileObj = {
-		userId:userId,
-		exchangeUniversityId:exchangeUniversityId,
-		homeUniversityId:homeUniversityId,
-		term:term,
-		year:year
+		userId: userId,
+		homeUniversityId: homeUniversityId,
+		exchangeUniversityId: exchangeUniversityId,
+		term: term,
+		year: year
 	}
 	const req = request
 		.patch(ROOT_URL + '/updateUni/')

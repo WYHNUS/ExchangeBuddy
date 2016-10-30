@@ -36,11 +36,17 @@ const filter = (searchText, key) => {
 
 class AspiringExchangerForm extends React.Component {
   submitForm(val) {
-    this.props.attemptLogin(val);
+    const { user, universities } = this.props;
+    for (var i=0; i<universities.length; i++) {
+      if (universities[i].name === val.homeUniName) {
+        this.props.updateUniInfo(user.id, universities[i].id);
+      }
+    }
   }
 
   render() {
     const { universities, handleSubmit } = this.props;
+    const { submitting, error } = this.props;
     universitiesProps = universities;
 
     return (
@@ -56,6 +62,17 @@ class AspiringExchangerForm extends React.Component {
               maxSearchResults={10}
               dataSource={ universities.map((uni) => uni.name) } 
           />
+          <div style={{ marginTop: 12 }}>
+            <RaisedButton
+              disableTouchRipple={true}
+              disableFocusRipple={true}
+              primary={true}
+              type="submit"
+              style={{ margin: 6 }}
+              label="Submit" 
+              disabled={submitting}
+            />
+          </div>
         </form>
       </div>
     );

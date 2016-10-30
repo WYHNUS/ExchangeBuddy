@@ -1,10 +1,9 @@
 .exchange-uni-selection-wrapper {
-	>div { display: inline-block; }
-
 	.exchange-uni-selection {
-		width: 300px;
+		min-width: 300px;
+		max-width: 650px;
 	    vertical-align: top;
-	    margin: 30px;
+	    margin: 30px auto;
 	}
 
 	.select-uni-form {
