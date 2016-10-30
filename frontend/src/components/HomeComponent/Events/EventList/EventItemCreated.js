@@ -24,6 +24,7 @@ import Menu from 'material-ui/Menu';
 import Popover from 'material-ui/Popover';
 import Checkbox from 'material-ui/Checkbox';
 import Paper from 'material-ui/Paper';
+import IconButton from 'material-ui/IconButton';
 
 /*const postToChat = (groupEvent, groupId, cardText) => {
 	const {name, coverPicture, startTime, id } = groupEvent;
@@ -55,7 +56,8 @@ class EventItemCreated extends React.Component{
 		value:1,
 		peopleList:[],
 		peopleListLoaded:false,
-		userIsGoing:false
+		userIsGoing:false,
+		isDialogOpen:false
 	};
 
 	handleOpen = () => {
@@ -64,6 +66,14 @@ class EventItemCreated extends React.Component{
 
 	handleClose = () => {
 		this.setState({open: false});
+	};
+
+	closeDeleteDialog = () =>{
+		this.setState({isDialogOpen:false});
+	};
+
+	openDeleteDialog = () =>{
+		this.setState({isDialogOpen:true});
 	};
 
 	//fetch and render list of people to display here
@@ -188,12 +198,21 @@ class EventItemCreated extends React.Component{
 		/>
 		];
 
+		const deleteActions = [
+	      <FlatButton label="Cancel" primary={true} onTouchTap={this.closeDeleteDialog} />,
+	      <FlatButton label="Delete" primary={true} onTouchTap={console.log('delete')} />,
+	    ];
+
 		const {groupEvent,homeGroupDetails, showSnackbar, user, 
 			goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate,
 			fetchEvents, universities} = this.props;
 			const cardText = truncate(groupEvent.detail, 300);
 			return (
 				<div className='row center-xs'>
+
+				<Dialog actions={deleteActions} modal={false} open={this.state.isDialogOpen} onRequestClose={this.closeDeleteDialog}>
+		          Delete the event forever?
+		        </Dialog>
 
 				<Dialog
 				title={`${groupEvent.going.length} going for ${groupEvent.title}`}
@@ -214,6 +233,8 @@ class EventItemCreated extends React.Component{
 					<CardTitle
 					className="event-item-card-title" 
 					title={ groupEvent.title }
+					showExpandableButton={true}
+					actAsExpander={true}
 					subtitle={  <Link id='link-title' to={`/profile/${groupEvent.User.id}`}>{`by ${groupEvent.User.name}`}</Link>} />
 					<CardText>
 						<div className="col-xs-12 event-item-info">
@@ -248,7 +269,18 @@ class EventItemCreated extends React.Component{
 										</Paper>
 									</div>
 								</div>
-							: null }
+							: null 
+						}
+						{
+							<div className="edit-delete-btn">
+						      <IconButton tooltipPosition="bottom-center" tooltip="Edit" onTouchTap={console.log('edit')/*()=>goToEdit(props)*/}>
+						        {Icons.icon('mode_edit')}
+						      </IconButton>
+						      <IconButton tooltipPosition="bottom-center" tooltip="Delete" onTouchTap={console.log('delete')/*()=>props.openDialog(1)*/} >
+						        {Icons.icon('delete')}
+						      </IconButton>
+					        </div>
+						}
 					</CardActions>
 				</Card>
 
@@ -256,6 +288,11 @@ class EventItemCreated extends React.Component{
 			);
 		}
 	}
+	const goToEdit = props => {
+	  browserHistory.push('/edit/'+props.dropId);
+	  props.selectedDropSrc('profile');
+	  props.selectedDropIdx(props.idx);
+	};
 
 
 	EventItemCreated.propTypes = {

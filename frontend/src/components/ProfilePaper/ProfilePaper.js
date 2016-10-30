@@ -127,10 +127,18 @@ export default class ProfilePaper extends React.Component {
               </div>
 
               <div className='row'>
-                <div className='col-xs-12 col-md-4 table-header'>Facebook</div>
-                <div className='col-xs-12 col-md-8 table-cell'>
-                  <Link to={ `https://facebook.com/${profile.fbUserId}` }>Facebook profile</Link>
-                </div>
+                {profile.fbUserId?
+                  (
+                    <div>
+                    <div className='col-xs-12 col-md-4 table-header'>Facebook</div>
+                    <div className='col-xs-12 col-md-8 table-cell'>
+                      <Link to={ `https://facebook.com/${profile.fbUserId}` }>Facebook profile</Link>
+                    </div>
+                    </div>
+                    )
+                  :null
+                }
+                
               </div>
               
             </div>

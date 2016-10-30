@@ -56,10 +56,10 @@ export const getRoutes = (store) =>{
       replace({ 
         pathname: '/notloggedin'
       });
-    } else if (!state.user.userObject.UniversityId) {
-      replace({ 
-        pathname: '/identifyUniversity'
-      });
+    // } else if (!state.user.userObject.UniversityId) {
+    //   replace({ 
+    //     pathname: '/identifyUniversity'
+    //   });
     }
   };
 
