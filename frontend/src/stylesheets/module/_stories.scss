@@ -6,9 +6,11 @@
 }
 
 .text-content-wrapper {
-	margin: 20px 20px 18% 18%;
+	/*margin: 20px 20px 18% 18%;*/
+	text-align: left;
 
 	.user-profile-container {
+		width:100%;
 		display: flex!important;
 		div { margin: 10px; }
 		.story-avatar {
@@ -23,8 +25,12 @@
 
 	.story-container {
 		display: inline-block;
-		margin-bottom: 40px;
-		margin-top: 5px;
+		margin-bottom: 30px;
+		margin: 5px;
+
+		.img{
+			width: 100%;
+		}
 
 		.title {
 			font-weight: 700;

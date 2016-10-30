@@ -20,12 +20,12 @@ const stories = [
 	documents I had to prepare as a NUS CHBE student, which I feel should be similar for other \
 	courses. If you are from a different faculty, you may want to check with your seniors or \
 	course&#8217;s international coordinator!</p>\
-	<h4 style=\"text-align: justify;\">Step 0:       Check the application period</h4>\
+	<h2 style=\"text-align: justify;\">Step 0:       Check the application period</h2>\
 	<p style=\"text-align: justify;\">Before you begin, you need to know when your SEP application \
 	period is. You can easily check this up online or you will receive news from your school&#8217;s \
 	email. So <span style=\"text-decoration: underline;\"><strong>CHECK YOUR NUS EMAIL!</strong>\
 	</span></p>\
-	<h4 style=\"text-align: justify;\">Step 1:        Access the SEP Application Portal</h4>\
+	<h2 style=\"text-align: justify;\">Step 1:        Access the SEP Application Portal</h2>\
 	<p id=\"yui_3_16_0_ym19_1_1476337420900_25936\" class=\"yiv9590841408MsoNormal\" align=\"center\">\
 	During the application period, log in to the portal and submit your application. Remember to do so \
 	before the DEADLINE!</p>\
@@ -47,13 +47,13 @@ const stories = [
 	left;\" align=\"center\"><b><span lang=\"EN-US\">  </span></b><span id=\"yui_3_16_0_ym19_1_1476337420900_25888\"\
 	lang=\"EN-GB\">For instructions, please visit: <a href=\"https://share.nus.edu.sg/goabroad/ge/\" onclick=\"__gaTracker('send', 'event', 'outbound-article', 'https://share.nus.edu.sg/goabroad/ge/', 'https://share.nus.edu.sg/goabroad/ge/');\"\
 	>https://share.nus.edu.sg/goabroad/ge/</a></span></p>\
-	<h4 style=\"text-align: justify;\">Step 2:       Write up about yourself</h4>\
+	<h2 style=\"text-align: justify;\">Step 2:       Write up about yourself</h2>\
 	<p style=\"text-align: justify;\">This is the easy part. Fill in all your personal information\
 	: CCAs, awards, academic history and others. You will also need to write a Statement of Purpose\
 	(up to 1000 words I believe), including why you feel that you should be allowed to be an ambassador\
 	of NUS for SEP or other information which you feel are relevant.</p>\
 	<p style=\"text-align: justify;\">On this same page, you can start with step 3 as well.</p>\
-	<h4 style=\"text-align: justify;\">Step 3:       Fill in your top 5 choices</h4>\
+	<h2 style=\"text-align: justify;\">Step 3:       Fill in your top 5 choices</h2>\
 	<p style=\"text-align: justify;\">During this application period, you should receive\
 	a list stating the number of vacancies at the different possible partner school choices from NUS\
 	International Relations Office (IRO). You are required to fill up your top 5 school choices from\
@@ -80,7 +80,7 @@ const stories = [
 	<p style=\"text-align: justify;\">Though every choice is important, try to spend more time contemplating and\
 	planning for your first and second choices. These are the ones that you must be most well-versed in to talk\
 	about when you head for your SEP interview (if any).</p>\
-	<h4 style=\"text-align: justify;\">Step 4:       Prepare your documents</h4>\
+	<h2 style=\"text-align: justify;\">Step 4:       Prepare your documents</h2>\
 	<p>There are 3 documents that NUS CHBE students are required to submit before heading for SEP. These are our study plan,\
 	mappable module description list and module road map. If you have the time, try to prepare them all during\
 	the planning stages as it will help you in deciding your school choice.</p>\
@@ -114,12 +114,12 @@ const stories = [
 	</ul>\
 	</li>\
 	</ol>\
-	<h4 style=\"text-align: justify;\">Step 5:       Head for your SEP interview (if any)</h4>\
+	<h2 style=\"text-align: justify;\">Step 5:       Head for your SEP interview (if any)</h2>\
 	<p style=\"text-align: justify;\">Some faculties like NUS School of business do not have this segment. However NUS CHBE does!</p>\
 	<p style=\"text-align: justify;\">It is a small group interview of up to 3 interviewees and 3 interviewers, and lasts for 10-15 minutes. Within this interview, they will ask 3-5 questions for the group to answer. These questions have a wide range of topics, such as describing about yourself and past experiences, about your educational curriculum or about your SEP choices. You can find a list of sample SEP interview questions <a href=\"https://whyamiinchemeng.wordpress.com/2016/07/18/sep-interview/\" onclick=\"__gaTracker('send', 'event', 'outbound-article', 'https://whyamiinchemeng.wordpress.com/2016/07/18/sep-interview/', 'here');\">here</a>.</p>\
-	<h4 style=\"text-align: justify;\">Step 6:       Pray</h4>\
+	<h2 style=\"text-align: justify;\">Step 6:       Pray</h2>\
 	<p style=\"text-align: justify;\">And you&#8217;re done! That is all there is to it and hopefully you will get your top choice! (:. If you don&#8217;t, fret not. There is always round 2 (and maybe round 3), but only with the remaining vacancies that have yet to be taken.</p>\
-	<p style=\"text-align: justify;\">SEP really is a wonderful experience, so I hope that this simple guide has been helpful to whoever needs it (:.</p>\"",
+	<p style=\"text-align: justify;\">SEP really is a wonderful experience, so I hope that this simple guide has been helpful to whoever needs it (:.</p>",
 
 	"storyImgUrl": storyImg0,
 	"isPublic": true,
@@ -197,7 +197,7 @@ const stories = [
 	<p>Applying in the <strong>second semester</strong> may or may not eat into your internship dates (depending on the country and its exam dates so do find out if you are attempting to go during the second semester AND plan on going on internship), but the weather does get warmer (later in your travel) and you have the entire summer to travel, if you don’t have plans to intern.</p>\
 	<p>Also, decide when in your 4 years/3.5 years you want to embark on exchange. As part of SMU requirements, you can&#8217;t go for exchange on your last semester (boohoo to living a high life right till graduation).  Furthermore, you don’t want to go on exchange too early and come back and have 2 more long years of school left right? Varying opinions on this but let’s get started.</p>\
 	<ol start=\"2\">\
-	<li><strong> Choose <u>who</u>you want to travel with </strong></li>\
+	<li><strong> Choose <u>who</u> you want to travel with </strong></li>\
 	</ol>\
 	<p>This is a very important step so choose wisely. Personally, the three of us have travelled together before, on more than a few occasions. We liked it. And it worked for us (for now at least).</p>\
 	<p>You have to understand that embarking on a 6 month long exchange will mean you guys will literally be living together all the time (of course depending on how much time you guys spend apart meeting other people from other countries), but this is your <em>family</em> for the duration of your exchange. It is very important to align your priorities and if not, learn to compromise. Learn and know about each other’s travelling style, and think hard if it suits you.</p>\

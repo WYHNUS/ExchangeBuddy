@@ -32,6 +32,8 @@ export default class StoryDetails extends React.Component {
 
 		return (
 			<div className="text-content-wrapper">
+				<div className='row center-xs'>
+				<div className='col-xs-12 col-md-6 col-lg-4'>
 				<div className="user-profile-container">
 					<div className="story-avatar">{ UserHelper.getAvatar(User, 60) }</div>
 					<div className="author-details">
@@ -39,9 +41,12 @@ export default class StoryDetails extends React.Component {
 						<div><span>{moment(createdAt).fromNow()}</span></div>
 					</div>
 				</div>
+				</div>
+				</div>
+				
 				<div className="story-container">
 					<div className="story-row">
-						<img src={storyImgUrl}/>
+						<img className='img' src={storyImgUrl}/>
 						<h1 className="title">{ title }</h1>
 						<div id="content"></div>
 					</div>
