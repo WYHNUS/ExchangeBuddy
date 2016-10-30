@@ -13,7 +13,7 @@ import ChildComponent from './AspiringExchangerForm';
 
 const mapStateToProps = (state) => {
   return{
-    token: state.user.token,
+    updateStatus: state.user,
   	user: state.user.userObject,
     universities: state.utilityInfo.universitiesList.universities
   };
@@ -26,8 +26,8 @@ const mapDispatchToProps = (dispatch) => {
     updateUniInfo: (userId, homeUniId) => {
       dispatch(editUniversities(userId, homeUniId)).payload.then((response) => {
         console.log(response);
-        if (!response.error) {
-          dispatch(editUniversitiesSuccess(response.body));
+        if (response.status === 200) {
+          dispatch(editUniversitiesSuccess(response.body.user));
         } else {
           dispatch(editUniversitiesFailure(response.error));
         }

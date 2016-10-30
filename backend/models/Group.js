@@ -20,9 +20,9 @@ module.exports = function(sequelize, DataType) {
     2: default group of same home university, same exchange university
     */
     groupType: {
-      type: DataType.INTEGER(1),
+      type: DataType.INTEGER(2),
       min: 0,
-      max: 2,
+      max: 10,
       allowNull: false
     }
   }, {

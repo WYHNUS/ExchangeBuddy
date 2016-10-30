@@ -35,96 +35,170 @@ exports.getUniversity = function(req, res){
 };
 
 exports.updateUni = function(req, res){
-    console.log(req.body);
-    models.sequelize.Promise.all([
-        models.User.findOne({
-            where: {
-                id: req.body.userId
-            }
-        }),
-
-        models.University.findOne({
-            where: {
-                id: req.body.exchangeUniversityId
-            }
-        }),
-
-        models.Exchange.findOrCreate({
-            where: {
-                year: req.body.year,
-                term: req.body.term,
-                UniversityId: req.body.exchangeUniversityId
-            }
-        }),
-
-        models.University.findOne({
-            where: {
-                id: req.body.homeUniversityId
-            }
-        })
-    ]).spread(function(user, exchangeUniversity, exchange, university){
-        models.sequelize.Promise.all([
-            user.getGroup(),
-            user.getUniversity(),
-            user.getExchangeEvent(),
-            user.setUniversity(university)
-        ]).spread(function(groups, homeUniversity, exchangeEvent, homeUniversity){
-            user.removeGroup(groups);
-            user.removeExchangeEvent(exchangeEvent);
-
-            exchange = exchange[0];
-            user.addExchangeEvent(exchange);
-            var defaultGroups = [
-                {
-                    id: 0,
-                    name: exchangeUniversity.name + " exchange students -- Year " + exchange.year + " " + exchange.term
-                },
-                {
-                    id: 1,
-                    name: homeUniversity.name + " going abroad -- Year " + exchange.year + " " + exchange.term
-                },
-                {
-                    id: 2,
-                    name: homeUniversity.name + " students in " + exchangeUniversity.name
-                }
-            ];
-
-            var defaultGroupArray = defaultGroups.map(group => {
-                return models.Group.findOrCreate({
-                    where: {
-                        name: group.name,
-                        groupType: group.id,
-                    }
-                });
+    // hack here -- need to improve: only two possibilities
+    var data = req.body;
+    if (!data.userId) {
+        return res.status(400).json({
+                status: 'fail',
+                message: 'Invalid authenticate data.'
             });
+    } else if (data.homeUniversityId && !data.exchangeUniversityId) {
+        // assume this is first time login for now... -> quick hack
+        models.sequelize.Promise.all([
+            models.User.findOne({
+                where: {
+                    id: data.userId
+                }
+            }),
+            models.University.findOne({
+                where: {
+                    id: data.homeUniversityId
+                }
+            })
+        ]).spread(function(user, uni){
+            models.sequelize.Promise.all([
+                user.setUniversity(uni)
+            ]).spread(function(homeUniversity){
 
-            models.sequelize.Promise.all(defaultGroupArray).then(groups => {
-                groups.map(group => {
-                    group[0].addUser(user);
-                })
-            
-                // return user object
-                models.User.findOne({
+                var defaultGroup = {
+                    id: 4,
+                    name: homeUniversity.name + " interested in exchange"
+                }
+
+                models.Group.findOrCreate({
                     where: {
-                        id: user.id
-                    },
-                    include: [{
-                        model: models.University
-                    }],
-                    attributes: ['id', 'email', 'name', 'profilePictureUrl', 'fbUserId', 'bio', 'UniversityId']
-                }).then(function(currentUser) {
-                    res.send({
-                        status: 'success',
-                        user: currentUser
+                        name: defaultGroup.name,
+                        groupType: defaultGroup.id,
+                    }
+                }).then(function(group) {
+                    group.addUser(user);
+
+                    // return user object
+                    models.User.findOne({
+                        where: {
+                            id: user.id
+                        },
+                        include: [{
+                            model: models.University
+                        }],
+                        attributes: ['id', 'email', 'name', 'profilePictureUrl', 'fbUserId', 'bio', 'UniversityId']
+                    }).then(function(currentUser) {
+                        console.log(currentUser);
+                        return res.status(200).json({
+                            status: 'success',
+                            user: currentUser
+                        });
+                    }).catch(function(err) {
+                        resError(res, err);
                     });
                 }).catch(function(err) {
                     resError(res, err);
                 });
             });
+
+        }).catch(function(err){
+            resError(res, err);
+        });
+    } else if (!data.homeUniversityId || !data.exchangeUniversityId || !data.year || !data.term) {
+        // check if all fields are present -> quick hack
+        return res.status(400).json({
+                status: 'fail',
+                message: 'Invalid authenticate data.'
+            });
+    } else {
+        models.sequelize.Promise.all([
+            models.User.findOne({
+                where: {
+                    id: req.body.userId
+                }
+            }),
+
+            models.University.findOne({
+                where: {
+                    id: req.body.exchangeUniversityId
+                }
+            }),
+
+            models.Exchange.findOrCreate({
+                where: {
+                    year: req.body.year,
+                    term: req.body.term,
+                    UniversityId: req.body.exchangeUniversityId
+                }
+            }),
+
+            models.University.findOne({
+                where: {
+                    id: req.body.homeUniversityId
+                }
+            })
+        ]).spread(function(user, exchangeUniversity, exchange, university){
+            models.sequelize.Promise.all([
+                user.getGroup(),
+                user.getUniversity(),
+                user.getExchangeEvent(),
+                user.setUniversity(university)
+            ]).spread(function(groups, homeUniversity, exchangeEvent, homeUniversity){
+                user.removeGroup(groups);
+                user.removeExchangeEvent(exchangeEvent);
+
+                exchange = exchange[0];
+                user.addExchangeEvent(exchange);
+
+                // sort out term group : Jan - Jun and Junly - Dec
+
+                var defaultGroups = [
+                    {
+                        id: 0,
+                        name: exchangeUniversity.name + " exchange students -- Year " + exchange.year + " " + exchange.term
+                    },
+                    {
+                        id: 1,
+                        name: homeUniversity.name + " going abroad -- Year " + exchange.year + " " + exchange.term
+                    },
+                    {
+                        id: 2,
+                        name: homeUniversity.name + " students in " + exchangeUniversity.name
+                    }
+                ];
+
+                var defaultGroupArray = defaultGroups.map(group => {
+                    return models.Group.findOrCreate({
+                        where: {
+                            name: group.name,
+                            groupType: group.id,
+                        }
+                    });
+                });
+
+                models.sequelize.Promise.all(defaultGroupArray).then(groups => {
+                    groups.map(group => {
+                        group[0].addUser(user);
+                    })
+                
+                    // return user object
+                    models.User.findOne({
+                        where: {
+                            id: user.id
+                        },
+                        include: [{
+                            model: models.University
+                        }],
+                        attributes: ['id', 'email', 'name', 'profilePictureUrl', 'fbUserId', 'bio', 'UniversityId']
+                    }).then(function(currentUser) {
+                        res.send({
+                            status: 'success',
+                            user: currentUser
+                        });
+                    }).catch(function(err) {
+                        resError(res, err);
+                    });
+                });
+            })
+        }).catch(function(err){
+            resError(res, err);
         })
-    }).catch(function(err){
-        resError(res, err);
-    })
+    }
 }
 
 function resError(res, err) {

@@ -36,7 +36,8 @@ const filter = (searchText, key) => {
 
 class AspiringExchangerForm extends React.Component {
   componentDidUpdate() {
-    if (!!this.props.token && !!this.props.user.UniversityId){
+    const { fetchingAuthUpdate, error } = this.props.updateStatus;
+    if (!!this.props.user.UniversityId && !fetchingAuthUpdate && !error) {
       browserHistory.push('/home');
     }
   }
@@ -52,7 +53,7 @@ class AspiringExchangerForm extends React.Component {
 
   render() {
     const { universities, handleSubmit } = this.props;
-    const { submitting, error } = this.props;
+    const { fetchingAuthUpdate, error } = this.props.updateStatus;
     universitiesProps = universities;
 
     return (
@@ -76,9 +77,19 @@ class AspiringExchangerForm extends React.Component {
               type="submit"
               style={{ margin: 6 }}
               label="Submit" 
-              disabled={submitting}
+              disabled={fetchingAuthUpdate}
             />
           </div>
+
+          { fetchingAuthUpdate ? <p>Updating... Please be patient. :)</p> : null }
+
+          { 
+            error ? 
+              error.error ?
+                <p>{ error.error }</p> 
+              : <p>{ error }</p> 
+            : null
+          }
         </form>
       </div>
     );
