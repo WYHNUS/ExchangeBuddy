@@ -28,8 +28,8 @@
 
   .message-avatar { margin-right: 10px; }
 
-  h5.message-username { margin: 0; font-weight: 500; color: #444; font-size: 15px; }
-  p.message-content { color: #666; font-size: 13px; word-break: break-all; }
+  h5.message-username { text-align:left; margin: 0; font-weight: 500; color: #444; font-size: 15px; }
+  p.message-content { text-align: left; color: #666; font-size: 13px; word-break: break-all; }
   span.message-timestamp { font-size: 12px; color: #999; font-weight: 400; }
 }
 
@@ -43,6 +43,7 @@
   }
 
   .message-send-field { margin-right: 10px;
+    text-align: left;
     >label{
       z-index: 0!important;
     }
