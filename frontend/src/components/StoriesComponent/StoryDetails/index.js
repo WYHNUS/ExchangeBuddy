@@ -8,10 +8,12 @@ import { fetchOneStory, fetchStorySuccess, fetchStoryFail } from '../../../actio
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import stories from '../../../util/storyData';
 
 const mapStateToProps = (state) => {
 	return {
-		storyDetails: state.stories.storyDetails,
+		//storyDetails: state.stories.storyDetails,
+		storyDetails: stories[parseInt(state.routing.locationBeforeTransitions.pathname.split("/")[2])],
 		fetching_result: state.stories.fetching_result,
 		user: state.user.userObject,
 		id: parseInt(state.routing.locationBeforeTransitions.pathname.split("/")[2])

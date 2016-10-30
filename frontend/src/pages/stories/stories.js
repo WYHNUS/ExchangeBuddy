@@ -20,11 +20,14 @@ class Stories extends React.Component{
 
 	render() {
 		return (
-			<div style={{'margin':'50px', 'marginTop':'100px', 'textAlign':'center'}}>
-				<p>Click here to view current stories from our website!</p>
-				<a href="http://www.exchangebuddy.com/experiences/" target="_blank">
-					Stories
-				</a>
+			// <div style={{'margin':'50px', 'marginTop':'100px', 'textAlign':'center'}}>
+			// 	<p>Click here to view current stories from our website!</p>
+			// 	<a href="http://www.exchangebuddy.com/experiences/" target="_blank">
+			// 		Stories
+			// 	</a>
+			// </div>
+			<div>
+			<StoryList/>
 			</div>
 		);
 	}

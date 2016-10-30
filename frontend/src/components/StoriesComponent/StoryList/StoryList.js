@@ -28,7 +28,7 @@ const styles={
 }
 
 // dummy one image ...
-let storyImgUrl = "http://i.imgur.com/RRUe0Mo.png";
+//let storyImgUrl = "http://i.imgur.com/RRUe0Mo.png";
 
 class Story extends React.Component{
 	componentDidMount(){
@@ -39,7 +39,7 @@ class Story extends React.Component{
 	}
 
 	render(){
-		const { id, title, /*tags, favorites, status, storyImgUrl,*/ User, createdAt } = this.props.story;
+		const { id, title, /* favorites, status, ,*/tags, storyImgUrl,User, createdAt } = this.props.story;
 		return (
 			<GridTile
 				key={id}
@@ -68,7 +68,8 @@ export default class StoryList extends React.Component {
 	}
 
 	componentDidMount() {
-		this.props.fetchAllStories();
+		//TODO: Uncomment this
+		//this.props.fetchAllStories();
 	}
 
 	render() {
