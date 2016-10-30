@@ -97,8 +97,11 @@ class SignupForm extends React.Component {
 
         { 
           isEmailSent ? 
-          <div> 
-            <p>Verification email sent! Check your mail to start connecting with people!</p> 
+          <div className="verification-msg-wrapper"> 
+            <p>Verification email sent!</p> 
+            <p>Check your mail to start connecting with people!</p>
+            <p>If you did not receive the mail, kindly check your <b>JUNK</b> mail.</p>
+            <p>We're still in the process of recycling. :)</p>
           </div> 
           : null 
         }
