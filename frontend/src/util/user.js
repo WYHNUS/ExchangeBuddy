@@ -4,6 +4,7 @@ import Avatar from 'material-ui/Avatar';
 
 import * as Colors from 'material-ui/styles/colors';
 import * as IconsHelper from './icons';
+import userImg from '../res/user.png'
 
 export const resolveGender = (gender) => {
   gender = gender.toLowerCase();
@@ -42,5 +43,6 @@ export const getAvatar = (user, size=64, style) => {
   if (avatarUrl)
     return <Avatar src={ avatarUrl } size={size} style={style} />;
   else
-    return <Avatar backgroundColor={ Colors.grey700 } icon={ IconsHelper.materialIcon("person") } />;
+    //return <Avatar backgroundColor={ Colors.grey700 } icon={ IconsHelper.materialIcon("person") } />;
+    return <Avatar src={ userImg } size={size} style={style} />;
 };
