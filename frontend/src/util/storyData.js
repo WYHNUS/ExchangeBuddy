@@ -132,10 +132,10 @@ const stories = [
 		"profilePictureUrl": minhan,
 		"fbUserId": null
 	},
-	"tags":["application","Chem Eng","NUS","SEP","Student Experience", "General Tips", "Pre-departure"]
+	"tags":["application","Chem Eng","NUS","SEP","Student Experience", "General Tips"]//, "Pre-departure"
 },
 {
-	"id": 0,
+	"id": 1,
 	"title": "How to Apply for NUS Student Exchange Program in 6 Easy Steps",
 	"content":"<p>Singapore’s a hot (literally), destination for students to go on exchange. There’s absolutely no need to worry about communication, food, transportation, entertainment and more.</p>\
 	<h3><strong>#1 Take The Public Transport ALL THE TIME </strong></h3>\
@@ -184,7 +184,7 @@ const stories = [
 
 
 {
-	"id": 1,
+	"id": 2,
 	"title": "10 essential steps to a successful exchange application",
 	"content": "<p>In less than a month, the 3 of us leave for Warsaw, Poland. Trust me, this whole upcoming exchange still feels really surreal to us and it&#8217;s not just because we are heading to Poland but also that&#8230;.  the three of us are all heading <strong>together to the same city in the same country</strong>.</p>\
 	<p>We hope this (condensed) post is able to help those attempting to go together as well! Since we really did go through quite a bit in our case of application and think it was appropriate to begin our new blog with <em>how it all started. </em></p>\

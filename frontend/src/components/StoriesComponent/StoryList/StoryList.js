@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactHtmlParser from 'react-html-parser';
-import truncate from 'truncate';
+import Truncate from 'react-truncate';
 import {Link, browserHistory} from 'react-router';
 
 import { formatTime } from '../../../util/helper';
@@ -10,7 +10,7 @@ import * as IconsHelper from '../../../util/icons';
 
 import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+//import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 import $ from 'jquery';
 var moment = require('moment');
@@ -38,23 +38,46 @@ class Story extends React.Component{
 		browserHistory.push('/stories/' + this.props.story.id);
 	}
 
+	/*actionIcon={ 
+					<IconButton><StarBorder color="white" /></IconButton> 
+				}*/
+
 	render(){
 		const { id, title, /* favorites, status, ,*/tags, storyImgUrl,User, createdAt } = this.props.story;
 		return (
 			<GridTile
 				key={id}
 				title={title}
-				actionIcon={ 
-					<IconButton><StarBorder color="white" /></IconButton> 
-				}
 				onClick={this.clickHandler.bind(this)}
 				subtitle={
-					<span>
+					<div>
+					<div className="col-xs-12 story-item-info">
+						{IconsHelper.icon('person')}<span>&nbsp;
+						{id===1?
+						(<a href={"https://www.youtube.com/watch?v=eVhtup5r55I"}>
+							<span style={{marginLeft:'3px',fontWeight:'bold',color:'white',textDecoration:'underline'}}>{`by ${User.name}`}</span>
+						</a>
+						):
+						(`by ${User.name}`)
+						} 
+						</span>
+					</div>
+					<div className="col-xs-12 story-item-info">
+						{IconsHelper.icon('watch_later')}<span>&nbsp; {moment(createdAt).fromNow()}</span>
+					</div>
+					<div className="col-xs-12 story-item-info">
+						{IconsHelper.icon('local_offer')}<span>&nbsp; 
+						<Truncate ellipsis={<span>...</span>}>{tags.map(function(tag){return(<span>{tag+" "}</span>)})}</Truncate></span>
+					</div>
+					</div>
+
+
+					/*<span>
 					<div><span>{IconsHelper.smallWhiteMaterialIcon("perm_identity")} by <b>{User.name}</b></span></div>
 					<div><span>{moment(createdAt).fromNow()}</span></div>
-					</span>
+					</span>*/
 				}
-				titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
+				titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.6) 70%,rgba(0,0,0,0.4) 100%)">
 				<img src={storyImgUrl} />
 			</GridTile>
 		)

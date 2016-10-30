@@ -31,3 +31,15 @@
 		}
 	}
 }
+
+.story-item-info{
+	text-align: left;
+	color:white;
+	>span{
+		font-size: 14px!important;
+		color: white!important;
+		height: 17px;
+		vertical-align: middle;
+		margin-bottom: -4px;
+	}
+}
