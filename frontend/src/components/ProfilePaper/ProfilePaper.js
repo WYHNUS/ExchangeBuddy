@@ -1,9 +1,14 @@
+import request from 'superagent';
+import {bearer} from '../../util/bearer';
+import {ROOT_URL} from '../../util/backend';
+
 import React, {PropTypes} from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookie';
 import Paper from 'material-ui/Paper';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+import IconButton from 'material-ui/IconButton';
 
 import Link from '../Link';
 
@@ -11,6 +16,8 @@ import * as UserHelper from '../../util/user';
 import * as UniversityHelper from '../../util/university';
 import { fetchAllUniversities } from '../../actions/utilityInfo';
 import{ fetchProfile } from '../../actions/profile';
+
+import * as IconsHelper from '../../util/icons';
 
 const text_header_style = {
   fontSize: "-webkit-xxx-large",
@@ -23,10 +30,47 @@ function urlToUserid(userId) {
   //that means user specified a profile id number
   //if not, return the user's default profile id number
   if (urlArr.length > 1) {
-    return urlArr[1];
+    if(urlArr[1]==="me"){
+      return userId;
+    }else{
+      return urlArr[1];  
+    }
   } else {
     return userId;
   }
+}
+
+function editProfile(userId, name, birthday, website, bio, email){
+  var profileObj = {
+    userId: userId,
+    name:name, 
+    birthday:birthday, 
+    website:website, 
+    bio:bio, 
+    email:email
+  }
+  const req = request
+    .patch(ROOT_URL + '/updateUser/')
+    .send(profileObj)
+    .use(bearer);
+
+  return req;
+}
+
+function editUniversities(userId, exchangeUniversityId, homeUniversityId, term, year){
+  var profileObj = {
+    userId:userId,
+    exchangeUniversityId:exchangeUniversityId,
+    homeUniversityId:homeUniversityId,
+    term:term,
+    year:year
+  }
+  const req = request
+    .patch(ROOT_URL + '/updateUni/')
+    .send(profileObj)
+    .use(bearer);
+
+  return req;
 }
 
 export default class ProfilePaper extends React.Component {
@@ -93,7 +137,7 @@ export default class ProfilePaper extends React.Component {
     }
 
     render() {
-      const { profile } = this.props;
+      const { profile, userObject } = this.props;
 
       return (
         <div className='row' id="profile-paper">
@@ -103,6 +147,11 @@ export default class ProfilePaper extends React.Component {
 
           <div className='col-xs-12 col-md-7' id="user-info">
             <h1 style={ text_header_style }>{ profile.name }</h1>
+            {
+              profile.email?
+              (<h2 style={ text_header_style }>{ profile.email }</h2>):
+              null
+            }
 
             <div className="flex-table-container">
               <div className='row'>
@@ -143,6 +192,15 @@ export default class ProfilePaper extends React.Component {
               
             </div>
           </div>
+          {
+          (urlToUserid(userObject.id)===userObject.id)?
+          (<div className='col-xs-12 col-md-2'>
+          <IconButton tooltipPosition="bottom-center" tooltip="Edit" onTouchTap={()=>browserHistory.push("/profile/me/edit")}>
+            {IconsHelper.icon('mode_edit')}
+          </IconButton>
+          </div>)
+          :
+          null}
         </div>
         )
     }

@@ -63,7 +63,7 @@ class BottomBar extends Component {
         {/*<BottomNavigationItem onTouchTap={this.goToURL('/wiki')} label="Wiki" icon={IconsHelper.materialIcon("info")} />*/}
         <BottomNavigationItem onTouchTap={this.goToURL('/newstory')} label="NewStory" icon={IconsHelper.materialIcon("create")} />
         <BottomNavigationItem onTouchTap={this.goToURL('/stories')} label="Stories" icon={IconsHelper.materialIcon("library_books")} />
-        <BottomNavigationItem onTouchTap={this.goToURL('/profile')} label="Profile" icon={IconsHelper.materialIcon("account_circle")} />
+        <BottomNavigationItem onTouchTap={this.goToURL('/profile/me')} label="Profile" icon={IconsHelper.materialIcon("account_circle")} />
         </BottomNavigation>
         </Paper>
         :
