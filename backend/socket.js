@@ -3,15 +3,15 @@ var ChatCtrl = require('./controllers/ChatController');
 var Group = models.Group;
 
 module.exports = function(io){
-    var groupsOfUsers = {};
-    groupsOfUsers['nus'] =[];
-    var allGroups = [];
-    Group.findAll().then(function(groups){
-        for(var group of groups){
-            groupsOfUsers[group.name] = [];
-            allGroups.push(group);
-        }
-    })
+    // var groupsOfUsers = {};
+    // groupsOfUsers['nus'] =[];
+    // var allGroups = [];
+    // Group.findAll().then(function(groups){
+    //     for(var group of groups){
+    //         groupsOfUsers[group.name] = [];
+    //         allGroups.push(group);
+    //     }
+    // })
 
     // no error feedback to socket, assume all data format correct
 
@@ -31,10 +31,9 @@ module.exports = function(io){
         }
         */
         socket.on('adduser', function(data){
-            console.log('adding user', data);
             try{
                 console.log("added user");
-                groupsOfUsers[data.group.name].push(data.user.id);
+                // groupsOfUsers[data.group.name].push(data.user.id);
                 socket.user = data.user;
                 socket.room = data.group;
                 socket.join(socket.room.name);
@@ -55,7 +54,7 @@ module.exports = function(io){
                         plain_chat.User.name = user.name;
                         plain_chat.User.profilePictureUrl = user.profilePictureUrl;
                         plain_chat.User.id = user.id;
-                        console.log(socket.room.name);
+
                         io.sockets.in(socket.room.name).emit('updatechat', plain_chat);
                     })
                 });
@@ -75,11 +74,11 @@ module.exports = function(io){
         socket.on('switchroom', function(newroom){
             try{
                 socket.leave(socket.room.name);
-                groupsOfUsers[socket.room.name].splice(groupsOfUsers[socket.room.name].indexOf(socket.user.id), 1);
+                // groupsOfUsers[socket.room.name].splice(groupsOfUsers[socket.room.name].indexOf(socket.user.id), 1);
 
                 socket.join(newroom.name);
                 socket.room = newroom;
-                groupsOfUsers[socket.room.name].push(socket.user.id);
+                // groupsOfUsers[socket.room.name].push(socket.user.id);
             }catch(error){
                 console.log(error);
             }
@@ -88,11 +87,10 @@ module.exports = function(io){
         });
 
         socket.on('disconnect', function(){
-            console.log('disconnect');
             try{
                 socket.leave(socket.room.name);
                 socket.room = null;
-                groupsOfUsers[socket.room.name].splice(groupsOfUsers[socket.room.name].indexOf(socket.user.id), 1);
+                // groupsOfUsers[socket.room.name].splice(groupsOfUsers[socket.room.name].indexOf(socket.user.id), 1);
             }catch(error){
                 console.log(error);
             }
