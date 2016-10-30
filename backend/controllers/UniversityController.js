@@ -140,7 +140,8 @@ exports.updateUni = function(req, res){
                 user.getUniversity(),
                 user.getExchangeEvent(),
                 user.setUniversity(university)
-            ]).spread(function(groups, homeUniversity, exchangeEvent, homeUniversity){
+            ]).spread(function(groups, homeUniversity, exchangeEvent){
+                var homeUniversity = university;
                 user.removeGroup(groups);
                 user.removeExchangeEvent(exchangeEvent);
 

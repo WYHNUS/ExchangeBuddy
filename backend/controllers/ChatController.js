@@ -7,11 +7,10 @@ exports.addChatMessage = function(user, msg, group){
         UserId: user.id,
         GroupId: group.id
     })
-    
+
 }
 
 exports.getMessages = function(req, res){
-    console.log('chatreq', req);
     ChatMessage.findAll({
         where: {
             GroupId: req.body.GroupId
