@@ -46,7 +46,6 @@ class LoginForm extends React.Component {
 
   render() {
     const { handleSubmit, submitting, loginError } = this.props;
-    const { isLoggedIn, isAuthenticated, isRegistered } = this.props.userAuthData;
 
     return (
       <div>

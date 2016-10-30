@@ -3,13 +3,31 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import IdentifyUniForm from '../components/IdentifyUniForm';
+import { 
+  toggleBottomBarVisibility, toggleTopBarVisibility
+} from '../actions/pageVisibility';
 
-const IdentifyUniversity = () => (
-  <div>
-    <h1>Complete your profile</h1>
-    <IdentifyUniForm/>
-  </div>
-);
+
+class IdentifyUniversity extends React.Component {
+
+  componentDidMount() {
+    this.props.toggleBottomBarVisibility(false);
+    this.props.toggleTopBarVisibility(true);
+  }
+
+  componentWillUnmount(){
+    this.props.toggleTopBarVisibility(false);
+  }
+  
+  render() {
+    return (
+      <div>
+        <h1>Complete your profile</h1>
+        <IdentifyUniForm/>
+      </div>
+    );
+  }
+};
 
 const mapStateToProps = (state)=>{
   return {
@@ -19,6 +37,8 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
+    toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility)),
+    toggleTopBarVisibility: visibility=>dispatch(toggleTopBarVisibility(visibility))
   };
 };
 

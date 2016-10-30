@@ -3,10 +3,14 @@ import { reduxForm } from 'redux-form';
 import validator from 'validator';
 import RaisedButton from 'material-ui/RaisedButton';
 import { browserHistory } from 'react-router';
+import FacebookLogin from 'react-facebook-login';
 
 import { TextFormField } from '../Field';
 import { EmailFormField } from '../Field';
 import { PasswordFormField } from '../Field';
+
+
+const responseFacebook = (attemptFacebookLogin) => (response) => {attemptFacebookLogin(response.accessToken)};
 
 const validate = (values) => {
   const errors = {};
@@ -41,28 +45,52 @@ class SignupForm extends React.Component {
     this.props.submitSignupForm(val);
   }
 
+  componentDidUpdate() {
+    const { isLoggedIn, isAuthenticated, token } = this.props.userAuthData;
+    
+    if (isLoggedIn && isAuthenticated && token){
+      browserHistory.push('/home');
+    }
+  }
+
   render() {
-    const { handleSubmit, submitting, isEmailSent, authEmailError } = this.props;
+    const { handleSubmit, submitting, authEmailError } = this.props;
+    const { isEmailSent } = this.props.userAuthData;
 
     return (
-      <form onSubmit={ handleSubmit((values) => {
-        this.submitForm(values)
-      }) }>
-        <TextFormField name="userName" floatingLabelText="Your name" />
+      <div>
+        <form onSubmit={ handleSubmit((values) => {
+          this.submitForm(values)
+        }) }>
+          <TextFormField name="userName" floatingLabelText="Your name" />
 
-        <EmailFormField
-          name="userEmail"
-          floatingLabelText="Your email address" />
+          <EmailFormField
+            name="userEmail"
+            floatingLabelText="Your email address" />
 
-        <PasswordFormField
-          name="userPassword" floatingLabelText="Your password (more than 8 digits)" />
-        <PasswordFormField
-          name="userConfirmPassword" floatingLabelText="Confirm your password" />
+          <PasswordFormField
+            name="userPassword" floatingLabelText="Your password (more than 8 digits)" />
+          <PasswordFormField
+            name="userConfirmPassword" floatingLabelText="Confirm your password" />
 
-        <div className="row" style={{marginTop: "18px"}}>
-          <div className="info-container-col signup-button-container">
-            <RaisedButton className="raised-btn" label="Submit" primary={true} type="submit" style={{ width: "100%" }}/>
+          <div className="row" style={{marginTop: "18px"}}>
+            <div className="info-container-col signup-button-container">
+              <RaisedButton className="raised-btn" label="Submit" primary={true} type="submit" style={{ width: "100%" }}/>
+            </div>
           </div>
+        </form>
+
+        <div className="social-network-wrapper">
+          <div style={{marginRight: 40}}><p>Social Network Signup :</p></div>
+          <div><FacebookLogin
+            appId={ "580995375434079" }
+            scope="public_profile"
+            fields="name, email"
+            callback={ responseFacebook(this.props.attemptFacebookLogin) }
+            cssClass="facebook-login-button"
+            textButton= ""
+            icon="fa-facebook" 
+          /></div>
         </div>
 
         { submitting ? <p>Registering user. Please be patient. :)</p> : null }
@@ -82,7 +110,7 @@ class SignupForm extends React.Component {
             : <p>{ authEmailError }</p> 
           : null
         }
-      </form>
+      </div>
     );
   }
 }

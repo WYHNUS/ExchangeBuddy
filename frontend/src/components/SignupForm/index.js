@@ -8,6 +8,9 @@ import { connect } from 'react-redux';
 import { 
   submitSignupForm, signupSuccess, signupFail
 } from '../../actions/user';
+import { 
+  attemptFacebookLogin
+} from '../../actions/authActions';
 // Component
 import ChildComponent from './SignupForm';
 
@@ -15,7 +18,7 @@ import ChildComponent from './SignupForm';
 const mapStateToProps = (state) => {
   return {
     submitting: state.user.fetchingAuthUpdate,
-    isEmailSent: state.user.isEmailSent,
+    userAuthData: state.user,
     authEmailError: state.user.error,
     initialValues: { 
       userName: state.user.signupInfo.displayName, 
@@ -30,6 +33,9 @@ const mapDispatchToProps = (dispatch) => {
     actions: bindActionCreators({  }, dispatch),
     submitSignupForm: (signupInfo) => {
       dispatch(submitSignupForm(signupInfo));
+    },
+    attemptFacebookLogin: (accessToken) => {
+      dispatch(attemptFacebookLogin(accessToken));
     }
   };
 };
