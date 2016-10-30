@@ -43,10 +43,11 @@ class Story extends React.Component{
 				}*/
 
 	render(){
-		const { id, title, /* favorites, status, ,*/tags, storyImgUrl,User, createdAt } = this.props.story;
+		const { id, title, /* favorites, status, ,*/tags, storyImgUrl,User, createdAt, key } = this.props.story;
 		return (
 			<GridTile
-				key={id}
+				className="single-story"
+				key={key}
 				title={title}
 				onClick={this.clickHandler.bind(this)}
 				subtitle={
@@ -78,7 +79,7 @@ class Story extends React.Component{
 					</span>*/
 				}
 				titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.6) 70%,rgba(0,0,0,0.4) 100%)">
-				<img src={storyImgUrl} />
+				<img className='storyImage' src={storyImgUrl} />
 			</GridTile>
 		)
 	}
@@ -103,9 +104,9 @@ export default class StoryList extends React.Component {
 				<div style={styles.stories_list_root}>
 				{ stories.length > 0 ?
 					<GridList
-						className="stories-container"
+					className="stories-container"
 						cols={1}
-						cellHeight={400}
+						cellHeight={300}
 						padding={1}
 						style={styles.stories_list_grid}
 					>
