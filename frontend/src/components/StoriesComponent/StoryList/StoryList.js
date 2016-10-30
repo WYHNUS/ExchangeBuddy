@@ -110,9 +110,13 @@ export default class StoryList extends React.Component {
 						padding={1}
 						style={styles.stories_list_grid}
 					>
-						{ stories.length > 0 && stories.map((story, idx) =>
-							( <Story story={story} key={ idx } /> ) 
-						)}
+						{ (stories.length > 0)?
+							(
+								stories.map(function(story, idx){return (<Story story={story} key={ idx } />) })
+							)
+							:
+							null
+						}
 					</GridList>
 					: null
 				}

@@ -161,14 +161,20 @@ export default class ProfilePaper extends React.Component {
           
 
           <div className='row center-xs'>
-          <div className="col-xs-12 col-md-6 profile-fb">
-            <a target="_window" href={`https://facebook.com/${profile.fbUserId}`}>Message on Facebook</a>
-          </div>
+          {
+            profile.fbUserId?
+            (
+              <div className="col-xs-12 col-md-6 profile-fb">
+                <a target="_window" href={`https://facebook.com/${profile.fbUserId}`}>Message on Facebook</a>
+              </div>
+            ):
+            null
+          }
           {
             profile.email?
             (
               <div className="col-xs-12 col-md-6 profile-fb">
-                <a target="_window" href={profile.email}>Message through Email</a>
+                <a target="_blank" href={`mailto:${profile.email}`}>Message through Email</a>
               </div>
             ):
             null
@@ -195,8 +201,8 @@ export default class ProfilePaper extends React.Component {
             }
           </div>*/}
 
-          <div className='row'>
-            <div className='col-xs-12 col-md-4'>Home University</div>
+          <div className='row university-details'>
+            <div className='col-xs-12 col-md-4 university-header'>Home University</div>
             <div className='col-xs-12 col-md-8'>
               { 
                 this.props.profile.University?
@@ -206,8 +212,8 @@ export default class ProfilePaper extends React.Component {
             </div>
           </div>
 
-          <div className='row'>
-            <div className='col-xs-12 col-md-4'>On exchange to</div>
+          <div className='row university-details'>
+            <div className='col-xs-12 col-md-4 university-header'>Exchange University</div>
             <div className='col-xs-12 col-md-8'>
             {this.state.exchangeUniListLoaded? 
               (this.state.exchangeUniList.map((uni, idx) => uni.name)):
@@ -215,7 +221,7 @@ export default class ProfilePaper extends React.Component {
             </div>
           </div>
 
-          <div className='row center-xs'>
+          {/*<div className='row center-xs'>
           {
           (urlToUserid(userObject.id)===userObject.id)?
           (<div className='col-xs-12 col-md-2'>
@@ -224,7 +230,7 @@ export default class ProfilePaper extends React.Component {
           :
           null
           }
-          </div>
+          </div>*/}
 
 
         </div>
