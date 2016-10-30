@@ -68,11 +68,12 @@ export default class MemberList extends React.Component {
     }
 
     return(
-      <Grid>
-        <Row>
+      <div className='row start-xs'>
+        <div className='col-xs-12'>
+          <h3 style={{ textAlign: 'center' }}>These students are in the same group as you.</h3>
           { homeFriends.map((user, idx) => <MemberTile key={ idx } user={ user } />) }
-        </Row>
-      </Grid>
+        </div>
+      </div>
     );
   }
 }

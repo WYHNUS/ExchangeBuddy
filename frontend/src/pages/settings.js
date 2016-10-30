@@ -8,7 +8,7 @@ import SettingsList from '../components/Settings/SettingsList';
 class Settings extends React.Component{
 
 	componentDidMount() {
-		if(this.props.user.isLoggedIn==false){
+		if(this.props.user.isLoggedIn===false){
 			this.props.toggleBottomBarVisibility(false);
 			this.props.toggleTopBarVisibility(true);
 			this.props.toggleTopBarBackButtonVisibility(true);
