@@ -65,12 +65,15 @@ exports.updateUni = function(req, res){
                     name: homeUniversity.name + " interested in exchange"
                 }
 
+                console.log(homeUniversity.name);
+
                 models.Group.findOrCreate({
                     where: {
                         name: defaultGroup.name,
                         groupType: defaultGroup.id,
                     }
                 }).then(function(group) {
+                    console.log(group[0]);
                     group[0].addUser(user);
 
                     // return user object

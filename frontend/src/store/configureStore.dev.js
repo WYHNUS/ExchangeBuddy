@@ -33,7 +33,6 @@ export default function configureStore(initialState) {
 
   store.subscribe(throttle(() => {
     saveState({
-      home: store.getState().home,
       user: {
         token: store.getState().user.token,
         userObject: store.getState().user.userObject,

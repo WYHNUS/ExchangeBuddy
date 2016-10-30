@@ -153,7 +153,8 @@ export default class Header extends React.Component {
       if(homeGroupDetails.groupType<4){
         return imgArray[homeGroupDetails.groupType];
       }
-      return null;
+      // randomly choose one -> need to fix later
+      return imgArray[1];
     }
 
     return (
@@ -182,7 +183,7 @@ export default class Header extends React.Component {
 
             {
               !!homeGroupDetails.name ? 
-                (parseInt(homeGroupDetails.groupType) == 2) ?
+                (parseInt(homeGroupDetails.groupType) == 2 || parseInt(homeGroupDetails.groupType) == 4) ?
                   (
                     <div className='col-xs-12 col-md-8 col-lg-8' id="header-title">
                       <h2 id="uni-name">{ homeGroupDetails.name }</h2>
