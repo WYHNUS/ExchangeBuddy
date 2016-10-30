@@ -1,129 +1,93 @@
 import React from 'react';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+
 import { reduxForm } from 'redux-form';
-import MenuItem from 'material-ui/MenuItem';
 import validator from 'validator';
 import { browserHistory } from 'react-router';
 
-import { TextFormField, SelectFormField, AutoCompleteFormField } from '../Field';
+import AspiringExchangerForm from './AspiringExchangerForm';
+import CompleteExchangeForm from './CompleteExchangeForm';
 
 
-const monthNames = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
-let universitiesProps;
-
-const validate = values => {
-  const errors = {};
-  const requiredFields = [ 'homeUniName', 'exchangeUniName', 'exchangeUniYear', 'exchangeTerm' ];
-  requiredFields.forEach(field => {
-    if (!values[ field ]) {
-      errors[ field ] = 'Required'
-    }
-  });
-  if (universitiesProps && universitiesProps.filter(uni => uni.name === values.homeUniName).length === 0 ) {
-    errors['homeUniName'] = 'University not found';
-  }
-  if (universitiesProps && universitiesProps.filter(uni => uni.name === values.exchangeUniName).length === 0 ) {
-    errors['exchangeUniName'] = 'University not found';
-  }
-  if (!!values.homeUniName && !!values.homeUniName.length>1 && values.exchangeUniName === values.homeUniName) {
-    errors['exchangeUniName'] = 'Are you sure your Home University and Exchange University are the same? :)';
+export default class IdentifyUniForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      expanded1: false,
+      expanded2: false,
+      expanded3: false,
+    };
   }
 
-  return errors;
-};
-
-const filter = (searchText, key) => {
-  searchText = searchText.toLowerCase();
-  key = key.toLowerCase().replace(/[^a-z0-9 ]/g, '');
-
-  if (searchText.length < 3)
-    return false;
-
-  return searchText.split(' ').every(searchTextSubstring =>
-    key.split(' ').some(s => s.substr(0, searchTextSubstring.length) == searchTextSubstring)
-  );
-};
-
-class IdentifyUniForm extends React.Component {
   componentWillMount() {
     this.props.fetchAllUniversities();
   }
 
-  submitForm(val) {
-    console.log(val);
-    // this.props.updateUserProfile(val);
-  }
+  handleExpandChange1 = (expanded) => {
+    this.setState({expanded1: expanded});
+  };
+  handleExpandChange2 = (expanded) => {
+    this.setState({expanded2: expanded});
+  };
+  handleExpandChange3 = (expanded) => {
+    this.setState({expanded3: expanded});
+  };
 
   render() {
-    const { handleSubmit, submitting, loginError } = this.props;
-    const { universities } = this.props.universitiesList;
-
-    universitiesProps = universities;
-
     // Year of exchange
     const year = new Date().getFullYear();
-    const years = [];
-    for (var i = year - 1; i < year + 5; i++ ) {
-      years.push(i);
+    const goingYears = [];
+    const doneYears = [];
+    for (var i=year-1; i<year+5; i++) {
+      goingYears.push(i);
+    }
+    for (var i=year-5; i<year; i++) {
+      doneYears.push(i);
     }
 
     return (
-      <div>
-        <form onSubmit={ handleSubmit((values) => {
-          this.submitForm(values)
-        }) }>
-
-          <AutoCompleteFormField
-              name="homeUniName"
-              floatingLabelText="Current university"
-              openOnFocus={true}
-              filter={ filter }
-              maxSearchResults={10}
-              dataSource={ universities.map((uni) => uni.name) } 
+      <div className="exchange-uni-selection-wrapper">
+        <Card className="exchange-uni-selection" expanded={this.state.expanded1} onExpandChange={this.handleExpandChange1}>
+          <CardHeader
+            title="Aspiring Exchanger"
+            subtitle="You are considering going for exchange, but have not yet confirmed a place."
+            actAsExpander={true}
+            showExpandableButton={true}
           />
-        
-          <AutoCompleteFormField
-            id="exchangeUniName"
-            name="exchangeUniName"
-            floatingLabelText="Your exchange university"
-            openOnFocus={true}
-            filter={ filter }
-            maxSearchResults={10}
-            dataSource={ universities.map((uni) => uni.name ) } 
+          <CardActions expandable={true}>
+            <AspiringExchangerForm />
+          </CardActions>
+        </Card>
+
+        <Card className="exchange-uni-selection" expanded={this.state.expanded2} onExpandChange={this.handleExpandChange2}>
+          <CardHeader
+            title="The Exchanger"
+            subtitle="You are going to exchange OR currently involved in exchange."
+            actAsExpander={true}
+            showExpandableButton={true}
           />
+          <CardActions expandable={true}>
+            <CompleteExchangeForm 
+              years={ goingYears }
+            />
+          </CardActions>
+        </Card>
 
-          <SelectFormField
-            name="exchangeUniYear"
-            floatingLabelText="Start year of exchange">
-            { years.map(year => <MenuItem key={year} value={year} primaryText={year} />) }
-          </SelectFormField>
-
-          <SelectFormField
-            name="exchangeTerm"
-            floatingLabelText="Start month of exchange">
-            { monthNames.map(month => <MenuItem key={month} value={month} primaryText={month} />) }
-          </SelectFormField>
-
-        </form>
-
-        { submitting ? <p>Logging in... Please be patient. :)</p> : null }
-
-        { 
-          loginError ? 
-            loginError.error ?
-              <p>{ loginError.error }</p> 
-            : <p>{ loginError }</p> 
-          : null
-        }
+        <Card className="exchange-uni-selection" expanded={this.state.expanded3} onExpandChange={this.handleExpandChange3}>
+          <CardHeader
+            title="Senior Exchanger"
+            subtitle="You have done this before!"
+            actAsExpander={true}
+            showExpandableButton={true}
+          />
+          <CardActions expandable={true}>
+            <CompleteExchangeForm
+              years={ doneYears }
+            />
+          </CardActions>
+        </Card>
       </div>
     );
   }
 }
-
-// Decorate with redux-form
-export default reduxForm({
-  form: 'IdentifyUniForm',
-  validate
-})(IdentifyUniForm);

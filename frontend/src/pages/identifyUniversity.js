@@ -21,7 +21,7 @@ class IdentifyUniversity extends React.Component {
   
   render() {
     return (
-      <div>
+      <div style={{ padding: 30 }}>
         <h1>Complete your profile</h1>
         <IdentifyUniForm/>
       </div>
