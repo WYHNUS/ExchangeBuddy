@@ -83,11 +83,6 @@ export function editUniversitiesFailure(error){
 }
 
 export function editUniversities(userId, homeUniversityId, exchangeUniversityId=null, year=null, term=null) {
-	console.log(userId);
-	console.log(homeUniversityId);
-	console.log(exchangeUniversityId);
-	console.log(term);
-	console.log(year);
 	var profileObj = {
 		userId: userId,
 		homeUniversityId: homeUniversityId,

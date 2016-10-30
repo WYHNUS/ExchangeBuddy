@@ -53,7 +53,7 @@ export const getRoutes = (store) =>{
     // Now you can access the store object here.
     const state = store.getState();
 
-    if (!state.user.isAuthenticated) {
+    if (!state.user.token) {
       replace({ 
         pathname: '/notloggedin'
       });
