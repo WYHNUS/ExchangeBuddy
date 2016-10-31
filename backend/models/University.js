@@ -30,10 +30,10 @@ module.exports = function(sequelize, DataType) {
 
   	// AWS images
     logoImageUrl: {
-      type: DataType.STRING(255),
+      type: DataType.STRING(1000),
     },
   	bgImageUrl: {
-      type: DataType.STRING(255),
+      type: DataType.STRING(1000),
   	},
 
   	// JSON.stringify()-ed strings
