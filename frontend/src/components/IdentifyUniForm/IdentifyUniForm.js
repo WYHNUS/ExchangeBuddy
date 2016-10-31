@@ -42,7 +42,7 @@ export default class IdentifyUniForm extends React.Component {
     for (var i=year-1; i<year+4; i++) {
       goingYears.push(i);
     }
-    for (var i=year-5; i<year; i++) {
+    for (var i=year-5; i<=year; i++) {
       doneYears.push(i);
     }
 
