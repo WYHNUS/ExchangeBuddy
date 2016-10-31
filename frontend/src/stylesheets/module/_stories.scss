@@ -1,18 +1,18 @@
 .stories-container {
 	margin-top: 20px!important;
+	overflow-y: hidden;
+	max-width: 500px;
+	min-width: 300px;
+	text-align: left;
+	>div{
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
 	.storyImage{
 		height: 100%;
 		position: absolute;
 	}
 }
-
-.single-story{
-	margin-top: 10px;
-	margin-bottom: 10px;
-}
-
-
-
 
 .text-content-wrapper {
 	/*margin: 20px 20px 18% 18%;*/
