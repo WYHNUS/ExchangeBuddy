@@ -2,10 +2,8 @@ import request from 'superagent';
 import {ROOT_URL} from '../util/backend';
 
 export const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';
-export const SAVE_SIGNUP_PAGE_ONE_INFO = 'SAVE_SIGNUP_PAGE_ONE_INFO';
-export const SAVE_SIGNUP_PAGE_TWO_INFO = 'SAVE_SIGNUP_PAGE_TWO_INFO';
-export const SAVE_SIGNUP_PAGE_THREE_INFO = 'SAVE_SIGNUP_PAGE_THREE_INFO';
 
+export const SAVE_SIGNUP_INFO = 'SAVE_SIGNUP_INFO';
 export const CLICKED_SIGNUP = 'CLICKED_SIGNUP';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAIL = 'SIGNUP_FAIL';
@@ -17,20 +15,6 @@ export function updateUserProfile(profile) {
 		type: UPDATE_USER_PROFILE,
 		profile:profile
 	}
-}
-
-
-/*		signup flow		*/
-export function saveSignupPageOneInfo(field) {
-	return { type: SAVE_SIGNUP_PAGE_ONE_INFO, field }
-}
-
-export function saveSignupPageTwoInfo(field) {
-	return { type: SAVE_SIGNUP_PAGE_TWO_INFO, field }
-}
-
-export function saveSignupPageThreeInfo(email) {
-	return { type: SAVE_SIGNUP_PAGE_THREE_INFO, email }
 }
 
 /*		new signup flow		*/

@@ -6,7 +6,7 @@ import {
 } from '../actions/authActions';
 
 import {
-  UPDATE_USER_PROFILE, SAVE_SIGNUP_PAGE_ONE_INFO, SAVE_SIGNUP_PAGE_TWO_INFO, SAVE_SIGNUP_INFO,
+  UPDATE_USER_PROFILE, SAVE_SIGNUP_INFO,
   CLICKED_SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAIL
 } from '../actions/user';
 
@@ -81,31 +81,6 @@ export function user(state = initialState , action) {
         fetchingAuthUpdate: false,
         error: action.error
       });
-
-    // case SAVE_SIGNUP_PAGE_ONE_INFO:
-    //   return Object.assign({}, state, {
-    //     signupInfo: {
-    //       fbToken: state.signupInfo.fbToken,
-    //       displayName: action.field.displayName,
-    //       gender: action.field.gender,
-    //       homeUniName: action.field.homeUniName,
-    //       exchangeUniName: state.signupInfo.exchangeUniName,
-    //       exchangeUniYear: state.signupInfo.exchangeUniYear,
-    //       exchangeTerm: state.signupInfo.exchangeTerm
-    //     }
-    //   });
-    // case SAVE_SIGNUP_PAGE_TWO_INFO:
-    //   return Object.assign({}, state, {
-    //     signupInfo: {
-    //       fbToken: state.signupInfo.fbToken,
-    //       displayName: state.signupInfo.displayName,
-    //       gender: state.signupInfo.gender,
-    //       homeUniName: state.signupInfo.homeUniName,
-    //       exchangeUniName: action.field.exchangeUniName,
-    //       exchangeUniYear: action.field.exchangeUniYear,
-    //       exchangeTerm: action.field.exchangeTerm
-    //     }
-    //   });
 
     case SAVE_SIGNUP_INFO:
       return Object.assign({}, state, {
