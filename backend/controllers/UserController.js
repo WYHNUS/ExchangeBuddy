@@ -108,7 +108,7 @@ exports.updateUser = function(req, res){
         password: md5(req.body.password),
     }, {
         where: {
-            id: req.body.userId
+            id: req.user.id
         }
     }).then(function(user){
         res.send({

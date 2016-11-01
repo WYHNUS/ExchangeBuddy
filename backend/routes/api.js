@@ -59,7 +59,7 @@ request:
 }
 */
 
-router.patch('/updateUser', UserCtrl.updateUser);
+router.patch('/updateUser', verifyToken, UserCtrl.updateUser);
 router.put('/createUser', UserCtrl.createUser);
 
 router.get('/verify/:token', MailCtrl.verifyToken);
