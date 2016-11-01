@@ -16,14 +16,21 @@ const profileForm=(callback)=>(values)=>{
 
 const validate = (values) => {
   const errors = {};
-  const requiredFields = [ 'userName'];
-  const { userPassword, userConfirmPassword } = values;
+  const { userPassword, userConfirmPassword, userName } = values;
+
+  const requiredFields=['userName'];
   
   requiredFields.forEach(field => {
     if (!values[ field ]) {
       errors[ field ] = 'Required'
     }
   });
+
+  if(!!userName){
+    if(userName.length<8){
+      errors['userName']='Please enter a name longer than 8 chars!'
+    }
+  }
 
   if (!!userPassword && !!userConfirmPassword) {
     if ((userPassword.length < 8)&&(userPassword.length!==0)) {
@@ -43,41 +50,51 @@ class ProfileForm extends Component {
 	}
 	render() {
 		const { handleSubmit, pristine, reset, submitting, userObject, showSnackbar } = this.props;
-    //const {userId} = user.userObject; 
-    //const {id} = this.props.homeGroupDetails.homeGroupDetails;
 
     const submitHandler = handleSubmit(
     	profileForm(reset));
-    /*this.props.user.userObject.id, 
-    		this.state.isGeocodingError,
-    		this.state.foundAddress, 
-    		this.state.position, 
-    		id, 
-    		postEvents, 
-    		showSnackbar*/
 
     		return (
+          <div className="page-profile-submit row center-xs">
+          <div className='col-xs-12'>
     			<form onSubmit={ submitHandler }>
-
-          <Field name="userName" component={PrefilledNamePicker} defaultValue={userObject.name}/>
-
+          <div className="row center-xs">
+          <Field 
+            name="userName" 
+            component={PrefilledNamePicker} 
+            defaultValue={userObject.name}
+            className='profile-editfield'/>
+          </div>
+          <div className="row center-xs">
           <TextField
+            className='profile-editfield'
             disabled={true}
             hintText="Your email address"
             defaultValue={userObject.email}
             floatingLabelText="Your email address"/>
-
+          </div>
+          <div className="row center-xs">
           <PasswordFormField
-            name="userPassword" floatingLabelText="Your new password (more than 8 digits)" />
+            className='profile-editfield'
+            name="userPassword" 
+            floatingLabelText="Your new password (more than 8 digits)" />
+          </div>
+          <div className="row center-xs">
           <PasswordFormField
-            name="userConfirmPassword" floatingLabelText="Confirm your new password" />
+            name="userConfirmPassword" 
+            floatingLabelText="Confirm your new password"
+            className='profile-editfield' />
+          </div>
 
-          <div className="row" style={{marginTop: "18px"}}>
+          <div className="row center-xs" style={{marginTop: "18px"}}>
             <div className="info-container-col signup-button-container">
-              <RaisedButton className="raised-btn" label="Continue" primary={true} type="submit" style={{ width: "100%" }}/>
+              <RaisedButton className="raised-btn" disabled={pristine || submitting}
+              label="Submit Changes" primary={true} type="submit" style={{ width: "100%" }}/>
             </div>
           </div>
     			</form>
+          </div>
+          </div>
     			)
     	}
     }
@@ -86,8 +103,11 @@ class PrefilledNamePicker extends React.Component{
   render(){
     const {value,onChange} = this.props.input;
     const{defaultValue}=this.props;
+    const{error}=this.props.meta;
     return(
-      <TextField 
+      <TextField
+      className='profile-editfield'
+      errorText={error}
       hintText="Your name"
       floatingLabelText="Your name"
       onChange={(x,newName)=>{
@@ -99,7 +119,7 @@ class PrefilledNamePicker extends React.Component{
   }
 }
 
-    export default reduxForm({
-    	form: 'profileForm'
-    	,validate
-    })(ProfileForm);
+export default reduxForm({
+	form: 'profileForm'
+	,validate
+})(ProfileForm);
