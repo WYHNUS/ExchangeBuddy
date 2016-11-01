@@ -109,6 +109,14 @@ exports.updateUser = function(req, res){
         where: {
             id: req.body.userId
         }
+    }).then(function(user){
+        res.send({
+            status: 'success'
+        })
+    }, function(err){
+        res.send({
+            status: 'fail'
+        })
     })
 }
 
