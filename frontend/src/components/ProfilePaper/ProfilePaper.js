@@ -221,7 +221,7 @@ export default class ProfilePaper extends React.Component {
             </div>
           </div>
 
-          {/*<div className='row center-xs'>
+          <div className='row center-xs'>
           {
           (urlToUserid(userObject.id)===userObject.id)?
           (<div className='col-xs-12 col-md-2'>
@@ -230,7 +230,7 @@ export default class ProfilePaper extends React.Component {
           :
           null
           }
-          </div>*/}
+          </div>
 
 
         </div>

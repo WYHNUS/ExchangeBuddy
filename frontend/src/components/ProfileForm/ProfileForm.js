@@ -7,6 +7,9 @@ import { TextField, Toggle} from 'redux-form-material-ui';
 import moment from 'moment';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import { TextFormField } from '../Field';
+import { PasswordFormField } from '../Field';
+
 /*const newEventForm = (callback, userId, isGeocodingError, foundAddress, position, id, postEvents, showSnackbar) => (values) => {
 
 	const errors = [];
@@ -64,17 +67,27 @@ const profileForm=(callback)=>(values)=>{
 	console.log(values);
 }
 
-const validate = values => {
+const validate = (values) => {
   const errors = {};
-  const requiredFields = [ 'title', 'details', 'address' ];
+  const requiredFields = [ 'userName'];
+  const { userPassword, userConfirmPassword } = values;
+  
   requiredFields.forEach(field => {
     if (!values[ field ]) {
       errors[ field ] = 'Required'
     }
   });
 
+  if (!!userPassword && !!userConfirmPassword) {
+    if ((userPassword.length < 8)&&(userPassword.length!==0)) {
+      errors['userPassword'] = 'Secure password (at least 8 digits) is the new fashion!';
+    } else if (userPassword !== userConfirmPassword) {
+      errors['userConfirmPassword'] = 'Two passwords must match';
+    }
+  }
+  
   return errors;
-}
+};
 
 class ProfileForm extends Component {
 
@@ -98,30 +111,24 @@ class ProfileForm extends Component {
 
     		return (
     			<form onSubmit={ submitHandler }>
+          <TextFormField name="userName" floatingLabelText="Your name" />
 
-    			<div className="row center-xs">
-    			<div className="col-xs-11 col-md-8">
-    			<Field name="title" component={TextField} fullWidth={true}
-    			floatingLabelText="Event Title" floatingLabelStyle={{left: 0}}
-    			errorStyle={{textAlign: "left"}}
-    			multiLine={false} />
-    			</div>
-    			</div>
-    			<div className="row center-xs">
-    			<div className="col-xs-11 col-md-8">
-    			<Field name="details" component={TextField} fullWidth={true}
-    			floatingLabelText="Event Details" floatingLabelStyle={{left: 0}}
-    			errorStyle={{textAlign: "left"}}
-    			multiLine={true} rows={3}/>
-    			</div>
-    			</div>
+          <TextField
+            disabled={true}
+            hintText="Your email address"
+            defaultValue="xxx@gmail.com"
+            floatingLabelText="Your email address"/>
 
-    			<div className="col-xs-12">
-    			<RaisedButton type="submit" label="Submit"
-    			labelStyle={{fontSize:"1.2rem"}} style={{margin: "2vh 0 5vh", width: "50%"}}
-    			disabled={pristine || submitting} primary={true}
-    			/>
-    			</div>
+          <PasswordFormField
+            name="userPassword" floatingLabelText="Your new password (more than 8 digits)" />
+          <PasswordFormField
+            name="userConfirmPassword" floatingLabelText="Confirm your new password" />
+
+          <div className="row" style={{marginTop: "18px"}}>
+            <div className="info-container-col signup-button-container">
+              <RaisedButton className="raised-btn" label="Continue" primary={true} type="submit" style={{ width: "100%" }}/>
+            </div>
+          </div>
     			</form>
     			)
     	}
