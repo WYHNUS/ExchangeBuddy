@@ -15,7 +15,7 @@ const mapDispatchToProps = (dispatch) => {
 		editProfile: (userId, userName, userPassword) => {
 	      dispatch(editProfile(userId, userName, userPassword))
 	        .payload.then((response) => {
-	          console.log(response, 'editprofile response');
+	          console.log(response, 'editprofile');
 	          if (!response.error) {
 	            dispatch(showSnackbar('Editted your profile'));
 	          } else {

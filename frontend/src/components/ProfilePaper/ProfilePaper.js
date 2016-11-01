@@ -207,9 +207,16 @@ export default class ProfilePaper extends React.Component {
           <div className='row center-xs'>
           {
           (urlToUserid(userObject.id)===userObject.id)?
-          (<div className='col-xs-12 col-md-2'>
-          <RaisedButton label="Edit Profile" onTouchTap={()=>browserHistory.push("/profile/me/edit")}/>
-          </div>)
+          (
+          <div>
+          <div className='col-xs-12 col-md-2'>
+          <RaisedButton primary={true} label="Edit Profile" onTouchTap={()=>browserHistory.push("/profile/me/edit")}/>
+          </div>
+          <div className='col-xs-12 col-md-2'>
+          <RaisedButton primary={true} label="Edit Universities" onTouchTap={()=>browserHistory.push("/profile/me/editUni")}/>
+          </div>
+          </div>
+          )
           :
           null
           }
