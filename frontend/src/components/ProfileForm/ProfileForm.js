@@ -10,59 +10,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { TextFormField } from '../Field';
 import { PasswordFormField } from '../Field';
 
-/*const newEventForm = (callback, userId, isGeocodingError, foundAddress, position, id, postEvents, showSnackbar) => (values) => {
-
-	const errors = [];
-	const dateFields = ['startDate', 'startTime', 'endDate', 'endTime'];
-	var allDateFieldsFilled = true;
-	dateFields.forEach(field => {
-		if (!values[ field ]) {
-			errors.push(`Please fill up ${field}`);
-			allDateFieldsFilled=false;
-		}
-	});
-  //logic to check if end time is more than start time
-  if(allDateFieldsFilled){
-    //console.log(moment(values['endDate']).isAfter(moment(values['startDate']),'day'));
-    if(!moment(values['endDate']).isAfter(moment(values['startDate']),'day')){
-    	var beginning = moment(values['startTime']);
-    	var ending = moment(values['endTime']);
-      //console.log(beginning, ending);
-      if(ending.isBefore(beginning)){
-      	errors.push('Start time is later than End time...') 
-      }
-  }
-}
-
-if(isGeocodingError){
-	errors.push('Please enter a valid address before submitting')
-}
-
-  //logic to check if you have actually found an address!
-
-  //if there are some errors, show them!
-  if(errors.length===0){
-  	callback();
-  	console.log(id,userId)
-  	postEvents(
-  		position.latitude,
-  		position.longitude,
-  		foundAddress,
-  		values.title,
-  		values.startTime,
-  		values.endTime,
-  		values.details,
-  		null,
-  		id,
-  		userId
-  		);
-  	browserHistory.push(`/home/${id}/events`);
-
-  }else{
-  	showSnackbar(errors[0]);
-  	console.log(errors);
-  }
-}*/
 const profileForm=(callback)=>(values)=>{
 	console.log(values);
 }
@@ -95,7 +42,7 @@ class ProfileForm extends Component {
 		super(props);
 	}
 	render() {
-		const { handleSubmit, pristine, reset, submitting, user, postEvents, showSnackbar } = this.props;
+		const { handleSubmit, pristine, reset, submitting, userObject, showSnackbar } = this.props;
     //const {userId} = user.userObject; 
     //const {id} = this.props.homeGroupDetails.homeGroupDetails;
 
@@ -111,12 +58,13 @@ class ProfileForm extends Component {
 
     		return (
     			<form onSubmit={ submitHandler }>
-          <TextFormField name="userName" floatingLabelText="Your name" />
+
+          <Field name="userName" component={PrefilledNamePicker} defaultValue={userObject.name}/>
 
           <TextField
             disabled={true}
             hintText="Your email address"
-            defaultValue="xxx@gmail.com"
+            defaultValue={userObject.email}
             floatingLabelText="Your email address"/>
 
           <PasswordFormField
@@ -133,6 +81,23 @@ class ProfileForm extends Component {
     			)
     	}
     }
+
+class PrefilledNamePicker extends React.Component{
+  render(){
+    const {value,onChange} = this.props.input;
+    const{defaultValue}=this.props;
+    return(
+      <TextField 
+      hintText="Your name"
+      floatingLabelText="Your name"
+      onChange={(x,newName)=>{
+        onChange(newName);
+      }}
+      defaultValue={defaultValue}
+      />
+      );
+  }
+}
 
     export default reduxForm({
     	form: 'profileForm'
