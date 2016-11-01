@@ -26,12 +26,12 @@ const validate = (values) => {
   if (!userEmail || !userEmail.length) {
     errors['userEmail'] = 'Required'
   } else if (!validator.isEmail(userEmail)) {
-    errors['userEmail'] = 'Not valid email';
+    errors['userEmail'] = 'That doesn\'t look like an email address. :o';
   }
 
   if (!!userPassword && !!userConfirmPassword) {
     if (userPassword.length < 8) {
-      errors['userPassword'] = 'Please have a more secure password (more than 8 digits)';
+      errors['userPassword'] = 'Secure password (at least 8 digits) is the new fashion!';
     } else if (userPassword !== userConfirmPassword) {
       errors['userConfirmPassword'] = 'Two passwords must match';
     }

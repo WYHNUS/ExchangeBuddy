@@ -25,7 +25,7 @@ const validate = (values) => {
   if (!userEmail || !userEmail.length) {
     errors['userEmail'] = 'Required'
   } else if (!validator.isEmail(userEmail)) {
-    errors['userEmail'] = 'Not valid email';
+    errors['userEmail'] = 'That doesn\'t look like an email address :o';
   }
   
   return errors;
