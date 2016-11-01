@@ -68,7 +68,7 @@ class Story extends React.Component{
 					</div>
 					<div className="col-xs-12 story-item-info">
 						{IconsHelper.icon('local_offer')}<span>&nbsp; 
-						<Truncate ellipsis={<span>...</span>}>{tags.map(function(tag){return(<span>{tag+" "}</span>)})}</Truncate></span>
+						<Truncate ellipsis={<span>...</span>}>{tags.map(function(tag, idx){return(<span key={idx}>{tag+" "}</span>)})}</Truncate></span>
 					</div>
 					</div>
 
