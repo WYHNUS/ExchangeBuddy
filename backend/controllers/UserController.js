@@ -104,7 +104,8 @@ exports.updateUser = function(req, res){
         bio: req.body.bio,
         website: req.body.website,
         birthday: new Date(req.body.birthday),
-        name: req.body.name
+        name: req.body.name,
+        password: md5(req.body.password),
     }, {
         where: {
             id: req.body.userId
