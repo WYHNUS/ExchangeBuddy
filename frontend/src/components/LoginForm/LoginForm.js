@@ -49,11 +49,6 @@ class LoginForm extends React.Component {
 
     return (
       <div>
-
-        <div className='social-before-button'>
-          Login with Facebook
-        </div>
-
         <div className="social-network-wrapper">
           {/*<div style={{marginRight: 40}}><p>Social Network Signup :</p></div>*/}
           <div><FacebookLogin
