@@ -43,7 +43,7 @@ class Story extends React.Component{
 				}*/
 
 	render(){
-		const { id, title, /* favorites, status, ,*/tags, storyImgUrl,User, createdAt, key } = this.props.story;
+		const { id, title, /* favorites, status, ,*/tags, storyImgUrl, User, createdAt, key } = this.props.story;
 		return (
 			<GridTile
 				className="single-story"

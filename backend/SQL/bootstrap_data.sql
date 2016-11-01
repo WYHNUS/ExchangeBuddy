@@ -7765,7 +7765,7 @@ values
 "KR", "", "",
 "", "", "[""[]""]", "[]", 718,
 "2016-10-18", "2016-10-20"
-)
+),
 (
 "919", "Warsaw School of Economics (SGH)", "", "http://uczelnia.sgh.waw.pl", "",
 "PL", "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/Warsaw+School+of+Economics.png?X-Amz-Date=20161031T040611Z&X-Amz-Expires=300&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Signature=65684ab30fe6ae87b34ffbfe1027ac20cee094d299722ff0b40602ab7a354905&X-Amz-Credential=ASIAIQZNAVCVHFBXLLFQ/20161031/ap-southeast-1/s3/aws4_request&X-Amz-SignedHeaders=Host&x-amz-security-token=FQoDYXdzEFUaDP%2BV/fPSFZuWYJcMLCL6AcpNh2g08tuDesGwdsTGaRUlhnYb0LsAhMDWXWaf/WPNKFFRoPROdUx/kQFVF0AXIkl7wX4feoxzPVYQKa38FN3N9BwXagR30qA7PvSyMzsZxuHmLRHSZIDa%2BJ1Fidp5CVLSMW4yweiPovOzEf6M/nqJmgm5NQyULr9p4zh51zzq5%2BvaNHPH5HlAt8u2tcFKZta0Meolkop0/6Hn6gJ6jyDcw5H1keF791Rc9Wzdp5pdUy3/WIibjnHbSPymgmVnnW6Ydl2pT0rZJspfd89/ueQDD1CpQp3XY%2BiQp7kQUHdJ9JKrCN%2B/xQ%2BtUUWe5//%2BQcnnB%2BNnip1PdwAolobbwAU%3D", "",

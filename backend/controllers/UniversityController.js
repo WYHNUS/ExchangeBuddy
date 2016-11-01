@@ -61,6 +61,12 @@ exports.updateUni = function(req, res){
             ]).spread(function(user){
                 var homeUniversity = uni;
                 var defaultGroup = {
+                    // todo: ask new user for years they want to exchange, hence make :
+                    // check: if req.body.year exists, if exchange event exists, 
+                    // remember: alter existing db user data
+                    // id: 1,
+                    // name: homeUniversity.name + " going abroad -- Year " + exchange.year
+                   
                     id: 4,
                     name: homeUniversity.name + " interested in exchange"
                 }
@@ -148,8 +154,6 @@ exports.updateUni = function(req, res){
                 exchange = exchange[0];
                 user.addExchangeEvent(exchange);
 
-                // sort out term group : Jan - Jun and Junly - Dec
-
                 var defaultGroups = [
                     {
                         id: 0,
@@ -157,6 +161,7 @@ exports.updateUni = function(req, res){
                     },
                     {
                         id: 1,
+                        // todo -> remove exchange.term , this group only consider exchange year
                         name: homeUniversity.name + " going abroad -- Year " + exchange.year + " " + exchange.term
                     },
                     {

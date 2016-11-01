@@ -38,11 +38,6 @@ class Stories extends React.Component{
 			</div>
 		);
 	}
-	// return (
-	// 	<div>
-	// 		<StoryList/>
-	// 	</div>
-	// );
 }
 
 const mapStateToProps = (state )=>{
