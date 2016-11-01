@@ -99,10 +99,18 @@
     margin-top: 40px;
   }
   .social-network-wrapper {
-    >div { display: inline-block; }
+    /*>div { display: inline-block; }*/
+    margin: 30px 0;
     .facebook-login-button {
-      width:300px;
-      height:30px;
+      border: none;
+      width: 300px;
+      height: 30px;
+      background-color: rgb(70, 98, 158);
+      color: rgb(255, 255, 255);
+      font-weight: 500;
+      font-size: 16px;
+      vertical-align: center;
+      >i {margin-right: 20px}
     }
     .facebook-login-
     on:hover {
@@ -113,10 +121,24 @@
   .verification-msg-wrapper {
     p {color: #79a75c}
   }
-/*  h1 { margin: 0; }
-.signup-right { display: flex; flex-direction: column; justify-content: center; padding: 30px; }*/
 }
 
+.line-seperator {
+  text-align: center;
+}
+.line-seperator:before, .line-seperator:after {
+  background: rgba(0,0,0,0.2);
+  -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+  content: '';
+  display: inline-block;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  width: 37%;
+}
+.line-seperator:before {margin-right: 10px;}
+.line-seperator:after {margin-left: 10px;}
 
 #stepper-img {
   height: 100vh; width: 100%; object-fit: cover;

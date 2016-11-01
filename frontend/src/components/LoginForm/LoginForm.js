@@ -55,21 +55,20 @@ class LoginForm extends React.Component {
         </div>
 
         <div className="social-network-wrapper">
-            {/*<div style={{marginRight: 40}}><p>Social Network Login :</p></div>*/}
-            <div><FacebookLogin
-              appId={ "580995375434079" }
-              scope="public_profile"
-              fields="name, email"
-              callback={ responseFacebook(this.props.attemptFacebookLogin) }
-              cssClass="facebook-login-button"
-              textButton= ""
-              icon="fa-facebook" 
-            /></div>
+          {/*<div style={{marginRight: 40}}><p>Social Network Signup :</p></div>*/}
+          <div><FacebookLogin
+            appId={ "580995375434079" }
+            scope="public_profile"
+            fields="name, email"
+            callback={ responseFacebook(this.props.attemptFacebookLogin) }
+            cssClass="facebook-login-button"
+            textButton= "Continue with Facebook"
+            icon="fa-facebook fa-1x" 
+          /></div>
         </div>
 
-        <div className='social-before-button'>
-          Or Login with email
-        </div>
+        <p className='line-seperator' style={{marginTop: 20}}> or </p>
+
         <form onSubmit={ handleSubmit((values) => {
           this.submitForm(values)
         }) }>
@@ -82,7 +81,7 @@ class LoginForm extends React.Component {
 
           <div className="row" style={{marginTop: "18px"}}>
             <div className="info-container-col signup-button-container">
-              <RaisedButton className="raised-btn" label="Submit" primary={true} type="submit" style={{ width: "100%" }}/>
+              <RaisedButton className="raised-btn" label="Continue" primary={true} type="submit" style={{ width: "100%" }}/>
             </div>
           </div>
         </form>

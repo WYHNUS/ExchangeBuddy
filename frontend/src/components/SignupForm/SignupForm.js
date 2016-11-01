@@ -71,14 +71,12 @@ class SignupForm extends React.Component {
             fields="name, email"
             callback={ responseFacebook(this.props.attemptFacebookLogin) }
             cssClass="facebook-login-button"
-            textButton= ""
-            icon="fa-facebook" 
+            textButton= "Continue with Facebook"
+            icon="fa-facebook fa-1x" 
           /></div>
         </div>
 
-        <div className='social-before-button'>
-        Or Signup with email
-        </div>
+        <p className='line-seperator' style={{marginTop: 20}}> or </p>
 
         <form onSubmit={ handleSubmit((values) => {
           this.submitForm(values)
@@ -96,7 +94,7 @@ class SignupForm extends React.Component {
 
           <div className="row" style={{marginTop: "18px"}}>
             <div className="info-container-col signup-button-container">
-              <RaisedButton className="raised-btn" label="Submit" primary={true} type="submit" style={{ width: "100%" }}/>
+              <RaisedButton className="raised-btn" label="Continue" primary={true} type="submit" style={{ width: "100%" }}/>
             </div>
           </div>
         </form>
