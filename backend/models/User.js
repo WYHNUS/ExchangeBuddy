@@ -52,6 +52,18 @@ module.exports = function(sequelize, DataType) {
         },
         isEmailVerified: {
             type: DataType.BOOLEAN(),
+        },
+
+        credibility: {
+            type: DataType.Integer(),
+            defaultValue: 0,
+        },
+
+        role: {
+            type: DataType.Integer(),
+            min: 0,
+            max: 10,
+            defaultValue: 0,
         }
     }, {
         classMethods: {

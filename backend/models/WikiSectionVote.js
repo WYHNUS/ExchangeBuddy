@@ -8,7 +8,11 @@ module.exports = function(sequelize, DataType) {
       min: -1,
       max: 1,
       allowNull: false
-  	}
+  	},
+
+    comment: {
+      type: DataType.TEXT(),
+    }
   }, {
     classMethods: {
       associate: function(models) {

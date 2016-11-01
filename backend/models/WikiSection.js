@@ -8,7 +8,12 @@ module.exports = function(sequelize, DataType) {
       unique: true,
   	},
 
-    status: {
+    // to make query faster (hopefully)
+    displayVersionNumber: {
+      type: DataType.INTEGER(),
+    },
+
+    sectionType: {
       type: DataType.STRING(50),
       validate: {
           isIn: [
