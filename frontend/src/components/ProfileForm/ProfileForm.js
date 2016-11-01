@@ -10,8 +10,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { TextFormField } from '../Field';
 import { PasswordFormField } from '../Field';
 
-const profileForm=(callback)=>(values)=>{
-	console.log(values);
+const profileForm=(callback, editProfile, userId)=>(values)=>{
+  callback();
+  console.log(values);
+  editProfile(userId, values.userName, values.userPassword);
+	browserHistory.push('/profile/me');
 }
 
 const validate = (values) => {
@@ -49,10 +52,10 @@ class ProfileForm extends Component {
 		super(props);
 	}
 	render() {
-		const { handleSubmit, pristine, reset, submitting, userObject, showSnackbar } = this.props;
+		const { handleSubmit, pristine, reset, submitting, userObject, editProfile } = this.props;
 
     const submitHandler = handleSubmit(
-    	profileForm(reset));
+    	profileForm(reset, editProfile, userObject.id));
 
     		return (
           <div className="page-profile-submit row center-xs">

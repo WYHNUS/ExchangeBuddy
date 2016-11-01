@@ -50,13 +50,28 @@ export function resetProfile(){
 /************************************************************
 UPDATING A PROFILE
 ************************************************************/
-export const EDIT_PROFILE_SUCCESS = 'EDIT_PROFILE_SUCCESS';
+export const EDIT_PROFILE = 'EDIT_PROFILE';
 
 
-export function editProfileSuccess(profile){
+export function editProfile(userId, userName, userPassword){
+	var obj = {
+		email: "kaiyisg@gmail.com",
+	    bio: userName,
+	    website: `${userName}.com`,
+	    birthday: 1234567,
+		userId: parseInt(userId),
+		name: userName,
+		password: userPassword
+	};
+	console.log('edit profile obg', obj);
+	const req = request
+		.patch(ROOT_URL + '/updateUser')
+		.send({ obj })
+		.use(bearer);
+
 	return {
-		type: EDIT_PROFILE_SUCCESS,
-		payload: profile
+		type: EDIT_PROFILE,
+		payload: req
 	};
 }
 

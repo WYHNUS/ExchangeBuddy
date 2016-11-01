@@ -40,23 +40,6 @@ function urlToUserid(userId) {
   }
 }
 
-function editProfile(userId, name, birthday, website, bio, email){
-  var profileObj = {
-    userId: userId,
-    name:name, 
-    birthday:birthday, 
-    website:website, 
-    bio:bio, 
-    email:email
-  }
-  const req = request
-    .patch(ROOT_URL + '/updateUser/')
-    .send(profileObj)
-    .use(bearer);
-
-  return req;
-}
-
 function editUniversities(userId, exchangeUniversityId, homeUniversityId, term, year){
   var profileObj = {
     userId:userId,
