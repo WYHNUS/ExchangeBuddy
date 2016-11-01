@@ -90,6 +90,10 @@ module.exports = function(sequelize, DataType) {
                 User.hasMany(models.ChatMessage);
 
                 User.hasMany(models.Story);
+
+                User.hasMany(models.WikiSectionVersion);
+
+                User.hasMany(models.WikiSectionVote);
             }
         },
         instanceMethods: {

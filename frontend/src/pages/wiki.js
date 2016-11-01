@@ -18,9 +18,9 @@ class Wiki extends React.Component{
 	render() {
 		return (
 			<div>
-			Wiki
+				Wiki
 			</div>
-			);
+		);
 	}
 
 }
