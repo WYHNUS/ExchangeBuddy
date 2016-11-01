@@ -78,6 +78,14 @@ exports.getMembers = function(req, res){
 	})
 }
 
+exports.getGroups = function(req, res){
+	Group.findAll({
+		attributes: ['id', 'name', 'groupType']
+	}).then(function(groups){
+		res.json(groups);
+	})
+}
+
 function resError(res, err) {
     return res.status(500).json({
         message: err.message
