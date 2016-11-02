@@ -51,15 +51,14 @@ export function resetProfile(){
 UPDATING A PROFILE
 ************************************************************/
 export const EDIT_PROFILE = 'EDIT_PROFILE';
+export const EDIT_PROFILE_SUCCESS = 'EDIT_PROFILE_SUCCESS';
 
 
-export function editProfile(userId, userName, userPassword){
+export function editProfile(userName, userPassword){
 	var obj = {
-		email: "kaiyisg@gmail.com",
-	    bio: userName,
-	    website: `${userName}.com`,
-	    birthday: 1234567,
-		userId: parseInt(userId),
+	    bio: null,
+	    website: null,
+	    birthday: null,
 		name: userName,
 		password: userPassword
 	};
@@ -74,6 +73,14 @@ export function editProfile(userId, userName, userPassword){
 		payload: req
 	};
 }
+
+export function editProfileSuccess(profile){
+	return {
+		type: EDIT_PROFILE_SUCCESS,
+		profile: profile
+	};
+}
+
 
 /************************************************************
 UPDATING A UNIVERSITY

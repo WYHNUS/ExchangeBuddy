@@ -8,16 +8,17 @@ import { showSnackbar } from '../../actions/messageSnackbar';
 
 import { connect } from 'react-redux';
 
-import {editProfile} from '../../actions/profile';
+import {editProfile, editProfileSuccess} from '../../actions/profile';
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		editProfile: (userId, userName, userPassword) => {
-	      dispatch(editProfile(userId, userName, userPassword))
+		editProfile: (userName, userPassword) => {
+	      dispatch(editProfile(userName, userPassword))
 	        .payload.then((response) => {
 	          console.log(response, 'editprofile');
 	          if (!response.error) {
 	            dispatch(showSnackbar('Editted your profile'));
+	            dispatch(editProfileSuccess(userName));
 	          } else {
 	            dispatch(showSnackbar('Error in editting profile'));
 	          }

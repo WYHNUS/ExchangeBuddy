@@ -12,8 +12,7 @@ import { PasswordFormField } from '../Field';
 
 const profileForm=(callback, editProfile, userId)=>(values)=>{
   callback();
-  console.log(values);
-  editProfile(userId, values.userName, values.userPassword);
+  editProfile(values.userName, values.userPassword);
 	browserHistory.push('/profile/me');
 }
 

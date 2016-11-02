@@ -116,12 +116,14 @@ class CompleteExchangeForm extends React.Component {
         />
 
         <SelectFormField
+          className="exchange-form-field"
           name="exchangeUniYear"
           floatingLabelText="Start year of exchange">
           { years.map(year => <MenuItem key={year} value={year} primaryText={year} />) }
         </SelectFormField>
 
         <SelectFormField
+          className="exchange-form-field"
           name="exchangeTerm"
           floatingLabelText="Start month of exchange">
           { monthNames.map(month => <MenuItem key={month} value={month} primaryText={month} />) }

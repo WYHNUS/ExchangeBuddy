@@ -11,7 +11,7 @@ import {
 } from '../actions/user';
 
 import {
-  EDIT_UNIVERSITIES, EDIT_UNIVERSITIES_SUCCESS, EDIT_UNIVERSITIES_FAILURE 
+  EDIT_UNIVERSITIES, EDIT_UNIVERSITIES_SUCCESS, EDIT_UNIVERSITIES_FAILURE, EDIT_PROFILE_SUCCESS
 } from '../actions/profile';
 
 const initialState = {
@@ -43,6 +43,12 @@ const initialState = {
 
 export function user(state = initialState , action) {
   switch (action.type){
+
+    /*when edit profile is done, update user state too*/
+    case EDIT_PROFILE_SUCCESS:
+      return Object.assign({},state,{
+        userObject: {...state.userObject, name:action.profile}
+      })
 
     /*    verification of token received via email    */
     case VERIFY_TOKEN_SUCCESS:
