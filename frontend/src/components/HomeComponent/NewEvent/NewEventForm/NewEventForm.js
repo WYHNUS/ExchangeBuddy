@@ -64,42 +64,6 @@ const newEventForm = (callback, userId, isGeocodingError, foundAddress, position
     showSnackbar(errors[0]);
     console.log(errors);
   }
-
-  
-  //console.log(values);
-
-
-
-  /*if(dropId){
-    // If edit/:dropId route
-    values.dropId = dropId;
-    values.userId = user.userId;
-    request
-    .put('/api/feeds')
-    .send(values)
-    .end((err,res) => {
-      passSnackbarMessage('Updated message details');
-      browserHistory.push('/profile');
-    })
-  } else if (navigator.geolocation) {
-    passSnackbarMessage('Getting location and submitting..')
-    navigator.geolocation.getCurrentPosition(position=>{
-      socketHandler.post({
-        userID: user.userId,
-        emoji: values.emojiUni,
-        title: values.title,
-        video: values.videoUrl,
-        image: values.imageId,
-        sound: values.soundCloudUrl,
-        longitude: position.coords.longitude,
-        latitude: position.coords.latitude,
-        date: moment(),
-        anonymous: values.anonymous ? 1 : 0
-      });
-      browserHistory.push('/drops')
-    });
-  }
-*/
 }
 
 const validate = values => {
@@ -152,7 +116,6 @@ class NewEventForm extends Component {
 
   updateMinDate(date){
     this.setState({...this.state, minDate:date});
-    //console.log(this.state.minDate);
   }
 
   updateMap(isGeocodingError, foundAddress, position){

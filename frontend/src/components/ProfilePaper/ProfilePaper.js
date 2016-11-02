@@ -210,7 +210,7 @@ export default class ProfilePaper extends React.Component {
       {
         (urlToUserid(userObject.id)===userObject.id)?
         (
-          <div className='row center-xs'>
+          <div className='row center-xs edit-profile-container'>
           <div className='col-xs-10 col-md-4'>
           <RaisedButton className='edit-profile-button' primary={true} label="Edit Profile" onTouchTap={()=>browserHistory.push("/profile/me/edit")}/>
           </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component, PropTypes} from 'react';
 
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import Drawer from 'material-ui/Drawer';
@@ -14,20 +14,43 @@ import cookie from 'react-cookie';
 import {fetchAllGroups, fetchAllGroupsSuccess, fetchAllGroupsFailure, resetAllGroups} from '../../actions/home';
 import { clearUser } from '../../actions/authActions';
 
-const Search = React.createClass({
+import RaisedButton from 'material-ui/RaisedButton';
+
+
+class Search extends Component {
+
+	constructor(props){
+		super(props);
+		this.state={
+	      isSearchOpen: false
+	    }
+	}
+
+	toggleSearch(toggle){
+		this.setState({...this.state, isSearchOpen:toggle});
+	}
+
+	getSearchWidth(){
+		if(this.state.isSearchOpen){
+			return window.innerWidth;
+		}else{
+			if((window.innerWidth/3*2)>500){
+				return 500;
+			}else{
+				return (window.innerWidth/3*2);
+			}
+		}
+	}
 
 	componentDidMount(){
 		this.props.fetchAllGroups();
-	},
+	}
 
 	render(){
 		return(
 			<Drawer 
-			className="groupSearchLayout"
-			width={
-				((window.innerWidth/3*2)>500)?
-				500:(window.innerWidth/3*2)
-			} 
+			className="group-search-layout"
+			width={this.getSearchWidth()} 
 			openSecondary={true} 
 			open={this.props.homeSearchDrawerOpen}
 			disableSwipeToOpen={false}
@@ -35,8 +58,14 @@ const Search = React.createClass({
 			onRequestChange={(open) => this.props.toggleHomeSearchDrawerVisibility(open)}>
 
 			<div className="row center-xs">
+			<RaisedButton label='Search' 
+			onTouchTap={()=>{this.toggleSearch(true)}}/>
+			</div>
+
+			<div className="row center-xs">
 			<h2>My groups</h2>
 			</div>
+
 			<div className="row center-xs">
 			<GroupList/>
 			</div>			
@@ -45,9 +74,7 @@ const Search = React.createClass({
 			);
 	}
 
-})
-
-
+}
 
 const mapDispatchToProps = (dispatch) => {
 	return {
