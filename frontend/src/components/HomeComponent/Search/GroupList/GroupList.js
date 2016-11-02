@@ -27,7 +27,7 @@ class GroupItem extends React.Component {
         <div className="group-body">
           <h5 className="group-heading">{heading}</h5>
           {
-            (parseInt(group.groupType)<=1)?
+            (parseInt(group.groupType)==0)?
             (
             <ListItem
             key={group.id}
@@ -38,11 +38,22 @@ class GroupItem extends React.Component {
             />
             ):
             (
-            <ListItem
-            key={group.id}
-            primaryText={group.name}
-            onTouchTap={goToGroup}
-            />  
+              (parseInt(group.groupType) == 1) ?
+              (
+                <ListItem
+                key={group.id}
+                primaryText={getName(group.name)}
+                secondaryText={`${getYear(group.name)}`}
+                onTouchTap={()=>goToGroup(group.id)}
+                />
+              ):
+              (
+                <ListItem
+                key={group.id}
+                primaryText={group.name}
+                onTouchTap={goToGroup}
+                />  
+              )
             )
           }  
         </div>

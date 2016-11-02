@@ -67,6 +67,18 @@ class Search extends Component {
 	        toggleHomeSearchDrawerVisibility(false); 
 	    };
 
+	    const filter = (searchText, key) => {
+		  searchText = searchText.toLowerCase();
+		  key = key.toLowerCase().replace(/[^a-z0-9 ]/g, '');
+
+		  if (searchText.length < 1)
+		    return false;
+
+		  return searchText.split(' ').every(searchTextSubstring =>
+		    key.split(' ').some(s => s.substr(0, searchTextSubstring.length) == searchTextSubstring)
+		  );
+		};
+
 		return(
 			<Drawer 
 			className="group-search-layout"
@@ -78,7 +90,7 @@ class Search extends Component {
 			onRequestChange={(open) => this.props.toggleHomeSearchDrawerVisibility(open)}>
 
 			<div className="row search-container center-xs middle-xs">
-			<div className={this.state.isSearchOpen?("col-xs-9"):("col-xs-12")}>
+			<div className={this.state.isSearchOpen?("col-xs-9 col-md-10 col-lg-11"):("col-xs-12")}>
 			<TextField
 			ref="searchField"
 		    hintText="Search" className={this.state.isSearchOpen?("search-textfield-selected"):("search-textfield")}
@@ -87,7 +99,7 @@ class Search extends Component {
 		    {
 		    	(this.state.isSearchOpen)?
 		    	(
-		    		<div className='col-xs-3'>
+		    		<div className="col-xs-3 col-md-2 col-lg-1">
 		    		<FlatButton label="Cancel" className='search-cancel'
 				    onTouchTap={(e)=>{ e.preventDefault();this.toggleSearch(false)}}/>
 				    </div>
@@ -102,7 +114,7 @@ class Search extends Component {
 					<div className="row center-xs">
 					<List>
 					{allGroups.map((group,idx)=>(
-						(parseInt(group.groupType)<=1)?
+						(parseInt(group.groupType)==0)?
 						(
 						<ListItem
 						key={idx}
@@ -112,11 +124,22 @@ class Search extends Component {
 						/>
 						):
 						(
-						<ListItem
-						key={idx}
-						primaryText={group.name}
-						onTouchTap={()=>goToGroup(group.id)}
-						/>	
+							(parseInt(group.groupType) == 1) ?
+		                    (
+		                    	<ListItem
+								key={idx}
+								primaryText={getName(group.name)}
+								secondaryText={`${getYear(group.name)}`}
+								onTouchTap={()=>goToGroup(group.id)}
+								/>
+		                    ):
+							(
+							<ListItem
+							key={idx}
+							primaryText={group.name}
+							onTouchTap={()=>goToGroup(group.id)}
+							/>	
+							)
 						)
 					))}
 					</List>
