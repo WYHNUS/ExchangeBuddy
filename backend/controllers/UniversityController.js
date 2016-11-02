@@ -166,7 +166,7 @@ exports.updateUni = function(req, res){
                     {
                         id: 1,
                         // todo -> remove exchange.term , this group only consider exchange year
-                        name: homeUniversity.name + " going abroad -- Year " + exchange.year + " " + exchange.term
+                        name: homeUniversity.name + " going abroad -- Year " + exchange.year
                     },
                     {
                         id: 2,
