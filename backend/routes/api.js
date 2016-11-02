@@ -10,7 +10,8 @@ var CountryCtrl = require('../controllers/CountryController');
 var UniCtrl = require('../controllers/UniversityController');
 var AuthCtrl = require('../controllers/AuthenticateController');
 var UserCtrl = require('../controllers/UserController');
-var StoryCtrl = require('../controllers/StoryController')
+var StoryCtrl = require('../controllers/StoryController');
+var WikiCtrl = require('../controllers/WikiController');
 var GroupCtrl = require('../controllers/GroupController');
 var MailCtrl = require('../controllers/MailController');
 var EventCtrl = require('../controllers/EventController');
@@ -73,6 +74,11 @@ router.get('/university', UniCtrl.getAllUniversities);
 router.get('/university/:id', UniCtrl.getUniversity);
 
 router.post('/messages', verifyToken, ChatCtrl.getMessages);
+
+router.get('/wiki', WikiCtrl.getWiki);
+router.get('/wiki/section/version/:id', WikiCtrl.getSectionVersion);
+router.put('/wiki/section/', verifyToken, WikiCtrl.postNewSectionVersion);
+router.post('/wiki/section/version/vote', verifyToken, WikiCtrl.vote);
 
 router.get('/allStories', /*verifyToken,*/ StoryCtrl.getAllStories);
 router.post('/story/:id', /*verifyToken,*/ StoryCtrl.getStory);

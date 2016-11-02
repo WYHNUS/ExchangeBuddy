@@ -70,12 +70,12 @@ exports.getSectionVersion = function(req, res) {
             });
     } else {
         // find specific version of given section for that wiki
-        
+
     }
 }
 
 // user upload a new version of wiki section
-exports.postNewVersion = function(req, res) {
+exports.postNewSectionVersion = function(req, res) {
     // this part not sure yet... but quick version is:
     // create new version, hence increase version number and 
     //      --> should this be done (or how else should we differentiate edition and rewrite)?
@@ -83,6 +83,16 @@ exports.postNewVersion = function(req, res) {
     //      --> should this be done (only until admin change this WikiSection's type)? 
     // IMPORTANT: get user id from token
     // CHECK: disable user frequently editing same version --> should this check exists?
+    if (!req.body.wikiId || !req.body.sectionIndex || !req.body.vote) {
+        return res.status(400)
+            .json({
+                status: 'fail',
+                message: 'Invalid query data.'
+            });
+    } else {
+        // change vote and version score
+        
+    }
 }
 
 // user vote up or done for specific version of WikiSectionVersion
@@ -90,6 +100,16 @@ exports.vote = function(req, res) {
     // edit user's previous vote or create new Vote if none exists
     // change WikiSectionVersion's score
     // change author's credibility
+    if (!req.body.wikiId || !req.body.sectionIndex || !req.body.versionNumber || !req.body.vote) {
+        return res.status(400)
+            .json({
+                status: 'fail',
+                message: 'Invalid query data.'
+            });
+    } else {
+        // change vote and version score
+        
+    }
 }
 
 function resError(res, err) {
