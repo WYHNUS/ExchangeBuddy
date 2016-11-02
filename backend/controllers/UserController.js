@@ -99,14 +99,13 @@ exports.updateUser = function(req, res){
     //     if(err) console.log(err);
     //     else res.send('ok');
     // });
+    var query = {};
+    Object.keys(req.body).map((key) => {
+        if(req.body[key] != null)
+            query[key] = req.body[key]
+    });
 
-    User.update({
-        bio: req.body.bio,
-        website: req.body.website,
-        birthday: new Date(req.body.birthday),
-        name: req.body.name,
-        password: md5(req.body.password),
-    }, {
+    User.update(query, {
         where: {
             id: req.user.id
         }
