@@ -11,6 +11,7 @@ import { user } from './user';
 import { utilityInfo } from './utilityInfo';
 import {profile} from './profile';
 import {stories} from './stories';
+import {homeSearchGroups} from './homeSearchGroups';
 
 const rootReducer = combineReducers({
   messageSnackbar,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   utilityInfo,
   profile,
   stories,
+  homeSearchGroups,
 
   // Add routerReducer
   routing: routerReducer,

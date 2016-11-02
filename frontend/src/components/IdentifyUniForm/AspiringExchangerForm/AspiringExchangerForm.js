@@ -35,11 +35,24 @@ const filter = (searchText, key) => {
 };
 
 class AspiringExchangerForm extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state={
+      submitted: false
+    }
+  }
+
   componentDidUpdate() {
     const { fetchingAuthUpdate, error } = this.props.updateStatus;
     if (!!this.props.user.UniversityId && !fetchingAuthUpdate && !error) {
       if(!(window.location.pathname.split('/')[1]==="profile")){
         browserHistory.push('/home');
+      }else{
+        if(this.state.submitted){
+          browserHistory.push('/profile');
+          this.props.showSnackbar('Universties have been updated!');
+        }
       }
     }
   }
@@ -49,6 +62,7 @@ class AspiringExchangerForm extends React.Component {
     for (var i=0; i<universities.length; i++) {
       if (universities[i].name === val.homeUniName) {
         this.props.updateUniInfo(user.id, universities[i].id);
+        this.setState({...this.state, submitted:true});
       }
     }
   }

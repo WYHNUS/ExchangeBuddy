@@ -7,6 +7,9 @@ import { connect } from 'react-redux';
 import {
 	editUniversities, editUniversitiesSuccess, editUniversitiesFailure
 } from '../../../actions/profile';
+
+import { showSnackbar } from '../../../actions/messageSnackbar';
+
 // Component
 import ChildComponent from './CompleteExchangeForm';
 
@@ -40,7 +43,8 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(editUniversitiesFailure(err.response.error.message));
         }
       });
-    }
+    },
+    showSnackbar: (message) => { dispatch(showSnackbar(message)) }
   };
 };
 
