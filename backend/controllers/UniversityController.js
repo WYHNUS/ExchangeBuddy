@@ -58,9 +58,11 @@ exports.updateUni = function(req, res){
         ]).spread(function(user, uni){
             models.sequelize.Promise.all([
                 user.getGroup(),
+                user.getExchangeEvent(),
                 user.setUniversity(uni)
-            ]).spread(function(groups, user){
+            ]).spread(function(groups, exchange, user){
                 user.removeGroup(groups);
+                user.removeExchangeEvent(exchange);
                 var homeUniversity = uni;
                 var defaultGroup = {
                     // todo: ask new user for years they want to exchange, hence make :
