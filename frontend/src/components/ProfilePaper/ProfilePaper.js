@@ -40,23 +40,6 @@ function urlToUserid(userId) {
   }
 }
 
-function editProfile(userId, name, birthday, website, bio, email){
-  var profileObj = {
-    userId: userId,
-    name:name, 
-    birthday:birthday, 
-    website:website, 
-    bio:bio, 
-    email:email
-  }
-  const req = request
-    .patch(ROOT_URL + '/updateUser/')
-    .send(profileObj)
-    .use(bearer);
-
-  return req;
-}
-
 function editUniversities(userId, exchangeUniversityId, homeUniversityId, term, year){
   var profileObj = {
     userId:userId,
@@ -221,16 +204,21 @@ export default class ProfilePaper extends React.Component {
             </div>
           </div>
 
-          {/*<div className='row center-xs'>
           {
           (urlToUserid(userObject.id)===userObject.id)?
-          (<div className='col-xs-12 col-md-2'>
-          <RaisedButton label="Edit Profile" onTouchTap={()=>browserHistory.push("/profile/me/edit")}/>
-          </div>)
+          (
+          <div className='row center-xs'>
+          <div className='col-xs-10 col-md-4'>
+          <RaisedButton primary={true} label="Edit Profile" onTouchTap={()=>browserHistory.push("/profile/me/edit")}/>
+          </div>
+          <div className='col-xs-10 col-md-4'>
+          <RaisedButton primary={true} label="Edit Universities" onTouchTap={()=>browserHistory.push("/profile/me/editUni")}/>
+          </div>
+          </div>
+          )
           :
           null
           }
-          </div>*/}
 
 
         </div>

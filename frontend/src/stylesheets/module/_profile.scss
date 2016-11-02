@@ -6,6 +6,13 @@
   @include media-xs-only { padding-top: 15px; min-height: calc(100vh - 15px); }
 }
 
+.page-profile-submit{ 
+  text-align: left;
+  .profile-editfield{
+    width: 320px!important;
+  }
+}
+
 #profile-buffer{
   width:100%;
   background: #9E9E9E;

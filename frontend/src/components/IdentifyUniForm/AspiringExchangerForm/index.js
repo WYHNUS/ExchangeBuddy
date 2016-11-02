@@ -8,6 +8,8 @@ import {
 	editUniversities, editUniversitiesSuccess, editUniversitiesFailure
 } from '../../../actions/profile';
 
+import { showSnackbar } from '../../../actions/messageSnackbar';
+
 // Component
 import ChildComponent from './AspiringExchangerForm';
 
@@ -41,7 +43,8 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(editUniversitiesFailure(err.response.error.message));
         }
       });
-    }
+    },
+    showSnackbar: (message) => { dispatch(showSnackbar(message)) }
   };
 };
 

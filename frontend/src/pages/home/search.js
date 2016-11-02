@@ -11,8 +11,16 @@ import {toggleHomeSearchDrawerVisibility} from '../../actions/pageVisibility';
 import GroupList from '../../components/HomeComponent/Search/GroupList';
 import SearchBar from '../../components/HomeComponent/Search/SearchBar';
 import UniversitySearchList from '../../components/HomeComponent/Search/UniversitySearchList';
+import cookie from 'react-cookie';
+
+import {fetchAllGroups, fetchAllGroupsSuccess, fetchAllGroupsFailure, resetAllGroups} from '../../actions/home';
+import { clearUser } from '../../actions/authActions';
 
 const Search = React.createClass({
+
+	componentDidMount(){
+		this.props.fetchAllGroups();
+	},
 
 	render(){
 		return(
@@ -53,13 +61,33 @@ const Search = React.createClass({
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		toggleHomeSearchDrawerVisibility: visibility=>dispatch(toggleHomeSearchDrawerVisibility(visibility))
+		toggleHomeSearchDrawerVisibility: visibility=>dispatch(
+			toggleHomeSearchDrawerVisibility(visibility)),
+		fetchAllGroups: () => {
+	      dispatch(fetchAllGroups()).payload.then((response) => {
+	      	if (!response.error) {
+	      		dispatch(fetchAllGroupsSuccess(response.body))
+	      	}else{
+	      		dispatch(fetchAllGroupsFailure(response.error))
+	      	}
+		}, (err) => {
+	        if (err.status === 401) {
+	          cookie.remove('authToken');
+	          dispatch(clearUser());
+	          // need to redirect to a new version of login page
+	          browserHistory.push('/');
+	        } else {
+	          dispatch(fetchAllGroupsFailure(err.response.error.message));
+	        }
+	      })
+	  }
 	};
 };
 
 const mapStateToProps = (state)=>{
 	return {
-		homeSearchDrawerOpen: state.pageVisibility.homeSearchDrawerOpen
+		homeSearchDrawerOpen: state.pageVisibility.homeSearchDrawerOpen,
+		allGroups: state.homeSearchGroups.allGroups.allGroups
 	};
 }
 
