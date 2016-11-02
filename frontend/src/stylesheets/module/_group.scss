@@ -27,7 +27,15 @@
   }
 
   .selected-group{
+  	padding-top: 5px;
+	padding-bottom: 5px;
   	background: #e6e6e6!important;
+  }
+  .non-selected-group{
+  	>div>div{
+  		padding-top: 5px;
+  		padding-bottom: 5px;
+  	}
   }
 
   .group-heading{

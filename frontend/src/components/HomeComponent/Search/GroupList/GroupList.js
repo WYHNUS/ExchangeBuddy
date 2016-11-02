@@ -13,7 +13,7 @@ class GroupItem extends React.Component {
   render(){
     const {group, heading, toggleHomeTab, 
       toggleSelectedHomeGroup, toggleHomeSearchDrawerVisibility,
-      homeGroupDetails, key, index, fetchNewGroup} = this.props;
+      homeGroupDetails, index, fetchNewGroup} = this.props;
       const {selected} = this.props.homeGroups;
 
       const goToGroup = () => { 
@@ -25,14 +25,26 @@ class GroupItem extends React.Component {
       };
       return (
         <div className="group-body">
-          <h5 className="group-heading">{heading}</h5>  
-          <ListItem
-          className={parseInt(index)===parseInt(selected)?'selected-group':null}
-          primaryText={group.name}
-          onTouchTap={goToGroup}
-          />
-          {/*
-          leftAvatar={<Avatar src={ imageUrl } size={ 40 } style={{ objectFit: 'contain', backgroundColor: '#fff'}}/>}*/}
+          <h5 className="group-heading">{heading}</h5>
+          {
+            (parseInt(group.groupType)<=1)?
+            (
+            <ListItem
+            key={group.id}
+            className={parseInt(index)===parseInt(selected)?'selected-group':'non-selected-group'}
+            primaryText={getName(group.name)}
+            secondaryText={`${getTerm(group.name)} ${getYear(group.name)}`}
+            onTouchTap={goToGroup}
+            />
+            ):
+            (
+            <ListItem
+            key={group.id}
+            primaryText={group.name}
+            onTouchTap={goToGroup}
+            />  
+            )
+          }  
         </div>
       );
     }
@@ -86,4 +98,16 @@ GroupList.PropTypes={
  toggleHomeTab: PropTypes.func.isRequired,
  homeGroupDetails: PropTypes.object.isRequired,
  fetchNewGroup: PropTypes.func.isRequired
+}
+
+function getName(homeGroupDetailsName){
+  return homeGroupDetailsName.trim().split("--")[0].trim();
+}
+
+function getTerm(homeGroupDetailsName){
+  return homeGroupDetailsName.trim().split("--")[1].trim().split(" ")[2];
+}
+
+function getYear(homeGroupDetailsName){
+  return homeGroupDetailsName.trim().split("--")[1].trim().split(" ")[1];
 }

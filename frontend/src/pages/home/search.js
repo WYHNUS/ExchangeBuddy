@@ -1,25 +1,23 @@
 import React, {Component, PropTypes} from 'react';
+import cookie from 'react-cookie';
+import { browserHistory } from 'react-router';
+import { connect } from 'react-redux';
 
-import { Grid, Row, Col } from 'react-flexbox-grid';
-import Drawer from 'material-ui/Drawer';
 import SearchInput, {createFilter} from 'react-search-input'
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import {toggleHomeSearchDrawerVisibility} from '../../actions/pageVisibility';
-import GroupList from '../../components/HomeComponent/Search/GroupList';
-import cookie from 'react-cookie';
-
-import {fetchAllGroups, fetchAllGroupsSuccess, fetchAllGroupsFailure, resetAllGroups} from '../../actions/home';
-import { clearUser } from '../../actions/authActions';
-
+import Drawer from 'material-ui/Drawer';
 import {List, ListItem} from 'material-ui/List';
-
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 
+import GroupList from '../../components/HomeComponent/Search/GroupList';
+import {fetchAllGroups, fetchAllGroupsSuccess, fetchAllGroupsFailure, resetAllGroups,
+fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure, toggleHomeTab
+} from '../../actions/home';
+import { toggleHomeSearchDrawerVisibility } from '../../actions/pageVisibility';
+import { toggleSelectedHomeGroup } from '../../actions/home';
+import { clearUser } from '../../actions/authActions';
 
 class Search extends Component {
 
@@ -60,7 +58,15 @@ class Search extends Component {
 	}
 
 	render(){
-		const{allGroups}=this.props;
+		const{allGroups, toggleHomeTab, toggleHomeSearchDrawerVisibility, fetchNewGroup}=this.props;
+
+		const goToGroup = (id) => { 
+	        browserHistory.push(`/home/${id}`);
+	        fetchNewGroup(id);
+	        toggleHomeTab('friends');
+	        toggleHomeSearchDrawerVisibility(false); 
+	    };
+
 		return(
 			<Drawer 
 			className="group-search-layout"
@@ -90,17 +96,28 @@ class Search extends Component {
 			    null
 		    }
 			</div>
-{/*secondaryText={group.}*/}
 			{
 				(this.state.isSearchOpen)?
 				(
 					<div className="row center-xs">
 					<List>
 					{allGroups.map((group,idx)=>(
+						(parseInt(group.groupType)<=1)?
+						(
+						<ListItem
+						key={idx}
+						primaryText={getName(group.name)}
+						secondaryText={`${getTerm(group.name)} ${getYear(group.name)}`}
+						onTouchTap={()=>goToGroup(group.id)}
+						/>
+						):
+						(
 						<ListItem
 						key={idx}
 						primaryText={group.name}
-						/>
+						onTouchTap={()=>goToGroup(group.id)}
+						/>	
+						)
 					))}
 					</List>
 					</div>	
@@ -144,7 +161,28 @@ const mapDispatchToProps = (dispatch) => {
 	          dispatch(fetchAllGroupsFailure(err.response.error.message));
 	        }
 	      })
-	  }
+	  	},
+	  	fetchNewGroup: (groupId) => {
+	      dispatch(fetchCurrentGroup(groupId)).payload.then((response) => {
+	        if (!response.error) {
+	          dispatch(fetchCurrentGroupSuccess(response.body));
+	        } else {
+	          dispatch(fetchCurrentGroupFailure(response.error));
+	        }
+	      }, (err) => {
+	        if (err.status === 401) {
+	          cookie.remove('authToken');
+	          dispatch(clearUser());
+	          // need to redirect to a new version of login page
+	          browserHistory.push('/');
+	        } else {
+	          dispatch(fetchCurrentGroupFailure(err.response.error.message));
+	        }
+	      });
+	    },
+	    toggleHomeSearchDrawerVisibility: visibility => dispatch(toggleHomeSearchDrawerVisibility(visibility)),
+	    toggleSelectedHomeGroup: index => dispatch(toggleSelectedHomeGroup(index)),
+	    toggleHomeTab: tabValue => dispatch(toggleHomeTab(tabValue)),
 	};
 };
 
@@ -156,3 +194,15 @@ const mapStateToProps = (state)=>{
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);
+
+function getName(homeGroupDetailsName){
+  return homeGroupDetailsName.trim().split("--")[0].trim();
+}
+
+function getTerm(homeGroupDetailsName){
+  return homeGroupDetailsName.trim().split("--")[1].trim().split(" ")[2];
+}
+
+function getYear(homeGroupDetailsName){
+  return homeGroupDetailsName.trim().split("--")[1].trim().split(" ")[1];
+}
