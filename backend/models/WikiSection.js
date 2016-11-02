@@ -8,7 +8,12 @@ module.exports = function(sequelize, DataType) {
       unique: true,
   	},
 
-    // to make query faster (hopefully)
+    sectionIndex: {
+      type: DataType.INTEGER(),
+    },
+
+    // to make query faster (hopefully) 
+    //    --> later will have Archive to store past versions when expecting infrequent change
     displayVersionNumber: {
       type: DataType.INTEGER(),
     },
