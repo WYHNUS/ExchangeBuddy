@@ -8,7 +8,7 @@ var University = models.University;
 exports.getGroupIndex = function(req, res) {
 	User.findOne({
 		where: {
-			id: req.user.id
+			id: req.body.UserId
 		}
 	}).then(function(user){
 		user.getGroup().then(function(groups){
