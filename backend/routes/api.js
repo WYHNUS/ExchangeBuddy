@@ -50,12 +50,10 @@ router.get('/user/:id', verifyToken, UserCtrl.getUser);
 /*
 request:
 {
-    email: "a@a.com",
     bio: "abc",
     website: "a.com",
     birthday: 1234567 (in milliseconds),
     name: "haha",
-    userId: 1
 }
 */
 
@@ -85,6 +83,7 @@ request:
     userId: 1
 }
 */
+router.post('/joinGroup', verifyToken, GroupCtrl.joinGroup);
 router.post('/group', verifyToken, GroupCtrl.getGroupIndex);
 router.get('/group/:id', verifyToken, GroupCtrl.getGroup);
 router.get('/getGroups', verifyToken, GroupCtrl.getGroups);
