@@ -50,11 +50,12 @@ exports.getWiki = function(req, res) {
                     view: wiki.view + 1;
                 }).then(function(updatedWiki) {
                     console.log(updatedWiki);
-                    res.send({
-                        status: 'success',
-                        wiki: updatedWiki,
-                        sections: versions
-                    });
+                    return res.status(200)
+                        .json({
+                            status: 'success',
+                            wiki: updatedWiki,
+                            sections: versions
+                        });
                 }).catch(function(err) {
                     resError(res, err);
                 });
@@ -174,6 +175,7 @@ exports.createNewWikiSection = function(req, res) {
                             name: req.body.sectionName,
                             sectionIndex: existingSections.length + 1,
                             displayVersionNumber: 1,    // default first version number
+                            totalVersionCount: 1,
                             sectionType: 'OpenToEdit',  // default value for now...
                             WikiId: existingWiki.WikiId,
                             UserId: req.user.id
@@ -216,22 +218,73 @@ exports.createNewWikiSection = function(req, res) {
 
 // user upload a new version of wiki section
 exports.createNewSectionVersion = function(req, res) {
-    // this part not sure yet... but quick version is:
+    // this part not sure yet... but quick solution is:
     // create new version, hence increase version number and 
     //      --> should this be done (or how else should we differentiate edition and rewrite)?
     // update WikiSection's displayVersionNumber to latest one 
     //      --> should this be done (only until admin change this WikiSection's type)? 
     // IMPORTANT: get user id from token
     // CHECK: disable user frequently editing same version --> should this check exists?
-    if (!req.body.wikiId || !req.body.sectionIndex || !req.body.vote) {
+    if (!req.body.wikiId || !req.body.sectionIndex || !req.body.content) {
         return res.status(400)
             .json({
                 status: 'fail',
                 message: 'Invalid query data.'
             });
     } else {
-        // change vote and version score
-        
+        // check if wiki and section exists
+        models.sequelize.Promise.all([
+            Wiki.findOne({
+                where: {
+                    id: req.body.wikiId
+                }
+            }),
+            Section.findOne({
+                where: {
+                    WikiId: req.body.wikiId,
+                    sectionIndex: req.body.sectionIndex
+                }
+            })
+        ]).spread(function(wiki, section){
+            /*
+                >>>>>>>>>>>>>>>>>>>>  TODO  <<<<<<<<<<<<<<<<<<<<<
+                    check if user has the permission to edit
+                    based on User.role, User.credibility and
+                    WikiSection.sectionType
+                >>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<
+            */
+            Version.create({
+                content: req.body.content,
+                versionNumber: section.totalVersionCount + 1,
+                WikiSectionId: section.id,
+                UserId: req.user.id
+            }).then(function(version) {
+                // update WikiSection's display with the latest version 
+                section.update({
+                    displayVersionNumber: version.versionNumber,
+                    totalVersionCount: section.totalVersionCount + 1
+                }).then(function(updatedSection) {
+                    console.log(updatedSection);
+                    return res.status(200)
+                        .json({
+                            status: 'success',
+                            section: updatedSection,
+                            version: version
+                        });
+                    /*
+                        >>>>>>>>>>>>>>>>>>>>  Consider  <<<<<<<<<<<<<<<<<<<<<
+                            maybe can update author's credibility here?
+                        >>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<
+                    */
+                }).catch(function(err) {
+                    resError(res, err);
+                });
+            }).catch(function(err) {
+                resError(res, err);
+            });
+        }).catch(function(err) {
+            resError(res, err);
+        });
     }
 }
 

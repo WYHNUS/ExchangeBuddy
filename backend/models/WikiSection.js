@@ -20,6 +20,11 @@ module.exports = function(sequelize, DataType) {
       allowNull: false,
     },
 
+    totalVersionCount: {
+      type: DataType.INTEGER(),
+      allowNull: false,
+    },
+
     sectionType: {
       type: DataType.STRING(50),
       validate: {
