@@ -78,8 +78,59 @@ exports.getSectionVersion = function(req, res) {
                 message: 'Invalid query data.'
             });
     } else {
-        // find specific version of given section for that wiki
-
+        // check if wikiId, SectionIndex and versionNumber are valid
+        models.sequelize.Promise.all([
+            Wiki.findOne({
+                where: {
+                    id: req.body.wikiId
+                }
+            }),
+            Section.findOne({
+                where: {
+                    WikiId: req.body.wikiId,
+                    sectionIndex: req.body.sectionIndex
+                },
+                include: [{
+                    { 
+                        model: Version,
+                        where: {
+                            versionNumber: req.body.versionNumber
+                        }
+                    }
+                }]
+            })
+        ]).spread(function(wiki, section){
+            console.log(wiki);
+            console.log(section);
+            if (!wiki) {
+                return res.status(404)
+                    .json({
+                        status: 'fail',
+                        message: 'requested wiki doesn\'t exists'
+                    });
+            } else if (!section) {
+                return res.status(404)
+                    .json({
+                        status: 'fail',
+                        message: 'requested section doesn\'t exists'
+                    });
+            } else if (!section.versions) {
+                return res.status(404)
+                    .json({
+                        status: 'fail',
+                        message: 'requested section doesn\'t exists'
+                    });
+            } else {
+                return res.status(200)
+                        .json({
+                            status: 'success',
+                            wiki: wiki,
+                            section: section
+                        });
+                    }
+        }).catch(function(err) {
+            resError(res, err);
+        });
     }
 }
 
