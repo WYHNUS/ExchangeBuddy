@@ -83,6 +83,7 @@ request:
     userId: 1
 }
 */
+router.post('/joinGroup', verifyToken, GroupCtrl.joinGroup);
 router.post('/group', verifyToken, GroupCtrl.getGroupIndex);
 router.get('/group/:id', verifyToken, GroupCtrl.getGroup);
 router.get('/getGroups', verifyToken, GroupCtrl.getGroups);
