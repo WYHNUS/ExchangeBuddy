@@ -59,7 +59,7 @@ request:
 }
 */
 
-router.patch('/updateUser', UserCtrl.updateUser);
+router.patch('/updateUser', verifyToken, UserCtrl.updateUser);
 router.put('/createUser', UserCtrl.createUser);
 
 router.get('/verify/:token', MailCtrl.verifyToken);
@@ -87,6 +87,7 @@ request:
 */
 router.post('/group', verifyToken, GroupCtrl.getGroupIndex);
 router.get('/group/:id', verifyToken, GroupCtrl.getGroup);
+router.get('/getGroups', verifyToken, GroupCtrl.getGroups);
 
 /*
 Get group members
