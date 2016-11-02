@@ -10,10 +10,10 @@ const initialState={
 export function homeSearchGroups(state=initialState, action) {
 
 	switch (action.type) {
-		/*case TOGGLE_HOME_GROUP_UNIVERSITY_SEARCH_LIST:
-		return Object.assign({}, state, {
-			homeGroupUniversitySearchListOpen: action.open
-		})*/
+			/*case TOGGLE_HOME_GROUP_UNIVERSITY_SEARCH_LIST:
+			return Object.assign({}, state, {
+				homeGroupUniversitySearchListOpen: action.open
+			})*/
 
 		case FETCH_ALL_GROUPS:
 		return {...state, allGroups: {allGroups:[], error: null, loading: true}};
