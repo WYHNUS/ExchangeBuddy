@@ -97,6 +97,7 @@ export const getRoutes = (store) =>{
     <Route path="profile(/:userId)" onEnter={ authRequired }>
       <IndexRoute component={Profile}/>
       <Route path="edit" component={ProfileEdit}/>
+      <Route path="editUni" component={IdentifyUniversity}/>
     </Route>
     <Route path="notloggedin" component={ NotLoggedIn }/>
     <Route path="signup" component={ Signup }/>

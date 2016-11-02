@@ -99,16 +99,32 @@ exports.updateUser = function(req, res){
     //     if(err) console.log(err);
     //     else res.send('ok');
     // });
-
-    User.update({
-        bio: req.body.bio,
-        website: req.body.website,
-        birthday: new Date(req.body.birthday),
-        name: req.body.name
-    }, {
-        where: {
-            id: req.body.userId
+    var query = {};
+    Object.keys(req.body).map((key) => {
+        if(req.body[key] != null){
+            if(key == "password"){
+                query[key] = md5(req.body[key]);
+            }else if(key == "birthday"){
+                query[key] = new Date(req.body[key]);
+            }else{
+                query[key] = req.body[key]
+            }
         }
+
+    });
+
+    User.update(query, {
+        where: {
+            id: req.user.id
+        }
+    }).then(function(user){
+        res.send({
+            status: 'success'
+        })
+    }, function(err){
+        res.send({
+            status: 'fail'
+        })
     })
 }
 

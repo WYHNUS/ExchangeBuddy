@@ -17,7 +17,7 @@ exports.createEvent = function(req, res){
 
         models.User.findOne({
             where: {
-                id: req.body.obj.UserId
+                id: req.user.id
             }
         })
     ]).spread(function(event, user){
@@ -33,52 +33,66 @@ exports.createEvent = function(req, res){
 }
 
 exports.deleteEvent = function(req, res){
-    models.Event.destroy({
+    models.Event.findOne({
         where: {
             id: req.body.EventId
         }
-    }).then(function(count){
-        if(count > 0){
-            res.send({
-                success: true
-            })
-        }else{
-            res.send({
-                success: false
-            })
-        }
-    }).catch(function(err) {
-        resError(res, err);
-    });
+    }).then(function(event){
+        event.getUser().then(function(user){
+            if(user.id == req.user.id){
+                event.destroy();
+                res.send({
+                    success: true
+                })
+            }else{
+                res.status(401).json({
+                    success: false,
+                    message: "unauthorized"
+                })
+            }
+        })
+    })
 }
 
 exports.updateEvent = function(req, res){
-    models.Event.update({
-        lat: req.body.lat,
-        lng: req.body.lng,
-        location: req.body.location,
-        title: req.body.title,
-        startTime: new Date(req.body.startTime),
-        endTime: new Date(req.body.endTime),
-        detail: req.body.detail,
-        imgSrc: req.body.imgSrc
-    }, {
+    models.Event.findOne({
         where: {
             id: req.body.EventId
         }
-    }).then(function(response){
-        if(response.length > 0){
-            res.send({
-                success: true
-            })
-        }else{
-            res.send({
-                success: false
-            })
-        }
+    }).then(function(event){
+        event.getUser().then(function(user){
+            if(user.id == req.user.id){
+                event.update({
+                    lat: req.body.lat,
+                    lng: req.body.lng,
+                    location: req.body.location,
+                    title: req.body.title,
+                    startTime: new Date(req.body.startTime),
+                    endTime: new Date(req.body.endTime),
+                    detail: req.body.detail,
+                    imgSrc: req.body.imgSrc
+                }).then(function(response){
+                    if(response.length > 0){
+                        res.send({
+                            success: true
+                        })
+                    }else{
+                        res.send({
+                            success: false
+                        })
+                    }
+                })
+            } else {
+                res.status(401).json({
+                    success: false,
+                    message: "unauthorized"
+                })
+            }
+        })
     }).catch(function(err) {
         resError(res, err);
     });
+
 }
 
 exports.getAllEvents = function(req, res){
@@ -127,7 +141,7 @@ exports.goToEvent = function(req, res){
         }),
         models.User.findOne({
             where: {
-                id: req.body.UserId
+                id: req.user.id
             }
         })
     ]).spread(function(event, user){
@@ -157,7 +171,7 @@ exports.unGoToEvent = function(req, res){
         }),
         models.User.findOne({
             where: {
-                id: req.body.UserId
+                id: req.user.id
             }
         })
     ]).spread(function(event, user){
@@ -179,7 +193,7 @@ exports.comment = function(req, res){
     models.Comment.create({
         content: req.body.content,
         EventId: req.body.EventId,
-        UserId: req.body.UserId
+        UserId: req.user.id
     }).then(function(comment){
         res.send({
             success: true

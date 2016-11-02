@@ -51,16 +51,14 @@ router.get('/user/:id', verifyToken, UserCtrl.getUser);
 /*
 request:
 {
-    email: "a@a.com",
     bio: "abc",
     website: "a.com",
     birthday: 1234567 (in milliseconds),
     name: "haha",
-    userId: 1
 }
 */
 
-router.patch('/updateUser', UserCtrl.updateUser);
+router.patch('/updateUser', verifyToken, UserCtrl.updateUser);
 router.put('/createUser', UserCtrl.createUser);
 
 router.get('/verify/:token', MailCtrl.verifyToken);
@@ -93,9 +91,10 @@ request:
     userId: 1
 }
 */
+router.post('/joinGroup', verifyToken, GroupCtrl.joinGroup);
 router.post('/group', verifyToken, GroupCtrl.getGroupIndex);
 router.get('/group/:id', verifyToken, GroupCtrl.getGroup);
-router.get('/getGroups', verifyToken, GroupCtrl.getGroups);
+router.get('/getGroups', GroupCtrl.getGroups);
 
 /*
 Get group members

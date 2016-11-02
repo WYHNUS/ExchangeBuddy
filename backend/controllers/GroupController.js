@@ -29,6 +29,32 @@ exports.getGroupIndex = function(req, res) {
 
 };
 
+exports.joinGroup = function(req, res){
+	models.sequelize.Promise.all([
+		models.User.findOne({
+			where: {
+				id: req.user.id
+			}
+		}),
+		models.Group.findOne({
+			where: {
+				id: req.body.GroupId
+			}
+		})
+	]).spread(function(user, group){
+		if(!!user && !!group){
+			group.addUser(user);
+			res.send({
+				success: true
+			})
+		}else{
+			res.status(400).send({
+				success: false
+			})
+		}
+	})
+}
+
 // Show group if user belongs to it
 exports.getGroup = function(req, res) {
     Group.findOne({

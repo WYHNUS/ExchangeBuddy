@@ -8,9 +8,31 @@ import { showSnackbar } from '../../actions/messageSnackbar';
 
 import { connect } from 'react-redux';
 
+import {editProfile} from '../../actions/profile';
+
 const mapDispatchToProps = (dispatch) => {
 	return {
-		showSnackbar: (message) => { dispatch(showSnackbar(message)) }
+		editProfile: (userId, userName, userPassword) => {
+	      dispatch(editProfile(userId, userName, userPassword))
+	        .payload.then((response) => {
+	          console.log(response, 'editprofile');
+	          if (!response.error) {
+	            dispatch(showSnackbar('Editted your profile'));
+	          } else {
+	            dispatch(showSnackbar('Error in editting profile'));
+	          }
+	        }, (err) => {
+	          if (err.status === 401) {
+	            cookie.remove('authToken');
+	            dispatch(clearUser());
+	            // need to redirect to a new version of login page
+	            browserHistory.push('/');
+	          } else {
+	            console.log(err.response.error.message);
+	            dispatch(showSnackbar(err.response.error.message));
+	          }
+	        });
+	    }
 	}
 }
 

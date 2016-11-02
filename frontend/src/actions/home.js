@@ -172,6 +172,48 @@ export function resetMyGroups(){
 	}
 }
 
+/************************************************************
+FETCHING ALL GROUPS FOR SEARCH
+************************************************************/
+
+export const FETCH_ALL_GROUPS = 'FETCH_ALL_GROUPS';
+export const FETCH_ALL_GROUPS_SUCCESS = 'FETCH_ALL_GROUPS_SUCCESS';
+export const FETCH_ALL_GROUPS_FAILURE = 'FETCH_ALL_GROUPS_FAILURE';
+export const RESET_ALL_GROUPS = 'RESET_ALL_GROUPS';
+
+export function fetchAllGroups(){
+	const req = request
+		.get(ROOT_URL + '/getGroups')
+		.use(bearer);
+
+	return {
+		type: FETCH_ALL_GROUPS,
+		payload: req
+	};
+
+}
+
+export function fetchAllGroupsSuccess(groups){
+	return {
+		type: FETCH_ALL_GROUPS_SUCCESS,
+		payload: groups
+	};
+}
+
+export function fetchAllGroupsFailure(error){
+	return {
+		type: FETCH_ALL_GROUPS_FAILURE,
+		payload: error
+	};
+}
+
+export function resetAllGroups(){
+	return{
+		type: RESET_ALL_GROUPS
+	}
+}
+
+
 
 //export function fetchMyGroups()
 

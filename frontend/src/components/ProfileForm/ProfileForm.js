@@ -7,74 +7,44 @@ import { TextField, Toggle} from 'redux-form-material-ui';
 import moment from 'moment';
 import RaisedButton from 'material-ui/RaisedButton';
 
-/*const newEventForm = (callback, userId, isGeocodingError, foundAddress, position, id, postEvents, showSnackbar) => (values) => {
+import { TextFormField } from '../Field';
+import { PasswordFormField } from '../Field';
 
-	const errors = [];
-	const dateFields = ['startDate', 'startTime', 'endDate', 'endTime'];
-	var allDateFieldsFilled = true;
-	dateFields.forEach(field => {
-		if (!values[ field ]) {
-			errors.push(`Please fill up ${field}`);
-			allDateFieldsFilled=false;
-		}
-	});
-  //logic to check if end time is more than start time
-  if(allDateFieldsFilled){
-    //console.log(moment(values['endDate']).isAfter(moment(values['startDate']),'day'));
-    if(!moment(values['endDate']).isAfter(moment(values['startDate']),'day')){
-    	var beginning = moment(values['startTime']);
-    	var ending = moment(values['endTime']);
-      //console.log(beginning, ending);
-      if(ending.isBefore(beginning)){
-      	errors.push('Start time is later than End time...') 
-      }
-  }
+const profileForm=(callback, editProfile, userId)=>(values)=>{
+  callback();
+  console.log(values);
+  editProfile(userId, values.userName, values.userPassword);
+	browserHistory.push('/profile/me');
 }
 
-if(isGeocodingError){
-	errors.push('Please enter a valid address before submitting')
-}
-
-  //logic to check if you have actually found an address!
-
-  //if there are some errors, show them!
-  if(errors.length===0){
-  	callback();
-  	console.log(id,userId)
-  	postEvents(
-  		position.latitude,
-  		position.longitude,
-  		foundAddress,
-  		values.title,
-  		values.startTime,
-  		values.endTime,
-  		values.details,
-  		null,
-  		id,
-  		userId
-  		);
-  	browserHistory.push(`/home/${id}/events`);
-
-  }else{
-  	showSnackbar(errors[0]);
-  	console.log(errors);
-  }
-}*/
-const profileForm=(callback)=>(values)=>{
-	console.log(values);
-}
-
-const validate = values => {
+const validate = (values) => {
   const errors = {};
-  const requiredFields = [ 'title', 'details', 'address' ];
+  const { userPassword, userConfirmPassword, userName } = values;
+
+  const requiredFields=['userName'];
+  
   requiredFields.forEach(field => {
     if (!values[ field ]) {
       errors[ field ] = 'Required'
     }
   });
 
+  if(!!userName){
+    if(userName.length<8){
+      errors['userName']='Please enter a name longer than 8 chars!'
+    }
+  }
+
+  if (!!userPassword && !!userConfirmPassword) {
+    if ((userPassword.length < 8)&&(userPassword.length!==0)) {
+      errors['userPassword'] = 'Secure password (at least 8 digits) is the new fashion!';
+    } else if (userPassword !== userConfirmPassword) {
+      errors['userConfirmPassword'] = 'Two passwords must match';
+    }
+  }
+  
   return errors;
-}
+};
 
 class ProfileForm extends Component {
 
@@ -82,52 +52,77 @@ class ProfileForm extends Component {
 		super(props);
 	}
 	render() {
-		const { handleSubmit, pristine, reset, submitting, user, postEvents, showSnackbar } = this.props;
-    //const {userId} = user.userObject; 
-    //const {id} = this.props.homeGroupDetails.homeGroupDetails;
+		const { handleSubmit, pristine, reset, submitting, userObject, editProfile } = this.props;
 
     const submitHandler = handleSubmit(
-    	profileForm(reset));
-    /*this.props.user.userObject.id, 
-    		this.state.isGeocodingError,
-    		this.state.foundAddress, 
-    		this.state.position, 
-    		id, 
-    		postEvents, 
-    		showSnackbar*/
+    	profileForm(reset, editProfile, userObject.id));
 
     		return (
+          <div className="page-profile-submit row center-xs">
+          <div className='col-xs-12'>
     			<form onSubmit={ submitHandler }>
+          <div className="row center-xs">
+          <Field 
+            name="userName" 
+            component={PrefilledNamePicker} 
+            defaultValue={userObject.name}
+            className='profile-editfield'/>
+          </div>
+          <div className="row center-xs">
+          <TextField
+            className='profile-editfield'
+            disabled={true}
+            hintText="Your email address"
+            defaultValue={userObject.email}
+            floatingLabelText="Your email address"/>
+          </div>
+          <div className="row center-xs">
+          <PasswordFormField
+            className='profile-editfield'
+            name="userPassword" 
+            floatingLabelText="Your new password (more than 8 digits)" />
+          </div>
+          <div className="row center-xs">
+          <PasswordFormField
+            name="userConfirmPassword" 
+            floatingLabelText="Confirm your new password"
+            className='profile-editfield' />
+          </div>
 
-    			<div className="row center-xs">
-    			<div className="col-xs-11 col-md-8">
-    			<Field name="title" component={TextField} fullWidth={true}
-    			floatingLabelText="Event Title" floatingLabelStyle={{left: 0}}
-    			errorStyle={{textAlign: "left"}}
-    			multiLine={false} />
-    			</div>
-    			</div>
-    			<div className="row center-xs">
-    			<div className="col-xs-11 col-md-8">
-    			<Field name="details" component={TextField} fullWidth={true}
-    			floatingLabelText="Event Details" floatingLabelStyle={{left: 0}}
-    			errorStyle={{textAlign: "left"}}
-    			multiLine={true} rows={3}/>
-    			</div>
-    			</div>
-
-    			<div className="col-xs-12">
-    			<RaisedButton type="submit" label="Submit"
-    			labelStyle={{fontSize:"1.2rem"}} style={{margin: "2vh 0 5vh", width: "50%"}}
-    			disabled={pristine || submitting} primary={true}
-    			/>
-    			</div>
+          <div className="row center-xs" style={{marginTop: "18px"}}>
+            <div className="info-container-col signup-button-container">
+              <RaisedButton className="raised-btn" disabled={pristine || submitting}
+              label="Submit Changes" primary={true} type="submit" style={{ width: "100%" }}/>
+            </div>
+          </div>
     			</form>
+          </div>
+          </div>
     			)
     	}
     }
 
-    export default reduxForm({
-    	form: 'profileForm'
-    	,validate
-    })(ProfileForm);
+class PrefilledNamePicker extends React.Component{
+  render(){
+    const {value,onChange} = this.props.input;
+    const{defaultValue}=this.props;
+    const{error}=this.props.meta;
+    return(
+      <TextField
+      className='profile-editfield'
+      errorText={error}
+      hintText="Your name"
+      floatingLabelText="Your name"
+      onChange={(x,newName)=>{
+        onChange(newName);
+      }}
+      defaultValue={defaultValue}
+      />
+      );
+  }
+}
+
+export default reduxForm({
+	form: 'profileForm'
+	,validate
+})(ProfileForm);
