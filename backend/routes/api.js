@@ -50,12 +50,10 @@ router.get('/user/:id', verifyToken, UserCtrl.getUser);
 /*
 request:
 {
-    email: "a@a.com",
     bio: "abc",
     website: "a.com",
     birthday: 1234567 (in milliseconds),
     name: "haha",
-    userId: 1
 }
 */
 

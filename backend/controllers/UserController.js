@@ -101,8 +101,16 @@ exports.updateUser = function(req, res){
     // });
     var query = {};
     Object.keys(req.body).map((key) => {
-        if(req.body[key] != null)
-            query[key] = req.body[key]
+        if(req.body[key] != null){
+            if(key == "password"){
+                query[key] = md5(req.body[key]);
+            }else if(key == "birthday"){
+                query[key] = new Date(req.body[key]);
+            }else{
+                query[key] = req.body[key]
+            }
+        }
+
     });
 
     User.update(query, {
