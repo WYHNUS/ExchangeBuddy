@@ -204,15 +204,14 @@ export default class ProfilePaper extends React.Component {
             </div>
           </div>
 
-          <div className='row center-xs'>
           {
           (urlToUserid(userObject.id)===userObject.id)?
           (
-          <div>
-          <div className='col-xs-12 col-md-2'>
+          <div className='row center-xs'>
+          <div className='col-xs-10 col-md-4'>
           <RaisedButton primary={true} label="Edit Profile" onTouchTap={()=>browserHistory.push("/profile/me/edit")}/>
           </div>
-          <div className='col-xs-12 col-md-2'>
+          <div className='col-xs-10 col-md-4'>
           <RaisedButton primary={true} label="Edit Universities" onTouchTap={()=>browserHistory.push("/profile/me/editUni")}/>
           </div>
           </div>
@@ -220,7 +219,6 @@ export default class ProfilePaper extends React.Component {
           :
           null
           }
-          </div>
 
 
         </div>

@@ -22,7 +22,13 @@ class IdentifyUniversity extends React.Component {
   render() {
     return (
       <div style={{ padding: 30 }}>
-        <h1>Complete your profile</h1>
+        {
+          (window.location.pathname.split('/')[1]==="profile")?
+          (<h1>Edit your profile</h1>)
+          :
+          (<h1>Complete your profile</h1>)
+        }
+        
         <IdentifyUniForm/>
       </div>
     );

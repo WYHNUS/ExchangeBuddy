@@ -52,7 +52,9 @@ class CompleteExchangeForm extends React.Component {
   componentDidUpdate() {
     const { fetchingAuthUpdate, error } = this.props.updateStatus;
     if (!!this.props.user.UniversityId && !fetchingAuthUpdate && !error) {
-      browserHistory.push('/home');
+      if(!(window.location.pathname.split('/')[1]==="profile")){
+        browserHistory.push('/home');
+      }
     }
   }
 
