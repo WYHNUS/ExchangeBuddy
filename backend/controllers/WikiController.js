@@ -3,6 +3,7 @@ var User = models.User;
 var Wiki = models.Wiki;
 var Section = models.WikiSection;
 var Version = models.WikiSectionVersion;
+var Vote = models.WikiSectionVote;
 
 // user get specific wiki page
 exports.getWiki = function(req, res) {
@@ -47,7 +48,7 @@ exports.getWiki = function(req, res) {
             models.sequelize.Promise.all(displayedSectionVersionArray).then(versions => {
                 // increase wiki view count
                 wiki.update({
-                    view: wiki.view + 1;
+                    view: wiki.view + 1
                 }).then(function(updatedWiki) {
                     console.log(updatedWiki);
                     return res.status(200)
@@ -91,11 +92,9 @@ exports.getSectionVersion = function(req, res) {
                     sectionIndex: req.body.sectionIndex
                 },
                 include: [{
-                    { 
-                        model: Version,
-                        where: {
-                            versionNumber: req.body.versionNumber
-                        }
+                    model: Version,
+                    where: {
+                        versionNumber: req.body.versionNumber
                     }
                 }]
             })
@@ -176,7 +175,7 @@ exports.createNewWiki = function(req, res) {
 }
 
 // user create a new wikiSection page, together with first version
-exports.createNewWikiSection = function(req, res) {
+exports.createNewSection = function(req, res) {
     // check if wiki name exists
     if (!req.body.wikiId || !req.body.sectionName || !req.body.content) {
         return res.status(400)
@@ -351,8 +350,114 @@ exports.vote = function(req, res) {
                 message: 'Invalid query data.'
             });
     } else {
-        // change vote and version score
-        
+        if (req.body.vote !== 0 || req.body.vote !== 1 || req.body.vote !== -1 || req.body.comment.length > 1000) {
+            return res.status(400)
+                .json({
+                    status: 'fail',
+                    message: 'Invalid query data.'
+                });
+        }
+        // check if wikiId, SectionIndex and versionNumber are valid
+        models.sequelize.Promise.all([
+            Wiki.findOne({
+                where: {
+                    id: req.body.wikiId
+                }
+            }),
+            Section.findOne({
+                where: {
+                    WikiId: req.body.wikiId,
+                    sectionIndex: req.body.sectionIndex
+                },
+                include: [{
+                    model: Version,
+                    attributes: ['score'],
+                    where: {
+                        versionNumber: req.body.versionNumber
+                    }
+                }]
+            })
+        ]).spread(function(wiki, section){
+            console.log(wiki);
+            console.log(section);
+            if (!wiki || !section || !section.versions) {
+                return res.status(404)
+                    .json({
+                        status: 'fail',
+                        message: 'requested section version doesn\'t exists'
+                    });
+            } else {
+                // check if user has voted before
+                Vote.findOne({
+                    where: {
+                        WikiSectionVersionId: section.versions[0].id,
+                        UserId: req.user.id
+                    }
+                }).then(function(vote) {
+                    var userComment = req.body.comment || "";
+                    // change vote and version score
+                    if (!!vote) {
+                        /*
+                            >>>>>>>>>>>>>>>>>>>>  TODO  <<<<<<<<<<<<<<<<<<<<<
+                                user a weighted sum to calculate based on 
+                                User.role (maybe?) and User.credibility
+                            >>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<
+                        */
+                        var previousScore = vote.score;
+                        models.sequelize.Promise.all([
+                            vote.update({
+                                score: req.body.vote,
+                                comment: userComment
+                            }),
+                            section.versions[0].update({
+                                score: section.versions[0].score - previousScore + req.body.vote
+                            })
+                        ]).spread(function(newVote, newSection){
+                            console.log(newVote);
+                            console.log(newSection);
+                            return res.status(200)
+                                    .json({
+                                        status: 'success'
+                                    });
+                        });
+
+                    } else {
+                        // submit new vote
+                        Vote.create({
+                            score: req.body.vote,
+                            comment: userComment,
+                            WikiSectionVersionId: section.versions[0].id,
+                            UserId: req.user.id 
+                        }).then(function(newVote) {
+                            /*
+                                >>>>>>>>>>>>>>>>>>>>  TODO  <<<<<<<<<<<<<<<<<<<<<
+                                    user a weighted sum to calculate based on 
+                                    User.role (maybe?) and User.credibility
+                                >>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<
+                            */
+                            section.versions[0].update({
+                                score: section.versions[0].score + newVote.score
+                            }).then(function(updatedVersion) {
+                                console.log(updatedVersion);
+                                return res.status(200)
+                                    .json({
+                                        status: 'success'
+                                    });
+                            }).catch(function(err) {
+                                resError(res, err);
+                            });
+
+                        }).catch(function(err) {
+                            resError(res, err);
+                        });
+                    }
+                }).catch(function(err) {
+                    resError(res, err);
+                });
+            }
+        }).catch(function(err) {
+            resError(res, err);
+        });
     }
 }
 

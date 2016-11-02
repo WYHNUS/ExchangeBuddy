@@ -77,8 +77,10 @@ router.post('/messages', verifyToken, ChatCtrl.getMessages);
 
 router.get('/wiki', WikiCtrl.getWiki);
 router.get('/wiki/section/version/:id', WikiCtrl.getSectionVersion);
-router.put('/wiki/section/', verifyToken, WikiCtrl.createNewSectionVersion);
-router.post('/wiki/section/version/vote', verifyToken, WikiCtrl.vote);
+router.put('/wiki/', verifyToken, WikiCtrl.createNewWiki);
+router.put('/wiki/section/', verifyToken, WikiCtrl.createNewSection);
+router.put('/wiki/section/version', verifyToken, WikiCtrl.createNewSectionVersion);
+// router.post('/wiki/section/version/vote', verifyToken, WikiCtrl.vote);
 
 router.get('/allStories', /*verifyToken,*/ StoryCtrl.getAllStories);
 router.post('/story/:id', /*verifyToken,*/ StoryCtrl.getStory);
