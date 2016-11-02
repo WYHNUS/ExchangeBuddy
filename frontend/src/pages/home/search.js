@@ -14,6 +14,8 @@ import cookie from 'react-cookie';
 import {fetchAllGroups, fetchAllGroupsSuccess, fetchAllGroupsFailure, resetAllGroups} from '../../actions/home';
 import { clearUser } from '../../actions/authActions';
 
+import {List, ListItem} from 'material-ui/List';
+
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
@@ -31,8 +33,17 @@ class Search extends Component {
 	toggleSearch(toggle){
 		this.setState({...this.state, isSearchOpen:toggle});
 		if(toggle){
-			console.log('search field focuses');
 			this.refs.searchField.focus();
+			this.populateGroups();
+		}else{
+			this.refs.searchField.blur();
+		}
+	}
+
+	populateGroups(){
+		//only fetch groups if there are no groups currently
+		if(this.props.allGroups.length===0){
+			this.props.fetchAllGroups();
 		}
 	}
 
@@ -48,11 +59,8 @@ class Search extends Component {
 		}
 	}
 
-	componentDidMount(){
-		this.props.fetchAllGroups();
-	}
-
 	render(){
+		const{allGroups}=this.props;
 		return(
 			<Drawer 
 			className="group-search-layout"
@@ -75,21 +83,39 @@ class Search extends Component {
 		    	(
 		    		<div className='col-xs-3'>
 		    		<FlatButton label="Cancel" className='search-cancel'
-				    onTouchTap={()=>{this.toggleSearch(false)}}/>
+				    onTouchTap={(e)=>{ e.preventDefault();this.toggleSearch(false)}}/>
 				    </div>
 			    )
 			    :
 			    null
 		    }
 			</div>
-
-			<div className="row center-xs">
-			<h2>My groups</h2>
-			</div>
-
-			<div className="row center-xs">
-			<GroupList/>
-			</div>			
+{/*secondaryText={group.}*/}
+			{
+				(this.state.isSearchOpen)?
+				(
+					<div className="row center-xs">
+					<List>
+					{allGroups.map((group,idx)=>(
+						<ListItem
+						key={idx}
+						primaryText={group.name}
+						/>
+					))}
+					</List>
+					</div>	
+				):
+				(
+					<div>
+					<div className="row center-xs">
+					<h2>My groups</h2>
+					</div>
+					<div className="row center-xs">
+					<GroupList/>
+					</div>
+					</div>	
+				)
+			}	
 
 			</Drawer>
 			);

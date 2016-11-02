@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     toggleSelectedHomeGroup: index => dispatch(toggleSelectedHomeGroup(index)),
     toggleHomeTab: tabValue => dispatch(toggleHomeTab(tabValue)),
     fetchNewGroup: (groupId) => {
-      dispatch(fetchEvents(groupId)).payload.then((response) => {
+      /*dispatch(fetchEvents(groupId)).payload.then((response) => {
         if (!response.error) {
           dispatch(fetchEventsSuccess(response.body));
         } else {
@@ -36,7 +36,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         } else {
           dispatch(fetchEventsFailure(err.response.error.message));
         }
-      });
+      });*/
       dispatch(fetchCurrentGroup(groupId)).payload.then((response) => {
         if (!response.error) {
           dispatch(fetchCurrentGroupSuccess(response.body));

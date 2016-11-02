@@ -191,29 +191,6 @@ class NewEventForm extends Component {
 
     }.bind(this));
   }
-    
-    //this.clickedDrop = selectedDrop.selectedDropSrc === "profile" ? profileDrops[selectedDrop.selectedDropIdx] : null;
-
-    /*if(this.props.route.path === "add"){
-      this.props.initialize({});
-
-    }else if(this.clickedDrop){
-      console.log(this.clickedDrop)
-      this.props.initialize(this.clickedDrop);
-
-    } else{
-      request
-      .get('/api/feeds/'+this.props.params.dropId)
-      .end((err,res) => {
-        this.props.initialize(res.body);
-      })
-    }*/
-
-  /*componentDidUpdate(prevProps) {
-    // Clear form if going from edit to add message route
-    if(prevProps.routes[1].path.substring(0,4) === "edit" && this.props.route.path === "add")
-      this.props.initialize({})
-  }*/
 
   render() {
     const { handleSubmit, pristine, reset, submitting, user, postEvents, showSnackbar } = this.props;
@@ -237,12 +214,6 @@ class NewEventForm extends Component {
     return (
       <form onSubmit={ submitHandler }>
       <h1>{id ? 'Edit event' : 'New event'}</h1>
-
-      {/*<div className="row center-xs">
-        <div className="col-xs-11 col-md-8">
-          <Field name="imageUpload" component={ImageUpload}/>
-        </div>
-      </div>*/}
 
       <div className="row center-xs">
         <div className="col-xs-11 col-md-8">
@@ -302,10 +273,6 @@ class NewEventForm extends Component {
 
       <div className="row center-xs">
         <div className="col-xs-11 col-md-8">
-          {/*<Field name="address" component={TextField} fullWidth={true}
-          floatingLabelText="Address" floatingLabelStyle={{left: 0}}
-          errorStyle={{textAlign: "left"}}
-          multiLine={false} />*/}
           <TextField ref={this.setSearchInputElementReference} hintText="Enter Address"/>
           <RaisedButton label="Find Address"
           labelStyle={{fontSize:"1.2rem"}}
@@ -328,16 +295,13 @@ class NewEventForm extends Component {
       }
       </div>
 
-      
-
-
-
       <div className="col-xs-12">
         <RaisedButton type="submit" label="Submit"
         labelStyle={{fontSize:"1.2rem"}} style={{margin: "2vh 0 5vh", width: "50%"}}
         disabled={pristine || submitting} primary={true}
         />
       </div>
+
       </form>
     )
   }
@@ -367,9 +331,6 @@ class StartDatePick extends React.Component{
       );
   }
 }
-
-//onDismiss={()=>onChange()} 
-
 
 class StartTimePick extends React.Component{
   render(){
@@ -428,11 +389,3 @@ export default reduxForm({
   form: 'newEventForm'
   ,validate
 })(NewEventForm);
-
-// Decorate with redux-form
-/*NewEventForm = reduxForm({
-  form: 'newEventForm',
-  validate
-})(NewEventForm)
-export default NewEventForm;
-*/

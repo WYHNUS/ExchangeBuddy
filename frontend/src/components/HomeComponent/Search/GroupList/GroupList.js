@@ -70,9 +70,7 @@ class GroupItem extends React.Component {
       <div>
       <List className="groups-container">
       { groups.length > 0 && groups.map((group, idx) => 
-        <Group group={group} {...this.props} key={idx} index={index++}/>
-        /*<Group group={ group } currentUser={ user } key={ idx } 
-        handleClose={toggleHomeSearchDrawerVisibility} toggleSelectedHomeGroup={toggleSelectedHomeGroup} />*/) }
+        <Group group={group} {...this.props} key={idx} index={index++}/>)}
       </List>
       </div>
       );
