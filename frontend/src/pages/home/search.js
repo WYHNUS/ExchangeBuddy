@@ -15,6 +15,8 @@ import {fetchAllGroups, fetchAllGroupsSuccess, fetchAllGroupsFailure, resetAllGr
 import { clearUser } from '../../actions/authActions';
 
 import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import FlatButton from 'material-ui/FlatButton';
 
 
 class Search extends Component {
@@ -28,6 +30,10 @@ class Search extends Component {
 
 	toggleSearch(toggle){
 		this.setState({...this.state, isSearchOpen:toggle});
+		if(toggle){
+			console.log('search field focuses');
+			this.refs.searchField.focus();
+		}
 	}
 
 	getSearchWidth(){
@@ -57,9 +63,24 @@ class Search extends Component {
 			docked={false} 
 			onRequestChange={(open) => this.props.toggleHomeSearchDrawerVisibility(open)}>
 
-			<div className="row center-xs">
-			<RaisedButton label='Search' 
-			onTouchTap={()=>{this.toggleSearch(true)}}/>
+			<div className="row search-container center-xs middle-xs">
+			<div className={this.state.isSearchOpen?("col-xs-9"):("col-xs-12")}>
+			<TextField
+			ref="searchField"
+		    hintText="Search" className={this.state.isSearchOpen?("search-textfield-selected"):("search-textfield")}
+		    onTouchTap={(e) => { e.preventDefault();this.toggleSearch(true)}}/>
+		    </div>
+		    {
+		    	(this.state.isSearchOpen)?
+		    	(
+		    		<div className='col-xs-3'>
+		    		<FlatButton label="Cancel" className='search-cancel'
+				    onTouchTap={()=>{this.toggleSearch(false)}}/>
+				    </div>
+			    )
+			    :
+			    null
+		    }
 			</div>
 
 			<div className="row center-xs">
