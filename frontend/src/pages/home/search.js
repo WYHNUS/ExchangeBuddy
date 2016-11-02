@@ -9,8 +9,6 @@ import { bindActionCreators } from 'redux';
 
 import {toggleHomeSearchDrawerVisibility} from '../../actions/pageVisibility';
 import GroupList from '../../components/HomeComponent/Search/GroupList';
-import SearchBar from '../../components/HomeComponent/Search/SearchBar';
-import UniversitySearchList from '../../components/HomeComponent/Search/UniversitySearchList';
 import cookie from 'react-cookie';
 
 import {fetchAllGroups, fetchAllGroupsSuccess, fetchAllGroupsFailure, resetAllGroups} from '../../actions/home';
@@ -37,19 +35,11 @@ const Search = React.createClass({
 			onRequestChange={(open) => this.props.toggleHomeSearchDrawerVisibility(open)}>
 
 			<div className="row center-xs">
-			{/*<SearchBar/>*/}
-			</div>
-			<div className="row center-xs">
 			<h2>My groups</h2>
 			</div>
 			<div className="row center-xs">
 			<GroupList/>
-			</div>
-			<div className="row center-xs">
-			{/*<UniversitySearchList/>*/}
-			</div>
-
-			
+			</div>			
 
 			</Drawer>
 			);

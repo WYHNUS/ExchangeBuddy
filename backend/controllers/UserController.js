@@ -111,6 +111,7 @@ exports.updateUser = function(req, res){
             id: req.user.id
         }
     }).then(function(user){
+        console.log(user);
         res.send({
             status: 'success'
         })

@@ -209,10 +209,10 @@ export default class ProfilePaper extends React.Component {
           (
           <div className='row center-xs'>
           <div className='col-xs-10 col-md-4'>
-          <RaisedButton primary={true} label="Edit Profile" onTouchTap={()=>browserHistory.push("/profile/me/edit")}/>
+          <RaisedButton className='edit-profile-button' primary={true} label="Edit Profile" onTouchTap={()=>browserHistory.push("/profile/me/edit")}/>
           </div>
           <div className='col-xs-10 col-md-4'>
-          <RaisedButton primary={true} label="Edit Universities" onTouchTap={()=>browserHistory.push("/profile/me/editUni")}/>
+          <RaisedButton className='edit-profile-button' primary={true} label="Edit Universities" onTouchTap={()=>browserHistory.push("/profile/me/editUni")}/>
           </div>
           </div>
           )

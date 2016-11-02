@@ -66,7 +66,7 @@ export function editProfile(userId, userName, userPassword){
 	console.log('edit profile obg', obj);
 	const req = request
 		.patch(ROOT_URL + '/updateUser')
-		.send({ obj })
+		.send(obj)
 		.use(bearer);
 
 	return {
