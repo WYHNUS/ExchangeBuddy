@@ -103,8 +103,9 @@ module.exports = function(sequelize, DataType) {
 
                 User.hasMany(models.Story);
 
+                User.hasMany(models.Wiki);
+                User.hasMany(models.WikiSection);
                 User.hasMany(models.WikiSectionVersion);
-
                 User.hasMany(models.WikiSectionVote);
             }
         },

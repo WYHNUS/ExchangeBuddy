@@ -10,13 +10,14 @@ module.exports = function(sequelize, DataType) {
 
     view: {
       type: DataType.INTEGER(),
+      defaultValue: 0,
     }
   }, {
     classMethods: {
       associate: function(models) {
         Wiki.belongsTo(models.University);
-
         Wiki.belongsTo(models.Country);
+        Wiki.belongsTo(models.User);
 
         Wiki.hasMany(models.WikiSection);
       }

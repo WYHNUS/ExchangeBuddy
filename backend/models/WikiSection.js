@@ -8,6 +8,7 @@ module.exports = function(sequelize, DataType) {
       unique: true,
   	},
 
+    // the index to display in particular wiki page
     sectionIndex: {
       type: DataType.INTEGER(),
     },
@@ -16,6 +17,7 @@ module.exports = function(sequelize, DataType) {
     //    --> later will have Archive to store past versions when expecting infrequent change
     displayVersionNumber: {
       type: DataType.INTEGER(),
+      allowNull: false,
     },
 
     sectionType: {
@@ -29,7 +31,13 @@ module.exports = function(sequelize, DataType) {
   }, {
     classMethods: {
       associate: function(models) {
-        WikiSection.belongsTo(models.Wiki);
+        WikiSection.belongsTo(models.Wiki, {
+          onDelete: 'CASCADE',
+          foreignKey: {
+            allowNull: false
+          }
+        });
+        WikiSection.belongsTo(models.User);
 
         WikiSection.hasMany(models.WikiSectionVersion);
       }

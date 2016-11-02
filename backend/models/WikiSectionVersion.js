@@ -2,17 +2,14 @@
 
 module.exports = function(sequelize, DataType) {
   var WikiSectionVersion = sequelize.define('WikiSectionVersion', {
-    title: {
-      type: DataType.STRING(255),
-      allowNull: false,
-    },
-
     content: {
       type: DataType.TEXT(),
+      allowNull: false,
     },
 
     versionNumber: {
       type: DataType.INTEGER(),
+      allowNull: false,
     },
 
     score: {

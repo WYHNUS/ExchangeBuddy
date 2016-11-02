@@ -45,10 +45,18 @@ exports.getWiki = function(req, res) {
             });
 
             models.sequelize.Promise.all(displayedSectionVersionArray).then(versions => {
-                res.send({
-                    status: 'success',
-                    wiki: wiki,
-                    sections: versions
+                // increase wiki view count
+                wiki.update({
+                    view: wiki.view + 1;
+                }).then(function(updatedWiki) {
+                    console.log(updatedWiki);
+                    res.send({
+                        status: 'success',
+                        wiki: updatedWiki,
+                        sections: versions
+                    });
+                }).catch(function(err) {
+                    resError(res, err);
                 });
             }).catch(function(err) {
                 resError(res, err);
@@ -74,8 +82,140 @@ exports.getSectionVersion = function(req, res) {
     }
 }
 
+// user create a new wiki page
+exports.createNewWiki = function(req, res) {
+    // check if wiki name exists
+    if (!req.body.wikiTitle) {
+        return res.status(400)
+            .json({
+                status: 'fail',
+                message: 'Invalid query data.'
+            });
+    } else {
+        // check if wiki exists
+        Wiki.findOne({
+            where: {
+                title: req.body.wikiTitle
+            }
+        }).then(function(existingWiki) {
+            if (!!existingWiki) {
+                return res.status(409)
+                    .json({
+                        status: 'fail',
+                        message:'wiki already exists',
+                        wiki: existingWiki
+                    });
+            } else {
+                Wiki.create({
+                    name: req.body.wikiTitle,
+                    UserId: req.user.id
+                }).then(function(wiki){    
+                    return res.status(200)
+                        .json({
+                            status: 'success',
+                            wiki: wiki
+                        });
+                });
+            }
+        }).catch(function(err){
+            resError(res, err);
+        });
+    }
+}
+
+// user create a new wikiSection page, together with first version
+exports.createNewWikiSection = function(req, res) {
+    // check if wiki name exists
+    if (!req.body.wikiId || !req.body.sectionName || !req.body.content) {
+        return res.status(400)
+            .json({
+                status: 'fail',
+                message: 'Invalid query data.'
+            });
+    } else {
+        // check if wiki exists
+        Wiki.findOne({
+            where: {
+                title: req.body.wikiId
+            }
+        }).then(function(existingWiki) {
+            if (!existingWiki) {
+                return res.status(404)
+                    .json({
+                        status: 'fail',
+                        message:'wiki doesn\'t exist'
+                    });
+            } else {
+                // wiki exists, check if section already exist
+                Section.findAll({
+                    where: {
+                        WikiId: existingWiki.WikiId
+                    }
+                }).then(function(existingSections) {
+                    for (var i=0; i<existingSections.length; i++) {
+                        if (existingSections[i].name === req.body.sectionName) {
+                            return res.status(409)
+                                .json({
+                                    status: 'fail',
+                                    message:'wiki section already exist'
+                                });
+                        }
+                    }
+                    // filter content -> disallow content less than 100 char?
+                    if (req.body.content.length <= 100) {
+                        return res.status(409)
+                                .json({
+                                    status: 'fail',
+                                    message: 'too little content'
+                                });
+                    } else {
+                        // create wikiSection
+                        Section.create({
+                            name: req.body.sectionName,
+                            sectionIndex: existingSections.length + 1,
+                            displayVersionNumber: 1,    // default first version number
+                            sectionType: 'OpenToEdit',  // default value for now...
+                            WikiId: existingWiki.WikiId,
+                            UserId: req.user.id
+                        }).then(function(section) {
+                            // create first version and assign it to wikiSection
+                            Version.create({
+                                content: req.body.content,
+                                versionNumber: 1,   // only one exists
+                                WikiSectionId: section.id,
+                                UserId: req.user.id
+                            }).then(function(version) {
+                                // link the new section to Wiki 
+                                existingWiki.addWikiSection(section).then(function(wiki) {
+                                    return res.status(200)
+                                        .json({
+                                            status: 'success',
+                                            wiki: wiki,
+                                            section: section,
+                                            version: version
+                                        });
+                                }).catch(function(err) {
+                                    resError(res, err);
+                                });
+                            }).catch(function(err) {
+                                resError(res, err);
+                            });
+                        }).catch(function(err) {
+                            resError(res, err);
+                        });
+                    }
+                }).catch(function(err) {
+                    resError(res, err);
+                });
+            }
+        }).catch(function(err) {
+            resError(res, err);
+        });
+    }
+}
+
 // user upload a new version of wiki section
-exports.postNewSectionVersion = function(req, res) {
+exports.createNewSectionVersion = function(req, res) {
     // this part not sure yet... but quick version is:
     // create new version, hence increase version number and 
     //      --> should this be done (or how else should we differentiate edition and rewrite)?
