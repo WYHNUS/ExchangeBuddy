@@ -38,9 +38,9 @@ class Wiki extends React.Component{
 					<hr className="green-separator" style={{ width: "85%"}}></hr>
 					<ul className="recommendation-item-list">
 						<li className="recommendation-item">
-							<div className="recommendation-item-wrapper" onClick={this.getComponent.bind(this, "university title")}>
+							<div className="recommendation-item-wrapper" onClick={this.getComponent.bind(this, "Uni")}>
 								<img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSTbaosNAfYYmTOoIblAjvlfYYP63bnMb_J_PmH3R4T4N16A8RqAqOcQs0" />
-							    <p>University</p>
+							    <p>Uni</p>
 							</div>
 						</li>
 					</ul>

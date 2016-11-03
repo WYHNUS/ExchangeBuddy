@@ -37,14 +37,6 @@ class Section extends React.Component {
 
 
 export default class WikiDetail extends React.Component {
-	componentWillMount() {
-		//this.props.fetchStory(this.props.id, this.props.user.id);
-	}
-
-	componentDidMount() {
-		// $('#content').append(this.props.storyDetails.content);
-	}
-
 	render() {
 		const { wiki, sections, userToken } = this.props;
 
