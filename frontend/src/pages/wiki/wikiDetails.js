@@ -16,7 +16,6 @@ class WikiDetails extends React.Component{
 		this.props.toggleTopBarBackButtonVisibility(false);
 	}
 
-
 	render() {
 		return (
 			<div>
