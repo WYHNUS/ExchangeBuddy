@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataType) {
   	},
 
     comment: {
-      type: DataType.String(1000),
+      type: DataType.STRING(1000),
     }
   }, {
     classMethods: {

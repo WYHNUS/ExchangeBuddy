@@ -55,12 +55,12 @@ module.exports = function(sequelize, DataType) {
         },
 
         credibility: {
-            type: DataType.Integer(),
+            type: DataType.INTEGER(),
             defaultValue: 0,
         },
 
         role: {
-            type: DataType.Integer(),
+            type: DataType.INTEGER(),
             min: 0,
             max: 10,
             defaultValue: 0,
