@@ -29,14 +29,22 @@ class WikiDetails extends React.Component{
 	}
 
 	render() {
-		const { error, fetching, wiki, sections } = this.props;
+		const { error, fetching } = this.props;
 
 		return (
 			<div>
-				<h1>{ wiki.title }</h1>
-				<div>
-					
-				</div>
+				{
+					fetching ?
+						<p> fetching resource ... </p>
+					:
+						<WikiDetail />
+				}
+				{
+					error ?
+						<p> { error } </p>
+					:
+						null
+				}
 			</div>
 		);
 	}
@@ -46,9 +54,7 @@ const mapStateToProps = (state) => {
 	return{
 		wikiTitle: state.routing.locationBeforeTransitions.pathname.split("/")[2],
 		error: state.wiki.error,
-		fetching: state.wiki.fetching,
-		wiki: state.wiki.wiki,
-		sections: state.wiki.sections,
+		fetching: state.wiki.fetching
 	};
 }
 

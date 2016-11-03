@@ -6,27 +6,69 @@ import { browserHistory } from 'react-router';
 import { formatTime } from '../../../util/helper';
 import * as UserHelper from '../../../util/user';
 
+class Section extends React.Component {
+	componentDidMount() {
+		const { section } = this.props;
+		$('#section' + section.WikiSection.sectionIndex + 'content').append(section.content);
+	}
+
+	render() {
+		const { section } = this.props;
+
+		return (
+			<div className="wikiDetailWrapper">
+				<h2>{ section.WikiSection.name }</h2>
+				<div id={'section' + section.WikiSection.sectionIndex + 'content'}></div>
+			</div>
+		);
+	}
+}
+
 
 export default class WikiDetail extends React.Component {
 	componentWillMount() {
 		//this.props.fetchStory(this.props.id, this.props.user.id);
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		// $('#content').append(this.props.storyDetails.content);
 	}
 
 	render() {
-		
+		const { wiki, sections } = this.props;
+
 		return (
-			<div className="text-content-wrapper">
+			<div className="wikiDetailWrapper">
+				<h1>{ wiki.title }</h1>
+				<div className="wikiContentTable">
+					<div className="wikiContentTableSubtitle">
+						<h2>Contents</h2>
+					</div>
+					<ul>
+					</ul>
+				</div>
+
+				<div>
+					{ 
+						(sections.length > 0) ?
+							(
+								sections.map(function(section, idx){
+									return (
+										<Section section={ section } key={ idx } />
+									) 
+								})
+							)
+						:
+						null
+					}
+				</div>
 			</div>
-		)
+		);
 	}
 }
 
 
 WikiDetail.propTypes = {
-	// storyDetails: PropTypes.object.isRequired,
-	// user: PropTypes.object.isRequired
+	wiki: PropTypes.object.isRequired,
+	sections: PropTypes.array.isRequired
 };
