@@ -98,28 +98,58 @@ class Search extends Component {
 		var isSelected = !newFilterChips[int]
 		newFilterChips[int]= isSelected;
 		this.setState({...this.state, filterChips: newFilterChips});
+		
 		var tempList = [];
+		var dataSource= this.props.allGroups;
 
-		for(var i=0;i<this.props.allGroups.length;i++){
+		if(this.state.value===""){
 
-			if(this.filterText(this.state.value,this.props.allGroups[i].name)){
-				
+			for(var i=0;i<dataSource.length;i++){
+
 				//cannot wait for value propagation
-				if(this.props.allGroups[i].groupType===int){
+				if(dataSource[i].groupType===int){
 					if(isSelected){
-						tempList.push(this.props.allGroups[i]);	
+						tempList.push(dataSource[i]);	
 					}
-				}else if(this.state.filterChips[this.props.allGroups[i].groupType]){
-					tempList.push(this.props.allGroups[i]);
+				}else if(this.state.filterChips[dataSource[i].groupType]){
+					tempList.push(dataSource[i]);
 				}
 			}
+			this.setState({groupListShown:tempList});
+		
+		}else{
+
+			for(var i=0;i<dataSource.length;i++){
+
+				if(this.filterText(this.state.value,dataSource[i].name)){
+					
+					//cannot wait for value propagation
+					if(dataSource[i].groupType===int){
+						if(isSelected){
+							tempList.push(dataSource[i]);	
+						}
+					}else if(this.state.filterChips[dataSource[i].groupType]){
+						tempList.push(dataSource[i]);
+					}
+				}
+			}
+			this.setState({groupListShown:tempList});
 		}
-		this.setState({groupListShown:tempList});
 	}
 
 	getDataSource = () =>{
 		if(this.state.value===""){
-			return this.props.allGroups;
+
+			//if all filters untouched
+			if(this.state.filterChips[0]&&
+				this.state.filterChips[1]&&
+				this.state.filterChips[2]&&
+				this.state.filterChips[3]&&
+				this.state.filterChips[4]){
+				return this.props.allGroups;	
+			}else{
+				return this.state.groupListShown;
+			}	
 		}else{
 			return this.state.groupListShown;
 		}
@@ -170,7 +200,12 @@ class Search extends Component {
 				(
 					<div className="col-xs-3 col-md-2 col-lg-1">
 					<FlatButton label="Cancel" className='search-cancel'
-					onTouchTap={(e)=>{ e.preventDefault();this.toggleSearch(false)}}/>
+					onTouchTap={(e)=>{ 
+						e.preventDefault();
+						this.toggleSearch(false);
+						this.setState({value:''});
+						this.setState({filterChips:[true,true,true,true,true]});
+					}}/>
 					</div>
 					)
 				:
