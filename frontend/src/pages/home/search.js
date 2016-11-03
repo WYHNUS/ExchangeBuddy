@@ -13,7 +13,7 @@ import FlatButton from 'material-ui/FlatButton';
 
 import GroupList from '../../components/HomeComponent/Search/GroupList';
 import {fetchAllGroups, fetchAllGroupsSuccess, fetchAllGroupsFailure, resetAllGroups,
-fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure, toggleHomeTab
+	fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure, toggleHomeTab
 } from '../../actions/home';
 import { toggleHomeSearchDrawerVisibility } from '../../actions/pageVisibility';
 import { toggleSelectedHomeGroup } from '../../actions/home';
@@ -24,8 +24,10 @@ class Search extends Component {
 	constructor(props){
 		super(props);
 		this.state={
-	      isSearchOpen: false
-	    }
+			isSearchOpen: false,
+			groupListShown: [],
+			value:"",
+		}
 	}
 
 	toggleSearch(toggle){
@@ -57,26 +59,42 @@ class Search extends Component {
 		}
 	}
 
+	filterChange=(event)=>{
+
+		this.setState({...this.state, value: event.target.value});
+		var tempList = [];
+
+		for(var i=0;i<this.props.allGroups.length;i++){
+			if(this.filter(event.target.value,this.props.allGroups[i].name)){
+				tempList.push(this.props.allGroups[i])
+			}
+		}
+
+		this.setState({groupListShown:tempList});
+	}
+
+	filter(searchText, key){
+
+		searchText = searchText.toLowerCase();
+		key = key.toLowerCase().replace(/[^a-z0-9 ]/g, '');
+
+		if (searchText.length < 1)
+			return false;
+
+		return searchText.split(' ').every(searchTextSubstring =>
+			key.split(' ').some(s => s.substr(0, searchTextSubstring.length) == searchTextSubstring)
+			);
+	}
+
 	render(){
 		const{allGroups, toggleHomeTab, toggleHomeSearchDrawerVisibility, fetchNewGroup}=this.props;
+		const{groupListShown} = this.state;
 
 		const goToGroup = (id) => { 
-	        browserHistory.push(`/home/${id}`);
-	        fetchNewGroup(id);
-	        toggleHomeTab('friends');
-	        toggleHomeSearchDrawerVisibility(false); 
-	    };
-
-	    const filter = (searchText, key) => {
-		  searchText = searchText.toLowerCase();
-		  key = key.toLowerCase().replace(/[^a-z0-9 ]/g, '');
-
-		  if (searchText.length < 1)
-		    return false;
-
-		  return searchText.split(' ').every(searchTextSubstring =>
-		    key.split(' ').some(s => s.substr(0, searchTextSubstring.length) == searchTextSubstring)
-		  );
+			browserHistory.push(`/home/${id}`);
+			fetchNewGroup(id);
+			toggleHomeTab('friends');
+			toggleHomeSearchDrawerVisibility(false); 
 		};
 
 		return(
@@ -93,58 +111,60 @@ class Search extends Component {
 			<div className={this.state.isSearchOpen?("col-xs-9 col-md-10 col-lg-11"):("col-xs-12")}>
 			<TextField
 			ref="searchField"
-		    hintText="Search" className={this.state.isSearchOpen?("search-textfield-selected"):("search-textfield")}
-		    onTouchTap={(e) => { e.preventDefault();this.toggleSearch(true)}}/>
-		    </div>
-		    {
-		    	(this.state.isSearchOpen)?
-		    	(
-		    		<div className="col-xs-3 col-md-2 col-lg-1">
-		    		<FlatButton label="Cancel" className='search-cancel'
-				    onTouchTap={(e)=>{ e.preventDefault();this.toggleSearch(false)}}/>
-				    </div>
-			    )
-			    :
-			    null
-		    }
+			hintText="Search" className={this.state.isSearchOpen?("search-textfield-selected"):("search-textfield")}
+			value={this.state.value}
+			onChange={this.filterChange}
+			onTouchTap={(e) => { e.preventDefault();this.toggleSearch(true)}}/>
+			</div>
+			{
+				(this.state.isSearchOpen)?
+				(
+					<div className="col-xs-3 col-md-2 col-lg-1">
+					<FlatButton label="Cancel" className='search-cancel'
+					onTouchTap={(e)=>{ e.preventDefault();this.toggleSearch(false)}}/>
+					</div>
+					)
+				:
+				null
+			}
 			</div>
 			{
 				(this.state.isSearchOpen)?
 				(
 					<div className="row center-xs">
 					<List>
-					{allGroups.map((group,idx)=>(
+					{groupListShown.map((group,idx)=>(
 						(parseInt(group.groupType)==0)?
 						(
-						<ListItem
-						key={idx}
-						primaryText={getName(group.name)}
-						secondaryText={`${getTerm(group.name)} ${getYear(group.name)}`}
-						onTouchTap={()=>goToGroup(group.id)}
-						/>
-						):
+							<ListItem
+							key={idx}
+							primaryText={getName(group.name)}
+							secondaryText={`${getTerm(group.name)} ${getYear(group.name)}`}
+							onTouchTap={()=>goToGroup(group.id)}
+							/>
+							):
 						(
 							(parseInt(group.groupType) == 1) ?
-		                    (
-		                    	<ListItem
+							(
+								<ListItem
 								key={idx}
 								primaryText={getName(group.name)}
 								secondaryText={`${getYear(group.name)}`}
 								onTouchTap={()=>goToGroup(group.id)}
 								/>
-		                    ):
+								):
 							(
-							<ListItem
-							key={idx}
-							primaryText={group.name}
-							onTouchTap={()=>goToGroup(group.id)}
-							/>	
+								<ListItem
+								key={idx}
+								primaryText={group.name}
+								onTouchTap={()=>goToGroup(group.id)}
+								/>	
+								)
 							)
-						)
-					))}
+						))}
 					</List>
 					</div>	
-				):
+					):
 				(
 					<div>
 					<div className="row center-xs">
@@ -154,7 +174,7 @@ class Search extends Component {
 					<GroupList/>
 					</div>
 					</div>	
-				)
+					)
 			}	
 
 			</Drawer>
@@ -168,44 +188,44 @@ const mapDispatchToProps = (dispatch) => {
 		toggleHomeSearchDrawerVisibility: visibility=>dispatch(
 			toggleHomeSearchDrawerVisibility(visibility)),
 		fetchAllGroups: () => {
-	      dispatch(fetchAllGroups()).payload.then((response) => {
-	      	if (!response.error) {
-	      		dispatch(fetchAllGroupsSuccess(response.body))
-	      	}else{
-	      		dispatch(fetchAllGroupsFailure(response.error))
-	      	}
-		}, (err) => {
-	        if (err.status === 401) {
-	          cookie.remove('authToken');
-	          dispatch(clearUser());
+			dispatch(fetchAllGroups()).payload.then((response) => {
+				if (!response.error) {
+					dispatch(fetchAllGroupsSuccess(response.body))
+				}else{
+					dispatch(fetchAllGroupsFailure(response.error))
+				}
+			}, (err) => {
+				if (err.status === 401) {
+					cookie.remove('authToken');
+					dispatch(clearUser());
 	          // need to redirect to a new version of login page
 	          browserHistory.push('/');
-	        } else {
-	          dispatch(fetchAllGroupsFailure(err.response.error.message));
-	        }
-	      })
-	  	},
-	  	fetchNewGroup: (groupId) => {
-	      dispatch(fetchCurrentGroup(groupId)).payload.then((response) => {
-	        if (!response.error) {
-	          dispatch(fetchCurrentGroupSuccess(response.body));
-	        } else {
-	          dispatch(fetchCurrentGroupFailure(response.error));
-	        }
-	      }, (err) => {
-	        if (err.status === 401) {
-	          cookie.remove('authToken');
-	          dispatch(clearUser());
+	      } else {
+	      	dispatch(fetchAllGroupsFailure(err.response.error.message));
+	      }
+	  })
+		},
+		fetchNewGroup: (groupId) => {
+			dispatch(fetchCurrentGroup(groupId)).payload.then((response) => {
+				if (!response.error) {
+					dispatch(fetchCurrentGroupSuccess(response.body));
+				} else {
+					dispatch(fetchCurrentGroupFailure(response.error));
+				}
+			}, (err) => {
+				if (err.status === 401) {
+					cookie.remove('authToken');
+					dispatch(clearUser());
 	          // need to redirect to a new version of login page
 	          browserHistory.push('/');
-	        } else {
-	          dispatch(fetchCurrentGroupFailure(err.response.error.message));
-	        }
-	      });
-	    },
-	    toggleHomeSearchDrawerVisibility: visibility => dispatch(toggleHomeSearchDrawerVisibility(visibility)),
-	    toggleSelectedHomeGroup: index => dispatch(toggleSelectedHomeGroup(index)),
-	    toggleHomeTab: tabValue => dispatch(toggleHomeTab(tabValue)),
+	      } else {
+	      	dispatch(fetchCurrentGroupFailure(err.response.error.message));
+	      }
+	  });
+		},
+		toggleHomeSearchDrawerVisibility: visibility => dispatch(toggleHomeSearchDrawerVisibility(visibility)),
+		toggleSelectedHomeGroup: index => dispatch(toggleSelectedHomeGroup(index)),
+		toggleHomeTab: tabValue => dispatch(toggleHomeTab(tabValue)),
 	};
 };
 
@@ -219,13 +239,13 @@ const mapStateToProps = (state)=>{
 export default connect(mapStateToProps, mapDispatchToProps)(Search);
 
 function getName(homeGroupDetailsName){
-  return homeGroupDetailsName.trim().split("--")[0].trim();
+	return homeGroupDetailsName.trim().split("--")[0].trim();
 }
 
 function getTerm(homeGroupDetailsName){
-  return homeGroupDetailsName.trim().split("--")[1].trim().split(" ")[2];
+	return homeGroupDetailsName.trim().split("--")[1].trim().split(" ")[2];
 }
 
 function getYear(homeGroupDetailsName){
-  return homeGroupDetailsName.trim().split("--")[1].trim().split(" ")[1];
+	return homeGroupDetailsName.trim().split("--")[1].trim().split(" ")[1];
 }
