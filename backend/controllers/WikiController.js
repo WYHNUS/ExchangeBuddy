@@ -7,38 +7,40 @@ var Vote = models.WikiSectionVote;
 
 // user get specific wiki page
 exports.getWiki = function(req, res) {
-    if (!req.body.wikiId) {
+    var query = req.query;
+    if (!query.q) {
         return res.status(400)
             .json({
                 status: 'fail',
                 message: 'Invalid query data.'
             });
     } else {
-        // find all wikiSections and all current WikiSectionVersion content specific with wiki
-        models.sequelize.Promise.all([
-            Wiki.findOne({
-                where: {
-                    id: req.body.wikiId
-                }
-            }),
-            Section.findAll({
-                where: {
-                    WikiId: req.body.wikiId
-                },
+        // find all wikiSections
+        Wiki.findOne({
+            attributes: ['id', 'title', 'view', 'createdAt', 'updatedAt'],
+            where: {
+                title: query.q
+            },
+            include: [{
+                model: Section,
+                attributes: ['id', 'displayVersionNumber'],
                 order: '"sectionIndex" DESC'
-            })
-        ]).spread(function(wiki, sections){
-            var displayedSectionVersionArray = sections.map(section => {
+            }]
+        }).then(function(wiki) {
+            var displayedSectionVersionArray = wiki.WikiSections.map(section => {
                 // find list of sectionVersions belong to corresponding section
                 return Version.find({
+                    attributes: ['content', 'versionNumber', 'score', 'createdAt', 'updatedAt'],
                     where: {
                         WikiSectionId: section.id,
                         versionNumber: section.displayVersionNumber
                     },
                     include: [
-                        { model: Section },
                         { 
-                            model: User,
+                            model: Section
+                        },
+                        { 
+                            model: User,    // get author
                             attributes: ['id', 'name', 'profilePictureUrl']
                         }
                     ]

@@ -68,15 +68,16 @@ router.get('/resendVerificationMail/:userId', MailCtrl.resend);
 router.get('/country', CountryCtrl.getAllCountries);
 router.get('/country/:id', CountryCtrl.getCountry);
 
-router.get('/university', UniCtrl.getAllUniversities);
+router.get('/university/', UniCtrl.getAllUniversities);
 router.get('/university/:id', UniCtrl.getUniversity);
 
 router.post('/messages', verifyToken, ChatCtrl.getMessages);
 
+// use query String to get particular wiki page
 router.get('/wiki', WikiCtrl.getWiki);
 router.get('/wiki/section/version/:id', WikiCtrl.getSectionVersion);
-router.put('/wiki/', verifyToken, WikiCtrl.createNewWiki);
-router.put('/wiki/section/', verifyToken, WikiCtrl.createNewSection);
+router.put('/wiki', verifyToken, WikiCtrl.createNewWiki);
+router.put('/wiki/section', verifyToken, WikiCtrl.createNewSection);
 router.put('/wiki/section/version', verifyToken, WikiCtrl.createNewSectionVersion);
 // router.post('/wiki/section/version/vote', verifyToken, WikiCtrl.vote);
 
