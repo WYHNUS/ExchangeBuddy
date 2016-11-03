@@ -98,7 +98,7 @@ export const getRoutes = (store) =>{
     <Route path="wiki">
       <IndexRoute component={ Wiki }/>
       <Route path=":wikiTitle" component={ WikiDetails }/>
-      <Route path="editWiki(/:wikiTitle)" component={ EditWiki } onEnter={ authRequired }/>
+      <Route path="editWiki(/:wikiTitle/:wikiSection)" component={ EditWiki } onEnter={ authRequired }/>
     </Route>
     <Route path="profile(/:userId)" onEnter={ authRequired }>
       <IndexRoute component={ Profile }/>

@@ -50,12 +50,17 @@
 	    font-weight: normal;
 	    border-bottom: 1px solid $h-border-color;
 	}
+	a { 
+		text-decoration: none;
+	    color: $unvisited-a-color;
+	}
+	a:visited { color: $visited-a-color; }
 
 	.wikiContentTable {
 	    display: table;
 	    padding: 5px;
 	    border: 1px solid $h-border-color;
-	    
+
 		h2 {
 		    margin: 0;
 		    text-align: center;
@@ -67,11 +72,6 @@
 		    list-style-type: none;
 		    list-style-image: none;
 		}
-		a { 
-			text-decoration: none;
-		    color: $unvisited-a-color;
-		}
-		a:visited { color: $visited-a-color; }
 
 		.wikiSectionWrapper {
 			.contentNumber { padding-right: 7px; }
@@ -82,6 +82,17 @@
 		h2 {
 		    font-weight: normal;
 		    border-bottom: 1px solid $h-border-color;
+
+			span {
+				cursor: pointer;
+				margin-left: 15px;
+				font-size: 13px;
+				font-weight: normal;
+				float: right;
+			}
+			span:visited {
+				color: #123;
+			}
 		}
 	}
 }

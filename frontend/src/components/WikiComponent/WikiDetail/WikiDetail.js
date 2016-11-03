@@ -12,12 +12,23 @@ class Section extends React.Component {
 		$('#section' + section.WikiSection.sectionIndex + 'content').append(section.content);
 	}
 
-	render() {
-		const { section } = this.props;
+	editComponent() {
+		const { wikiTitle, section } = this.props;
+        browserHistory.push('/wiki/editWiki/' + wikiTitle + '/' + section.WikiSection.sectionIndex);
+	}
 
+	render() {
+		const { section, userToken } = this.props;
 		return (
 			<div className="wikiSectionWrapper" id={ section.WikiSection.name }>
-				<h2>{ section.WikiSection.name }</h2>
+				<h2>
+					{ section.WikiSection.name }
+					{
+						userToken ?
+							<span onClick={this.editComponent.bind(this)}><a>[ edit ]</a></span>
+						: null
+					}
+				</h2>
 				<div id={"section" + section.WikiSection.sectionIndex + "content"}></div>
 			</div>
 		);
@@ -35,7 +46,7 @@ export default class WikiDetail extends React.Component {
 	}
 
 	render() {
-		const { wiki, sections } = this.props;
+		const { wiki, sections, userToken } = this.props;
 
 		return (
 			<div className="wikiDetailWrapper">
@@ -68,7 +79,12 @@ export default class WikiDetail extends React.Component {
 							(
 								sections.map(function(section, idx){
 									return (
-										<Section section={ section } key={ idx } />
+										<Section
+											wikiTitle={ wiki.title }
+											section={ section } 
+											userToken={ userToken } 
+											key={ idx } 
+										/>
 									) 
 								})
 							)
