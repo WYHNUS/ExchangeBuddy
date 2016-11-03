@@ -275,7 +275,7 @@ exports.createNewSectionVersion = function(req, res) {
     //      --> should this be done (only until admin change this WikiSection's type)? 
     // IMPORTANT: get user id from token
     // CHECK: disable user frequently editing same version --> should this check exists?
-    if (!req.body.wikiId || !req.body.sectionIndex || !req.body.content) {
+    if (!req.body.wikiTitle || !req.body.sectionIndex || !req.body.content) {
         return res.status(400)
             .json({
                 status: 'fail',
@@ -283,56 +283,78 @@ exports.createNewSectionVersion = function(req, res) {
             });
     } else {
         // check if wiki and section exists
-        // models.sequelize.Promise.all([
-            Wiki.findOne({
+        Wiki.findOne({
+            where: {
+                title: req.body.wikiTitle
+            },
+            include: [{
+                model: Section,
                 where: {
-                    title: req.body.wikiTitle
-                },
-                include: [{
-                    model: Section,
-                    where: {
-                        sectionIndex: req.body.sectionIndex
-                    }
-                }]
-            }).then(function(wiki) {
-                console.log(wiki);
-        // ]).spread(function(wiki, section){
-            /*
-                >>>>>>>>>>>>>>>>>>>>  TODO  <<<<<<<<<<<<<<<<<<<<<
-                    check if user has the permission to edit
-                    based on User.role, User.credibility and
-                    WikiSection.sectionType
-                >>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<
-            */
-            Version.create({
-                content: req.body.content,
-                versionNumber: wiki.section.totalVersionCount + 1,
-                WikiSectionId: wiki.section.id,
-                UserId: req.user.id
-            }).then(function(version) {
-                // update WikiSection's display with the latest version 
-                wiki.section.update({
-                    displayVersionNumber: version.versionNumber,
-                    totalVersionCount: wiki.section.totalVersionCount + 1
-                }).then(function(updatedSection) {
-                    console.log(updatedSection);
-                    return res.status(200)
-                        .json({
-                            status: 'success',
-                            section: updatedSection,
-                            version: version
-                        });
+                    sectionIndex: req.body.sectionIndex
+                }
+            }]
+        }).then(function(wiki) {
+            // check if new content is the same as the old one
+            Version.findOne({
+                where: { 
+                    versionNumber: wiki.WikiSections[0].displayVersionNumber,
+                    WikiSectionId: wiki.WikiSections[0].id
+                }
+            }).then(function(currentVersion) {
+                console.log(currentVersion);
+                if (currentVersion.content === req.body.content) {
+                    return res.status(304)
+                            .json({
+                                status: 'fail',
+                                message: 'Content is the same as previous version.'
+                            });
+                } else {
                     /*
-                        >>>>>>>>>>>>>>>>>>>>  Consider  <<<<<<<<<<<<<<<<<<<<<
-                            maybe can update author's credibility here?
-                        >>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<
+                        >>>>>>>>>>>>>>>>>>>>  TODO  <<<<<<<<<<<<<<<<<<<<<
+                            check if user has the permission to edit
+                            based on User.role, User.credibility and
+                            WikiSection.sectionType
+                        >>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<
                     */
-                }).catch(function(err) {
-                    resError(res, err);
-                });
-            }).catch(function(err) {
-                resError(res, err);
-            });
+                    // filter content -> disallow content less than 100 char?
+                    if (req.body.content.length <= 100) {
+                        return res.status(409)
+                                .json({
+                                    status: 'fail',
+                                    message: 'too little content'
+                                });
+                    } else {
+                        Version.create({
+                            content: req.body.content,
+                            versionNumber: wiki.WikiSections[0].totalVersionCount + 1,
+                            WikiSectionId: wiki.WikiSections[0].id,
+                            UserId: req.user.id
+                        }).then(function(version) {
+                            // update WikiSection's display with the latest version 
+                            wiki.WikiSections[0].update({
+                                displayVersionNumber: version.versionNumber,
+                                totalVersionCount: wiki.WikiSections[0].totalVersionCount + 1
+                            }).then(function(updatedSection) {
+                                return res.status(200)
+                                    .json({
+                                        status: 'success',
+                                        section: updatedSection,
+                                        version: version
+                                    });
+                                /*
+                                    >>>>>>>>>>>>>>>>>>>>  Consider  <<<<<<<<<<<<<<<<<<<<<
+                                        maybe can update author's credibility here?
+                                    >>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<
+                                */
+                            }).catch(function(err) {
+                                resError(res, err);
+                            });
+                        }).catch(function(err) {
+                            resError(res, err);
+                        });
+                    }
+                }
+            }); 
         }).catch(function(err) {
             resError(res, err);
         });
