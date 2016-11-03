@@ -192,4 +192,9 @@ GET /comment/:eventId
 
 */
 router.get('/comment/:eventId', verifyToken, EventCtrl.getComments);
+router.get('/signups', function(req, res){
+    models.User.findAll().then(function(users){
+        res.send('Number of users: ' + users.length)
+    })
+})
 module.exports = router;
