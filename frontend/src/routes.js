@@ -19,7 +19,9 @@ import Friends from './pages/home/friends';
 import Landing from './pages/landing';
 import NotFound from './pages/not-found';
 import Profile from './pages/profile';
-import Wiki from './pages/wiki';
+import Wiki from './pages/wiki/wiki';
+import WikiDetails from './pages/wiki/wikiDetails';
+import EditWiki from './pages/wiki/editWiki';
 import Stories from './pages/stories/stories';
 import StoryDetails from './pages/stories/story';
 import EditStory from './pages/editStory';
@@ -89,15 +91,19 @@ export const getRoutes = (store) =>{
       </Route>
     </Route>
     {/*<Route path="newstory" component={ EditStory } onEnter={ authRequired }/>*/}
-    <Route path="stories" onEnter={ authRequired }>
+    <Route path="stories">
       <IndexRoute component={ Stories }/>
       <Route path=":storyId" component={ StoryDetails }/>
     </Route>
-    <Route path="wiki" component={Wiki}/>
+    <Route path="wiki">
+      <IndexRoute component={ Wiki }/>
+      <Route path=":wikiTitle" component={ WikiDetails }/>
+      <Route path="editWiki(/:wikiTitle)" component={ EditWiki } onEnter={ authRequired }/>
+    </Route>
     <Route path="profile(/:userId)" onEnter={ authRequired }>
-      <IndexRoute component={Profile}/>
-      <Route path="edit" component={ProfileEdit}/>
-      <Route path="editUni" component={IdentifyUniversity}/>
+      <IndexRoute component={ Profile }/>
+      <Route path="edit" component={ ProfileEdit }/>
+      <Route path="editUni" component={ IdentifyUniversity }/>
     </Route>
     <Route path="notloggedin" component={ NotLoggedIn }/>
     <Route path="signup" component={ Signup }/>

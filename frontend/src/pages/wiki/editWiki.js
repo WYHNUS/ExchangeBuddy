@@ -1,35 +1,43 @@
 import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { toggleBottomBarVisibility, toggleTopBarVisibility,
-toggleTopBarSettingsButtonVisibility } from '../actions/pageVisibility';
+toggleTopBarBackButtonVisibility } from '../../actions/pageVisibility';
 
-class Wiki extends React.Component{
+import WikiForm from '../../components/WikiComponent/WikiForm';
+
+class WikiDetails extends React.Component{
 
 	componentDidMount() {
 		this.props.toggleBottomBarVisibility(true);
 		this.props.toggleTopBarVisibility(true);
-		this.props.toggleTopBarSettingsButtonVisibility(true);
+		this.props.toggleTopBarBackButtonVisibility(true);
+	}
+	componentWillUnmount(){
+		this.props.toggleTopBarBackButtonVisibility(false);
 	}
 
-	componentWillUnmount(){
-		this.props.toggleTopBarSettingsButtonVisibility(false);
-	}
 
 	render() {
 		return (
 			<div>
-				Wiki
+				<WikiForm/>
 			</div>
 		);
 	}
-
 }
+
+const mapStateToProps = (state )=>{
+	return{
+	};
+}
+
+
 const mapDispatchToProps = (dispatch) => {
 	return {
 		toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility)),
 		toggleTopBarVisibility: visibility=>dispatch(toggleTopBarVisibility(visibility)),
-		toggleTopBarSettingsButtonVisibility: visibility=>dispatch(toggleTopBarSettingsButtonVisibility(visibility))
+		toggleTopBarBackButtonVisibility: visibility=>dispatch(toggleTopBarBackButtonVisibility(visibility))
 	};
 };
 
-export default connect(null, mapDispatchToProps)(Wiki);
+export default connect(mapStateToProps, mapDispatchToProps)(WikiDetails);
