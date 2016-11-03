@@ -1,65 +1,28 @@
-var app = require('./app')
-var models = require('./models');
+var fs = require('fs');
+var xml2js = require("xml2js");
+var models = ('./models');
+var app = ('./app');
 
+var parser = new xml2js.Parser();
 
-models.Group.findAll({
-    where: {
-        groupType: 1
-    }
-}).then(function(groups){
-    models.sequelize.Promise.all(groups.map((group) => (group.getUser()))).then(function(users){
-        var newGroups = [];
-        var queries = [];
-        for(var group of groups){
-            var name = group.name;
-            var name_array = name.split(' ');
-            name_array.pop();
-            var newGroup = {groupType : 1};
-            newGroup.name = name_array.join(' ');
-            newGroups.push(newGroup);
-        }
+var dummy = {
+    name: "ExchangeBuddy"
+}
 
-        for(var i = 0; i < newGroups.length; i++){
-            newGroups[i].users = users[i];
-        }
+models.User.create(dummy).then(function(user){
 
-        for(var i = 0; i < newGroups.length; i++){
-            var found = false;
-            for(var j = 0; j < queries.length; j++){
-                if(newGroups[i].name == queries[j].name){
-                    queries[j].users = queries[j].users.concat(newGroups[i].users);
-                    found = true;
-                    break;
-                }
-            }
-
-            if(!found){
-                queries.push(newGroups[i]);
-            }
-        }
-
-
-
-        models.sequelize.Promise.all(
-            queries.map(
-                (newGroup) => (
-                    models.Group.create({
-                        groupType: newGroup.groupType,
-                        name: newGroup.name
-                    })
-                )
-            )
-        ).then(function(groups){
-            for(var i = 0; i < groups.length; i++){
-                groups[i].addUser(queries[i].users);
+    fs.readFile('./exchangebuddy.wordpress.2016-11-03.xml', function(err, data){
+        parser.parseString(data, function(err, result){
+            for(var item of result.rss.channel[0].item){
+                var title = item.title;
+                var content = item['content:encoded'][0]
+                models.Story.create({
+                    title,
+                    content,
+                    id: user.id
+                })
             }
         })
-
-        groups.map((group) => {
-            group.removeUser();
-            group.destroy();
-        })
-
     })
 
 })
