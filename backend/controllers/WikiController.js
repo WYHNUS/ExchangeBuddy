@@ -283,19 +283,20 @@ exports.createNewSectionVersion = function(req, res) {
             });
     } else {
         // check if wiki and section exists
-        models.sequelize.Promise.all([
+        // models.sequelize.Promise.all([
             Wiki.findOne({
                 where: {
-                    id: req.body.wikiId
-                }
-            }),
-            Section.findOne({
-                where: {
-                    WikiId: req.body.wikiId,
-                    sectionIndex: req.body.sectionIndex
-                }
-            })
-        ]).spread(function(wiki, section){
+                    title: req.body.wikiTitle
+                },
+                include: [{
+                    model: Section,
+                    where: {
+                        sectionIndex: req.body.sectionIndex
+                    }
+                }]
+            }).then(function(wiki) {
+                console.log(wiki);
+        // ]).spread(function(wiki, section){
             /*
                 >>>>>>>>>>>>>>>>>>>>  TODO  <<<<<<<<<<<<<<<<<<<<<
                     check if user has the permission to edit
@@ -305,14 +306,14 @@ exports.createNewSectionVersion = function(req, res) {
             */
             Version.create({
                 content: req.body.content,
-                versionNumber: section.totalVersionCount + 1,
-                WikiSectionId: section.id,
+                versionNumber: wiki.section.totalVersionCount + 1,
+                WikiSectionId: wiki.section.id,
                 UserId: req.user.id
             }).then(function(version) {
                 // update WikiSection's display with the latest version 
-                section.update({
+                wiki.section.update({
                     displayVersionNumber: version.versionNumber,
-                    totalVersionCount: section.totalVersionCount + 1
+                    totalVersionCount: wiki.section.totalVersionCount + 1
                 }).then(function(updatedSection) {
                     console.log(updatedSection);
                     return res.status(200)
