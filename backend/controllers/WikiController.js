@@ -27,6 +27,14 @@ exports.getWiki = function(req, res) {
                 order: '"sectionIndex" DESC'
             }]
         }).then(function(wiki) {
+            if (!wiki) {
+                return res.status(404)
+                    .json({
+                        status: 'fail',
+                        message: 'Requested wiki page doesn\'t exist'
+                    });
+            }
+
             var displayedSectionVersionArray = wiki.WikiSections.map(section => {
                 // find list of sectionVersions belong to corresponding section
                 return Version.find({
@@ -112,7 +120,7 @@ exports.getSectionVersion = function(req, res) {
                 return res.status(404)
                     .json({
                         status: 'fail',
-                        message: 'requested wiki section version doesn\'t exists'
+                        message: 'requested wiki section version doesn\'t exist'
                     });
             } else {
                 return res.status(200)
@@ -401,7 +409,7 @@ exports.vote = function(req, res) {
                 return res.status(404)
                     .json({
                         status: 'fail',
-                        message: 'requested section version doesn\'t exists'
+                        message: 'requested section version doesn\'t exist'
                     });
             } else {
                 // check if user has voted before

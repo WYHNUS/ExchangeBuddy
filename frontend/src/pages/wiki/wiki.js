@@ -35,7 +35,7 @@ class Wiki extends React.Component{
 					<div className="recommendation-nav-bar">
 						<h2>Recommendation</h2>
 					</div>
-					<hr className="green-separator" sytle={{ width: "80%"}}></hr>
+					<hr className="green-separator" style={{ width: "85%"}}></hr>
 					<ul className="recommendation-item-list">
 						<li className="recommendation-item">
 							<div className="recommendation-item-wrapper" onClick={this.getComponent.bind(this, "university title")}>
@@ -44,7 +44,7 @@ class Wiki extends React.Component{
 							</div>
 						</li>
 					</ul>
-					<hr className="green-separator" sytle={{ width: "80%"}}></hr>
+					<hr className="green-separator" style={{ width: "85%"}}></hr>
 				</div>
 				<div className="search">
 					

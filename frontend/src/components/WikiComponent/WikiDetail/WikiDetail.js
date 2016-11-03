@@ -50,8 +50,8 @@ export default class WikiDetail extends React.Component {
 									return (
 										<li key={ idx }>
 											<a href={ "#" + section.WikiSection.name }>
-												<span class="contentNumber">{ section.WikiSection.sectionIndex }</span>
-												<span class="contentText">{ section.WikiSection.name }</span>
+												<span className="contentNumber">{ section.WikiSection.sectionIndex }</span>
+												<span className="contentText">{ section.WikiSection.name }</span>
 											</a>
 										</li>
 									) 

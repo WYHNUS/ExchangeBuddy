@@ -37,13 +37,10 @@ class WikiDetails extends React.Component{
 					fetching ?
 						<p> fetching resource ... </p>
 					:
-						<WikiDetail />
-				}
-				{
-					error ?
-						<p> { error } </p>
-					:
-						null
+						error ?
+							<p> { error } </p>
+						:
+							<WikiDetail />
 				}
 			</div>
 		);
