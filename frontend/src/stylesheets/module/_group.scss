@@ -61,24 +61,31 @@
   			}
   		}
 
-  		.search-textfield-selected{
-
-  			width:100%!important;
-  			border-radius: 15px;
-  			border:2px solid lightgray;
-  			padding-left: 10px;
-
-  			>div>hr{
-  				width:93%!important;
-  			}
-  		}
-
   		.search-cancel{
   			background: white;
   		}	
   	}
 
+  	.seperator{
+  		width: 100%;
+  		margin-right: 20px;
+  		margin-left: 20px;
+  	}
 
+  	.search-chip-wrapper{
+  		margin-left: 10px;
+  		margin-right: 10px;
+  		width: 100%;
+
+  		.selected-chip{
+  			background-color: cadetblue!important;
+  		}
+
+  		.deselected-chip{
+
+  		}
+
+  	}
 
   }
 

@@ -10,6 +10,7 @@ import {List, ListItem} from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
+import Chip from 'material-ui/Chip'
 
 import GroupList from '../../components/HomeComponent/Search/GroupList';
 import {fetchAllGroups, fetchAllGroupsSuccess, fetchAllGroupsFailure, resetAllGroups,
@@ -27,6 +28,7 @@ class Search extends Component {
 			isSearchOpen: false,
 			groupListShown: [],
 			value:"",
+			filterChips:[true,true,true,true,true]
 		}
 	}
 
@@ -65,15 +67,19 @@ class Search extends Component {
 		var tempList = [];
 
 		for(var i=0;i<this.props.allGroups.length;i++){
-			if(this.filter(event.target.value,this.props.allGroups[i].name)){
-				tempList.push(this.props.allGroups[i])
+
+			if(this.filterText(event.target.value,this.props.allGroups[i].name)){
+				//check to see if within the filtered targets
+				if(this.state.filterChips[this.props.allGroups[i].groupType]){
+					tempList.push(this.props.allGroups[i])	
+				}
 			}
 		}
 
 		this.setState({groupListShown:tempList});
 	}
 
-	filter(searchText, key){
+	filterText(searchText, key){
 
 		searchText = searchText.toLowerCase();
 		key = key.toLowerCase().replace(/[^a-z0-9 ]/g, '');
@@ -86,15 +92,58 @@ class Search extends Component {
 			);
 	}
 
+	handleChipTap=(int)=>{
+
+		var newFilterChips = this.state.filterChips.slice();
+		var isSelected = !newFilterChips[int]
+		newFilterChips[int]= isSelected;
+		this.setState({...this.state, filterChips: newFilterChips});
+		var tempList = [];
+
+		for(var i=0;i<this.props.allGroups.length;i++){
+
+			if(this.filterText(this.state.value,this.props.allGroups[i].name)){
+				
+				//cannot wait for value propagation
+				if(this.props.allGroups[i].groupType===int){
+					if(isSelected){
+						tempList.push(this.props.allGroups[i]);	
+					}
+				}else if(this.state.filterChips[this.props.allGroups[i].groupType]){
+					tempList.push(this.props.allGroups[i]);
+				}
+			}
+		}
+		this.setState({groupListShown:tempList});
+	}
+
+	getDataSource = () =>{
+		if(this.state.value===""){
+			return this.props.allGroups;
+		}else{
+			return this.state.groupListShown;
+		}
+	}
+
 	render(){
 		const{allGroups, toggleHomeTab, toggleHomeSearchDrawerVisibility, fetchNewGroup}=this.props;
-		const{groupListShown} = this.state;
+		const{groupListShown, filterChips} = this.state;
 
 		const goToGroup = (id) => { 
 			browserHistory.push(`/home/${id}`);
 			fetchNewGroup(id);
 			toggleHomeTab('friends');
 			toggleHomeSearchDrawerVisibility(false); 
+		};
+
+		const styles = {
+		  chip: {
+		    margin: 4,
+		  },
+		  wrapper: {
+		    display: 'flex',
+		    flexWrap: 'wrap',
+		  },
 		};
 
 		return(
@@ -111,7 +160,7 @@ class Search extends Component {
 			<div className={this.state.isSearchOpen?("col-xs-9 col-md-10 col-lg-11"):("col-xs-12")}>
 			<TextField
 			ref="searchField"
-			hintText="Search" className={this.state.isSearchOpen?("search-textfield-selected"):("search-textfield")}
+			hintText="Search" className="search-textfield"
 			value={this.state.value}
 			onChange={this.filterChange}
 			onTouchTap={(e) => { e.preventDefault();this.toggleSearch(true)}}/>
@@ -132,8 +181,36 @@ class Search extends Component {
 				(this.state.isSearchOpen)?
 				(
 					<div className="row center-xs">
+
+					<hr className='seperator'/>
+
+					<div style={styles.wrapper} className='search-chip-wrapper'>
+					<Chip className={filterChips[0]?("selected-chip"):("deselected-chip")} 
+					style={styles.chip} onTouchTap={()=>this.handleChipTap(0)}>
+					Exchange University
+					</Chip>
+					<Chip className={filterChips[1]?("selected-chip"):("deselected-chip")}
+					style={styles.chip} onTouchTap={()=>this.handleChipTap(1)}>
+					Home University
+					</Chip>
+					<Chip className={filterChips[2]?("selected-chip"):("deselected-chip")}
+					style={styles.chip} onTouchTap={()=>this.handleChipTap(2)}>
+					Alumni Support
+					</Chip>
+					<Chip className={filterChips[3]?("selected-chip"):("deselected-chip")}
+					style={styles.chip} onTouchTap={()=>this.handleChipTap(3)}>
+					Special
+					</Chip>
+					<Chip className={filterChips[4]?("selected-chip"):("deselected-chip")}
+					style={styles.chip} onTouchTap={()=>this.handleChipTap(4)}>
+					Interested
+					</Chip>
+					</div>
+
+					<hr className='seperator'/>
+
 					<List>
-					{groupListShown.map((group,idx)=>(
+					{this.getDataSource().map((group,idx)=>(
 						(parseInt(group.groupType)==0)?
 						(
 							<ListItem
