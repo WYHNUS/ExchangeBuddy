@@ -158,7 +158,7 @@ exports.createNewWiki = function(req, res) {
                     });
             } else {
                 Wiki.create({
-                    name: req.body.wikiTitle,
+                    title: req.body.wikiTitle,
                     UserId: req.user.id
                 }).then(function(wiki){    
                     return res.status(200)
