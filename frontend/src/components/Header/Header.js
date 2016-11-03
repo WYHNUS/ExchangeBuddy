@@ -206,12 +206,9 @@ export default class Header extends React.Component {
                     )
               : null
             }
-
-            {/*<div className="col-xs-6 col-md-2">
-              {<HeaderProfile user={ user } uni={ uni } group={ group } actions={ actions } />}
-            </div>*/}
+            
           </div>
-          <div className="row bottom-xs bottom-md center-xs" >{/*id="header-tab-row"*/}
+          <div className="row bottom-xs bottom-md center-xs" >
             <div className='col-xs-12 col-md-8' id="header-tab-col">
             <Tabs inkBarStyle={{ backgroundColor: "#fff" }} className="header-tab-parent" value={homeTabValue} onChange={this.handleChange} >
               <Tab value='friends' icon={IconsHelper.materialIcon("people")} label="FRIENDS" className="header-tab" onActive={ gotourl(params.id, "friends") } />
@@ -236,8 +233,3 @@ function getTerm(homeGroupDetailsName){
 function getYear(homeGroupDetailsName){
   return homeGroupDetailsName.trim().split("--")[1].trim().split(" ")[1];
 }
-
-/*
-
-value={this.props.value} onChange={this.handleChange}*/
-//initialSelectedIndex={ pathToIdx() }

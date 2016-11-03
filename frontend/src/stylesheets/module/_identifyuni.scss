@@ -1,4 +1,5 @@
 .exchange-uni-selection-wrapper {
+	
 	.exchange-uni-selection {
 		min-width: 300px;
 		max-width: 650px;
@@ -8,5 +9,9 @@
 
 	.select-uni-form {
 		margin: 0 10px 45px 10px;
+		
+		.exchange-form-field{
+			text-align: left;
+		}
 	}
 }

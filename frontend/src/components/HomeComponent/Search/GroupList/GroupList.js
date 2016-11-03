@@ -13,7 +13,7 @@ class GroupItem extends React.Component {
   render(){
     const {group, heading, toggleHomeTab, 
       toggleSelectedHomeGroup, toggleHomeSearchDrawerVisibility,
-      homeGroupDetails, key, index, fetchNewGroup} = this.props;
+      homeGroupDetails, index, fetchNewGroup} = this.props;
       const {selected} = this.props.homeGroups;
 
       const goToGroup = () => { 
@@ -25,14 +25,37 @@ class GroupItem extends React.Component {
       };
       return (
         <div className="group-body">
-          <h5 className="group-heading">{heading}</h5>  
-          <ListItem
-          className={parseInt(index)===parseInt(selected)?'selected-group':null}
-          primaryText={group.name}
-          onTouchTap={goToGroup}
-          />
-          {/*
-          leftAvatar={<Avatar src={ imageUrl } size={ 40 } style={{ objectFit: 'contain', backgroundColor: '#fff'}}/>}*/}
+          <h5 className="group-heading">{heading}</h5>
+          {
+            (parseInt(group.groupType)==0)?
+            (
+            <ListItem
+            key={group.id}
+            className={parseInt(index)===parseInt(selected)?'selected-group':'non-selected-group'}
+            primaryText={getName(group.name)}
+            secondaryText={`${getTerm(group.name)} ${getYear(group.name)}`}
+            onTouchTap={goToGroup}
+            />
+            ):
+            (
+              (parseInt(group.groupType) == 1) ?
+              (
+                <ListItem
+                key={group.id}
+                primaryText={getName(group.name)}
+                secondaryText={`${getYear(group.name)}`}
+                onTouchTap={()=>goToGroup(group.id)}
+                />
+              ):
+              (
+                <ListItem
+                key={group.id}
+                primaryText={group.name}
+                onTouchTap={goToGroup}
+                />  
+              )
+            )
+          }  
         </div>
       );
     }
@@ -52,6 +75,7 @@ class GroupItem extends React.Component {
           : groupType === 1 ? <GroupItem {...this.props} heading={"My Home University Group"}/>
           : groupType === 2 ? <GroupItem {...this.props} heading={"My Home University Alumni Support Group"}/>
           : groupType === 3 ? <GroupItem {...this.props} heading={"My Special Group"}/>
+          : groupType === 4 ? <GroupItem {...this.props} heading={"My Exchange Interest Group"}/>
           : null
         }
         </div>
@@ -70,9 +94,7 @@ class GroupItem extends React.Component {
       <div>
       <List className="groups-container">
       { groups.length > 0 && groups.map((group, idx) => 
-        <Group group={group} {...this.props} key={idx} index={index++}/>
-        /*<Group group={ group } currentUser={ user } key={ idx } 
-        handleClose={toggleHomeSearchDrawerVisibility} toggleSelectedHomeGroup={toggleSelectedHomeGroup} />*/) }
+        <Group group={group} {...this.props} key={idx} index={index++}/>)}
       </List>
       </div>
       );
@@ -88,4 +110,16 @@ GroupList.PropTypes={
  toggleHomeTab: PropTypes.func.isRequired,
  homeGroupDetails: PropTypes.object.isRequired,
  fetchNewGroup: PropTypes.func.isRequired
+}
+
+function getName(homeGroupDetailsName){
+  return homeGroupDetailsName.trim().split("--")[0].trim();
+}
+
+function getTerm(homeGroupDetailsName){
+  return homeGroupDetailsName.trim().split("--")[1].trim().split(" ")[2];
+}
+
+function getYear(homeGroupDetailsName){
+  return homeGroupDetailsName.trim().split("--")[1].trim().split(" ")[1];
 }

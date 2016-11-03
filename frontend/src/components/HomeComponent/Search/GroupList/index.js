@@ -21,22 +21,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     toggleSelectedHomeGroup: index => dispatch(toggleSelectedHomeGroup(index)),
     toggleHomeTab: tabValue => dispatch(toggleHomeTab(tabValue)),
     fetchNewGroup: (groupId) => {
-      dispatch(fetchEvents(groupId)).payload.then((response) => {
-        if (!response.error) {
-          dispatch(fetchEventsSuccess(response.body));
-        } else {
-          dispatch(fetchEventsFailure(response.error));
-        }
-      }, (err) => {
-        if (err.status === 401) {
-          cookie.remove('authToken');
-          dispatch(clearUser());
-          // need to redirect to a new version of login page
-          browserHistory.push('/');
-        } else {
-          dispatch(fetchEventsFailure(err.response.error.message));
-        }
-      });
       dispatch(fetchCurrentGroup(groupId)).payload.then((response) => {
         if (!response.error) {
           dispatch(fetchCurrentGroupSuccess(response.body));

@@ -26,17 +26,6 @@ import Checkbox from 'material-ui/Checkbox';
 import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
 
-/*const postToChat = (groupEvent, groupId, cardText) => {
-	const {name, coverPicture, startTime, id } = groupEvent;
-	const profilePicture = groupEvent.venue.profilePicture || groupEvent.profilePicture;
-	const eventPosting = { name, profilePicture, coverPicture, startTime, id };
-	const params = { userToken: Meteor.userToken(), userId: Meteor.userId(), groupId, eventPosting, content: cardText, type: "eventFB" };
-
-	Meteor.call('GroupChatMessage.sendToGroup', params, (err, success) => {
-		if(err)
-			console.log(err)
-	})
-}*/
 const styles = {
 	customWidth: {
 		width: 150,
@@ -180,10 +169,12 @@ class EventItemCreated extends React.Component{
 	handleChangeGoing(){
 		const {groupEvent,homeGroupDetails, showSnackbar, user, goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate,fetchEvents} = this.props;
 		if(this.state.userIsGoing){
-			this.ungoForAnEvent(groupEvent.id, user.userObject.id, showSnackbar, goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents);
+			this.ungoForAnEvent(groupEvent.id, user.userObject.id, showSnackbar, 
+				goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents);
 		}
 		else{
-			this.goForAnEvent(groupEvent.id, user.userObject.id, showSnackbar, goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents);
+			this.goForAnEvent(groupEvent.id, user.userObject.id, showSnackbar, 
+				goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents);
 		}
 	}
 
@@ -199,8 +190,10 @@ class EventItemCreated extends React.Component{
 		];
 
 		const deleteActions = [
-	      <FlatButton label="Cancel" primary={true} onTouchTap={this.closeDeleteDialog} />,
-	      <FlatButton label="Delete" primary={true} onTouchTap={console.log('delete')} />,
+	      <FlatButton label="Cancel" primary={true} 
+	      onTouchTap={(e)=>{e.preventDefault();this.closeDeleteDialog}} />,
+	      <FlatButton label="Delete" primary={true} 
+	      onTouchTap={(e)=>{e.preventDefault();this.closeDeleteDialog}} />,
 	    ];
 
 		const {groupEvent,homeGroupDetails, showSnackbar, user, 
@@ -210,9 +203,10 @@ class EventItemCreated extends React.Component{
 			return (
 				<div className='row center-xs'>
 
-				{/*<Dialog actions={deleteActions} modal={false} open={this.state.isDialogOpen} onRequestClose={this.closeDeleteDialog}>
+				<Dialog actions={deleteActions} modal={false} open={this.state.isDialogOpen} 
+					onRequestClose={this.closeDeleteDialog}>
 		          Delete the event forever?
-		        </Dialog>*/}
+		        </Dialog>
 
 				<Dialog
 				title={`${groupEvent.going.length} going for ${groupEvent.title}`}
@@ -235,27 +229,31 @@ class EventItemCreated extends React.Component{
 					title={ groupEvent.title }
 					showExpandableButton={true}
 					actAsExpander={true}
-					subtitle={  <Link id='link-title' to={`/profile/${groupEvent.User.id}`}>{`by ${groupEvent.User.name}`}</Link>} />
+					subtitle={  <Link id='link-title' to={`/profile/${groupEvent.User.id}`}>
+					{`by ${groupEvent.User.name}`}</Link>} />
 					<CardText>
 						<div className="col-xs-12 event-item-info">
 							{Icons.icon('watch_later')}<span>&nbsp; {
-							`${moment(groupEvent.startTime).format("D MMM, ddd, hA")} to ${moment(groupEvent.endTime).format("D MMM, ddd, hA")}`}</span>
+							`${moment(groupEvent.startTime).format("D MMM, ddd, hA")} to 
+							${moment(groupEvent.endTime).format("D MMM, ddd, hA")}`}</span>
 						</div>
 						<div className="col-xs-12 event-item-info">
 							{Icons.icon('place')}<span>&nbsp; 
 							<a href={`http://maps.google.com/maps?q=loc:${groupEvent.lat},${groupEvent.lng}`}>
-								<span style={{marginLeft:'3px',fontWeight:'bold',color:'darkgrey',textDecoration:'underline'}}>{`${groupEvent.location}`}</span>
+								<span style={{marginLeft:'3px',fontWeight:'bold',color:'darkgrey',textDecoration:'underline'}}>
+								{`${groupEvent.location}`}</span>
 							</a></span>
 						</div>
 						<div className="col-xs-12 event-item-info">
-							{Icons.icon('group')}<span>&nbsp; <span id='link' onClick={this.handleOpen}>{`${groupEvent.going.length} going`}</span></span>
+							{Icons.icon('group')}<span>&nbsp; <span id='link' onClick={this.handleOpen}>
+							{`${groupEvent.going.length} going`}</span></span>
 						</div>
 					</CardText>
 					<CardText className="event-item-card-text" expandable={true}>
 						{ cardText }
 					</CardText>
 					<CardActions expandable={true}>
-						{ /*Meteor.user()*/
+						{ 
 							true ?
 								<div className='row center-xs'>
 									<div className='col-xs-6 col-md-4'>
@@ -271,15 +269,18 @@ class EventItemCreated extends React.Component{
 								</div>
 							: null 
 						}
-						{
-							/*<div className="edit-delete-btn">
-						      <IconButton tooltipPosition="bottom-center" tooltip="Edit" onTouchTap={console.log('edit')()=>goToEdit(props)}>
+						{	
+							/*(parseInt(this.props.user.userObject.id)==parseInt())*/
+							<div className="edit-delete-btn">
+						      <IconButton tooltipPosition="bottom-center" tooltip="Edit" 
+						      onTouchTap={()=>goToEdit(props)}>
 						        {Icons.icon('mode_edit')}
 						      </IconButton>
-						      <IconButton tooltipPosition="bottom-center" tooltip="Delete" onTouchTap={console.log('delete')()=>props.openDialog(1)} >
+						      <IconButton tooltipPosition="bottom-center" tooltip="Delete" 
+						      onTouchTap={()=>this.openDeleteDialog()} >
 						        {Icons.icon('delete')}
 						      </IconButton>
-					        </div>*/
+					        </div>
 						}
 					</CardActions>
 				</Card>

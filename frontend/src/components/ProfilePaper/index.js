@@ -1,5 +1,6 @@
 import React from 'react';
 import Loading from '../Loading';
+import cookie from 'react-cookie';
 
 // Redux
 import { bindActionCreators } from 'redux';
@@ -9,6 +10,7 @@ import { connect } from 'react-redux';
 import ChildComponent from './ProfilePaper';
 
 import { fetchProfileSuccess, fetchProfileFailure } from '../../actions/profile';
+import { fetchProfileGroups,fetchProfileGroupsSuccess, fetchProfileGroupsFailure } from '../../actions/profile';
 import { fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure } from '../../actions/utilityInfo';
 import { attemptLogout, clearUser } from '../../actions/authActions'
 import { showSnackbar } from '../../actions/messageSnackbar';
@@ -17,6 +19,7 @@ import { showSnackbar } from '../../actions/messageSnackbar';
 const mapStateToProps = (state) => {
   return {
     profile: state.profile.userProfile.userProfile,
+    profileGroups: state.profile.userProfileGroups.userProfileGroups,
     userObject: state.user.userObject,
     /*userHomeUniversity: state.profile.userHomeUniversity.userHomeUniversity,
     userExchangeUniversities: state.profile.userExchangeUniversities.userExchangeUniversities,
@@ -49,6 +52,24 @@ const mapDispatchToProps = (dispatch) => {
     clearUser: () => {
       dispatch(clearUser());
     },
+    fetchProfileGroups:(userId)=>{
+      dispatch(fetchProfileGroups(userId)).payload.then((response)=>{
+        if (!response.error) {
+          dispatch(fetchProfileGroupsSuccess(response.body))
+        }else {
+          dispatch(fetchProfileGroupsFailure(response.error));
+        }
+      }, (err) => {
+        if (err.status === 401) {
+          cookie.remove('authToken');
+          dispatch(clearUser());
+          // need to redirect to a new version of login page
+          browserHistory.push('/');
+        } else {
+          dispatch(fetchProfileGroupsFailure(err.response.error.message));
+        }
+      })
+    }
   };
 };
 
