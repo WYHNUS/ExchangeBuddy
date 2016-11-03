@@ -43,9 +43,7 @@ export default class WikiDetail extends React.Component {
 				{
 					(sections.length > 0) ?
 						<div className="wikiContentTable">
-							<div className="wikiContentTableSubtitle">
-								<h2>Contents</h2>
-							</div>
+							<h2>Contents</h2>
 							<ul>
 							{(
 								sections.map(function(section, idx){
