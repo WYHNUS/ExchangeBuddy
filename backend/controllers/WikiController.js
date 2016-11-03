@@ -17,7 +17,7 @@ exports.getWiki = function(req, res) {
     } else {
         // find all wikiSections
         Wiki.findOne({
-            attributes: ['id', 'title', 'view', 'createdAt', 'updatedAt'],
+            attributes: ['id', 'title', 'view', 'createdAt', 'updatedAt', 'UserId'],
             where: {
                 title: query.q
             },
@@ -74,7 +74,9 @@ exports.getWiki = function(req, res) {
 // get WikiSectionVersion with specified version number
 exports.getSectionVersion = function(req, res) {
     // check if version number is valid and return all info if valid
-    if (!req.body.wikiId || !req.body.sectionIndex || !req.body.versionNumber) {
+    var query = req.query;
+    console.log(query);
+    if (!query.q || !query.section || !query.version) {
         return res.status(400)
             .json({
                 status: 'fail',
@@ -82,53 +84,43 @@ exports.getSectionVersion = function(req, res) {
             });
     } else {
         // check if wikiId, SectionIndex and versionNumber are valid
-        models.sequelize.Promise.all([
-            Wiki.findOne({
+        Wiki.findOne({
+            attributes: ['id', 'title', 'view', 'createdAt', 'updatedAt', 'UserId'],
+            where: {
+                title: query.q
+            },
+            include: [{
+                model: Section,
+                attributes: ['id', 'sectionIndex', 'displayVersionNumber', 'totalVersionCount', 'sectionType'],
                 where: {
-                    id: req.body.wikiId
-                }
-            }),
-            Section.findOne({
-                where: {
-                    WikiId: req.body.wikiId,
-                    sectionIndex: req.body.sectionIndex
+                    sectionIndex: query.section
                 },
                 include: [{
                     model: Version,
+                    attributes: ['id', 'content', 'score', 'createdAt', 'updatedAt'],
                     where: {
-                        versionNumber: req.body.versionNumber
-                    }
+                        versionNumber: query.version
+                    },
+                    include: [{
+                        model: User,
+                        attributes: ['id', 'name', 'profilePictureUrl']
+                    }]
                 }]
-            })
-        ]).spread(function(wiki, section){
-            console.log(wiki);
-            console.log(section);
+            }]
+        }).then(function(wiki) {
             if (!wiki) {
                 return res.status(404)
                     .json({
                         status: 'fail',
-                        message: 'requested wiki doesn\'t exists'
-                    });
-            } else if (!section) {
-                return res.status(404)
-                    .json({
-                        status: 'fail',
-                        message: 'requested section doesn\'t exists'
-                    });
-            } else if (!section.versions) {
-                return res.status(404)
-                    .json({
-                        status: 'fail',
-                        message: 'requested section doesn\'t exists'
+                        message: 'requested wiki section version doesn\'t exists'
                     });
             } else {
                 return res.status(200)
                         .json({
                             status: 'success',
-                            wiki: wiki,
-                            section: section
+                            wiki: wiki
                         });
-                    }
+                    };
         }).catch(function(err) {
             resError(res, err);
         });
