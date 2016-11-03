@@ -38,7 +38,9 @@ class WikiDetails extends React.Component{
 						<p> fetching resource ... </p>
 					:
 						error ?
-							<p> { error } </p>
+							error.message ?
+								<p> { error.message } </p>
+							: <p>{ error }</p>
 						:
 							<WikiDetail />
 				}
