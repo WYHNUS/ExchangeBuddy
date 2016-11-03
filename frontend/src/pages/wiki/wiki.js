@@ -1,7 +1,11 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { toggleBottomBarVisibility, toggleTopBarVisibility,
-toggleTopBarSettingsButtonVisibility } from '../../actions/pageVisibility';
+import { 
+	toggleBottomBarVisibility, toggleTopBarVisibility,
+	toggleTopBarSettingsButtonVisibility 
+} from '../../actions/pageVisibility';
+
+import { Card, CardMedia, CardTitle } from 'material-ui/Card';
 
 class Wiki extends React.Component{
 
@@ -16,12 +20,30 @@ class Wiki extends React.Component{
 	}
 
 	// if user is signedin, display wiki related to his home and exchange Universities
-	// as well as the related two Countries as default
+	// as well as the related two Countries as Recommendation
 	// otherwise display mostly viewed wiki OR Singapore and NUS as default (for now...)
+	// later maybe can use user's location to give suggestions?
 	render() {
 		return (
 			<div>
-				Wiki
+				<div className="wiki-recommendation-wrapper">
+					<div className="recommendation-nav-bar">
+						Recommendation
+					</div>
+					<hr className="green-separator" sytle={{ width: "80%"}}></hr>
+					<ul className="recommendation-item-list">
+						<li className="recommendation-item">
+							<div className="recommendation-item-wrapper">
+								<img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSTbaosNAfYYmTOoIblAjvlfYYP63bnMb_J_PmH3R4T4N16A8RqAqOcQs0" />
+							    <p>University</p>
+							</div>
+						</li>
+					</ul>
+					<hr className="green-separator" sytle={{ width: "80%"}}></hr>
+				</div>
+				<div className="search">
+					
+				</div>
 			</div>
 		);
 	}
