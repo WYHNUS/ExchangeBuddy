@@ -16,23 +16,14 @@ import ChildComponent from './WikiForm';
 // redux
 const mapStateToProps = (state) => {
   return{
-    // error: state.stories.error,
-    // uploading: state.stories.uploading,
-    // published: state.stories.published,
-    // storyDetails: state.stories.editingStory,
-    // user: state.user.userObject,
-    // isLoggedin: state.user.isLoggedIn
+    wiki: state.wiki.wiki,
+    sections: state.wiki.sections,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({  }, dispatch),
-    // saveContent: (val) => dispatch(saveStoryContent(val)),
-    // uploadContent: (title, content, id) => {
-    //   dispatch(uploadContentToServer(title, content, id));
-    // },
-    // cleanUp: () => dispatch(resetEditingStory())
   };
 };
 

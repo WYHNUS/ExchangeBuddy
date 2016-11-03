@@ -14,9 +14,9 @@ import WikiDetail from '../../components/WikiComponent/WikiDetail';
 
 class WikiDetails extends React.Component{
 	componentWillMount() {
-		console.log(this.props.wikiTitle);
-		// query backend based on wikiName
-		this.props.fetchWikiPage(this.props.wikiTitle);
+		// check if already in reducer
+		if (this.props.wikiTitle !== this.props.currentWikiTitle)
+			this.props.fetchWikiPage(this.props.wikiTitle);
 	}
 
 	componentDidMount() {
@@ -52,6 +52,7 @@ class WikiDetails extends React.Component{
 const mapStateToProps = (state) => {
 	return{
 		wikiTitle: state.routing.locationBeforeTransitions.pathname.split("/")[2],
+		currentWikiTitle: state.wiki.wiki.title,
 		error: state.wiki.error,
 		fetching: state.wiki.fetching
 	};
