@@ -74,13 +74,13 @@ export default class ProfilePaper extends React.Component {
     fetchProfileGroups(urlToUserid(userObject.id));
 
     fetchProfile(urlToUserid(userObject.id)).payload.then((userProfileRes)=>{
-      console.log(userProfileRes);
+      //console.log(userProfileRes);
 
       if (!userProfileRes.error) {
         fetchProfileSuccess(userProfileRes.body); 
         if (universities.length < 2) {
           fetchAllUniversities().payload.then((uniRes) => {
-            console.log(uniRes);
+            //console.log(uniRes);
 
             if (!uniRes.error) {
               fetchAllUniversitiesSuccess(uniRes.data);
@@ -124,7 +124,6 @@ export default class ProfilePaper extends React.Component {
 
   render() {
     const { profile, userObject, profileGroups } = this.props;
-    console.log(profileGroups);
 
     return (
       <div>
@@ -179,7 +178,7 @@ export default class ProfilePaper extends React.Component {
       <div className='university-header'>Exchange University</div>
       {
         this.state.exchangeUniListLoaded? 
-        (this.state.exchangeUniList.map((uni, idx) => uni.name)):
+        (this.state.exchangeUniList.map((uni, idx) => <div key={idx}>{uni.name}</div>)):
         (<h2>Error loading list of unis...</h2>)
       }
       </div>
@@ -195,7 +194,7 @@ export default class ProfilePaper extends React.Component {
         <div className='row center-xs'>
         {profileGroups.map((group,idx)=>
           (
-          <div className='col-xs-12'>
+          <div key={idx} className='col-xs-12'>
           {group.name}
           </div>
           ) 

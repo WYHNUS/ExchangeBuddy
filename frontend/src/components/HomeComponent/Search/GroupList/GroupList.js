@@ -75,6 +75,7 @@ class GroupItem extends React.Component {
           : groupType === 1 ? <GroupItem {...this.props} heading={"My Home University Group"}/>
           : groupType === 2 ? <GroupItem {...this.props} heading={"My Home University Alumni Support Group"}/>
           : groupType === 3 ? <GroupItem {...this.props} heading={"My Special Group"}/>
+          : groupType === 4 ? <GroupItem {...this.props} heading={"My Exchange Interest Group"}/>
           : null
         }
         </div>
