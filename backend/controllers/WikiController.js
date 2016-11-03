@@ -177,7 +177,7 @@ exports.createNewWiki = function(req, res) {
 // user create a new wikiSection page, together with first version
 exports.createNewSection = function(req, res) {
     // check if wiki name exists
-    if (!req.body.wikiId || !req.body.sectionName || !req.body.content) {
+    if (!req.body.wikiTitle || !req.body.sectionName || !req.body.content) {
         return res.status(400)
             .json({
                 status: 'fail',
@@ -187,7 +187,7 @@ exports.createNewSection = function(req, res) {
         // check if wiki exists
         Wiki.findOne({
             where: {
-                title: req.body.wikiId
+                title: req.body.wikiTitle
             }
         }).then(function(existingWiki) {
             if (!existingWiki) {

@@ -6,6 +6,7 @@ module.exports = function(sequelize, DataType) {
     title: {
       type: DataType.STRING(255),
       allowNull: false,
+      unique: true,
     },
 
     view: {
