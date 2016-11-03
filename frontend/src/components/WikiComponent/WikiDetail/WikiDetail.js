@@ -16,9 +16,9 @@ class Section extends React.Component {
 		const { section } = this.props;
 
 		return (
-			<div className="wikiDetailWrapper">
+			<div className="wikiSectionWrapper" id={ section.WikiSection.name }>
 				<h2>{ section.WikiSection.name }</h2>
-				<div id={'section' + section.WikiSection.sectionIndex + 'content'}></div>
+				<div id={"section" + section.WikiSection.sectionIndex + "content"}></div>
 			</div>
 		);
 	}
@@ -40,13 +40,29 @@ export default class WikiDetail extends React.Component {
 		return (
 			<div className="wikiDetailWrapper">
 				<h1>{ wiki.title }</h1>
-				<div className="wikiContentTable">
-					<div className="wikiContentTableSubtitle">
-						<h2>Contents</h2>
-					</div>
-					<ul>
-					</ul>
-				</div>
+				{
+					(sections.length > 0) ?
+						<div className="wikiContentTable">
+							<div className="wikiContentTableSubtitle">
+								<h2>Contents</h2>
+							</div>
+							<ul>
+							{(
+								sections.map(function(section, idx){
+									return (
+										<li key={ idx }>
+											<a href={ "#" + section.WikiSection.name }>
+												<span class="contentNumber">{ section.WikiSection.sectionIndex }</span>
+												<span class="contentText">{ section.WikiSection.name }</span>
+											</a>
+										</li>
+									) 
+								})
+							)}
+							</ul>
+						</div>
+					: null
+				}
 
 				<div>
 					{ 
@@ -58,8 +74,7 @@ export default class WikiDetail extends React.Component {
 									) 
 								})
 							)
-						:
-						null
+						: null
 					}
 				</div>
 			</div>
