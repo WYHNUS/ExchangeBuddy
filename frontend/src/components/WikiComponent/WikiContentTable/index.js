@@ -14,9 +14,9 @@ export default class WikiContentTable extends React.Component {
 							sections.map(function(section, idx){
 								return (
 									<li key={ idx }>
-										<a href={ "#" + section.WikiSection.name }>
+										<a href={ "#" + section.title }>
 											<span className="contentNumber">{ section.WikiSection.sectionIndex }</span>
-											<span className="contentText">{ section.WikiSection.name }</span>
+											<span className="contentText">{ section.title }</span>
 										</a>
 									</li>
 								) 
