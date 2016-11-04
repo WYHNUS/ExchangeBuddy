@@ -188,9 +188,15 @@ exports.createNewSection = function(req, res) {
     } else {
         // check if wiki exists
         Wiki.findOne({
+            attributes: ['id', 'title', 'view', 'createdAt', 'updatedAt', 'UserId'],
             where: {
                 title: req.body.wikiTitle
-            }
+            },
+            include: [{
+                model: Section,
+                attributes: ['id', 'displayVersionNumber'],
+                order: '"sectionIndex" DESC'
+            }]
         }).then(function(existingWiki) {
             if (!existingWiki) {
                 return res.status(404)
@@ -199,41 +205,49 @@ exports.createNewSection = function(req, res) {
                         message:'wiki doesn\'t exist'
                     });
             } else {
-                // wiki exists, check if section already exist
-                Section.findAll({
-                    where: {
-                        WikiId: existingWiki.WikiId
-                    },
-                    include: [{
-                        model: Version,
+                var displayedSectionVersionArray = existingWiki.WikiSections.map(section => {
+                    // find list of sectionVersions belong to corresponding section
+                    return Version.find({
+                        attributes: ['title', 'content', 'versionNumber', 'score', 'createdAt', 'updatedAt'],
                         where: {
-                            title: req.body.versionTitle
+                            WikiSectionId: section.id,
+                            versionNumber: section.displayVersionNumber
+                        },
+                        include: [
+                            { 
+                                model: Section
+                            },
+                            { 
+                                model: User,    // get author
+                                attributes: ['id', 'name', 'profilePictureUrl']
+                            }
+                        ]
+                    });
+                });
+
+                models.sequelize.Promise.all(displayedSectionVersionArray).then(versions => {
+                    // check if duplicate section title exist
+                    for (var i=0; i<versions.length; i++) {
+                        if (versions[i].title === req.body.versionTitle) {
+                            return res.status(409)
+                                .json({
+                                    status: 'fail',
+                                    message:'wiki section already exist'
+                                });
                         }
-                    }]
-                }).then(function(existingSections) {
-                    if (!existingSections) {
-                        return res.status(404)
-                            .json({
-                                status: 'fail',
-                                message:'section doesn\'t exist'
-                            });
-                    } else if (!!existingSections.wikiSectionVersions) {
-                        return res.status(409)
-                            .json({
-                                status: 'fail',
-                                message:'wiki section already exist'
-                            });
-                    } else if (req.body.content.length <= 100) {
-                        // filter content -> disallow content less than 100 char?
+                    }
+
+                    // filter content -> disallow content less than 100 char?
+                    if (req.body.content.length <= 100) {
                         return res.status(409)
                                 .json({
                                     status: 'fail',
                                     message: 'too little content'
                                 });
                     } else {
-                        // create wikiSection
+                        // create new wikiSection
                         Section.create({
-                            sectionIndex: existingSections.length + 1,
+                            sectionIndex: existingWiki.WikiSections.length + 1,
                             displayVersionNumber: 1,    // default first version number
                             totalVersionCount: 1,
                             sectionType: 'OpenToEdit',  // default value for now...
@@ -250,12 +264,12 @@ exports.createNewSection = function(req, res) {
                             }).then(function(version) {
                                 // link the new section to Wiki 
                                 existingWiki.addWikiSection(section).then(function(wiki) {
+                                    versions.push(version);
                                     return res.status(200)
                                         .json({
                                             status: 'success',
                                             wiki: wiki,
-                                            section: section,
-                                            version: version
+                                            section: versions
                                         });
                                 }).catch(function(err) {
                                     resError(res, err);
