@@ -15,7 +15,9 @@ import ChildComponent from './WikiForm';
 // redux
 const mapStateToProps = (state) => {
 	return{
-		userToken: state.user.token
+		submitting: state.wiki.submitting,
+		error: state.wiki.uploadError,
+		uploadSuccess: state.wiki.uploadSuccess,
 	};
 };
 

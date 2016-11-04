@@ -9,6 +9,8 @@ const initialState=
 	error: null,
 	fetching: false,
 	submitting: false,
+	uploadSuccess: false,
+	uploadError: null,
 	wiki: {
 		id: null,
 		title: null,
@@ -43,18 +45,21 @@ export function wiki(state=initialState, action)
 		case CLICK_SUBMIT: 
 			return Object.assign({}, state, {
 				submitting: true,
-				error: null
+				uploadSuccess: false,
+				uploadError: null
 		    });
 		case CREATE_SECTION_VERSION_SUCCESS:
 			return Object.assign({}, state, {
 				// update state data ...
 				submitting: false,
-				error: null
+				uploadSuccess: true,
+				uploadError: null
 		    });
 		case CREATE_SECTION_VERSION_FAIL:
 			return Object.assign({}, state, {
 				submitting: false,
-				error: action.error
+				uploadSuccess: false,
+				uploadError: action.error
 		    });
 
 		// fetch single page status

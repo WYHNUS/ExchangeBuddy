@@ -25,8 +25,14 @@ export default class WikiForm extends React.Component {
         this.props.initializeForm(title, content);
     }
 
-    cancelChange() {
-        browserHistory.goBack();
+    componentDidUpdate() {
+        if (this.props.uploadSuccess) {
+            this.redirectBack();
+        }
+    }
+
+    redirectBack() {
+        browserHistory.push('/wiki/' + this.props.wikiName);
     }
 
     submitForm() {
@@ -43,7 +49,7 @@ export default class WikiForm extends React.Component {
     }
 
     render() {
-        const { section } = this.props;
+        const { section, submitting, error, uploadSuccess } = this.props;
 
         return (
             <div id={ section.WikiSection.name }>
@@ -60,16 +66,29 @@ export default class WikiForm extends React.Component {
                     onChange={ this.handleEditorChange.bind(this) }
                 />
 
+                {
+                    submitting ? 
+                        <p>Uploading new version to the server...</p>
+                    :
+                        error ?
+                            error.message ?
+                                <p> { error.message } </p>
+                            : <p>{ error }</p>
+                        : uploadSuccess ?
+                                <p>Upload new version successful! :)</p>
+                            : null
+                }
+
                 <div className="row center-md center-xs" style={{marginTop: "18px"}}>
                     <div>
-                        <RaisedButton className="raised-btn" label="Save changes" primary={true} disabled={false}
+                        <RaisedButton className="raised-btn" label="Save changes" primary={true} disabled={submitting}
                             onClick={this.submitForm.bind(this)}
                         />
                     </div>
                 </div>
                 <div className="row center-md center-xs" style={{marginTop: "18px"}}>
                     <div>
-                        <RaisedButton className="raised-btn" label="Cancel" onClick={this.cancelChange.bind(this)}/>
+                        <RaisedButton className="raised-btn" label="Cancel" onClick={this.redirectBack.bind(this)}/>
                     </div>
                 </div>
             </div>
