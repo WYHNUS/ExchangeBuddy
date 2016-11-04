@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 
+// import actions
 import { 
 	toggleBottomBarVisibility, toggleTopBarVisibility,
 	toggleTopBarBackButtonVisibility 
@@ -9,16 +10,16 @@ import {
 	fetchWikiPage
 } from '../../actions/wiki';
 
+import WikiContentTable from '../../components/WikiComponent/WikiContentTable';
 import WikiForm from '../../components/WikiComponent/WikiForm';
 
 class WikiDetails extends React.Component{
 	componentWillMount() {
 		const { wikiTitle, sectionIndex, wiki } = this.props;
-		// check if the info stored in reducer matches with the one stored in URL
+		// check if the info stored in reducer matches with the one stored in URL, and if sectionIndex is valid
 		if (wikiTitle === wiki.wiki.title && sectionIndex > 0 && sectionIndex <= wiki.sections.length) {
 			// not altered
 		} else {
-			// reload
 			this.props.fetchWikiPage(wikiTitle);
 		}
 	}
@@ -47,7 +48,29 @@ class WikiDetails extends React.Component{
 								<p> { error.message } </p>
 							: <p>{ error }</p>
 						:
-							<WikiForm/>
+							<div className="wikiDetailWrapper">
+								<h1>{ wiki.title }</h1>
+								<WikiContentTable sections={ sections } />
+
+								<div>
+									{ 
+										(sections.length > 0) ?
+											(
+												sections.map(function(section, idx){
+													return (
+														<WikiSection
+															wikiTitle={ wiki.title }
+															section={ section } 
+															key={ idx } 
+														/>
+													) 
+												})
+											)
+										: null
+									}
+								</div>
+								<WikiForm/>
+							</div>
 				}
 			</div>
 		);

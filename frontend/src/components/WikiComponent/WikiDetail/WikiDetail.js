@@ -1,35 +1,16 @@
 import React, {PropTypes} from 'react';
 
+import WikiContentTable from '../WikiContentTable'
 import WikiSection from '../WikiSection';
 
 export default class WikiDetail extends React.Component {
 	render() {
 		const { wiki, sections } = this.props;
-		
+
 		return (
 			<div className="wikiDetailWrapper">
 				<h1>{ wiki.title }</h1>
-				{
-					(sections.length > 0) ?
-						<div className="wikiContentTable">
-							<h2>Contents</h2>
-							<ul>
-							{(
-								sections.map(function(section, idx){
-									return (
-										<li key={ idx }>
-											<a href={ "#" + section.WikiSection.name }>
-												<span className="contentNumber">{ section.WikiSection.sectionIndex }</span>
-												<span className="contentText">{ section.WikiSection.name }</span>
-											</a>
-										</li>
-									) 
-								})
-							)}
-							</ul>
-						</div>
-					: null
-				}
+				<WikiContentTable sections={ sections }/>
 
 				<div>
 					{ 
