@@ -24,7 +24,8 @@ export default class EventsList extends React.Component {
 	render() {
     const { source, showSnackbar, user,
       goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate,
-      fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure, universities } = this.props;
+      fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure, universities,
+      deleteAnEventSuccessUpdate, clearUser } = this.props;
     const { homeEvents, loading, error } = this.props.homeEvents;
 
     /*const EventItem = ({ key, source, groupEvent }) => {
@@ -68,6 +69,8 @@ export default class EventsList extends React.Component {
               fetchAllUniversitiesSuccess={fetchAllUniversitiesSuccess}
               fetchAllUniversitiesFailure={fetchAllUniversitiesFailure}
               universities={universities}
+              deleteAnEventSuccessUpdate={deleteAnEventSuccessUpdate}
+              clearUser={clearUser}
               />
               )
           ):
@@ -103,6 +106,8 @@ EventsList.propTypes = {
   fetchAllUniversitiesSuccess:PropTypes.func.isRequired,
   fetchAllUniversitiesFailure:PropTypes.func.isRequired,
   universities:PropTypes.array.isRequired,
-  resetEvents:PropTypes.func.isRequired
+  resetEvents:PropTypes.func.isRequired,
+  deleteAnEventSuccessUpdate: PropTypes.func.isRequired,
+  clearUser: PropTypes.func.isRequired
   //fetchEvents: PropTypes.func.isRequired
 };

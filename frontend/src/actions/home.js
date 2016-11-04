@@ -38,6 +38,21 @@ export function ungoForAnEventSuccessUpdate(EventId, UserId){
 }
 
 
+/************************************************************
+DELETE AN EVENT SUCCESS UPDATE
+************************************************************/
+
+export const DELETE_AN_EVENT_SUCCESS_UPDATE = 'DELETE_AN_EVENT_SUCCESS_UPDATE';
+
+export function deleteAnEventSuccessUpdate(EventId){
+	console.log(EventId);
+	return{
+		type: DELETE_AN_EVENT_SUCCESS_UPDATE,
+		payload:{
+			EventId:EventId
+		}
+	}
+}
 
 
 /************************************************************

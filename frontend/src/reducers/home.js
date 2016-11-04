@@ -11,7 +11,8 @@ import {
 	FETCH_GROUP_MESSAGES, FETCH_GROUP_MESSAGES_SUCCESS,
 	FETCH_GROUP_MESSAGES_FAILURE, RESET_GROUP_MESSAGES,
 	UPDATE_GROUP_MESSAGE_FROM_SOCKET,
-	GO_FOR_AN_EVENT_SUCCESS_UPDATE,UNGO_FOR_AN_EVENT_SUCCESS_UPDATE} from '../actions/home';
+	GO_FOR_AN_EVENT_SUCCESS_UPDATE,UNGO_FOR_AN_EVENT_SUCCESS_UPDATE,
+	DELETE_AN_EVENT_SUCCESS_UPDATE} from '../actions/home';
 
 	/*const homeGroups=
 	[
@@ -325,6 +326,16 @@ import {
 				case UNGO_FOR_AN_EVENT_SUCCESS_UPDATE:
 				return {...state}
 
+				case DELETE_AN_EVENT_SUCCESS_UPDATE:
+				var EventId = action.payload.EventId;
+				var newHomeEvents = [];
+				var homeEventIterable = state.homeEvents.homeEvents;
+				for(var i=0;i<homeEventIterable.length;i++){
+					if(!(parseInt(homeEventIterable[i].id)===parseInt(EventId))){
+						newHomeEvents.push(homeEventIterable[i]);
+					}
+				}
+				return {...state, homeEvents: {homeEvents:newHomeEvents, error: null, loading: false}}
 
 				default:
 				return state

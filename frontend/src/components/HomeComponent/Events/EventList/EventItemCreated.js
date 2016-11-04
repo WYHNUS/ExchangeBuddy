@@ -65,6 +65,31 @@ class EventItemCreated extends React.Component{
 		this.setState({isDialogOpen:true});
 	};
 
+	closeDeleteDialogDelete = () =>{
+		this.setState({isDialogOpen:false});
+		const {groupEvent, showSnackbar, deleteAnEventSuccessUpdate} = this.props;
+		const req = request
+			.delete(ROOT_URL + '/event')
+			.send({ 
+				EventId: groupEvent.id
+			})
+			.use(bearer)
+			.end(function(err,res){
+				console.log(res);
+				if (res.status === 401) {
+					cookie.remove('authToken');
+					this.props.clearUser();
+					browserHistory.push('/');
+		        }
+				if (!err && !res.error){
+					showSnackbar("Deleted the event!");
+					deleteAnEventSuccessUpdate(groupEvent.id);
+				} else {
+					showSnackbar("Error deleting the event...");
+				}
+			});
+	}
+
 	//fetch and render list of people to display here
 	componentWillMount(){
 		//console.log('event class mounted', universities);
@@ -191,9 +216,9 @@ class EventItemCreated extends React.Component{
 
 		const deleteActions = [
 	      <FlatButton label="Cancel" primary={true} 
-	      onTouchTap={(e)=>{e.preventDefault();this.closeDeleteDialog}} />,
+	      onTouchTap={this.closeDeleteDialog} />,
 	      <FlatButton label="Delete" primary={true} 
-	      onTouchTap={(e)=>{e.preventDefault();this.closeDeleteDialog}} />,
+	      onTouchTap={this.closeDeleteDialogDelete} />,
 	    ];
 
 		const {groupEvent,homeGroupDetails, showSnackbar, user, 
@@ -205,7 +230,7 @@ class EventItemCreated extends React.Component{
 
 				<Dialog actions={deleteActions} modal={false} open={this.state.isDialogOpen} 
 					onRequestClose={this.closeDeleteDialog}>
-		          Delete the event forever?
+		          Are you sure you want to delete your event?
 		        </Dialog>
 
 				<Dialog
@@ -270,7 +295,8 @@ class EventItemCreated extends React.Component{
 							: null 
 						}
 						{	
-							/*(parseInt(this.props.user.userObject.id)==parseInt())*/
+							(parseInt(this.props.user.userObject.id)==parseInt(groupEvent.UserId))?
+							(
 							<div className="edit-delete-btn">
 						      <IconButton tooltipPosition="bottom-center" tooltip="Edit" 
 						      onTouchTap={()=>goToEdit(props)}>
@@ -281,6 +307,9 @@ class EventItemCreated extends React.Component{
 						        {Icons.icon('delete')}
 						      </IconButton>
 					        </div>
+					        )
+					        :
+					        null
 						}
 					</CardActions>
 				</Card>
