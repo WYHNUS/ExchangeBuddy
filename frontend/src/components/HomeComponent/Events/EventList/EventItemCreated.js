@@ -75,7 +75,7 @@ class EventItemCreated extends React.Component{
 			})
 			.use(bearer)
 			.end(function(err,res){
-				console.log(res);
+				//console.log(res);
 				if (res.status === 401) {
 					cookie.remove('authToken');
 					this.props.clearUser();
@@ -149,7 +149,7 @@ class EventItemCreated extends React.Component{
 			})
 			.use(bearer)
 			.end((err,res)=>{
-				console.log(res);
+				//console.log(res);
 				if (res.status === 401) {
 					cookie.remove('authToken');
 					this.props.clearUser();
@@ -189,7 +189,7 @@ class EventItemCreated extends React.Component{
 			})
 			.use(bearer)
 			.end((err,res)=>{
-				console.log(res);
+				//console.log(res);
 				if (res.status === 401) {
 					cookie.remove('authToken');
 					this.props.clearUser();
