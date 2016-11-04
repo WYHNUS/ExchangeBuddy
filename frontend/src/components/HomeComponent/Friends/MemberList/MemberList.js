@@ -2,31 +2,9 @@ import React from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { ListItem } from 'material-ui/List';
 import { browserHistory } from 'react-router'
+import Spinner from 'react-spinkit';
 
 import { getAvatar } from '../../../../util/user';
-
-/*{
-  "id": 1,
-  "name": "a students in a",
-  "user": [
-    {
-      "id": 5,
-      "name": "Lee Kai Yi",
-      "profilePictureUrl": null,
-      "University": {
-        "name": "a",
-        "id": 3
-      },
-      "chat_group": {
-        "createdAt": "2016-10-17T17:00:11.000Z",
-        "updatedAt": "2016-10-17T17:00:11.000Z",
-        "groupId": 1,
-        "userId": 5
-      }
-    }
-  ],
-  "ChatMessages": []
-}*/
 
 const styles = {
   root: {
@@ -62,7 +40,7 @@ export default class MemberList extends React.Component {
     const { homeFriends, loading, error } = this.props.homeFriends;
 
     if(loading) {
-      return <div className="container"><h1>Posts</h1><h3>Loading...</h3></div>      
+      return <Spinner spinnerName="circle" />      
     } else if(error) {
       return <div className="alert alert-danger">Error: {error.message}</div>
     }

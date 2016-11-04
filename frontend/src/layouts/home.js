@@ -82,7 +82,7 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(fetchMyGroupsSuccess(response.body));
           browserHistory.push(`/home/${response.body[0].id}`)
           dispatch(toggleSelectedHomeGroup(selectedIndex))
-          dispatch(fetchEvents(response.body[selectedIndex].id)).payload.then((response) => {
+          /*dispatch(fetchEvents(response.body[selectedIndex].id)).payload.then((response) => {
             if (!response.error) {
               dispatch(fetchEventsSuccess(response.body));
             } else {
@@ -97,7 +97,7 @@ const mapDispatchToProps = (dispatch) => {
             } else {
               dispatch(fetchEventsFailure(err.response.error.message));
             }
-          });
+          });*/
           dispatch(fetchCurrentGroup(response.body[selectedIndex].id)).payload.then((response) => {
             if (!response.error) {
               dispatch(fetchCurrentGroupSuccess(response.body));

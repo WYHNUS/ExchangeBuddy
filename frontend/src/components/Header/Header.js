@@ -6,6 +6,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import IconButton from 'material-ui/IconButton';
 import LinearProgress from 'material-ui/LinearProgress';
 import Helmet from "react-helmet";
+import Spinner from 'react-spinkit';
 
 //import HeaderProfile from './HeaderProfile';
 import * as IconsHelper from '../../util/icons';
@@ -164,7 +165,7 @@ export default class Header extends React.Component {
     
 
     if(loading) {
-      return <div className="container"><h1>Group</h1><h3>Loading...</h3></div>      
+      return <Spinner spinnerName="circle" />  
     } else if(error) {
       return <div className="alert alert-danger">Error: {error.message}</div>
     }
