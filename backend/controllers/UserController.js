@@ -161,7 +161,7 @@ exports.uploadProfile = function(req, res){
             }
         }).then(function(user){
             fs.unlinkSync(req.file.path);
-            res.(200).send({
+            res.status.send({
                 url,
                 success: true
             });
