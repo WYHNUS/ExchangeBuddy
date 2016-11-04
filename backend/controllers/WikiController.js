@@ -277,6 +277,7 @@ exports.createNewSectionVersion = function(req, res) {
     //      --> should this be done (only until admin change this WikiSection's type)? 
     // IMPORTANT: get user id from token
     // CHECK: disable user frequently editing same version --> should this check exists?
+    console.log(req.body);
     if (!req.body.wikiTitle || !req.body.sectionIndex || !req.body.content) {
         return res.status(400)
             .json({
@@ -303,7 +304,7 @@ exports.createNewSectionVersion = function(req, res) {
                     WikiSectionId: wiki.WikiSections[0].id
                 }
             }).then(function(currentVersion) {
-                console.log(currentVersion);
+                // console.log(currentVersion);
                 if (currentVersion.content === req.body.content) {
                     return res.status(304)
                             .json({

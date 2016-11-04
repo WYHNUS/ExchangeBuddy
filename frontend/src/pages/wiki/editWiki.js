@@ -61,6 +61,7 @@ class WikiDetails extends React.Component{
 												return (
 													(section.WikiSection.sectionIndex === sectionIndex) ?
 														<WikiForm
+															wikiName = { wiki.title }
 															section={ section }
 															key={ idx }
 														/>

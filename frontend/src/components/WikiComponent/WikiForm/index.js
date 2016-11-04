@@ -6,9 +6,7 @@ import { connect } from 'react-redux';
 
 // Action creators
 import { 
-	initializeWikiForm
-  // saveStoryContent, resetEditingStory,
-  // uploadContentToServer, uploadContentSuccess, uploadContentFail 
+	initializeWikiForm, submitNewSectionVersion
 } from '../../../actions/wiki'
 
 // Component
@@ -25,6 +23,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		actions: bindActionCreators({  }, dispatch),
 		initializeForm: (title, content) => dispatch(initializeWikiForm(title, content)),
+		createVersion: (wikiTitle, sectionIndex, title, content) => {
+			dispatch(submitNewSectionVersion(wikiTitle, sectionIndex, title, content));
+		},
 	};
 };
 

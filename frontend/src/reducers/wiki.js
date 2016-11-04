@@ -1,14 +1,14 @@
 import {
 	FECTCH_WIKI_PAGE, FECTCH_WIKI_PAGE_SUCCESS, FECTCH_WIKI_PAGE_FAIL,
-	INITIALIZE_WIKI_FORM
+	INITIALIZE_WIKI_FORM, 
+	CLICK_SUBMIT, CREATE_SECTION_VERSION_SUCCESS, CREATE_SECTION_VERSION_FAIL
 } from '../actions/wiki';
 
 const initialState=
 {
 	error: null,
 	fetching: false,
-	uploading: false,
-	published: false,
+	submitting: false,
 	wiki: {
 		id: null,
 		title: null,
@@ -37,6 +37,24 @@ export function wiki(state=initialState, action)
 			return Object.assign({}, state, {
 				fetching: true,
 				error: null
+		    });
+
+		// submit new section version
+		case CLICK_SUBMIT: 
+			return Object.assign({}, state, {
+				submitting: true,
+				error: null
+		    });
+		case CREATE_SECTION_VERSION_SUCCESS:
+			return Object.assign({}, state, {
+				// update state data ...
+				submitting: false,
+				error: null
+		    });
+		case CREATE_SECTION_VERSION_FAIL:
+			return Object.assign({}, state, {
+				submitting: false,
+				error: action.error
 		    });
 
 		// fetch single page status

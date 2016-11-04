@@ -30,8 +30,8 @@ export default class WikiForm extends React.Component {
     }
 
     submitForm() {
-        console.log(this.state);
-        this.props.submitForm(this.state);
+        const { section, wikiName } = this.props;
+        this.props.createVersion(wikiName, section.WikiSection.sectionIndex, this.state.title, this.state.content);
     }
 
     handleTitleChange(e) {

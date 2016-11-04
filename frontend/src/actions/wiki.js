@@ -1,7 +1,12 @@
 import request from 'superagent';
+import { bearer } from '../util/bearer';
 import { ROOT_URL } from '../util/backend';
 
 export const INITIALIZE_WIKI_FORM = 'INITIALIZE_WIKI_FORM';
+
+export const CLICK_SUBMIT = 'CLICK_SUBMIT';
+export const CREATE_SECTION_VERSION_SUCCESS = 'CREATE_SECTION_VERSION_SUCCESS';
+export const CREATE_SECTION_VERSION_FAIL = 'CREATE_SECTION_VERSION_FAIL';
 
 export const FECTCH_WIKI_PAGE = 'FECTCH_WIKI_PAGE';
 export const FECTCH_WIKI_PAGE_SUCCESS = 'FECTCH_WIKI_PAGE_SUCCESS';
@@ -43,16 +48,19 @@ export function fetchWikiPage(wikiTitle) {
 
 /*	 Editing wiki section   */ 
 export function initializeWikiForm(title, content) {
-	return { type: INITIALIZE_WIKI_FORM, title, content }
+	return { type: INITIALIZE_WIKI_FORM, title, content };
 }
 
+export function clickedSubmit() {
+	return { type: CLICK_SUBMIT };
+}
 export function createSectionVersionSuccess(section, version) {
     return { type: CREATE_SECTION_VERSION_SUCCESS, section, version };
 }
 export function createSectionVersionFail(error) {
     return { type: CREATE_SECTION_VERSION_FAIL, error };
 }
-export function submitNewSectionVersion(wikiTitle, sectionIndex, content) {
+export function submitNewSectionVersion(wikiTitle, sectionIndex, sectionTitle, content) {
 	return (dispatch) => {
 		dispatch(clickedSubmit());
 
@@ -60,8 +68,10 @@ export function submitNewSectionVersion(wikiTitle, sectionIndex, content) {
 			.send({
 				wikiTitle: wikiTitle,
 				sectionIndex: sectionIndex,
+				sectionName: sectionTitle,
 				content: content
 			})
+			.use(bearer)
 			.end(function(err, res) {
 				console.log(err);
 				console.log(res);
