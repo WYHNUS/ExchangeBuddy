@@ -68,7 +68,7 @@ export function submitNewSectionVersion(wikiTitle, sectionIndex, sectionTitle, c
 			.send({
 				wikiTitle: wikiTitle,
 				sectionIndex: sectionIndex,
-				sectionName: sectionTitle,
+				sectionTitle: sectionTitle,
 				content: content
 			})
 			.use(bearer)

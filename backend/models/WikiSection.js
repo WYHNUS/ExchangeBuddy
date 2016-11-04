@@ -3,11 +3,6 @@ var config = require('../config/config');
 
 module.exports = function(sequelize, DataType) {
   var WikiSection = sequelize.define('WikiSection', {
-    name: {
-  	  type: DataType.STRING(255),
-      unique: true,
-  	},
-
     // the index to display in particular wiki page
     sectionIndex: {
       type: DataType.INTEGER(),

@@ -12,17 +12,17 @@ export default class WikiForm extends React.Component {
     constructor(props) {
         super(props);
 
-        const { WikiSection, content } = this.props.section;
+        const { title, content } = this.props.section;
         this.state = {
-            title: WikiSection.name,
+            title: title,
             content: content
         }
     }
 
     componentWillMount() {
-        const { WikiSection, content } = this.props.section;
+        const { title, content } = this.props.section;
         // assign initialValues
-        this.props.initializeForm(WikiSection.name, content);
+        this.props.initializeForm(title, content);
     }
 
     cancelChange() {

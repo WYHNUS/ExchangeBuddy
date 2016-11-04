@@ -11,16 +11,16 @@ export default class WikiSection extends React.Component {
 
 	editComponent() {
 		const { wikiTitle } = this.props;
-		const { WikiSection } = this.props.section;
-        browserHistory.push('/wiki/editWiki/' + wikiTitle + '/' + WikiSection.sectionIndex + '#' + WikiSection.name);
+		const { title, WikiSection } = this.props.section;
+        browserHistory.push('/wiki/editWiki/' + wikiTitle + '/' + WikiSection.sectionIndex + '#' + title);
 	}
 
 	render() {
 		const { section, userToken } = this.props;
 		return (
-			<div className="wikiSectionWrapper" id={ section.WikiSection.name }>
+			<div className="wikiSectionWrapper" id={ section.title }>
 				<h2>
-					{ section.WikiSection.name }
+					{ section.title }
 					{
 						userToken ?
 							<span onClick={this.editComponent.bind(this)}><a>[ edit ]</a></span>

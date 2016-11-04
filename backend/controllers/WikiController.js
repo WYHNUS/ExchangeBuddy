@@ -38,7 +38,7 @@ exports.getWiki = function(req, res) {
             var displayedSectionVersionArray = wiki.WikiSections.map(section => {
                 // find list of sectionVersions belong to corresponding section
                 return Version.find({
-                    attributes: ['content', 'versionNumber', 'score', 'createdAt', 'updatedAt'],
+                    attributes: ['title', 'content', 'versionNumber', 'score', 'createdAt', 'updatedAt'],
                     where: {
                         WikiSectionId: section.id,
                         versionNumber: section.displayVersionNumber
@@ -105,7 +105,7 @@ exports.getSectionVersion = function(req, res) {
                 },
                 include: [{
                     model: Version,
-                    attributes: ['id', 'content', 'score', 'createdAt', 'updatedAt'],
+                    attributes: ['id', 'title', 'content', 'score', 'createdAt', 'updatedAt'],
                     where: {
                         versionNumber: query.version
                     },
@@ -179,7 +179,7 @@ exports.createNewWiki = function(req, res) {
 // user create a new wikiSection page, together with first version
 exports.createNewSection = function(req, res) {
     // check if wiki name exists
-    if (!req.body.wikiTitle || !req.body.sectionName || !req.body.content) {
+    if (!req.body.wikiTitle || !req.body.versionTitle || !req.body.content) {
         return res.status(400)
             .json({
                 status: 'fail',
@@ -203,19 +203,28 @@ exports.createNewSection = function(req, res) {
                 Section.findAll({
                     where: {
                         WikiId: existingWiki.WikiId
-                    }
-                }).then(function(existingSections) {
-                    for (var i=0; i<existingSections.length; i++) {
-                        if (existingSections[i].name === req.body.sectionName) {
-                            return res.status(409)
-                                .json({
-                                    status: 'fail',
-                                    message:'wiki section already exist'
-                                });
+                    },
+                    include: [{
+                        model: Version,
+                        where: {
+                            title: req.body.versionTitle
                         }
-                    }
-                    // filter content -> disallow content less than 100 char?
-                    if (req.body.content.length <= 100) {
+                    }]
+                }).then(function(existingSections) {
+                    if (!existingSections) {
+                        return res.status(404)
+                            .json({
+                                status: 'fail',
+                                message:'section doesn\'t exist'
+                            });
+                    } else if (!!existingSections.wikiSectionVersions) {
+                        return res.status(409)
+                            .json({
+                                status: 'fail',
+                                message:'wiki section already exist'
+                            });
+                    } else if (req.body.content.length <= 100) {
+                        // filter content -> disallow content less than 100 char?
                         return res.status(409)
                                 .json({
                                     status: 'fail',
@@ -224,7 +233,6 @@ exports.createNewSection = function(req, res) {
                     } else {
                         // create wikiSection
                         Section.create({
-                            name: req.body.sectionName,
                             sectionIndex: existingSections.length + 1,
                             displayVersionNumber: 1,    // default first version number
                             totalVersionCount: 1,
@@ -234,6 +242,7 @@ exports.createNewSection = function(req, res) {
                         }).then(function(section) {
                             // create first version and assign it to wikiSection
                             Version.create({
+                                title: req.body.versionTitle,
                                 content: req.body.content,
                                 versionNumber: 1,   // only one exists
                                 WikiSectionId: section.id,
@@ -277,8 +286,7 @@ exports.createNewSectionVersion = function(req, res) {
     //      --> should this be done (only until admin change this WikiSection's type)? 
     // IMPORTANT: get user id from token
     // CHECK: disable user frequently editing same version --> should this check exists?
-    console.log(req.body);
-    if (!req.body.wikiTitle || !req.body.sectionIndex || !req.body.content) {
+    if (!req.body.wikiTitle || !req.body.sectionIndex || !req.body.sectionTitle || !req.body.content) {
         return res.status(400)
             .json({
                 status: 'fail',
@@ -304,8 +312,8 @@ exports.createNewSectionVersion = function(req, res) {
                     WikiSectionId: wiki.WikiSections[0].id
                 }
             }).then(function(currentVersion) {
-                // console.log(currentVersion);
-                if (currentVersion.content === req.body.content) {
+                if (currentVersion.title === req.body.sectionTitle &&
+                    currentVersion.content === req.body.content) {
                     return res.status(304)
                             .json({
                                 status: 'fail',
@@ -328,6 +336,7 @@ exports.createNewSectionVersion = function(req, res) {
                                 });
                     } else {
                         Version.create({
+                            title: req.body.sectionTitle,
                             content: req.body.content,
                             versionNumber: wiki.WikiSections[0].totalVersionCount + 1,
                             WikiSectionId: wiki.WikiSections[0].id,
