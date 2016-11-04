@@ -11,6 +11,7 @@ import {
 } from '../../actions/wiki';
 
 import WikiContentTable from '../../components/WikiComponent/WikiContentTable';
+import WikiSection from '../../components/WikiComponent/WikiSection';
 import WikiForm from '../../components/WikiComponent/WikiForm';
 
 class WikiDetails extends React.Component{
@@ -29,13 +30,14 @@ class WikiDetails extends React.Component{
 		this.props.toggleTopBarVisibility(true);
 		this.props.toggleTopBarBackButtonVisibility(true);
 	}
-	componentWillUnmount(){
+	componentWillUnmount() {
 		this.props.toggleTopBarBackButtonVisibility(false);
 	}
 
 
 	render() {
-		const { error, fetching } = this.props.wiki;
+		const { sectionIndex } = this.props;
+		const { error, fetching, wiki, sections } = this.props.wiki;
 
 		return (
 			<div>
@@ -54,22 +56,25 @@ class WikiDetails extends React.Component{
 
 								<div>
 									{ 
-										(sections.length > 0) ?
-											(
-												sections.map(function(section, idx){
-													return (
+										(sections.length > 0) ? (
+											sections.map(function(section, idx){
+												return (
+													(section.WikiSection.sectionIndex === sectionIndex) ?
+														<WikiForm
+															section={ section }
+															key={ idx }
+														/>
+													:
 														<WikiSection
 															wikiTitle={ wiki.title }
 															section={ section } 
 															key={ idx } 
 														/>
-													) 
-												})
-											)
-										: null
+												) 
+											})
+										) : null
 									}
 								</div>
-								<WikiForm/>
 							</div>
 				}
 			</div>

@@ -23,10 +23,10 @@ class WikiForm extends React.Component {
     }
 
     render() {
-        const { wiki, sections, error, uploading, published, handleSubmit } = this.props;
+        const { wiki, handleSubmit } = this.props;
 
         return (
-            <form onSubmit={ handleSubmit((values) => {
+            <form id={ this.props.section.WikiSection.name } onSubmit={ handleSubmit((values) => {
                 this.submitForm(values)
             }) }>
 

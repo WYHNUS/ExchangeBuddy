@@ -10,8 +10,9 @@ export default class WikiSection extends React.Component {
 	}
 
 	editComponent() {
-		const { wikiTitle, section } = this.props;
-        browserHistory.push('/wiki/editWiki/' + wikiTitle + '/' + section.WikiSection.sectionIndex);
+		const { wikiTitle } = this.props;
+		const { WikiSection } = this.props.section;
+        browserHistory.push('/wiki/editWiki/' + wikiTitle + '/' + WikiSection.sectionIndex + '#' + WikiSection.name);
 	}
 
 	render() {
