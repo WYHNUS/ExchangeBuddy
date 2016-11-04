@@ -31,6 +31,7 @@ export default class WikiForm extends React.Component {
 
     submitForm() {
         console.log(this.state);
+        this.props.submitForm(this.state);
     }
 
     handleTitleChange(e) {
@@ -61,7 +62,7 @@ export default class WikiForm extends React.Component {
 
                 <div className="row center-md center-xs" style={{marginTop: "18px"}}>
                     <div>
-                        <RaisedButton className="raised-btn" label="Save changes" primary={true} 
+                        <RaisedButton className="raised-btn" label="Save changes" primary={true} disabled={false}
                             onClick={this.submitForm.bind(this)}
                         />
                     </div>

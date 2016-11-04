@@ -45,3 +45,35 @@ export function fetchWikiPage(wikiTitle) {
 export function initializeWikiForm(title, content) {
 	return { type: INITIALIZE_WIKI_FORM, title, content }
 }
+
+export function createSectionVersionSuccess(section, version) {
+    return { type: CREATE_SECTION_VERSION_SUCCESS, section, version };
+}
+export function createSectionVersionFail(error) {
+    return { type: CREATE_SECTION_VERSION_FAIL, error };
+}
+export function submitNewSectionVersion(wikiTitle, sectionIndex, content) {
+	return (dispatch) => {
+		dispatch(clickedSubmit());
+
+		request.put(ROOT_URL + '/wiki/section/version')
+			.send({
+				wikiTitle: wikiTitle,
+				sectionIndex: sectionIndex,
+				content: content
+			})
+			.end(function(err, res) {
+				console.log(err);
+				console.log(res);
+				if (err) {
+					dispatch(createSectionVersionFail(err));
+				} else {
+					if (res.body.status === "success") {
+						dispatch(createSectionVersionSuccess(res.body.section, res.body.version));
+					} else {
+						dispatch(createSectionVersionFail(res.body.message));
+					}
+				}
+			});
+	}
+}
