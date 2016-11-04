@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('express-jwt');
 var config = require('../config/config');
+var multer = require('multer');
+var upload = multer({dest: __dirname+'/../public/uploads'});
 
 
 
@@ -59,6 +61,7 @@ request:
 
 router.patch('/updateUser', verifyToken, UserCtrl.updateUser);
 router.put('/createUser', UserCtrl.createUser);
+router.post('/uploadProfile',[verifyToken, upload.single('profilePicture'), UserCtrl.uploadProfile]);
 
 router.get('/verify/:token', MailCtrl.verifyToken);
 router.get('/resendVerificationMail/:userId', MailCtrl.resend);
