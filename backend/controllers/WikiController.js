@@ -23,7 +23,7 @@ exports.getWiki = function(req, res) {
             },
             include: [{
                 model: Section,
-                attributes: ['id', 'displayVersionNumber'],
+                attributes: ['id', 'displayVersionNumber', 'sectionIndex'],
                 order: '"sectionIndex" DESC'
             }]
         }).then(function(wiki) {
@@ -237,8 +237,8 @@ exports.createNewSection = function(req, res) {
                         }
                     }
 
-                    // filter content -> disallow content less than 100 char?
-                    if (req.body.content.length <= 100) {
+                    // filter content -> disallow content less than 10 char?
+                    if (req.body.content.length <= 10) {
                         return res.status(409)
                                 .json({
                                     status: 'fail',
@@ -268,8 +268,7 @@ exports.createNewSection = function(req, res) {
                                     return res.status(200)
                                         .json({
                                             status: 'success',
-                                            wiki: wiki,
-                                            section: versions
+                                            message: 'creation succeed'
                                         });
                                 }).catch(function(err) {
                                     resError(res, err);
@@ -319,6 +318,13 @@ exports.createNewSectionVersion = function(req, res) {
                 }
             }]
         }).then(function(wiki) {
+            if (!wiki) {
+                return res.status(404)
+                    .json({
+                        status: 'fail',
+                        message:'wiki doesn\'t exist'
+                    });
+            } 
             // check if new content is the same as the old one
             Version.findOne({
                 where: { 
@@ -341,8 +347,8 @@ exports.createNewSectionVersion = function(req, res) {
                             WikiSection.sectionType
                         >>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<
                     */
-                    // filter content -> disallow content less than 100 char?
-                    if (req.body.content.length <= 100) {
+                    // filter content -> disallow content less than 10 char?
+                    if (req.body.content.length <= 10) {
                         return res.status(409)
                                 .json({
                                     status: 'fail',

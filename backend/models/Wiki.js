@@ -12,6 +12,16 @@ module.exports = function(sequelize, DataType) {
     view: {
       type: DataType.INTEGER(),
       defaultValue: 0,
+    },
+
+    wikiType: {
+      type: DataType.STRING(50),
+      validate: {
+          isIn: [
+              ['OpenToEdit', 'SemiProtected', 'Protected']
+          ]
+      },
+      defaultValue: 'OpenToEdit',
     }
   }, {
     classMethods: {

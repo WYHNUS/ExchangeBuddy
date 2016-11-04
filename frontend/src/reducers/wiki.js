@@ -9,6 +9,7 @@ const initialState=
 	error: null,
 	fetching: false,
 	submitting: false,
+	needReload: false,
 	uploadSuccess: false,
 	uploadError: null,
 	wiki: {
@@ -50,9 +51,9 @@ export function wiki(state=initialState, action)
 		    });
 		case CREATE_SECTION_VERSION_SUCCESS:
 			return Object.assign({}, state, {
-				// update state data ...
-				submitting: false,
+				needReload: true,
 				uploadSuccess: true,
+				submitting: false,
 				uploadError: null
 		    });
 		case CREATE_SECTION_VERSION_FAIL:
@@ -68,6 +69,7 @@ export function wiki(state=initialState, action)
 				wiki: action.wiki,
 				sections: action.sections,
 				fetching: false,
+				needReload: false,
 				error: null
 		    });
 		case FECTCH_WIKI_PAGE_FAIL:
@@ -79,6 +81,11 @@ export function wiki(state=initialState, action)
 		// edit wiki section
 		case INITIALIZE_WIKI_FORM:
 			return Object.assign({}, state, {
+				error: null,
+				submitting: false,
+				needReload: false,
+				uploadSuccess: false,
+				uploadError: null,
 				editingSection: {
 					title: action.title,
 					content: action.content

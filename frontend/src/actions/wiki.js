@@ -54,8 +54,8 @@ export function initializeWikiForm(title, content) {
 export function clickedSubmit() {
 	return { type: CLICK_SUBMIT };
 }
-export function createSectionVersionSuccess(section, version) {
-    return { type: CREATE_SECTION_VERSION_SUCCESS, section, version };
+export function createSectionVersionSuccess() {
+    return { type: CREATE_SECTION_VERSION_SUCCESS };
 }
 export function createSectionVersionFail(error) {
     return { type: CREATE_SECTION_VERSION_FAIL, error };
@@ -73,13 +73,13 @@ export function submitNewSectionVersion(wikiTitle, sectionIndex, sectionTitle, c
 			})
 			.use(bearer)
 			.end(function(err, res) {
-				console.log(err);
-				console.log(res);
+				// console.log(err);
+				// console.log(res);
 				if (err) {
 					dispatch(createSectionVersionFail(err));
 				} else {
 					if (res.body.status === "success") {
-						dispatch(createSectionVersionSuccess(res.body.section, res.body.version));
+						dispatch(createSectionVersionSuccess());
 					} else {
 						dispatch(createSectionVersionFail(res.body.message));
 					}

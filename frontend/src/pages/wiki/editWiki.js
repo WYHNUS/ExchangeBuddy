@@ -18,7 +18,8 @@ class WikiDetails extends React.Component{
 	componentWillMount() {
 		const { wikiTitle, sectionIndex, wiki } = this.props;
 		// check if the info stored in reducer matches with the one stored in URL, and if sectionIndex is valid
-		if (wikiTitle === wiki.wiki.title && sectionIndex > 0 && sectionIndex <= wiki.sections.length) {
+		if (wikiTitle === wiki.wiki.title && !this.props.wiki.needReload &&
+			sectionIndex > 0 && sectionIndex <= wiki.sections.length) {
 			// not altered
 		} else {
 			this.props.fetchWikiPage(wikiTitle);

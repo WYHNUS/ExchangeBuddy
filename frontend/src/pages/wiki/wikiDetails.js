@@ -15,7 +15,8 @@ import WikiDetail from '../../components/WikiComponent/WikiDetail';
 class WikiDetails extends React.Component{
 	componentWillMount() {
 		// check if already in reducer
-		if (this.props.wikiTitle !== this.props.currentWikiTitle)
+		if (this.props.wikiTitle !== this.props.currentWikiTitle
+			|| this.props.needReload)
 			this.props.fetchWikiPage(this.props.wikiTitle);
 	}
 
@@ -53,6 +54,7 @@ const mapStateToProps = (state) => {
 	return{
 		wikiTitle: state.routing.locationBeforeTransitions.pathname.split("/")[2],
 		currentWikiTitle: state.wiki.wiki.title,
+		needReload: state.wiki.needReload,
 		error: state.wiki.error,
 		fetching: state.wiki.fetching
 	};
