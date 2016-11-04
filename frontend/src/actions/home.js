@@ -15,29 +15,42 @@ export const UNGO_FOR_AN_EVENT_SUCCESS_UPDATE = 'UNGO_FOR_AN_EVENT_SUCCESS_UPDAT
 //export const UNGO_FOR_AN_EVENT_SUCCESS = 'UNGO_FOR_AN_EVENT_SUCCESS';
 //export const UNGO_FOR_AN_EVENT_FAILURE = 'UNGO_FOR_AN_EVENT_FAILURE';
 
-export function goForAnEventSuccessUpdate(EventId, UserId){
-	console.log(EventId);
+export function goForAnEventSuccessUpdate(EventId, user){
 	return{
 		type: GO_FOR_AN_EVENT_SUCCESS_UPDATE,
 		payload:{
 			EventId:EventId,
-			UserId: UserId
+			user: user
 		}
 	}
 }
 
-export function ungoForAnEventSuccessUpdate(EventId, UserId){
-	console.log(EventId);
+export function ungoForAnEventSuccessUpdate(EventId, user){
 	return{
 		type: UNGO_FOR_AN_EVENT_SUCCESS_UPDATE,
 		payload:{
 			EventId:EventId,
-			UserId: UserId
+			user: user
 		}
 	}
 }
 
 
+/************************************************************
+DELETE AN EVENT SUCCESS UPDATE
+************************************************************/
+
+export const DELETE_AN_EVENT_SUCCESS_UPDATE = 'DELETE_AN_EVENT_SUCCESS_UPDATE';
+
+export function deleteAnEventSuccessUpdate(EventId){
+	console.log(EventId);
+	return{
+		type: DELETE_AN_EVENT_SUCCESS_UPDATE,
+		payload:{
+			EventId:EventId
+		}
+	}
+}
 
 
 /************************************************************

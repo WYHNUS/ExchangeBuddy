@@ -31,6 +31,28 @@ export const getImage = (uni, size=90, style={}) => {
   
 };
 
+export function insertUniversitiesIntoUser(user, universities){
+
+  var uniName = "";
+
+  for(var i=0;i<universities.length;i++){
+    
+    if(universities[i].id===user.UniversityId){
+      uniName = universities[i].name;
+      break;
+
+    }
+  }
+
+  user.University=
+  {
+    name: uniName,
+    id: user.UniversityId
+  };
+  
+  return user;
+};
+
 
 export function insertUniversitiesIntoList(goingArray, universities){
   var finalArray = [];

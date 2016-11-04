@@ -11,7 +11,8 @@ import {
 	FETCH_GROUP_MESSAGES, FETCH_GROUP_MESSAGES_SUCCESS,
 	FETCH_GROUP_MESSAGES_FAILURE, RESET_GROUP_MESSAGES,
 	UPDATE_GROUP_MESSAGE_FROM_SOCKET,
-	GO_FOR_AN_EVENT_SUCCESS_UPDATE,UNGO_FOR_AN_EVENT_SUCCESS_UPDATE} from '../actions/home';
+	GO_FOR_AN_EVENT_SUCCESS_UPDATE,UNGO_FOR_AN_EVENT_SUCCESS_UPDATE,
+	DELETE_AN_EVENT_SUCCESS_UPDATE} from '../actions/home';
 
 	/*const homeGroups=
 	[
@@ -309,22 +310,62 @@ import {
 				return {...state, homeMessages: { homeMessages: [action.payload].concat(state.homeMessages.homeMessages), error: null, loading: false}};
 
 				case GO_FOR_AN_EVENT_SUCCESS_UPDATE:
-				var EventId = action.payload.EventId;
-				var UserId = action.payload.UserId;
-				var newHomeEvents = state.homeEvents.homeEvents;
-				//checking and adding user to the homeEvents going list
-				/*var eventAttendees = state.homeEvents.homeEvents[EventId].going;
-				var arrayLength = eventAttendees.length;
-				for (var i=0;i<arrayLength;i++){
-					if(eventAttendees[i].id===UserId){
-						eventAttendees = eventAttendees.splice(i,1);
-						break;
-					}
-				}*/
-				return {...state, homeEvents: {homeEvents:newHomeEvents, error: null, loading: false}}
-				case UNGO_FOR_AN_EVENT_SUCCESS_UPDATE:
-				return {...state}
 
+				var EventId = action.payload.EventId;
+				var user = action.payload.user;
+				var newHomeEvent = [];
+				
+				for (var i=0;i<state.homeEvents.homeEvents.length;i++){
+					var newEvent=state.homeEvents.homeEvents[i];
+
+					if(parseInt(newEvent.id)==parseInt(EventId)){
+						newEvent.going.push(user);
+					
+					}
+
+					newHomeEvent.push(newEvent)
+				}
+
+				return {...state, homeEvents: {homeEvents:newHomeEvent, error: null, loading: false}}
+
+				case UNGO_FOR_AN_EVENT_SUCCESS_UPDATE:
+
+				var EventId = action.payload.EventId;
+				var user = action.payload.user;
+				var newHomeEvent = [];
+
+				for (var i=0;i<state.homeEvents.homeEvents.length;i++){
+					var newEvent=state.homeEvents.homeEvents[i];
+
+					if(parseInt(newEvent.id)==parseInt(EventId)){
+						var goingArray = newEvent.going;
+
+						for(var k=0;k<goingArray.length;k++){
+
+							if(parseInt(goingArray[k].id)===user.id){
+								goingArray.splice(k, 1);
+								break;
+							}
+						}
+
+						newEvent.going = goingArray;
+					}
+
+					newHomeEvent.push(newEvent)
+				}
+
+				return {...state, homeEvents: {homeEvents:newHomeEvent, error: null, loading: false}}
+
+				case DELETE_AN_EVENT_SUCCESS_UPDATE:
+				var EventId = action.payload.EventId;
+				var newHomeEvents = [];
+				var homeEventIterable = state.homeEvents.homeEvents;
+				for(var i=0;i<homeEventIterable.length;i++){
+					if(!(parseInt(homeEventIterable[i].id)===parseInt(EventId))){
+						newHomeEvents.push(homeEventIterable[i]);
+					}
+				}
+				return {...state, homeEvents: {homeEvents:newHomeEvents, error: null, loading: false}}
 
 				default:
 				return state

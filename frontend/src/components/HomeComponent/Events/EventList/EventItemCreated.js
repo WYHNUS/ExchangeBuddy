@@ -65,6 +65,31 @@ class EventItemCreated extends React.Component{
 		this.setState({isDialogOpen:true});
 	};
 
+	closeDeleteDialogDelete = () =>{
+		this.setState({isDialogOpen:false});
+		const {groupEvent, showSnackbar, deleteAnEventSuccessUpdate} = this.props;
+		const req = request
+			.delete(ROOT_URL + '/event')
+			.send({ 
+				EventId: groupEvent.id
+			})
+			.use(bearer)
+			.end(function(err,res){
+				console.log(res);
+				if (res.status === 401) {
+					cookie.remove('authToken');
+					this.props.clearUser();
+					browserHistory.push('/');
+		        }
+				if (!err && !res.error){
+					showSnackbar("Deleted the event!");
+					deleteAnEventSuccessUpdate(groupEvent.id);
+				} else {
+					showSnackbar("Error deleting the event...");
+				}
+			});
+	}
+
 	//fetch and render list of people to display here
 	componentWillMount(){
 		//console.log('event class mounted', universities);
@@ -109,16 +134,21 @@ class EventItemCreated extends React.Component{
 		})
 	}
 
-	goForAnEvent(EventId, UserId, showSnackbar,goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents){
-		//console.log(EventId, UserId);
+	goForAnEvent(){
+
+	 	const {groupEvent,homeGroupDetails, showSnackbar, 
+	 		goForAnEventSuccessUpdate, universities} = this.props;
+		const {userObject} = this.props.user;
+	 	const {peopleList} = this.state;
+
 		const req = request
 			.post(ROOT_URL + '/goToEvent')
 			.send({ 
-				EventId: EventId,
-				UserId:UserId
+				EventId: groupEvent.id,
+				UserId:userObject.id
 			})
 			.use(bearer)
-			.end(function(err,res){
+			.end((err,res)=>{
 				console.log(res);
 				if (res.status === 401) {
 					cookie.remove('authToken');
@@ -126,28 +156,39 @@ class EventItemCreated extends React.Component{
 					// need to redirect to a new version of login page
 					browserHistory.push('/');
 		        } 
-				//console.log(homeGroupDetails.id);
+
 				if (!err && !res.error && homeGroupDetails.id){
-					//showSnackbar("Registered for event");
-					//goForAnEventSuccessUpdate(EventId, UserId);
-					fetchEvents(homeGroupDetails.id);
+					var newUser = UniversityHelper.insertUniversitiesIntoUser(userObject,universities);
+					showSnackbar("Registered for event");
+					goForAnEventSuccessUpdate(groupEvent.id, newUser);
+					
+					var newPeopleList = peopleList.slice();
+					newPeopleList.push(newUser);
+					this.setState({
+						peopleList:newPeopleList,
+						userIsGoing:true
+					});
+
 				} else {
 					showSnackbar("Error registering for event");
 				}
 			});
 	};
 
-	ungoForAnEvent(EventId, UserId, showSnackbar,ungoForAnEventSuccessUpdate, homeGroupDetails, fetchEvents){
-		//console.log(EventId, UserId, showSnackbar);
-		//console.log(EventId, UserId);
+	ungoForAnEvent(){
+
+		const {groupEvent,homeGroupDetails, showSnackbar, ungoForAnEventSuccessUpdate} = this.props;
+		const {userObject} = this.props.user;
+	 	const {peopleList} = this.state;
+
 		const req = request
 			.post(ROOT_URL + '/unattend')
 			.send({ 
-				EventId: EventId,
-				UserId:UserId
+				EventId: groupEvent.id,
+				UserId: userObject.id
 			})
 			.use(bearer)
-			.end(function(err,res){
+			.end((err,res)=>{
 				console.log(res);
 				if (res.status === 401) {
 					cookie.remove('authToken');
@@ -155,11 +196,26 @@ class EventItemCreated extends React.Component{
 					// need to redirect to a new version of login page
 					browserHistory.push('/');
 		        } 
-				//console.log(homeGroupDetails.id);
+
 				if (!err && !res.error && homeGroupDetails.id){
-					//showSnackbar("Unregistered for event");
-					//ungoForAnEventSuccessUpdate(EventId, UserId);
-					fetchEvents(homeGroupDetails.id);
+					showSnackbar("Unregistered for event");
+					ungoForAnEventSuccessUpdate(groupEvent.id, userObject);
+					
+					var newPeopleList = peopleList.slice();
+					
+					//remove object from list
+					for(var i=0;i<newPeopleList.length;i++){
+
+						if(parseInt(newPeopleList[i].id)===userObject.id){
+							newPeopleList.splice(i, 1);
+							break;
+						}
+					}
+					this.setState({
+						peopleList:newPeopleList,
+						userIsGoing:false
+					});
+
 				} else {
 					showSnackbar("Error unregistering for event");
 				}
@@ -167,14 +223,11 @@ class EventItemCreated extends React.Component{
 	};
 
 	handleChangeGoing(){
-		const {groupEvent,homeGroupDetails, showSnackbar, user, goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate,fetchEvents} = this.props;
 		if(this.state.userIsGoing){
-			this.ungoForAnEvent(groupEvent.id, user.userObject.id, showSnackbar, 
-				goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents);
+			this.ungoForAnEvent();
 		}
 		else{
-			this.goForAnEvent(groupEvent.id, user.userObject.id, showSnackbar, 
-				goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents);
+			this.goForAnEvent();
 		}
 	}
 
@@ -191,9 +244,9 @@ class EventItemCreated extends React.Component{
 
 		const deleteActions = [
 	      <FlatButton label="Cancel" primary={true} 
-	      onTouchTap={(e)=>{e.preventDefault();this.closeDeleteDialog}} />,
+	      onTouchTap={this.closeDeleteDialog} />,
 	      <FlatButton label="Delete" primary={true} 
-	      onTouchTap={(e)=>{e.preventDefault();this.closeDeleteDialog}} />,
+	      onTouchTap={this.closeDeleteDialogDelete} />,
 	    ];
 
 		const {groupEvent,homeGroupDetails, showSnackbar, user, 
@@ -205,7 +258,7 @@ class EventItemCreated extends React.Component{
 
 				<Dialog actions={deleteActions} modal={false} open={this.state.isDialogOpen} 
 					onRequestClose={this.closeDeleteDialog}>
-		          Delete the event forever?
+		          Are you sure you want to delete your event?
 		        </Dialog>
 
 				<Dialog
@@ -270,7 +323,8 @@ class EventItemCreated extends React.Component{
 							: null 
 						}
 						{	
-							/*(parseInt(this.props.user.userObject.id)==parseInt())*/
+							(parseInt(this.props.user.userObject.id)==parseInt(groupEvent.UserId))?
+							(
 							<div className="edit-delete-btn">
 						      <IconButton tooltipPosition="bottom-center" tooltip="Edit" 
 						      onTouchTap={()=>goToEdit(props)}>
@@ -281,6 +335,9 @@ class EventItemCreated extends React.Component{
 						        {Icons.icon('delete')}
 						      </IconButton>
 					        </div>
+					        )
+					        :
+					        null
 						}
 					</CardActions>
 				</Card>
