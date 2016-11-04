@@ -134,7 +134,12 @@ class EventItemCreated extends React.Component{
 		})
 	}
 
-	goForAnEvent(EventId, UserId, showSnackbar,goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents, user){
+	goForAnEvent(EventId, UserId, showSnackbar, goForAnEventSuccessUpdate,
+	 homeGroupDetails, fetchEvents, user, universities){
+
+	 	const{peopleList} = this.state;
+	 	console.log(peopleList);
+
 		//console.log(EventId, UserId);
 		const req = request
 			.post(ROOT_URL + '/goToEvent')
@@ -143,7 +148,7 @@ class EventItemCreated extends React.Component{
 				UserId:UserId
 			})
 			.use(bearer)
-			.end(function(err,res){
+			.end((err,res)=>{
 				console.log(res);
 				if (res.status === 401) {
 					cookie.remove('authToken');
@@ -153,8 +158,17 @@ class EventItemCreated extends React.Component{
 		        } 
 				//console.log(homeGroupDetails.id);
 				if (!err && !res.error && homeGroupDetails.id){
+					var newUser = UniversityHelper.insertUniversitiesIntoUser(user,universities);
 					showSnackbar("Registered for event");
-					goForAnEventSuccessUpdate(EventId, user);
+					goForAnEventSuccessUpdate(EventId, newUser);
+					
+					var newPeopleList = peopleList.slice();
+					newPeopleList.push(newUser);
+					this.setState({
+						peopleList:newPeopleList,
+						userIsGoing:true
+					});
+
 				} else {
 					showSnackbar("Error registering for event");
 				}
@@ -192,14 +206,15 @@ class EventItemCreated extends React.Component{
 
 	handleChangeGoing(){
 		const {groupEvent,homeGroupDetails, showSnackbar, user, goForAnEventSuccessUpdate, 
-			ungoForAnEventSuccessUpdate,fetchEvents} = this.props;
+			ungoForAnEventSuccessUpdate,fetchEvents, universities} = this.props;
 		if(this.state.userIsGoing){
 			this.ungoForAnEvent(groupEvent.id, user.userObject.id, showSnackbar, 
 				goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents, user.userObject);
 		}
 		else{
 			this.goForAnEvent(groupEvent.id, user.userObject.id, showSnackbar, 
-				goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents, user.userObject);
+				goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents, 
+				user.userObject, universities);
 		}
 	}
 

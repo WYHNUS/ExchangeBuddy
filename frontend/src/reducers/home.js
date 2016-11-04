@@ -314,17 +314,15 @@ import {
 				var EventId = action.payload.EventId;
 				var user = action.payload.user;
 				var newHomeEvent = [];
-				var newAttendee = {name:user.name,id:user.id,
-					profilePictureUrl:user.profilePictureUrl,University:{name:"National Univ"}}
 				
 				for (var i=0;i<state.homeEvents.homeEvents.length;i++){
 					var newEvent=state.homeEvents.homeEvents[i];
-					console.log(newEvent);
+
 					if(parseInt(newEvent.id)==parseInt(EventId)){
-						newEvent.going.push(newAttendee);
+						newEvent.going.push(user);
 					
 					}
-					console.log(newEvent);
+					
 					newHomeEvent.push(newEvent)
 				}
 
