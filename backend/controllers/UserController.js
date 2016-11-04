@@ -153,15 +153,24 @@ exports.uploadProfile = function(req, res){
 
     uploader.on('end', function(){
         var url = s3.getPublicUrl(Bucket, req.file.filename, "ap-southeast-1");
-        models.User.update({
-            profilePictureUrl: url
-        }, {
+        models.User.findOne({
             where: {
                 id: req.user.id
             }
         }).then(function(user){
+            if(!!user.profilePictureUrl){
+                var splitString = user.profilePictureUrl.split('/');
+                client.deleteObject({
+                    Bucket,
+                    Key: splitString[splitString.length - 1]
+                })
+            }
+            user.update({
+                profilePictureUrl: url
+            })
+
             fs.unlinkSync(req.file.path);
-            res.(200).send({
+            res.status(200).send({
                 url,
                 success: true
             });
