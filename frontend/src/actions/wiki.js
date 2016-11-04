@@ -1,6 +1,8 @@
 import request from 'superagent';
 import { ROOT_URL } from '../util/backend';
 
+export const INITIALIZE_WIKI_FORM = 'INITIALIZE_WIKI_FORM';
+
 export const FECTCH_WIKI_PAGE = 'FECTCH_WIKI_PAGE';
 export const FECTCH_WIKI_PAGE_SUCCESS = 'FECTCH_WIKI_PAGE_SUCCESS';
 export const FECTCH_WIKI_PAGE_FAIL = 'FECTCH_WIKI_PAGE_FAIL';
@@ -13,11 +15,9 @@ export function clickedFetch() {
 export function fetchWikiSuccess(wiki, sections) {
     return { type: FECTCH_WIKI_PAGE_SUCCESS, wiki, sections };
 }
-
 export function fetchWikiFail(error) {
     return { type: FECTCH_WIKI_PAGE_FAIL, error };
 }
-
 export function fetchWikiPage(wikiTitle) {
 	return (dispatch) => {
 	    dispatch(clickedFetch());
@@ -38,4 +38,10 @@ export function fetchWikiPage(wikiTitle) {
 				}
 			});
   	}
+}
+
+
+/*	 Editing wiki section   */ 
+export function initializeWikiForm(title, content) {
+	return { type: INITIALIZE_WIKI_FORM, title, content }
 }

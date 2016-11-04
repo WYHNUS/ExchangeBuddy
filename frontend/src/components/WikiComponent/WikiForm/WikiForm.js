@@ -3,42 +3,68 @@ import { reduxForm } from 'redux-form';
 import RaisedButton from 'material-ui/RaisedButton';
 import { browserHistory } from 'react-router';
 
-import { TextFormField } from '../../Field';
+// import { TextFormField } from '../../Field';
+import { TextField } from 'redux-form-material-ui';
 import { EditableField } from '../../EditableField';
 
-var tmpId = -1;
 
-class WikiForm extends React.Component {
+export default class WikiForm extends React.Component {
+    constructor(props) {
+        super(props);
+
+        const { WikiSection, content } = this.props.section;
+        this.state = {
+            title: WikiSection.name,
+            content: content
+        }
+    }
+
+    componentWillMount() {
+        const { WikiSection, content } = this.props.section;
+        // assign initialValues
+        this.props.initializeForm(WikiSection.name, content);
+    }
+
     cancelChange() {
         browserHistory.goBack();
     }
 
-    submitForm(val) {
-        console.log(val);
+    submitForm() {
+        console.log(this.state);
+    }
+
+    handleTitleChange(e) {
+        this.setState({ title: e.target.value });
     }
 
     handleEditorChange(e) {
-        console.log(e.target.getContent());
-        // this.props.saveContent(e.target.getContent());
+        this.setState({ content: e.target.getContent() });
     }
 
     render() {
-        const { wiki, handleSubmit } = this.props;
+        const { wiki, section, formValue, handleSubmit } = this.props;
 
         return (
-            <form id={ this.props.section.WikiSection.name } onSubmit={ handleSubmit((values) => {
-                this.submitForm(values)
-            }) }>
+            <div id={ section.WikiSection.name }>
 
-                <TextFormField name="sectionTitle" floatingLabelText="Title"/>
+                <TextField 
+                    name="sectionTitle" 
+                    floatingLabelText="Title" 
+                    value={ this.state.title }
+                    onChange={ this.handleTitleChange.bind(this) }
+                />
+
                 <EditableField
-                    name="wiki" 
+                    name="sectionContent" 
+                    content={ this.state.content }
                     onChange={ this.handleEditorChange.bind(this) }
                 />
 
                 <div className="row center-md center-xs" style={{marginTop: "18px"}}>
                     <div>
-                        <RaisedButton className="raised-btn" label="Save changes" primary={true} type="submit"/>
+                        <RaisedButton className="raised-btn" label="Save changes" primary={true} 
+                            onClick={this.submitForm.bind(this)}
+                        />
                     </div>
                 </div>
                 <div className="row center-md center-xs" style={{marginTop: "18px"}}>
@@ -46,12 +72,7 @@ class WikiForm extends React.Component {
                         <RaisedButton className="raised-btn" label="Cancel" onClick={this.cancelChange.bind(this)}/>
                     </div>
                 </div>
-            </form>
+            </div>
         );
     }
 }
-
-// Decorate with redux-form
-export default reduxForm({
-  form: 'WikiForm'
-})(WikiForm);

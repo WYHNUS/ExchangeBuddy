@@ -1,5 +1,6 @@
 import {
-	FECTCH_WIKI_PAGE, FECTCH_WIKI_PAGE_SUCCESS, FECTCH_WIKI_PAGE_FAIL
+	FECTCH_WIKI_PAGE, FECTCH_WIKI_PAGE_SUCCESS, FECTCH_WIKI_PAGE_FAIL,
+	INITIALIZE_WIKI_FORM
 } from '../actions/wiki';
 
 const initialState=
@@ -21,7 +22,11 @@ const initialState=
 			id: null, name: null, sectionIndex: null, sectionType: "OpenToEdit", 
 			totalVersionCount: null, displayedVersionCount: null
 		}
-	}]
+	}],
+	editingSection: {
+		title: null,
+		content: null
+	}
 }
 
 export function wiki(state=initialState, action) 
@@ -47,6 +52,15 @@ export function wiki(state=initialState, action)
 				fetching: false,
 				error: action.error
 		    });
+
+		// edit wiki section
+		case INITIALIZE_WIKI_FORM:
+			return Object.assign({}, state, {
+				editingSection: {
+					title: action.title,
+					content: action.content
+				}
+			});
 
 		default:
 			return state
