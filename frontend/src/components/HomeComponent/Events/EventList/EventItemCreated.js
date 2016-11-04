@@ -134,18 +134,18 @@ class EventItemCreated extends React.Component{
 		})
 	}
 
-	goForAnEvent(EventId, UserId, showSnackbar, goForAnEventSuccessUpdate,
-	 homeGroupDetails, fetchEvents, user, universities){
+	goForAnEvent(){
 
-	 	const{peopleList} = this.state;
-	 	console.log(peopleList);
+	 	const {groupEvent,homeGroupDetails, showSnackbar, 
+	 		goForAnEventSuccessUpdate, universities} = this.props;
+		const {userObject} = this.props.user;
+	 	const {peopleList} = this.state;
 
-		//console.log(EventId, UserId);
 		const req = request
 			.post(ROOT_URL + '/goToEvent')
 			.send({ 
-				EventId: EventId,
-				UserId:UserId
+				EventId: groupEvent.id,
+				UserId:userObject.id
 			})
 			.use(bearer)
 			.end((err,res)=>{
@@ -156,11 +156,11 @@ class EventItemCreated extends React.Component{
 					// need to redirect to a new version of login page
 					browserHistory.push('/');
 		        } 
-				//console.log(homeGroupDetails.id);
+
 				if (!err && !res.error && homeGroupDetails.id){
-					var newUser = UniversityHelper.insertUniversitiesIntoUser(user,universities);
+					var newUser = UniversityHelper.insertUniversitiesIntoUser(userObject,universities);
 					showSnackbar("Registered for event");
-					goForAnEventSuccessUpdate(EventId, newUser);
+					goForAnEventSuccessUpdate(groupEvent.id, newUser);
 					
 					var newPeopleList = peopleList.slice();
 					newPeopleList.push(newUser);
@@ -175,17 +175,20 @@ class EventItemCreated extends React.Component{
 			});
 	};
 
-	ungoForAnEvent(EventId, UserId, showSnackbar,ungoForAnEventSuccessUpdate, homeGroupDetails, fetchEvents, user){
-		//console.log(EventId, UserId, showSnackbar);
-		//console.log(EventId, UserId);
+	ungoForAnEvent(){
+
+		const {groupEvent,homeGroupDetails, showSnackbar, ungoForAnEventSuccessUpdate} = this.props;
+		const {userObject} = this.props.user;
+	 	const {peopleList} = this.state;
+
 		const req = request
 			.post(ROOT_URL + '/unattend')
 			.send({ 
-				EventId: EventId,
-				UserId:UserId
+				EventId: groupEvent.id,
+				UserId: userObject.id
 			})
 			.use(bearer)
-			.end(function(err,res){
+			.end((err,res)=>{
 				console.log(res);
 				if (res.status === 401) {
 					cookie.remove('authToken');
@@ -193,11 +196,26 @@ class EventItemCreated extends React.Component{
 					// need to redirect to a new version of login page
 					browserHistory.push('/');
 		        } 
-				//console.log(homeGroupDetails.id);
+
 				if (!err && !res.error && homeGroupDetails.id){
-					//showSnackbar("Unregistered for event");
-					//ungoForAnEventSuccessUpdate(EventId, UserId);
-					fetchEvents(homeGroupDetails.id);
+					showSnackbar("Unregistered for event");
+					ungoForAnEventSuccessUpdate(groupEvent.id, userObject);
+					
+					var newPeopleList = peopleList.slice();
+					
+					//remove object from list
+					for(var i=0;i<newPeopleList.length;i++){
+
+						if(parseInt(newPeopleList[i].id)===userObject.id){
+							newPeopleList.splice(i, 1);
+							break;
+						}
+					}
+					this.setState({
+						peopleList:newPeopleList,
+						userIsGoing:false
+					});
+
 				} else {
 					showSnackbar("Error unregistering for event");
 				}
@@ -205,16 +223,11 @@ class EventItemCreated extends React.Component{
 	};
 
 	handleChangeGoing(){
-		const {groupEvent,homeGroupDetails, showSnackbar, user, goForAnEventSuccessUpdate, 
-			ungoForAnEventSuccessUpdate,fetchEvents, universities} = this.props;
 		if(this.state.userIsGoing){
-			this.ungoForAnEvent(groupEvent.id, user.userObject.id, showSnackbar, 
-				goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents, user.userObject);
+			this.ungoForAnEvent();
 		}
 		else{
-			this.goForAnEvent(groupEvent.id, user.userObject.id, showSnackbar, 
-				goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents, 
-				user.userObject, universities);
+			this.goForAnEvent();
 		}
 	}
 

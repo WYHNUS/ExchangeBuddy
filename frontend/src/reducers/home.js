@@ -322,14 +322,39 @@ import {
 						newEvent.going.push(user);
 					
 					}
-					
+
 					newHomeEvent.push(newEvent)
 				}
 
 				return {...state, homeEvents: {homeEvents:newHomeEvent, error: null, loading: false}}
 
 				case UNGO_FOR_AN_EVENT_SUCCESS_UPDATE:
-				return {...state}
+
+				var EventId = action.payload.EventId;
+				var user = action.payload.user;
+				var newHomeEvent = [];
+
+				for (var i=0;i<state.homeEvents.homeEvents.length;i++){
+					var newEvent=state.homeEvents.homeEvents[i];
+
+					if(parseInt(newEvent.id)==parseInt(EventId)){
+						var goingArray = newEvent.going;
+
+						for(var k=0;k<goingArray.length;k++){
+
+							if(parseInt(goingArray[k].id)===user.id){
+								goingArray.splice(k, 1);
+								break;
+							}
+						}
+
+						newEvent.going = goingArray;
+					}
+
+					newHomeEvent.push(newEvent)
+				}
+
+				return {...state, homeEvents: {homeEvents:newHomeEvent, error: null, loading: false}}
 
 				case DELETE_AN_EVENT_SUCCESS_UPDATE:
 				var EventId = action.payload.EventId;
