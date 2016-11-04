@@ -1,0 +1,25 @@
+.login label {
+  display: block;
+  @extend %clearfix;
+}
+
+.joyride-overlay{
+	height: 100vh!important;
+	.joyride-hole{
+		bottom:0px!important;
+		top:initial!important;
+	}
+	.joyride-tooltip{
+		max-width: 250px!important;
+		/*bottom:0px!important;*/
+	}
+}
+
+#react-root{
+	/*height: 100vh;
+	position: absolute;*/
+	/*>div{
+		height: 100vh;
+		position: absolute;
+	}*/
+}

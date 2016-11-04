@@ -216,6 +216,11 @@ export default class ProfilePaper extends React.Component {
           <RaisedButton className='edit-profile-button' primary={true} 
           label="Edit Universities" onTouchTap={()=>browserHistory.push("/profile/me/editUni")}/>
           </div>
+          <form action="https://app.exchangebuddy.com:8443/uploadProfile", 
+          method='post', 
+          enctype='multipart/form-data'>
+          <input type='file' name='profilePicture'/>
+          </form>
           </div>
           )
         :

@@ -12,7 +12,8 @@ import {
 	FETCH_GROUP_MESSAGES_FAILURE, RESET_GROUP_MESSAGES,
 	UPDATE_GROUP_MESSAGE_FROM_SOCKET,
 	GO_FOR_AN_EVENT_SUCCESS_UPDATE,UNGO_FOR_AN_EVENT_SUCCESS_UPDATE,
-	DELETE_AN_EVENT_SUCCESS_UPDATE, ADD_ONBOARDING_STEP, ADD_JOYRIDE} from '../actions/home';
+	DELETE_AN_EVENT_SUCCESS_UPDATE, ADD_ONBOARDING_STEP, ADD_JOYRIDE,
+	SET_FIRST_TIME, START_JOYRIDE} from '../actions/home';
 
 	/*const homeGroups=
 	[
@@ -235,7 +236,9 @@ import {
 		homeJoyride:{
 			steps: [],
 			ready: false,
-			joyride: null
+			joyride: null,
+			isFirstTime: false,
+			start: false
 		}
 	}
 
@@ -246,12 +249,20 @@ import {
 
 		switch (action.type) {
 
+			case START_JOYRIDE:
+			//state.homeJoyride.joyride.start(true);
+			return {...state, homeJoyride:{...state.homeJoyride,start:true}}
+
+			case SET_FIRST_TIME:
+			return {...state, homeJoyride:{...state.homeJoyride,isFirstTime:action.isFirstTime}}
+
 			case ADD_ONBOARDING_STEP:
 			var newSteps = state.homeJoyride.steps.slice();
-			newSteps.push(action.steps);
+			newSteps.concat(action.steps);	
 			return {...state, homeJoyride:{...state.homeJoyride,steps:newSteps}}
 
 			case ADD_JOYRIDE:
+			console.log('adding a joyride?', action.joyride);
 			return {...state, homeJoyride:{...state.homeJoyride,joyride:action.joyride}}
 
 			case TOGGLE_HOME_TAB:
