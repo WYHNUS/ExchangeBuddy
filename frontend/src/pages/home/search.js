@@ -199,7 +199,7 @@ class Search extends Component {
 				(this.state.isSearchOpen)?
 				(
 					<div className="col-xs-3 col-md-2 col-lg-1">
-					<FlatButton label="BACK" keyboardFocused={true} className='search-cancel'
+					<FlatButton label="BACK" className='search-cancel'
 					onTouchTap={(e)=>{ 
 						e.preventDefault();
 						this.toggleSearch(false);

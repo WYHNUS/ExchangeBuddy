@@ -132,6 +132,7 @@
     "react-router": "^2.8.0",
     "react-router-redux": "^4.0.5",
     "react-search-input": "^0.10.3",
+    "react-spinkit": "^1.1.11",
     "react-tap-event-plugin": "^1.0.0",
     "react-tinymce": "^0.5.1",
     "react-truncate": "^2.0.1",
