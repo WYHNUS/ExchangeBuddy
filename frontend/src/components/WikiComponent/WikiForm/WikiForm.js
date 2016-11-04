@@ -42,11 +42,10 @@ export default class WikiForm extends React.Component {
     }
 
     render() {
-        const { wiki, section, formValue, handleSubmit } = this.props;
+        const { section } = this.props;
 
         return (
             <div id={ section.WikiSection.name }>
-
                 <TextField 
                     name="sectionTitle" 
                     floatingLabelText="Title" 

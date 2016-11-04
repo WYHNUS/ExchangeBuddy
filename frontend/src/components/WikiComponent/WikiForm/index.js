@@ -17,13 +17,7 @@ import ChildComponent from './WikiForm';
 // redux
 const mapStateToProps = (state) => {
 	return{
-		userToken: state.user.token,
-		wiki: state.wiki,
-		formValue: state.wiki.editingSection,
-		initialValues: {
-			sectionTitle: state.wiki.editingSection.title,
-			sectionContent: state.wiki.editingSection.content
-		}
+		userToken: state.user.token
 	};
 };
 
