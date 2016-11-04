@@ -310,19 +310,26 @@ import {
 				return {...state, homeMessages: { homeMessages: [action.payload].concat(state.homeMessages.homeMessages), error: null, loading: false}};
 
 				case GO_FOR_AN_EVENT_SUCCESS_UPDATE:
+
 				var EventId = action.payload.EventId;
-				var UserId = action.payload.UserId;
-				var newHomeEvents = state.homeEvents.homeEvents;
-				//checking and adding user to the homeEvents going list
-				/*var eventAttendees = state.homeEvents.homeEvents[EventId].going;
-				var arrayLength = eventAttendees.length;
-				for (var i=0;i<arrayLength;i++){
-					if(eventAttendees[i].id===UserId){
-						eventAttendees = eventAttendees.splice(i,1);
-						break;
+				var user = action.payload.user;
+				var newHomeEvent = [];
+				var newAttendee = {name:user.name,id:user.id,
+					profilePictureUrl:user.profilePictureUrl,University:{name:"National Univ"}}
+				
+				for (var i=0;i<state.homeEvents.homeEvents.length;i++){
+					var newEvent=state.homeEvents.homeEvents[i];
+					console.log(newEvent);
+					if(parseInt(newEvent.id)==parseInt(EventId)){
+						newEvent.going.push(newAttendee);
+					
 					}
-				}*/
-				return {...state, homeEvents: {homeEvents:newHomeEvents, error: null, loading: false}}
+					console.log(newEvent);
+					newHomeEvent.push(newEvent)
+				}
+
+				return {...state, homeEvents: {homeEvents:newHomeEvent, error: null, loading: false}}
+
 				case UNGO_FOR_AN_EVENT_SUCCESS_UPDATE:
 				return {...state}
 

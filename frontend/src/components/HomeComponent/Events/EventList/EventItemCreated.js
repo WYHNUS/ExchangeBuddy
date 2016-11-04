@@ -134,7 +134,7 @@ class EventItemCreated extends React.Component{
 		})
 	}
 
-	goForAnEvent(EventId, UserId, showSnackbar,goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents){
+	goForAnEvent(EventId, UserId, showSnackbar,goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents, user){
 		//console.log(EventId, UserId);
 		const req = request
 			.post(ROOT_URL + '/goToEvent')
@@ -153,16 +153,15 @@ class EventItemCreated extends React.Component{
 		        } 
 				//console.log(homeGroupDetails.id);
 				if (!err && !res.error && homeGroupDetails.id){
-					//showSnackbar("Registered for event");
-					//goForAnEventSuccessUpdate(EventId, UserId);
-					fetchEvents(homeGroupDetails.id);
+					showSnackbar("Registered for event");
+					goForAnEventSuccessUpdate(EventId, user);
 				} else {
 					showSnackbar("Error registering for event");
 				}
 			});
 	};
 
-	ungoForAnEvent(EventId, UserId, showSnackbar,ungoForAnEventSuccessUpdate, homeGroupDetails, fetchEvents){
+	ungoForAnEvent(EventId, UserId, showSnackbar,ungoForAnEventSuccessUpdate, homeGroupDetails, fetchEvents, user){
 		//console.log(EventId, UserId, showSnackbar);
 		//console.log(EventId, UserId);
 		const req = request
@@ -192,14 +191,15 @@ class EventItemCreated extends React.Component{
 	};
 
 	handleChangeGoing(){
-		const {groupEvent,homeGroupDetails, showSnackbar, user, goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate,fetchEvents} = this.props;
+		const {groupEvent,homeGroupDetails, showSnackbar, user, goForAnEventSuccessUpdate, 
+			ungoForAnEventSuccessUpdate,fetchEvents} = this.props;
 		if(this.state.userIsGoing){
 			this.ungoForAnEvent(groupEvent.id, user.userObject.id, showSnackbar, 
-				goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents);
+				goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents, user.userObject);
 		}
 		else{
 			this.goForAnEvent(groupEvent.id, user.userObject.id, showSnackbar, 
-				goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents);
+				goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents, user.userObject);
 		}
 	}
 

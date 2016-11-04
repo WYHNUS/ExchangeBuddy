@@ -44,11 +44,11 @@ const mapDispatchToProps = (dispatch) => {
     showSnackbar: (message) => {
       dispatch(showSnackbar(message))
     },
-    goForAnEventSuccessUpdate: (EventId, UserId) => {
-      dispatch(goForAnEventSuccessUpdate(EventId, UserId))
+    goForAnEventSuccessUpdate: (EventId, user) => {
+      dispatch(goForAnEventSuccessUpdate(EventId, user))
     },
-    ungoForAnEventSuccessUpdate: (EventId, UserId) => {
-      dispatch(ungoForAnEventSuccessUpdate(EventId, UserId))
+    ungoForAnEventSuccessUpdate: (EventId, user) => {
+      dispatch(ungoForAnEventSuccessUpdate(EventId, user))
     },
     fetchAllUniversitiesSuccess: (data) => {
       dispatch(fetchAllUniversitiesSuccess(data));
