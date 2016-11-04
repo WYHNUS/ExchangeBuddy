@@ -326,3 +326,25 @@ export function toggleHomeTab(tabValue){
 		tabValue
 	}
 }
+
+
+/************************************************************
+ADDING STEPS FOR ONBOARDING
+************************************************************/
+
+export const ADD_ONBOARDING_STEP = 'ADD_ONBOARDING_STEP';
+export const ADD_JOYRIDE = 'ADD_JOYRIDE';
+
+export function addJoyride(joyride){
+	return{
+		type: ADD_JOYRIDE,
+		joyride
+	}
+}
+
+export function addOnboardStep(steps){
+	return{
+		type: ADD_ONBOARDING_STEP,
+		steps
+	}
+}

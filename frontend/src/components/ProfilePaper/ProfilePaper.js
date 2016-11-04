@@ -193,7 +193,7 @@ export default class ProfilePaper extends React.Component {
         (profileGroups.length>0)?
         (
           profileGroups.map((group,idx)=>
-          <div key={idx} className='col-xs-12'>
+          <div id="profilegroup" key={idx} className='col-xs-12'>
           {group.name}
           </div>)
         )

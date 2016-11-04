@@ -13,23 +13,33 @@ import {
   fetchMyGroups, fetchMyGroupsSuccess, fetchMyGroupsFailure,
   fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure,
   toggleSelectedHomeGroup, fetchEvents, fetchEventsSuccess, 
-  fetchEventsFailure, resetEvents
+  fetchEventsFailure, resetEvents,addJoyride
 } from '../actions/home';
 import { clearUser } from '../actions/authActions';
 
+import Joyride from 'react-joyride';
+
 import Header from '../components/Header';
-//import SwitchGroupDialog from '../components/SwitchGroupDialog';
 
 class Home extends React.Component{
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      joyrideOverlay: true,
+      joyrideType: 'continuous',
+      ready: false
+    };
+  }
+
   componentDidMount() {
+    this.props.addJoyride(this.joyride);
     this.props.toggleBottomBarVisibility(true);
     this.props.toggleTopBarVisibility(true);
     this.props.toggleHomeSearchDrawerOpenButtonVisibility(true);
     this.props.toggleTopBarBackButtonVisibility(false);
     this.props.toggleTopBarSettingsButtonVisibility(true);
-
-    //fetchMyGroups(userId)
 
     //if user is authenticated, fetch group and point groupDetails to that
     /*if(this.props.user.isAuthenticated){
@@ -39,6 +49,19 @@ class Home extends React.Component{
     }*/
     
     this.props.fetchMyGroups(this.props.user.id);
+
+    setTimeout(() => {
+      this.setState({
+        ready: true
+      });
+    }, 1000);
+
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    /*if (!prevState.ready && this.state.ready) {
+      this.joyride.start();
+    }*/
   }
 
   componentWillUnmount(){
@@ -53,6 +76,7 @@ class Home extends React.Component{
       <div>
       {<Header params={ this.props.params } tab={ this.props.routes[2].path } />}
       <div id="group-container">
+      <Joyride ref={c => (this.joyride = c)} steps={this.state.steps} debug={true} />
       { homeGroupsLoaded?(this.props.children):(<h1>Loading home groups...</h1>) }
       </div>
 
@@ -125,6 +149,9 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(fetchMyGroupsFailure(err.response.error.message));
         }
       });
+    },
+    addJoyride: (joyride)=>{
+      dispatch(addJoyride(joyride))
     }
   };
 };

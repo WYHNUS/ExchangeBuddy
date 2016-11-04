@@ -235,7 +235,7 @@ class EventItemCreated extends React.Component{
 		const actions = 
 		[
 		<FlatButton
-		label="Cancel"
+		label="Back"
 		primary={true}
 		keyboardFocused={true}
 		onTouchTap={this.handleClose}
@@ -326,10 +326,10 @@ class EventItemCreated extends React.Component{
 							(parseInt(this.props.user.userObject.id)==parseInt(groupEvent.UserId))?
 							(
 							<div className="edit-delete-btn">
-						      <IconButton tooltipPosition="bottom-center" tooltip="Edit" 
+						      {/*<IconButton tooltipPosition="bottom-center" tooltip="Edit" 
 						      onTouchTap={()=>goToEdit(props)}>
 						        {Icons.icon('mode_edit')}
-						      </IconButton>
+						      </IconButton>*/}
 						      <IconButton tooltipPosition="bottom-center" tooltip="Delete" 
 						      onTouchTap={()=>this.openDeleteDialog()} >
 						        {Icons.icon('delete')}
