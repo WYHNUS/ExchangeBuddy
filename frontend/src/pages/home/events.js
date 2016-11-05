@@ -47,47 +47,47 @@ class Events extends React.Component{
 	componentWillMount(){
     this.props.toggleHomeTab('events')
 		//fetchHomeEvenets(groupId)
-        //fetchFbEvents(123,[1231,12341]);
-        //fetchMuEvents(university, country);
-      }
+    //fetchFbEvents(123,[1231,12341]);
+    //fetchMuEvents(university, country);
+  }
 
-      constructor(props) {
-        super(props);
-        this.state = {value: 1};
-      }
+  constructor(props) {
+    super(props);
+    this.state = {value: 1};
+  }
 
-      handleChange = (event, index, value) => this.setState({value});
+  handleChange = (event, index, value) => this.setState({value});
 
 
-      render(){
-        const {id} = this.props.homeGroupDetails.homeGroupDetails;
-        return(
-         <div>
-           {/*<SelectField
-           value={this.state.value}
-           onChange={this.handleChange}>
-           {items}
-         </SelectField>*/}
-         <div className='row center-xs'>
-         <div className='col-xs event-item-button'>
-         <RaisedButton
-         className="event-item-button-add"
-         label='New Event'
-         onTouchTap={ () => browserHistory.push(`/home/${id}/events/new`)}
-         secondary={true}
-         icon={IconsHelper.materialIcon("add")}/>
-         </div>
-         </div>
+  render(){
+    const {id} = this.props.homeGroupDetails.homeGroupDetails;
+    return(
+     <div>
+       {/*<SelectField
+       value={this.state.value}
+       onChange={this.handleChange}>
+       {items}
+     </SelectField>*/}
+     <div className='row center-xs'>
+     <div className='col-xs event-item-button'>
+     <RaisedButton
+     className="event-item-button-add"
+     label='New Event'
+     onTouchTap={ () => browserHistory.push(`/home/${id}/events/new`)}
+     secondary={true}
+     icon={IconsHelper.materialIcon("add")}/>
+     </div>
+     </div>
 
-         <div className='row center-xs'>
-         <EventList source="Created"/>
+     <div className='row center-xs'>
+     <EventList source="Created"/>
 
-         </div>
+     </div>
 
-         </div>
-         );
-      }
-    }
+     </div>
+     );
+  }
+}
 
     /*<EventList source="Created" groupId={ id } groupEvents={fbseed} />*/
     /*<EventList event={seed}*/
