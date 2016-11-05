@@ -10,6 +10,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { TextFormField } from '../Field';
 import { PasswordFormField } from '../Field';
 
+import { ROOT_URL } from '../../util/backend';
+
 const profileForm=(callback, editProfile, userId)=>(values)=>{
   callback();
   editProfile(values.userName, values.userPassword);
@@ -95,10 +97,11 @@ class ProfileForm extends Component {
             </div>
           </div>
     			</form>
-          <form action="https://app.exchangebuddy.com:8443/uploadProfile"
+          <form action={`${ROOT_URL}/uploadProfile`}
           method='post'
-          enctype='multipart/form-data'>
+          encType='multipart/form-data'>
           <input type='file' name='profilePicture'/>
+          <button type='submit' > submit </button>
           </form>
           </div>
           </div>
