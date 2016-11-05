@@ -159,11 +159,23 @@ exports.uploadProfile = function(req, res){
             }
         }).then(function(user){
             if(!!user.profilePictureUrl){
+
                 var splitString = user.profilePictureUrl.split('/');
-                client.deleteObject({
-                    Bucket,
-                    Key: splitString[splitString.length - 1]
-                })
+                var Key = splitString[splitString.length - 1];
+                console.log(Key);
+                if(Key.length === req.file.filename.length){
+                    client.deleteObjects({
+                        Bucket,
+                        Delete: {
+                            Objects: [
+                                {
+                                    Key,
+                                }
+                            ]
+                        }
+                    })
+                }
+
             }
             user.update({
                 profilePictureUrl: url
