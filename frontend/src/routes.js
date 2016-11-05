@@ -21,6 +21,7 @@ import NotFound from './pages/not-found';
 import Profile from './pages/profile';
 import Wiki from './pages/wiki/wiki';
 import WikiDetails from './pages/wiki/wikiDetails';
+import WikiHistory from './pages/wiki/wikiHistory';
 import EditWiki from './pages/wiki/editWiki';
 import Stories from './pages/stories/stories';
 import StoryDetails from './pages/stories/story';
@@ -98,6 +99,7 @@ export const getRoutes = (store) =>{
     <Route path="wiki">
       <IndexRoute component={ Wiki }/>
       <Route path=":wikiTitle" component={ WikiDetails }/>
+      <Route path="history(/:wikiTitle)/*" component={ WikiHistory }/>
       <Route path="editWiki(/:wikiTitle/:wikiSection)" component={ EditWiki } onEnter={ authRequired }/>
     </Route>
     <Route path="profile(/:userId)" onEnter={ authRequired }>

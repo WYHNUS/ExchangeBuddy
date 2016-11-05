@@ -84,7 +84,7 @@ exports.getSectionVersion = function(req, res) {
     // check if version number is valid and return all info if valid
     var query = req.query;
     console.log(query);
-    if (!query.q || !query.section || !query.version) {
+    if (!query.q || !query.sectionIndex || !query.version) {
         return res.status(400)
             .json({
                 status: 'fail',
@@ -101,7 +101,7 @@ exports.getSectionVersion = function(req, res) {
                 model: Section,
                 attributes: ['id', 'sectionIndex', 'displayVersionNumber', 'totalVersionCount', 'sectionType'],
                 where: {
-                    sectionIndex: query.section
+                    sectionIndex: query.sectionIndex
                 },
                 include: [{
                     model: Version,

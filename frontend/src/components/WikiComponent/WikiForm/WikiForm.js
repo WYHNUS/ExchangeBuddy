@@ -3,7 +3,6 @@ import { reduxForm } from 'redux-form';
 import RaisedButton from 'material-ui/RaisedButton';
 import { browserHistory } from 'react-router';
 
-// import { TextFormField } from '../../Field';
 import { TextField } from 'redux-form-material-ui';
 import { EditableField } from '../../EditableField';
 
