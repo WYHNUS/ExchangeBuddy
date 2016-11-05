@@ -365,3 +365,14 @@ export function startJoyride(){
 		type: START_JOYRIDE
 	}
 }
+
+export const ADDING_GROUP_SUCCESS_UPDATE = 'ADDING_GROUP_SUCCESS_UPDATE';
+
+export function addingGroupSuccessUpdate(userObject){
+	return{
+		type: ADDING_GROUP_SUCCESS_UPDATE,
+		payload:{
+			userObject:userObject
+		}
+	}
+}
