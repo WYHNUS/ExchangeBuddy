@@ -367,6 +367,16 @@ export function startJoyride(){
 }
 
 export const ADDING_GROUP_SUCCESS_UPDATE = 'ADDING_GROUP_SUCCESS_UPDATE';
+export const LEAVING_GROUP_SUCCESS_UPDATE = 'LEAVING_GROUP_SUCCESS_UPDATE';
+
+export function leavingGroupSuccessUpdate(userObject){
+	return{
+		type: LEAVING_GROUP_SUCCESS_UPDATE,
+		payload:{
+			userObject:userObject
+		}
+	}
+}
 
 export function addingGroupSuccessUpdate(userObject){
 	return{

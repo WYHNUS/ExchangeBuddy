@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { ListItem } from 'material-ui/List';
 import { browserHistory } from 'react-router'
@@ -8,6 +8,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import request from 'superagent';
 import { bearer } from '../../../../util/bearer';
 import { ROOT_URL } from '../../../../util/backend';
+import * as UniversityHelper from '../../../../util/university';
 
 import { getAvatar } from '../../../../util/user';
 
@@ -53,8 +54,10 @@ export default class MemberList extends React.Component {
 
   joinGroup(){
     
-    const { showSnackbar, clearUser } = this.props;
+    const { showSnackbar, clearUser, universities, 
+      fetchAllUniversities, userObject, addingGroupSuccessUpdate } = this.props;
     const { homeGroupDetails } = this.props.homeGroupDetails;
+    let homeGroupDetailsId = homeGroupDetails.id;
 
     const req = request
       .post(ROOT_URL + '/joinGroup')
@@ -73,8 +76,16 @@ export default class MemberList extends React.Component {
 
         if (!err && !res.error && homeGroupDetails.id){
           showSnackbar("Added group!");
-          addingGroupSuccessUpdate(userObject);
-
+          
+          console.log(universities);
+          if (universities.length < 2) {
+            fetchAllUniversities();
+            browserHistory.push(`/home/${homeGroupDetailsId}`)
+          }else{
+            var newUser = UniversityHelper.insertUniversitiesIntoUser(userObject,universities);
+            addingGroupSuccessUpdate(newUser);
+          }
+          
         } else {
           showSnackbar("Error adding group");
         }
@@ -84,7 +95,7 @@ export default class MemberList extends React.Component {
 
   leaveGroup(){
 
-    const { showSnackbar, clearUser } = this.props;
+    const { showSnackbar, clearUser, userObject,leavingGroupSuccessUpdate } = this.props;
     const { homeGroupDetails } = this.props.homeGroupDetails;
 
     const req = request
@@ -104,7 +115,7 @@ export default class MemberList extends React.Component {
 
         if (!err && !res.error && homeGroupDetails.id){
           showSnackbar("Left group!");
-          //addingGroupSuccessUpdate(homeGroupDetails, userObject)
+          leavingGroupSuccessUpdate(userObject)
 
         } else {
           showSnackbar("Error leaving group");
@@ -126,7 +137,7 @@ export default class MemberList extends React.Component {
   render(){
 
     const { loading, error, homeGroupDetails } = this.props.homeGroupDetails;
-    const {user} = this.props;
+    const {userObject} = this.props;
 
     if(loading) {
       return <Spinner spinnerName="circle" />      
@@ -134,7 +145,7 @@ export default class MemberList extends React.Component {
       return <div className="alert alert-danger">Error: {error.message}</div>
     }
 
-    var userPartOfGroup = isUserPartOfGroup(user.id,homeGroupDetails.user);
+    var userPartOfGroup = isUserPartOfGroup(userObject.id,homeGroupDetails.user);
 
     return(
       <div>
@@ -186,4 +197,12 @@ export default class MemberList extends React.Component {
   }
 }
 
-// style={{ textAlign: 'center' }}
+MemberList.propTypes = {
+  leavingGroupSuccessUpdate: PropTypes.func.isRequired,
+  addingGroupSuccessUpdate: PropTypes.func.isRequired,
+  fetchAllUniversities: PropTypes.func.isRequired,
+  showSnackbar: PropTypes.func.isRequired,
+  userObject: PropTypes.object.isRequired,
+  universities: PropTypes.array.isRequired,
+  homeGroupDetails: PropTypes.object.isRequired
+};
