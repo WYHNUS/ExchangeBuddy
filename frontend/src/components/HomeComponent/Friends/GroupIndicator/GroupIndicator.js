@@ -5,22 +5,13 @@ import { browserHistory } from 'react-router'
 import Spinner from 'react-spinkit';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 
 import request from 'superagent';
 import { bearer } from '../../../../util/bearer';
 import { ROOT_URL } from '../../../../util/backend';
 import * as UniversityHelper from '../../../../util/university';
-
-const isUserPartOfGroup = (userId, homeFriends) => {
-  
-  for(var i=0;i<homeFriends.length;i++){
-
-    if(parseInt(homeFriends[i].id)===parseInt(userId)){
-      return true;
-    }
-  }
-  return false;
-}
+import * as GroupHelper from '../../../../util/group';
 
 export default class GroupIndicator extends React.Component {
 
@@ -122,53 +113,58 @@ export default class GroupIndicator extends React.Component {
     const {homeGroups}=this.props;
 
     if(homeGroups.length===1){
-      this.showNoLeaveDialog();
+      this.handleNoDeleteOpen();
     }
 
     else{
-      this.showConfirmLeaveDialog();
+      this.handleConfirmDeleteOpen();
     }
-
-  }
-
-  showConfirmLeaveDialog(){
-
-  }
-
-  showNoLeaveDialog(){
-
 
   }
 
   render(){
 
-    const actions = 
+    const noDeleteActions = 
     [
-    <FlatButton
-    label="Back"
-    primary={true}
-    keyboardFocused={true}
-    onTouchTap={this.handleClose}
+      <FlatButton
+      label="Back"
+      primary={true}
+      keyboardFocused={true}
+      onTouchTap={this.handleNoDeleteClose}
     />
     ];
 
-    const deleteActions = 
+    const confirmDeleteActions = 
     [
       <FlatButton label="Cancel" primary={true} 
-      onTouchTap={this.closeDeleteDialog} />,
+      onTouchTap={this.handleConfirmDeleteClose} />,
       <FlatButton label="Delete" primary={true} 
-      onTouchTap={this.closeDeleteDialogDelete} />,
+      onTouchTap={(e)=>{e.preventDefault();this.handleConfirmDeleteClose();this.leaveGroup()}} />,
     ];
 
     const { homeGroupDetails } = this.props.homeGroupDetails;
     const {userObject} = this.props;
 
-    console.log('redering group ind');
-
-    var userPartOfGroup = isUserPartOfGroup(userObject.id,homeGroupDetails.user);
+    var userPartOfGroup = GroupHelper.isUserPartOfGroup(userObject.id,homeGroupDetails.user);
 
     return(
       <div>
+
+        <Dialog 
+        actions={noDeleteActions} 
+        modal={false} 
+        open={this.state.noDeleteOpen} 
+        onRequestClose={this.handleNoDeleteClose}>
+        You cannot delete your last group!
+        </Dialog>
+
+        <Dialog
+        actions={confirmDeleteActions}
+        modal={false}
+        open={this.state.confirmDeleteOpen}
+        onRequestClose={this.handleConfirmDeleteOpen}>
+        Are you sure you want to delete your group?
+        </Dialog>
         
         <div className='row middle-xs'>
           {
@@ -179,12 +175,12 @@ export default class GroupIndicator extends React.Component {
                 className='join-button'
                 primary={true} 
                 onTouchTap={(e)=>{e.preventDefault();this.joinGroup()}}/>
-                <h3>These students are in this group</h3>
+                <h2>These students are in this group</h2>
               </div>
             ):
             (
               <div className='col-xs-12'>
-              <h3>These students are in the same group as you.</h3>
+              <h2>These students are in the same group as you.</h2>
               <p>Find friends, start chatting, or organize events!</p>
               </div>
             )
@@ -199,7 +195,7 @@ export default class GroupIndicator extends React.Component {
                 <RaisedButton label='Leave group'
                 className='join-button'
                 secondary={true} 
-                onTouchTap={(e)=>{e.preventDefault();this.leaveGroup()}}/>
+                onTouchTap={(e)=>{e.preventDefault();this.showLeaveDialog()}}/>
               </div>
             ):
             null

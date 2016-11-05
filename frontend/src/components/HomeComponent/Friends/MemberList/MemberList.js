@@ -44,8 +44,6 @@ export default class MemberList extends React.Component {
 
     const { homeGroupDetails } = this.props.homeGroupDetails;
 
-    console.log('redering group members');
-
     return(
       <div>
 
