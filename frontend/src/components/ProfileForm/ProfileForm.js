@@ -95,6 +95,11 @@ class ProfileForm extends Component {
             </div>
           </div>
     			</form>
+          <form action="https://app.exchangebuddy.com:8443/uploadProfile"
+          method='post'
+          enctype='multipart/form-data'>
+          <input type='file' name='profilePicture'/>
+          </form>
           </div>
           </div>
     			)

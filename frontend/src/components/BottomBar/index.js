@@ -7,9 +7,11 @@ import ChildComponent from './BottomBar';
 import { toggleBottomBarVisibility } from '../../actions/pageVisibility';
 import {toggleHomeTab} from '../../actions/home';
 
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state, ownProps)=>{
   return {
-    pageVisibility: state.pageVisibility
+    pageVisibility: state.pageVisibility,
+    addSteps: ownProps.addSteps,
+    homeJoyride: state.home.homeJoyride
   };
 }
 const mapDispatchToProps = (dispatch) => {

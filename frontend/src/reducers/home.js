@@ -12,7 +12,8 @@ import {
 	FETCH_GROUP_MESSAGES_FAILURE, RESET_GROUP_MESSAGES,
 	UPDATE_GROUP_MESSAGE_FROM_SOCKET,
 	GO_FOR_AN_EVENT_SUCCESS_UPDATE,UNGO_FOR_AN_EVENT_SUCCESS_UPDATE,
-	DELETE_AN_EVENT_SUCCESS_UPDATE} from '../actions/home';
+	DELETE_AN_EVENT_SUCCESS_UPDATE, ADD_ONBOARDING_STEP, ADD_JOYRIDE,
+	SET_FIRST_TIME, START_JOYRIDE} from '../actions/home';
 
 	/*const homeGroups=
 	[
@@ -231,6 +232,14 @@ import {
 			loading: false
 		},
 		homeTabValue:'events',
+
+		homeJoyride:{
+			steps: [],
+			ready: false,
+			joyride: null,
+			isFirstTime: false,
+			start: false
+		}
 	}
 
 
@@ -239,135 +248,146 @@ import {
 		let error;
 
 		switch (action.type) {
+
+			case START_JOYRIDE:
+			//state.homeJoyride.joyride.start(true);
+			return {...state, homeJoyride:{...state.homeJoyride,start:true}}
+
+			case SET_FIRST_TIME:
+			return {...state, homeJoyride:{...state.homeJoyride,isFirstTime:action.isFirstTime}}
+
+			case ADD_ONBOARDING_STEP:
+			var newSteps = state.homeJoyride.steps.slice();
+			newSteps.concat(action.steps);	
+			return {...state, homeJoyride:{...state.homeJoyride,steps:newSteps}}
+
+			case ADD_JOYRIDE:
+			console.log('adding a joyride?', action.joyride);
+			return {...state, homeJoyride:{...state.homeJoyride,joyride:action.joyride}}
+
 			case TOGGLE_HOME_TAB:
 			return {...state, homeTabValue:action.tabValue}
 
 			case TOGGLE_SELECTED_HOME_GROUP:
-			return {...state, 
-				homeGroups: {...state.homeGroups,selected:action.index}}
-			/*return {...state, 
-				homeGroups: {...state.homeGroups,selected:action.index},
-				homeGroupDetails:{...state.homeGroupDetails, homeGroupDetails:state.homeGroups.homeGroups[action.index]}}*/
+			return {...state, homeGroups: {...state.homeGroups,selected:action.index}}
+			case FETCH_HOME_MESSAGES:
+			return {...state, homeMessages: {homeMessages:[], error: null, loading: true}};
+			case FETCH_HOME_MESSAGES_SUCCESS:
+			return {...state, homeMessages: {homeMessages: action.payload, error:null, loading: false}};
+			case FETCH_HOME_MESSAGES_FAILURE:
+			error = action.payload || {message: action.payload};
+			return {...state, homeMessages: {homeMessages: [], error: error, loading: false}};
+			case RESET_HOME_MESSAGES:
+			return {...state, homeMessages: {homeMessages: [], error:null, loading: false}}
 
-				case FETCH_HOME_MESSAGES:
-				return {...state, homeMessages: {homeMessages:[], error: null, loading: true}};
-				case FETCH_HOME_MESSAGES_SUCCESS:
-				return {...state, homeMessages: {homeMessages: action.payload, error:null, loading: false}};
-				case FETCH_HOME_MESSAGES_FAILURE:
-				error = action.payload || {message: action.payload};
-				return {...state, homeMessages: {homeMessages: [], error: error, loading: false}};
-				case RESET_HOME_MESSAGES:
-				return {...state, homeMessages: {homeMessages: [], error:null, loading: false}}
+			case FETCH_EVENTS:
+			return {...state, homeEvents: {homeEvents:[], error: null, loading: true}};
+			case FETCH_EVENTS_SUCCESS:
+			return {...state, homeEvents: {homeEvents: action.payload, error: null, loading: false}};
+			case FETCH_EVENTS_FAILURE:
+			error = action.payload || {message: action.payload};
+			return {...state, homeEvents: {homeEvents: [], error: error, loading: false}};
+			case RESET_EVENTS:
+			return {...state, homeEvents: {homeEvents: [], error: null, loading: false}};
 
-				case FETCH_EVENTS:
-				return {...state, homeEvents: {homeEvents:[], error: null, loading: true}};
-				case FETCH_EVENTS_SUCCESS:
-				return {...state, homeEvents: {homeEvents: action.payload, error: null, loading: false}};
-				case FETCH_EVENTS_FAILURE:
-				error = action.payload || {message: action.payload};
-				return {...state, homeEvents: {homeEvents: [], error: error, loading: false}};
-				case RESET_EVENTS:
-				return {...state, homeEvents: {homeEvents: [], error: null, loading: false}};
+			case FETCH_MY_GROUPS:
+			return {...state, homeGroups: {groupsLoaded:false, selected:-1, homeGroups:[], error: null, loading: true}};
+			case FETCH_MY_GROUPS_SUCCESS://sorting to ensure that the groups are displayed in order
+			action.payload.sort(function(a, b) {
+				return parseInt(a.groupType) - parseInt(b.groupType);
+			});
+			return {...state, homeGroups: {groupsLoaded:true, selected:0, homeGroups: action.payload, error: null, loading: false}};
+			case FETCH_MY_GROUPS_FAILURE:
+			error = action.payload || {message: action.payload};
+			return {...state, homeGroups: {groupsLoaded:false, selected:-1, homeGroups: [], error: error, loading: false}};
+			case RESET_MY_GROUPS:
+			return {...state, homeGroups: {groupsLoaded:false, selected:-1, homeGroups: [], error: null, loading: false}};
 
-				case FETCH_MY_GROUPS:
-				return {...state, homeGroups: {groupsLoaded:false, selected:-1, homeGroups:[], error: null, loading: true}};
-				case FETCH_MY_GROUPS_SUCCESS:
-				//sorting to ensure that the groups are displayed in order
-				action.payload.sort(function(a, b) {
-					return parseInt(a.groupType) - parseInt(b.groupType);
-				});
-				return {...state, homeGroups: {groupsLoaded:true, selected:0, homeGroups: action.payload, error: null, loading: false}};
-				case FETCH_MY_GROUPS_FAILURE:
-				error = action.payload || {message: action.payload};
-				return {...state, homeGroups: {groupsLoaded:false, selected:-1, homeGroups: [], error: error, loading: false}};
-				case RESET_MY_GROUPS:
-				return {...state, homeGroups: {groupsLoaded:false, selected:-1, homeGroups: [], error: null, loading: false}};
+			case FETCH_CURRENT_GROUP:
+			return {...state, homeGroupDetails: {...state.homeGroupDetails, error: null, loading: true, detailsLoaded:false},
+			homeFriends: {homeFriends:[], error: null, loading: true}};
+			case FETCH_CURRENT_GROUP_SUCCESS:
+			return {...state, homeGroupDetails: {homeGroupDetails: action.payload, error: null, loading: false, detailsLoaded:true},
+			homeFriends: {homeFriends: action.payload.user, error: null, loading: false}};
+			case FETCH_CURRENT_GROUP_FAILURE:
+			error = action.payload || {message: action.payload};
+			return {...state, homeGroupDetails: {homeGroupDetails: {}, error: error, loading: false, detailsLoaded:false},
+			homeFriends: {homeFriends: [], error: error, loading: false}};
+			case RESET_CURRENT_GROUP:
+			return {...state, homeGroupDetails: {homeGroupDetails: {}, error: null, loading: false, detailsLoaded:false},
+			homeFriends: {homeFriends: [], error: null, loading: false}};
 
-				case FETCH_CURRENT_GROUP:
-				return {...state, homeGroupDetails: {...state.homeGroupDetails, error: null, loading: true, detailsLoaded:false},
-				homeFriends: {homeFriends:[], error: null, loading: true}};
-				case FETCH_CURRENT_GROUP_SUCCESS:
-				return {...state, homeGroupDetails: {homeGroupDetails: action.payload, error: null, loading: false, detailsLoaded:true},
-				homeFriends: {homeFriends: action.payload.user, error: null, loading: false}};
-				case FETCH_CURRENT_GROUP_FAILURE:
-				error = action.payload || {message: action.payload};
-				return {...state, homeGroupDetails: {homeGroupDetails: {}, error: error, loading: false, detailsLoaded:false},
-				homeFriends: {homeFriends: [], error: error, loading: false}};
-				case RESET_CURRENT_GROUP:
-				return {...state, homeGroupDetails: {homeGroupDetails: {}, error: null, loading: false, detailsLoaded:false},
-				homeFriends: {homeFriends: [], error: null, loading: false}};
+			case FETCH_GROUP_MESSAGES:
+			return {...state, homeMessages: { homeMessages:[], error: null, loading: true}};
+			case FETCH_GROUP_MESSAGES_SUCCESS:
+			return {...state, homeMessages: { homeMessages: action.payload, error: null, loading: false}};
+			case FETCH_GROUP_MESSAGES_FAILURE:
+			error = action.payload || {message: action.payload};
+			return {...state, homeMessages: { homeMessages: [], error: error, loading: false}};
+			case RESET_GROUP_MESSAGES:
+			return {...state, homeMessages: { homeMessages: [], error: null, loading: false}};
+			case UPDATE_GROUP_MESSAGE_FROM_SOCKET:
+			return {...state, homeMessages: { homeMessages: [action.payload].concat(state.homeMessages.homeMessages), error: null, loading: false}};
 
-				case FETCH_GROUP_MESSAGES:
-				return {...state, homeMessages: { homeMessages:[], error: null, loading: true}};
-				case FETCH_GROUP_MESSAGES_SUCCESS:
-				return {...state, homeMessages: { homeMessages: action.payload, error: null, loading: false}};
-				case FETCH_GROUP_MESSAGES_FAILURE:
-				error = action.payload || {message: action.payload};
-				return {...state, homeMessages: { homeMessages: [], error: error, loading: false}};
-				case RESET_GROUP_MESSAGES:
-				return {...state, homeMessages: { homeMessages: [], error: null, loading: false}};
-				case UPDATE_GROUP_MESSAGE_FROM_SOCKET:
-				return {...state, homeMessages: { homeMessages: [action.payload].concat(state.homeMessages.homeMessages), error: null, loading: false}};
+			case GO_FOR_AN_EVENT_SUCCESS_UPDATE:
 
-				case GO_FOR_AN_EVENT_SUCCESS_UPDATE:
+			var EventId = action.payload.EventId;
+			var user = action.payload.user;
+			var newHomeEvent = [];
 
-				var EventId = action.payload.EventId;
-				var user = action.payload.user;
-				var newHomeEvent = [];
-				
-				for (var i=0;i<state.homeEvents.homeEvents.length;i++){
-					var newEvent=state.homeEvents.homeEvents[i];
+			for (var i=0;i<state.homeEvents.homeEvents.length;i++){
+				var newEvent=state.homeEvents.homeEvents[i];
 
-					if(parseInt(newEvent.id)==parseInt(EventId)){
-						newEvent.going.push(user);
-					
-					}
+				if(parseInt(newEvent.id)==parseInt(EventId)){
+					newEvent.going.push(user);
 
-					newHomeEvent.push(newEvent)
 				}
 
-				return {...state, homeEvents: {homeEvents:newHomeEvent, error: null, loading: false}}
-
-				case UNGO_FOR_AN_EVENT_SUCCESS_UPDATE:
-
-				var EventId = action.payload.EventId;
-				var user = action.payload.user;
-				var newHomeEvent = [];
-
-				for (var i=0;i<state.homeEvents.homeEvents.length;i++){
-					var newEvent=state.homeEvents.homeEvents[i];
-
-					if(parseInt(newEvent.id)==parseInt(EventId)){
-						var goingArray = newEvent.going;
-
-						for(var k=0;k<goingArray.length;k++){
-
-							if(parseInt(goingArray[k].id)===user.id){
-								goingArray.splice(k, 1);
-								break;
-							}
-						}
-
-						newEvent.going = goingArray;
-					}
-
-					newHomeEvent.push(newEvent)
-				}
-
-				return {...state, homeEvents: {homeEvents:newHomeEvent, error: null, loading: false}}
-
-				case DELETE_AN_EVENT_SUCCESS_UPDATE:
-				var EventId = action.payload.EventId;
-				var newHomeEvents = [];
-				var homeEventIterable = state.homeEvents.homeEvents;
-				for(var i=0;i<homeEventIterable.length;i++){
-					if(!(parseInt(homeEventIterable[i].id)===parseInt(EventId))){
-						newHomeEvents.push(homeEventIterable[i]);
-					}
-				}
-				return {...state, homeEvents: {homeEvents:newHomeEvents, error: null, loading: false}}
-
-				default:
-				return state
+				newHomeEvent.push(newEvent)
 			}
+
+			return {...state, homeEvents: {homeEvents:newHomeEvent, error: null, loading: false}}
+
+			case UNGO_FOR_AN_EVENT_SUCCESS_UPDATE:
+
+			var EventId = action.payload.EventId;
+			var user = action.payload.user;
+			var newHomeEvent = [];
+
+			for (var i=0;i<state.homeEvents.homeEvents.length;i++){
+				var newEvent=state.homeEvents.homeEvents[i];
+
+				if(parseInt(newEvent.id)==parseInt(EventId)){
+					var goingArray = newEvent.going;
+
+					for(var k=0;k<goingArray.length;k++){
+
+						if(parseInt(goingArray[k].id)===user.id){
+							goingArray.splice(k, 1);
+							break;
+						}
+					}
+
+					newEvent.going = goingArray;
+				}
+
+				newHomeEvent.push(newEvent)
+			}
+
+			return {...state, homeEvents: {homeEvents:newHomeEvent, error: null, loading: false}}
+
+			case DELETE_AN_EVENT_SUCCESS_UPDATE:
+			var EventId = action.payload.EventId;
+			var newHomeEvents = [];
+			var homeEventIterable = state.homeEvents.homeEvents;
+			for(var i=0;i<homeEventIterable.length;i++){
+				if(!(parseInt(homeEventIterable[i].id)===parseInt(EventId))){
+					newHomeEvents.push(homeEventIterable[i]);
+				}
+			}
+			return {...state, homeEvents: {homeEvents:newHomeEvents, error: null, loading: false}}
+
+			default:
+			return state
 		}
+	}

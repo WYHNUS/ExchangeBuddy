@@ -57,19 +57,26 @@
   .university-details{
     margin-top: 20px;
     margin-bottom: 10px;
+
     .university-header{
       font-size: 22px;
+
+      #profilegroup{
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
     }
   }
   .edit-profile-container{
     margin-top: 20px;
+    
     .edit-profile-button{
       margin-bottom: 10px;
+
+      >button{
+        width: 200px;
+      }
     } 
-  }
-  /*#user-info {
-  	margin-left: 20px;
-    }*/
   }
 
   #half-header {
@@ -78,3 +85,4 @@
 
     #logo-image { position: absolute; top: 30px; left: 30px; }
   }
+}

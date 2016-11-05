@@ -326,3 +326,42 @@ export function toggleHomeTab(tabValue){
 		tabValue
 	}
 }
+
+
+/************************************************************
+ADDING STEPS FOR ONBOARDING
+************************************************************/
+
+export const ADD_ONBOARDING_STEP = 'ADD_ONBOARDING_STEP';
+export const ADD_JOYRIDE = 'ADD_JOYRIDE';
+export const SET_FIRST_TIME = 'SET_FIRST_TIME';
+export const START_JOYRIDE = 'START_JOYRIDE';
+
+export function setFirstTime(isFirstTime){
+	return{
+		type: SET_FIRST_TIME,
+		isFirstTime
+	}
+}
+
+export function addJoyride(joyride){
+
+    console.log('tryng to add joyride', joyride);
+	return{
+		type: ADD_JOYRIDE,
+		joyride
+	}
+}
+
+export function addOnboardStep(steps){
+	return{
+		type: ADD_ONBOARDING_STEP,
+		steps
+	}
+}
+
+export function startJoyride(){
+	return{
+		type: START_JOYRIDE
+	}
+}
