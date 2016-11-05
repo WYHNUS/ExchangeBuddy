@@ -118,6 +118,7 @@
     "react-cloudinary": "^0.4.0",
     "react-cookie": "^0.4.8",
     "react-dom": "^15.3.2",
+    "react-dropzone": "^3.7.2",
     "react-facebook": "^2.0.6",
     "react-facebook-login": "^3.1.0",
     "react-flexbox-grid": "^0.10.2",
