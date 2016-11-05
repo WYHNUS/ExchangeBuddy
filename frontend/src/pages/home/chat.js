@@ -96,16 +96,17 @@ class Chat extends React.Component{
 
 				{
 					(userPartOfGroup)?
-					(<SubmitForm socket={socket}/>)
+					(
+						<SubmitForm socket={socket}/>
+						<MessageList />
+					)
 					:
 					(
 						<div className='row center-xs'>
 							<h2>Join the group to join in the coversation!</h2>
 						</div>
 					)
-				}
-
-				<MessageList />
+				}				
 
 			</div>
 	

@@ -8,7 +8,8 @@ import {toggleHomeTab} from '../../actions/home';
 import RaisedButton from 'material-ui/RaisedButton';
 import MenuItem from 'material-ui/MenuItem';
 import { browserHistory } from 'react-router';
-import * as IconsHelper from '../../util/icons' 
+import * as IconsHelper from '../../util/icons';
+import * as GroupHelper from '../../util/group';
 
 import EventList from '../../components/HomeComponent/Events/EventList';
 
@@ -60,71 +61,74 @@ class Events extends React.Component{
 
 
   render(){
+
+    const { homeGroupDetails } = this.props.homeGroupDetails;
     const {id} = this.props.homeGroupDetails.homeGroupDetails;
+    const {user} = this.props;
+
+    var userPartOfGroup = GroupHelper.isUserPartOfGroup(user.id,homeGroupDetails.user);    
+
     return(
+
      <div>
-       {/*<SelectField
-       value={this.state.value}
-       onChange={this.handleChange}>
-       {items}
-     </SelectField>*/}
-     <div className='row center-xs'>
-     <div className='col-xs event-item-button'>
-     <RaisedButton
-     className="event-item-button-add"
-     label='New Event'
-     onTouchTap={ () => browserHistory.push(`/home/${id}/events/new`)}
-     secondary={true}
-     icon={IconsHelper.materialIcon("add")}/>
-     </div>
+     
+      {
+          (userPartOfGroup)?
+          (
+            <div>
+            <div className='row center-xs'>
+            <div className='col-xs event-item-button'>
+            <RaisedButton
+            className="event-item-button-add"
+            label='New Event'
+            onTouchTap={ () => browserHistory.push(`/home/${id}/events/new`)}
+            secondary={true}
+            icon={IconsHelper.materialIcon("add")}/>
+            </div>
+            </div>
+            <div className='row center-xs'>
+            <EventList source="Created"/>
+            </div>
+            </div>
+          )
+          :
+          (
+            <div className='row center-xs'>
+              <h2>Join the group to see and join events!</h2>
+            </div>
+          )
+      }
+
      </div>
 
-     <div className='row center-xs'>
-     <EventList source="Created"/>
-
-     </div>
-
-     </div>
      );
   }
 }
 
-    /*<EventList source="Created" groupId={ id } groupEvents={fbseed} />*/
-    /*<EventList event={seed}*/
-/*<Row>
-           <Col xs={12} md={6}>
-           <h3 className="event-title pinline"> <span>Facebook Events</span> </h3>
-           {<EventList source="Facebook" groupId={ id } groupEvents={fbseed} />}
-           </Col>
-           <Col xs={12} md={6}>
-           <h3 className="event-title pinline"> <span>Meetup Events</span> </h3>
-           {<EventList source="Meetup" groupId={ id } groupEvents={meetupseed}/>}
-           </Col>
-           </Row>*/
+const mapStateToProps = (state )=>{
+  return{
+    homeGroupDetails: state.home.homeGroupDetails,
+    user: state.user.userObject
+  };
+}
 
-           const mapStateToProps = (state )=>{
-             return{
-              homeGroupDetails: state.home.homeGroupDetails
-            };
-          }
+const mapDispatchToProps = (dispatch) => {
+ return {
+  actions: bindActionCreators({ showSnackbar }, dispatch),
 
-          const mapDispatchToProps = (dispatch) => {
-           return {
-            actions: bindActionCreators({ showSnackbar }, dispatch),
+  fetchFbEvents:(countryCode, uniLatLng)=>{
+    dispatch(fetchFbEvents(countryCode, uniLatLng)).then((response) => {
+      !response.error ? dispatch(fetchFbEventsSuccess(response.payload)) : 
+      dispatch(fetchFbEventsFailure(response.payload));
+    })},
 
-            fetchFbEvents:(countryCode, uniLatLng)=>{
-              dispatch(fetchFbEvents(countryCode, uniLatLng)).then((response) => {
-                !response.error ? dispatch(fetchFbEventsSuccess(response.payload)) : 
-                dispatch(fetchFbEventsFailure(response.payload));
-              })},
+    fetchMuEvents:(university, country)=>{
+      dispatch(fetchMuEvents(university,country))
+    },
 
-              fetchMuEvents:(university, country)=>{
-                dispatch(fetchMuEvents(university,country))
-              },
-
-              toggleHomeTab:(tab)=>dispatch(toggleHomeTab(tab))
-            }
-          }
+    toggleHomeTab:(tab)=>dispatch(toggleHomeTab(tab))
+  }
+}
 
 
-          export default connect(mapStateToProps, mapDispatchToProps)(Events);
+export default connect(mapStateToProps, mapDispatchToProps)(Events);
