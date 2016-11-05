@@ -87,8 +87,8 @@ export default class MemberList extends React.Component {
     const { showSnackbar, clearUser } = this.props;
     const { homeGroupDetails } = this.props.homeGroupDetails;
 
-    /*const req = request
-      .post(ROOT_URL + '/joinGroup')
+    const req = request
+      .post(ROOT_URL + '/leaveGroup')
       .send({ 
         GroupId: homeGroupDetails.id
       })
@@ -103,13 +103,13 @@ export default class MemberList extends React.Component {
             } 
 
         if (!err && !res.error && homeGroupDetails.id){
-          showSnackbar("Added group!");
+          showSnackbar("Left group!");
           //addingGroupSuccessUpdate(homeGroupDetails, userObject)
 
         } else {
-          showSnackbar("Error adding group");
+          showSnackbar("Error leaving group");
         }
-      });*/
+      });
 
   }
 
