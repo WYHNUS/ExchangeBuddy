@@ -6,16 +6,29 @@ import ChildComponent from './MemberList';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import { showSnackbar } from '../../../../actions/messageSnackbar';
+import { clearUser } from '../../../../actions/authActions';
+import {addingGroupSuccessUpdate} from '../../../../actions/home'
+
 
 const mapDispatchToProps = (dispatch) => {
   return {
+  	clearUser: () => {
+      dispatch(clearUser());
+    },
+    showSnackbar: (message) => {
+      dispatch(showSnackbar(message))
+    },
+    addingGroupSuccessUpdate:(userObject)=>{
+    	dispatch(addingGroupSuccessUpdate(userObject))
+    }
   };
 };
 
 const mapStateToProps = (state) => {
   return {
     user:state.user.userObject,
-    homeFriends: state.home.homeFriends
+    homeGroupDetails: state.home.homeGroupDetails
   }
 };
 

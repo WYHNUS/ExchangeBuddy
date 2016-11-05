@@ -19,6 +19,8 @@ import { clearUser } from '../actions/authActions';
 
 import Header from '../components/Header';
 
+import Spinner from 'react-spinkit';
+
 class Home extends React.Component{
 
   constructor(props){
@@ -56,7 +58,7 @@ class Home extends React.Component{
       {<Header params={ this.props.params } tab={ this.props.routes[2].path } />}
       <div id="group-container">
 
-      { homeGroupsLoaded?(this.props.children):(<h1>Loading home groups...</h1>) }
+      { homeGroupsLoaded?(this.props.children):(<Spinner spinnerName="circle" />) }
       </div>
 
     </div>

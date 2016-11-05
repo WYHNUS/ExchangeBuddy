@@ -13,7 +13,7 @@ import {
 	UPDATE_GROUP_MESSAGE_FROM_SOCKET,
 	GO_FOR_AN_EVENT_SUCCESS_UPDATE,UNGO_FOR_AN_EVENT_SUCCESS_UPDATE,
 	DELETE_AN_EVENT_SUCCESS_UPDATE, ADD_ONBOARDING_STEP, ADD_JOYRIDE,
-	SET_FIRST_TIME, START_JOYRIDE} from '../actions/home';
+	SET_FIRST_TIME, START_JOYRIDE, ADDING_GROUP_SUCCESS_UPDATE} from '../actions/home';
 
 	/*const homeGroups=
 	[
@@ -211,7 +211,8 @@ import {
 			homeGroupDetails: {
 				id: -1,
 				name: null,
-				groupType: -1
+				groupType: -1,
+				user:[]
 			},
 			error: null,
 			loading: false
@@ -226,12 +227,8 @@ import {
 			error: null,
 			loading: false
 		},
-		homeFriends: {
-			homeFriends: [],
-			error: null,
-			loading: false
-		},
-		homeTabValue:'events',
+
+		homeTabValue:'friends',
 
 		homeJoyride:{
 			steps: [],
@@ -304,18 +301,14 @@ import {
 			return {...state, homeGroups: {groupsLoaded:false, selected:-1, homeGroups: [], error: null, loading: false}};
 
 			case FETCH_CURRENT_GROUP:
-			return {...state, homeGroupDetails: {...state.homeGroupDetails, error: null, loading: true, detailsLoaded:false},
-			homeFriends: {homeFriends:[], error: null, loading: true}};
+			return {...state, homeGroupDetails: {...state.homeGroupDetails, error: null, loading: true, detailsLoaded:false}}
 			case FETCH_CURRENT_GROUP_SUCCESS:
-			return {...state, homeGroupDetails: {homeGroupDetails: action.payload, error: null, loading: false, detailsLoaded:true},
-			homeFriends: {homeFriends: action.payload.user, error: null, loading: false}};
+			return {...state, homeGroupDetails: {homeGroupDetails: action.payload, error: null, loading: false, detailsLoaded:true}}
 			case FETCH_CURRENT_GROUP_FAILURE:
 			error = action.payload || {message: action.payload};
-			return {...state, homeGroupDetails: {homeGroupDetails: {}, error: error, loading: false, detailsLoaded:false},
-			homeFriends: {homeFriends: [], error: error, loading: false}};
+			return {...state, homeGroupDetails: {homeGroupDetails: {}, error: error, loading: false, detailsLoaded:false}}
 			case RESET_CURRENT_GROUP:
-			return {...state, homeGroupDetails: {homeGroupDetails: {}, error: null, loading: false, detailsLoaded:false},
-			homeFriends: {homeFriends: [], error: null, loading: false}};
+			return {...state, homeGroupDetails: {homeGroupDetails: {}, error: null, loading: false, detailsLoaded:false}}
 
 			case FETCH_GROUP_MESSAGES:
 			return {...state, homeMessages: { homeMessages:[], error: null, loading: true}};
@@ -386,6 +379,11 @@ import {
 				}
 			}
 			return {...state, homeEvents: {homeEvents:newHomeEvents, error: null, loading: false}}
+
+			case ADDING_GROUP_SUCCESS_UPDATE:
+			var userObject = action.payload.userObject;
+			var newHomeGroupDetails = state.homeGroupDetails.homeGroupDetails;
+			var newHomeGroups = state.homeGroups.homeGroups;
 
 			default:
 			return state
