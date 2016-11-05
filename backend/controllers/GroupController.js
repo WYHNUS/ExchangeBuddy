@@ -68,7 +68,7 @@ exports.leaveGroup = function(req, res){
 			})
 		}else{
 			res.status(400).send({
-				success: false;
+				success: false
 			})
 		}
 	})
