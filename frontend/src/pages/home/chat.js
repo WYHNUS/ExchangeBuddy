@@ -97,8 +97,10 @@ class Chat extends React.Component{
 				{
 					(userPartOfGroup)?
 					(
+						<div>
 						<SubmitForm socket={socket}/>
 						<MessageList />
+						</div>
 					)
 					:
 					(
