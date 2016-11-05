@@ -18,36 +18,14 @@ const FILE_FIELD_NAME = 'files';
 
 const uploadFile=(data)=>{
   console.log('called superagent file request');
-  /*req = request
-    .post(ROOT_URL + '/uploadProfile')
-    .send({ 
-      file: file
-    })
-    .type('form')
-    .use(bearer)
-    .attach('file', 'path/to/tobi.png', 'user.png')
-    .end((err,res)=>{
-    console.log(err,res);
-    if (res.status === 401) {
-      //cookie.remove('authToken');
-      //this.props.clearUser();
-      // need to redirect to a new version of login page
-      browserHistory.push('/');
-    } 
-
-    if (!err && !res.error){
-      console.log('uploaded');
-    } else {
-      console.log('server error');
-    }
-  });*/
-  var body = new FormData();
-    Object.keys(data).forEach(( key ) => {
-      body.append(key, data[ key ]);
-  });
+  const formData = new FormData();
+  formData.append('file',data.files[0]);
+  console.log(formData);
   var req = request
     .post(ROOT_URL + '/uploadProfile')
-    .send(body)
+    .send(formData)
+    /*.attach(data.files[0].name,data.files[0])
+    .type("multipart/form-data")*/
     .use(bearer)
     .end((err,res)=>{
       console.log(err,res);
@@ -195,6 +173,12 @@ class ProfileForm extends Component {
             </div>
           </div>
 
+          {/*<Field
+            type="file"
+            name="poster"
+            component={FileInput}
+          />*/}
+
           {/*<input
             type="file"
             onChange={
@@ -223,37 +207,27 @@ class ProfileForm extends Component {
   }
 }
 
-/*const req = request
-      .post(ROOT_URL + '/uploadProfile')
-      .send({ 
-        GroupId: homeGroupDetails.id
-      })
-      .use(bearer)
-      .end((err,res)=>{
-        //console.log(res);
-        if (res.status === 401) {
-          cookie.remove('authToken');
-          this.props.clearUser();
-          // need to redirect to a new version of login page
-          browserHistory.push('/');
-            } 
+class FileInput extends React.Component {
+  constructor(props) {
+    super(props)
+    this.onChange = this.onChange.bind(this)
+  }
 
-        if (!err && !res.error && homeGroupDetails.id){
-          showSnackbar("Added group!");
+  onChange(e) {
+    const { input: { onChange } } = this.props
+    onChange(e.target.files[0])
+  }
 
-          console.log(universities);
-          if (universities.length < 2) {
-            fetchAllUniversities();
-            browserHistory.push(`/home/${homeGroupDetailsId}`)
-          }else{
-            var newUser = UniversityHelper.insertUniversitiesIntoUser(userObject,universities);
-            addingGroupSuccessUpdate(newUser);
-          }
-          
-        } else {
-          showSnackbar("Error adding group");
-        }
-      });*/
+  render() {
+    const { input: { value } } = this.props
+
+    return (<input
+      type="file"
+      value={value}
+      onChange={this.onChange}
+    />)
+  }
+}
 
 class PrefilledNamePicker extends React.Component{
   render(){
