@@ -11,17 +11,7 @@ import request from 'superagent';
 import { bearer } from '../../../../util/bearer';
 import { ROOT_URL } from '../../../../util/backend';
 import * as UniversityHelper from '../../../../util/university';
-
-const isUserPartOfGroup = (userId, homeFriends) => {
-  
-  for(var i=0;i<homeFriends.length;i++){
-
-    if(parseInt(homeFriends[i].id)===parseInt(userId)){
-      return true;
-    }
-  }
-  return false;
-}
+import * as GroupHelper from '../../../../util/group';
 
 export default class GroupIndicator extends React.Component {
 
@@ -155,7 +145,7 @@ export default class GroupIndicator extends React.Component {
     const { homeGroupDetails } = this.props.homeGroupDetails;
     const {userObject} = this.props;
 
-    var userPartOfGroup = isUserPartOfGroup(userObject.id,homeGroupDetails.user);
+    var userPartOfGroup = GroupHelper.isUserPartOfGroup(userObject.id,homeGroupDetails.user);
 
     return(
       <div>
@@ -185,12 +175,12 @@ export default class GroupIndicator extends React.Component {
                 className='join-button'
                 primary={true} 
                 onTouchTap={(e)=>{e.preventDefault();this.joinGroup()}}/>
-                <h3>These students are in this group</h3>
+                <h2>These students are in this group</h2>
               </div>
             ):
             (
               <div className='col-xs-12'>
-              <h3>These students are in the same group as you.</h3>
+              <h2>These students are in the same group as you.</h2>
               <p>Find friends, start chatting, or organize events!</p>
               </div>
             )

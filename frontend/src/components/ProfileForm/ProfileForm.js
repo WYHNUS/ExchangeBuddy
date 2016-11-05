@@ -19,7 +19,7 @@ const FILE_FIELD_NAME = 'files';
 const uploadFile=(data)=>{
   console.log('called superagent file request');
   const formData = new FormData();
-  formData.append('file',data.files[0]);
+  formData.append('profilePicture',data.files[0]);
   console.log(formData);
   var req = request
     .post(ROOT_URL + '/uploadProfile')
@@ -194,12 +194,12 @@ class ProfileForm extends Component {
 
     			</form>
 
-          {/*<form action={`${ROOT_URL}/uploadProfile`}
+          {<form action={`${ROOT_URL}/uploadProfile`}
           method='post'
           encType='multipart/form-data'>
           <input type='file' name='profilePicture'/>
           <button type='submit' > submit </button>
-          </form>*/}
+          </form>}
 
           </div>
           </div>

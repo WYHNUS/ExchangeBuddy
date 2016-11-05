@@ -13,3 +13,14 @@ export function getTerm(groupName){
 //for groupType 1
 
 //for groupType 2
+
+export function isUserPartOfGroup (userId, homeFriends) {
+  
+  for(var i=0;i<homeFriends.length;i++){
+
+    if(parseInt(homeFriends[i].id)===parseInt(userId)){
+      return true;
+    }
+  }
+  return false;
+}
