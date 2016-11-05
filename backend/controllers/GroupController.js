@@ -55,6 +55,25 @@ exports.joinGroup = function(req, res){
 	})
 }
 
+exports.leaveGroup = function(req, res){
+	models.Group.findOne({
+		where: {
+			id: req.body.GroupId
+		}
+	}).then(function(group){
+		if(!!group){
+			group.removeUser(req.user.id);
+			res.send({
+				success: true
+			})
+		}else{
+			res.status(400).send({
+				success: false;
+			})
+		}
+	})
+}
+
 // Show group if user belongs to it
 exports.getGroup = function(req, res) {
     Group.findOne({

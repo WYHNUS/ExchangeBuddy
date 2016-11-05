@@ -87,6 +87,7 @@ request:
 }
 */
 router.post('/joinGroup', verifyToken, GroupCtrl.joinGroup);
+router.post('/leaveGroup', verifyToken, GroupCtrl.leaveGroup);
 router.post('/group', verifyToken, GroupCtrl.getGroupIndex);
 router.get('/group/:id', verifyToken, GroupCtrl.getGroup);
 router.get('/getGroups', GroupCtrl.getGroups);
