@@ -204,6 +204,7 @@ export default class Header extends React.Component {
                   (
                     <div className='col-xs-12 col-md-8 col-lg-8' id="header-title">
                       <h2 id="uni-name">{ homeGroupDetails.name }</h2>
+                      <p id="uni-description">{ `${homeGroupDetails.user.length} ${homeGroupDetails.user.length==1?("member"):("members")}` }</p>
                     </div>
                   )
                 : 
@@ -211,14 +212,16 @@ export default class Header extends React.Component {
                     (
                       <div className='col-xs-12 col-md-8 col-lg-8' id="header-title">
                         <h2 id="uni-name">{ getName(homeGroupDetails.name) }</h2>
-                        <p id="uni-description">{ `${getYear(homeGroupDetails.name)}` }</p>
+                        <p id="uni-description">{ `${getYear(homeGroupDetails.name)} | 
+                        ${homeGroupDetails.user.length} ${homeGroupDetails.user.length==1?("member"):("members")}` }</p>
                       </div>
                     )
                   : 
                     (
                       <div className='col-xs-12 col-md-8 col-lg-8' id="header-title">
                         <h2 id="uni-name">{ getName(homeGroupDetails.name) }</h2>
-                        <p id="uni-description">{ `${getTerm(homeGroupDetails.name)} ${getYear(homeGroupDetails.name)}` }</p>
+                        <p id="uni-description">{ `${getTerm(homeGroupDetails.name)} ${getYear(homeGroupDetails.name)} | 
+                        ${homeGroupDetails.user.length} ${homeGroupDetails.user.length==1?("member"):("members")}` }</p>
                       </div>
                     )
               : null
