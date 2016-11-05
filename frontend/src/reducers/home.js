@@ -13,7 +13,8 @@ import {
 	UPDATE_GROUP_MESSAGE_FROM_SOCKET,
 	GO_FOR_AN_EVENT_SUCCESS_UPDATE,UNGO_FOR_AN_EVENT_SUCCESS_UPDATE,
 	DELETE_AN_EVENT_SUCCESS_UPDATE, ADD_ONBOARDING_STEP, ADD_JOYRIDE,
-	SET_FIRST_TIME, START_JOYRIDE, ADDING_GROUP_SUCCESS_UPDATE} from '../actions/home';
+	SET_FIRST_TIME, START_JOYRIDE, ADDING_GROUP_SUCCESS_UPDATE, 
+	LEAVING_GROUP_SUCCESS_UPDATE} from '../actions/home';
 
 	/*const homeGroups=
 	[
@@ -381,9 +382,53 @@ import {
 			return {...state, homeEvents: {homeEvents:newHomeEvents, error: null, loading: false}}
 
 			case ADDING_GROUP_SUCCESS_UPDATE:
+			
 			var userObject = action.payload.userObject;
 			var newHomeGroupDetails = state.homeGroupDetails.homeGroupDetails;
 			var newHomeGroups = state.homeGroups.homeGroups;
+
+			newHomeGroupDetails.user.push(
+				{
+					id:userObject.id,
+					name:userObject.name,
+					profilePictureUrl:userObject.profilePictureUrl,
+					University:userObject.University
+				})
+
+			newHomeGroupDetails.number = newHomeGroupDetails.user.length;
+
+			newHomeGroups.push(newHomeGroupDetails);
+			var selected = newHomeGroups.length-1;
+
+			return {...state, homeGroupDetails: {homeGroupDetails:newHomeGroupDetails, error: null, loading: false, detailsLoaded:true},homeGroups: {homeGroups:newHomeGroups, error: null, loading: false, groupsLoaded:true, selected:selected}}
+
+			case LEAVING_GROUP_SUCCESS_UPDATE:
+			
+			var userObject = action.payload.userObject;
+			var newHomeGroupDetails = state.homeGroupDetails.homeGroupDetails;
+			var newHomeGroups = state.homeGroups.homeGroups;
+			
+			for(var i=0;i<newHomeGroups.length;i++){
+				
+				if(parseInt(newHomeGroups[i].id)===parseInt(newHomeGroupDetails.id)){
+					newHomeGroups.splice(i,1);
+					break;
+				}
+			}
+
+			var userArray = newHomeGroupDetails.user;
+
+			for(var i=0;i<userArray.length;i++){
+				
+				if(parseInt(userArray[i].id)===parseInt(userObject.id)){
+					userArray.splice(i,1);
+					break;
+				}
+			}
+
+			newHomeGroupDetails.user = userArray;
+
+			return {...state, homeGroupDetails: {homeGroupDetails:newHomeGroupDetails, error: null, loading: false, detailsLoaded:true},homeGroups: {homeGroups:newHomeGroups, error: null, loading: false, groupsLoaded:true}}
 
 			default:
 			return state

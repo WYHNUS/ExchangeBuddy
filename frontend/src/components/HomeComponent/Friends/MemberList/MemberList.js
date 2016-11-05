@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { ListItem } from 'material-ui/List';
 import { browserHistory } from 'react-router'
 import Spinner from 'react-spinkit';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 
 import request from 'superagent';
 import { bearer } from '../../../../util/bearer';
 import { ROOT_URL } from '../../../../util/backend';
+import * as UniversityHelper from '../../../../util/university';
 
 import { getAvatar } from '../../../../util/user';
 
@@ -51,10 +53,33 @@ export const MemberTile = ({ user }) => (
 
 export default class MemberList extends React.Component {
 
+  state = {
+    noDeleteOpen: false,
+    confirmDeleteOpen:false
+  };
+
+  handleNoDeleteOpen = () => {
+    this.setState({noDeleteOpen: true});
+  };
+
+  handleNoDeleteClose = () => {
+    this.setState({noDeleteOpen: false});
+  };
+
+  handleConfirmDeleteOpen = () =>{
+    this.setState({confirmDeleteOpen:true});
+  };
+
+  handleConfirmDeleteClose = () =>{
+    this.setState({confirmDeleteOpen:false});
+  };
+
   joinGroup(){
     
-    const { showSnackbar, clearUser } = this.props;
+    const { showSnackbar, clearUser, universities, 
+      fetchAllUniversities, userObject, addingGroupSuccessUpdate } = this.props;
     const { homeGroupDetails } = this.props.homeGroupDetails;
+    let homeGroupDetailsId = homeGroupDetails.id;
 
     const req = request
       .post(ROOT_URL + '/joinGroup')
@@ -73,8 +98,16 @@ export default class MemberList extends React.Component {
 
         if (!err && !res.error && homeGroupDetails.id){
           showSnackbar("Added group!");
-          addingGroupSuccessUpdate(userObject);
 
+          console.log(universities);
+          if (universities.length < 2) {
+            fetchAllUniversities();
+            browserHistory.push(`/home/${homeGroupDetailsId}`)
+          }else{
+            var newUser = UniversityHelper.insertUniversitiesIntoUser(userObject,universities);
+            addingGroupSuccessUpdate(newUser);
+          }
+          
         } else {
           showSnackbar("Error adding group");
         }
@@ -84,7 +117,7 @@ export default class MemberList extends React.Component {
 
   leaveGroup(){
 
-    const { showSnackbar, clearUser } = this.props;
+    const { showSnackbar, clearUser, userObject, leavingGroupSuccessUpdate } = this.props;
     const { homeGroupDetails } = this.props.homeGroupDetails;
 
     const req = request
@@ -100,11 +133,11 @@ export default class MemberList extends React.Component {
           this.props.clearUser();
           // need to redirect to a new version of login page
           browserHistory.push('/');
-            } 
+        } 
 
         if (!err && !res.error && homeGroupDetails.id){
           showSnackbar("Left group!");
-          //addingGroupSuccessUpdate(homeGroupDetails, userObject)
+          leavingGroupSuccessUpdate(userObject)
 
         } else {
           showSnackbar("Error leaving group");
@@ -113,8 +146,21 @@ export default class MemberList extends React.Component {
 
   }
 
-  showConfirmLeaveDialog(){
+  showLeaveDialog(){
 
+    const {homeGroups}=this.props;
+
+    if(homeGroups.length===1){
+      this.showNoLeaveDialog();
+    }
+
+    else{
+      this.showConfirmLeaveDialog();
+    }
+
+  }
+
+  showConfirmLeaveDialog(){
 
   }
 
@@ -125,8 +171,26 @@ export default class MemberList extends React.Component {
 
   render(){
 
+    const actions = 
+    [
+    <FlatButton
+    label="Back"
+    primary={true}
+    keyboardFocused={true}
+    onTouchTap={this.handleClose}
+    />
+    ];
+
+    const deleteActions = 
+    [
+      <FlatButton label="Cancel" primary={true} 
+      onTouchTap={this.closeDeleteDialog} />,
+      <FlatButton label="Delete" primary={true} 
+      onTouchTap={this.closeDeleteDialogDelete} />,
+    ];
+
     const { loading, error, homeGroupDetails } = this.props.homeGroupDetails;
-    const {user} = this.props;
+    const {userObject} = this.props;
 
     if(loading) {
       return <Spinner spinnerName="circle" />      
@@ -134,7 +198,7 @@ export default class MemberList extends React.Component {
       return <div className="alert alert-danger">Error: {error.message}</div>
     }
 
-    var userPartOfGroup = isUserPartOfGroup(user.id,homeGroupDetails.user);
+    var userPartOfGroup = isUserPartOfGroup(userObject.id,homeGroupDetails.user);
 
     return(
       <div>
@@ -186,4 +250,13 @@ export default class MemberList extends React.Component {
   }
 }
 
-// style={{ textAlign: 'center' }}
+MemberList.propTypes = {
+  leavingGroupSuccessUpdate: PropTypes.func.isRequired,
+  addingGroupSuccessUpdate: PropTypes.func.isRequired,
+  fetchAllUniversities: PropTypes.func.isRequired,
+  showSnackbar: PropTypes.func.isRequired,
+  userObject: PropTypes.object.isRequired,
+  universities: PropTypes.array.isRequired,
+  homeGroupDetails: PropTypes.object.isRequired,
+  homeGroups: PropTypes.array.isRequired
+};
