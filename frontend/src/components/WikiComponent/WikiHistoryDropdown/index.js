@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
+import { setReload, fetchWikiPage } from '../../../actions/wiki';
+
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
@@ -36,7 +38,9 @@ class WikiHistoryDropdown extends React.Component {
   		// redirect
   		const { wikiTitle, sections } = this.props;
 
+		var queryArray = [];
   		var urlString = '/wiki/history/' + wikiTitle + '/';
+
   		for (var i=0; i<sections.length; i++) {
   			var section = sections[i];
   			var	versionString = ('section' + section.WikiSection.sectionIndex 
@@ -44,8 +48,18 @@ class WikiHistoryDropdown extends React.Component {
 
   			// check if chosen section number 
   			if (value.substring(7, 8) === ('' + section.WikiSection.sectionIndex)) {
-  				versionString = value
-  			}
+  				versionString = value;
+  				queryArray.push({ 
+					sectionIndex: value.substring(7, 8), 
+					versionIndex: value.substring(value.indexOf('=') + 1)
+				});
+  			} else {
+	  			queryArray.push({ 
+					sectionIndex: section.WikiSection.sectionIndex, 
+					versionIndex: section.versionNumber
+				});
+	  		}
+  			var section = sections[i];
 
   			if (i === 0) {
   				urlString += versionString;
@@ -54,9 +68,8 @@ class WikiHistoryDropdown extends React.Component {
   			}
   		}
 
-  		console.log(urlString);
   		browserHistory.push(urlString);
-  		this.setState({value});
+  		this.props.fetchWikiPage(wikiTitle, queryArray);
   	}
 
 	render() {
@@ -79,7 +92,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		actions: bindActionCreators({  }, dispatch)
+		actions: bindActionCreators({  }, dispatch),
+		setReload: () => dispatch(setReload()),
+		fetchWikiPage: (title, paramArray) => dispatch(fetchWikiPage(title, paramArray)),
 	};
 };
 

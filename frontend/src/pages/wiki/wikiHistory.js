@@ -14,18 +14,20 @@ import {
 import WikiContentTable from '../../components/WikiComponent/WikiContentTable';
 import WikiSection from '../../components/WikiComponent/WikiSection';
 
-class WikiDetails extends React.Component{
+var shouldRefresh = false;
 
+class WikiDetails extends React.Component {
 	componentWillMount() {
-		const { wikiTitle, sectionParam, wiki } = this.props;
-console.log(sectionParam);
-		if (!sectionParam) {
+		const { params, wiki } = this.props;
+
+		// tmpSectionParam = sectionParam;
+		if (!params.splat) {
 			// return to latest wiki
-			browserHistory.push('/wiki/' + wikiTitle);
+			browserHistory.push('/wiki/' + params.wikiTitle);
 		} else {
 			// process sectionParam and check validity of sectionParamArray
 			var isValid = true;
-			var sectionParamArray = sectionParam.split('&');
+			var sectionParamArray = params.splat.split('&');
 			var queryArray = [];
 
 			for (var i=0; i<sectionParamArray.length; i++) {
@@ -42,13 +44,13 @@ console.log(sectionParam);
 
 			// redirect back if query param not valid
 			if (!isValid) {
-				browserHistory.push('/wiki/' + wikiTitle);
+				browserHistory.push('/wiki/' + params.wikiTitle);
 			}
 
 			// check if the info stored in reducer matches with the one stored in URL, and if sectionIndex is valid
-			// if (wikiTitle !== wiki.wiki.title || this.props.wiki.needReload) {
-				this.props.fetchWikiPage(wikiTitle, queryArray);
-			// }
+			if (params.wikiTitle !== wiki.wiki.title || wiki.needReload) {
+				this.props.fetchWikiPage(params.wikiTitle, queryArray);
+			}
 		}
 	}
 
@@ -57,10 +59,10 @@ console.log(sectionParam);
 		this.props.toggleTopBarVisibility(true);
 		this.props.toggleTopBarBackButtonVisibility(true);
 	}
+	
 	componentWillUnmount() {
 		this.props.toggleTopBarBackButtonVisibility(false);
 	}
-
 
 	render() {
 		const { error, fetching, wiki, sections } = this.props.wiki;
@@ -104,8 +106,6 @@ console.log(sectionParam);
 
 const mapStateToProps = (state) => {
 	return{
-		wikiTitle: state.routing.locationBeforeTransitions.pathname.split("/")[3],
-		sectionParam: state.routing.locationBeforeTransitions.pathname.split("/")[4],
 		wiki: state.wiki
 	};
 }
