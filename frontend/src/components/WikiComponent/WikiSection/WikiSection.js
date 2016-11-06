@@ -23,17 +23,19 @@ export default class WikiSection extends React.Component {
 		return (
 			<div className="wiki-section-wrapper" id={ section.title }>
 				<h2>
-					{ section.title }
-					{
-						userToken ?
-							<span onClick={this.editComponent.bind(this)}><a>[ edit ]</a></span>
-						: null
-					}
+					<div>
+						{ section.title }
+						{
+							userToken ?
+								<span className="edit-span" onClick={this.editComponent.bind(this)}><a>[ edit ]</a></span>
+							: null
+						}
+					</div>
+					<WikiHistoryDropdown 
+						wikiTitle = { wikiTitle }
+						section={ section } 
+					/>
 				</h2>
-				<WikiHistoryDropdown 
-					wikiTitle = { wikiTitle }
-					section={ section } 
-				/>
 				<div id={"section" + section.WikiSection.sectionIndex + "content"}></div>
 			</div>
 		);

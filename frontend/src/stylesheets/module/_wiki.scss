@@ -81,17 +81,19 @@
 		    font-weight: normal;
 		    border-bottom: 1px solid $h-border-color;
 
-			span {
+			.edit-span {
 				cursor: pointer;
 				margin-left: 15px;
 				font-size: 13px;
 				font-weight: normal;
 			}
-			span:visited {
+			.edit-span:visited {
 				color: #123;
 			}
 
 			.dropdown-menu {
+				margin-left: 18px;
+				margin-bottom: 18px;
 				float: right;
 			}
 		}
