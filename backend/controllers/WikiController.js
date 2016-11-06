@@ -120,68 +120,12 @@ exports.getWiki = function(req, res) {
             }).catch(function(err) {
                 resError(res, err);
             });
-            
+
         }).catch(function(err) {
             resError(res, err);
         });
     }
 }
-
-// // get WikiSectionVersion with specified version number
-// exports.getSectionVersion = function(req, res) {
-//     // check if version number is valid and return all info if valid
-//     var query = req.query;
-//     console.log(query);
-//     if (!query.q || !query.sectionIndex || !query.version) {
-//         return res.status(400)
-//             .json({
-//                 status: 'fail',
-//                 message: 'Invalid query data.'
-//             });
-//     } else {
-//         // check if wikiId, SectionIndex and versionNumber are valid
-//         Wiki.findOne({
-//             attributes: ['id', 'title', 'view', 'createdAt', 'updatedAt', 'UserId'],
-//             where: {
-//                 title: query.q
-//             },
-//             include: [{
-//                 model: Section,
-//                 attributes: ['id', 'sectionIndex', 'displayVersionNumber', 'totalVersionCount', 'sectionType'],
-//                 where: {
-//                     sectionIndex: query.sectionIndex
-//                 },
-//                 include: [{
-//                     model: Version,
-//                     attributes: ['id', 'title', 'content', 'score', 'createdAt', 'updatedAt'],
-//                     where: {
-//                         versionNumber: query.version
-//                     },
-//                     include: [{
-//                         model: User,
-//                         attributes: ['id', 'name', 'profilePictureUrl']
-//                     }]
-//                 }]
-//             }]
-//         }).then(function(wiki) {
-//             if (!wiki) {
-//                 return res.status(404)
-//                     .json({
-//                         status: 'fail',
-//                         message: 'requested wiki section version doesn\'t exist'
-//                     });
-//             } else {
-//                 return res.status(200)
-//                         .json({
-//                             status: 'success',
-//                             wiki: wiki
-//                         });
-//                     };
-//         }).catch(function(err) {
-//             resError(res, err);
-//         });
-//     }
-// }
 
 // user create a new wiki page
 exports.createNewWiki = function(req, res) {
