@@ -19,7 +19,7 @@ export default class WikiSection extends React.Component {
 
 	render() {
 		const { wikiTitle, section, userToken } = this.props;
-
+		console.log(section);
 		return (
 			<div className="wiki-section-wrapper" id={ section.title }>
 				<h2>
@@ -36,6 +36,11 @@ export default class WikiSection extends React.Component {
 						section={ section } 
 					/>
 				</h2>
+				{
+					(section.versionNumber !== section.WikiSection.displayVersionNumber) ?
+						<div><p style={{color: 'red'}}>Reminder: This is not the latest version!</p></div>
+					: null
+				}
 				<div id={"section" + section.WikiSection.sectionIndex + "content"}></div>
 			</div>
 		);
