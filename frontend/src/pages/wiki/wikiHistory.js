@@ -87,18 +87,11 @@ class WikiDetails extends React.Component{
 										(sections.length > 0) ? (
 											sections.map(function(section, idx){
 												return (
-													// (section.WikiSection.sectionIndex === sectionIndex) ?
-													// 	<WikiForm
-													// 		wikiName = { wiki.title }
-													// 		section={ section }
-													// 		key={ idx }
-													// 	/>
-													// :
-														<WikiSection
-															wikiTitle={ wiki.title }
-															section={ section } 
-															key={ idx } 
-														/>
+													<WikiSection
+														wikiTitle={ wiki.title }
+														section={ section } 
+														key={ idx } 
+													/>
 												) 
 											})
 										) : null

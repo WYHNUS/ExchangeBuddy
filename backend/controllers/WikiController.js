@@ -11,22 +11,14 @@ exports.getWiki = function(req, res) {
     var historyArray = null;    // to store parsed history
 
     if (!query.q) {
-        return res.status(400)
-            .json({
-                status: 'fail',
-                message: 'Invalid query data.'
-            });
+        invalidError(res);
     } else {
         // check for param validity
         if (!!query.param) {
             try {
                 historyArray = JSON.parse(query.param);
             } catch (e) {
-                return res.status(400)
-                    .json({
-                        status: 'fail',
-                        message: 'Invalid query data.'
-                    });
+                invalidError(res);
             }
         }
 
@@ -59,11 +51,7 @@ exports.getWiki = function(req, res) {
                     for (var i=0; i<historyArray.length; i++) {
                         // if not numerical, return false
                         if (isNaN(historyArray[i].sectionIndex) || isNaN(historyArray[i].versionIndex)) {
-                            return res.status(400)
-                                .json({
-                                    status: 'fail',
-                                    message: 'Invalid query data.'
-                                });
+                            invalidError(res);
                         }
 
                         // if match sectionIndex --> 
@@ -73,11 +61,7 @@ exports.getWiki = function(req, res) {
 
                             // if section version number is not valid
                             if (section.totalVersionCount < requestVersionIndex || requestVersionIndex < 1) {
-                                return res.status(400)
-                                    .json({
-                                        status: 'fail',
-                                        message: 'Invalid query data.'
-                                    });
+                                invalidError(res);
                             } else {
                                 versionNumber = parseInt(historyArray[i].versionIndex);
                             }
@@ -131,11 +115,7 @@ exports.getWiki = function(req, res) {
 exports.createNewWiki = function(req, res) {
     // check if wiki name exists
     if (!req.body.wikiTitle) {
-        return res.status(400)
-            .json({
-                status: 'fail',
-                message: 'Invalid query data.'
-            });
+        invalidError(res);
     } else {
         // check if wiki exists
         Wiki.findOne({
@@ -172,11 +152,7 @@ exports.createNewWiki = function(req, res) {
 exports.createNewSection = function(req, res) {
     // check if wiki name exists
     if (!req.body.wikiTitle || !req.body.versionTitle || !req.body.content) {
-        return res.status(400)
-            .json({
-                status: 'fail',
-                message: 'Invalid query data.'
-            });
+        invalidError(res);
     } else {
         // check if wiki exists
         Wiki.findOne({
@@ -292,11 +268,7 @@ exports.createNewSectionVersion = function(req, res) {
     // IMPORTANT: get user id from token
     // CHECK: disable user frequently editing same version --> should this check exists?
     if (!req.body.wikiTitle || !req.body.sectionIndex || !req.body.sectionTitle || !req.body.content) {
-        return res.status(400)
-            .json({
-                status: 'fail',
-                message: 'Invalid query data.'
-            });
+        invalidError(res);
     } else {
         // check if wiki and section exists
         Wiki.findOne({
@@ -391,18 +363,10 @@ exports.vote = function(req, res) {
     // change WikiSectionVersion's score
     // change author's credibility
     if (!req.body.wikiId || !req.body.sectionIndex || !req.body.versionNumber || !req.body.vote) {
-        return res.status(400)
-            .json({
-                status: 'fail',
-                message: 'Invalid query data.'
-            });
+        invalidError(res);
     } else {
         if (req.body.vote !== 0 || req.body.vote !== 1 || req.body.vote !== -1 || req.body.comment.length > 1000) {
-            return res.status(400)
-                .json({
-                    status: 'fail',
-                    message: 'Invalid query data.'
-                });
+            invalidError(res);
         }
         // check if wikiId, SectionIndex and versionNumber are valid
         models.sequelize.Promise.all([
@@ -506,6 +470,13 @@ exports.vote = function(req, res) {
             resError(res, err);
         });
     }
+}
+
+function invalidError(res) {
+    return res.status(400).json({
+        status: 'fail',
+        message: 'Invalid query data.'
+    });
 }
 
 function resError(res, err) {
