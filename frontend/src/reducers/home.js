@@ -221,7 +221,8 @@ import {
 		homeEvents: {
 			homeEvents: [],
 			error: null,
-			loading: false
+			loading: false,
+			id:-1
 		},
 		homeMessages: {
 			homeMessages: [],
@@ -279,14 +280,14 @@ import {
 			return {...state, homeMessages: {homeMessages: [], error:null, loading: false}}
 
 			case FETCH_EVENTS:
-			return {...state, homeEvents: {homeEvents:[], error: null, loading: true}};
+			return {...state, homeEvents: {homeEvents:[], error: null, loading: true, id:action.id}};
 			case FETCH_EVENTS_SUCCESS:
-			return {...state, homeEvents: {homeEvents: action.payload, error: null, loading: false}};
+			return {...state, homeEvents: {homeEvents: action.payload, error: null, loading: false, id:state.homeEvents.id}};
 			case FETCH_EVENTS_FAILURE:
 			error = action.payload || {message: action.payload};
-			return {...state, homeEvents: {homeEvents: [], error: error, loading: false}};
+			return {...state, homeEvents: {homeEvents: [], error: error, loading: false, id:-1}};
 			case RESET_EVENTS:
-			return {...state, homeEvents: {homeEvents: [], error: null, loading: false}};
+			return {...state, homeEvents: {homeEvents: [], error: null, loading: false, id:-1}};
 
 			case FETCH_MY_GROUPS:
 			return {...state, homeGroups: {groupsLoaded:false, selected:-1, homeGroups:[], error: null, loading: true}};

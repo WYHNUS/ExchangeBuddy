@@ -151,6 +151,7 @@ class NewEventForm extends Component {
         }
     });
     this.geocoder = new google.maps.Geocoder();
+    this.refs.title.focus()
     //console.log(this.map,this.marker, this.geocoder);
   }
 
@@ -218,6 +219,7 @@ class NewEventForm extends Component {
       <div className="row center-xs">
         <div className="col-xs-11 col-md-8">
           <Field name="title" component={TextField} fullWidth={true}
+          ref="title"
           floatingLabelText="Event Title" floatingLabelStyle={{left: 0}}
           errorStyle={{textAlign: "left"}}
           multiLine={false} />

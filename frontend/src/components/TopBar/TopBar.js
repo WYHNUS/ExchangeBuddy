@@ -50,6 +50,8 @@ class TopBar extends Component {
     if(homeSearchDrawerOpenButtonVisibility){
       return(
         <FlatButton 
+        backgroundColor="#80d4ff"
+        hoverColor="#e6f7ff"
         label="Groups"
         onClick={()=>this.props.toggleHomeSearchDrawerVisibility(true)}
         />

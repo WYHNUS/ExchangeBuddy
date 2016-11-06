@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { showSnackbar } from '../../actions/messageSnackbar';
 import { pageVisibility } from '../../actions/pageVisibility';
-import {toggleHomeTab} from '../../actions/home';
+import {toggleHomeTab, fetchEvents, fetchEventsFailure, fetchEventsSuccess} from '../../actions/home';
 import RaisedButton from 'material-ui/RaisedButton';
 import MenuItem from 'material-ui/MenuItem';
 import { browserHistory } from 'react-router';
@@ -13,28 +13,7 @@ import * as GroupHelper from '../../util/group';
 
 import EventList from '../../components/HomeComponent/Events/EventList';
 
-import {
-  fetchFbEvents, fetchFbEventsSuccess, 
-  fetchFbEventsFailure, fetchMuEvents
-} from '../../actions/home';
-
 import SelectField from 'material-ui/SelectField';
-
-var date=new Date();
-
-const university = 
-{
-  lat:1.2966426,
-  lng:103.7742052,
-  city: 'Singapore',
-  country: 'Singapore',
-  countryCode: 'SGP'
-};
-
-const country = 
-{
-  capital: "Singapore"
-}
 
 const items = [
   <MenuItem key={1} value={1} primaryText="Most Recent" />,
@@ -50,6 +29,23 @@ class Events extends React.Component{
 		//fetchHomeEvenets(groupId)
     //fetchFbEvents(123,[1231,12341]);
     //fetchMuEvents(university, country);
+  }
+
+  componentDidMount(){
+
+    const{homeEvents} = this.props;
+    const{loading} = this.props.homeGroupDetails;
+    const{id} = this.props.homeGroupDetails.homeGroupDetails;
+    
+    if((id===null)||loading){
+      browserHistory.push(`/home`);
+    
+    }else{
+
+      if(parseInt(id)!=parseInt(homeEvents.id)){
+        this.props.fetchEvents(id);
+      }
+    }
   }
 
   constructor(props) {
@@ -108,25 +104,36 @@ class Events extends React.Component{
 const mapStateToProps = (state )=>{
   return{
     homeGroupDetails: state.home.homeGroupDetails,
-    user: state.user.userObject
+    user: state.user.userObject,
+    homeEvents: state.home.homeEvents,
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
  return {
-  actions: bindActionCreators({ showSnackbar }, dispatch),
+    actions: bindActionCreators({ showSnackbar }, dispatch),
 
-  fetchFbEvents:(countryCode, uniLatLng)=>{
-    dispatch(fetchFbEvents(countryCode, uniLatLng)).then((response) => {
-      !response.error ? dispatch(fetchFbEventsSuccess(response.payload)) : 
-      dispatch(fetchFbEventsFailure(response.payload));
-    })},
+    toggleHomeTab:(tab)=>dispatch(toggleHomeTab(tab)),
 
-    fetchMuEvents:(university, country)=>{
-      dispatch(fetchMuEvents(university,country))
+    fetchEvents: (GroupId) => {
+        dispatch(fetchEvents(GroupId)).payload.then((response) => {
+          //console.log(response);
+          if (!response.error) {
+            dispatch(fetchEventsSuccess(response.body));
+          } else {
+            dispatch(fetchEventsFailure(response.error));
+          }
+        }, (err) => {
+          if (err.status === 401) {
+            cookie.remove('authToken');
+            dispatch(clearUser());
+            // need to redirect to a new version of login page
+            browserHistory.push('/');
+          } else {
+            dispatch(fetchEventsFailure(err.response.error.message));
+          }
+        });
     },
-
-    toggleHomeTab:(tab)=>dispatch(toggleHomeTab(tab))
   }
 }
 
