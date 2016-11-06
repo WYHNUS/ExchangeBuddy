@@ -3,6 +3,8 @@ var moment=require('moment');
 import React, {PropTypes} from 'react';
 import { browserHistory } from 'react-router';
 
+import WikiHistoryDropdown from '../WikiHistoryDropdown';
+
 export default class WikiSection extends React.Component {
 	componentDidMount() {
 		const { section } = this.props;
@@ -17,6 +19,7 @@ export default class WikiSection extends React.Component {
 
 	render() {
 		const { section, userToken } = this.props;
+
 		return (
 			<div className="wikiSectionWrapper" id={ section.title }>
 				<h2>
@@ -27,6 +30,7 @@ export default class WikiSection extends React.Component {
 						: null
 					}
 				</h2>
+				<WikiHistoryDropdown section={ section } />
 				<div id={"section" + section.WikiSection.sectionIndex + "content"}></div>
 			</div>
 		);

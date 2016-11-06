@@ -16,7 +16,7 @@ export function clickedFetch() {
     return { type: FECTCH_WIKI_PAGE };
 }
 
-/*	Get one story 	*/
+/*	Get one wiki page 	*/
 export function fetchWikiSuccess(wiki, sections) {
     return { type: FECTCH_WIKI_PAGE_SUCCESS, wiki, sections };
 }
@@ -34,8 +34,8 @@ export function fetchWikiPage(wikiTitle, additionalParam=null) {
 	    request.get(ROOT_URL + '/wiki')
 	    	.query(query)
 	    	.end(function(err, res){
-				console.log(err);
-				console.log(res);
+				// console.log(err);
+				// console.log(res);
 				if (err) {
 					dispatch(fetchWikiFail(err));
 				} else {
