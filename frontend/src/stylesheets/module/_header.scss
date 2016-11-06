@@ -99,6 +99,12 @@ $headerStickyHeight: 95px;
 }
 
 .header-tab-parent{
+  
+  @include media-sm-up {
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+  }
 }
 
 .header-tab > div > div {
