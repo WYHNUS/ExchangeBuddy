@@ -162,7 +162,6 @@ exports.uploadProfile = function(req, res){
 
                 var splitString = user.profilePictureUrl.split('/');
                 var Key = splitString[splitString.length - 1];
-                console.log(Key);
                 if(Key.length === req.file.filename.length){
                     client.deleteObjects({
                         Bucket,
