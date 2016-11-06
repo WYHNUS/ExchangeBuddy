@@ -7,11 +7,25 @@ var Vote = models.WikiSectionVote;
 
 // give default recommendation
 exports.getRecommendation = function(req, res) {
-    return res.status(200)
-        .json({
-            status: 'success',
-            wiki: [{imageUrl: '', name: 'National University of Singapore'}]
-        });
+    Wiki.findAll({
+        attributes: ['title'],
+        limit: 6,
+        order: '"view" DESC'
+    }).then(function(wiki) {
+        var result = [];
+        for (var i=0; i<wiki.length; i++) {
+            result.push({
+                imageUrl: wiki[i].image,
+                name: wiki[i].title
+            })
+        }
+
+        return res.status(200)
+            .json({
+                status: 'success',
+                wiki: result
+            });
+    });
 }
 
 // give wiki recommendation based on User

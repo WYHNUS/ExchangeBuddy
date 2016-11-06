@@ -9,6 +9,10 @@ module.exports = function(sequelize, DataType) {
       unique: true,
     },
 
+    image: {
+      type: DataType.STRING(1000),
+    },
+
     view: {
       type: DataType.INTEGER(),
       defaultValue: 0,
