@@ -29,7 +29,7 @@ export function fetchWikiPage(wikiTitle, additionalParam=null) {
 
 	    var query = 'q=' + wikiTitle;
 	    if (!!additionalParam) {
-	    	query += ('&param=' + JSON.stringfy(additionalParam));
+	    	query += ('&param=' + JSON.stringify(additionalParam));
 	    }
 	    request.get(ROOT_URL + '/wiki')
 	    	.query(query)

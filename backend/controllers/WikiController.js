@@ -29,7 +29,6 @@ exports.getWiki = function(req, res) {
                     });
             }
         }
-        console.log(historyArray); // debug log
 
         // find all wikiSections
         Wiki.findOne({
@@ -39,7 +38,7 @@ exports.getWiki = function(req, res) {
             },
             include: [{
                 model: Section,
-                attributes: ['id', 'displayVersionNumber', 'sectionIndex'],
+                attributes: ['id', 'displayVersionNumber', 'totalVersionCount', 'sectionIndex'],
                 order: '"sectionIndex" DESC'
             }]
         }).then(function(wiki) {
@@ -54,21 +53,34 @@ exports.getWiki = function(req, res) {
             var displayedSectionVersionArray = wiki.WikiSections.map(section => {
                 // find list of sectionVersions belong to corresponding section
                 var versionNumber = section.displayVersionNumber;
-                            
+
                 // process historyArray if present -- format: [{ sectionIndex: a, versionIndex: b }, ...]
                 if (!!historyArray) {
                     for (var i=0; i<historyArray.length; i++) {
                         // if not numerical, return false
-                        if (!isNaN(historyArray[i].sectionIndex)) {
+                        if (isNaN(historyArray[i].sectionIndex) || isNaN(historyArray[i].versionIndex)) {
                             return res.status(400)
                                 .json({
                                     status: 'fail',
                                     message: 'Invalid query data.'
                                 });
                         }
-                        // if match sectionIndex
+
+                        // if match sectionIndex --> 
+                        //      here assumes to ignore sectionIndex if it is not valid
                         if (parseInt(historyArray[i].sectionIndex) === section.sectionIndex) {
-                            versionNumber = parseInt(historyArray[i].versionIndex);
+                            var requestVersionIndex = parseInt(historyArray[i].versionIndex);
+
+                            // if section version number is not valid
+                            if (section.totalVersionCount < requestVersionIndex || requestVersionIndex < 1) {
+                                return res.status(400)
+                                    .json({
+                                        status: 'fail',
+                                        message: 'Invalid query data.'
+                                    });
+                            } else {
+                                versionNumber = parseInt(historyArray[i].versionIndex);
+                            }
                         }
                     }
                 }
@@ -77,7 +89,7 @@ exports.getWiki = function(req, res) {
                     attributes: ['title', 'content', 'versionNumber', 'score', 'createdAt', 'updatedAt'],
                     where: {
                         WikiSectionId: section.id,
-                        versionNumber: versionNumber    // what if versionNumber is not valid here???
+                        versionNumber: versionNumber
                     },
                     include: [
                         { 
@@ -96,7 +108,6 @@ exports.getWiki = function(req, res) {
                 wiki.update({
                     view: wiki.view + 1
                 }).then(function(updatedWiki) {
-                    console.log(updatedWiki);
                     return res.status(200)
                         .json({
                             status: 'success',
@@ -109,6 +120,7 @@ exports.getWiki = function(req, res) {
             }).catch(function(err) {
                 resError(res, err);
             });
+            
         }).catch(function(err) {
             resError(res, err);
         });

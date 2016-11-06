@@ -39,6 +39,7 @@ class WikiDetails extends React.Component{
 					versionIndex: tmp[1]
 				})
 			}
+			console.log(queryArray);
 
 			// redirect back if query param not valid
 			if (!isValid) {
