@@ -5,9 +5,11 @@ var Section = models.WikiSection;
 var Version = models.WikiSectionVersion;
 var Vote = models.WikiSectionVote;
 
-// user get specific wiki page
+// user get specific wiki page, if 
 exports.getWiki = function(req, res) {
     var query = req.query;
+    var historyArray = null;    // to store parsed history
+
     if (!query.q) {
         return res.status(400)
             .json({
@@ -15,6 +17,20 @@ exports.getWiki = function(req, res) {
                 message: 'Invalid query data.'
             });
     } else {
+        // check for param validity
+        if (!!query.param) {
+            try {
+                historyArray = JSON.parse(query.param);
+            } catch (e) {
+                return res.status(400)
+                    .json({
+                        status: 'fail',
+                        message: 'Invalid query data.'
+                    });
+            }
+        }
+        console.log(historyArray); // debug log
+
         // find all wikiSections
         Wiki.findOne({
             attributes: ['id', 'title', 'view', 'createdAt', 'updatedAt', 'UserId'],
@@ -37,11 +53,31 @@ exports.getWiki = function(req, res) {
 
             var displayedSectionVersionArray = wiki.WikiSections.map(section => {
                 // find list of sectionVersions belong to corresponding section
+                var versionNumber = section.displayVersionNumber;
+                            
+                // process historyArray if present -- format: [{ sectionIndex: a, versionIndex: b }, ...]
+                if (!!historyArray) {
+                    for (var i=0; i<historyArray.length; i++) {
+                        // if not numerical, return false
+                        if (!isNaN(historyArray[i].sectionIndex)) {
+                            return res.status(400)
+                                .json({
+                                    status: 'fail',
+                                    message: 'Invalid query data.'
+                                });
+                        }
+                        // if match sectionIndex
+                        if (parseInt(historyArray[i].sectionIndex) === section.sectionIndex) {
+                            versionNumber = parseInt(historyArray[i].versionIndex);
+                        }
+                    }
+                }
+
                 return Version.find({
                     attributes: ['title', 'content', 'versionNumber', 'score', 'createdAt', 'updatedAt'],
                     where: {
                         WikiSectionId: section.id,
-                        versionNumber: section.displayVersionNumber
+                        versionNumber: versionNumber    // what if versionNumber is not valid here???
                     },
                     include: [
                         { 
@@ -79,61 +115,61 @@ exports.getWiki = function(req, res) {
     }
 }
 
-// get WikiSectionVersion with specified version number
-exports.getSectionVersion = function(req, res) {
-    // check if version number is valid and return all info if valid
-    var query = req.query;
-    console.log(query);
-    if (!query.q || !query.sectionIndex || !query.version) {
-        return res.status(400)
-            .json({
-                status: 'fail',
-                message: 'Invalid query data.'
-            });
-    } else {
-        // check if wikiId, SectionIndex and versionNumber are valid
-        Wiki.findOne({
-            attributes: ['id', 'title', 'view', 'createdAt', 'updatedAt', 'UserId'],
-            where: {
-                title: query.q
-            },
-            include: [{
-                model: Section,
-                attributes: ['id', 'sectionIndex', 'displayVersionNumber', 'totalVersionCount', 'sectionType'],
-                where: {
-                    sectionIndex: query.sectionIndex
-                },
-                include: [{
-                    model: Version,
-                    attributes: ['id', 'title', 'content', 'score', 'createdAt', 'updatedAt'],
-                    where: {
-                        versionNumber: query.version
-                    },
-                    include: [{
-                        model: User,
-                        attributes: ['id', 'name', 'profilePictureUrl']
-                    }]
-                }]
-            }]
-        }).then(function(wiki) {
-            if (!wiki) {
-                return res.status(404)
-                    .json({
-                        status: 'fail',
-                        message: 'requested wiki section version doesn\'t exist'
-                    });
-            } else {
-                return res.status(200)
-                        .json({
-                            status: 'success',
-                            wiki: wiki
-                        });
-                    };
-        }).catch(function(err) {
-            resError(res, err);
-        });
-    }
-}
+// // get WikiSectionVersion with specified version number
+// exports.getSectionVersion = function(req, res) {
+//     // check if version number is valid and return all info if valid
+//     var query = req.query;
+//     console.log(query);
+//     if (!query.q || !query.sectionIndex || !query.version) {
+//         return res.status(400)
+//             .json({
+//                 status: 'fail',
+//                 message: 'Invalid query data.'
+//             });
+//     } else {
+//         // check if wikiId, SectionIndex and versionNumber are valid
+//         Wiki.findOne({
+//             attributes: ['id', 'title', 'view', 'createdAt', 'updatedAt', 'UserId'],
+//             where: {
+//                 title: query.q
+//             },
+//             include: [{
+//                 model: Section,
+//                 attributes: ['id', 'sectionIndex', 'displayVersionNumber', 'totalVersionCount', 'sectionType'],
+//                 where: {
+//                     sectionIndex: query.sectionIndex
+//                 },
+//                 include: [{
+//                     model: Version,
+//                     attributes: ['id', 'title', 'content', 'score', 'createdAt', 'updatedAt'],
+//                     where: {
+//                         versionNumber: query.version
+//                     },
+//                     include: [{
+//                         model: User,
+//                         attributes: ['id', 'name', 'profilePictureUrl']
+//                     }]
+//                 }]
+//             }]
+//         }).then(function(wiki) {
+//             if (!wiki) {
+//                 return res.status(404)
+//                     .json({
+//                         status: 'fail',
+//                         message: 'requested wiki section version doesn\'t exist'
+//                     });
+//             } else {
+//                 return res.status(200)
+//                         .json({
+//                             status: 'success',
+//                             wiki: wiki
+//                         });
+//                     };
+//         }).catch(function(err) {
+//             resError(res, err);
+//         });
+//     }
+// }
 
 // user create a new wiki page
 exports.createNewWiki = function(req, res) {

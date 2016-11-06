@@ -23,12 +23,16 @@ export function fetchWikiSuccess(wiki, sections) {
 export function fetchWikiFail(error) {
     return { type: FECTCH_WIKI_PAGE_FAIL, error };
 }
-export function fetchWikiPage(wikiTitle) {
+export function fetchWikiPage(wikiTitle, additionalParam=null) {
 	return (dispatch) => {
 	    dispatch(clickedFetch());
 
+	    var query = 'q=' + wikiTitle;
+	    if (!!additionalParam) {
+	    	query += ('&param=' + JSON.stringfy(additionalParam));
+	    }
 	    request.get(ROOT_URL + '/wiki')
-	    	.query('q='+wikiTitle)
+	    	.query(query)
 	    	.end(function(err, res){
 				console.log(err);
 				console.log(res);

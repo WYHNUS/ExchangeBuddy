@@ -74,7 +74,7 @@ router.get('/university/:id', UniCtrl.getUniversity);
 router.post('/messages', verifyToken, ChatCtrl.getMessages);
 
 // use query String to get particular wiki page
-router.get('/wiki', WikiCtrl.getWiki);  // ?q=
+router.get('/wiki', WikiCtrl.getWiki);  // ?q= &param= 
 router.get('/wiki/section/version', WikiCtrl.getSectionVersion);    // ?q= &section= &version= 
 router.put('/wiki', verifyToken, WikiCtrl.createNewWiki);
 router.put('/wiki/section', verifyToken, WikiCtrl.createNewSection);
