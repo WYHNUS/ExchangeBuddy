@@ -12,7 +12,7 @@ class Settings extends React.Component{
 		this.props.toggleTopBarVisibility(true);
 		this.props.toggleTopBarBackButtonVisibility(true);
 
-		if(this.props.user.isLoggedIn===false){
+		if(!(this.props.user.isLoggedIn===true)){
 			this.props.toggleBottomBarVisibility(false);
 			
 		}else{

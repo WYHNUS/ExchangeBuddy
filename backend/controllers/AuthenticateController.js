@@ -12,7 +12,7 @@ exports.authenticateOrCreateByFB = function(req, res){
             });
     }else{
         var facebookToken = req.body.facebookToken;
-        graph.get("/me?fields=name,id,email,picture&access_token=" + facebookToken, function(error, response){
+        graph.get("/me?fields=name,id,email,picture.width(720).height(720)&access_token=" + facebookToken, function(error, response){
             User.findOne({
                 where: {
                     fbUserId: response.id
