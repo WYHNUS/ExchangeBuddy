@@ -13,10 +13,10 @@ export default class WikiRecommendation extends React.Component {
 			<li className="recommendation-item">
 				<div 
 					className="recommendation-item-wrapper" 
-					onClick={this.getComponent.bind(this, previewItem.title)}
+					onClick={this.getComponent.bind(this, previewItem.name)}
 				>
 					<img src={ previewItem.imageUrl } />
-				    <p>{ previewItem.title }</p>
+				    <p>{ previewItem.name }</p>
 				</div>
 			</li>
 		)

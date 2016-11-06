@@ -1,5 +1,6 @@
 import {
 	FECTCH_WIKI_PAGE, FECTCH_WIKI_PAGE_SUCCESS, FECTCH_WIKI_PAGE_FAIL,
+	FECTCH_RECOMMENDATION_SUCCESS, FECTCH_RECOMMENDATION_FAIL,
 	INITIALIZE_WIKI_FORM,
 	CLICK_SUBMIT, CREATE_SECTION_VERSION_SUCCESS, CREATE_SECTION_VERSION_FAIL
 } from '../actions/wiki';
@@ -14,7 +15,7 @@ const initialState=
 	uploadError: null,
 	previews: [{
 		imageUrl: '', 
-		title: 'National University of Singapore'
+		name: 'National University of Singapore'
 	}],
 	wiki: {
 		id: null,
@@ -45,6 +46,19 @@ export function wiki(state=initialState, action)
 				fetching: true,
 				error: null
 		    });
+
+		// fetch recommendation wikis
+		case FECTCH_RECOMMENDATION_SUCCESS:
+			return Object.assign({}, state, {
+				previews: action.wiki,
+				fetching: false,
+				error: null
+			});
+		case FECTCH_RECOMMENDATION_FAIL:
+			return Object.assign({}, state, {
+				fetching: false,
+				error: action.error
+			});
 
 		// submit new section version
 		case CLICK_SUBMIT: 

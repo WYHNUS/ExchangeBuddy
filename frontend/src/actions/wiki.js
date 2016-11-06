@@ -1,4 +1,5 @@
 import request from 'superagent';
+import cookie from 'react-cookie';
 import { bearer } from '../util/bearer';
 import { ROOT_URL } from '../util/backend';
 
@@ -12,8 +13,51 @@ export const FECTCH_WIKI_PAGE = 'FECTCH_WIKI_PAGE';
 export const FECTCH_WIKI_PAGE_SUCCESS = 'FECTCH_WIKI_PAGE_SUCCESS';
 export const FECTCH_WIKI_PAGE_FAIL = 'FECTCH_WIKI_PAGE_FAIL';
 
+export const FECTCH_RECOMMENDATION_SUCCESS = 'FECTCH_RECOMMENDATION_SUCCESS';
+export const FECTCH_RECOMMENDATION_FAIL = 'FECTCH_RECOMMENDATION_FAIL';
+
+
 export function clickedFetch() {
     return { type: FECTCH_WIKI_PAGE };
+}
+
+/*  Get all wiki recommendation */
+export function fetchRecommendationSuccess(wiki) {
+    return { type: FECTCH_RECOMMENDATION_SUCCESS, wiki };
+}
+export function fetchRecommendationFail(error) {
+    return { type: FECTCH_RECOMMENDATION_FAIL, error };
+}
+function handleRecommendationRes(dispatch, err, res) {
+	console.log(err);
+	console.log(res);
+	if (err) {
+		dispatch(fetchRecommendationFail(err));
+	} else {
+		if (res.body.status === "success") {
+			dispatch(fetchRecommendationSuccess(res.body.wiki));
+		} else {
+			dispatch(fetchRecommendationFail(res.body.message));
+		}
+	}
+}
+export function fetchRecommendation() {
+	return (dispatch) => {
+	    dispatch(clickedFetch());
+
+	    if (cookie.load('authToken')) {
+		    request.get(ROOT_URL + '/wikiCustomizedRecommend')
+				.use(bearer)
+		    	.end(function(err, res) {
+		    		handleRecommendationRes(dispatch, err, res)
+				});
+	    } else {
+	    	request.get(ROOT_URL + '/wikiRecommend')
+		    	.end(function(err, res) {
+		    		handleRecommendationRes(dispatch, err, res)
+				});
+	    }
+  	}
 }
 
 /*	Get one wiki page 	*/
@@ -33,7 +77,7 @@ export function fetchWikiPage(wikiTitle, additionalParam=null) {
 	    }
 	    request.get(ROOT_URL + '/wiki')
 	    	.query(query)
-	    	.end(function(err, res){
+	    	.end(function(err, res) {
 				// console.log(err);
 				// console.log(res);
 				if (err) {

@@ -5,13 +5,21 @@ var Section = models.WikiSection;
 var Version = models.WikiSectionVersion;
 var Vote = models.WikiSectionVote;
 
-// give wiki recommendation based on User
+// give default recommendation
 exports.getRecommendation = function(req, res) {
+    return res.status(200)
+        .json({
+            status: 'success',
+            wiki: [{imageUrl: '', name: 'National University of Singapore'}]
+        });
+}
+// give wiki recommendation based on User
+exports.getCustomizedRecommendation = function(req, res) {
     console.log(req.user);
     return res.status(200)
         .json({
             status: 'success',
-            wiki: [{imageUrl: '', name: ''}]
+            wiki: [{imageUrl: '', name: 'National University of Singapore'}]
         });
 }
 

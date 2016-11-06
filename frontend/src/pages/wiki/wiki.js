@@ -1,13 +1,21 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+
 import { 
 	toggleBottomBarVisibility, toggleTopBarVisibility,
 	toggleTopBarSettingsButtonVisibility 
 } from '../../actions/pageVisibility';
+import {
+	fetchRecommendation
+} from '../../actions/wiki';
 
 import WikiRecommendation from '../../components/WikiComponent/WikiRecommendation';
 
-class Wiki extends React.Component{
+class Wiki extends React.Component {
+	componentWillMount() {
+		// need to check if already in reducer ?
+		this.props.fetchRecommendation();
+	}
 
 	componentDidMount() {
 		this.props.toggleBottomBarVisibility(true);
@@ -69,7 +77,8 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility)),
 		toggleTopBarVisibility: visibility=>dispatch(toggleTopBarVisibility(visibility)),
-		toggleTopBarSettingsButtonVisibility: visibility=>dispatch(toggleTopBarSettingsButtonVisibility(visibility))
+		toggleTopBarSettingsButtonVisibility: visibility=>dispatch(toggleTopBarSettingsButtonVisibility(visibility)),
+		fetchRecommendation: () => dispatch(fetchRecommendation()),
 	};
 };
 
