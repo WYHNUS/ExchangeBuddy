@@ -13,14 +13,96 @@ exports.getRecommendation = function(req, res) {
             wiki: [{imageUrl: '', name: 'National University of Singapore'}]
         });
 }
+
 // give wiki recommendation based on User
 exports.getCustomizedRecommendation = function(req, res) {
-    console.log(req.user);
-    return res.status(200)
-        .json({
-            status: 'success',
-            wiki: [{imageUrl: '', name: 'National University of Singapore'}]
+    var result = [];
+
+    User.findOne({
+        attributes: ['id', 'CountryAlpha2Code', 'UniversityId'],
+        where: {
+            id: req.user.id
+        }
+    }).then(function(user) {
+        // search for homeUni and homeCountry wiki as well as exchange uni wiki
+        models.sequelize.Promise.all([
+            models.University.findOne({
+                attributes: ['name', 'logoImageUrl', 'bgImageUrl'],
+                where: {
+                    id: user.UniversityId
+                }
+            }),
+
+            models.Country.findOne({
+                where: {
+                    alpha2Code: user.CountryAlpha2Code
+                }
+            }),
+
+            models.Exchange.findAll({
+                include: [{
+                    model: User,
+                    as: 'exchangeStudent',
+                    through: {
+                        where: {
+                            Userid: user.id
+                        }
+                    }
+                }]
+            })
+        ]).spread(function(homeUniversity, homeCountry, exchange) {
+            if (!!homeUniversity) {
+                result.push({
+                    imageUrl: homeUniversity.logoImageUrl,
+                    name: homeUniversity.name
+                });
+            }
+
+            if (!!homeCountry) {
+                result.push({
+                    imageUrl: null,
+                    name: homeCountry.name
+                });
+            }
+
+            if (!!exchange) {
+                var exchangeUnis = exchange.map(ex => {
+                    // find list of exchange universities
+                    return models.University.find({
+                        attributes: ['name', 'logoImageUrl', 'bgImageUrl'],
+                        where: {
+                            id: ex.UniversityId
+                        }
+                    });
+                });
+
+                models.sequelize.Promise.all(exchangeUnis).then(exUni => {
+                    for (var i=0; i<exUni.length; i++) {
+                        result.push({
+                            imageUrl: exUni[i].logoImageUrl,
+                            name: exUni[i].name
+                        });
+                    }
+
+                    return res.status(200)
+                        .json({
+                            status: 'success',
+                            wiki: result
+                        });
+                }).catch(function(err) {
+                    resError(res, err);
+                });
+            } else {
+                return res.status(200)
+                    .json({
+                        status: 'success',
+                        wiki: result
+                    });
+            }
+        }).catch(function(err) {
+            resError(res, err);
         });
+    });
 }
 
 // user get specific wiki page, if 

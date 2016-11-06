@@ -29,8 +29,8 @@ export function fetchRecommendationFail(error) {
     return { type: FECTCH_RECOMMENDATION_FAIL, error };
 }
 function handleRecommendationRes(dispatch, err, res) {
-	console.log(err);
-	console.log(res);
+	// console.log(err);
+	// console.log(res);
 	if (err) {
 		dispatch(fetchRecommendationFail(err));
 	} else {
