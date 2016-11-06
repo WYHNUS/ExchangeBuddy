@@ -6,10 +6,12 @@ import { browserHistory } from 'react-router';
 import { formatTime } from '../../../util/helper';
 import * as UserHelper from '../../../util/user';
 
+import storyImgUrl from '../../../res/story/storyimg.png';
+
 
 export default class StoryDetails extends React.Component {
 	componentWillMount() {
-		//this.props.fetchStory(this.props.id, this.props.user.id);
+		this.props.fetchStory(this.props.id, this.props.user.id);
 	}
 
 	componentDidMount(){
@@ -21,7 +23,6 @@ export default class StoryDetails extends React.Component {
 		const { 
 			id, title, content, User, 
 			/*tags, favorites, status, storyImgUrl,*/ 
-			tags, storyImgUrl,
 			createdAt, updatedAt 
 		} = this.props.storyDetails;
 
