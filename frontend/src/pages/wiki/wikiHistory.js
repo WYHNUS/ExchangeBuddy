@@ -18,7 +18,7 @@ class WikiDetails extends React.Component{
 
 	componentWillMount() {
 		const { wikiTitle, sectionParam, wiki } = this.props;
-
+console.log(sectionParam);
 		if (!sectionParam) {
 			// return to latest wiki
 			browserHistory.push('/wiki/' + wikiTitle);
