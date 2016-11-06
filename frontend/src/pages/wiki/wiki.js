@@ -4,8 +4,8 @@ import {
 	toggleBottomBarVisibility, toggleTopBarVisibility,
 	toggleTopBarSettingsButtonVisibility 
 } from '../../actions/pageVisibility';
-import { browserHistory } from 'react-router';
 
+import WikiRecommendation from '../../components/WikiComponent/WikiRecommendation';
 
 class Wiki extends React.Component{
 
@@ -19,16 +19,13 @@ class Wiki extends React.Component{
 		this.props.toggleTopBarSettingsButtonVisibility(false);
 	}
 
-	getComponent(wikiTitle) {
-        console.log(wikiTitle);
-        browserHistory.push('/wiki/' + wikiTitle);
-    }
-
 	// if user is signedin, display wiki related to his home and exchange Universities
 	// as well as the related two Countries as Recommendation
 	// otherwise display mostly viewed wiki OR Singapore and NUS as default (for now...)
 	// later maybe can use user's location to give suggestions?
 	render() {
+		const { recommendWikis } = this.props;
+
 		return (
 			<div>
 				<div className="wiki-recommendation-wrapper">
@@ -36,14 +33,22 @@ class Wiki extends React.Component{
 						<h2>Recommendation</h2>
 					</div>
 					<hr className="green-separator" style={{ width: "85%"}}></hr>
+
 					<ul className="recommendation-item-list">
-						<li className="recommendation-item">
-							<div className="recommendation-item-wrapper" onClick={this.getComponent.bind(this, "National University of Singapore")}>
-								<img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSTbaosNAfYYmTOoIblAjvlfYYP63bnMb_J_PmH3R4T4N16A8RqAqOcQs0" />
-							    <p>National University of Singapore</p>
-							</div>
-						</li>
+					{
+						(recommendWikis.length > 0) ?
+							(
+								recommendWikis.map(function(wikiPreview, idx){
+									console.log(wikiPreview);
+									return (
+										<WikiRecommendation previewItem={ wikiPreview } key={ idx } />
+									) 
+								})
+							)
+						: null
+					}
 					</ul>
+
 					<hr className="green-separator" style={{ width: "85%"}}></hr>
 				</div>
 				<div className="search">
@@ -56,6 +61,7 @@ class Wiki extends React.Component{
 
 const mapStateToProps = (state) => {
 	return{
+		recommendWikis: state.wiki.previews
 	};
 }
 

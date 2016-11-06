@@ -12,6 +12,10 @@ const initialState=
 	needReload: false,
 	uploadSuccess: false,
 	uploadError: null,
+	previews: [{
+		imageUrl: '', 
+		title: 'National University of Singapore'
+	}],
 	wiki: {
 		id: null,
 		title: null,

@@ -5,6 +5,16 @@ var Section = models.WikiSection;
 var Version = models.WikiSectionVersion;
 var Vote = models.WikiSectionVote;
 
+// give wiki recommendation based on User
+exports.getRecommendation = function(req, res) {
+    console.log(req.user);
+    return res.status(200)
+        .json({
+            status: 'success',
+            wiki: [{imageUrl: '', name: ''}]
+        });
+}
+
 // user get specific wiki page, if 
 exports.getWiki = function(req, res) {
     var query = req.query;

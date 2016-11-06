@@ -19,7 +19,7 @@ export default class WikiSection extends React.Component {
 
 	render() {
 		const { wikiTitle, section, userToken } = this.props;
-		console.log(section);
+		
 		return (
 			<div className="wiki-section-wrapper" id={ section.title }>
 				<h2>
