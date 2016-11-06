@@ -8,8 +8,7 @@ import { connect } from 'react-redux';
 import { showSnackbar } from '../../../../actions/messageSnackbar';
 import { clearUser } from '../../../../actions/authActions';
 import {addingGroupSuccessUpdate, leavingGroupSuccessUpdate} from '../../../../actions/home';
-import { fetchAllUniversities, fetchAllUniversitiesSuccess, 
-	fetchAllUniversitiesFailure } from '../../../../actions/utilityInfo';
+import { fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure } from '../../../../actions/utilityInfo';
 
 
 const mapDispatchToProps = (dispatch) => {
@@ -26,7 +25,7 @@ const mapDispatchToProps = (dispatch) => {
 		leavingGroupSuccessUpdate:(userObject)=>{
 			dispatch(leavingGroupSuccessUpdate(userObject))
 		},
-		fetchAllUniversities:() => {
+		/*fetchAllUniversities:() => {
 			fetchAllUniversities().payload.then((response) => {
 				if (!response.error) {
 					dispatch(fetchAllUniversitiesSuccess(response.data));
@@ -34,6 +33,12 @@ const mapDispatchToProps = (dispatch) => {
 					dispatch(fetchAllUniversitiesFailure(response.error));
 				}
 			})
+		},*/
+		fetchAllUniversitiesSuccess:(uni)=>{
+			dispatch(fetchAllUniversitiesSuccess(uni));
+		},
+		fetchAllUniversitiesFailure:(error)=>{
+			dispatch(fetchAllUniversitiesFailure(error));
 		}
 	};
 };

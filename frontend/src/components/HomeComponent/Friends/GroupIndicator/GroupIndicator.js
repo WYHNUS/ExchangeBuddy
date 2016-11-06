@@ -12,6 +12,7 @@ import { bearer } from '../../../../util/bearer';
 import { ROOT_URL } from '../../../../util/backend';
 import * as UniversityHelper from '../../../../util/university';
 import * as GroupHelper from '../../../../util/group';
+import {fetchAllUniversities } from '../../../../actions/utilityInfo';
 
 export default class GroupIndicator extends React.Component {
 
@@ -38,8 +39,8 @@ export default class GroupIndicator extends React.Component {
 
   joinGroup(){
     
-    const { showSnackbar, clearUser, universities, 
-      fetchAllUniversities, userObject, addingGroupSuccessUpdate } = this.props;
+    const { showSnackbar, clearUser, universities, fetchAllUniversitiesFailure,
+      fetchAllUniversitiesSuccess, userObject, addingGroupSuccessUpdate } = this.props;
     const { homeGroupDetails } = this.props.homeGroupDetails;
     let homeGroupDetailsId = homeGroupDetails.id;
 
@@ -56,15 +57,28 @@ export default class GroupIndicator extends React.Component {
           this.props.clearUser();
           // need to redirect to a new version of login page
           browserHistory.push('/');
-            } 
+        } 
 
         if (!err && !res.error && homeGroupDetails.id){
           showSnackbar("Added group!");
 
-          console.log(universities);
           if (universities.length < 2) {
-            fetchAllUniversities();
-            browserHistory.push(`/home/${homeGroupDetailsId}`)
+            
+            fetchAllUniversities().payload.then((response) =>{
+              
+              if(!response.error){
+                fetchAllUniversitiesSuccess(response.data);
+                var newUser = UniversityHelper.insertUniversitiesIntoUser(userObject,universities);
+                addingGroupSuccessUpdate(newUser);    
+              }
+
+              else{
+                fetchAllUniversitiesFailure(response.error);
+                showSnackbar("Error adding group");
+              }
+              
+            });
+
           }else{
             var newUser = UniversityHelper.insertUniversitiesIntoUser(userObject,universities);
             addingGroupSuccessUpdate(newUser);
@@ -210,10 +224,12 @@ export default class GroupIndicator extends React.Component {
 GroupIndicator.propTypes = {
   leavingGroupSuccessUpdate: PropTypes.func.isRequired,
   addingGroupSuccessUpdate: PropTypes.func.isRequired,
-  fetchAllUniversities: PropTypes.func.isRequired,
+  /*fetchAllUniversities: PropTypes.func.isRequired,*/
   showSnackbar: PropTypes.func.isRequired,
   userObject: PropTypes.object.isRequired,
   universities: PropTypes.array.isRequired,
   homeGroupDetails: PropTypes.object.isRequired,
-  homeGroups: PropTypes.array.isRequired
+  homeGroups: PropTypes.array.isRequired,
+  fetchAllUniversitiesSuccess: PropTypes.func.isRequired,
+  fetchAllUniversitiesFailure: PropTypes.func.isRequired
 };
