@@ -39,7 +39,6 @@ class WikiDetails extends React.Component{
 					versionIndex: tmp[1]
 				})
 			}
-			console.log(queryArray);
 
 			// redirect back if query param not valid
 			if (!isValid) {
@@ -64,7 +63,6 @@ class WikiDetails extends React.Component{
 
 
 	render() {
-		// const { sectionIndex } = this.props;
 		const { error, fetching, wiki, sections } = this.props.wiki;
 
 		return (

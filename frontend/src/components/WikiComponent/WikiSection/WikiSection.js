@@ -18,7 +18,7 @@ export default class WikiSection extends React.Component {
 	}
 
 	render() {
-		const { section, userToken } = this.props;
+		const { wikiTitle, section, userToken } = this.props;
 
 		return (
 			<div className="wikiSectionWrapper" id={ section.title }>
@@ -30,7 +30,10 @@ export default class WikiSection extends React.Component {
 						: null
 					}
 				</h2>
-				<WikiHistoryDropdown section={ section } />
+				<WikiHistoryDropdown 
+					wikiTitle = { wikiTitle }
+					section={ section } 
+				/>
 				<div id={"section" + section.WikiSection.sectionIndex + "content"}></div>
 			</div>
 		);
