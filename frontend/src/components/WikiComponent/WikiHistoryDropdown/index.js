@@ -76,7 +76,7 @@ class WikiHistoryDropdown extends React.Component {
 		const { section } = this.props;
 
 		return (
-			<DropDownMenu maxHeight={300} value={this.state.value} onChange={this.handleChange}>
+			<DropDownMenu className="dropdown-menu" maxHeight={300} value={this.state.value} onChange={this.handleChange}>
 	        	{items}
 			</DropDownMenu>
 		);

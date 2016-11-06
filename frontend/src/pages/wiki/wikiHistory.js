@@ -78,7 +78,7 @@ class WikiDetails extends React.Component {
 								<p> { error.message } </p>
 							: <p>{ error }</p>
 						:
-							<div className="wikiDetailWrapper">
+							<div className="wiki-detail-wrapper">
 								<h1>{ wiki.title }</h1>
 								<WikiContentTable sections={ sections } />
 

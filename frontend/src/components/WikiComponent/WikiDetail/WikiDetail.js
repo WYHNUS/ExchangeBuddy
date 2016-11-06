@@ -8,7 +8,7 @@ export default class WikiDetail extends React.Component {
 		const { wiki, sections } = this.props;
 
 		return (
-			<div className="wikiDetailWrapper">
+			<div className="wiki-detail-wrapper">
 				<h1>{ wiki.title }</h1>
 				<WikiContentTable sections={ sections }/>
 

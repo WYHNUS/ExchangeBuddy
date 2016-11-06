@@ -7,7 +7,7 @@ export default class WikiContentTable extends React.Component {
 			<div>
 			{
 				(sections.length > 0) ?
-					<div className="wikiContentTable">
+					<div className="wiki-content-table">
 						<h2>Contents</h2>
 						<ul>
 						{(
@@ -15,8 +15,8 @@ export default class WikiContentTable extends React.Component {
 								return (
 									<li key={ idx }>
 										<a href={ "#" + section.title }>
-											<span className="contentNumber">{ section.WikiSection.sectionIndex }</span>
-											<span className="contentText">{ section.title }</span>
+											<span className="content-number">{ section.WikiSection.sectionIndex }</span>
+											<span className="content-text">{ section.title }</span>
 										</a>
 									</li>
 								) 
