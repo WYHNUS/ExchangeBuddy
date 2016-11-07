@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 
 import WikiContentTable from '../WikiContentTable'
 import WikiSection from '../WikiSection';
+import WikiAddSectionButton from '../WikiAddSectionButton';
 
 export default class WikiDetail extends React.Component {
 	render() {
@@ -29,6 +30,7 @@ export default class WikiDetail extends React.Component {
 						: null
 					}
 				</div>
+				<WikiAddSectionButton wikiTitle={ wiki.title } />
 			</div>
 		);
 	}

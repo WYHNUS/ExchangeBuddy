@@ -14,7 +14,7 @@ import WikiContentTable from '../../components/WikiComponent/WikiContentTable';
 import WikiSection from '../../components/WikiComponent/WikiSection';
 import WikiForm from '../../components/WikiComponent/WikiForm';
 
-class WikiDetails extends React.Component{
+class WikiDetails extends React.Component {
 	componentWillMount() {
 		const { wikiTitle, sectionIndex, wiki } = this.props;
 		// check if the info stored in reducer matches with the one stored in URL, and if sectionIndex is valid

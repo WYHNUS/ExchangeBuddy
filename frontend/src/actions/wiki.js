@@ -119,8 +119,8 @@ export function submitNewSection(wikiTitle, versionTitle, content) {
 			})
 			.use(bearer)
 			.end(function(err, res) {
-				console.log(err);
-				console.log(res);
+				// console.log(err);
+				// console.log(res);
 				if (err) {
 					dispatch(createNewSectionFail(err));
 				} else {
