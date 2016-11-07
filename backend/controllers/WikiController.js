@@ -8,13 +8,9 @@ var Vote = models.WikiSectionVote;
 // give default recommendation
 exports.getRecommendation = function(req, res) {
     Wiki.findAll({
-<<<<<<< HEAD
+
         attributes: [
-            ['title', 'name'],
-=======
-        attributes: [
-            ['title', 'name'],
->>>>>>> f40521e377794c66e51f512ab48e430cd7c13e97
+
             ['image', 'imageUrl']
         ],
         // limit: 6,
@@ -62,11 +58,9 @@ exports.getCustomizedRecommendation = function(req, res) {
         models.sequelize.Promise.all([
             Wiki.findAll({
                 attributes: [
-<<<<<<< HEAD
+
                     ['title', 'name'],
-=======
-                    ['title', 'name'],
->>>>>>> f40521e377794c66e51f512ab48e430cd7c13e97
+
                     ['image', 'imageUrl']
                 ],
                 order: '"view" DESC'
@@ -97,7 +91,7 @@ exports.getCustomizedRecommendation = function(req, res) {
                 }]
             })
         ]).spread(function(allWikis, homeUniversity, homeCountry, exchange) {
-<<<<<<< HEAD
+
             /*
                 To store all country wiki -->
                     this is a dirty fix as the bootstrapped db is not correctly set up
@@ -105,15 +99,7 @@ exports.getCustomizedRecommendation = function(req, res) {
             */
             var dirtyCountryUrl = 'http://pix.iemoji.com/images/emoji/apple/ios-9/256/earth-globe-americas.png';
             var countryArray = [];
-=======
-            /*
-                To store all country wiki -->
-                    this is a dirty fix as the bootstrapped db is not correctly set up
-                    for uni and country
-            */
-            var dirtyCountryUrl = 'http://pix.iemoji.com/images/emoji/apple/ios-9/256/earth-globe-americas.png';
-            var countryArray = [];
->>>>>>> f40521e377794c66e51f512ab48e430cd7c13e97
+
 
             if (!!homeUniversity) {
                 result.push({
