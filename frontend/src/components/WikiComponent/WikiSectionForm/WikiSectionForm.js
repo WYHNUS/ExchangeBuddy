@@ -29,7 +29,7 @@ export default class WikiSectionForm extends React.Component {
 
     submitForm() {
         const { wikiName } = this.props;
-        this.props.createVersion(wikiName, this.state.title, this.state.content);
+        this.props.createSection(wikiName, this.state.title, this.state.content);
     }
 
     handleTitleChange(e) {

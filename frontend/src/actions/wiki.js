@@ -98,6 +98,9 @@ export function fetchWikiPage(wikiTitle, additionalParam=null) {
 
 
 /*	 Create new wiki section 	*/
+export function clickedSubmit() {
+	return { type: CLICK_SUBMIT };
+}
 export function createNewSectionSuccess() {
     return { type: CREATE_NEW_SECTION_SUCCESS };
 }
@@ -135,10 +138,6 @@ export function submitNewSection(wikiTitle, versionTitle, content) {
 /*	 Editing wiki section   */ 
 export function initializeWikiForm(title, content) {
 	return { type: INITIALIZE_WIKI_FORM, title, content };
-}
-
-export function clickedSubmit() {
-	return { type: CLICK_SUBMIT };
 }
 export function createSectionVersionSuccess() {
     return { type: CREATE_SECTION_VERSION_SUCCESS };

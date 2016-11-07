@@ -386,16 +386,19 @@ exports.createNewSectionVersion = function(req, res) {
     } else {
         // check if wiki and section exists
         Wiki.findOne({
+            attributes: ['id', 'title', 'view', 'createdAt', 'updatedAt', 'UserId'],
             where: {
                 title: req.body.wikiTitle
             },
             include: [{
                 model: Section,
+                attributes: ['id', 'displayVersionNumber', 'totalVersionCount', 'sectionIndex'],
                 where: {
                     sectionIndex: req.body.sectionIndex
                 }
             }]
         }).then(function(wiki) {
+            console.log(wiki);
             if (!wiki) {
                 return res.status(404)
                     .json({

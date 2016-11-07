@@ -33,7 +33,6 @@ class WikiDetails extends React.Component{
 		this.props.toggleTopBarBackButtonVisibility(false);
 	}
 
-
 	render() {
 		const { sectionIndex } = this.props;
 		const { error, fetching, wiki, sections } = this.props.wiki;
