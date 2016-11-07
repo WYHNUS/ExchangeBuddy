@@ -56,9 +56,7 @@ exports.getCustomizedRecommendation = function(req, res) {
         models.sequelize.Promise.all([
             Wiki.findAll({
                 attributes: [
-
                     ['title', 'name'],
-
                     ['image', 'imageUrl']
                 ],
                 order: '"view" DESC'
@@ -288,12 +286,10 @@ exports.getWiki = function(req, res) {
                         versionNumber: versionNumber
                     },
                     include: [
-
                         {
                             model: Section
                         },
                         {
-
                             model: User,    // get author
                             attributes: ['id', 'name', 'profilePictureUrl']
                         }
@@ -398,12 +394,10 @@ exports.createNewSection = function(req, res) {
                             versionNumber: section.displayVersionNumber
                         },
                         include: [
-
                             {
                                 model: Section
                             },
                             {
-
                                 model: User,    // get author
                                 attributes: ['id', 'name', 'profilePictureUrl']
                             }
@@ -640,11 +634,7 @@ exports.vote = function(req, res) {
                     if (!!vote) {
                         /*
                             >>>>>>>>>>>>>>>>>>>>  TODO  <<<<<<<<<<<<<<<<<<<<<
-<<<<<<< HEAD
                                 user a weighted sum to calculate based on
-=======
-                                user a weighted sum to calculate based on
->>>>>>> f40521e377794c66e51f512ab48e430cd7c13e97
                                 User.role (maybe?) and User.credibility
                             >>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<
                         */
@@ -678,13 +668,6 @@ exports.vote = function(req, res) {
                             /*
                                 >>>>>>>>>>>>>>>>>>>>  TODO  <<<<<<<<<<<<<<<<<<<<<
                                     user a weighted sum to calculate based on
-=======
-                            UserId: req.user.id
-                        }).then(function(newVote) {
-                            /*
-                                >>>>>>>>>>>>>>>>>>>>  TODO  <<<<<<<<<<<<<<<<<<<<<
-                                    user a weighted sum to calculate based on
->>>>>>> f40521e377794c66e51f512ab48e430cd7c13e97
                                     User.role (maybe?) and User.credibility
                                 >>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<
                             */
