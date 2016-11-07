@@ -80,13 +80,11 @@ export default class WikiForm extends React.Component {
 
                 <div className="row center-md center-xs" style={{marginTop: "18px"}}>
                     <div>
-                        <RaisedButton className="raised-btn" label="Save changes" primary={true} disabled={submitting}
+                        <RaisedButton className="raised-btn" label="Save changes" 
+                            style={{marginRight: "18px"}}
+                            primary={true} disabled={submitting}
                             onClick={this.submitForm.bind(this)}
                         />
-                    </div>
-                </div>
-                <div className="row center-md center-xs" style={{marginTop: "18px"}}>
-                    <div>
                         <RaisedButton className="raised-btn" label="Cancel" onClick={this.redirectBack.bind(this)}/>
                     </div>
                 </div>
