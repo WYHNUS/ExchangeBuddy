@@ -153,7 +153,7 @@ exports.getCustomizedRecommendation = function(req, res) {
 
                     models.sequelize.Promise.all(allCountry).then(countries => {
                         for (var i=0; i<countries.length; i++) {
-                            if (shouldAdd(result, countries[i].name)) {
+                            if (!!countries[i] && shouldAdd(result, countries[i].name)) {
                                 result.push({
                                     imageUrl: dirtyCountryUrl,
                                     name: countries[i].name
