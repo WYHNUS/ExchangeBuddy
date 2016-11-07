@@ -11,7 +11,7 @@ import * as IconsHelper from '../../../util/icons';
 import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import coverPhoto from '../../../res/story/storyimg.png';
-//import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import TextField from 'material-ui/TextField';
 
 import $ from 'jquery';
 var moment = require('moment');
@@ -88,11 +88,52 @@ class Story extends React.Component{
 
 
 export default class StoryList extends React.Component {
+	
 	constructor(props) {
 		super(props);
 		this.state={
-			cols:1
+			cols:1,
+			storiesShown:[],
+			value:""
 		}
+	}
+
+	getDataSource = () =>{
+		
+		if(this.state.value===""){
+			return this.props.stories;
+
+		}else{
+			return this.state.storiesShown;
+		}
+	}
+
+	filterChange=(event)=>{
+
+		this.setState({...this.state, value: event.target.value});
+		var tempList = [];
+
+		for(var i=0;i<this.props.stories.length;i++){
+
+			if(this.filterText(event.target.value,this.props.stories[i].title)){
+				tempList.push(this.props.stories[i])
+			}
+		}
+
+		this.setState({storiesShown:tempList});
+	}
+
+	filterText(searchText, key){
+
+		searchText = searchText.toLowerCase();
+		key = key.toLowerCase().replace(/[^a-z0-9 ]/g, '');
+
+		if (searchText.length < 1)
+			return false;
+
+		return searchText.split(' ').every(searchTextSubstring =>
+			key.split(' ').some(s => s.substr(0, searchTextSubstring.length) == searchTextSubstring)
+			);
 	}
 
 	componentDidMount() {
@@ -126,12 +167,16 @@ export default class StoryList extends React.Component {
 		return (
 			<div>
 
-				
+				<TextField
+				hintText="Search titles" className="search-textfield"
+				value={this.state.value}
+				onChange={this.filterChange}/>
 
-				<hr className="green-separator" style={{ width: "85%"}}></hr>
-				<div style={styles.stories_list_root}>
-				{ stories.length > 0 ?
+				{ this.getDataSource().length > 0 ?
 					(
+						<div className="stories-outer-container">
+						<hr className="green-separator" style={{ width: "85%"}}></hr>
+						<div style={styles.stories_list_root}>
 						<GridList 
 						className="stories-container"
 						cols={this.state.cols}
@@ -139,17 +184,16 @@ export default class StoryList extends React.Component {
 						padding={1}
 						style={styles.stories_list_grid}>
 						{ 
-							(stories.length > 0)?
-							(stories.map(function(story, idx){return (<Story story={story} key={ idx } />) }))
-							:
-							null
+							(this.getDataSource().map(function(story, idx){return (<Story story={story} key={ idx } />) }))
 						}
 						</GridList>
+						</div>
+						<hr className="green-separator" style={{ width: "85%"}}></hr>
+						</div>
 					)
 					: null
 				}
-				</div>
-				<hr className="green-separator" style={{ width: "85%"}}></hr>
+				
 			</div>
 			)
 	}

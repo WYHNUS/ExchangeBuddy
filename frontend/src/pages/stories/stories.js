@@ -22,7 +22,7 @@ class Stories extends React.Component{
 		return (
 			<div>
 
-			<div className="recommendation-nav-bar">
+			<div className="stories-bar">
 				<h2>Stories</h2>
 			</div>
 
