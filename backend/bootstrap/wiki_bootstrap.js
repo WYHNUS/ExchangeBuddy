@@ -1,5 +1,5 @@
-var app = require('./app');
-var models = require('./models');
+var app = require('../app');
+var models = require('../models');
 
 models.sequelize.Promise.all([
     models.Country.findAll({
