@@ -12,7 +12,7 @@ export default class WikiSectionForm extends React.Component {
         super(props);
 
         this.state = {
-            title: '',
+            title: 'New Section',
             content: null
         }
     }
