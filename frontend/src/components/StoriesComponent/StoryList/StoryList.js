@@ -10,7 +10,7 @@ import * as IconsHelper from '../../../util/icons';
 
 import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
-import storyImgUrl from '../../../res/story/storyimg.png';
+import coverPhoto from '../../../res/story/storyimg.png';
 //import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 import $ from 'jquery';
@@ -29,7 +29,7 @@ const styles={
 }
 
 // dummy one image ...
-//let storyImgUrl = "http://i.imgur.com/RRUe0Mo.png";
+//let coverPhoto = "http://i.imgur.com/RRUe0Mo.png";
 
 class Story extends React.Component{
 	componentDidMount(){
@@ -44,7 +44,7 @@ class Story extends React.Component{
 				}*/
 
 	render(){
-		const { id, title, /* favorites, status, ,*//*tags, storyImgUrl,*/ User, createdAt, key } = this.props.story;
+		const { id, title, /* favorites, status, ,*//*tags, */coverPhoto, User, createdAt, key } = this.props.story;
 		return (
 			<GridTile
 				className="single-story"
@@ -80,7 +80,7 @@ class Story extends React.Component{
 					</span>*/
 				}
 				titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.6) 70%,rgba(0,0,0,0.4) 100%)">
-				<img className='storyImage' src={storyImgUrl} />
+				<img className='storyImage' src={coverPhoto} />
 			</GridTile>
 		)
 	}

@@ -1,7 +1,7 @@
 var fs = require('fs');
 var xml2js = require("xml2js");
-var app = require('./app');
-var models = require('./models');
+var app = require('../app');
+var models = require('../models');
 
 
 var parser = new xml2js.Parser();
