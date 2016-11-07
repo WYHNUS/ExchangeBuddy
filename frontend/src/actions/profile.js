@@ -48,25 +48,66 @@ export function resetProfile(){
 }
 
 /************************************************************
+FETCHING ALL GROUPS OF USER PROFILE
+************************************************************/
+
+export const START_FETCHING_PROFILE_GROUPS = 'START_FETCHING_PROFILE_GROUPS';
+export const FETCH_PROFILE_GROUPS_SUCCESS = 'FETCH_PROFILE_GROUPS_SUCCESS';
+export const FETCH_PROFILE_GROUPS_FAILURE = 'FETCH_PROFILE_GROUPS_FAILURE';
+export const RESET_PROFILE_GROUPS = 'RESET_PROFILE_GROUPS';
+
+export function fetchProfileGroups(userId){
+	const req = request
+		.post(ROOT_URL + '/group')
+		.send({ userId: userId })
+		.use(bearer);
+
+	return {
+		type: START_FETCHING_PROFILE_GROUPS,
+		payload: req
+	};
+
+}
+
+export function fetchProfileGroupsSuccess(groups){
+	return {
+		type: FETCH_PROFILE_GROUPS_SUCCESS,
+		payload: groups
+	};
+}
+
+export function fetchProfileGroupsFailure(error){
+	return {
+		type: FETCH_PROFILE_GROUPS_FAILURE,
+		payload: error
+	};
+}
+
+export function resetProfileGroups(){
+	return{
+		type: RESET_PROFILE_GROUPS
+	}
+}
+
+/************************************************************
 UPDATING A PROFILE
 ************************************************************/
 export const EDIT_PROFILE = 'EDIT_PROFILE';
+export const EDIT_PROFILE_SUCCESS = 'EDIT_PROFILE_SUCCESS';
 
 
-export function editProfile(userId, userName, userPassword){
+export function editProfile(userName, userPassword){
 	var obj = {
-		email: "kaiyisg@gmail.com",
-	    bio: userName,
-	    website: `${userName}.com`,
-	    birthday: 1234567,
-		userId: parseInt(userId),
+	    bio: null,
+	    website: null,
+	    birthday: null,
 		name: userName,
 		password: userPassword
 	};
 	console.log('edit profile obg', obj);
 	const req = request
 		.patch(ROOT_URL + '/updateUser')
-		.send({ obj })
+		.send(obj)
 		.use(bearer);
 
 	return {
@@ -74,6 +115,14 @@ export function editProfile(userId, userName, userPassword){
 		payload: req
 	};
 }
+
+export function editProfileSuccess(profile){
+	return {
+		type: EDIT_PROFILE_SUCCESS,
+		profile: profile
+	};
+}
+
 
 /************************************************************
 UPDATING A UNIVERSITY

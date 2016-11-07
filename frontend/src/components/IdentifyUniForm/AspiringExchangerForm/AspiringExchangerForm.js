@@ -23,6 +23,7 @@ const validate = (values) => {
 };
 
 const filter = (searchText, key) => {
+
   searchText = searchText.toLowerCase();
   key = key.toLowerCase().replace(/[^a-z0-9 ]/g, '');
 

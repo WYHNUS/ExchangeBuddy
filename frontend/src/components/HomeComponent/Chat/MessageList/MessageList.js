@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import ReactHtmlParser from 'react-html-parser';
 import truncate from 'truncate';
 import Linkify from 'react-linkify';
+import Spinner from 'react-spinkit';
 
 import { formatTime } from '../../../../util/helper';
 import * as UserHelper from '../../../../util/user';
@@ -113,7 +114,7 @@ export default class MessageList extends React.Component {
     const { homeMessages, loading, error } = this.props.homeMessages;
 
     if (loading) {
-      return <div className="container"><h1>Message</h1><h3>Loading...</h3></div>      
+      return <Spinner spinnerName="circle" />       
     } else if (error) {
       return <div className="alert alert-danger">Error: {error.message}</div>
     }

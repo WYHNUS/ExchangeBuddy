@@ -15,29 +15,42 @@ export const UNGO_FOR_AN_EVENT_SUCCESS_UPDATE = 'UNGO_FOR_AN_EVENT_SUCCESS_UPDAT
 //export const UNGO_FOR_AN_EVENT_SUCCESS = 'UNGO_FOR_AN_EVENT_SUCCESS';
 //export const UNGO_FOR_AN_EVENT_FAILURE = 'UNGO_FOR_AN_EVENT_FAILURE';
 
-export function goForAnEventSuccessUpdate(EventId, UserId){
-	console.log(EventId);
+export function goForAnEventSuccessUpdate(EventId, user){
 	return{
 		type: GO_FOR_AN_EVENT_SUCCESS_UPDATE,
 		payload:{
 			EventId:EventId,
-			UserId: UserId
+			user: user
 		}
 	}
 }
 
-export function ungoForAnEventSuccessUpdate(EventId, UserId){
-	console.log(EventId);
+export function ungoForAnEventSuccessUpdate(EventId, user){
 	return{
 		type: UNGO_FOR_AN_EVENT_SUCCESS_UPDATE,
 		payload:{
 			EventId:EventId,
-			UserId: UserId
+			user: user
 		}
 	}
 }
 
 
+/************************************************************
+DELETE AN EVENT SUCCESS UPDATE
+************************************************************/
+
+export const DELETE_AN_EVENT_SUCCESS_UPDATE = 'DELETE_AN_EVENT_SUCCESS_UPDATE';
+
+export function deleteAnEventSuccessUpdate(EventId){
+	console.log(EventId);
+	return{
+		type: DELETE_AN_EVENT_SUCCESS_UPDATE,
+		payload:{
+			EventId:EventId
+		}
+	}
+}
 
 
 /************************************************************
@@ -311,5 +324,65 @@ export function toggleHomeTab(tabValue){
 	return{
 		type: TOGGLE_HOME_TAB,
 		tabValue
+	}
+}
+
+
+/************************************************************
+ADDING STEPS FOR ONBOARDING
+************************************************************/
+
+export const ADD_ONBOARDING_STEP = 'ADD_ONBOARDING_STEP';
+export const ADD_JOYRIDE = 'ADD_JOYRIDE';
+export const SET_FIRST_TIME = 'SET_FIRST_TIME';
+export const START_JOYRIDE = 'START_JOYRIDE';
+
+export function setFirstTime(isFirstTime){
+	return{
+		type: SET_FIRST_TIME,
+		isFirstTime
+	}
+}
+
+export function addJoyride(joyride){
+
+    console.log('tryng to add joyride', joyride);
+	return{
+		type: ADD_JOYRIDE,
+		joyride
+	}
+}
+
+export function addOnboardStep(steps){
+	return{
+		type: ADD_ONBOARDING_STEP,
+		steps
+	}
+}
+
+export function startJoyride(){
+	return{
+		type: START_JOYRIDE
+	}
+}
+
+export const ADDING_GROUP_SUCCESS_UPDATE = 'ADDING_GROUP_SUCCESS_UPDATE';
+export const LEAVING_GROUP_SUCCESS_UPDATE = 'LEAVING_GROUP_SUCCESS_UPDATE';
+
+export function leavingGroupSuccessUpdate(userObject){
+	return{
+		type: LEAVING_GROUP_SUCCESS_UPDATE,
+		payload:{
+			userObject:userObject
+		}
+	}
+}
+
+export function addingGroupSuccessUpdate(userObject){
+	return{
+		type: ADDING_GROUP_SUCCESS_UPDATE,
+		payload:{
+			userObject:userObject
+		}
 	}
 }

@@ -26,17 +26,6 @@ import Checkbox from 'material-ui/Checkbox';
 import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
 
-/*const postToChat = (groupEvent, groupId, cardText) => {
-	const {name, coverPicture, startTime, id } = groupEvent;
-	const profilePicture = groupEvent.venue.profilePicture || groupEvent.profilePicture;
-	const eventPosting = { name, profilePicture, coverPicture, startTime, id };
-	const params = { userToken: Meteor.userToken(), userId: Meteor.userId(), groupId, eventPosting, content: cardText, type: "eventFB" };
-
-	Meteor.call('GroupChatMessage.sendToGroup', params, (err, success) => {
-		if(err)
-			console.log(err)
-	})
-}*/
 const styles = {
 	customWidth: {
 		width: 150,
@@ -75,6 +64,31 @@ class EventItemCreated extends React.Component{
 	openDeleteDialog = () =>{
 		this.setState({isDialogOpen:true});
 	};
+
+	closeDeleteDialogDelete = () =>{
+		this.setState({isDialogOpen:false});
+		const {groupEvent, showSnackbar, deleteAnEventSuccessUpdate} = this.props;
+		const req = request
+			.delete(ROOT_URL + '/event')
+			.send({ 
+				EventId: groupEvent.id
+			})
+			.use(bearer)
+			.end(function(err,res){
+				//console.log(res);
+				if (res.status === 401) {
+					cookie.remove('authToken');
+					this.props.clearUser();
+					browserHistory.push('/');
+		        }
+				if (!err && !res.error){
+					showSnackbar("Deleted the event!");
+					deleteAnEventSuccessUpdate(groupEvent.id);
+				} else {
+					showSnackbar("Error deleting the event...");
+				}
+			});
+	}
 
 	//fetch and render list of people to display here
 	componentWillMount(){
@@ -120,57 +134,88 @@ class EventItemCreated extends React.Component{
 		})
 	}
 
-	goForAnEvent(EventId, UserId, showSnackbar,goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents){
-		//console.log(EventId, UserId);
+	goForAnEvent(){
+
+	 	const {groupEvent,homeGroupDetails, showSnackbar, 
+	 		goForAnEventSuccessUpdate, universities} = this.props;
+		const {userObject} = this.props.user;
+	 	const {peopleList} = this.state;
+
 		const req = request
 			.post(ROOT_URL + '/goToEvent')
 			.send({ 
-				EventId: EventId,
-				UserId:UserId
+				EventId: groupEvent.id,
+				UserId:userObject.id
 			})
 			.use(bearer)
-			.end(function(err,res){
-				console.log(res);
+			.end((err,res)=>{
+				//console.log(res);
 				if (res.status === 401) {
 					cookie.remove('authToken');
 					this.props.clearUser();
 					// need to redirect to a new version of login page
 					browserHistory.push('/');
 		        } 
-				//console.log(homeGroupDetails.id);
+
 				if (!err && !res.error && homeGroupDetails.id){
-					//showSnackbar("Registered for event");
-					//goForAnEventSuccessUpdate(EventId, UserId);
-					fetchEvents(homeGroupDetails.id);
+					var newUser = UniversityHelper.insertUniversitiesIntoUser(userObject,universities);
+					showSnackbar("Registered for event");
+					goForAnEventSuccessUpdate(groupEvent.id, newUser);
+					
+					var newPeopleList = peopleList.slice();
+					newPeopleList.push(newUser);
+					this.setState({
+						peopleList:newPeopleList,
+						userIsGoing:true
+					});
+
 				} else {
 					showSnackbar("Error registering for event");
 				}
 			});
 	};
 
-	ungoForAnEvent(EventId, UserId, showSnackbar,ungoForAnEventSuccessUpdate, homeGroupDetails, fetchEvents){
-		//console.log(EventId, UserId, showSnackbar);
-		//console.log(EventId, UserId);
+	ungoForAnEvent(){
+
+		const {groupEvent,homeGroupDetails, showSnackbar, ungoForAnEventSuccessUpdate} = this.props;
+		const {userObject} = this.props.user;
+	 	const {peopleList} = this.state;
+
 		const req = request
 			.post(ROOT_URL + '/unattend')
 			.send({ 
-				EventId: EventId,
-				UserId:UserId
+				EventId: groupEvent.id,
+				UserId: userObject.id
 			})
 			.use(bearer)
-			.end(function(err,res){
-				console.log(res);
+			.end((err,res)=>{
+				//console.log(res);
 				if (res.status === 401) {
 					cookie.remove('authToken');
 					this.props.clearUser();
 					// need to redirect to a new version of login page
 					browserHistory.push('/');
 		        } 
-				//console.log(homeGroupDetails.id);
+
 				if (!err && !res.error && homeGroupDetails.id){
-					//showSnackbar("Unregistered for event");
-					//ungoForAnEventSuccessUpdate(EventId, UserId);
-					fetchEvents(homeGroupDetails.id);
+					showSnackbar("Unregistered for event");
+					ungoForAnEventSuccessUpdate(groupEvent.id, userObject);
+					
+					var newPeopleList = peopleList.slice();
+					
+					//remove object from list
+					for(var i=0;i<newPeopleList.length;i++){
+
+						if(parseInt(newPeopleList[i].id)===userObject.id){
+							newPeopleList.splice(i, 1);
+							break;
+						}
+					}
+					this.setState({
+						peopleList:newPeopleList,
+						userIsGoing:false
+					});
+
 				} else {
 					showSnackbar("Error unregistering for event");
 				}
@@ -178,12 +223,11 @@ class EventItemCreated extends React.Component{
 	};
 
 	handleChangeGoing(){
-		const {groupEvent,homeGroupDetails, showSnackbar, user, goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate,fetchEvents} = this.props;
 		if(this.state.userIsGoing){
-			this.ungoForAnEvent(groupEvent.id, user.userObject.id, showSnackbar, goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents);
+			this.ungoForAnEvent();
 		}
 		else{
-			this.goForAnEvent(groupEvent.id, user.userObject.id, showSnackbar, goForAnEventSuccessUpdate, homeGroupDetails, fetchEvents);
+			this.goForAnEvent();
 		}
 	}
 
@@ -191,7 +235,7 @@ class EventItemCreated extends React.Component{
 		const actions = 
 		[
 		<FlatButton
-		label="Cancel"
+		label="Back"
 		primary={true}
 		keyboardFocused={true}
 		onTouchTap={this.handleClose}
@@ -199,8 +243,10 @@ class EventItemCreated extends React.Component{
 		];
 
 		const deleteActions = [
-	      <FlatButton label="Cancel" primary={true} onTouchTap={this.closeDeleteDialog} />,
-	      <FlatButton label="Delete" primary={true} onTouchTap={console.log('delete')} />,
+	      <FlatButton label="Cancel" primary={true} 
+	      onTouchTap={this.closeDeleteDialog} />,
+	      <FlatButton label="Delete" primary={true} 
+	      onTouchTap={this.closeDeleteDialogDelete} />,
 	    ];
 
 		const {groupEvent,homeGroupDetails, showSnackbar, user, 
@@ -210,9 +256,10 @@ class EventItemCreated extends React.Component{
 			return (
 				<div className='row center-xs'>
 
-				{/*<Dialog actions={deleteActions} modal={false} open={this.state.isDialogOpen} onRequestClose={this.closeDeleteDialog}>
-		          Delete the event forever?
-		        </Dialog>*/}
+				<Dialog actions={deleteActions} modal={false} open={this.state.isDialogOpen} 
+					onRequestClose={this.closeDeleteDialog}>
+		          Are you sure you want to delete your event?
+		        </Dialog>
 
 				<Dialog
 				title={`${groupEvent.going.length} going for ${groupEvent.title}`}
@@ -235,27 +282,31 @@ class EventItemCreated extends React.Component{
 					title={ groupEvent.title }
 					showExpandableButton={true}
 					actAsExpander={true}
-					subtitle={  <Link id='link-title' to={`/profile/${groupEvent.User.id}`}>{`by ${groupEvent.User.name}`}</Link>} />
+					subtitle={  <Link id='link-title' to={`/profile/${groupEvent.User.id}`}>
+					{`by ${groupEvent.User.name}`}</Link>} />
 					<CardText>
 						<div className="col-xs-12 event-item-info">
 							{Icons.icon('watch_later')}<span>&nbsp; {
-							`${moment(groupEvent.startTime).format("D MMM, ddd, hA")} to ${moment(groupEvent.endTime).format("D MMM, ddd, hA")}`}</span>
+							`${moment(groupEvent.startTime).format("D MMM, ddd, hA")} to 
+							${moment(groupEvent.endTime).format("D MMM, ddd, hA")}`}</span>
 						</div>
 						<div className="col-xs-12 event-item-info">
 							{Icons.icon('place')}<span>&nbsp; 
 							<a href={`http://maps.google.com/maps?q=loc:${groupEvent.lat},${groupEvent.lng}`}>
-								<span style={{marginLeft:'3px',fontWeight:'bold',color:'darkgrey',textDecoration:'underline'}}>{`${groupEvent.location}`}</span>
+								<span style={{marginLeft:'3px',fontWeight:'bold',color:'darkgrey',textDecoration:'underline'}}>
+								{`${groupEvent.location}`}</span>
 							</a></span>
 						</div>
 						<div className="col-xs-12 event-item-info">
-							{Icons.icon('group')}<span>&nbsp; <span id='link' onClick={this.handleOpen}>{`${groupEvent.going.length} going`}</span></span>
+							{Icons.icon('group')}<span>&nbsp; <span id='link' onClick={this.handleOpen}>
+							{`${groupEvent.going.length} going`}</span></span>
 						</div>
 					</CardText>
 					<CardText className="event-item-card-text" expandable={true}>
 						{ cardText }
 					</CardText>
 					<CardActions expandable={true}>
-						{ /*Meteor.user()*/
+						{ 
 							true ?
 								<div className='row center-xs'>
 									<div className='col-xs-6 col-md-4'>
@@ -271,15 +322,22 @@ class EventItemCreated extends React.Component{
 								</div>
 							: null 
 						}
-						{
-							/*<div className="edit-delete-btn">
-						      <IconButton tooltipPosition="bottom-center" tooltip="Edit" onTouchTap={console.log('edit')()=>goToEdit(props)}>
+						{	
+							(parseInt(this.props.user.userObject.id)==parseInt(groupEvent.UserId))?
+							(
+							<div className="edit-delete-btn">
+						      {/*<IconButton tooltipPosition="bottom-center" tooltip="Edit" 
+						      onTouchTap={()=>goToEdit(props)}>
 						        {Icons.icon('mode_edit')}
-						      </IconButton>
-						      <IconButton tooltipPosition="bottom-center" tooltip="Delete" onTouchTap={console.log('delete')()=>props.openDialog(1)} >
+						      </IconButton>*/}
+						      <IconButton tooltipPosition="bottom-center" tooltip="Delete" 
+						      onTouchTap={()=>this.openDeleteDialog()} >
 						        {Icons.icon('delete')}
 						      </IconButton>
-					        </div>*/
+					        </div>
+					        )
+					        :
+					        null
 						}
 					</CardActions>
 				</Card>

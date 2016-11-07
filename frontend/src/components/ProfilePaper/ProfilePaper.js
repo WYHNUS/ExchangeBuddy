@@ -9,14 +9,13 @@ import cookie from 'react-cookie';
 import Paper from 'material-ui/Paper';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
+import Spinner from 'react-spinkit';
 
 import Link from '../Link';
-
 import * as UserHelper from '../../util/user';
 import * as UniversityHelper from '../../util/university';
 import { fetchAllUniversities } from '../../actions/utilityInfo';
 import{ fetchProfile } from '../../actions/profile';
-
 import * as IconsHelper from '../../util/icons';
 
 const text_header_style = {
@@ -49,9 +48,9 @@ function editUniversities(userId, exchangeUniversityId, homeUniversityId, term, 
     year:year
   }
   const req = request
-    .patch(ROOT_URL + '/updateUni/')
-    .send(profileObj)
-    .use(bearer);
+  .patch(ROOT_URL + '/updateUni/')
+  .send(profileObj)
+  .use(bearer);
 
   return req;
 }
@@ -64,179 +63,179 @@ export default class ProfilePaper extends React.Component {
   };
 
   componentWillMount(){
-    const {
+    const 
+    {
       fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure, universities, 
       showSnackbar, userObject, 
-      fetchProfileSuccess, fetchProfileFailure, profile
+      fetchProfileSuccess, fetchProfileFailure, profile, fetchProfileGroups
     } = this.props;
 
-      fetchProfile(urlToUserid(userObject.id)).payload.then((userProfileRes)=>{
-        console.log(userProfileRes);
+    fetchProfileGroups(urlToUserid(userObject.id));
 
-        if (!userProfileRes.error) {
-          fetchProfileSuccess(userProfileRes.body); 
-          if (universities.length < 2) {
-            fetchAllUniversities().payload.then((uniRes) => {
-              console.log(uniRes);
+    fetchProfile(urlToUserid(userObject.id)).payload.then((userProfileRes)=>{
+      //console.log(userProfileRes);
 
-              if (!uniRes.error) {
-                fetchAllUniversitiesSuccess(uniRes.data);
-                var finalArray = UniversityHelper.insertUniversitiesIntoUniversityList(
-                  userProfileRes.body.Exchanges, uniRes.data
+      if (!userProfileRes.error) {
+        fetchProfileSuccess(userProfileRes.body);
+
+        if (universities.length < 2) {
+          fetchAllUniversities().payload.then((uniRes) => {
+            //console.log(uniRes);
+
+            if (!uniRes.error) {
+              fetchAllUniversitiesSuccess(uniRes.data);
+              var finalArray = UniversityHelper.insertUniversitiesIntoUniversityList(
+                userProfileRes.body.Exchanges, uniRes.data
                 );
-                this.setState({
-                  exchangeUniList: finalArray,
-                  exchangeUniListLoaded: true
-                });
-              } else {
-                fetchAllUniversitiesFailure(uniRes.error);
-                this.setState({
-                  exchangeUniListLoaded: false
-                });
-              }
-            });
-          } else {
-            var finalArray = UniversityHelper.insertUniversitiesIntoUniversityList(
-              userProfileRes.body.Exchanges, universities
-            );
-            this.setState({
-              exchangeUniList: finalArray,
-              exchangeUniListLoaded: true
-            });
-          }
+              this.setState({
+                exchangeUniList: finalArray,
+                exchangeUniListLoaded: true
+              });
+            } else {
+              fetchAllUniversitiesFailure(uniRes.error);
+              this.setState({
+                exchangeUniListLoaded: false
+              });
+            }
+          });
         } else {
-          fetchProfileFailure(userProfileRes.error);
+          var finalArray = UniversityHelper.insertUniversitiesIntoUniversityList(
+            userProfileRes.body.Exchanges, universities
+            );
+          this.setState({
+            exchangeUniList: finalArray,
+            exchangeUniListLoaded: true
+          });
         }
-      }, (err) => {
-        if (err.status === 401) {
-          cookie.remove('authToken');
-          this.props.clearUser();
+      } else {
+        fetchProfileFailure(userProfileRes.error);
+      }
+    }, (err) => {
+      if (err.status === 401) {
+        cookie.remove('authToken');
+        this.props.clearUser();
           // need to redirect to a new version of login page
           browserHistory.push('/');
         } else {
           fetchProfileFailure(err.response.error.message);
         }
       })
-    }
+  }
 
-    render() {
-      const { profile, userObject } = this.props;
+  render() {
+    const { profile, userObject, profileGroups } = this.props;
 
-      /*const isUser=()={
-        return profile.id===userObject.id;
-      }*/ 
+    return (
+      <div>
+      <div id='profile-buffer'></div>
+      <div id="profile-paper">
 
-      /*{ height: "auto", width: "100%" }*/
-      return (
-        <div>
-        <div id='profile-buffer'></div>
-        <div id="profile-paper">
+      <div className='row'>
+      <div className="col-xs-12 profile-pic">
+      {UserHelper.getAvatar(profile, 100)}
+      </div>
+      <div className="col-xs-12">
+      <h1 style={ text_header_style }>{ profile.name }</h1>
+      </div>
+      </div>
 
-          <div className='row'>
-          <div className="col-xs-12 profile-pic">
-            {UserHelper.getAvatar(profile, 100)}
+      <div className='row center-xs'>
+      {
+        profile.fbUserId?
+        (
+          <div className="col-xs-12 col-md-6 profile-fb">
+          <a target="_window" href={`https://facebook.com/${profile.fbUserId}`}>Message on Facebook</a>
           </div>
-          <div className="col-xs-12">
-          <h1 style={ text_header_style }>{ profile.name }</h1>
+          ):
+        null
+      }
+      {
+        profile.email?
+        (
+          <div className="col-xs-12 col-md-6 profile-fb">
+          <a target="_blank" href={`mailto:${profile.email}`}>Message through Email</a>
           </div>
-          </div>
-          
-          
+          ):
+        null
+      }
+      </div>
 
-          <div className='row center-xs'>
-          {
-            profile.fbUserId?
-            (
-              <div className="col-xs-12 col-md-6 profile-fb">
-                <a target="_window" href={`https://facebook.com/${profile.fbUserId}`}>Message on Facebook</a>
-              </div>
-            ):
-            null
-          }
-          {
-            profile.email?
-            (
-              <div className="col-xs-12 col-md-6 profile-fb">
-                <a target="_blank" href={`mailto:${profile.email}`}>Message through Email</a>
-              </div>
-            ):
-            null
-          }
-          </div>
-          
-          
-          {/*<div className='col-xs-12' id="user-image">
-          {  }
-          </div>*/}
-          
+      <div className='row center-xs'>
+      
+      <div className='col-xs-12 col-md-6'>
+      <div className='university-details'>
+      <div className='university-header'>Home University</div>
+      { 
+        this.props.profile.University?
+        (profile.University.name):
+        (<Spinner spinnerName="circle" />) 
+      }
+      </div>
+      </div>
 
-          {/*<div className='row'>
-            {profile.fbUserId?
-              (
-                <div>
-                <div className='col-xs-12 col-md-4 table-header'>Facebook</div>
-                <div className='col-xs-12 col-md-8 table-cell'>
-                  <Link to={ `https://facebook.com/${profile.fbUserId}` }>Facebook profile</Link>
-                </div>
-                </div>
-                )
-              :null
-            }
-          </div>*/}
+      <div className='col-xs-12 col-md-6'>
+      <div className='university-details'>
+      <div className='university-header'>Exchange University</div>
+      {
+        this.state.exchangeUniListLoaded? 
+        (this.state.exchangeUniList.map((uni, idx) => <div key={idx}>{uni.name}</div>)):
+        (<Spinner spinnerName="circle" />)
+      }
+      </div>
+      </div>
 
-          <div className='row university-details'>
-            <div className='col-xs-12 col-md-4 university-header'>Home University</div>
-            <div className='col-xs-12 col-md-8'>
-              { 
-                this.props.profile.University?
-                (profile.University.name):
-                (<div>Not loaded university name</div>) 
-              }
-            </div>
-          </div>
+      
 
-          <div className='row university-details'>
-            <div className='col-xs-12 col-md-4 university-header'>Exchange University</div>
-            <div className='col-xs-12 col-md-8'>
-            {this.state.exchangeUniListLoaded? 
-              (this.state.exchangeUniList.map((uni, idx) => uni.name)):
-              (<h2>Error loading list of unis...</h2>)}
-            </div>
-          </div>
+      <div className='col-xs-12 col-md-6'>
+      <div className='university-details'>
+      <div className='university-header'>Groups</div>
+      {
+        (profileGroups.length>0)?
+        (
+          profileGroups.map((group,idx)=>
+          <div id="profilegroup" key={idx} className='col-xs-12'>
+          {group.name}
+          </div>)
+        )
+        :
+        (<Spinner spinnerName="circle" />)
+      }
+      </div>
+      </div>
+      </div>
 
-          {
-          (urlToUserid(userObject.id)===userObject.id)?
-          (
-          <div className='row center-xs'>
+      {
+        (urlToUserid(userObject.id)===userObject.id)?
+        (
+          <div className='row center-xs edit-profile-container'>
           <div className='col-xs-10 col-md-4'>
-          <RaisedButton primary={true} label="Edit Profile" onTouchTap={()=>browserHistory.push("/profile/me/edit")}/>
+          <RaisedButton className='edit-profile-button' primary={true} 
+          label="Edit Profile" onTouchTap={(e)=>{e.preventDefault();browserHistory.push("/profile/me/edit")}}/>
           </div>
           <div className='col-xs-10 col-md-4'>
-          <RaisedButton primary={true} label="Edit Universities" onTouchTap={()=>browserHistory.push("/profile/me/editUni")}/>
+          <RaisedButton className='edit-profile-button' primary={true} 
+          label="Edit Universities" onTouchTap={(e)=>{e.preventDefault();browserHistory.push("/profile/me/editUni")}}/>
           </div>
           </div>
           )
-          :
-          null
-          }
+        :
+        null
+      }
 
-
-        </div>
-        </div>
-        )
-    }
+      </div>
+      </div>
+      )
   }
+}
 
-  ProfilePaper.propTypes = {
-    fetchProfileSuccess: PropTypes.func.isRequired,
-    fetchProfileFailure: PropTypes.func.isRequired,
-    fetchAllUniversitiesSuccess: PropTypes.func.isRequired,
-    fetchAllUniversitiesFailure: PropTypes.func.isRequired,
-    showSnackbar: PropTypes.func.isRequired,
-    profile: PropTypes.object.isRequired,
-    userObject: PropTypes.object.isRequired,
-    universities: PropTypes.array.isRequired
-
-    /*userProfile: PropTypes.object.isRequired*/
-  };
+ProfilePaper.propTypes = {
+  fetchProfileSuccess: PropTypes.func.isRequired,
+  fetchProfileFailure: PropTypes.func.isRequired,
+  fetchAllUniversitiesSuccess: PropTypes.func.isRequired,
+  fetchAllUniversitiesFailure: PropTypes.func.isRequired,
+  showSnackbar: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
+  userObject: PropTypes.object.isRequired,
+  universities: PropTypes.array.isRequired
+};
 

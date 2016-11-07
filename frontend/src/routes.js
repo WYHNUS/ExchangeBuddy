@@ -50,6 +50,8 @@ ReactGA.initialize(process.env.GA_ID);
 function logPageView() {
   ReactGA.set({ page: window.location.pathname });
   ReactGA.pageview(window.location.pathname);
+  //additionally, scroll to top
+  window.scrollTo(0, 0);
 }
 
 export const getRoutes = (store) =>{

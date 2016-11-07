@@ -1,32 +1,15 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { ListItem } from 'material-ui/List';
 import { browserHistory } from 'react-router'
+import RaisedButton from 'material-ui/RaisedButton';
+
+import request from 'superagent';
+import { bearer } from '../../../../util/bearer';
+import { ROOT_URL } from '../../../../util/backend';
+import * as UniversityHelper from '../../../../util/university';
 
 import { getAvatar } from '../../../../util/user';
-
-/*{
-  "id": 1,
-  "name": "a students in a",
-  "user": [
-    {
-      "id": 5,
-      "name": "Lee Kai Yi",
-      "profilePictureUrl": null,
-      "University": {
-        "name": "a",
-        "id": 3
-      },
-      "chat_group": {
-        "createdAt": "2016-10-17T17:00:11.000Z",
-        "updatedAt": "2016-10-17T17:00:11.000Z",
-        "groupId": 1,
-        "userId": 5
-      }
-    }
-  ],
-  "ChatMessages": []
-}*/
 
 const styles = {
   root: {
@@ -59,21 +42,22 @@ export default class MemberList extends React.Component {
 
   render(){
 
-    const { homeFriends, loading, error } = this.props.homeFriends;
-
-    if(loading) {
-      return <div className="container"><h1>Posts</h1><h3>Loading...</h3></div>      
-    } else if(error) {
-      return <div className="alert alert-danger">Error: {error.message}</div>
-    }
+    const { homeGroupDetails } = this.props.homeGroupDetails;
 
     return(
-      <div className='row start-xs'>
-        <div className='col-xs-12'>
-          <h3 style={{ textAlign: 'center' }}>These students are in the same group as you.</h3>
-          { homeFriends.map((user, idx) => <MemberTile key={ idx } user={ user } />) }
+      <div>
+
+        <div className='row start-xs'>
+          <div className='col-xs-12'>
+            { homeGroupDetails.user.map((user, idx) => <MemberTile key={ idx } user={ user } />) }
+          </div>
         </div>
+
       </div>
     );
   }
 }
+
+MemberList.propTypes = {
+  homeGroupDetails: PropTypes.object.isRequired
+};

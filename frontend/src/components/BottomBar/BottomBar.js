@@ -15,7 +15,7 @@ function urlToIdx(url) {
     // drops/:id have second lvl
     return -1;
   }*/
-  //console.log(firstLvl);  
+  //console.log(firstLvl);
   switch (firstLvl) {
     case 'home':
       return 0;
@@ -39,20 +39,23 @@ function urlToIdx(url) {
 class BottomBar extends Component {
   goToURL(url) {
     if(url==='/home'){
-      //console.log('/home');
       return ()=>{browserHistory.push(url);this.props.toggleHomeTab('friends');}
     }else{
       return ()=>browserHistory.push(url);
     }
   }
 
+
+
   render() {
     const tabIdx = urlToIdx(window.location.pathname);
     return (
       <div>
-        {    
-        this.props.pageVisibility.bottomBarVisibility ?  
+        {
+        this.props.pageVisibility.bottomBarVisibility ?
         <Paper zDepth={1} className="bottom-navigation">
+
+
           <BottomNavigation selectedIndex={tabIdx}>
           <BottomNavigationItem onTouchTap={this.goToURL('/home')} label="Home" icon={IconsHelper.materialIcon("home")} />
           <BottomNavigationItem onTouchTap={this.goToURL('/wiki')} label="Wiki" icon={IconsHelper.materialIcon("info")} />
@@ -60,6 +63,7 @@ class BottomBar extends Component {
           <BottomNavigationItem onTouchTap={this.goToURL('/stories')} label="Stories" icon={IconsHelper.materialIcon("library_books")} />
           <BottomNavigationItem onTouchTap={this.goToURL('/profile/me')} label="Profile" icon={IconsHelper.materialIcon("account_circle")} />
           </BottomNavigation>
+
         </Paper>
         :
         <div></div>
@@ -71,7 +75,9 @@ class BottomBar extends Component {
 
 BottomBar.propTypes = {
   pageVisibility: PropTypes.object.isRequired,
-  toggleHomeTab: PropTypes.func.isRequired
+  toggleHomeTab: PropTypes.func.isRequired,
+  addSteps: PropTypes.func.isRequired,
+  homeJoyride: PropTypes.object.isRequired
 }
 
 export default BottomBar;

@@ -1,13 +1,13 @@
 import React from 'react';
-
-import { Grid, Row, Col } from 'react-flexbox-grid';
-
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { showSnackbar } from '../../actions/messageSnackbar';
-import { pageVisibility } from '../../actions/pageVisibility';
+
 import MemberList from '../../components/HomeComponent/Friends/MemberList';
+import GroupIndicator from '../../components/HomeComponent/Friends/GroupIndicator';
+import GroupButtons from '../../components/HomeComponent/Friends/GroupButtons';
+import FBButtons from '../../components/HomeComponent/Friends/FBButtons';
 import {toggleHomeTab} from '../../actions/home'
+
+import Spinner from 'react-spinkit';
 
 
 class Friends extends React.Component{
@@ -17,25 +17,38 @@ class Friends extends React.Component{
 	}
 
 	render(){
+
+		const { loading, error } = this.props.homeGroupDetails;
+
+
+	    if(loading) {
+	      return <Spinner spinnerName="circle" />      
+	    } else if(error) {
+	      return <div className="alert alert-danger">Error: {error.message}</div>
+	    }
+
 		return(
-		<Grid>
+
 		<div className="friends-container">
-		<MemberList groupId={ parseInt(this.props.params.id) }/>
+		<GroupIndicator/>
+		<MemberList />
+		<FBButtons/>
+		<GroupButtons/>
 		</div>
-		</Grid>);
+
+		);
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ showSnackbar }, dispatch),
     toggleHomeTab:(tab)=>dispatch(toggleHomeTab(tab))
   };
 };
 
 const mapStateToProps = (state)=>{
 	return {
-		params: state.home.homeGroupDetails.homeGroupDetails
+		homeGroupDetails: state.home.homeGroupDetails,
 	};
 }
 

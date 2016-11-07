@@ -13,6 +13,7 @@ import SubmitForm from '../../components/HomeComponent/Chat/SubmitForm';
 import MessageList from '../../components/HomeComponent/Chat/MessageList';
 import {ROOT_URL} from '../../util/backend';
 import Socket from '../../util/socket';
+import * as GroupHelper from '../../util/group';
 
 import {browserHistory} from 'react-router';
 
@@ -36,6 +37,7 @@ class Chat extends React.Component{
 	componentDidMount(){
 		//if there is group id to join
 		if(this.props.homeGroupDetails.detailsLoaded){
+
 			if(!socket.isFirstTimeUse){
 				socket.setup(
 					this.props.homeGroupDetails.homeGroupDetails.name,
@@ -44,11 +46,11 @@ class Chat extends React.Component{
 					parseInt(this.props.user.userObject.id),
 					this.chatReceive.bind(this)
 				)
+
 			}else if(!(socket.currentRoom===parseInt(this.props.homeGroupDetails.homeGroupDetails.id))){
 				socket.updateRoom(
 					this.props.homeGroupDetails.homeGroupDetails.name,
 					parseInt(this.props.homeGroupDetails.homeGroupDetails.id)
-					//this.chatReceive.bind(this)
 				)
 			}		
 			
@@ -82,13 +84,35 @@ class Chat extends React.Component{
 	}
 
 	render(){
+
+		const { homeGroupDetails } = this.props.homeGroupDetails;
+	    const {userObject} = this.props.user;
+
+		var userPartOfGroup = GroupHelper.isUserPartOfGroup(userObject.id,homeGroupDetails.user);
+
 		return(
-			<Grid>
-				<div className="chat-container">
-					<SubmitForm socket={socket}/>
-					<MessageList />
-				</div>
-			</Grid>);
+	
+			<div className="chat-container">
+
+				{
+					(userPartOfGroup)?
+					(
+						<div>
+						<SubmitForm socket={socket}/>
+						<MessageList />
+						</div>
+					)
+					:
+					(
+						<div className='row center-xs'>
+							<h2>Join the group to join in the coversation!</h2>
+						</div>
+					)
+				}				
+
+			</div>
+	
+		);
 	}
 }
 

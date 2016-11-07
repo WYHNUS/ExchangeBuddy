@@ -13,7 +13,7 @@
 @import "module/header";
 @import "module/info";
 @import "module/loading";
-@import "module/login";
+@import "module/app";
 @import "module/misc";
 @import "module/md-editor-theme";
 @import "module/profile";
@@ -27,3 +27,5 @@
 @import "module/wiki";
 
 @import "state/navbar";
+
+@import '../../node_modules/react-joyride/lib/styles/react-joyride';

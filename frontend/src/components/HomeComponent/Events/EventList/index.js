@@ -6,7 +6,7 @@ import Loading from '../../../Loading';
 // Action creators
 import { 
   resetEvents, goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate,
-  fetchEvents , fetchEventsFailure, fetchEventsSuccess
+  fetchEvents , fetchEventsFailure, fetchEventsSuccess, deleteAnEventSuccessUpdate
 } from '../../../../actions/home';
 import { showSnackbar } from '../../../../actions/messageSnackbar';
 import { fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure } from '../../../../actions/utilityInfo';
@@ -44,11 +44,11 @@ const mapDispatchToProps = (dispatch) => {
     showSnackbar: (message) => {
       dispatch(showSnackbar(message))
     },
-    goForAnEventSuccessUpdate: (EventId, UserId) => {
-      dispatch(goForAnEventSuccessUpdate(EventId, UserId))
+    goForAnEventSuccessUpdate: (EventId, user) => {
+      dispatch(goForAnEventSuccessUpdate(EventId, user))
     },
-    ungoForAnEventSuccessUpdate: (EventId, UserId) => {
-      dispatch(ungoForAnEventSuccessUpdate(EventId, UserId))
+    ungoForAnEventSuccessUpdate: (EventId, user) => {
+      dispatch(ungoForAnEventSuccessUpdate(EventId, user))
     },
     fetchAllUniversitiesSuccess: (data) => {
       dispatch(fetchAllUniversitiesSuccess(data));
@@ -61,6 +61,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     clearUser: () => {
       dispatch(clearUser());
+    },
+    deleteAnEventSuccessUpdate: (EventId) =>{
+      dispatch(deleteAnEventSuccessUpdate(EventId))
     }
   };
 };

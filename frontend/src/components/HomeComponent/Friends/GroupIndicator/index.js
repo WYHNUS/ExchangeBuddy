@@ -1,10 +1,9 @@
 import React from 'react';
 
-import ChildComponent from './MemberList';
+import ChildComponent from './GroupIndicator';
 // Redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 
 const mapDispatchToProps = (dispatch) => {
 	return {
@@ -13,6 +12,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
 	return {
+		userObject:state.user.userObject,
 		homeGroupDetails: state.home.homeGroupDetails
 	}
 };

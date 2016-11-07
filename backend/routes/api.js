@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('express-jwt');
 var config = require('../config/config');
+var multer = require('multer');
+var upload = multer({dest: __dirname+'/../public/uploads'});
 
 
 
@@ -60,6 +62,7 @@ request:
 
 router.patch('/updateUser', verifyToken, UserCtrl.updateUser);
 router.put('/createUser', UserCtrl.createUser);
+router.post('/uploadProfile',[verifyToken, upload.single('profilePicture'), UserCtrl.uploadProfile]);
 
 router.get('/verify/:token', MailCtrl.verifyToken);
 router.get('/resendVerificationMail/:userId', MailCtrl.resend);
@@ -94,6 +97,7 @@ request:
 }
 */
 router.post('/joinGroup', verifyToken, GroupCtrl.joinGroup);
+router.post('/leaveGroup', verifyToken, GroupCtrl.leaveGroup);
 router.post('/group', verifyToken, GroupCtrl.getGroupIndex);
 router.get('/group/:id', verifyToken, GroupCtrl.getGroup);
 router.get('/getGroups', GroupCtrl.getGroups);
@@ -202,4 +206,9 @@ GET /comment/:eventId
 
 */
 router.get('/comment/:eventId', verifyToken, EventCtrl.getComments);
+router.get('/signups', function(req, res){
+    models.User.findAll().then(function(users){
+        res.send('Number of users: ' + users.length)
+    })
+})
 module.exports = router;
