@@ -8,11 +8,11 @@ function defaultPromise(req){
             function(err,res){
                 if(err===null){
                 	if(res.body.error){
-                		console.log(res.body + "error on server");
+                		// console.log(res.body + "error on server");
                 	}
                     resolve(res);
                 }else{
-                    console.log(err);
+                    // console.log(err);
                     reject(err);
                 }
             });

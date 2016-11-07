@@ -15,7 +15,7 @@ const mapDispatchToProps = (dispatch) => {
 		editProfile: (userName, userPassword) => {
 	      dispatch(editProfile(userName, userPassword))
 	        .payload.then((response) => {
-	          console.log(response, 'editprofile');
+	          // console.log(response, 'editprofile');
 	          if (!response.error) {
 	            dispatch(showSnackbar('Editted your profile'));
 	            dispatch(editProfileSuccess(userName));
@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch) => {
 	            // need to redirect to a new version of login page
 	            browserHistory.push('/');
 	          } else {
-	            console.log(err.response.error.message);
+	            // console.log(err.response.error.message);
 	            dispatch(showSnackbar(err.response.error.message));
 	          }
 	        });

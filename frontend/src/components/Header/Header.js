@@ -43,7 +43,7 @@ const tabToIdx = tab => {
 const pathToIdx = () =>{
   
   var pathArray = window.location.pathname.split("/");
-  console.log(pathArray);
+  // console.log(pathArray);
   var path;
   if (pathArray.length > 3) {
     path = pathArray[3];

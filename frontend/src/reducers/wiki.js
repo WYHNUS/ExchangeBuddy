@@ -16,11 +16,11 @@ const initialState=
 	uploadError: null,
 	previews: [{
 		imageUrl: '', 
-		name: 'National University of Singapore'
+		name: 'National University of Singapore(NUS)'
 	}],
 	allWikis: [{
 		imageUrl: '', 
-		name: 'National University of Singapore'
+		name: 'National University of Singapore(NUS)'
 	}],
 	wiki: {
 		id: null,

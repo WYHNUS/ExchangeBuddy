@@ -40,8 +40,8 @@ export function verifyToken(token) {
     request
       .get(ROOT_URL + '/verify/' + token)
       .end(function(err,res){
-        console.log(res);
-        console.log(err);
+        // console.log(res);
+        // console.log(err);
         if(res.body.status === "success"){
           dispatch(verifyTokenSuccess(res.body.user, res.body.token));
         } else {
@@ -66,7 +66,6 @@ export function requireAuthentication(user, error) {
     return { type: Not_Authenticated, user, error };
 }
 export function attemptLogin(field) {
-  console.log(field);
   return (dispatch) => {
     dispatch(clickedLogin());
     request
@@ -76,8 +75,8 @@ export function attemptLogin(field) {
         password: field.userPassword
       })
       .end(function(err,res){
-        console.log(res);
-        console.log(err);
+        // console.log(res);
+        // console.log(err);
         if(res.body.status === 'success'){
           cookie.save('authToken', res.body.token);
           dispatch(loginSuccess(res.body.user, res.body.token));
@@ -92,7 +91,6 @@ export function attemptLogin(field) {
   };
 }
 export function attemptFacebookLogin(token) {
-  console.log(token);
   return (dispatch) => {
     dispatch(clickedLogin());
     request
@@ -101,8 +99,8 @@ export function attemptFacebookLogin(token) {
         facebookToken: token
       })
       .end(function(err,res){
-        console.log(res);
-        console.log(err);
+        // console.log(res);
+        // console.log(err);
         if(res.body.status === 'success'){
           cookie.save('authToken', res.body.token);
           dispatch(loginSuccess(res.body.user, res.body.token));
@@ -128,7 +126,7 @@ export function attemptLogout() {
       .post('/logout')
       .end(function(err,res) {
         if(err)
-          console.log(err)
+          // console.log(err)
         dispatch(logoutSuccess());
       })
   }

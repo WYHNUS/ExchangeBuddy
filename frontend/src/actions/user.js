@@ -46,14 +46,14 @@ export function submitSignupForm(field) {
 				password: field.userPassword
 			})
 			.end(function(err, res){
-				console.log(err);
-				console.log(res);
+				// console.log(err);
+				// console.log(res);
 				if(res.body.status === "success"){
 					dispatch(signupSuccess(res.body.message));
 				} else {
 					if (res.status === 409 || err.status === 409) {
 						// email already registered
-						console.log(res.body.message);
+						// console.log(res.body.message);
 						dispatch(signupFail({
 							error: res.body.message
 						}));

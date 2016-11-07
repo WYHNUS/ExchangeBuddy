@@ -74,7 +74,7 @@ class Chat extends React.Component{
 
 
 	chatReceive(data){
-		console.log('rceived data', data);
+		// console.log('rceived data', data);
 		this.props.updateGroupMessageFromSocket(data);
 	}
 

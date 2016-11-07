@@ -104,7 +104,7 @@ export function editProfile(userName, userPassword){
 		name: userName,
 		password: userPassword
 	};
-	console.log('edit profile obg', obj);
+	// console.log('edit profile obg', obj);
 	const req = request
 		.patch(ROOT_URL + '/updateUser')
 		.send(obj)

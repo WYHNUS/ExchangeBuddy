@@ -51,9 +51,13 @@ export default class StoryDetails extends React.Component {
 				
 				<div className="story-container">
 					<div className="story-row">
-						<img className='img' src={coverPhoto}/>
+						{	
+							!!coverPhoto ?
+								<img className='img' src={coverPhoto}/>
+							: null
+						}
 						<h1 className="title">{ title }</h1>
-						<div id="content"></div>
+						<div id="content" className="story-content"></div>
 					</div>
 				</div>
 			</div>

@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch) => {
     actions: bindActionCreators({  }, dispatch),
     updateUniInfo: (userId, homeUniId) => {
       dispatch(editUniversities(userId, homeUniId)).payload.then((response) => {
-        console.log(response);
+        // console.log(response);
         if (response.status === 200) {
           dispatch(editUniversitiesSuccess(response.body.user));
         } else {
