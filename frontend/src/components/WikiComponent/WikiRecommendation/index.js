@@ -15,7 +15,12 @@ export default class WikiRecommendation extends React.Component {
 					className="recommendation-item-wrapper" 
 					onClick={this.getComponent.bind(this, previewItem.name)}
 				>
-					<img src={ previewItem.imageUrl } />
+				{ 
+					!!previewItem.imageUrl ?
+						<img src={ previewItem.imageUrl } />
+					:
+						<img src="http://pix.iemoji.com/images/emoji/apple/ios-9/256/earth-globe-americas.png" />
+				}
 				    <p>{ previewItem.name }</p>
 				</div>
 			</li>
