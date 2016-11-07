@@ -23,6 +23,7 @@ import Wiki from './pages/wiki/wiki';
 import WikiDetails from './pages/wiki/wikiDetails';
 import WikiHistory from './pages/wiki/wikiHistory';
 import EditWiki from './pages/wiki/editWiki';
+import WikiNewSection from './pages/wiki/wikiNewSection';
 import Stories from './pages/stories/stories';
 import StoryDetails from './pages/stories/story';
 import EditStory from './pages/editStory';
@@ -101,6 +102,7 @@ export const getRoutes = (store) =>{
       <Route path=":wikiTitle" component={ WikiDetails }/>
       <Route path="history(/:wikiTitle)/*" component={ WikiHistory }/>
       <Route path="editWiki(/:wikiTitle/:wikiSection)" component={ EditWiki } onEnter={ authRequired }/>
+      <Route path="newSection(/:wikiTitle)" component={ WikiNewSection } onEnter={ authRequired }/>
     </Route>
     <Route path="profile(/:userId)" onEnter={ authRequired }>
       <IndexRoute component={ Profile }/>

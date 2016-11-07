@@ -94,6 +94,12 @@ export function fetchWikiPage(wikiTitle, additionalParam=null) {
 }
 
 
+/*	 Create new wiki section 	*/
+export function submitNewSection(wikiTitle, versionTitle, content) {
+	return ;
+}
+
+
 /*	 Editing wiki section   */ 
 export function initializeWikiForm(title, content) {
 	return { type: INITIALIZE_WIKI_FORM, title, content };
