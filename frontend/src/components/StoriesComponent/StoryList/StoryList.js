@@ -64,9 +64,9 @@ class Story extends React.Component{
 						} 
 						</span>
 					</div>
-					<div className="col-xs-12 story-item-info">
+					{/*<div className="col-xs-12 story-item-info">
 						{IconsHelper.icon('watch_later')}<span>&nbsp; {moment(createdAt).fromNow()}</span>
-					</div>
+					</div>*/}
 					{/*<div className="col-xs-12 story-item-info">
 						{IconsHelper.icon('local_offer')}<span>&nbsp; 
 						<Truncate ellipsis={<span>...</span>}>{tags.map(function(tag, idx){return(<span key={idx}>{tag+" "}</span>)})}</Truncate></span>
@@ -90,11 +90,35 @@ class Story extends React.Component{
 export default class StoryList extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state={
+			cols:1
+		}
 	}
 
 	componentDidMount() {
 		this.props.fetchAllStories();
 	}
+
+	updateDimensions=()=>{
+		if(window.innerWidth>=1441){
+			this.setState({cols: 4});
+		}else if(window.innerWidth>=1024){
+			this.setState({cols: 3});
+		}else if(window.innerWidth>=600){
+			this.setState({cols: 2});
+		}else{
+			this.setState({cols: 1});
+		}
+    }
+    componentWillMount() {
+        this.updateDimensions();
+    }
+    componentDidMount() {
+        window.addEventListener("resize", this.updateDimensions);
+    }
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions);
+    }
 
 	render() {
 		const { stories, user } = this.props;
@@ -103,21 +127,21 @@ export default class StoryList extends React.Component {
 			<div>
 				<div style={styles.stories_list_root}>
 				{ stories.length > 0 ?
-					<GridList
-					className="stories-container"
-						cols={1}
+					(
+						<GridList 
+						className="stories-container"
+						cols={this.state.cols}
 						cellHeight={300}
 						padding={1}
-						style={styles.stories_list_grid}
-					>
-						{ (stories.length > 0)?
-							(
-								stories.map(function(story, idx){return (<Story story={story} key={ idx } />) })
-							)
+						style={styles.stories_list_grid}>
+						{ 
+							(stories.length > 0)?
+							(stories.map(function(story, idx){return (<Story story={story} key={ idx } />) }))
 							:
 							null
 						}
-					</GridList>
+						</GridList>
+					)
 					: null
 				}
 				
