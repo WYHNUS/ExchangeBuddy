@@ -33,7 +33,10 @@ const mapDispatchToProps = (dispatch) => {
 	            dispatch(showSnackbar(err.response.error.message));
 	          }
 	        });
-	    }
+	    },
+	    clearUser: () => {
+	      dispatch(clearUser());
+	    },
 	}
 }
 

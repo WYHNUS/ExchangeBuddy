@@ -22,8 +22,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
 	return {
-		//stories: state.stories.storyList,
-		stories: stories,
+		stories: state.stories.storyList,
+		//stories: stories,
 		user: state.user.userObject
 	};
 };

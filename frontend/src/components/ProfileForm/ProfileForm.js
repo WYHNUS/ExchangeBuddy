@@ -13,30 +13,30 @@ import { PasswordFormField } from '../Field';
 import { ROOT_URL } from '../../util/backend';
 import { bearer } from '../../util/bearer';
 import request from 'superagent';
+import cookie from 'react-cookie';
 
 const FILE_FIELD_NAME = 'files'; 
 
-const uploadFile=(data)=>{
-  console.log('called superagent file request');
+const uploadFile=(data, clearUser)=>{
+  //console.log('called superagent file request');
   const formData = new FormData();
   formData.append('profilePicture',data.files[0]);
   console.log(formData);
   var req = request
     .post(ROOT_URL + '/uploadProfile')
     .send(formData)
-    /*.attach(data.files[0].name,data.files[0])
-    .type("multipart/form-data")*/
     .use(bearer)
     .end((err,res)=>{
       console.log(err,res);
       if (res.status === 401) {
-        //cookie.remove('authToken');
-        //this.props.clearUser();
+        cookie.remove('authToken');
+        clearUser();
         // need to redirect to a new version of login page
         browserHistory.push('/');
       } 
 
       if (!err && !res.error){
+        browserHistory.push('/profile/me'); 
         console.log('uploaded');
       } else {
         console.log('server error');
@@ -44,15 +44,17 @@ const uploadFile=(data)=>{
     })
 };
 
-const profileForm=(callback, editProfile, userId)=>(values)=>{
-  console.log(values);
+const profileForm=(callback, editProfile, userId, clearUser)=>(values)=>{
+  //console.log(values);
   callback();
-  if(values.files.length>0){
-    uploadFile(values)  
-  }
   editProfile(values.userName, values.userPassword);
+  console.log(values.files);
+  if((values.files!=null)&&(values.files.length>0)){
+    uploadFile(values, clearUser);
+  }else{
+    browserHistory.push('/profile/me');  
+  }
 
-	browserHistory.push('/profile/me');
 };
 
 const validate = (values) => {
@@ -89,22 +91,24 @@ const renderDropzoneInput = (field) => {
   return (
     <div>
       <Dropzone
+        className="dropzone-upload"
         name={field.name}
         onDrop={( filesToUpload, e ) => field.input.onChange(filesToUpload)}
-      >
-        <div>Try dropping some files here, or click to select files to upload.</div>
+        multiple={false}
+        accept={"image/*"}>
+        {
+          (files && Array.isArray(files) && (files.length>0))?
+          (<img className='upload-preview' src={files[0].preview}/>):
+          (<div>Try dropping some files here, or click to select files to upload.</div>)
+        }
       </Dropzone>
-      {field.meta.touched &&
-        field.meta.error &&
-        <span className="error">{field.meta.error}</span>}
-      {files && Array.isArray(files) && (
-        <ul>
-          { files.map((file, i) => <li key={i}>{file.name}</li>) }
-        </ul>
-      )}
+      {field.meta.touched && field.meta.error && <span className="error">{field.meta.error}</span>}
     </div>
   );
 }
+        /*<ul>
+          { files.map((file, i) => <li key={i}>{file.name}</li>) }
+        </ul>*/
 
 class ProfileForm extends Component {
   
@@ -124,9 +128,10 @@ class ProfileForm extends Component {
 
 
 	render() {
-		const { handleSubmit, pristine, reset, submitting, userObject, editProfile } = this.props;
+		const { handleSubmit, pristine, reset, submitting, 
+      userObject, editProfile, clearUser } = this.props;
 
-    const submitHandler = handleSubmit(profileForm(reset, editProfile, userObject.id));
+    const submitHandler = handleSubmit(profileForm(reset, editProfile, userObject.id, clearUser));
 
     		return (
           <div className="page-profile-submit row center-xs">
@@ -160,6 +165,7 @@ class ProfileForm extends Component {
             className='profile-editfield' />
           </div>
 
+          <p className="profilepic-title">Profile Picture</p>
           <div className="row center-xs">
           <Field
             name={FILE_FIELD_NAME}
@@ -173,59 +179,11 @@ class ProfileForm extends Component {
             </div>
           </div>
 
-          {/*<Field
-            type="file"
-            name="poster"
-            component={FileInput}
-          />*/}
-
-          {/*<input
-            type="file"
-            onChange={
-              ( e ) => {      
-                e.preventDefault();
-                const { fields } = this.props;
-                // convert files to an array
-                const files = [ ...e.target.files ];
-                fields.yourField.handleChange(files);
-              }
-            }
-          />*/}
-
     			</form>
-
-          {<form action={`${ROOT_URL}/uploadProfile`}
-          method='post'
-          encType='multipart/form-data'>
-          <input type='file' name='profilePicture'/>
-          <button type='submit' > submit </button>
-          </form>}
 
           </div>
           </div>
     		)
-  }
-}
-
-class FileInput extends React.Component {
-  constructor(props) {
-    super(props)
-    this.onChange = this.onChange.bind(this)
-  }
-
-  onChange(e) {
-    const { input: { onChange } } = this.props
-    onChange(e.target.files[0])
-  }
-
-  render() {
-    const { input: { value } } = this.props
-
-    return (<input
-      type="file"
-      value={value}
-      onChange={this.onChange}
-    />)
   }
 }
 

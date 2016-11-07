@@ -10,6 +10,7 @@ import * as IconsHelper from '../../../util/icons';
 
 import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
+import storyImgUrl from '../../../res/story/storyimg.png';
 //import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 import $ from 'jquery';
@@ -43,7 +44,7 @@ class Story extends React.Component{
 				}*/
 
 	render(){
-		const { id, title, /* favorites, status, ,*/tags, storyImgUrl, User, createdAt, key } = this.props.story;
+		const { id, title, /* favorites, status, ,*//*tags, storyImgUrl,*/ User, createdAt, key } = this.props.story;
 		return (
 			<GridTile
 				className="single-story"
@@ -66,10 +67,10 @@ class Story extends React.Component{
 					<div className="col-xs-12 story-item-info">
 						{IconsHelper.icon('watch_later')}<span>&nbsp; {moment(createdAt).fromNow()}</span>
 					</div>
-					<div className="col-xs-12 story-item-info">
+					{/*<div className="col-xs-12 story-item-info">
 						{IconsHelper.icon('local_offer')}<span>&nbsp; 
 						<Truncate ellipsis={<span>...</span>}>{tags.map(function(tag, idx){return(<span key={idx}>{tag+" "}</span>)})}</Truncate></span>
-					</div>
+					</div>*/}
 					</div>
 
 
@@ -92,8 +93,7 @@ export default class StoryList extends React.Component {
 	}
 
 	componentDidMount() {
-		//TODO: Uncomment this
-		//this.props.fetchAllStories();
+		this.props.fetchAllStories();
 	}
 
 	render() {

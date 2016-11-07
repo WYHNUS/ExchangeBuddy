@@ -247,7 +247,8 @@ export function fetchEvents(GroupId){
 
 	return {
 		type: FETCH_EVENTS,
-		payload: req
+		payload: req,
+		id:GroupId
 	};
 
 }

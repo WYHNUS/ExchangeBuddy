@@ -228,7 +228,7 @@ export default class Header extends React.Component {
             }
             
           </div>
-          <div className="row bottom-xs bottom-md center-xs" >
+          <div className="row bottom-xs bottom-md bottom-lg center-xs" >
             <div className='col-xs-12 col-md-8' id="header-tab-col">
             <Tabs inkBarStyle={{ backgroundColor: "#fff" }} className="header-tab-parent" value={homeTabValue} onChange={this.handleChange} >
               <Tab className='header-friends' value='friends' icon={IconsHelper.materialIcon("people")} label="FRIENDS" className="header-tab" onActive={ gotourl(params.id, "friends") } />

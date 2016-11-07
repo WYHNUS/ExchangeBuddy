@@ -250,8 +250,7 @@ class EventItemCreated extends React.Component{
 	    ];
 
 		const {groupEvent,homeGroupDetails, showSnackbar, user, 
-			goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate,
-			fetchEvents, universities} = this.props;
+			goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate, universities} = this.props;
 			const cardText = truncate(groupEvent.detail, 300);
 			return (
 				<div className='row center-xs'>
@@ -360,7 +359,6 @@ class EventItemCreated extends React.Component{
 		user: PropTypes.object.isRequired,
 		goForAnEventSuccessUpdate: PropTypes.func.isRequired,
 		ungoForAnEventSuccessUpdate: PropTypes.func.isRequired,
-		fetchEvents: PropTypes.func.isRequired,
 		fetchAllUniversitiesSuccess:PropTypes.func.isRequired,
 		fetchAllUniversitiesFailure:PropTypes.func.isRequired,
 		universities:PropTypes.array.isRequired

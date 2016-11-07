@@ -3,6 +3,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import Loading from '../../../Loading';
 import RaisedButton from 'material-ui/RaisedButton';
 import Spinner from 'react-spinkit';
+import { browserHistory } from 'react-router';
 
 import EventItemMu from './EventItemMu';
 import EventItemFb from './EventItemFb';
@@ -12,6 +13,9 @@ export default class EventsList extends React.Component {
   
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount(){    
   }
 
 	render() {
@@ -33,7 +37,7 @@ export default class EventsList extends React.Component {
           (homeEvents.length>0)?
           (homeEvents.map((groupEvent, idx) => 
             <EventItemCreated key={idx} groupEvent={groupEvent} 
-              homeGroupDetails={this.props.homeGroupDetails} 
+              homeGroupDetails={this.props.homeGroupDetails.homeGroupDetails} 
               showSnackbar={showSnackbar} 
               user={user} 
               goForAnEventSuccessUpdate={goForAnEventSuccessUpdate}
@@ -63,7 +67,6 @@ EventsList.propTypes = {
   user: PropTypes.object.isRequired,
   goForAnEventSuccessUpdate: PropTypes.func.isRequired,
   ungoForAnEventSuccessUpdate: PropTypes.func.isRequired,
-  fetchEvents:PropTypes.func.isRequired,
   fetchAllUniversitiesSuccess:PropTypes.func.isRequired,
   fetchAllUniversitiesFailure:PropTypes.func.isRequired,
   universities:PropTypes.array.isRequired,
