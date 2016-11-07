@@ -29,6 +29,24 @@ module.exports = {
                     defaultValue: null,
                 }
             ),
+
+            queryInterface.addColumn(
+                'Countries',
+                'logoImage',
+                {
+                    type: Sequelize.STRING(1024),
+                    defaultValue: null,
+                }
+            ),
+
+            queryInterface.addColumn(
+                'Countries',
+                'backgroundImage',
+                {
+                    type: Sequelize.STRING(1024),
+                    defaultValue: null,
+                }
+            )
         ]
     },
 
