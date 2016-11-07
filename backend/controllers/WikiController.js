@@ -51,7 +51,7 @@ exports.getCustomizedRecommendation = function(req, res) {
         // search for homeUni and homeCountry wiki as well as exchange uni wiki
         models.sequelize.Promise.all([
             models.University.findOne({
-                attributes: ['name', 'logoImageUrl', 'bgImageUrl'],
+                attributes: ['name', 'logoImageUrl', 'bgImageUrl', 'countryCode'],
                 where: {
                     id: user.UniversityId
                 }
@@ -75,16 +75,25 @@ exports.getCustomizedRecommendation = function(req, res) {
                 }]
             })
         ]).spread(function(homeUniversity, homeCountry, exchange) {
+            /* 
+                To store all country wiki -->
+                    this is a dirty fix as the bootstrapped db is not correctly set up 
+                    for uni and country
+            */
+            var dirtyCountryUrl = 'http://pix.iemoji.com/images/emoji/apple/ios-9/256/earth-globe-americas.png';
+            var countryArray = [];  
+
             if (!!homeUniversity) {
                 result.push({
                     imageUrl: homeUniversity.logoImageUrl,
                     name: homeUniversity.name
                 });
+                countryArray.push(homeUniversity.countryCode);
             }
 
             if (!!homeCountry) {
                 result.push({
-                    imageUrl: null,
+                    imageUrl: dirtyCountryUrl,
                     name: homeCountry.name
                 });
             }
@@ -93,7 +102,7 @@ exports.getCustomizedRecommendation = function(req, res) {
                 var exchangeUnis = exchange.map(ex => {
                     // find list of exchange universities
                     return models.University.find({
-                        attributes: ['name', 'logoImageUrl', 'bgImageUrl'],
+                        attributes: ['name', 'logoImageUrl', 'bgImageUrl', 'countryCode'],
                         where: {
                             id: ex.UniversityId
                         }
@@ -102,6 +111,8 @@ exports.getCustomizedRecommendation = function(req, res) {
 
                 models.sequelize.Promise.all(exchangeUnis).then(exUni => {
                     for (var i=0; i<exUni.length; i++) {
+                        countryArray.push(exUni[i].countryCode);
+
                         if (shouldAdd(result, exUni[i].name)) {
                             result.push({
                                 imageUrl: exUni[i].logoImageUrl,
@@ -110,20 +121,64 @@ exports.getCustomizedRecommendation = function(req, res) {
                         }
                     }
 
+                    var allCountry = countryArray.map(countryCode => {
+                        // find list of exchange universities
+                        return models.Country.find({
+                            attributes: ['name'],
+                            where: {
+                                alpha2Code: countryCode
+                            }
+                        });
+                    });
+
+                    models.sequelize.Promise.all(allCountry).then(countries => {
+                        for (var i=0; i<countries.length; i++) {
+                            if (shouldAdd(result, countries[i].name)) {
+                                result.push({
+                                    imageUrl: dirtyCountryUrl,
+                                    name: countries[i].name
+                                });
+                            }
+                        }
+                        return res.status(200)
+                            .json({
+                                status: 'success',
+                                wiki: result
+                            });
+                    });
+                }).catch(function(err) {
+                    resError(res, err);
+                });
+            } else {
+                // check for home uni's country
+                if (countryArray.length === 1) {
+                    models.Country.find({
+                        attributes: ['name'],
+                        where: {
+                            alpha2Code: countryArray[0].countryCode
+                        }
+                    }).then(function(country) {
+                        result.push({
+                            imageUrl: dirtyCountryUrl,
+                            name: country.name
+                        });
+
+                        return res.status(200)
+                            .json({
+                                status: 'success',
+                                wiki: result
+                            });
+                    }).catch(function(err) {
+                        resError(res, err);
+                    });
+
+                } else {
                     return res.status(200)
                         .json({
                             status: 'success',
                             wiki: result
                         });
-                }).catch(function(err) {
-                    resError(res, err);
-                });
-            } else {
-                return res.status(200)
-                    .json({
-                        status: 'success',
-                        wiki: result
-                    });
+                }
             }
         }).catch(function(err) {
             resError(res, err);
@@ -410,7 +465,6 @@ exports.createNewSectionVersion = function(req, res) {
                 }
             }]
         }).then(function(wiki) {
-            console.log(wiki);
             if (!wiki) {
                 return res.status(404)
                     .json({
