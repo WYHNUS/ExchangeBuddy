@@ -14,10 +14,7 @@ const initialState=
 	needReload: false,
 	uploadSuccess: false,
 	uploadError: null,
-	previews: [{
-		imageUrl: '', 
-		name: 'National University of Singapore(NUS)'
-	}],
+	previews: [],
 	allWikis: [{
 		imageUrl: '', 
 		name: 'National University of Singapore(NUS)'

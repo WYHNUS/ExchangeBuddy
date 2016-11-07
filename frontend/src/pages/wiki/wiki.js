@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
+import Spinner from 'react-spinkit';
 
 import { 
 	toggleBottomBarVisibility, toggleTopBarVisibility,
@@ -89,7 +90,7 @@ class Wiki extends React.Component {
 									) 
 								})
 							)
-						: null
+						: <Spinner spinnerName="circle" />
 					}
 					</ul>
 
