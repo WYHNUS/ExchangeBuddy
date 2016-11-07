@@ -52,6 +52,18 @@ module.exports = function(sequelize, DataType) {
         },
         isEmailVerified: {
             type: DataType.BOOLEAN(),
+        },
+
+        credibility: {
+            type: DataType.INTEGER(),
+            defaultValue: 0,
+        },
+
+        role: {
+            type: DataType.INTEGER(),
+            min: 0,
+            max: 10,
+            defaultValue: 0,
         }
     }, {
         classMethods: {
@@ -90,6 +102,11 @@ module.exports = function(sequelize, DataType) {
                 User.hasMany(models.ChatMessage);
 
                 User.hasMany(models.Story);
+
+                User.hasMany(models.Wiki);
+                User.hasMany(models.WikiSection);
+                User.hasMany(models.WikiSectionVersion);
+                User.hasMany(models.WikiSectionVote);
             }
         },
         instanceMethods: {

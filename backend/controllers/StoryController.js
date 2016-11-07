@@ -9,7 +9,7 @@ exports.createStory = function(req, res) {
                 message: 'Please login first.'
             });
     }
-    if (!req.body.storyTitle | !req.body.storyContent) {
+    if (!req.body.storyTitle || !req.body.storyContent) {
         return res.status(400)
             .json({
                 status: 'fail',
