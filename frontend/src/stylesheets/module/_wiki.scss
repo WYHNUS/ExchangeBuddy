@@ -1,0 +1,101 @@
+.wiki-recommendation-wrapper {
+    padding: 20px 20px 40px;
+    margin: 20px;
+
+    .recommendation-nav-bar {
+    	padding: 0 10px;
+    	margin: 20px;
+    }
+    
+	.recommendation-item-list {
+		overflow: hidden;
+	    padding: 0;
+	    margin: 20px;
+	    margin-bottom: 50px;
+
+	    li {
+	    	float: left;
+		    display: inline-block;
+		    width: 150px;
+		    height: 150px;
+		    overflow: hidden;
+		    padding: 0 0 30px 50px;
+
+		    .recommendation-item-wrapper {
+		    	cursor: pointer;
+	    	    width: 140px;
+			    height: 140px;
+			    img {
+				    width: 100%;
+				    height: 100%;
+			    }
+			    p {
+			    	display: inline-block;
+				    max-width: 100%;
+				    vertical-align: middle;
+				}
+		    }
+	    }
+	}
+}
+
+.wiki-detail-wrapper {
+    text-align: left;
+    width: 80%;
+    margin: 0 auto;
+    padding: 5px;
+    font-size: 0.875em;
+
+	h1 {
+	    font-weight: normal;
+	    border-bottom: 1px solid $h-border-color;
+	}
+	a { 
+		text-decoration: none;
+	    color: $unvisited-a-color;
+	}
+	a:visited { color: $visited-a-color; }
+
+	.wiki-content-table {
+	    display: table;
+	    padding: 5px;
+	    border: 1px solid $h-border-color;
+
+		h2 {
+		    margin: 0;
+		    text-align: center;
+			font-size: 14px;
+			font-weight: bold;
+		}
+		ul { padding-left: 0; }
+		li {
+		    list-style-type: none;
+		    list-style-image: none;
+		}
+
+		.content-number { padding-right: 7px; }
+	}
+
+	.wiki-section-wrapper {
+		h2 {
+		    font-weight: normal;
+		    border-bottom: 1px solid $h-border-color;
+
+			.edit-span {
+				cursor: pointer;
+				margin-left: 15px;
+				font-size: 13px;
+				font-weight: normal;
+			}
+			.edit-span:visited {
+				color: #123;
+			}
+
+			.dropdown-menu {
+				margin-left: 18px;
+				margin-bottom: 18px;
+				float: right;
+			}
+		}
+	}
+}

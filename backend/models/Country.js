@@ -52,6 +52,8 @@ module.exports = function(sequelize, DataType) {
   }, {
     classMethods: {
       associate: function(models) {
+        Country.hasOne(models.Wiki);
+
       	Country.hasMany(models.User);
 
       	Country.hasMany(models.University);

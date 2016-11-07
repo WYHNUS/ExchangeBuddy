@@ -41,7 +41,7 @@ module.exports = function(sequelize, DataType) {
                 Event.belongsTo(models.User, {
                     onDelete: "CASCADE",
                     foreignKey: "UserId"
-                })
+                });
 
                 Event.belongsTo(models.Group, {
                     onDelete: "CASCADE",

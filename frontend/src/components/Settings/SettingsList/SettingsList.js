@@ -272,7 +272,7 @@ export default class SettingsList extends React.Component {
 
 			<div className='row center-xs'>
 			{
-				(this.props.user.isLoggedIn)?
+				(this.props.user.token)?
 				(<RaisedButton 
 					className="settings-item-card-button" 
 					label="Logout" 
