@@ -129,7 +129,7 @@ exports.getCustomizedRecommendation = function(req, res) {
 
                         if (shouldAdd(result, exUni[i].name)) {
                             result.push({
-                                imageUrl: exUni[i].logoImageUrl.replace('small', 'medium'),
+                                imageUrl: exUni[i].logoImageUrl,
                                 name: exUni[i].name
                             });
                         }
