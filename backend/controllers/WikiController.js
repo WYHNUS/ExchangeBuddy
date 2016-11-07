@@ -8,9 +8,7 @@ var Vote = models.WikiSectionVote;
 // give default recommendation
 exports.getRecommendation = function(req, res) {
     Wiki.findAll({
-
         attributes: [
-
             ['image', 'imageUrl']
         ],
         // limit: 6,
@@ -160,10 +158,17 @@ exports.getCustomizedRecommendation = function(req, res) {
                                 });
                             }
                         }
+
+                        var recommendations = [];
+                        var recommendationNumber = Math.min(result.length, 8);
+                        for (var i=0; i<recommendationNumber; i++) {
+                            recommendations.push(result[i])
+                        }
+
                         return res.status(200)
                             .json({
                                 status: 'success',
-                                wiki: result,
+                                wiki: recommendations,
                                 allWikis: allWikis
                             });
                     });
