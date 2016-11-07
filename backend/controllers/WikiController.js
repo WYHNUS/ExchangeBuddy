@@ -28,6 +28,16 @@ exports.getRecommendation = function(req, res) {
     });
 }
 
+
+function shouldAdd(arr, name) {
+    for (var i=0; i<arr.length; i++) {
+        if (arr[i].name === name) {
+            return false;
+        }
+    }
+    return true;
+}
+
 // give wiki recommendation based on User
 exports.getCustomizedRecommendation = function(req, res) {
     var result = [];
@@ -92,10 +102,12 @@ exports.getCustomizedRecommendation = function(req, res) {
 
                 models.sequelize.Promise.all(exchangeUnis).then(exUni => {
                     for (var i=0; i<exUni.length; i++) {
-                        result.push({
-                            imageUrl: exUni[i].logoImageUrl,
-                            name: exUni[i].name
-                        });
+                        if (shouldAdd(result, exUni[i].name)) {
+                            result.push({
+                                imageUrl: exUni[i].logoImageUrl,
+                                name: exUni[i].name
+                            });
+                        }
                     }
 
                     return res.status(200)
