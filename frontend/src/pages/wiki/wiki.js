@@ -98,7 +98,9 @@ class Wiki extends React.Component {
 
 				<div className="search wiki-recommendation-wrapper">
 					<TextField
-						hintText="Search Wiki :D" className="search-textfield"
+						hintText="Search for more! :D" 
+						className="search-textfield"
+						style={{width: '50%'}}
 						value={this.state.value}
 						onChange={this.filterChange}
 					/>
