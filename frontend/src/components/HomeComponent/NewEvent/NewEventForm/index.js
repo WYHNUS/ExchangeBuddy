@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch) => {
     postEvents: (lat, lng, location, title, startTime, endTime, detail, imgSrc, GroupId, UserId) => {
       dispatch(postEvents(lat, lng, location, title, startTime, endTime, detail, imgSrc, GroupId, UserId))
         .payload.then((response) => {
-          console.log(response);
+          // console.log(response);
           if (!response.error) {
             dispatch(showSnackbar('Posted an event!'));
             dispatch(fetchEvents(GroupId)).payload.then((response) => {
@@ -39,7 +39,7 @@ const mapDispatchToProps = (dispatch) => {
               }
             });
           } else {
-            console.log(response.error);
+            // console.log(response.error);
             dispatch(showSnackbar('Error in posting event'));
           }
         }, (err) => {
@@ -49,7 +49,7 @@ const mapDispatchToProps = (dispatch) => {
             // need to redirect to a new version of login page
             browserHistory.push('/');
           } else {
-            console.log(err.response.error.message);
+            // console.log(err.response.error.message);
             dispatch(showSnackbar(err.response.error.message));
           }
         });

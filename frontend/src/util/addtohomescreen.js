@@ -239,7 +239,7 @@ ath.removeSession = function (appID) {
 
 ath.doLog = function (logStr) {
 	if ( this.options.logging ) {
-		console.log(logStr);
+		// console.log(logStr);
 	}
 };
 

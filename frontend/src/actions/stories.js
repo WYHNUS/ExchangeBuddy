@@ -77,8 +77,8 @@ export function fetchAllStories() {
 	    	// allow all user to access stories
 	    	//.use(bearer)
 			.end(function(err, res){
-				console.log(err);
-				console.log(res);
+				// console.log(err);
+				// console.log(res);
 				if (err) {
 					dispatch(fetchAllStoriesFail(err));
 				} else {

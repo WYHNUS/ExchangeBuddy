@@ -261,7 +261,7 @@ import {
 			return {...state, homeJoyride:{...state.homeJoyride,steps:newSteps}}
 
 			case ADD_JOYRIDE:
-			console.log('adding a joyride?', action.joyride);
+			// console.log('adding a joyride?', action.joyride);
 			return {...state, homeJoyride:{...state.homeJoyride,joyride:action.joyride}}
 
 			case TOGGLE_HOME_TAB:

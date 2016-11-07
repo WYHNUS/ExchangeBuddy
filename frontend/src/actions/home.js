@@ -43,7 +43,7 @@ DELETE AN EVENT SUCCESS UPDATE
 export const DELETE_AN_EVENT_SUCCESS_UPDATE = 'DELETE_AN_EVENT_SUCCESS_UPDATE';
 
 export function deleteAnEventSuccessUpdate(EventId){
-	console.log(EventId);
+	// console.log(EventId);
 	return{
 		type: DELETE_AN_EVENT_SUCCESS_UPDATE,
 		payload:{
@@ -347,7 +347,7 @@ export function setFirstTime(isFirstTime){
 
 export function addJoyride(joyride){
 
-    console.log('tryng to add joyride', joyride);
+    // console.log('tryng to add joyride', joyride);
 	return{
 		type: ADD_JOYRIDE,
 		joyride

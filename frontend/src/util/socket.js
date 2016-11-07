@@ -28,14 +28,14 @@ export default class Socket{
 				name: userName
 			}
 		}
-		console.log('add user is called', emittedobj);
+		// console.log('add user is called', emittedobj);
 		socket.emit('adduser',emittedobj);
 		socket.on('updatechat', this._eventHandler.bind(this));
 	}
 
 	updateRoom(groupName, groupId){
 		//this.handler = handler;
-		console.log('update room is called', groupName);
+		// console.log('update room is called', groupName);
 		var emittedobj = 
 		{
 			name: groupName,
@@ -47,12 +47,12 @@ export default class Socket{
 	}
 
 	uninstall() {
-		console.log('socket uninstall');
+		// console.log('socket uninstall');
 		socket.emit('disconnect');
 	}
 
 	send(message){
-		console.log('sent msg', message)
+		// console.log('sent msg', message)
 		socket.emit('sendchat',message);
 	}
 

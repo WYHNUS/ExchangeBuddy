@@ -45,7 +45,7 @@ const newEventForm = (callback, userId, isGeocodingError, foundAddress, position
   //if there are some errors, show them!
   if(errors.length===0){
     callback();
-    console.log(id,userId)
+    // console.log(id,userId)
      postEvents(
       position.latitude,
       position.longitude,
@@ -62,7 +62,7 @@ const newEventForm = (callback, userId, isGeocodingError, foundAddress, position
 
   }else{
     showSnackbar(errors[0]);
-    console.log(errors);
+    // console.log(errors);
   }
 }
 
@@ -160,7 +160,7 @@ class NewEventForm extends Component {
     this.setState({isGeocodingError: true});
     this.geocoder.geocode({ 'address': address }, function handleResults(results, status) {
 
-      console.log(results);
+      // console.log(results);
       if (status === google.maps.GeocoderStatus.OK) {
         this.setState({
           foundAddress: results[0].formatted_address,

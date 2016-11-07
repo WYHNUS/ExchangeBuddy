@@ -35,7 +35,7 @@ class Landing extends React.Component{
   componentDidMount() {
     this.props.toggleBottomBarVisibility(false);
     this.props.toggleTopBarVisibility(false);
-    console.log("enter landing page!");
+    // console.log("enter landing page!");
   }
 
   state = {

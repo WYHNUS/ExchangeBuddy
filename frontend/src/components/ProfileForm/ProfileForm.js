@@ -21,13 +21,13 @@ const uploadFile=(data, clearUser)=>{
   //console.log('called superagent file request');
   const formData = new FormData();
   formData.append('profilePicture',data.files[0]);
-  console.log(formData);
+  // console.log(formData);
   var req = request
     .post(ROOT_URL + '/uploadProfile')
     .send(formData)
     .use(bearer)
     .end((err,res)=>{
-      console.log(err,res);
+      // console.log(err,res);
       if (res.status === 401) {
         cookie.remove('authToken');
         clearUser();
@@ -37,9 +37,9 @@ const uploadFile=(data, clearUser)=>{
 
       if (!err && !res.error){
         browserHistory.push('/profile/me'); 
-        console.log('uploaded');
+        // console.log('uploaded');
       } else {
-        console.log('server error');
+        // console.log('server error');
       }
     })
 };
@@ -48,7 +48,7 @@ const profileForm=(callback, editProfile, userId, clearUser)=>(values)=>{
   //console.log(values);
   callback();
   editProfile(values.userName, values.userPassword);
-  console.log(values.files);
+  // console.log(values.files);
   if((values.files!=null)&&(values.files.length>0)){
     uploadFile(values, clearUser);
   }else{

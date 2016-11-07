@@ -75,14 +75,14 @@ export function user(state = initialState , action) {
         error: null
       });
     case EDIT_UNIVERSITIES_SUCCESS:
-      console.log(action.user);
+      // console.log(action.user);
       return Object.assign({}, state, {
         fetchingAuthUpdate: false,
         userObject: action.user,
         error: null
       });
     case EDIT_UNIVERSITIES_FAILURE:
-      console.log(action.error);
+      // console.log(action.error);
       return Object.assign({}, state, {
         fetchingAuthUpdate: false,
         error: action.error
