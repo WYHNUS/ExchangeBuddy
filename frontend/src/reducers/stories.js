@@ -12,8 +12,16 @@ const initialState=
 	fetching_result: false,
 	uploading: false,
 	published: false,
-	storyDetails: {},
-	storyList: [],
+	storyDetails: {
+		title: '',
+		content: '', 
+		User: {name:''}
+	},
+	storyList: [{
+		title: '',
+		coverPhoto: '',
+		User: {name:''}
+	}],
 	editingStory: {
 		storyId: null,
 		title: null,

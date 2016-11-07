@@ -43,7 +43,11 @@ export default class StoryDetails extends React.Component {
 					<div className="story-avatar">{ UserHelper.getAvatar(User, 60) }</div>
 					<div className="author-details">
 						<div>{ User.name }</div>
-						<div><span>{moment(createdAt).fromNow()}</span></div>
+						{
+							!!createdAt ?
+								<div><span>{moment(createdAt).fromNow()}</span></div>
+							: null
+						}
 					</div>
 				</div>
 				</div>
