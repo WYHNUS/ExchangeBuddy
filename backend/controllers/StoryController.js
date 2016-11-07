@@ -79,7 +79,7 @@ exports.getAllStories = function(req, res){
         where: {
             isPublic: true
         },
-        attributes: ['id', 'title', 'createdAt'],
+        attributes: ['id', 'title', 'createdAt', 'coverPhoto'],
         include: [{
             model: models.User,
             attributes: ['id', 'name', 'profilePictureUrl']

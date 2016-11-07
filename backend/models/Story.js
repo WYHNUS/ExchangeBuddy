@@ -14,6 +14,11 @@ module.exports = function(sequelize, DataType) {
     isPublic: {
       type: DataType.BOOLEAN(),
       defaultValue: true,
+    },
+
+    coverPhoto: {
+        type: DataType.STRING(255),
+        defaultValue: null,
     }
   }, {
     classMethods: {

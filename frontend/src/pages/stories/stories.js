@@ -21,20 +21,28 @@ class Stories extends React.Component{
 	render() {
 		return (
 			<div>
-			<div>
+
+			<div className="stories-bar">
+				<h2>Stories</h2>
+			</div>
+
+			<div className='stories-container-wrapper'>
 			<StoryList/>
 			</div>
+
 			<div style={{'margin':'50px', 'textAlign':'center'}}>
 				<p>Enjoyed your senior's stories? <span>
 				<a href="http://www.exchangebuddy.com/experiences/" target="_blank">View more</a></span> from our website!
 				</p>
 			</div>
+
 			<div style={{'margin':'50px', 'textAlign':'center'}}>
 				<p>Want to contribute?</p>
 				<a href="mailto:exchangebuddycontact@gmail.com" target="_blank">
 					Contact us!
 				</a>
 			</div>
+
 			</div>
 		);
 	}

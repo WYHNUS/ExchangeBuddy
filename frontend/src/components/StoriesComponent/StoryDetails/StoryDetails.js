@@ -6,7 +6,7 @@ import { browserHistory } from 'react-router';
 import { formatTime } from '../../../util/helper';
 import * as UserHelper from '../../../util/user';
 
-import storyImgUrl from '../../../res/story/storyimg.png';
+//import coverPhoto from '../../../res/story/storyimg.png';
 
 
 export default class StoryDetails extends React.Component {
@@ -15,6 +15,10 @@ export default class StoryDetails extends React.Component {
 	}
 
 	componentDidMount(){
+		
+	}
+
+	componentDidUpdate(){
 		$('#content').append(this.props.storyDetails.content);
 	}
 
@@ -22,7 +26,7 @@ export default class StoryDetails extends React.Component {
 		const { user/*, fetching_result*/ } = this.props;
 		const { 
 			id, title, content, User, 
-			/*tags, favorites, status, storyImgUrl,*/ 
+			/*tags, favorites, status,*/ coverPhoto, 
 			createdAt, updatedAt 
 		} = this.props.storyDetails;
 
@@ -47,7 +51,7 @@ export default class StoryDetails extends React.Component {
 				
 				<div className="story-container">
 					<div className="story-row">
-						<img className='img' src={storyImgUrl}/>
+						<img className='img' src={coverPhoto}/>
 						<h1 className="title">{ title }</h1>
 						<div id="content"></div>
 					</div>

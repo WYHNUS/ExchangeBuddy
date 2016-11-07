@@ -1,5 +1,3 @@
-var app = require('../app');
-
 module.exports = {
     up: function(queryInterface, Sequelize){
         return [
@@ -21,7 +19,16 @@ module.exports = {
                     max: 10,
                     defaultValue: 0,
                 }
-            )
+            ),
+
+            queryInterface.addColumn(
+                'Stories',
+                'coverPhoto',
+                {
+                    type: Sequelize.STRING(255),
+                    defaultValue: null,
+                }
+            ),
         ]
     },
 
