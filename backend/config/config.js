@@ -6,7 +6,10 @@ module.exports = {
       'password': process.env.DB_USER_PASSWORD,
       'database': process.env.DB_DATABASE,
       'host': process.env.DB_URL,
-      'dialect': 'mysql'
+      'dialect': 'mysql',
+      'poll': {
+          'idle': 60000
+      }
     },
     'facebookClientId': process.env.FB_CLIENT_ID,
     'facebookClientSecret': process.env.FB_CLIENT_SECRET,
