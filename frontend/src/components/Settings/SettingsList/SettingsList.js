@@ -36,10 +36,10 @@ export default class SettingsList extends React.Component {
 
 			<div className='row center-xs'>
 			<Card className="settings-item-card col-xs" style={{maxWidth: "512px"}}>
-			<CardHeader 
+			<CardHeader
 			className="settings-title"
-			title={ "About" } 
-			actAsExpander={ true } 
+			title={ "About" }
+			actAsExpander={ true }
 			showExpandableButton={ true } />
 			<CardText expandable={true}>
 			<div className="settings-info">
@@ -107,10 +107,10 @@ export default class SettingsList extends React.Component {
 			<h2>[Backend magician]</h2>
 			</div>
 			<div className="row center-xs">
-			<p>"Logic don't create wonders, magic does"</p>
+			<p>"Logic doesn't create wonders, magic does"</p>
 			</div>
 			</div>
-			
+
 			<div className="single-profile">
 			<div className="crop row center-xs">
 			<img src={SueMae} alt="SueMae" />
@@ -171,10 +171,10 @@ export default class SettingsList extends React.Component {
 
 			<div className='row center-xs'>
 			<Card className="settings-item-card col-xs" style={{maxWidth: "512px"}}>
-			<CardHeader 
+			<CardHeader
 			className="settings-title"
-			title={ "Privacy Policy" } 
-			actAsExpander={ true } 
+			title={ "Privacy Policy" }
+			actAsExpander={ true }
 			showExpandableButton={ true } />
 			<CardText expandable={true}>
 			<div className="settings-info">
@@ -219,10 +219,10 @@ export default class SettingsList extends React.Component {
 
 			<div className='row center-xs'>
 			<Card className="settings-item-card col-xs" style={{maxWidth: "512px"}}>
-			<CardHeader 
+			<CardHeader
 			className="settings-title"
-			title={ "Terms of Service" } 
-			actAsExpander={ true } 
+			title={ "Terms of Service" }
+			actAsExpander={ true }
 			showExpandableButton={ true } />
 			<CardText expandable={true}>
 			<div className="settings-info">
@@ -253,10 +253,10 @@ export default class SettingsList extends React.Component {
 
 			<div className='row center-xs'>
 			<Card className="settings-item-card col-xs" style={{maxWidth: "512px"}}>
-			<CardHeader 
+			<CardHeader
 			className="settings-title"
-			title={ "Credits" } 
-			actAsExpander={ true } 
+			title={ "Credits" }
+			actAsExpander={ true }
 			showExpandableButton={ true } />
 			<CardText expandable={true}>
 			<div className="settings-info">
@@ -273,17 +273,17 @@ export default class SettingsList extends React.Component {
 			<div className='row center-xs'>
 			{
 				(this.props.user.token)?
-				(<RaisedButton 
-					className="settings-item-card-button" 
-					label="Logout" 
-					primary={false} 
-					type="cancel" 
+				(<RaisedButton
+					className="settings-item-card-button"
+					label="Logout"
+					primary={false}
+					type="cancel"
 					onTouchTap={()=>this.logout()}/>
 					)
 				:
 				null
 			}
-			
+
 			</div>
 			</div>
 			)
@@ -295,4 +295,3 @@ SettingsList.propTypes = {
 	attemptLogout: PropTypes.func.isRequired,
 	clearUser: PropTypes.func.isRequired
 };
-
