@@ -21,7 +21,7 @@ models.User.create(dummy).then(function(user){
                 var content = '';
                 for (var i=0; i<lines.length; i++) {
                     if (!!lines[i].trim()) {
-                        content = '<p>' + lines[i] + '</p>';
+                        content += ('<p>' + lines[i] + '</p>');
                     }
                 }
 
