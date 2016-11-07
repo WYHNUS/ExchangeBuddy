@@ -64,6 +64,7 @@ models.sequelize.Promise.all([
                     <li>Essential documents</li>\
                 </ul>\
             </div>",
+
             'Expenses':
             '<div>\
                 <h3 style="color:red">Contribute, get credited and help other students!</h3> <br>\
@@ -77,6 +78,7 @@ models.sequelize.Promise.all([
                     <li>Common goods price (beers, milk, McDonald\'s etc)</li>\
                 </ul>\
             </div>',
+
             'Getting Around':
             "<div>\
                 <h3 style='color:red'>Contribute, get credited and help other students!</h3> <br>\
@@ -86,24 +88,26 @@ models.sequelize.Promise.all([
                     <li>Buses</li>\
                     <li>Taxis</li>\
                     <li>Flight</li>\
-
                 </ul>\
             </div>",
+
+
             'Academic':
-            '<div>\
-                <h3 style="color:red">Contribute, get credited and help other students!</h3> <br>\
+            "<div>\
+                <h3 style='color:red'>Contribute, get credited and help other students!</h3> <br>\
                 <p>Some Tips to write this wiki: </p><br>\
                 <ul> \
                     <li>Language of Instructions</li>\
                     <li>Academic study term</li>\
                     <li>Academic Rigor (Modules)</li>\
                     <li>Scholarships</li>\
-
                 </ul>\
-            </div>',
+            </div>",
+
+
             'Campus Life':
-            '<div>\
-                <h3 style="color:red">Contribute, get credited and help other students!</h3> <br>\
+            "<div>\
+                <h3 style='color:red'>Contribute, get credited and help other students!</h3> <br>\
                 <p>Some Tips to write this wiki: </p><br>\
                 <ul> \
                     <li>Orientation Activities</li>\
@@ -115,9 +119,9 @@ models.sequelize.Promise.all([
                     <li>Healthcare (Hospitals, Pharmacies)</li>\
                     <li>Post Offices</li>\
                     <li>Internet(WiFi, Ethernet)</li>\
-
                 </ul>\
-            </div>',
+            </div>",
+
             'Night Life': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
             'Student Perks': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
             'Activities Outside School':
@@ -128,7 +132,6 @@ models.sequelize.Promise.all([
                     <li>Places of Interest</li>\
                     <li>Shopping Malls</li>\
                     <li>Food</li>\
-
                 </ul>\
             </div>",
             'Work Part-time': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
