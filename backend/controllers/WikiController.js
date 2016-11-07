@@ -81,13 +81,12 @@ exports.getCustomizedRecommendation = function(req, res) {
                     as: 'exchangeStudent',
                     through: {
                         where: {
-                            UserId: user.id
+                            userId: user.id
                         }
                     }
                 }]
             })
         ]).spread(function(allWikis, homeUniversity, homeCountry, exchange) {
-
             /*
                 To store all country wiki -->
                     this is a dirty fix as the bootstrapped db is not correctly set up
@@ -158,7 +157,7 @@ exports.getCustomizedRecommendation = function(req, res) {
                         }
 
                         var recommendations = [];
-                        var recommendationNumber = Math.min(result.length, 8);
+                        var recommendationNumber = Math.min(result.length, 6);
                         for (var i=0; i<recommendationNumber; i++) {
                             recommendations.push(result[i])
                         }
