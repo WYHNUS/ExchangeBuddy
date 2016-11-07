@@ -16,7 +16,14 @@ models.User.create(dummy).then(function(user){
         parser.parseString(data, function(err, result){
             for(var item of result.rss.channel[0].item){
                 var title = item.title[0];
-                var content = item['content:encoded'][0]
+                var lines = item['content:encoded'][0].split('\n');
+                
+                var content = '';
+                for (var i=0; i<lines.length; i++) {
+                    if (!!lines[i].trim()) {
+                        content = '<p>' + lines[i]) + '</p>';
+                    }
+                }
 
                 models.Story.create({
                     title,
