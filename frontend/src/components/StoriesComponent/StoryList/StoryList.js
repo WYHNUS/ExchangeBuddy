@@ -136,10 +136,6 @@ export default class StoryList extends React.Component {
 			);
 	}
 
-	componentDidMount() {
-		this.props.fetchAllStories();
-	}
-
 	updateDimensions=()=>{
 		if(window.innerWidth>=1441){
 			this.setState({cols: 4});

@@ -5,12 +5,15 @@ import { toggleBottomBarVisibility, toggleTopBarVisibility,
 
 import StoryList from '../../components/StoriesComponent/StoryList';
 
+import { fetchAllStories } from '../../actions/stories';
+
 class Stories extends React.Component{
 
 	componentDidMount() {
 		this.props.toggleBottomBarVisibility(true);
 		this.props.toggleTopBarVisibility(true);
 		this.props.toggleTopBarSettingsButtonVisibility(true);
+		this.props.fetchAllStories();
 		//window.open( "http://www.exchangebuddy.com/experiences/", "_blank");
 	}
 
@@ -58,7 +61,10 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility)),
 		toggleTopBarVisibility: visibility=>dispatch(toggleTopBarVisibility(visibility)),
-		toggleTopBarSettingsButtonVisibility: visibility=>dispatch(toggleTopBarSettingsButtonVisibility(visibility))
+		toggleTopBarSettingsButtonVisibility: visibility=>dispatch(toggleTopBarSettingsButtonVisibility(visibility)),
+		fetchAllStories: () => {
+	    	dispatch(fetchAllStories());
+	    }
 	};
 };
 
