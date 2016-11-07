@@ -25,8 +25,8 @@ export function clickedFetch() {
 }
 
 /*  Get all wiki recommendation */
-export function fetchRecommendationSuccess(wiki) {
-    return { type: FECTCH_RECOMMENDATION_SUCCESS, wiki };
+export function fetchRecommendationSuccess(wiki, allWikis) {
+    return { type: FECTCH_RECOMMENDATION_SUCCESS, wiki, allWikis };
 }
 export function fetchRecommendationFail(error) {
     return { type: FECTCH_RECOMMENDATION_FAIL, error };
@@ -38,7 +38,7 @@ function handleRecommendationRes(dispatch, err, res) {
 		dispatch(fetchRecommendationFail(err));
 	} else {
 		if (res.body.status === "success") {
-			dispatch(fetchRecommendationSuccess(res.body.wiki));
+			dispatch(fetchRecommendationSuccess(res.body.wiki, res.body.allWikis));
 		} else {
 			dispatch(fetchRecommendationFail(res.body.message));
 		}

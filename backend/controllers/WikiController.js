@@ -8,13 +8,17 @@ var Vote = models.WikiSectionVote;
 // give default recommendation
 exports.getRecommendation = function(req, res) {
     Wiki.findAll({
-        attributes: ['title'],
-        limit: 6,
+        attributes: [ 
+            ['title', 'name'], 
+            ['image', 'imageUrl']
+        ],
+        // limit: 6,
         order: '"view" DESC'
     }).then(function(wiki) {
-        var result = [];
-        for (var i=0; i<wiki.length; i++) {
-            result.push({
+        var recommendations = [];
+        var recommendationNumber = Math.min(wiki.length, 6);
+        for (var i=0; i<recommendationNumber; i++) {
+            recommendations.push({
                 imageUrl: wiki[i].image,
                 name: wiki[i].title
             })
@@ -23,7 +27,8 @@ exports.getRecommendation = function(req, res) {
         return res.status(200)
             .json({
                 status: 'success',
-                wiki: result
+                wiki: recommendations,
+                allWikis: wiki
             });
     });
 }
@@ -50,6 +55,14 @@ exports.getCustomizedRecommendation = function(req, res) {
     }).then(function(user) {
         // search for homeUni and homeCountry wiki as well as exchange uni wiki
         models.sequelize.Promise.all([
+            Wiki.findAll({
+                attributes: [
+                    ['title', 'name'], 
+                    ['image', 'imageUrl']
+                ],
+                order: '"view" DESC'
+            }),
+
             models.University.findOne({
                 attributes: ['name', 'logoImageUrl', 'bgImageUrl', 'countryCode'],
                 where: {
@@ -74,7 +87,7 @@ exports.getCustomizedRecommendation = function(req, res) {
                     }
                 }]
             })
-        ]).spread(function(homeUniversity, homeCountry, exchange) {
+        ]).spread(function(allWikis, homeUniversity, homeCountry, exchange) {
             /* 
                 To store all country wiki -->
                     this is a dirty fix as the bootstrapped db is not correctly set up 
@@ -143,7 +156,8 @@ exports.getCustomizedRecommendation = function(req, res) {
                         return res.status(200)
                             .json({
                                 status: 'success',
-                                wiki: result
+                                wiki: result,
+                                allWikis: allWikis
                             });
                     });
                 }).catch(function(err) {
@@ -166,7 +180,8 @@ exports.getCustomizedRecommendation = function(req, res) {
                         return res.status(200)
                             .json({
                                 status: 'success',
-                                wiki: result
+                                wiki: result,
+                                allWikis: allWikis
                             });
                     }).catch(function(err) {
                         resError(res, err);
@@ -176,7 +191,8 @@ exports.getCustomizedRecommendation = function(req, res) {
                     return res.status(200)
                         .json({
                             status: 'success',
-                            wiki: result
+                            wiki: result,
+                            allWikis: allWikis
                         });
                 }
             }

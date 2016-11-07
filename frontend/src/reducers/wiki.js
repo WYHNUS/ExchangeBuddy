@@ -18,6 +18,10 @@ const initialState=
 		imageUrl: '', 
 		name: 'National University of Singapore'
 	}],
+	allWikis: [{
+		imageUrl: '', 
+		name: 'National University of Singapore'
+	}],
 	wiki: {
 		id: null,
 		title: null,
@@ -52,6 +56,7 @@ export function wiki(state=initialState, action)
 		case FECTCH_RECOMMENDATION_SUCCESS:
 			return Object.assign({}, state, {
 				previews: action.wiki,
+				allWikis: action.allWikis,
 				fetching: false,
 				error: null
 			});

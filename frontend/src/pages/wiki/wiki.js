@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import TextField from 'material-ui/TextField';
 
 import { 
 	toggleBottomBarVisibility, toggleTopBarVisibility,
@@ -12,6 +13,14 @@ import {
 import WikiRecommendation from '../../components/WikiComponent/WikiRecommendation';
 
 class Wiki extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			wikisShown: [],
+			value: ""
+		}
+	}
+
 	componentWillMount() {
 		// need to check if already in reducer ?
 		this.props.fetchRecommendation();
@@ -23,8 +32,36 @@ class Wiki extends React.Component {
 		this.props.toggleTopBarSettingsButtonVisibility(true);
 	}
 
-	componentWillUnmount(){
+	componentWillUnmount() {
 		this.props.toggleTopBarSettingsButtonVisibility(false);
+	}
+
+	filterChange = (event) => {
+		this.setState({...this.state, value: event.target.value});
+		const { allWikis } = this.props;
+
+		var tempList = [];
+		// set a min length to filter
+		if (event.target.value.length >= 3) {
+			for (var i=0; i<allWikis.length; i++) {
+				if (this.filterText(event.target.value, allWikis[i].name)) {
+					tempList.push(allWikis[i])
+				}
+			}
+		}
+		this.setState({wikisShown:tempList});
+	}
+
+	filterText(searchText, key) {
+		searchText = searchText.toLowerCase();
+		key = key.toLowerCase().replace(/[^a-z0-9 ]/g, '');
+
+		if (searchText.length < 1)
+			return false;
+
+		return searchText.split(' ').every(searchTextSubstring =>
+			key.split(' ').some(s => s.substr(0, searchTextSubstring.length) == searchTextSubstring)
+		);
 	}
 
 	// if user is signedin, display wiki related to his home and exchange Universities
@@ -47,7 +84,6 @@ class Wiki extends React.Component {
 						(recommendWikis.length > 0) ?
 							(
 								recommendWikis.map(function(wikiPreview, idx){
-									console.log(wikiPreview);
 									return (
 										<WikiRecommendation previewItem={ wikiPreview } key={ idx } />
 									) 
@@ -59,8 +95,26 @@ class Wiki extends React.Component {
 
 					<hr className="green-separator" style={{ width: "85%"}}></hr>
 				</div>
-				<div className="search">
-					
+
+				<div className="search wiki-recommendation-wrapper">
+					<TextField
+						hintText="Search Wiki :D" className="search-textfield"
+						value={this.state.value}
+						onChange={this.filterChange}
+					/>
+
+					<ul className="recommendation-item-list">
+					{ this.state.wikisShown.length > 0 ?
+						(
+							(this.state.wikisShown.map(function(wiki, idx) {
+								return (
+									<WikiRecommendation previewItem={ wiki } key={ idx } />
+								) 
+							}))
+						)
+						: null
+					}	
+					</ul>
 				</div>
 			</div>
 		);
@@ -69,7 +123,8 @@ class Wiki extends React.Component {
 
 const mapStateToProps = (state) => {
 	return{
-		recommendWikis: state.wiki.previews
+		recommendWikis: state.wiki.previews,
+		allWikis: state.wiki.allWikis
 	};
 }
 

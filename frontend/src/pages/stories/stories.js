@@ -30,7 +30,7 @@ class Stories extends React.Component{
 			</div>
 
 			<div className='stories-container-wrapper'>
-			<StoryList/>
+				<StoryList/>
 			</div>
 
 			<div style={{'margin':'50px', 'textAlign':'center'}}>

@@ -6,36 +6,36 @@
     	padding: 0 10px;
     	margin: 20px;
     }
-    
-	.recommendation-item-list {
-		overflow: hidden;
-	    padding: 0;
-	    margin: 20px;
-	    margin-bottom: 50px;
+}
 
-	    li {
-	    	float: left;
-		    display: inline-block;
-		    width: 150px;
-		    height: 200px;
-		    padding: 0 0 30px 50px;
+.recommendation-item-list {
+	overflow: hidden;
+    padding: 0;
+    margin: 20px;
+    margin-bottom: 50px;
 
-		    .recommendation-item-wrapper {
-		    	cursor: pointer;
-	    	    width: 140px;
-			    height: 140px;
-			    img {
-				    width: 100%;
-				    height: 100%;
-			    }
-			    p {
-			    	display: inline-block;
-				    max-width: 100%;
-				    vertical-align: middle;
-				}
+    li {
+    	float: left;
+	    display: inline-block;
+	    width: 150px;
+	    height: 220px;
+	    padding: 0 0 30px 50px;
+
+	    .recommendation-item-wrapper {
+	    	cursor: pointer;
+    	    width: 140px;
+		    height: 140px;
+		    img {
+			    width: 100%;
+			    height: 100%;
 		    }
+		    p {
+		    	display: inline-block;
+			    max-width: 100%;
+			    vertical-align: middle;
+			}
 	    }
-	}
+    }
 }
 
 .wiki-detail-wrapper {

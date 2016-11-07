@@ -88,7 +88,6 @@ class Story extends React.Component{
 
 
 export default class StoryList extends React.Component {
-	
 	constructor(props) {
 		super(props);
 		this.state={
@@ -98,24 +97,21 @@ export default class StoryList extends React.Component {
 		}
 	}
 
-	getDataSource = () =>{
-		
-		if(this.state.value===""){
+	getDataSource = () => {
+		if (this.state.value === "") {
 			return this.props.stories;
 
-		}else{
+		} else {
 			return this.state.storiesShown;
 		}
 	}
 
-	filterChange=(event)=>{
-
+	filterChange = (event) => {
 		this.setState({...this.state, value: event.target.value});
 		var tempList = [];
 
-		for(var i=0;i<this.props.stories.length;i++){
-
-			if(this.filterText(event.target.value,this.props.stories[i].title)){
+		for (var i=0; i<this.props.stories.length; i++) {
+			if (this.filterText(event.target.value,this.props.stories[i].title)) {
 				tempList.push(this.props.stories[i])
 			}
 		}
@@ -123,8 +119,7 @@ export default class StoryList extends React.Component {
 		this.setState({storiesShown:tempList});
 	}
 
-	filterText(searchText, key){
-
+	filterText(searchText, key) {
 		searchText = searchText.toLowerCase();
 		key = key.toLowerCase().replace(/[^a-z0-9 ]/g, '');
 
@@ -133,17 +128,17 @@ export default class StoryList extends React.Component {
 
 		return searchText.split(' ').every(searchTextSubstring =>
 			key.split(' ').some(s => s.substr(0, searchTextSubstring.length) == searchTextSubstring)
-			);
+		);
 	}
 
-	updateDimensions=()=>{
-		if(window.innerWidth>=1441){
+	updateDimensions = () => {
+		if (window.innerWidth >= 1441) {
 			this.setState({cols: 4});
-		}else if(window.innerWidth>=1024){
+		} else if (window.innerWidth >= 1024) {
 			this.setState({cols: 3});
-		}else if(window.innerWidth>=600){
+		} else if (window.innerWidth >= 600) {
 			this.setState({cols: 2});
-		}else{
+		} else {
 			this.setState({cols: 1});
 		}
     }
@@ -162,7 +157,6 @@ export default class StoryList extends React.Component {
 		
 		return (
 			<div>
-
 				<TextField
 				hintText="Search titles" className="search-textfield"
 				value={this.state.value}
@@ -188,10 +182,9 @@ export default class StoryList extends React.Component {
 						</div>
 					)
 					: null
-				}
-				
+				}	
 			</div>
-			)
+		)
 	}
 }
 
