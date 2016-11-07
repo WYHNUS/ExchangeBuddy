@@ -27,32 +27,124 @@ models.sequelize.Promise.all([
         ))
     ]).spread(function(countryWikis, universityWikis){
         var uniCats = {
-            'General Tips'
-            : "1. Includes senior reviews\n2. How to buy cheap flights etc\n3. Important phone numbers at host university\n4. How to get help\n 5. Telecommunication",
-            'Visa' : "Details of visa",
-            'Safety Tips': "Emergency Contact",
-            "Pre-departure Checklist": "Essential documents\n packing list",
-            'Expenses': '1. School fees\n 2. On-campus accommodation\n 3. Transport\n 4. Living Cost\n 5. Rough Budget\n 6. Common goods price (beers, milk, McDonald\'s etc)',
-            'Getting Around': "1. Trains\n 2. Buses\n 3. Taxis\n 4. Flight",
-            'Academic': '1. Language of Instructions\n 2. Academic study term\n 3. Academic Rigor (Modules)\n 4. Scholarships',
-            'Campus Life': '1. Orientation Activities\n 2. Clubs and Societies\n 3. University Evenets\n 4. Healthcare (Hospitals, Pharmacies)\n 5. Sports Facilities\n 6. Buying Daily Necessities\n 7. Banking Facilities\n 8. Post Offices\n 9. Internet(WiFi, Ethernet)',
-            'Night Life': 'Contribute, get credited and help other students!',
-            'Student Perks': 'Contribute, get credited and help other students!',
-            'Activities Outside School': "1. Places of Interest\n 2. Shopping Malls\n 3. Food",
-            'Work Part-time': 'Contribute, get credited and help other students!',
-            'Others': 'Contribute, get credited and help other students!',
+            'General Tips':
+            "<div>\
+                <h3 style='color:red'>Contribute, get credited and help other students!</h3> <br>\
+                <p>Some Tips to write this wiki: </p><br>\
+                <ul> \
+                    <li> Includes senior reviews</li>\
+                    <li>How to buy cheap flights etc</li>\
+                    <li> Important phone numbers at host university</li>\
+                    <li> How to get help</li>\
+                    <li> Telecommunication</li>\
+                </ul>\
+            </div>",
+            'Visa' :
+            "<div>\
+                <h3 style='color:red'>Contribute, get credited and help other students!</h3> <br>\
+                <p>Some Tips to write this wiki: </p><br>\
+                <ul> \
+                    <li>Details of visa</li>\
+                </ul>\
+            </div>",
+            'Safety Tips':
+            "<div>\
+                <h3 style='color:red'>Contribute, get credited and help other students!</h3> <br>\
+                <p>Some Tips to write this wiki: </p><br>\
+                <ul> \
+                    <li>Emergency Contact</li>\
+                </ul>\
+            </div>",
+            "Pre-departure Checklist":
+            "<div>\
+                <h3 style='color:red'>Contribute, get credited and help other students!</h3> <br>\
+                <p>Some Tips to write this wiki: </p><br>\
+                <ul> \
+                    <li> Packing List</li>\
+                    <li>Essential documents</li>\
+                </ul>\
+            </div>",
+            'Expenses':
+            '<div>\
+                <h3 style="color:red">Contribute, get credited and help other students!</h3> <br>\
+                <p>Some Tips to write this wiki: </p><br>\
+                <ul> \
+                    <li>School fees</li>\
+                    <li>On-campus accommodation</li>\
+                    <li>Transport</li>\
+                    <li>Living Cost</li>\
+                    <li>Rough Budget</li>\
+                    <li>Common goods price (beers, milk, McDonald\'s etc)</li>\
+                </ul>\
+            </div>',
+            'Getting Around':
+            "<div>\
+                <h3 style='color:red'>Contribute, get credited and help other students!</h3> <br>\
+                <p>Some Tips to write this wiki: </p><br>\
+                <ul> \
+                    <li>Trains</li>\
+                    <li>Buses</li>\
+                    <li>Taxis</li>\
+                    <li>Flight</li>\
+
+                </ul>\
+            </div>",
+            'Academic':
+            '<div>\
+                <h3 style="color:red">Contribute, get credited and help other students!</h3> <br>\
+                <p>Some Tips to write this wiki: </p><br>\
+                <ul> \
+                    <li>Language of Instructions</li>\
+                    <li>Academic study term</li>\
+                    <li>Academic Rigor (Modules)</li>\
+                    <li>Scholarships</li>\
+
+                </ul>\
+            </div>',
+            'Campus Life':
+            '<div>\
+                <h3 style="color:red">Contribute, get credited and help other students!</h3> <br>\
+                <p>Some Tips to write this wiki: </p><br>\
+                <ul> \
+                    <li>Orientation Activities</li>\
+                    <li>Clubs and Societies</li>\
+                    <li>University Evenets</li>\
+                    <li>Sports Facilities</li>\
+                    <li>Buying Daily Necessities</li>\
+                    <li>Banking Facilities</li>\
+                    <li>Healthcare (Hospitals, Pharmacies)</li>\
+                    <li>Post Offices</li>\
+                    <li>Internet(WiFi, Ethernet)</li>\
+
+                </ul>\
+            </div>',
+            'Night Life': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
+            'Student Perks': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
+            'Activities Outside School':
+            "<div>\
+                <h3 style='color:red'>Contribute, get credited and help other students!</h3> <br>\
+                <p>Some Tips to write this wiki: </p><br>\
+                <ul> \
+                    <li>Places of Interest</li>\
+                    <li>Shopping Malls</li>\
+                    <li>Food</li>\
+
+                </ul>\
+            </div>",
+            'Work Part-time': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
+            'Others': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
         };
 
         var countryCats = {
-            'Culture': 'Contribute, get credited and help other students!',
-            'Holidays': 'Contribute, get credited and help other students!',
-            'Language': 'Contribute, get credited and help other students!',
-            'Attractions': 'Contribute, get credited and help other students!',
-            'Local Food': 'Contribute, get credited and help other students!',
-            'Travel': 'Contribute, get credited and help other students!',
-            'Visa': 'Contribute, get credited and help other students!',
-            'Telecom': 'Contribute, get credited and help other students!',
-            "Others": 'Contribute, get credited and help other students!',
+            'Culture': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
+            'Holidays': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
+            'Language': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
+            'Attractions': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
+            'Local Food': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
+            'Travel': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
+            'Visa': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
+            'Telecom': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
+            "Others": '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
         }
 
         universityWikis.map((wiki) => {
