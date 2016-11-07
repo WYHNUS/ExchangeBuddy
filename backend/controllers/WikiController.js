@@ -209,11 +209,8 @@ exports.getCustomizedRecommendation = function(req, res) {
     });
 }
 
-<<<<<<< HEAD
 // user get specific wiki page, if
-=======
-// user get specific wiki page, if
->>>>>>> f40521e377794c66e51f512ab48e430cd7c13e97
+
 exports.getWiki = function(req, res) {
     var query = req.query;
     var historyArray = null;    // to store parsed history
@@ -262,11 +259,9 @@ exports.getWiki = function(req, res) {
                             invalidError(res);
                         }
 
-<<<<<<< HEAD
+
                         // if match sectionIndex -->
-=======
-                        // if match sectionIndex -->
->>>>>>> f40521e377794c66e51f512ab48e430cd7c13e97
+
                         //      here assumes to ignore sectionIndex if it is not valid
                         if (parseInt(historyArray[i].sectionIndex) === section.sectionIndex) {
                             var requestVersionIndex = parseInt(historyArray[i].versionIndex);
@@ -288,17 +283,12 @@ exports.getWiki = function(req, res) {
                         versionNumber: versionNumber
                     },
                     include: [
-<<<<<<< HEAD
+
                         {
                             model: Section
                         },
                         {
-=======
-                        {
-                            model: Section
-                        },
-                        {
->>>>>>> f40521e377794c66e51f512ab48e430cd7c13e97
+
                             model: User,    // get author
                             attributes: ['id', 'name', 'profilePictureUrl']
                         }
@@ -353,11 +343,9 @@ exports.createNewWiki = function(req, res) {
                 Wiki.create({
                     title: req.body.wikiTitle,
                     UserId: req.user.id
-<<<<<<< HEAD
+
                 }).then(function(wiki){
-=======
-                }).then(function(wiki){
->>>>>>> f40521e377794c66e51f512ab48e430cd7c13e97
+
                     return res.status(200)
                         .json({
                             status: 'success',
@@ -405,17 +393,12 @@ exports.createNewSection = function(req, res) {
                             versionNumber: section.displayVersionNumber
                         },
                         include: [
-<<<<<<< HEAD
+
                             {
                                 model: Section
                             },
                             {
-=======
-                            {
-                                model: Section
-                            },
-                            {
->>>>>>> f40521e377794c66e51f512ab48e430cd7c13e97
+
                                 model: User,    // get author
                                 attributes: ['id', 'name', 'profilePictureUrl']
                             }
@@ -460,11 +443,9 @@ exports.createNewSection = function(req, res) {
                                 WikiSectionId: section.id,
                                 UserId: req.user.id
                             }).then(function(version) {
-<<<<<<< HEAD
+
                                 // link the new section to Wiki
-=======
-                                // link the new section to Wiki
->>>>>>> f40521e377794c66e51f512ab48e430cd7c13e97
+
                                 existingWiki.addWikiSection(section).then(function(wiki) {
                                     versions.push(version);
                                     return res.status(200)
@@ -495,17 +476,12 @@ exports.createNewSection = function(req, res) {
 // user upload a new version of wiki section
 exports.createNewSectionVersion = function(req, res) {
     // this part not sure yet... but quick solution is:
-<<<<<<< HEAD
+
     // create new version, hence increase version number and
     //      --> should this be done (or how else should we differentiate edition and rewrite)?
     // update WikiSection's displayVersionNumber to latest one
     //      --> should this be done (only until admin change this WikiSection's type)?
-=======
-    // create new version, hence increase version number and
-    //      --> should this be done (or how else should we differentiate edition and rewrite)?
-    // update WikiSection's displayVersionNumber to latest one
-    //      --> should this be done (only until admin change this WikiSection's type)?
->>>>>>> f40521e377794c66e51f512ab48e430cd7c13e97
+
     // IMPORTANT: get user id from token
     // CHECK: disable user frequently editing same version --> should this check exists?
     if (!req.body.wikiTitle || !req.body.sectionIndex || !req.body.sectionTitle || !req.body.content) {
@@ -531,17 +507,12 @@ exports.createNewSectionVersion = function(req, res) {
                         status: 'fail',
                         message:'wiki doesn\'t exist'
                     });
-<<<<<<< HEAD
+
             }
             // check if new content is the same as the old one
             Version.findOne({
                 where: {
-=======
-            }
-            // check if new content is the same as the old one
-            Version.findOne({
-                where: {
->>>>>>> f40521e377794c66e51f512ab48e430cd7c13e97
+
                     versionNumber: wiki.WikiSections[0].displayVersionNumber,
                     WikiSectionId: wiki.WikiSections[0].id
                 }
@@ -576,11 +547,9 @@ exports.createNewSectionVersion = function(req, res) {
                             WikiSectionId: wiki.WikiSections[0].id,
                             UserId: req.user.id
                         }).then(function(version) {
-<<<<<<< HEAD
+
                             // update WikiSection's display with the latest version
-=======
-                            // update WikiSection's display with the latest version
->>>>>>> f40521e377794c66e51f512ab48e430cd7c13e97
+
                             wiki.WikiSections[0].update({
                                 displayVersionNumber: version.versionNumber,
                                 totalVersionCount: wiki.WikiSections[0].totalVersionCount + 1
@@ -604,11 +573,9 @@ exports.createNewSectionVersion = function(req, res) {
                         });
                     }
                 }
-<<<<<<< HEAD
+
             });
-=======
-            });
->>>>>>> f40521e377794c66e51f512ab48e430cd7c13e97
+
         }).catch(function(err) {
             resError(res, err);
         });
@@ -700,7 +667,7 @@ exports.vote = function(req, res) {
                             score: req.body.vote,
                             comment: userComment,
                             WikiSectionVersionId: section.versions[0].id,
-<<<<<<< HEAD
+
                             UserId: req.user.id
                         }).then(function(newVote) {
                             /*
@@ -753,8 +720,5 @@ function resError(res, err) {
     return res.status(500).json({
         message: err.message
     });
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> f40521e377794c66e51f512ab48e430cd7c13e97
