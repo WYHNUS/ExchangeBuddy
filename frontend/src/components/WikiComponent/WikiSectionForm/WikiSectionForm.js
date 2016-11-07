@@ -73,13 +73,11 @@ export default class WikiSectionForm extends React.Component {
 
                 <div className="row center-md center-xs" style={{marginTop: "18px"}}>
                     <div>
-                        <RaisedButton className="raised-btn" label="Add Section" primary={true} disabled={submitting}
+                        <RaisedButton className="raised-btn" label="Add Section" 
+                            style={{marginRight: "18px"}}
+                            primary={true} disabled={submitting}
                             onClick={this.submitForm.bind(this)}
                         />
-                    </div>
-                </div>
-                <div className="row center-md center-xs" style={{marginTop: "18px"}}>
-                    <div>
                         <RaisedButton className="raised-btn" label="Cancel" onClick={this.redirectBack.bind(this)}/>
                     </div>
                 </div>
