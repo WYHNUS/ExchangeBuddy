@@ -16,12 +16,7 @@ module.exports = function(sequelize, DataType) {
   }, {
     classMethods: {
       associate: function(models) {
-        WikiSectionVote.belongsTo(models.User, {
-          onDelete: 'CASCADE',
-          foreignKey: {
-            allowNull: false
-          }
-        });
+        WikiSectionVote.belongsTo(models.User);
 
         WikiSectionVote.belongsTo(models.WikiSectionVersion, {
           onDelete: 'CASCADE',

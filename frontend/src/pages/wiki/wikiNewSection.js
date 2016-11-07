@@ -12,16 +12,14 @@ import {
 
 import WikiContentTable from '../../components/WikiComponent/WikiContentTable';
 import WikiSection from '../../components/WikiComponent/WikiSection';
-import WikiForm from '../../components/WikiComponent/WikiForm';
+import WikiSectionForm from '../../components/WikiComponent/WikiSectionForm';
 
-class WikiDetails extends React.Component {
+class WikiDetails extends React.Component{
 	componentWillMount() {
-		const { wikiTitle, sectionIndex, wiki } = this.props;
-		// check if the info stored in reducer matches with the one stored in URL, and if sectionIndex is valid
-		if (wikiTitle === wiki.wiki.title && !this.props.wiki.needReload &&
-			sectionIndex > 0 && sectionIndex <= wiki.sections.length) {
-			// not altered
-		} else {
+		const { wikiTitle } = this.props;
+		const { wiki, needReload } = this.props.wiki;
+		// check if the info stored in reducer matches with the one stored in URL
+		if (wikiTitle !== wiki.title || needReload) {
 			this.props.fetchWikiPage(wikiTitle);
 		}
 	}
@@ -34,7 +32,6 @@ class WikiDetails extends React.Component {
 	componentWillUnmount() {
 		this.props.toggleTopBarBackButtonVisibility(false);
 	}
-
 
 	render() {
 		const { sectionIndex } = this.props;
@@ -60,23 +57,17 @@ class WikiDetails extends React.Component {
 										(sections.length > 0) ? (
 											sections.map(function(section, idx){
 												return (
-													(section.WikiSection.sectionIndex === sectionIndex) ?
-														<WikiForm
-															wikiName = { wiki.title }
-															section={ section }
-															key={ idx }
-														/>
-													:
-														<WikiSection
-															wikiTitle={ wiki.title }
-															section={ section } 
-															key={ idx } 
-														/>
+													<WikiSection
+														wikiTitle={ wiki.title }
+														section={ section } 
+														key={ idx } 
+													/>
 												) 
 											})
 										) : null
 									}
 								</div>
+								<WikiSectionForm wikiName={ wiki.title } />
 							</div>
 				}
 			</div>
@@ -87,7 +78,6 @@ class WikiDetails extends React.Component {
 const mapStateToProps = (state) => {
 	return{
 		wikiTitle: state.routing.locationBeforeTransitions.pathname.split("/")[3],
-		sectionIndex: parseInt(state.routing.locationBeforeTransitions.pathname.split("/")[4]),
 		wiki: state.wiki
 	};
 }

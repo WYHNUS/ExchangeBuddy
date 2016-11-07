@@ -9,6 +9,9 @@ export const CLICK_SUBMIT = 'CLICK_SUBMIT';
 export const CREATE_SECTION_VERSION_SUCCESS = 'CREATE_SECTION_VERSION_SUCCESS';
 export const CREATE_SECTION_VERSION_FAIL = 'CREATE_SECTION_VERSION_FAIL';
 
+export const CREATE_NEW_SECTION_SUCCESS = 'CREATE_NEW_SECTION_SUCCESS';
+export const CREATE_NEW_SECTION_FAIL = 'CREATE_NEW_SECTION_FAIL';
+
 export const FECTCH_WIKI_PAGE = 'FECTCH_WIKI_PAGE';
 export const FECTCH_WIKI_PAGE_SUCCESS = 'FECTCH_WIKI_PAGE_SUCCESS';
 export const FECTCH_WIKI_PAGE_FAIL = 'FECTCH_WIKI_PAGE_FAIL';
@@ -94,13 +97,47 @@ export function fetchWikiPage(wikiTitle, additionalParam=null) {
 }
 
 
+/*	 Create new wiki section 	*/
+export function clickedSubmit() {
+	return { type: CLICK_SUBMIT };
+}
+export function createNewSectionSuccess() {
+    return { type: CREATE_NEW_SECTION_SUCCESS };
+}
+export function createNewSectionFail(error) {
+    return { type: CREATE_NEW_SECTION_FAIL, error };
+}
+export function submitNewSection(wikiTitle, versionTitle, content) {
+	return (dispatch) => {
+		dispatch(clickedSubmit());
+
+		request.put(ROOT_URL + '/wiki/section')
+			.send({
+				wikiTitle: wikiTitle,
+				versionTitle: versionTitle,
+				content: content
+			})
+			.use(bearer)
+			.end(function(err, res) {
+				// console.log(err);
+				// console.log(res);
+				if (err) {
+					dispatch(createNewSectionFail(err));
+				} else {
+					if (res.body.status === "success") {
+						dispatch(createNewSectionSuccess());
+					} else {
+						dispatch(createNewSectionFail(res.body.message));
+					}
+				}
+			});
+	}
+}
+
+
 /*	 Editing wiki section   */ 
 export function initializeWikiForm(title, content) {
 	return { type: INITIALIZE_WIKI_FORM, title, content };
-}
-
-export function clickedSubmit() {
-	return { type: CLICK_SUBMIT };
 }
 export function createSectionVersionSuccess() {
     return { type: CREATE_SECTION_VERSION_SUCCESS };

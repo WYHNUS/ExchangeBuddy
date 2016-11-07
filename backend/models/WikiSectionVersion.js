@@ -31,12 +31,7 @@ module.exports = function(sequelize, DataType) {
           }
         });
 
-        WikiSectionVersion.belongsTo(models.User, {
-          onDelete: 'CASCADE',
-          foreignKey: {
-            allowNull: false
-          }
-        });
+        WikiSectionVersion.belongsTo(models.User);
 
         WikiSectionVersion.hasMany(models.WikiSectionVote);
       }

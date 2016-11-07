@@ -2,7 +2,8 @@ import {
 	FECTCH_WIKI_PAGE, FECTCH_WIKI_PAGE_SUCCESS, FECTCH_WIKI_PAGE_FAIL,
 	FECTCH_RECOMMENDATION_SUCCESS, FECTCH_RECOMMENDATION_FAIL,
 	INITIALIZE_WIKI_FORM,
-	CLICK_SUBMIT, CREATE_SECTION_VERSION_SUCCESS, CREATE_SECTION_VERSION_FAIL
+	CLICK_SUBMIT, CREATE_SECTION_VERSION_SUCCESS, CREATE_SECTION_VERSION_FAIL,
+	CREATE_NEW_SECTION_SUCCESS, CREATE_NEW_SECTION_FAIL
 } from '../actions/wiki';
 
 const initialState=
@@ -60,13 +61,14 @@ export function wiki(state=initialState, action)
 				error: action.error
 			});
 
-		// submit new section version
+		// submit new section version or create new section
 		case CLICK_SUBMIT: 
 			return Object.assign({}, state, {
 				submitting: true,
 				uploadSuccess: false,
 				uploadError: null
 		    });
+		case CREATE_NEW_SECTION_SUCCESS:
 		case CREATE_SECTION_VERSION_SUCCESS:
 			return Object.assign({}, state, {
 				needReload: true,
@@ -74,6 +76,7 @@ export function wiki(state=initialState, action)
 				submitting: false,
 				uploadError: null
 		    });
+		case CREATE_NEW_SECTION_FAIL:
 		case CREATE_SECTION_VERSION_FAIL:
 			return Object.assign({}, state, {
 				submitting: false,
