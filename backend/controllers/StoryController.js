@@ -82,7 +82,7 @@ exports.getAllStories = function(req, res){
         attributes: ['id', 'title', 'createdAt'],
         include: [{
             model: models.User,
-            attributes: ['id', 'name', 'profilePictureUrl']
+            attributes: ['id', 'name', 'profilePictureUrl', 'coverPhoto']
         }]
     }).then(function(stories){
         return res.status(200)
