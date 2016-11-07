@@ -1,6 +1,10 @@
 var helper = require('sendgrid').mail;
 var graph = require('fbgraph');
 var md5 = require('md5');
+var AWS = require('aws-sdk');
+var config = require('../config/config');
+var s3 = require('s3');
+var fs = require('fs');
 
 var models = require('../models');
 var User = models.User;
@@ -9,16 +13,18 @@ var Exchange = models.Exchange;
 var Group = models.Group;
 var MailCtrl = require('./MailController');
 
-var multer  =   require('multer');
-var storage =   multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, '../public/uploads');
-  },
-  filename: function (req, file, callback) {
-    callback(null, file.fieldname + '-' + Date.now());
-  }
-});
-var upload = multer({ storage : storage}).single('ProfilePic');
+var Bucket = "exchangebuddy-profile-pictures";
+var s3Options = {
+    accessKeyId: config.AWS_ACCESS_KEY_ID,
+    secretAccessKey: config.AWS_SECRET_ACCESS_KEY
+}
+
+
+var awsS3Client = new AWS.S3(s3Options);
+var options = {
+    s3Client: awsS3Client
+};
+var client = s3.createClient(options);
 
 // Show a specific user
 exports.getUser = function(req, res) {
@@ -127,6 +133,63 @@ exports.updateUser = function(req, res){
             status: 'fail'
         })
     })
+}
+
+
+exports.uploadProfile = function(req, res){
+    var params = {
+        localFile: req.file.path,
+        s3Params: {
+            Bucket,
+            Key: req.file.filename,
+            ACL: 'public-read',
+        }
+    };
+
+    var uploader = client.uploadFile(params);
+    uploader.on('error', function(err){
+        console.log(err);
+    })
+
+    uploader.on('end', function(){
+        var url = s3.getPublicUrl(Bucket, req.file.filename, "ap-southeast-1");
+        models.User.findOne({
+            where: {
+                id: req.user.id
+            }
+        }).then(function(user){
+            if(!!user.profilePictureUrl){
+
+                var splitString = user.profilePictureUrl.split('/');
+                var Key = splitString[splitString.length - 1];
+                if(Key.length === req.file.filename.length){
+                    client.deleteObjects({
+                        Bucket,
+                        Delete: {
+                            Objects: [
+                                {
+                                    Key,
+                                }
+                            ]
+                        }
+                    })
+                }
+
+            }
+            user.update({
+                profilePictureUrl: url
+            })
+
+            fs.unlinkSync(req.file.path);
+            res.status(200).send({
+
+                url,
+                success: true
+            });
+        })
+
+    })
+
 }
 
 function resError(res, err) {

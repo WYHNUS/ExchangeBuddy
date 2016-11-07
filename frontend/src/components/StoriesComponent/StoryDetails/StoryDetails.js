@@ -6,13 +6,19 @@ import { browserHistory } from 'react-router';
 import { formatTime } from '../../../util/helper';
 import * as UserHelper from '../../../util/user';
 
+//import coverPhoto from '../../../res/story/storyimg.png';
+
 
 export default class StoryDetails extends React.Component {
 	componentWillMount() {
-		//this.props.fetchStory(this.props.id, this.props.user.id);
+		this.props.fetchStory(this.props.id, this.props.user.id);
 	}
 
 	componentDidMount(){
+		
+	}
+
+	componentDidUpdate(){
 		$('#content').append(this.props.storyDetails.content);
 	}
 
@@ -20,8 +26,7 @@ export default class StoryDetails extends React.Component {
 		const { user/*, fetching_result*/ } = this.props;
 		const { 
 			id, title, content, User, 
-			/*tags, favorites, status, storyImgUrl,*/ 
-			tags, storyImgUrl,
+			/*tags, favorites, status,*/ coverPhoto, 
 			createdAt, updatedAt 
 		} = this.props.storyDetails;
 
@@ -38,7 +43,11 @@ export default class StoryDetails extends React.Component {
 					<div className="story-avatar">{ UserHelper.getAvatar(User, 60) }</div>
 					<div className="author-details">
 						<div>{ User.name }</div>
-						<div><span>{moment(createdAt).fromNow()}</span></div>
+						{
+							!!createdAt ?
+								<div><span>{moment(createdAt).fromNow()}</span></div>
+							: null
+						}
 					</div>
 				</div>
 				</div>
@@ -46,9 +55,13 @@ export default class StoryDetails extends React.Component {
 				
 				<div className="story-container">
 					<div className="story-row">
-						<img className='img' src={storyImgUrl}/>
+						{	
+							!!coverPhoto ?
+								<img className='img' src={coverPhoto}/>
+							: null
+						}
 						<h1 className="title">{ title }</h1>
-						<div id="content"></div>
+						<div id="content" className="story-content"></div>
 					</div>
 				</div>
 			</div>

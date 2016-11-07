@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import {reducer as formReducer} from 'redux-form';
+import { reducer as formReducer } from 'redux-form';
 
 // Reducers
 import { messageSnackbar } from './messageSnackbar';
@@ -9,9 +9,10 @@ import { pageVisibility } from './pageVisibility';
 import { home } from './home';
 import { user } from './user';
 import { utilityInfo } from './utilityInfo';
-import {profile} from './profile';
-import {stories} from './stories';
-import {homeSearchGroups} from './homeSearchGroups';
+import { profile } from './profile';
+import { stories } from './stories';
+import { wiki } from './wiki';
+import { homeSearchGroups } from './homeSearchGroups';
 
 const rootReducer = combineReducers({
   messageSnackbar,
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   utilityInfo,
   profile,
   stories,
+  wiki,
   homeSearchGroups,
 
   // Add routerReducer

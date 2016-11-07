@@ -9,7 +9,7 @@ exports.createStory = function(req, res) {
                 message: 'Please login first.'
             });
     }
-    if (!req.body.storyTitle | !req.body.storyContent) {
+    if (!req.body.storyTitle || !req.body.storyContent) {
         return res.status(400)
             .json({
                 status: 'fail',
@@ -48,7 +48,7 @@ exports.getStory = function(req, res) {
         }]
     }).then(function(story){
         if (!!story) {
-            if (story.isPublic && story.UserId === req.body.userId) {
+            if (story.isPublic ||( story.UserId === req.body.userId)) {
                 return res.status(200)
                     .json({
                         status: 'success',
@@ -79,7 +79,7 @@ exports.getAllStories = function(req, res){
         where: {
             isPublic: true
         },
-        attributes: ['id', 'title', 'createdAt'],
+        attributes: ['id', 'title', 'createdAt', 'coverPhoto'],
         include: [{
             model: models.User,
             attributes: ['id', 'name', 'profilePictureUrl']

@@ -7,7 +7,6 @@ import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { toggleBottomBarVisibility, toggleTopBarVisibility,
 toggleTopBarSettingsButtonVisibility } from '../actions/pageVisibility';
-import { Grid, Row, Col } from 'react-flexbox-grid';
 
 import StoryForm from '../components/StoryForm';
 
@@ -56,7 +55,7 @@ class Story extends React.Component{
 	render() {
 		return (
 			<div>
-			<StoryForm />
+				<StoryForm />
 			</div>		
 		);
 	}

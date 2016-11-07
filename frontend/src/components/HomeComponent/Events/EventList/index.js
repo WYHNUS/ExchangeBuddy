@@ -5,8 +5,7 @@ import Loading from '../../../Loading';
 
 // Action creators
 import { 
-  resetEvents, goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate,
-  fetchEvents , fetchEventsFailure, fetchEventsSuccess
+  resetEvents, goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate, deleteAnEventSuccessUpdate
 } from '../../../../actions/home';
 import { showSnackbar } from '../../../../actions/messageSnackbar';
 import { fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure } from '../../../../actions/utilityInfo';
@@ -22,33 +21,14 @@ import { connect } from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchEvents: (GroupId) => {
-      dispatch(fetchEvents(GroupId)).payload.then((response) => {
-        //console.log(response);
-        if (!response.error) {
-          dispatch(fetchEventsSuccess(response.body));
-        } else {
-          dispatch(fetchEventsFailure(response.error));
-        }
-      }, (err) => {
-        if (err.status === 401) {
-          cookie.remove('authToken');
-          dispatch(clearUser());
-          // need to redirect to a new version of login page
-          browserHistory.push('/');
-        } else {
-          dispatch(fetchEventsFailure(err.response.error.message));
-        }
-      });
-    },
     showSnackbar: (message) => {
       dispatch(showSnackbar(message))
     },
-    goForAnEventSuccessUpdate: (EventId, UserId) => {
-      dispatch(goForAnEventSuccessUpdate(EventId, UserId))
+    goForAnEventSuccessUpdate: (EventId, user) => {
+      dispatch(goForAnEventSuccessUpdate(EventId, user))
     },
-    ungoForAnEventSuccessUpdate: (EventId, UserId) => {
-      dispatch(ungoForAnEventSuccessUpdate(EventId, UserId))
+    ungoForAnEventSuccessUpdate: (EventId, user) => {
+      dispatch(ungoForAnEventSuccessUpdate(EventId, user))
     },
     fetchAllUniversitiesSuccess: (data) => {
       dispatch(fetchAllUniversitiesSuccess(data));
@@ -61,6 +41,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     clearUser: () => {
       dispatch(clearUser());
+    },
+    deleteAnEventSuccessUpdate: (EventId) =>{
+      dispatch(deleteAnEventSuccessUpdate(EventId))
     }
   };
 };
@@ -68,7 +51,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     homeEvents: state.home.homeEvents,
-    homeGroupDetails: state.home.homeGroupDetails.homeGroupDetails,
+    homeGroupDetails: state.home.homeGroupDetails,
     source: ownProps.source,
     user: state.user,
     universities: state.utilityInfo.universitiesList.universities

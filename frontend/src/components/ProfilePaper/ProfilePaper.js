@@ -9,14 +9,13 @@ import cookie from 'react-cookie';
 import Paper from 'material-ui/Paper';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
+import Spinner from 'react-spinkit';
 
 import Link from '../Link';
-
 import * as UserHelper from '../../util/user';
 import * as UniversityHelper from '../../util/university';
 import { fetchAllUniversities } from '../../actions/utilityInfo';
 import{ fetchProfile } from '../../actions/profile';
-
 import * as IconsHelper from '../../util/icons';
 
 const text_header_style = {
@@ -77,7 +76,8 @@ export default class ProfilePaper extends React.Component {
       //console.log(userProfileRes);
 
       if (!userProfileRes.error) {
-        fetchProfileSuccess(userProfileRes.body); 
+        fetchProfileSuccess(userProfileRes.body);
+
         if (universities.length < 2) {
           fetchAllUniversities().payload.then((uniRes) => {
             //console.log(uniRes);
@@ -168,7 +168,7 @@ export default class ProfilePaper extends React.Component {
       { 
         this.props.profile.University?
         (profile.University.name):
-        (<div>Not loaded university name</div>) 
+        (<Spinner spinnerName="circle" />) 
       }
       </div>
       </div>
@@ -179,42 +179,42 @@ export default class ProfilePaper extends React.Component {
       {
         this.state.exchangeUniListLoaded? 
         (this.state.exchangeUniList.map((uni, idx) => <div key={idx}>{uni.name}</div>)):
-        (<h2>Error loading list of unis...</h2>)
+        (<Spinner spinnerName="circle" />)
       }
       </div>
       </div>
 
-      </div>
+      
 
+      <div className='col-xs-12 col-md-6'>
+      <div className='university-details'>
+      <div className='university-header'>Groups</div>
       {
         (profileGroups.length>0)?
         (
-        <div className='university-details'>
-        <div className='university-header'>Groups</div>
-        <div className='row center-xs'>
-        {profileGroups.map((group,idx)=>
-          (
-          <div key={idx} className='col-xs-12'>
+          profileGroups.map((group,idx)=>
+          <div id="profilegroup" key={idx} className='col-xs-12'>
           {group.name}
-          </div>
-          ) 
-        )}
-        </div>
-        </div>
+          </div>)
         )
         :
-        null
+        (<Spinner spinnerName="circle" />)
       }
+      </div>
+      </div>
+      </div>
 
       {
         (urlToUserid(userObject.id)===userObject.id)?
         (
           <div className='row center-xs edit-profile-container'>
           <div className='col-xs-10 col-md-4'>
-          <RaisedButton className='edit-profile-button' primary={true} label="Edit Profile" onTouchTap={()=>browserHistory.push("/profile/me/edit")}/>
+          <RaisedButton className='edit-profile-button' primary={true} 
+          label="Edit Profile" onTouchTap={(e)=>{e.preventDefault();browserHistory.push("/profile/me/edit")}}/>
           </div>
           <div className='col-xs-10 col-md-4'>
-          <RaisedButton className='edit-profile-button' primary={true} label="Edit Universities" onTouchTap={()=>browserHistory.push("/profile/me/editUni")}/>
+          <RaisedButton className='edit-profile-button' primary={true} 
+          label="Edit Universities" onTouchTap={(e)=>{e.preventDefault();browserHistory.push("/profile/me/editUni")}}/>
           </div>
           </div>
           )
@@ -237,7 +237,5 @@ ProfilePaper.propTypes = {
   profile: PropTypes.object.isRequired,
   userObject: PropTypes.object.isRequired,
   universities: PropTypes.array.isRequired
-
-  /*userProfile: PropTypes.object.isRequired*/
 };
 

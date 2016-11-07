@@ -33,7 +33,7 @@ class GroupItem extends React.Component {
             key={group.id}
             className={parseInt(index)===parseInt(selected)?'selected-group':'non-selected-group'}
             primaryText={getName(group.name)}
-            secondaryText={`${getTerm(group.name)} ${getYear(group.name)}`}
+            secondaryText={`${getTerm(group.name)} ${getYear(group.name)} | ${group.number} ${group.number==1?("member"):("members")}`}
             onTouchTap={goToGroup}
             />
             ):
@@ -42,15 +42,18 @@ class GroupItem extends React.Component {
               (
                 <ListItem
                 key={group.id}
+                className={parseInt(index)===parseInt(selected)?'selected-group':'non-selected-group'}
                 primaryText={getName(group.name)}
-                secondaryText={`${getYear(group.name)}`}
+                secondaryText={`${getYear(group.name)} | ${group.number} ${group.number==1?("member"):("members")}`}
                 onTouchTap={()=>goToGroup(group.id)}
                 />
               ):
               (
                 <ListItem
                 key={group.id}
+                className={parseInt(index)===parseInt(selected)?'selected-group':'non-selected-group'}
                 primaryText={group.name}
+                secondaryText={`${group.number} ${group.number==1?("member"):("members")}`}
                 onTouchTap={goToGroup}
                 />  
               )

@@ -16,63 +16,135 @@ import { connect } from 'react-redux';
 import { resizeBrowserWindow } from '../actions/browser';
 
 import Search from '../pages/home/search';
+import {addJoyride} from '../actions/home';
+import Joyride from 'react-joyride';
 
 class App extends React.Component{
 
+	constructor(props){
+		super(props);
+
+		this.state = {
+			ready: false,
+			steps: []
+		};
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+
+		if(this.props.homeJoyride.start){
+			setTimeout(() => {
+		        this.setState({
+		          ready: true
+		        });
+		    }, 1000);
+		    if (!prevState.ready && this.state.ready) {
+		    	console.log('here joy ride starts');
+				this.joyride.start(true);
+			}
+		}
+	}
+
+	addSteps=(steps)=>{
+		const joyride = this.joyride;
+		let newSteps = steps;
+
+		if (!Array.isArray(newSteps)) {
+			newSteps = [newSteps];
+		}
+
+		if (!newSteps.length) {
+			return;
+		}
+
+		this.setState(currentState => {
+			currentState.steps = currentState.steps.concat(joyride.parseSteps(newSteps));
+			return currentState;
+		});
+	}
+
+
+
 	render(){
+
+		const{homeJoyride} = this.props;
+
 		return(
+
 			<MuiThemeProvider muiTheme={MuiTheme}>
 
 			<div>
-					<TopBar onTouchTap={()=>this.props.toggleHomeSearchDrawerVisibility(false)}/>
+
+			<Joyride 
+			ref={c => (this.joyride = c)} 
+			steps={this.state.steps} 
+			debug={false}
+			type="continuous"
+			showSkipButton={true}
+            showStepsProgress={true}
+            showOverlay={true} />
+
+			<TopBar 
+			onTouchTap={()=>this.props.toggleHomeSearchDrawerVisibility(false)}
+			addSteps={this.addSteps} />
 
 			<div id="root-container">
 
 			<Helmet
 			defaultTitle="ExchangeBuddy - Find your exchange buddies!"
-			meta={[
+			meta=
+			{
+				[
 				{"name": "description", "content": "ExchangeBuddy - Find your exchange buddies!"},
 				{"name": "viewport", "content": "initial-scale=1, minimal-ui, maximum-scale=1, minimum-scale=1"},
 				{"property": "og:type", "content": "exchangebuddy:exchange_group"},
 				{"property": "og:url", "content": "http://app.exchangebuddy.com/"},
 				{"property": "og:description", "content": "Find your exchange buddies!"},
 				{"property": "og:title", "content": "ExchangeBuddy"}
-				]}
-				link={[
-					{"rel": "canonical", "href": "http://app.exchangebuddy.com"},
-					{"rel": "shortcut icon", "href": "favicon.png?v1", "type": "image/png", "sizes": "16x16 32x32 64x64"},
-					{"rel": "apple-touch-icon", "sizes": "120x120", "href": "apple-touch-icon-precomposed.png"}
-					]} />
+				]
+			}
+			link=
+			{
+				[
+				{"rel": "canonical", "href": "http://app.exchangebuddy.com"},
+				{"rel": "shortcut icon", "href": "favicon.png?v1", "type": "image/png", "sizes": "16x16 32x32 64x64"},
+				{"rel": "apple-touch-icon", "sizes": "120x120", "href": "apple-touch-icon-precomposed.png"}
+				]
+			} />
 
 
-					<div id="main" className={`page-${ makeRouteSlug(this.props.routes) }`}>
-					{ this.props.children }
-					</div>
+			<div id="main" className={`page-${ makeRouteSlug(this.props.routes) }`}>
+			{ this.props.children }
+			</div>
 
-					<Search/>
-					
+			<Search addSteps={this.addSteps}/>
 
-					</div>
 
-					<MessageSnackbar/>
+			</div>
 
-					<BottomBar/>
+			<MessageSnackbar/>
 
-					</div>
+			<BottomBar addSteps={this.addSteps}/>
 
-					</MuiThemeProvider>
-					);
+			</div>
+
+			</MuiThemeProvider>
+			);
 	}
 }
 
 const mapStateToProps = (state)=>{
-  return {
-  };
+	return {
+		homeJoyride: state.home.homeJoyride
+	};
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		actions: bindActionCreators({ resizeBrowserWindow }, dispatch)
+		actions: bindActionCreators({ resizeBrowserWindow }, dispatch),
+		/*addJoyride: (joyride)=>{
+			dispatch(addJoyride(joyride))
+		}*/
 	};
 };
 

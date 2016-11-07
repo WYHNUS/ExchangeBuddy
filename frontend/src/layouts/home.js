@@ -12,15 +12,26 @@ import {
 import {
   fetchMyGroups, fetchMyGroupsSuccess, fetchMyGroupsFailure,
   fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure,
-  toggleSelectedHomeGroup, fetchEvents, fetchEventsSuccess, 
-  fetchEventsFailure, resetEvents
+  toggleSelectedHomeGroup, resetEvents, startJoyride
 } from '../actions/home';
 import { clearUser } from '../actions/authActions';
 
 import Header from '../components/Header';
-//import SwitchGroupDialog from '../components/SwitchGroupDialog';
+
+import Spinner from 'react-spinkit';
 
 class Home extends React.Component{
+
+  constructor(props){
+    super(props);
+    this.state = {
+      ready: false
+    };
+  }
+
+  componentWillMount(){
+    //this.props.startJoyride();
+  }
 
   componentDidMount() {
     this.props.toggleBottomBarVisibility(true);
@@ -28,17 +39,8 @@ class Home extends React.Component{
     this.props.toggleHomeSearchDrawerOpenButtonVisibility(true);
     this.props.toggleTopBarBackButtonVisibility(false);
     this.props.toggleTopBarSettingsButtonVisibility(true);
-
-    //fetchMyGroups(userId)
-
-    //if user is authenticated, fetch group and point groupDetails to that
-    /*if(this.props.user.isAuthenticated){
-
-    }else{
-
-    }*/
-    
     this.props.fetchMyGroups(this.props.user.id);
+
   }
 
   componentWillUnmount(){
@@ -49,14 +51,15 @@ class Home extends React.Component{
 
   render() {
     const{homeGroupsLoaded} = this.props;
+
     return (
       <div>
       {<Header params={ this.props.params } tab={ this.props.routes[2].path } />}
       <div id="group-container">
-      { homeGroupsLoaded?(this.props.children):(<h1>Loading home groups...</h1>) }
+
+      { homeGroupsLoaded?(this.props.children):(<Spinner spinnerName="circle" />) }
       </div>
 
-    {/*<SwitchGroupDialog />*/}
     </div>
     );
   }
@@ -80,22 +83,6 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(fetchMyGroupsSuccess(response.body));
           browserHistory.push(`/home/${response.body[0].id}`)
           dispatch(toggleSelectedHomeGroup(selectedIndex))
-          dispatch(fetchEvents(response.body[selectedIndex].id)).payload.then((response) => {
-            if (!response.error) {
-              dispatch(fetchEventsSuccess(response.body));
-            } else {
-              dispatch(fetchEventsFailure(response.error));
-            }
-          }, (err) => {
-            if (err.status === 401) {
-              cookie.remove('authToken');
-              dispatch(clearUser());
-              // need to redirect to a new version of login page
-              browserHistory.push('/');
-            } else {
-              dispatch(fetchEventsFailure(err.response.error.message));
-            }
-          });
           dispatch(fetchCurrentGroup(response.body[selectedIndex].id)).payload.then((response) => {
             if (!response.error) {
               dispatch(fetchCurrentGroupSuccess(response.body));
@@ -125,14 +112,15 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(fetchMyGroupsFailure(err.response.error.message));
         }
       });
-    }
+    },
+    startJoyride:()=>{dispatch(startJoyride())}
   };
 };
 
 const mapStateToProps = (state)=>{
   return {
     user:state.user.userObject,
-    homeGroupsLoaded: state.home.homeGroups.groupsLoaded
+    homeGroupsLoaded: state.home.homeGroups.groupsLoaded,
   };
 }
 

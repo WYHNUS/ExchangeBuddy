@@ -36,6 +36,16 @@ module.exports = function(sequelize, DataType) {
 		type: DataType.INTEGER(),
 	},
 
+    // related images
+    logoImage: {
+        type: DataType.STRING(1024),
+        defaultValue: null
+    },
+    backgroundImage: {
+        type: DataType.STRING(1024),
+        defaultValue: null
+    },
+
 	// Stored as JSON stringified arrays
 	currencies: {
 		type: DataType.TEXT(),
@@ -52,6 +62,8 @@ module.exports = function(sequelize, DataType) {
   }, {
     classMethods: {
       associate: function(models) {
+        Country.hasOne(models.Wiki);
+
       	Country.hasMany(models.User);
 
       	Country.hasMany(models.University);

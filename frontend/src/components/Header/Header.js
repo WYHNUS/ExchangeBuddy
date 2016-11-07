@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import { browserHistory } from 'react-router';
 /*import { handleLogout } from '../../util/session';*/
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -6,6 +6,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import IconButton from 'material-ui/IconButton';
 import LinearProgress from 'material-ui/LinearProgress';
 import Helmet from "react-helmet";
+import Spinner from 'react-spinkit';
 
 //import HeaderProfile from './HeaderProfile';
 import * as IconsHelper from '../../util/icons';
@@ -13,16 +14,9 @@ import group0Uni from '../../res/group0_uni.jpg';
 import group1Uni from '../../res/group1_uni.jpg';
 import group2Uni from '../../res/group2_uni.jpg';
 import group3Uni from '../../res/group3_uni.jpg';
+import group4Uni from '../../res/group4_uni.jpg';
 
-
-
-/*import * as Colors from 'material-ui/styles/colors';
-import * as ImagesHelper from '../../util/images';
-import * as UniversityHelper from '../../util/university';
-import { pluralizer } from '../../util/helper';
-*/
-
-const imgArray=[group0Uni,group1Uni, group2Uni, group3Uni];
+const imgArray=[group0Uni,group1Uni, group2Uni, group3Uni, group4Uni];
 
 const gotourl = (groupId, tab) => () => {
   const queryParams = ['home', groupId];
@@ -49,7 +43,7 @@ const tabToIdx = tab => {
 const pathToIdx = () =>{
   
   var pathArray = window.location.pathname.split("/");
-  console.log(pathArray);
+  // console.log(pathArray);
   var path;
   if (pathArray.length > 3) {
     path = pathArray[3];
@@ -92,68 +86,95 @@ export default class Header extends React.Component {
   }
 
   componentWillMount() {
+
     //console.log(window.location.pathname);
     //console.log(this.props.params);
     //console.log(this.props.tab);
   }
 
-  /*handleUpload(event) {
-    const self = this;
-    const files = event.currentTarget.files;
-    this.setState({ loadingFile: true });
-
-    Cloudinary.upload(files, {}, function(err, cloudinaryRes) {
-      Meteor.call('University.setBgImage', Meteor.userToken(), self.props.uni.id, cloudinaryRes.public_id, function(err, res) {
-        if (err)
-          return;
-
-        self.props.actions.showSnackbar("Updated university cover photo.");
-        self.setState({
-          loadingFile: false,
-          bgImageId: cloudinaryRes.secure_url,
-        });
-      });
-    });
-  }*/
-
-  /*componentWillMount(nextProps) {
-    this.setState({
-      bgImageId: this.props.uni.bgImageId || 'exchangebuddy/section-images/About'
-    });
-  }*/
-
-  /*componentDidMount() {
-    $(window).on('scroll', eventHandleScroll);
-  }
-
-  componentWillUnmount() {
-    $(window).off('scroll', eventHandleScroll);
-  }*/
-
   handleChange = (value) => {
     this.props.toggleHomeTab(value);
   };
 
+  /*addJoyrideSteps(steps) {
+
+    const{isFirstTime, joyride} = this.props.homeJoyride;
+    const{addOnboardStep} = this.props;
+    
+    if((isFirstTime)||(joyride==null)){
+      return;
+    }
+    
+    console.log('try adding to joyride')
+    //const joyride = this.props.joyride;
+
+    let newSteps = steps;
+
+    if (!Array.isArray(newSteps)) {
+      newSteps = [newSteps];
+    }
+
+    if (!newSteps.length) {
+      return;
+    }
+
+    console.log('trying to add', joyride.parseSteps(newSteps));
+    addOnboardStep(joyride.parseSteps(newSteps));
+  }*/
+
+  componentDidMount(){
+
+    //console.log('header did mount');
+    
+    const steps = 
+    [
+      {
+        title: 'Friends',
+        text: 'Find friends in this group here!',
+        selector: '.header-friends',
+        position: 'top',
+        type: 'hover'
+      },
+      {
+        title: 'Chat',
+        text: 'Talk to people exclusively in this group here!',
+        selector: '.header-chat',
+        position: 'top',
+        type: 'hover'
+      },
+      {
+        title: 'Events',
+        text: 'Arrange events and meet up with friends in this group!',
+        selector: '.header-events',
+        position: 'top',
+        type: 'hover'
+      }
+    ]
+
+    //this.addJoyrideSteps(steps);
+    //this.props.addSteps(steps);
+
+  }
+
   
 
   render() {
-    const { user, uni, group, actions, params, homeTabValue } = this.props;
+    const { user, uni, group, actions, params, homeTabValue, 
+      addOnboardStep, homeJoyride } = this.props;
     const { homeGroupDetails, loading, error } = this.props.homeGroupDetails;
     
 
     if(loading) {
-      return <div className="container"><h1>Group</h1><h3>Loading...</h3></div>      
+      return <Spinner spinnerName="circle" />  
     } else if(error) {
       return <div className="alert alert-danger">Error: {error.message}</div>
     }
 
-    console.log(homeGroupDetails);
     const getBackgroundImg=()=>{
       //console.log(homeGroupDetails.groupType);
-      if(homeGroupDetails.groupType<4){
+      if(homeGroupDetails.groupType<5){
         return imgArray[homeGroupDetails.groupType];
       }
-      // randomly choose one -> need to fix later
       return imgArray[1];
     }
 
@@ -177,16 +198,13 @@ export default class Header extends React.Component {
 
           <div className="row center-xs">
 
-            {/*<div className="col-xs-6 col-md-2" id="logo-image">
-              { ImagesHelper.makeScale(Meteor.settings.public.logoImageId, 180, "exchangebuddy-logo") }
-            </div>*/}
-
             {
               !!homeGroupDetails.name ? 
                 (parseInt(homeGroupDetails.groupType) == 2 || parseInt(homeGroupDetails.groupType) == 4) ?
                   (
                     <div className='col-xs-12 col-md-8 col-lg-8' id="header-title">
                       <h2 id="uni-name">{ homeGroupDetails.name }</h2>
+                      <p id="uni-description">{ `${homeGroupDetails.user.length} ${homeGroupDetails.user.length==1?("member"):("members")}` }</p>
                     </div>
                   )
                 : 
@@ -194,32 +212,41 @@ export default class Header extends React.Component {
                     (
                       <div className='col-xs-12 col-md-8 col-lg-8' id="header-title">
                         <h2 id="uni-name">{ getName(homeGroupDetails.name) }</h2>
-                        <p id="uni-description">{ `${getYear(homeGroupDetails.name)}` }</p>
+                        <p id="uni-description">{ `${getYear(homeGroupDetails.name)} | 
+                        ${homeGroupDetails.user.length} ${homeGroupDetails.user.length==1?("member"):("members")}` }</p>
                       </div>
                     )
                   : 
                     (
                       <div className='col-xs-12 col-md-8 col-lg-8' id="header-title">
                         <h2 id="uni-name">{ getName(homeGroupDetails.name) }</h2>
-                        <p id="uni-description">{ `${getTerm(homeGroupDetails.name)} ${getYear(homeGroupDetails.name)}` }</p>
+                        <p id="uni-description">{ `${getTerm(homeGroupDetails.name)} ${getYear(homeGroupDetails.name)} | 
+                        ${homeGroupDetails.user.length} ${homeGroupDetails.user.length==1?("member"):("members")}` }</p>
                       </div>
                     )
               : null
             }
             
           </div>
-          <div className="row bottom-xs bottom-md center-xs" >
+          <div className="row bottom-xs bottom-md bottom-lg center-xs" >
             <div className='col-xs-12 col-md-8' id="header-tab-col">
             <Tabs inkBarStyle={{ backgroundColor: "#fff" }} className="header-tab-parent" value={homeTabValue} onChange={this.handleChange} >
-              <Tab value='friends' icon={IconsHelper.materialIcon("people")} label="FRIENDS" className="header-tab" onActive={ gotourl(params.id, "friends") } />
-              <Tab value='chat' icon={IconsHelper.materialIcon("chat")} label="CHAT" className="header-tab" onActive={ gotourl(params.id, "chat") } />
-              <Tab value='events' icon={IconsHelper.materialIcon("library_books")} label="EVENTS" className="header-tab" onActive={ gotourl(params.id, "events")}/>
+              <Tab className='header-friends' value='friends' icon={IconsHelper.materialIcon("people")} label="FRIENDS" className="header-tab" onActive={ gotourl(params.id, "friends") } />
+              <Tab className='header-chat' value='chat' icon={IconsHelper.materialIcon("chat")} label="CHAT" className="header-tab" onActive={ gotourl(params.id, "chat") } />
+              <Tab className='header-events' value='events' icon={IconsHelper.materialIcon("library_books")} label="EVENTS" className="header-tab" onActive={ gotourl(params.id, "events")}/>
             </Tabs>
             </div>
           </div>
       </div>
     );
   }
+}
+
+Header.propTypes = {
+  toggleHomeTab: PropTypes.func.isRequired,
+  addOnboardStep: PropTypes.func.isRequired,
+  homeJoyride: PropTypes.object.isRequired,
+  //addSteps: PropTypes.func.isRequired
 }
 
 function getName(homeGroupDetailsName){

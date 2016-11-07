@@ -19,7 +19,11 @@ import Friends from './pages/home/friends';
 import Landing from './pages/landing';
 import NotFound from './pages/not-found';
 import Profile from './pages/profile';
-import Wiki from './pages/wiki';
+import Wiki from './pages/wiki/wiki';
+import WikiDetails from './pages/wiki/wikiDetails';
+import WikiHistory from './pages/wiki/wikiHistory';
+import EditWiki from './pages/wiki/editWiki';
+import WikiNewSection from './pages/wiki/wikiNewSection';
 import Stories from './pages/stories/stories';
 import StoryDetails from './pages/stories/story';
 import EditStory from './pages/editStory';
@@ -46,6 +50,8 @@ ReactGA.initialize(process.env.GA_ID);
 function logPageView() {
   ReactGA.set({ page: window.location.pathname });
   ReactGA.pageview(window.location.pathname);
+  //additionally, scroll to top
+  window.scrollTo(0, 0);
 }
 
 export const getRoutes = (store) =>{
@@ -89,15 +95,21 @@ export const getRoutes = (store) =>{
       </Route>
     </Route>
     {/*<Route path="newstory" component={ EditStory } onEnter={ authRequired }/>*/}
-    <Route path="stories" onEnter={ authRequired }>
+    <Route path="stories">
       <IndexRoute component={ Stories }/>
       <Route path=":storyId" component={ StoryDetails }/>
     </Route>
-    {/*<Route path="wiki" component={Wiki}/>*/}
+    <Route path="wiki">
+      <IndexRoute component={ Wiki }/>
+      <Route path=":wikiTitle" component={ WikiDetails }/>
+      <Route path="history(/:wikiTitle)/*" component={ WikiHistory }/>
+      <Route path="editWiki(/:wikiTitle/:wikiSection)" component={ EditWiki } onEnter={ authRequired }/>
+      <Route path="newSection(/:wikiTitle)" component={ WikiNewSection } onEnter={ authRequired }/>
+    </Route>
     <Route path="profile(/:userId)" onEnter={ authRequired }>
-      <IndexRoute component={Profile}/>
-      <Route path="edit" component={ProfileEdit}/>
-      <Route path="editUni" component={IdentifyUniversity}/>
+      <IndexRoute component={ Profile }/>
+      <Route path="edit" component={ ProfileEdit }/>
+      <Route path="editUni" component={ IdentifyUniversity }/>
     </Route>
     <Route path="notloggedin" component={ NotLoggedIn }/>
     <Route path="signup" component={ Signup }/>

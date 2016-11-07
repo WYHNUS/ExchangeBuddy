@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('express-jwt');
 var config = require('../config/config');
+var multer = require('multer');
+var upload = multer({dest: __dirname+'/../public/uploads'});
 
 
 
@@ -10,7 +12,8 @@ var CountryCtrl = require('../controllers/CountryController');
 var UniCtrl = require('../controllers/UniversityController');
 var AuthCtrl = require('../controllers/AuthenticateController');
 var UserCtrl = require('../controllers/UserController');
-var StoryCtrl = require('../controllers/StoryController')
+var StoryCtrl = require('../controllers/StoryController');
+var WikiCtrl = require('../controllers/WikiController');
 var GroupCtrl = require('../controllers/GroupController');
 var MailCtrl = require('../controllers/MailController');
 var EventCtrl = require('../controllers/EventController');
@@ -59,6 +62,7 @@ request:
 
 router.patch('/updateUser', verifyToken, UserCtrl.updateUser);
 router.put('/createUser', UserCtrl.createUser);
+router.post('/uploadProfile',[verifyToken, upload.single('profilePicture'), UserCtrl.uploadProfile]);
 
 router.get('/verify/:token', MailCtrl.verifyToken);
 router.get('/resendVerificationMail/:userId', MailCtrl.resend);
@@ -67,10 +71,19 @@ router.get('/resendVerificationMail/:userId', MailCtrl.resend);
 router.get('/country', CountryCtrl.getAllCountries);
 router.get('/country/:id', CountryCtrl.getCountry);
 
-router.get('/university', UniCtrl.getAllUniversities);
+router.get('/university/', UniCtrl.getAllUniversities);
 router.get('/university/:id', UniCtrl.getUniversity);
 
 router.post('/messages', verifyToken, ChatCtrl.getMessages);
+
+// use query String to get particular wiki page
+router.get('/wikiRecommend', WikiCtrl.getRecommendation);
+router.get('/wikiCustomizedRecommend', verifyToken, WikiCtrl.getCustomizedRecommendation);
+router.get('/wiki', WikiCtrl.getWiki);  // ?q= &param= [stringified array: {section= &version=}]
+router.put('/wiki', verifyToken, WikiCtrl.createNewWiki);
+router.put('/wiki/section', verifyToken, WikiCtrl.createNewSection);
+router.put('/wiki/section/version', verifyToken, WikiCtrl.createNewSectionVersion);
+// router.post('/wiki/section/version/vote', verifyToken, WikiCtrl.vote);
 
 router.get('/allStories', /*verifyToken,*/ StoryCtrl.getAllStories);
 router.post('/story/:id', /*verifyToken,*/ StoryCtrl.getStory);
@@ -84,6 +97,7 @@ request:
 }
 */
 router.post('/joinGroup', verifyToken, GroupCtrl.joinGroup);
+router.post('/leaveGroup', verifyToken, GroupCtrl.leaveGroup);
 router.post('/group', verifyToken, GroupCtrl.getGroupIndex);
 router.get('/group/:id', verifyToken, GroupCtrl.getGroup);
 router.get('/getGroups', GroupCtrl.getGroups);

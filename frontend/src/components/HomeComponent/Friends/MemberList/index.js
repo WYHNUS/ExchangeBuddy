@@ -1,5 +1,4 @@
 import React from 'react';
-import Loading from '../../../Loading';
 
 import ChildComponent from './MemberList';
 // Redux
@@ -8,15 +7,14 @@ import { connect } from 'react-redux';
 
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-  };
+	return {
+	};
 };
 
 const mapStateToProps = (state) => {
-  return {
-    user:state.user,
-    homeFriends: state.home.homeFriends
-  }
+	return {
+		homeGroupDetails: state.home.homeGroupDetails
+	}
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChildComponent);

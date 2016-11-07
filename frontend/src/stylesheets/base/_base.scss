@@ -17,6 +17,15 @@ html body {
 
   h1 { font-size: 2em; line-height: 1.2em; }
   h2 { font-size: 1.4rem; }
+  
+  hr {
+    display: block;
+    height: 2px;
+    border: 0;
+    border-top: 2px solid $theme-color;
+    padding: 0;
+    margin: 2px auto;
+  }
 }
 
 #root-container {
