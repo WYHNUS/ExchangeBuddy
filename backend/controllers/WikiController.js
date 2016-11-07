@@ -83,7 +83,7 @@ exports.getCustomizedRecommendation = function(req, res) {
                     as: 'exchangeStudent',
                     through: {
                         where: {
-                            Userid: user.id
+                            UserId: user.id
                         }
                     }
                 }]
