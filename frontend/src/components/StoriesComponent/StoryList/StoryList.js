@@ -125,6 +125,10 @@ export default class StoryList extends React.Component {
 		
 		return (
 			<div>
+
+				
+
+				<hr className="green-separator" style={{ width: "85%"}}></hr>
 				<div style={styles.stories_list_root}>
 				{ stories.length > 0 ?
 					(
@@ -144,8 +148,8 @@ export default class StoryList extends React.Component {
 					)
 					: null
 				}
-				
 				</div>
+				<hr className="green-separator" style={{ width: "85%"}}></hr>
 			</div>
 			)
 	}
