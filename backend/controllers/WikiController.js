@@ -9,7 +9,8 @@ var Vote = models.WikiSectionVote;
 exports.getRecommendation = function(req, res) {
     Wiki.findAll({
         attributes: [
-            ['image', 'title']
+            ['title', 'name'],
+            ['image', 'imageUrl']
         ],
         // limit: 6,
         order: '"view" DESC'
@@ -17,10 +18,7 @@ exports.getRecommendation = function(req, res) {
         var recommendations = [];
         var recommendationNumber = Math.min(wiki.length, 6);
         for (var i=0; i<recommendationNumber; i++) {
-            recommendations.push({
-                imageUrl: wiki[i].image,
-                name: wiki[i].title
-            })
+            recommendations.push(wiki[i]);
         }
         return res.status(200)
             .json({
