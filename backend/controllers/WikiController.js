@@ -9,7 +9,7 @@ var Vote = models.WikiSectionVote;
 exports.getRecommendation = function(req, res) {
     Wiki.findAll({
         attributes: [
-            ['image', 'imageUrl']
+            ['image', 'title']
         ],
         // limit: 6,
         order: '"view" DESC'
@@ -22,7 +22,6 @@ exports.getRecommendation = function(req, res) {
                 name: wiki[i].title
             })
         }
-
         return res.status(200)
             .json({
                 status: 'success',
@@ -113,24 +112,28 @@ exports.getCustomizedRecommendation = function(req, res) {
 
             if (!!exchange) {
                 var exchangeUnis = exchange.map(ex => {
-                    // find list of exchange universities
-                    return models.University.find({
-                        attributes: ['name', 'logoImageUrl', 'bgImageUrl', 'countryCode'],
-                        where: {
-                            id: ex.UniversityId
-                        }
-                    });
+                    if (!!ex.exchangeStudent && ex.exchangeStudent.length > 0) {
+                        // find list of exchange universities
+                        return models.University.find({
+                            attributes: ['name', 'logoImageUrl', 'bgImageUrl', 'countryCode'],
+                            where: {
+                                id: ex.UniversityId
+                            }
+                        });
+                    }
                 });
 
                 models.sequelize.Promise.all(exchangeUnis).then(exUni => {
                     for (var i=0; i<exUni.length; i++) {
-                        countryArray.push(exUni[i].countryCode);
+                        if (!!exUni[i]) {
+                            countryArray.push(exUni[i].countryCode);
 
-                        if (shouldAdd(result, exUni[i].name)) {
-                            result.push({
-                                imageUrl: exUni[i].logoImageUrl,
-                                name: exUni[i].name
-                            });
+                            if (shouldAdd(result, exUni[i].name)) {
+                                result.push({
+                                    imageUrl: exUni[i].logoImageUrl,
+                                    name: exUni[i].name
+                                });
+                            }
                         }
                     }
 
