@@ -7779,5 +7779,33 @@ values
 "http://www.ecp.fr/templates/ecp_internet_templates/images/structure/logo_centrale_paris.png", "",
 "[""[]""]", "[]", -2,
 "2016-11-8", "2016-11-8"
+),
+(
+"928", "American University of Rome", "", "https://www.aur.edu/", "",
+"IT", "https://upload.wikimedia.org/wikipedia/en/5/5b/The_American_University_of_Rome_Official_Crest_2014.png", "",
+"https://upload.wikimedia.org/wikipedia/en/5/5b/The_American_University_of_Rome_Official_Crest_2014.png", "",
+"[""[]""]", "[]", -3,
+"2016-11-9", "2016-11-9"
+),
+(
+"929", "Kozminski University", "", "http://www.kozminski.edu.pl/", "",
+"PL", "http://rankings.ft.com/lib/img/logos/entity/kozminski-university-warsaw", "",
+"http://rankings.ft.com/lib/img/logos/entity/kozminski-university-warsaw", "",
+"[""[]""]", "[]", -4,
+"2016-11-9", "2016-11-9"
+),
+(
+"930", "Cracow University of Technology", "", "http://www.pk.edu.pl/", "",
+"PL", "http://iati.pl/index.php?aam_media=218&size=medium", "",
+"http://iati.pl/index.php?aam_media=218&size=medium", "",
+"[""[]""]", "[]", -5,
+"2016-11-9", "2016-11-9"
+),
+(
+"931", "Norwegian School of Economics", "", "https://www.nhh.no/", "",
+"NO", "https://media.licdn.com/mpr/mpr/shrink_200_200/p/2/005/02f/34d/1990bb3.png", "",
+"https://media.licdn.com/mpr/mpr/shrink_200_200/p/2/005/02f/34d/1990bb3.png", "",
+"[""[]""]", "[]", -6,
+"2016-11-9", "2016-11-9"
 )
 ;
