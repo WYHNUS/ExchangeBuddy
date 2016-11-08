@@ -9,20 +9,17 @@ var Vote = models.WikiSectionVote;
 exports.getRecommendation = function(req, res) {
     Wiki.findAll({
         attributes: [
+            ['title', 'name'],
             ['image', 'imageUrl']
         ],
         // limit: 6,
-        order: '"view" DESC'
+        order: '`view` DESC'
     }).then(function(wiki) {
         var recommendations = [];
         var recommendationNumber = Math.min(wiki.length, 6);
         for (var i=0; i<recommendationNumber; i++) {
-            recommendations.push({
-                imageUrl: wiki[i].image,
-                name: wiki[i].title
-            })
+            recommendations.push(wiki[i]);
         }
-
         return res.status(200)
             .json({
                 status: 'success',
@@ -59,7 +56,7 @@ exports.getCustomizedRecommendation = function(req, res) {
                     ['title', 'name'],
                     ['image', 'imageUrl']
                 ],
-                order: '"view" DESC'
+                order: '`view` DESC'
             }),
 
             models.University.findOne({
@@ -81,13 +78,12 @@ exports.getCustomizedRecommendation = function(req, res) {
                     as: 'exchangeStudent',
                     through: {
                         where: {
-                            UserId: user.id
+                            userId: user.id
                         }
                     }
                 }]
             })
         ]).spread(function(allWikis, homeUniversity, homeCountry, exchange) {
-
             /*
                 To store all country wiki -->
                     this is a dirty fix as the bootstrapped db is not correctly set up
@@ -114,24 +110,28 @@ exports.getCustomizedRecommendation = function(req, res) {
 
             if (!!exchange) {
                 var exchangeUnis = exchange.map(ex => {
-                    // find list of exchange universities
-                    return models.University.find({
-                        attributes: ['name', 'logoImageUrl', 'bgImageUrl', 'countryCode'],
-                        where: {
-                            id: ex.UniversityId
-                        }
-                    });
+                    if (!!ex.exchangeStudent && ex.exchangeStudent.length > 0) {
+                        // find list of exchange universities
+                        return models.University.find({
+                            attributes: ['name', 'logoImageUrl', 'bgImageUrl', 'countryCode'],
+                            where: {
+                                id: ex.UniversityId
+                            }
+                        });
+                    }
                 });
 
                 models.sequelize.Promise.all(exchangeUnis).then(exUni => {
                     for (var i=0; i<exUni.length; i++) {
-                        countryArray.push(exUni[i].countryCode);
+                        if (!!exUni[i]) {
+                            countryArray.push(exUni[i].countryCode);
 
-                        if (shouldAdd(result, exUni[i].name)) {
-                            result.push({
-                                imageUrl: exUni[i].logoImageUrl,
-                                name: exUni[i].name
-                            });
+                            if (shouldAdd(result, exUni[i].name)) {
+                                result.push({
+                                    imageUrl: exUni[i].logoImageUrl,
+                                    name: exUni[i].name
+                                });
+                            }
                         }
                     }
 
@@ -158,7 +158,7 @@ exports.getCustomizedRecommendation = function(req, res) {
                         }
 
                         var recommendations = [];
-                        var recommendationNumber = Math.min(result.length, 8);
+                        var recommendationNumber = Math.min(result.length, 6);
                         for (var i=0; i<recommendationNumber; i++) {
                             recommendations.push(result[i])
                         }
@@ -239,7 +239,7 @@ exports.getWiki = function(req, res) {
             include: [{
                 model: Section,
                 attributes: ['id', 'displayVersionNumber', 'totalVersionCount', 'sectionIndex'],
-                order: '"sectionIndex" DESC'
+                order: '`sectionIndex` ASC'
             }]
         }).then(function(wiki) {
             if (!wiki) {
@@ -262,9 +262,7 @@ exports.getWiki = function(req, res) {
                             invalidError(res);
                         }
 
-
                         // if match sectionIndex -->
-
                         //      here assumes to ignore sectionIndex if it is not valid
                         if (parseInt(historyArray[i].sectionIndex) === section.sectionIndex) {
                             var requestVersionIndex = parseInt(historyArray[i].versionIndex);
@@ -375,7 +373,7 @@ exports.createNewSection = function(req, res) {
             include: [{
                 model: Section,
                 attributes: ['id', 'displayVersionNumber'],
-                order: '"sectionIndex" DESC'
+                order: '`sectionIndex` ASC'
             }]
         }).then(function(existingWiki) {
             if (!existingWiki) {

@@ -16,7 +16,7 @@ var request = require('superagent');
 
 
 const landingContainerStyle = {
-  backgroundColor: "darkslategray",
+  // backgroundColor: "darkslategray",
 }
 
 /*const landingImg = {
