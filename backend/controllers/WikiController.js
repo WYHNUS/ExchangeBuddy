@@ -89,7 +89,6 @@ exports.getCustomizedRecommendation = function(req, res) {
                     this is a dirty fix as the bootstrapped db is not correctly set up
                     for uni and country
             */
-            var dirtyCountryUrl = 'http://pix.iemoji.com/images/emoji/apple/ios-9/256/earth-globe-americas.png';
             var countryArray = [];
 
 
@@ -103,7 +102,7 @@ exports.getCustomizedRecommendation = function(req, res) {
 
             if (!!homeCountry) {
                 result.push({
-                    imageUrl: dirtyCountryUrl,
+                    imageUrl: homeCountry.logoImage,
                     name: homeCountry.name
                 });
             }
@@ -140,7 +139,7 @@ exports.getCustomizedRecommendation = function(req, res) {
 
                         return models.Country.findOne({
 
-                            attributes: ['name'],
+                            attributes: ['name', 'logoImage'],
                             where: {
                                 alpha2Code: countryCode
                             }
@@ -151,7 +150,7 @@ exports.getCustomizedRecommendation = function(req, res) {
                         for (var i=0; i<countries.length; i++) {
                             if (!!countries[i] && shouldAdd(result, countries[i].name)) {
                                 result.push({
-                                    imageUrl: dirtyCountryUrl,
+                                    imageUrl: countries[i].logoImage,
                                     name: countries[i].name
                                 });
                             }
@@ -183,7 +182,7 @@ exports.getCustomizedRecommendation = function(req, res) {
                         }
                     }).then(function(country) {
                         result.push({
-                            imageUrl: dirtyCountryUrl,
+                            imageUrl: country.logoImage,
                             name: country.name
                         });
 
