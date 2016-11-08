@@ -49,7 +49,8 @@ class TopBar extends Component {
 
     if(homeSearchDrawerOpenButtonVisibility){
       return(
-        <FlatButton 
+        <FlatButton
+        className='flat-button-top' 
         label="Groups"
         onClick={()=>this.props.toggleHomeSearchDrawerVisibility(true)}
         />
