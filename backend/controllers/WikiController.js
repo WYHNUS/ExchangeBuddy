@@ -13,7 +13,7 @@ exports.getRecommendation = function(req, res) {
             ['image', 'imageUrl']
         ],
         // limit: 6,
-        order: '"view" DESC'
+        order: '`view` DESC'
     }).then(function(wiki) {
         var recommendations = [];
         var recommendationNumber = Math.min(wiki.length, 6);
@@ -56,7 +56,7 @@ exports.getCustomizedRecommendation = function(req, res) {
                     ['title', 'name'],
                     ['image', 'imageUrl']
                 ],
-                order: '"view" DESC'
+                order: '`view` DESC'
             }),
 
             models.University.findOne({
@@ -239,7 +239,7 @@ exports.getWiki = function(req, res) {
             include: [{
                 model: Section,
                 attributes: ['id', 'displayVersionNumber', 'totalVersionCount', 'sectionIndex'],
-                order: '"sectionIndex" DESC'
+                order: '`sectionIndex` ASC'
             }]
         }).then(function(wiki) {
             if (!wiki) {
@@ -262,9 +262,7 @@ exports.getWiki = function(req, res) {
                             invalidError(res);
                         }
 
-
                         // if match sectionIndex -->
-
                         //      here assumes to ignore sectionIndex if it is not valid
                         if (parseInt(historyArray[i].sectionIndex) === section.sectionIndex) {
                             var requestVersionIndex = parseInt(historyArray[i].versionIndex);
@@ -375,7 +373,7 @@ exports.createNewSection = function(req, res) {
             include: [{
                 model: Section,
                 attributes: ['id', 'displayVersionNumber'],
-                order: '"sectionIndex" DESC'
+                order: '`sectionIndex` ASC'
             }]
         }).then(function(existingWiki) {
             if (!existingWiki) {
