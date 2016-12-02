@@ -15,12 +15,12 @@ import {ROOT_URL} from '../../util/backend';
 import Socket from '../../util/socket';
 import * as GroupHelper from '../../util/group';
 
-import {browserHistory} from 'react-router';
+import { browserHistory } from 'react-router';
 
 /*var socket = io.connect(ROOT_URL);
 
 socket.on('updatechat', function(msg){
-	console.log('msg2', msg);
+  console.log('msg2', msg);
 })*/
 
 
@@ -29,111 +29,108 @@ const socket = new Socket();
 
 class Chat extends React.Component{
 
-	componentWillMount(){
-		this.props.toggleHomeTab('chat');	
-		this.props.resetGroupMessages();	
-	}
+  componentWillMount(){
+    this.props.toggleHomeTab('chat'); 
+    this.props.resetGroupMessages();  
+  }
 
-	componentDidMount(){
-		//if there is group id to join
-		if(this.props.homeGroupDetails.detailsLoaded){
+  componentDidMount(){
+    //if there is group id to join
+    if(this.props.homeGroupDetails.detailsLoaded){
 
-			if(!socket.isFirstTimeUse){
-				socket.setup(
-					this.props.homeGroupDetails.homeGroupDetails.name,
-					parseInt(this.props.homeGroupDetails.homeGroupDetails.id),
-					this.props.user.userObject.name,
-					parseInt(this.props.user.userObject.id),
-					this.chatReceive.bind(this)
-				)
+      if(!socket.isFirstTimeUse){
+        socket.setup(
+          this.props.homeGroupDetails.homeGroupDetails.name,
+          parseInt(this.props.homeGroupDetails.homeGroupDetails.id),
+          this.props.user.userObject.name,
+          parseInt(this.props.user.userObject.id),
+          this.chatReceive.bind(this)
+        )
 
-			}else if(!(socket.currentRoom===parseInt(this.props.homeGroupDetails.homeGroupDetails.id))){
-				socket.updateRoom(
-					this.props.homeGroupDetails.homeGroupDetails.name,
-					parseInt(this.props.homeGroupDetails.homeGroupDetails.id)
-				)
-			}		
-			
-			/*var emittedobj = 
-			{
-				group:
-				{
-					name: this.props.homeGroupDetails.homeGroupDetails.name,
-					id: parseInt(this.props.homeGroupDetails.homeGroupDetails.id)
-				},
-				user:
-				{
-					id:parseInt(this.props.user.userObject.userId),
-					name: this.props.user.userObject.name
-				}
-			}
+      }else if(!(socket.currentRoom===parseInt(this.props.homeGroupDetails.homeGroupDetails.id))){
+        socket.updateRoom(
+          this.props.homeGroupDetails.homeGroupDetails.name,
+          parseInt(this.props.homeGroupDetails.homeGroupDetails.id)
+        )
+      }   
+      
+      /*var emittedobj = 
+      {
+        group:
+        {
+          name: this.props.homeGroupDetails.homeGroupDetails.name,
+          id: parseInt(this.props.homeGroupDetails.homeGroupDetails.id)
+        },
+        user:
+        {
+          id:parseInt(this.props.user.userObject.userId),
+          name: this.props.user.userObject.name
+        }
+      }
 
-			socket.emit('adduser',emittedobj);*/
-		}
-	}
+      socket.emit('adduser',emittedobj);*/
+    }
+  }
 
+  componentWillUnmount(){
+    //socket.emit('disconnect');
+    //socket.uninstall();
+  }
 
-	chatReceive(data){
-		// console.log('rceived data', data);
-		this.props.updateGroupMessageFromSocket(data);
-	}
+  render(){
 
-	componentWillUnmount(){
-		//socket.emit('disconnect');
-		//socket.uninstall();
-	}
+    const { homeGroupDetails } = this.props.homeGroupDetails;
+    const {userObject} = this.props.user;
 
-	render(){
+    var userPartOfGroup = GroupHelper.isUserPartOfGroup(userObject.id,homeGroupDetails.user);
 
-		const { homeGroupDetails } = this.props.homeGroupDetails;
-	    const {userObject} = this.props.user;
+    return (
+      <div className="chat-container">
 
-		var userPartOfGroup = GroupHelper.isUserPartOfGroup(userObject.id,homeGroupDetails.user);
+        {
+          (userPartOfGroup)?
+          (
+            <div>
+            <SubmitForm socket={socket}/>
+            <MessageList />
+            </div>
+          )
+          :
+          (
+            <div className="row center-xs">
+              <h2>Join the group to join in the coversation!</h2>
+            </div>
+          )
+        }       
 
-		return(
-	
-			<div className="chat-container">
+      </div>
+    );
+  }
 
-				{
-					(userPartOfGroup)?
-					(
-						<div>
-						<SubmitForm socket={socket}/>
-						<MessageList />
-						</div>
-					)
-					:
-					(
-						<div className='row center-xs'>
-							<h2>Join the group to join in the coversation!</h2>
-						</div>
-					)
-				}				
-
-			</div>
-	
-		);
-	}
+  chatReceive(data) {
+    // console.log('rceived data', data);
+    this.props.updateGroupMessageFromSocket(data);
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
-	return {
-		actions: bindActionCreators({ showSnackbar }, dispatch),
-		updateGroupMessageFromSocket:(message)=>{
-			dispatch(updateGroupMessageFromSocket(message))
-		},
-		toggleHomeTab:(tab)=>dispatch(toggleHomeTab(tab)),
-		resetGroupMessages:()=>{dispatch(resetGroupMessages())}
+  return {
+    actions: bindActionCreators({ showSnackbar }, dispatch),
+    updateGroupMessageFromSocket:(message)=>{
+      dispatch(updateGroupMessageFromSocket(message))
+    },
+    toggleHomeTab:(tab)=>dispatch(toggleHomeTab(tab)),
+    resetGroupMessages:()=>{dispatch(resetGroupMessages())}
 
-	};
+  };
 };
 
 const mapStateToProps = (state)=>{
-	return {
-		homeGroupDetails: state.home.homeGroupDetails,
-		user: state.user,
-		homeMessages: state.home.homeMessages
-	};
+  return {
+    homeGroupDetails: state.home.homeGroupDetails,
+    user: state.user,
+    homeMessages: state.home.homeMessages
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

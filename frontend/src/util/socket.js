@@ -1,6 +1,7 @@
 import {ROOT_URL} from './backend';
 
-var socket = io.connect(ROOT_URL);
+// Will be deprecated soon? Fix later.
+var socket = io.connect(ROOT_URL); // eslint-disable-line no-undef
 
 export default class Socket{
 

@@ -16,10 +16,19 @@ export default class ImageUpload extends Component {
     this.onImageDrop = this.onImageDrop.bind(this);
   }
 
-  onImageDrop(e) {
-    const files = e.currentTarget.files;
-    this.setState({ uploadedFile: files[0] });
-    this.handleImageUpload(files[0]);
+  render() {
+    const {uploading, uploadedFile} = this.state;
+    const { input : { value } } = this.props;
+    return (
+      <div>
+        <FlatButton primary={true} className="upload-img-btn" icon={Icons.materialIcon('add_a_photo')} label="upload Image">
+          <input onChange={this.onImageDrop} type="file" accept="image/*" style={inputStyle} />
+        </FlatButton>
+          { uploading && <LinearProgress mode="indeterminate" />}
+        <CloudinaryImage className="drop-image" publicId={value} options={{ height: 300, crop: 'scale' }} />
+      </div>
+
+    )
   }
 
   handleImageUpload(file) {
@@ -37,18 +46,9 @@ export default class ImageUpload extends Component {
     });
   }
 
-  render() {
-    const {uploading, uploadedFile} = this.state;
-    const { input : { value } } = this.props;
-    return (
-      <div>
-        <FlatButton primary={true} className="upload-img-btn" icon={Icons.materialIcon('add_a_photo')} label="upload Image">
-          <input onChange={this.onImageDrop} type="file" accept="image/*" style={inputStyle} />
-        </FlatButton>
-          { uploading && <LinearProgress mode="indeterminate" />}
-        <CloudinaryImage className="drop-image" publicId={value} options={{ height: 300, crop: 'scale' }} />
-      </div>
-
-    )
+  onImageDrop(e) {
+    const files = e.currentTarget.files;
+    this.setState({ uploadedFile: files[0] });
+    this.handleImageUpload(files[0]);
   }
 }

@@ -5,7 +5,7 @@ const Loading = (props) => {
   let { containerClassName, containerStyle } = props;
 
   if (!containerClassName)
-    containerClassName = "loading-container";
+    containerClassName = 'loading-container';
 
   return (
     <div className={ containerClassName } style={ containerStyle }>

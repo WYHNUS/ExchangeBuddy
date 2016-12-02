@@ -12,6 +12,9 @@ import ImageUpload from '../../../ImageUpload/index.js'
 import validUrl from 'valid-url'
 import GoogleMap from 'google-map-react';
 
+// temporary for googlemaps
+/* eslint-disable no-undef */
+
 const newEventForm = (callback, userId, isGeocodingError, foundAddress, position, id, postEvents, showSnackbar) => (values) => {
 
   const errors = [];
@@ -24,26 +27,26 @@ const newEventForm = (callback, userId, isGeocodingError, foundAddress, position
     }
   });
   //logic to check if end time is more than start time
-  if(allDateFieldsFilled){
+  if (allDateFieldsFilled) {
     //console.log(moment(values['endDate']).isAfter(moment(values['startDate']),'day'));
-    if(!moment(values['endDate']).isAfter(moment(values['startDate']),'day')){
+    if (!moment(values['endDate']).isAfter(moment(values['startDate']),'day')) {
       var beginning = moment(values['startTime']);
       var ending = moment(values['endTime']);
       //console.log(beginning, ending);
-      if(ending.isBefore(beginning)){
+      if (ending.isBefore(beginning)) {
         errors.push('Start time is later than End time...') 
       }
     }
   }
 
-  if(isGeocodingError){
+  if (isGeocodingError) {
     errors.push('Please enter a valid address before submitting')
   }
 
   //logic to check if you have actually found an address!
 
   //if there are some errors, show them!
-  if(errors.length===0){
+  if (errors.length===0) {
     callback();
     // console.log(id,userId)
      postEvents(
@@ -60,7 +63,7 @@ const newEventForm = (callback, userId, isGeocodingError, foundAddress, position
        );
     browserHistory.push(`/home/${id}/events`);
 
-  }else{
+  } else {
     showSnackbar(errors[0]);
     // console.log(errors);
   }
@@ -110,24 +113,6 @@ class NewEventForm extends Component {
     this.setSearchInputElementReference=this.setSearchInputElementReference.bind(this);
   }
 
-  setSearchInputElementReference(inputReference) {
-    this.searchInputElement = inputReference;
-  }
-
-  updateMinDate(date){
-    this.setState({...this.state, minDate:date});
-  }
-
-  updateMap(isGeocodingError, foundAddress, position){
-    this.setState({...this.state, isGeocodingError:isGeocodingError, 
-      foundAddress:foundAddress, position:position})
-  }
-
-  setMapElementReference(mapElementReference){
-    this.mapElement = mapElementReference;
-  }
-
-
   componentDidMount() {
     this.map = new google.maps.Map(this.mapElement, {
         zoom: INITIAL_MAP_ZOOM_LEVEL,
@@ -153,6 +138,135 @@ class NewEventForm extends Component {
     this.geocoder = new google.maps.Geocoder();
     this.refs.title.focus()
     //console.log(this.map,this.marker, this.geocoder);
+  }
+
+  render() {
+    const { handleSubmit, pristine, reset, submitting, user, postEvents, showSnackbar } = this.props;
+    //const {userId} = user.userObject; 
+    const { id } = this.props.homeGroupDetails.homeGroupDetails;
+
+    //getting event id
+    //const {eventId} = 
+
+    const submitHandler = handleSubmit(
+      newEventForm(
+        reset, 
+        this.props.user.userObject.id, 
+        this.state.isGeocodingError,
+        this.state.foundAddress, 
+        this.state.position, 
+        id, 
+        postEvents, 
+        showSnackbar));
+
+    return (
+      <form onSubmit={ submitHandler }>
+      <h1>{id ? 'Edit event' : 'New event'}</h1>
+
+      <div className="row center-xs">
+        <div className="col-xs-11 col-md-8">
+          <Field name="title" component={TextField} fullWidth
+          ref="title"
+          floatingLabelText="Event Title" floatingLabelStyle={{left: 0}}
+          errorStyle={{ textAlign: 'left' }}
+          multiLine={false} />
+        </div>
+      </div>
+      <div className="row center-xs">
+        <div className="col-xs-11 col-md-8">
+          <Field name="details" component={TextField} fullWidth
+          floatingLabelText="Event Details" floatingLabelStyle={{left: 0}}
+          errorStyle={{ textAlign: 'left' }}
+          multiLine rows={3}/>
+        </div>
+      </div>
+
+      <div className="row center-xs">
+      <div className="col-xs-12 col-md-4">
+      <div className="row center-xs">
+        <div className="col-xs-4">
+        <h5>Start Date/Time</h5>
+        </div>
+        <div className="col-xs-4">
+          <Field name="startDate" component={StartDatePick} 
+          errorStyle={{ textAlign: 'left' }}
+          updateMinDate={this.updateMinDate}/>
+        </div>
+        <div className="col-xs-4">
+          <Field name="startTime" component={StartTimePick}
+          errorStyle={{ textAlign: 'left' }}/>
+        </div>
+      </div>
+      </div>
+      <div className="col-xs-12 col-md-4">
+      <div className="row center-xs">
+        <div className="col-xs-4">
+        <h5>End Date/Time</h5>
+        </div>
+        <div className="col-xs-4">
+          <Field name="endDate" component={EndDatePick} 
+          errorStyle={{ textAlign: 'left' }}
+          minDate={this.state.minDate}/>
+        </div>
+        <div className="col-xs-4">
+          <Field name="endTime" component={EndTimePick}
+          errorStyle={{ textAlign: 'left' }}/>
+        </div>
+      </div>
+      </div>
+      </div>
+      {/*<GoogleMap
+	    bootstrapURLKeys = {{key:process.env.GOOGLE_MAP_APIKEY}}
+      defaultCenter={this.props.center}
+      defaultZoom={this.props.zoom}></GoogleMap>*/}
+
+      <div className="row center-xs">
+        <div className="col-xs-11 col-md-8">
+          <TextField ref={this.setSearchInputElementReference} hintText="Enter Address"/>
+          <RaisedButton label="Find Address"
+          labelStyle={{fontSize:'1.2rem'}}
+          disabled={submitting} primary
+          onTouchTap={()=>{
+            this.geocodeAddress(this.searchInputElement.refs.component.input.value);
+          }}
+          />
+        </div>
+      </div>
+      
+      <div className="map" ref={this.setMapElementReference}></div>
+      <div>
+        { this.state.isGeocodingError 
+          ? <p className="bg-danger">Address not found.</p>
+          : <p className="bg-info">{this.state.foundAddress}</p>
+        }
+      </div>
+
+      <div className="col-xs-12">
+        <RaisedButton type="submit" label="Submit"
+        labelStyle={{fontSize:'1.2rem'}} style={{margin: '2vh 0 5vh', width: '50%'}}
+        disabled={pristine || submitting} primary
+        />
+      </div>
+
+      </form>
+    )
+  }
+
+  setSearchInputElementReference(inputReference) {
+    this.searchInputElement = inputReference;
+  }
+
+  updateMinDate(date){
+    this.setState({...this.state, minDate:date});
+  }
+
+  updateMap(isGeocodingError, foundAddress, position){
+    this.setState({...this.state, isGeocodingError:isGeocodingError, 
+      foundAddress:foundAddress, position:position})
+  }
+
+  setMapElementReference(mapElementReference){
+    this.mapElement = mapElementReference;
   }
 
   geocodeAddress(address) {
@@ -192,121 +306,6 @@ class NewEventForm extends Component {
 
     }.bind(this));
   }
-
-  render() {
-    const { handleSubmit, pristine, reset, submitting, user, postEvents, showSnackbar } = this.props;
-    //const {userId} = user.userObject; 
-    const {id} = this.props.homeGroupDetails.homeGroupDetails;
-
-    //getting event id
-    //const{eventId} = 
-
-    const submitHandler = handleSubmit(
-      newEventForm(
-        reset, 
-        this.props.user.userObject.id, 
-        this.state.isGeocodingError,
-        this.state.foundAddress, 
-        this.state.position, 
-        id, 
-        postEvents, 
-        showSnackbar));
-
-    return (
-      <form onSubmit={ submitHandler }>
-      <h1>{id ? 'Edit event' : 'New event'}</h1>
-
-      <div className="row center-xs">
-        <div className="col-xs-11 col-md-8">
-          <Field name="title" component={TextField} fullWidth={true}
-          ref="title"
-          floatingLabelText="Event Title" floatingLabelStyle={{left: 0}}
-          errorStyle={{textAlign: "left"}}
-          multiLine={false} />
-        </div>
-      </div>
-      <div className="row center-xs">
-        <div className="col-xs-11 col-md-8">
-          <Field name="details" component={TextField} fullWidth={true}
-          floatingLabelText="Event Details" floatingLabelStyle={{left: 0}}
-          errorStyle={{textAlign: "left"}}
-          multiLine={true} rows={3}/>
-        </div>
-      </div>
-
-      <div className='row center-xs'>
-      <div className='col-xs-12 col-md-4'>
-      <div className="row center-xs">
-        <div className="col-xs-4">
-        <h5>Start Date/Time</h5>
-        </div>
-        <div className="col-xs-4">
-          <Field name="startDate" component={StartDatePick} 
-          errorStyle={{textAlign: "left"}}
-          updateMinDate={this.updateMinDate}/>
-        </div>
-        <div className="col-xs-4">
-          <Field name="startTime" component={StartTimePick}
-          errorStyle={{textAlign: "left"}}/>
-        </div>
-      </div>
-      </div>
-      <div className='col-xs-12 col-md-4'>
-      <div className="row center-xs">
-        <div className="col-xs-4">
-        <h5>End Date/Time</h5>
-        </div>
-        <div className="col-xs-4">
-          <Field name="endDate" component={EndDatePick} 
-          errorStyle={{textAlign: "left"}}
-          minDate={this.state.minDate}/>
-        </div>
-        <div className="col-xs-4">
-          <Field name="endTime" component={EndTimePick}
-          errorStyle={{textAlign: "left"}}/>
-        </div>
-      </div>
-      </div>
-      </div>
-      {/*<GoogleMap
-	    bootstrapURLKeys = {{key:process.env.GOOGLE_MAP_APIKEY}}
-      defaultCenter={this.props.center}
-      defaultZoom={this.props.zoom}></GoogleMap>*/}
-
-      <div className="row center-xs">
-        <div className="col-xs-11 col-md-8">
-          <TextField ref={this.setSearchInputElementReference} hintText="Enter Address"/>
-          <RaisedButton label="Find Address"
-          labelStyle={{fontSize:"1.2rem"}}
-          disabled={submitting} primary={true}
-          onTouchTap={()=>{
-            this.geocodeAddress(this.searchInputElement.refs.component.input.value);
-          }}
-          />
-        </div>
-      </div>
-      
-      <div className="map" ref={this.setMapElementReference}></div>
-      <div>
-      {
-        this.state.isGeocodingError 
-        ? 
-        <p className="bg-danger">Address not found.</p>
-        :
-        <p className="bg-info">{this.state.foundAddress}</p>
-      }
-      </div>
-
-      <div className="col-xs-12">
-        <RaisedButton type="submit" label="Submit"
-        labelStyle={{fontSize:"1.2rem"}} style={{margin: "2vh 0 5vh", width: "50%"}}
-        disabled={pristine || submitting} primary={true}
-        />
-      </div>
-
-      </form>
-    )
-  }
 }
 
 class StartDatePick extends React.Component{
@@ -317,12 +316,12 @@ class StartDatePick extends React.Component{
       minDate:minDate
     }
   }
-  render(){
+  render() {
     const {value,onChange} = this.props.input;
-    const{updateMinDate}=this.props;
+    const {updateMinDate}=this.props;
     return(
       <DatePicker 
-      className='new-event-date-chooser' 
+      className="new-event-date-chooser" 
       hintText="Start Date"
       onChange={(x,newdate)=>{
         onChange(newdate);
@@ -335,11 +334,11 @@ class StartDatePick extends React.Component{
 }
 
 class StartTimePick extends React.Component{
-  render(){
+  render() {
     const {value,onChange} = this.props.input
     return(
       <TimePicker 
-      className='new-event-time-chooser' 
+      className="new-event-time-chooser" 
       hintText="Start Time"
       onChange={(x,newdate)=>{
         onChange(newdate);
@@ -349,12 +348,12 @@ class StartTimePick extends React.Component{
 }
 
 class EndDatePick extends React.Component{
-  render(){
+  render() {
     const {value,onChange} = this.props.input;
-    const{minDate} = this.props;
+    const {minDate} = this.props;
     return(
       <DatePicker 
-      className='new-event-date-chooser' 
+      className="new-event-date-chooser" 
       hintText="End Date" 
       onChange={(x,newdate)=>{
         onChange(newdate);
@@ -366,11 +365,11 @@ class EndDatePick extends React.Component{
 }
 
 class EndTimePick extends React.Component{
-  render(){
+  render() {
     const {value,onChange} = this.props.input
     return(
       <TimePicker 
-      className='new-event-time-chooser' 
+      className="new-event-time-chooser" 
       hintText="End Time" 
       onChange={(x,newdate)=>{
         onChange(newdate);
@@ -384,8 +383,6 @@ NewEventForm.propTypes = {
   postEvents: PropTypes.func.isRequired,
   showSnackbar: PropTypes.func.isRequired
 };
-
-
 
 export default reduxForm({
   form: 'newEventForm'

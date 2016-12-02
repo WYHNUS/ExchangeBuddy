@@ -9,6 +9,8 @@ import ChildComponent from './SubmitForm';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import { updateGroupMessageFromSocket } from 'actions/home';
+
 const mapDispatchToProps = (dispatch) => {
 	return {
 		updateGroupMessageFromSocket:(message)=>{

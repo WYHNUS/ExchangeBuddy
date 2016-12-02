@@ -86,8 +86,8 @@ class WikiDetails extends React.Component {
 
 const mapStateToProps = (state) => {
 	return{
-		wikiTitle: state.routing.locationBeforeTransitions.pathname.split("/")[3],
-		sectionIndex: parseInt(state.routing.locationBeforeTransitions.pathname.split("/")[4]),
+		wikiTitle: state.routing.locationBeforeTransitions.pathname.split('/')[3],
+		sectionIndex: parseInt(state.routing.locationBeforeTransitions.pathname.split('/')[4]),
 		wiki: state.wiki
 	};
 }

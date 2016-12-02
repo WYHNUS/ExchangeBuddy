@@ -22,7 +22,7 @@ export const getAvatarUrl = (user, size=64) => {
   //console.log(user);
 
   if (!user)
-    return "";
+    return '';
 
   const profilePictureUrl = user.profilePictureUrl;
   const fbUserId = user.fbUserId;

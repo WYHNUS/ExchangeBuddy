@@ -6,63 +6,63 @@ import ProfilePaper from '../components/ProfilePaper';
 
 class Profile extends React.Component{
 
-	isBaseProfilePage() {
-  		let urlFmt = window.location.pathname.substring(1).toLowerCase();
-  		let urlArr = urlFmt.split('/');
-		
-		if (urlArr.length > 1) {
-			
-			if(urlArr[1]==="me"){
-				return true;
-			}
-		}
+  componentDidMount() {
+    
+    if(!this.isBaseProfilePage()){
+      this.props.toggleTopBarSettingsButtonVisibility(false);
+      this.props.toggleTopBarBackButtonVisibility(true);
+    }else{
+      this.props.toggleTopBarSettingsButtonVisibility(true);
+      this.props.toggleTopBarBackButtonVisibility(false);
+    }
 
-		else{
-			return false;
-		}
-	}
+    this.props.toggleBottomBarVisibility(true);
+    this.props.toggleTopBarVisibility(true);
+    
+  }
+  componentWillUnmount(){
+    this.props.toggleTopBarSettingsButtonVisibility(false);
+    this.props.toggleTopBarBackButtonVisibility(false);
+  }
 
-	componentDidMount() {
-		
-		if(!this.isBaseProfilePage()){
-			this.props.toggleTopBarSettingsButtonVisibility(false);
-			this.props.toggleTopBarBackButtonVisibility(true);
-		}else{
-			this.props.toggleTopBarSettingsButtonVisibility(true);
-			this.props.toggleTopBarBackButtonVisibility(false);
-		}
+  render() {
+    return (
+      <div>
+        <ProfilePaper userId={ this.props.user.userId } />
+      </div>
+    );
+  }
 
-		this.props.toggleBottomBarVisibility(true);
-		this.props.toggleTopBarVisibility(true);
-		
-	}
-	componentWillUnmount(){
-		this.props.toggleTopBarSettingsButtonVisibility(false);
-		this.props.toggleTopBarBackButtonVisibility(false);
-	}
+  isBaseProfilePage() {
+      let urlFmt = window.location.pathname.substring(1).toLowerCase();
+      let urlArr = urlFmt.split('/');
+    
+    if (urlArr.length > 1) {
+      
+      if(urlArr[1]==='me'){
+        return true;
+      }
+    }
 
-	render() {
-		return (
-			<div>
-				<ProfilePaper userId={ this.props.user.userId } />
-			</div>
-		);
-	}
+    else{
+      return false;
+    }
+  }
 
 }
 const mapDispatchToProps = (dispatch) => {
-	return {
-		toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility)),
-		toggleTopBarVisibility: visibility=>dispatch(toggleTopBarVisibility(visibility)),
-		toggleTopBarSettingsButtonVisibility: visibility=>dispatch(toggleTopBarSettingsButtonVisibility(visibility)),
-		toggleTopBarBackButtonVisibility: visibility=>dispatch(toggleTopBarBackButtonVisibility(visibility))
-	};
+  return {
+    toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility)),
+    toggleTopBarVisibility: visibility=>dispatch(toggleTopBarVisibility(visibility)),
+    toggleTopBarSettingsButtonVisibility: visibility=>dispatch(toggleTopBarSettingsButtonVisibility(visibility)),
+    toggleTopBarBackButtonVisibility: visibility=>dispatch(toggleTopBarBackButtonVisibility(visibility))
+  };
 };
 
 const mapStateToProps = (state )=>{
-	return{
-		user: state.user.userObject
-	};
+  return{
+    user: state.user.userObject
+  };
 }
 
 

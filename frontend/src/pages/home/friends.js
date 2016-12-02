@@ -12,32 +12,32 @@ import Spinner from 'react-spinkit';
 
 class Friends extends React.Component{
 
-	componentWillMount(){
-		this.props.toggleHomeTab('friends');
-	}
+  componentWillMount(){
+    this.props.toggleHomeTab('friends');
+  }
 
-	render(){
+  render(){
 
-		const { loading, error } = this.props.homeGroupDetails;
+    const { loading, error } = this.props.homeGroupDetails;
 
 
-	    if(loading) {
-	      return <Spinner spinnerName="circle" />      
-	    } else if(error) {
-	      return <div className="alert alert-danger">Error: {error.message}</div>
-	    }
+      if(loading) {
+        return <Spinner spinnerName="circle" />      
+      } else if(error) {
+        return <div className="alert alert-danger">Error: {error.message}</div>
+      }
 
-		return(
+    return(
 
-		<div className="friends-container">
-		<GroupIndicator/>
-		<MemberList />
-		<FBButtons/>
-		<GroupButtons/>
-		</div>
+    <div className="friends-container">
+    <GroupIndicator/>
+    <MemberList />
+    <FBButtons/>
+    <GroupButtons/>
+    </div>
 
-		);
-	}
+    );
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -47,9 +47,9 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = (state)=>{
-	return {
-		homeGroupDetails: state.home.homeGroupDetails,
-	};
+  return {
+    homeGroupDetails: state.home.homeGroupDetails,
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Friends);

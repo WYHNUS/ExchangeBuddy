@@ -10,14 +10,6 @@ import { EditableField } from '../EditableField';
 var tmpId = -1;
 
 class StoryForm extends React.Component {
-  submitForm(val) {
-    this.props.uploadContent(val.storyTitle, this.props.storyDetails.content, this.props.user.id);
-  }
-
-  handleEditorChange(e) {
-    this.props.saveContent(e.target.getContent());
-  }
-
   render() {
     const { storyDetails, handleSubmit, error, uploading, published } = this.props;
     
@@ -45,31 +37,39 @@ class StoryForm extends React.Component {
         />
 
         { uploading ?
-          <div className="row center-md center-xs" style={{marginTop: "15px"}}>
+          <div className="row center-md center-xs" style={{ marginTop: 15 }}>
             <p> Posting your story ... </p>
           </div>
           : null
         }
         { error ?
-          <div className="row center-md center-xs" style={{marginTop: "15px"}}>
+          <div className="row center-md center-xs" style={{ marginTop: 15 }}>
             <p> An error has occurred. </p>
           </div>
           : null
         }
         { published ?
-          <div className="row center-md center-xs" style={{marginTop: "15px"}}>
+          <div className="row center-md center-xs" style={{ marginTop: 15 }}>
             <p> Your story has been posted successfully. :) </p>
           </div>
           : null
         }
 
-        <div className="row center-md center-xs" style={{marginTop: "18px"}}>
+        <div className="row center-md center-xs" style={{ marginTop: 18 }}>
           <Col xs={8} md={3} className="info-container-col">
             <RaisedButton className="raised-btn" label="Submit" primary={true} type="submit" style={{ margin: 6 }}/>
           </Col>
         </div>
       </form>
     );
+  }
+
+  submitForm(val) {
+    this.props.uploadContent(val.storyTitle, this.props.storyDetails.content, this.props.user.id);
+  }
+
+  handleEditorChange(e) {
+    this.props.saveContent(e.target.getContent());
   }
 }
 

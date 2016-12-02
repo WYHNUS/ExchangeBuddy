@@ -5,8 +5,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Spinner from 'react-spinkit';
 import { browserHistory } from 'react-router';
 
-import EventItemMu from './EventItemMu';
-import EventItemFb from './EventItemFb';
 import EventItemCreated from './EventItemCreated';
 
 export default class EventsList extends React.Component {

@@ -42,7 +42,7 @@ export function verifyToken(token) {
       .end(function(err,res){
         // console.log(res);
         // console.log(err);
-        if(res.body.status === "success"){
+        if(res.body.status === 'success'){
           dispatch(verifyTokenSuccess(res.body.user, res.body.token));
         } else {
           dispatch(verifyTokenFail(res.body.message));

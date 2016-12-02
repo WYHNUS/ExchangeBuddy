@@ -3,7 +3,7 @@ import { reduxForm, Field } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 import IconButton from 'material-ui/IconButton';
 import { TextFormField } from '../../../Field';
-import $ from "jquery";
+import $ from 'jquery';
 
 import * as UserHelper from '../../../../util/user';
 
@@ -21,13 +21,13 @@ const submitForm = (callback, socket, updateGroupMessageFromSocket) => (values) 
 };
 
 const handleKeyPress = (submitHandler) => (event) => {
-  if (event.key == "Enter" && !event.shiftKey && !event.ctrlKey && !event.altKey)
+  if (event.key == 'Enter' && !event.shiftKey && !event.ctrlKey && !event.altKey)
     submitHandler();
 };
 
 class SubmitForm extends Component {
   componentDidMount() {
-    $(".message-send-field").focus();
+    $('.message-send-field').focus();
   }
 
   render() {
@@ -47,9 +47,9 @@ class SubmitForm extends Component {
             name="message"
             component={TextField}
             floatingLabelText="Say something..."
-            floatingLabelFixed={true}
+            floatingLabelFixed
             autoComplete="off"
-            multiLine={true}
+            multiLine
             onKeyPress={ handleKeyPress(submitHandler) }
             rows={2} />
 

@@ -1,10 +1,12 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import cookie from 'react-cookie';
+import { clearUser } from 'actions/authActions';
+
 import { showSnackbar } from '../../actions/messageSnackbar';
 import { pageVisibility } from '../../actions/pageVisibility';
-import {toggleHomeTab, fetchEvents, fetchEventsFailure, fetchEventsSuccess} from '../../actions/home';
+import { toggleHomeTab, fetchEvents, fetchEventsFailure, fetchEventsSuccess } from '../../actions/home';
 import RaisedButton from 'material-ui/RaisedButton';
 import MenuItem from 'material-ui/MenuItem';
 import { browserHistory } from 'react-router';
@@ -21,9 +23,12 @@ const items = [
   <MenuItem key={3} value={3} primaryText="Most Comments" />
 ];
 
+class Events extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: 1};
+  }
 
-
-class Events extends React.Component{
 	componentWillMount(){
     this.props.toggleHomeTab('events')
 		//fetchHomeEvenets(groupId)
@@ -48,15 +53,7 @@ class Events extends React.Component{
     }
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {value: 1};
-  }
-
-  handleChange = (event, index, value) => this.setState({value});
-
-
-  render(){
+  render() {
 
     const { homeGroupDetails } = this.props.homeGroupDetails;
     const {id} = this.props.homeGroupDetails.homeGroupDetails;
@@ -72,24 +69,24 @@ class Events extends React.Component{
           (userPartOfGroup)?
           (
             <div>
-            <div className='row center-xs'>
-            <div className='col-xs event-item-button'>
+            <div className="row center-xs">
+            <div className="col-xs event-item-button">
             <RaisedButton
             className="event-item-button-add"
-            label='New Event'
+            label="New Event"
             onTouchTap={ () => browserHistory.push(`/home/${id}/events/new`)}
             secondary={true}
-            icon={IconsHelper.materialIcon("add")}/>
+            icon={IconsHelper.materialIcon('add')}/>
             </div>
             </div>
-            <div className='row center-xs'>
+            <div className="row center-xs">
             <EventList source="Created"/>
             </div>
             </div>
           )
           :
           (
-            <div className='row center-xs'>
+            <div className="row center-xs">
               <h2>Join the group to see and join events!</h2>
             </div>
           )
@@ -99,10 +96,12 @@ class Events extends React.Component{
 
      );
   }
+
+  handleChange = (event, index, value) => this.setState({value});
 }
 
 const mapStateToProps = (state )=>{
-  return{
+  return {
     homeGroupDetails: state.home.homeGroupDetails,
     user: state.user.userObject,
     homeEvents: state.home.homeEvents,
@@ -126,7 +125,7 @@ const mapDispatchToProps = (dispatch) => {
         }, (err) => {
           if (err.status === 401) {
             cookie.remove('authToken');
-            dispatch(clearUser());
+            // dispatch(clearUser());
             // need to redirect to a new version of login page
             browserHistory.push('/');
           } else {

@@ -14,16 +14,16 @@ export default class GroupIndicator extends React.Component {
     return(
       <div>
         
-        <div className='row middle-xs'>
+        <div className="row middle-xs">
           {
             (!userPartOfGroup)?
             (
-              <div className='col-xs-12'>
+              <div className="col-xs-12">
               <h2>These students are in this group</h2>
               </div>
             ):
             (
-              <div className='col-xs-12'>
+              <div className="col-xs-12">
               <h2>These students are in the same group as you.</h2>
               <h3>Find friends, start chatting, or organize events!</h3>
               </div>

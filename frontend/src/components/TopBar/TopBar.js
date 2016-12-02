@@ -13,55 +13,7 @@ import FlatButton from 'material-ui/FlatButton';
 const src = require('../../static/ExchangeBuddyMini.png');
 
 class TopBar extends Component {
-
-	navigateBack(){
-		browserHistory.goBack();
-	}
-
-  getIconElementLeft(){
-
-    const{topBarSettingsButton, topBarBackButtonVisibility} = this.props.pageVisibility;
-
-    if((topBarSettingsButton)&&(!topBarBackButtonVisibility)){
-      return (
-        <IconButton
-        onClick={()=>browserHistory.push('/settings')}>
-        {IconsHelper.materialIcon("settings")}
-        </IconButton>
-        )
-
-    }else if ((!topBarSettingsButton)&&(topBarBackButtonVisibility)){
-      return(
-        <IconButton
-        onClick={this.navigateBack}>
-        {IconsHelper.materialIcon("chevron_left")}
-        </IconButton>
-        )
-
-    }else{
-      return (<div style={{margin:"24px"}}></div>)
-    }
-  }
-
-  getIconElementRight(){
-
-    const{homeSearchDrawerOpenButtonVisibility} = this.props.pageVisibility
-
-    if(homeSearchDrawerOpenButtonVisibility){
-      return(
-        <FlatButton
-        className='flat-button-top' 
-        label="Groups"
-        onClick={()=>this.props.toggleHomeSearchDrawerVisibility(true)}
-        />
-        )
-
-    }else{
-      return (<div style={{marginLeft:"44px",marginRight:"44px",marginTop:"24px", marginBottom:"24px"}}></div>)
-    }
-  }
-
-  render(){
+  render() {
 
     const appClass = classNames({
       'back-btn': this.props.pageVisibility.topBarSettingsButton,
@@ -76,7 +28,7 @@ class TopBar extends Component {
         (<AppBar
           className={appClass}
           title={<span id="app-title">{<img src={src}/>}</span>}
-          style={{textAlign:"center"}}
+          style={{textAlign:'center'}}
           iconElementLeft={ this.getIconElementLeft() }
           iconElementRight={ this.getIconElementRight()}
           showMenuIconButton={true}
@@ -88,6 +40,51 @@ class TopBar extends Component {
       </div>
       )
   }
+
+  navigateBack() {
+    browserHistory.goBack();
+  }
+
+  getIconElementLeft() {
+
+    const{topBarSettingsButton, topBarBackButtonVisibility} = this.props.pageVisibility;
+
+    if((topBarSettingsButton)&&(!topBarBackButtonVisibility)){
+      return (
+        <IconButton
+        onClick={()=>browserHistory.push('/settings')}>
+        {IconsHelper.materialIcon('settings')}
+        </IconButton>
+        )
+
+    }else if ((!topBarSettingsButton)&&(topBarBackButtonVisibility)){
+      return(
+        <IconButton
+        onClick={this.navigateBack}>
+        {IconsHelper.materialIcon('chevron_left')}
+        </IconButton>
+        )
+
+    }else{
+      return (<div style={{ margin: 24 }}></div>)
+    }
+  }
+
+  getIconElementRight() {
+    const { homeSearchDrawerOpenButtonVisibility } = this.props.pageVisibility;
+
+    if (homeSearchDrawerOpenButtonVisibility) {
+      return (
+        <FlatButton
+        className="flat-button-top"
+        label="Groups"
+        onClick={ () => this.props.toggleHomeSearchDrawerVisibility(true) } />
+      );
+    } else {
+      return <div style={{ marginLeft: 44, marginRight: 44, marginTop: 24,  marginBottom: 24 }}></div>;
+    }
+  }
+
 }
 
 TopBar.propTypes = {

@@ -19,8 +19,8 @@ const styles = {
   },
 
   gridList: {
-    width: "100%",
-    margin: "0 auto",
+    width: '100%',
+    margin: '0 auto',
   },
 };
 
@@ -47,8 +47,8 @@ export default class MemberList extends React.Component {
     return(
       <div>
 
-        <div className='row start-xs'>
-          <div className='col-xs-12'>
+        <div className="row start-xs">
+          <div className="col-xs-12">
             { homeGroupDetails.user.map((user, idx) => <MemberTile key={ idx } user={ user } />) }
           </div>
         </div>

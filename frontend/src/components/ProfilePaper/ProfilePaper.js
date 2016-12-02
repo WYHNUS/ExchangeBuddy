@@ -19,7 +19,7 @@ import{ fetchProfile } from '../../actions/profile';
 import * as IconsHelper from '../../util/icons';
 
 const text_header_style = {
-  fontSize: "-webkit-xxx-large",
+  fontSize: '-webkit-xxx-large',
   fontWeight: 300,
 };
 
@@ -29,9 +29,9 @@ function urlToUserid(userId) {
   //that means user specified a profile id number
   //if not, return the user's default profile id number
   if (urlArr.length > 1) {
-    if(urlArr[1]==="me"){
+    if (urlArr[1] === 'me'){
       return userId;
-    }else{
+    } else {
       return urlArr[1];  
     }
   } else {
@@ -127,10 +127,10 @@ export default class ProfilePaper extends React.Component {
 
     return (
       <div>
-      <div id='profile-buffer'></div>
+      <div id="profile-buffer"></div>
       <div id="profile-paper">
 
-      <div className='row'>
+      <div className="row">
       <div className="col-xs-12 profile-pic">
       {UserHelper.getAvatar(profile, 100)}
       </div>
@@ -139,7 +139,7 @@ export default class ProfilePaper extends React.Component {
       </div>
       </div>
 
-      <div className='row center-xs'>
+      <div className="row center-xs">
       {
         profile.fbUserId?
         (
@@ -160,11 +160,11 @@ export default class ProfilePaper extends React.Component {
       }
       </div>
 
-      <div className='row center-xs'>
+      <div className="row center-xs">
       
-      <div className='col-xs-12 col-md-6'>
-      <div className='university-details'>
-      <div className='university-header'>Home University</div>
+      <div className="col-xs-12 col-md-6">
+      <div className="university-details">
+      <div className="university-header">Home University</div>
       { 
         this.props.profile.University?
         (profile.University.name):
@@ -173,9 +173,9 @@ export default class ProfilePaper extends React.Component {
       </div>
       </div>
 
-      <div className='col-xs-12 col-md-6'>
-      <div className='university-details'>
-      <div className='university-header'>Exchange University</div>
+      <div className="col-xs-12 col-md-6">
+      <div className="university-details">
+      <div className="university-header">Exchange University</div>
       {
         this.state.exchangeUniListLoaded? 
         (this.state.exchangeUniList.map((uni, idx) => <div key={idx}>{uni.name}</div>)):
@@ -186,14 +186,14 @@ export default class ProfilePaper extends React.Component {
 
       
 
-      <div className='col-xs-12 col-md-6'>
-      <div className='university-details'>
-      <div className='university-header'>Groups</div>
+      <div className="col-xs-12 col-md-6">
+      <div className="university-details">
+      <div className="university-header">Groups</div>
       {
         (profileGroups.length>0)?
         (
           profileGroups.map((group,idx)=>
-          <div id="profilegroup" key={idx} className='col-xs-12'>
+          <div id="profilegroup" key={idx} className="col-xs-12">
           {group.name}
           </div>)
         )
@@ -205,21 +205,24 @@ export default class ProfilePaper extends React.Component {
       </div>
 
       {
-        (urlToUserid(userObject.id)===userObject.id)?
-        (
-          <div className='row center-xs edit-profile-container'>
-          <div className='col-xs-10 col-md-4'>
-          <RaisedButton className='edit-profile-button' primary={true} 
-          label="Edit Profile" onTouchTap={(e)=>{e.preventDefault();browserHistory.push("/profile/me/edit")}}/>
+        urlToUserid(userObject.id) === userObject.id
+        ? <div className="row center-xs edit-profile-container">
+            <div className="col-xs-10 col-md-4">
+              <RaisedButton 
+                primary 
+                className="edit-profile-button"
+                label="Edit Profile" 
+                onTouchTap={(e)=>{e.preventDefault();browserHistory.push('/profile/me/edit')}}/>
+            </div>
+            <div className="col-xs-10 col-md-4">
+              <RaisedButton 
+                primary
+                className="edit-profile-button"
+                label="Edit Universities" 
+                onTouchTap={(e)=>{e.preventDefault();browserHistory.push('/profile/me/editUni')}}/>
+            </div>
           </div>
-          <div className='col-xs-10 col-md-4'>
-          <RaisedButton className='edit-profile-button' primary={true} 
-          label="Edit Universities" onTouchTap={(e)=>{e.preventDefault();browserHistory.push("/profile/me/editUni")}}/>
-          </div>
-          </div>
-          )
-        :
-        null
+        : null
       }
 
       </div>

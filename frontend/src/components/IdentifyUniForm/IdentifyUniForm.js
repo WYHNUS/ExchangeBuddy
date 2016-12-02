@@ -24,25 +24,15 @@ export default class IdentifyUniForm extends React.Component {
     this.props.fetchAllUniversities();
   }
 
-  handleExpandChange1 = (expanded) => {
-    this.setState({expanded1: expanded});
-  };
-  handleExpandChange2 = (expanded) => {
-    this.setState({expanded2: expanded});
-  };
-  handleExpandChange3 = (expanded) => {
-    this.setState({expanded3: expanded});
-  };
-
   render() {
     // Year of exchange
     const year = new Date().getFullYear();
     const goingYears = [];
     const doneYears = [];
-    for (var i=year-1; i<year+4; i++) {
+    for (let i=year-1; i<year+4; i++) {
       goingYears.push(i);
     }
-    for (var i=year-5; i<=year; i++) {
+    for (let i=year-5; i<=year; i++) {
       doneYears.push(i);
     }
 
@@ -90,4 +80,14 @@ export default class IdentifyUniForm extends React.Component {
       </div>
     );
   }
+
+  handleExpandChange1 = (expanded) => {
+    this.setState({expanded1: expanded});
+  };
+  handleExpandChange2 = (expanded) => {
+    this.setState({expanded2: expanded});
+  };
+  handleExpandChange3 = (expanded) => {
+    this.setState({expanded3: expanded});
+  };
 }

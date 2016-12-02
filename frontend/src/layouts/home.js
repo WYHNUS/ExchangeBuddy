@@ -70,12 +70,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility)),
     toggleTopBarVisibility: visibility=>dispatch(toggleTopBarVisibility(visibility)),
-    toggleHomeSearchDrawerOpenButtonVisibility:visibility=>dispatch
-    (toggleHomeSearchDrawerOpenButtonVisibility(visibility)),
-    toggleTopBarBackButtonVisibility:visibility=>dispatch
-    (toggleTopBarBackButtonVisibility(visibility)),
-    toggleTopBarSettingsButtonVisibility:visibility=>dispatch
-    (toggleTopBarSettingsButtonVisibility(visibility)),
+    toggleHomeSearchDrawerOpenButtonVisibility:visibility=>dispatch(toggleHomeSearchDrawerOpenButtonVisibility(visibility)),
+    toggleTopBarBackButtonVisibility:visibility=>dispatch(toggleTopBarBackButtonVisibility(visibility)),
+    toggleTopBarSettingsButtonVisibility:visibility=>dispatch(toggleTopBarSettingsButtonVisibility(visibility)),
     fetchMyGroups: (userId) => {
       dispatch(fetchMyGroups(userId)).payload.then((response) => {
         if (!response.error) {

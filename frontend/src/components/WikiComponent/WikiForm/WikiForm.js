@@ -8,87 +8,88 @@ import { EditableField } from '../../EditableField';
 
 
 export default class WikiForm extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        const { title, content } = this.props.section;
-        this.state = {
-            title: title,
-            content: content
-        }
+    const { title, content } = this.props.section;
+    this.state = {
+      title: title,
+      content: content
     }
+  }
 
-    componentWillMount() {
-        const { title, content } = this.props.section;
-        // assign initialValues
-        this.props.initializeForm(title, content);
+  componentWillMount() {
+    const { title, content } = this.props.section;
+    // assign initialValues
+    this.props.initializeForm(title, content);
+  }
+
+  componentDidUpdate() {
+    if (this.props.uploadSuccess) {
+      this.redirectBack();
     }
+  }
 
-    componentDidUpdate() {
-        if (this.props.uploadSuccess) {
-            this.redirectBack();
-        }
-    }
+  render() {
+    const { section, submitting, error, uploadSuccess } = this.props;
 
-    redirectBack() {
-        browserHistory.push('/wiki/' + this.props.wikiName);
-    }
+    return (
+      <div id={ section.WikiSection.name }>
+        <TextField 
+          name="sectionTitle" 
+          floatingLabelText="Title" 
+          value={ this.state.title }
+          onChange={ this.handleTitleChange.bind(this) } />
 
-    submitForm() {
-        const { section, wikiName } = this.props;
-        this.props.createVersion(wikiName, section.WikiSection.sectionIndex, this.state.title, this.state.content);
-    }
+        <EditableField
+          name="sectionContent" 
+          content={ this.state.content }
+          onChange={ this.handleEditorChange.bind(this) } />
 
-    handleTitleChange(e) {
-        this.setState({ title: e.target.value });
-    }
+        {
+          submitting ? 
+          <p>Uploading new version to the server...</p>
+          :
+          error ?
+          error.message ?
+          <p> { error.message } </p>
+          : <p>{ error }</p>
+          : uploadSuccess ?
+          <p>Upload new version successful! :)</p>
+        : null
+      }
 
-    handleEditorChange(e) {
-        this.setState({ content: e.target.getContent() });
-    }
+      <div className="row center-md center-xs" style={{ marginTop: 18 }}>
+        <div>
+          <RaisedButton 
+            primary 
+            className="raised-btn" 
+            label="Save changes" 
+            style={{ marginRight: 18 }}
+            disabled={ submitting }
+            onClick={this.submitForm.bind(this)}
+            />
+            <RaisedButton className="raised-btn" label="Cancel" onClick={this.redirectBack.bind(this)}/>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-    render() {
-        const { section, submitting, error, uploadSuccess } = this.props;
+  redirectBack() {
+    browserHistory.push('/wiki/' + this.props.wikiName);
+  }
 
-        return (
-            <div id={ section.WikiSection.name }>
-                <TextField 
-                    name="sectionTitle" 
-                    floatingLabelText="Title" 
-                    value={ this.state.title }
-                    onChange={ this.handleTitleChange.bind(this) }
-                />
+  submitForm() {
+    const { section, wikiName } = this.props;
+    this.props.createVersion(wikiName, section.WikiSection.sectionIndex, this.state.title, this.state.content);
+  }
 
-                <EditableField
-                    name="sectionContent" 
-                    content={ this.state.content }
-                    onChange={ this.handleEditorChange.bind(this) }
-                />
+  handleTitleChange(e) {
+    this.setState({ title: e.target.value });
+  }
 
-                {
-                    submitting ? 
-                        <p>Uploading new version to the server...</p>
-                    :
-                        error ?
-                            error.message ?
-                                <p> { error.message } </p>
-                            : <p>{ error }</p>
-                        : uploadSuccess ?
-                                <p>Upload new version successful! :)</p>
-                            : null
-                }
-
-                <div className="row center-md center-xs" style={{marginTop: "18px"}}>
-                    <div>
-                        <RaisedButton className="raised-btn" label="Save changes" 
-                            style={{marginRight: "18px"}}
-                            primary={true} disabled={submitting}
-                            onClick={this.submitForm.bind(this)}
-                        />
-                        <RaisedButton className="raised-btn" label="Cancel" onClick={this.redirectBack.bind(this)}/>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+  handleEditorChange(e) {
+    this.setState({ content: e.target.getContent() });
+  }
 }

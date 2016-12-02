@@ -33,7 +33,7 @@ class GroupItem extends React.Component {
             key={group.id}
             className={parseInt(index)===parseInt(selected)?'selected-group':'non-selected-group'}
             primaryText={getName(group.name)}
-            secondaryText={`${getTerm(group.name)} ${getYear(group.name)} | ${group.number} ${group.number==1?("member"):("members")}`}
+            secondaryText={`${getTerm(group.name)} ${getYear(group.name)} | ${group.number} ${ group.number == 1 ? 'member' : 'members' }`}
             onTouchTap={goToGroup}
             />
             ):
@@ -44,7 +44,7 @@ class GroupItem extends React.Component {
                 key={group.id}
                 className={parseInt(index)===parseInt(selected)?'selected-group':'non-selected-group'}
                 primaryText={getName(group.name)}
-                secondaryText={`${getYear(group.name)} | ${group.number} ${group.number==1?("member"):("members")}`}
+                secondaryText={`${getYear(group.name)} | ${group.number} ${ group.number == 1 ? 'member' : 'members' }`}
                 onTouchTap={()=>goToGroup(group.id)}
                 />
               ):
@@ -53,7 +53,7 @@ class GroupItem extends React.Component {
                 key={group.id}
                 className={parseInt(index)===parseInt(selected)?'selected-group':'non-selected-group'}
                 primaryText={group.name}
-                secondaryText={`${group.number} ${group.number==1?("member"):("members")}`}
+                secondaryText={`${group.number} ${ group.number == 1 ? 'member' : 'members' }`}
                 onTouchTap={goToGroup}
                 />  
               )
@@ -69,16 +69,16 @@ class GroupItem extends React.Component {
       const { groupType } = this.props.group;
       const bSize = 60;
       const cSize = 60; 
-      var uni = "";
+      var uni = '';
       return (
         <div>
         <div className="group-row">
         {
-          groupType === 0 ? <GroupItem {...this.props} heading={"My Exchange University Group"} />
-          : groupType === 1 ? <GroupItem {...this.props} heading={"My Home University Group"}/>
-          : groupType === 2 ? <GroupItem {...this.props} heading={"My Home University Alumni Support Group"}/>
-          : groupType === 3 ? <GroupItem {...this.props} heading={"My Special Group"}/>
-          : groupType === 4 ? <GroupItem {...this.props} heading={"My Exchange Interest Group"}/>
+          groupType === 0 ? <GroupItem {...this.props} heading="My Exchange University Group" />
+          : groupType === 1 ? <GroupItem {...this.props} heading="My Home University Group" />
+          : groupType === 2 ? <GroupItem {...this.props} heading="My Home University Alumni Support Group" />
+          : groupType === 3 ? <GroupItem {...this.props} heading="My Special Group" />
+          : groupType === 4 ? <GroupItem {...this.props} heading="My Exchange Interest Group" />
           : null
         }
         </div>
@@ -116,13 +116,13 @@ GroupList.PropTypes={
 }
 
 function getName(homeGroupDetailsName){
-  return homeGroupDetailsName.trim().split("--")[0].trim();
+  return homeGroupDetailsName.trim().split('--')[0].trim();
 }
 
 function getTerm(homeGroupDetailsName){
-  return homeGroupDetailsName.trim().split("--")[1].trim().split(" ")[2];
+  return homeGroupDetailsName.trim().split('--')[1].trim().split(' ')[2];
 }
 
 function getYear(homeGroupDetailsName){
-  return homeGroupDetailsName.trim().split("--")[1].trim().split(" ")[1];
+  return homeGroupDetailsName.trim().split('--')[1].trim().split(' ')[1];
 }

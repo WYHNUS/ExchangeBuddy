@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { showSnackbar } from '../../../../actions/messageSnackbar';
+import { clearUser } from 'actions/authActions';
 
 const mapDispatchToProps = (dispatch) => {
 	return {

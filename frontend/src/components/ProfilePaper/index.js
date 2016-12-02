@@ -1,6 +1,7 @@
 import React from 'react';
 import Loading from '../Loading';
 import cookie from 'react-cookie';
+import { browserHistory } from 'react-router';
 
 // Redux
 import { bindActionCreators } from 'redux';

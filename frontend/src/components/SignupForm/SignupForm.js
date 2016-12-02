@@ -41,10 +41,6 @@ const validate = (values) => {
 };
 
 class SignupForm extends React.Component {
-  submitForm(val) {
-    this.props.submitSignupForm(val);
-  }
-
   componentDidUpdate() {
     const { isLoggedIn, isAuthenticated, token } = this.props.userAuthData;
     
@@ -62,7 +58,7 @@ class SignupForm extends React.Component {
         <div className="social-network-wrapper">
           {/*<div style={{marginRight: 40}}><p>Social Network Signup :</p></div>*/}
           <div><FacebookLogin
-            appId={ "580995375434079" }
+            appId="580995375434079"
             scope="public_profile"
             fields="name, email"
             callback={ responseFacebook(this.props.attemptFacebookLogin) }
@@ -72,7 +68,7 @@ class SignupForm extends React.Component {
           /></div>
         </div>
 
-        <p className='line-seperator' style={{marginTop: 20}}> or </p>
+        <p className="line-seperator" style={{marginTop: 20}}> or </p>
 
         <form onSubmit={ handleSubmit((values) => {
           this.submitForm(values)
@@ -88,9 +84,9 @@ class SignupForm extends React.Component {
           <PasswordFormField
             name="userConfirmPassword" floatingLabelText="Confirm your password" />
 
-          <div className="row" style={{marginTop: "18px"}}>
+          <div className="row" style={{marginTop: 18}}>
             <div className="info-container-col signup-button-container">
-              <RaisedButton className="raised-btn" label="Continue" primary={true} type="submit" style={{ width: "100%" }}/>
+              <RaisedButton className="raised-btn" label="Continue" primary type="submit" style={{ width: '100%' }}/>
             </div>
           </div>
         </form>
@@ -117,6 +113,10 @@ class SignupForm extends React.Component {
         }
       </div>
     );
+  }
+
+  submitForm(val) {
+    this.props.submitSignupForm(val);
   }
 }
 

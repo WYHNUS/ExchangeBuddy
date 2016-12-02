@@ -8,14 +8,14 @@ import ChildComponent from './TopBar';
 
 const mapStateToProps = (state) => {
   return {
-  	pageVisibility: state.pageVisibility
+    pageVisibility: state.pageVisibility
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-	return {
-		toggleHomeSearchDrawerVisibility: visibility=>dispatch(toggleHomeSearchDrawerVisibility(visibility))
-	};
+  return {
+    toggleHomeSearchDrawerVisibility: visibility=>dispatch(toggleHomeSearchDrawerVisibility(visibility))
+  };
 };
 
 const TopBar = connect(mapStateToProps, mapDispatchToProps)(ChildComponent);

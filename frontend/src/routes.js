@@ -118,7 +118,7 @@ export const getRoutes = (store) =>{
       <Route path=":token" component={ Verify }/>
     </Route>
     <Route path="identifyUniversity" component={ IdentifyUniversity }/>
-    <Route path='settings' component={ Settings }/>
+    <Route path="settings" component={ Settings }/>
     <Route path="*" component={ NotFound }/>
   </Route>
   );

@@ -12,20 +12,20 @@ import { connect } from 'react-redux';
 import stories from '../../../util/storyData';
 
 const mapDispatchToProps = (dispatch) => {
-	return {
-		actions: bindActionCreators({  }, dispatch),
-		fetchAllStories: () => {
-	    	dispatch(fetchAllStories());
-	    }
-	};
+  return {
+    actions: bindActionCreators({  }, dispatch),
+    fetchAllStories: () => {
+        dispatch(fetchAllStories());
+      }
+  };
 };
 
 const mapStateToProps = (state) => {
-	return {
-		stories: state.stories.storyList,
-		//stories: stories,
-		user: state.user.userObject
-	};
+  return {
+    stories: state.stories.storyList,
+    //stories: stories,
+    user: state.user.userObject
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChildComponent);

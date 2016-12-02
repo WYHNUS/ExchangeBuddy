@@ -77,7 +77,7 @@ class WikiDetails extends React.Component{
 
 const mapStateToProps = (state) => {
 	return{
-		wikiTitle: state.routing.locationBeforeTransitions.pathname.split("/")[3],
+		wikiTitle: state.routing.locationBeforeTransitions.pathname.split('/')[3],
 		wiki: state.wiki
 	};
 }

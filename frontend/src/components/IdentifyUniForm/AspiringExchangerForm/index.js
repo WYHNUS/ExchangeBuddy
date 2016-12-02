@@ -1,14 +1,17 @@
 import React from 'react';
+import cookie from 'react-cookie';
+import { browserHistory } from 'react-router';
 
 // Redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import {
-	editUniversities, editUniversitiesSuccess, editUniversitiesFailure
+  editUniversities, editUniversitiesSuccess, editUniversitiesFailure
 } from '../../../actions/profile';
 
 import { showSnackbar } from '../../../actions/messageSnackbar';
+import { clearUser } from 'actions/authActions';
 
 // Component
 import ChildComponent from './AspiringExchangerForm';
@@ -16,7 +19,7 @@ import ChildComponent from './AspiringExchangerForm';
 const mapStateToProps = (state) => {
   return{
     updateStatus: state.user,
-  	user: state.user.userObject,
+    user: state.user.userObject,
     universities: state.utilityInfo.universitiesList.universities
   };
 };

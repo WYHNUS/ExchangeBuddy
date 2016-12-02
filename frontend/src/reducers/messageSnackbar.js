@@ -3,7 +3,7 @@ import {SHOW_SNACKBAR, HIDE_SNACKBAR} from '../actions/messageSnackbar';
 //designing state shape
 const initialState = {
   messageSnackbarOpen: false,
-  messageSnackbarMessage: ""
+  messageSnackbarMessage: ''
 }
 
 export function messageSnackbar(state = initialState, action){
@@ -16,7 +16,7 @@ export function messageSnackbar(state = initialState, action){
     case HIDE_SNACKBAR:
     return Object.assign({}, state, {
       messageSnackbarOpen: false,
-      messageSnackbarMessage: ""
+      messageSnackbarMessage: ''
     })
     default:
       return state;
