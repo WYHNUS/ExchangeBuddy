@@ -1,6 +1,6 @@
 var request = require('superagent');
 
-export const ROOT_URL = process.env.SERVER_NAME;
+export const ROOT_URL = process.env.API_ROOT_URL;
 
 function defaultPromise(req){
   return new Promise(function(resolve, reject) {
