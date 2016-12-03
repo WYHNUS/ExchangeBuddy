@@ -3,6 +3,8 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var DotenvPlugin = require('webpack-dotenv-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 
 module.exports = {
@@ -41,9 +43,13 @@ module.exports = {
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
+    new DotenvPlugin({
+      sample: path.join(__dirname, '../.env.example'),
+      path: path.join(__dirname, '../.env')
+    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
-    })
+    }),
   ],
   devServer: {
     historyApiFallback: true,

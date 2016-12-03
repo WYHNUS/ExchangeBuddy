@@ -46,6 +46,10 @@ module.exports = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
+    new DotenvPlugin({
+      sample: path.join(__dirname, '../.env.example'),
+      path: path.join(__dirname, '../.env')
+    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     })
