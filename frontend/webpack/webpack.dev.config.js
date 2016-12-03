@@ -40,6 +40,7 @@ module.exports = {
       template: path.join(__dirname, '../src/index.html'),
       inject: 'body',
       filename: 'index.html',
+      favicon: path.join(__dirname, '../src/static/android-chrome-512x512.png'),
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
