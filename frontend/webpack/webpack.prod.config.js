@@ -75,7 +75,7 @@ module.exports = {
       exclude: /flexboxgrid/,
     }, {
       test: /\.css$/,
-      loader: 'style!css?modules',
+      loader: 'style!css?sourceMap&-minimize',
       include: /flexboxgrid/,
     }, {
       test: /\.(png|jpg|gif)$/,
