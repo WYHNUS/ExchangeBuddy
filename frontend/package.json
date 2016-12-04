@@ -18,7 +18,9 @@
     "dev": "better-npm-run dev",
     "build": "better-npm-run build",
     "tar:staging": "better-npm-run tar:staging",
-    "tar:prod": "better-npm-run tar:prod"
+    "tar:prod": "better-npm-run tar:prod",
+    "deploy:staging": "better-npm-run deploy:staging",
+    "deploy:prod": "better-npm-run deploy:prod"
   },
   "betterScripts": {
     "dev": {
@@ -47,7 +49,9 @@
         "NODE_ENV": "production",
         "DEBUG": "app:*"
       }
-    }
+    },
+    "deploy:staging": "./sh/deploy.sh exchangebuddy-staging /home/ubuntu/www staging",
+    "deploy:prod": "./sh/deploy.sh exchangebuddy-prod /var/www/ExchangeBuddy prod"
   },
   "repository": {
     "type": "git",
