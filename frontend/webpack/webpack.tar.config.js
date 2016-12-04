@@ -54,7 +54,7 @@ module.exports = {
       path: path.join(__dirname, '../.env.' + process.env.NODE_ENV)
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      'process.env.NODE_ENV': JSON.stringify('production')
     }),
     new TarGzPlugin(function(tarGzStream) {
       tarGzStream.pipe(require('fs').createWriteStream('build/build.' + process.env.NODE_ENV + '.tar.gz'));
