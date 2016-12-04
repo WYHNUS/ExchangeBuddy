@@ -11,10 +11,11 @@ coverage
 
 # misc
 .DS_Store
-.env
+.env**
 npm-debug.log.*
 
 # intelliJ
 .idea
 
 dist/
+build/

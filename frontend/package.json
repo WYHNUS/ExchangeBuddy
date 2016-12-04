@@ -16,7 +16,9 @@
   "scripts": {
     "clean": "rimraf dist",
     "dev": "better-npm-run dev",
-    "build": "better-npm-run build"
+    "build": "better-npm-run build",
+    "tar:staging": "better-npm-run tar:staging",
+    "tar:prod": "better-npm-run tar:prod"
   },
   "betterScripts": {
     "dev": {
@@ -27,6 +29,20 @@
     },
     "build": {
       "command": "webpack -p  --progress --colors --config webpack/webpack.prod.config.js && [ -d 'dist_build' ] && rm -rf dist/ && mv dist_build/ dist/",
+      "env": {
+        "NODE_ENV": "production",
+        "DEBUG": "app:*"
+      }
+    },
+    "tar:staging": {
+      "command": "webpack -p  --progress --colors --config webpack/webpack.tar.config.js",
+      "env": {
+        "NODE_ENV": "staging",
+        "DEBUG": "app:*"
+      }
+    },
+    "tar:prod": {
+      "command": "webpack -p  --progress --colors --config webpack/webpack.tar.config.js",
       "env": {
         "NODE_ENV": "production",
         "DEBUG": "app:*"
@@ -151,6 +167,7 @@
     "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "^1.15.1",
     "webpack-dotenv-plugin": "^1.4.0",
-    "webpack-hot-middleware": "^2.12.2"
+    "webpack-hot-middleware": "^2.12.2",
+    "webpack-tar-gz-plugin": "0.0.4"
   }
 }
