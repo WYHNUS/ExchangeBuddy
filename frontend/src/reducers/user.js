@@ -3,16 +3,16 @@ import {
   Clicked_Logout, Logout_Success,
   VERIFY_TOKEN_SUCCESS, VERIFY_TOKEN_FAIL,
   Navigate_Away_From_Auth_Form, CLEAR_USER
-} from '../actions/authActions';
+} from 'actions/authActions';
 
 import {
   UPDATE_USER_PROFILE, SAVE_SIGNUP_INFO,
   CLICKED_SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAIL
-} from '../actions/user';
+} from 'actions/user';
 
 import {
   EDIT_UNIVERSITIES, EDIT_UNIVERSITIES_SUCCESS, EDIT_UNIVERSITIES_FAILURE, EDIT_PROFILE_SUCCESS
-} from '../actions/profile';
+} from 'actions/profile';
 
 const initialState = {
   isAuthenticated: false,

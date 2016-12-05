@@ -3,16 +3,6 @@ import { Link as ReactLink } from 'react-router';
 import FlatButton from 'material-ui/FlatButton';
 
 export default class Link extends React.Component {
-  parseTo(to) {
-    let parser = document.createElement('a');
-    parser.href = to;
-    return parser;
-  }
-
-  isInternal(toLocation) {
-    return window.location.host === toLocation.host;
-  }
-
   render() {
     const {to, children, ...rest} = this.props;
     const toLocation = this.parseTo(to);
@@ -23,6 +13,16 @@ export default class Link extends React.Component {
     } else {
       return (<a href={to} target="_blank" {...rest}>{children}</a>);
     }
+  }
+
+  parseTo(to) {
+    let parser = document.createElement('a');
+    parser.href = to;
+    return parser;
+  }
+
+  isInternal(toLocation) {
+    return window.location.host === toLocation.host;
   }
 }
 

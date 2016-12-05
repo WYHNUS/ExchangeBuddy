@@ -4,12 +4,13 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 
+import cookie from 'react-cookie';
 import request from 'superagent';
-import { bearer } from '../../../../util/bearer';
-import { ROOT_URL } from '../../../../util/backend';
-import * as UniversityHelper from '../../../../util/university';
-import * as GroupHelper from '../../../../util/group';
-import {fetchAllUniversities } from '../../../../actions/utilityInfo';
+import { bearer } from 'util/bearer';
+import { ROOT_URL } from 'util/backend';
+import * as UniversityHelper from 'util/university';
+import * as GroupHelper from 'util/group';
+import {fetchAllUniversities } from 'actions/utilityInfo';
 
 export default class GroupButtons extends React.Component {
 
@@ -18,138 +19,22 @@ export default class GroupButtons extends React.Component {
     confirmDeleteOpen:false
   };
 
-  handleNoDeleteOpen = () => {
-    this.setState({noDeleteOpen: true});
-  };
-
-  handleNoDeleteClose = () => {
-    this.setState({noDeleteOpen: false});
-  };
-
-  handleConfirmDeleteOpen = () =>{
-    this.setState({confirmDeleteOpen:true});
-  };
-
-  handleConfirmDeleteClose = () =>{
-    this.setState({confirmDeleteOpen:false});
-  };
-
-  joinGroup(){
-    
-    const { showSnackbar, clearUser, universities, fetchAllUniversitiesFailure,
-      fetchAllUniversitiesSuccess, userObject, addingGroupSuccessUpdate } = this.props;
-    const { homeGroupDetails } = this.props.homeGroupDetails;
-    let homeGroupDetailsId = homeGroupDetails.id;
-
-    const req = request
-      .post(ROOT_URL + '/joinGroup')
-      .send({ 
-        GroupId: homeGroupDetails.id
-      })
-      .use(bearer)
-      .end((err,res)=>{
-        //console.log(res);
-        if (res.status === 401) {
-          cookie.remove('authToken');
-          this.props.clearUser();
-          // need to redirect to a new version of login page
-          browserHistory.push('/');
-        } 
-
-        if (!err && !res.error && homeGroupDetails.id){
-          showSnackbar("Added group!");
-
-          if (universities.length < 2) {
-            
-            fetchAllUniversities().payload.then((response) =>{
-              
-              if(!response.error){
-                fetchAllUniversitiesSuccess(response.data);
-                var newUser = UniversityHelper.insertUniversitiesIntoUser(userObject,universities);
-                addingGroupSuccessUpdate(newUser);    
-              }
-
-              else{
-                fetchAllUniversitiesFailure(response.error);
-                showSnackbar("Error adding group");
-              }
-              
-            });
-
-          }else{
-            var newUser = UniversityHelper.insertUniversitiesIntoUser(userObject,universities);
-            addingGroupSuccessUpdate(newUser);
-          }
-          
-        } else {
-          showSnackbar("Error adding group");
-        }
-      });
-
-  }
-
-  leaveGroup(){
-
-    const { showSnackbar, clearUser, userObject, leavingGroupSuccessUpdate } = this.props;
-    const { homeGroupDetails } = this.props.homeGroupDetails;
-
-    const req = request
-      .post(ROOT_URL + '/leaveGroup')
-      .send({ 
-        GroupId: homeGroupDetails.id
-      })
-      .use(bearer)
-      .end((err,res)=>{
-        //console.log(res);
-        if (res.status === 401) {
-          cookie.remove('authToken');
-          this.props.clearUser();
-          // need to redirect to a new version of login page
-          browserHistory.push('/');
-        } 
-
-        if (!err && !res.error && homeGroupDetails.id){
-          showSnackbar("Left group!");
-          leavingGroupSuccessUpdate(userObject)
-
-        } else {
-          showSnackbar("Error leaving group");
-        }
-      });
-
-  }
-
-  showLeaveDialog(){
-
-    const {homeGroups}=this.props;
-
-    if(homeGroups.length===1){
-      this.handleNoDeleteOpen();
-    }
-
-    else{
-      this.handleConfirmDeleteOpen();
-    }
-
-  }
-
-  render(){
-
+  render() {
     const noDeleteActions = 
     [
       <FlatButton
       label="Back"
-      primary={true}
-      keyboardFocused={true}
+      primary
+      keyboardFocused
       onTouchTap={this.handleNoDeleteClose}
     />
     ];
 
     const confirmDeleteActions = 
     [
-      <FlatButton label="Cancel" primary={true} 
+      <FlatButton label="Cancel" primary 
       onTouchTap={this.handleConfirmDeleteClose} />,
-      <FlatButton label="Delete" primary={true} 
+      <FlatButton label="Delete" primary 
       onTouchTap={(e)=>{e.preventDefault();this.handleConfirmDeleteClose();this.leaveGroup()}} />,
     ];
 
@@ -177,30 +62,141 @@ export default class GroupButtons extends React.Component {
         Are you sure you want to delete your group?
         </Dialog>
         
-        <div className='row middle-xs'>
+        <div className="row middle-xs">
           {
             (!userPartOfGroup)?
             (
-	            <div className='col-xs-12'>
-                <RaisedButton label='Join group'
-                className='join-button'
-                primary={true} 
+              <div className="col-xs-12">
+                <RaisedButton label="Join group"
+                className="join-button"
+                primary 
                 onTouchTap={(e)=>{e.preventDefault();this.joinGroup()}}/>
                 </div>
             ):
             (
-            	<div className='col-xs-12'>
-                <RaisedButton label='Leave group'
-                className='join-button'
-                secondary={true} 
+              <div className="col-xs-12">
+                <RaisedButton label="Leave group"
+                className="join-button"
+                secondary 
                 onTouchTap={(e)=>{e.preventDefault();this.showLeaveDialog()}}/>
-	            </div>
+              </div>
             )
           }
         </div>
 
       </div>
     );
+  }
+
+  handleNoDeleteOpen = () => {
+    this.setState({ noDeleteOpen: true });
+  };
+
+  handleNoDeleteClose = () => {
+    this.setState({ noDeleteOpen: false });
+  };
+
+  handleConfirmDeleteOpen = () =>{
+    this.setState({ confirmDeleteOpen: true });
+  };
+
+  handleConfirmDeleteClose = () =>{
+    this.setState({ confirmDeleteOpen: false });
+  };
+
+  joinGroup(){
+    
+    const { showSnackbar, clearUser, universities, fetchAllUniversitiesFailure,
+      fetchAllUniversitiesSuccess, userObject, addingGroupSuccessUpdate } = this.props;
+    const { homeGroupDetails } = this.props.homeGroupDetails;
+    let homeGroupDetailsId = homeGroupDetails.id;
+
+    const req = request
+      .post(ROOT_URL + '/joinGroup')
+      .send({ 
+        GroupId: homeGroupDetails.id
+      })
+      .use(bearer)
+      .end((err,res)=>{
+        //console.log(res);
+        if (res.status === 401) {
+          cookie.remove('authToken');
+          this.props.clearUser();
+          // need to redirect to a new version of login page
+          browserHistory.push('/');
+        } 
+
+        if (!err && !res.error && homeGroupDetails.id){
+          showSnackbar('Added group!');
+
+          if (universities.length < 2) {
+            
+            fetchAllUniversities().payload.then((response) =>{
+              
+              if(!response.error){
+                fetchAllUniversitiesSuccess(response.data);
+                var newUser = UniversityHelper.insertUniversitiesIntoUser(userObject,universities);
+                addingGroupSuccessUpdate(newUser);    
+              }
+
+              else{
+                fetchAllUniversitiesFailure(response.error);
+                showSnackbar('Error adding group');
+              }
+              
+            });
+
+          }else{
+            var newUser = UniversityHelper.insertUniversitiesIntoUser(userObject,universities);
+            addingGroupSuccessUpdate(newUser);
+          }
+          
+        } else {
+          showSnackbar('Error adding group');
+        }
+      });
+
+  }
+
+  leaveGroup(){
+
+    const { showSnackbar, clearUser, userObject, leavingGroupSuccessUpdate } = this.props;
+    const { homeGroupDetails } = this.props.homeGroupDetails;
+
+    const req = request
+      .post(ROOT_URL + '/leaveGroup')
+      .send({ 
+        GroupId: homeGroupDetails.id
+      })
+      .use(bearer)
+      .end((err,res)=>{
+        //console.log(res);
+        if (res.status === 401) {
+          cookie.remove('authToken');
+          this.props.clearUser();
+          // need to redirect to a new version of login page
+          browserHistory.push('/');
+        } 
+
+        if (!err && !res.error && homeGroupDetails.id){
+          showSnackbar('Left group!');
+          leavingGroupSuccessUpdate(userObject)
+
+        } else {
+          showSnackbar('Error leaving group');
+        }
+      });
+
+  }
+
+  showLeaveDialog() {
+    const { homeGroups } = this.props;
+
+    if (homeGroups.length === 1) {
+      this.handleNoDeleteOpen();
+    } else {
+      this.handleConfirmDeleteOpen();
+    }
   }
 }
 

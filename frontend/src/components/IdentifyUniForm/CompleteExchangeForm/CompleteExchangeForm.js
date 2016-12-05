@@ -10,8 +10,8 @@ import MenuItem from 'material-ui/MenuItem';
 
 
 const monthNames = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
 ];
 let universitiesProps;
 
@@ -60,7 +60,7 @@ class CompleteExchangeForm extends React.Component {
   componentDidUpdate() {
     const { fetchingAuthUpdate, error } = this.props.updateStatus;
     if (!!this.props.user.UniversityId && !fetchingAuthUpdate && !error) {
-      if(!(window.location.pathname.split('/')[1]==="profile")){
+      if(!(window.location.pathname.split('/')[1]==='profile')){
         browserHistory.push('/home');
       }else{
         if(this.state.submitted){
@@ -69,22 +69,6 @@ class CompleteExchangeForm extends React.Component {
         }
       }
     }
-  }
-
-  submitForm(val) {
-    const { user, universities } = this.props;
-    var homeUniId, exchangeUniId;
-    for (var i=0; i<universities.length; i++) {
-      if (universities[i].name === val.homeUniName) {
-        homeUniId = universities[i].id;
-      }
-      if (universities[i].name === val.exchangeUniName) {
-        exchangeUniId = universities[i].id;
-        this.setState({...this.state, submitted:true});
-      }
-    }
-
-    this.props.updateUniInfo(user.id, homeUniId, exchangeUniId, val.exchangeUniYear, val.exchangeTerm);
   }
 
   render() {
@@ -152,6 +136,22 @@ class CompleteExchangeForm extends React.Component {
         }
       </form>
     );
+  }
+
+  submitForm(val) {
+    const { user, universities } = this.props;
+    var homeUniId, exchangeUniId;
+    for (var i=0; i<universities.length; i++) {
+      if (universities[i].name === val.homeUniName) {
+        homeUniId = universities[i].id;
+      }
+      if (universities[i].name === val.exchangeUniName) {
+        exchangeUniId = universities[i].id;
+        this.setState({...this.state, submitted:true});
+      }
+    }
+
+    this.props.updateUniInfo(user.id, homeUniId, exchangeUniId, val.exchangeUniYear, val.exchangeTerm);
   }
 }
 

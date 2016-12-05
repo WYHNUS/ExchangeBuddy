@@ -10,8 +10,8 @@ var Dropzone = require('react-dropzone');
 import { TextFormField } from '../Field';
 import { PasswordFormField } from '../Field';
 
-import { ROOT_URL } from '../../util/backend';
-import { bearer } from '../../util/bearer';
+import { ROOT_URL } from 'util/backend';
+import { bearer } from 'util/bearer';
 import request from 'superagent';
 import cookie from 'react-cookie';
 
@@ -69,9 +69,9 @@ const validate = (values) => {
     }
   });
 
-  if(!!userName){
-    if(userName.length<8){
-      errors['userName']='Please enter a name longer than 8 chars!'
+  if (userName) {
+    if (userName.length < 8) {
+      errors['userName'] = 'Please enter a name longer than 8 chars!';
     }
   }
 
@@ -95,10 +95,10 @@ const renderDropzoneInput = (field) => {
         name={field.name}
         onDrop={( filesToUpload, e ) => field.input.onChange(filesToUpload)}
         multiple={false}
-        accept={"image/*"}>
+        accept="image/*">
         {
           (files && Array.isArray(files) && (files.length>0))?
-          (<img className='upload-preview' src={files[0].preview}/>):
+          (<img className="upload-preview" src={files[0].preview}/>):
           (<div>Try dropping some files here, or click to select files to upload.</div>)
         }
       </Dropzone>
@@ -116,9 +116,68 @@ class ProfileForm extends Component {
     files: []
   };
 
+  render() {
+    const { handleSubmit, pristine, reset, submitting, 
+      userObject, editProfile, clearUser } = this.props;
+
+    const submitHandler = handleSubmit(profileForm(reset, editProfile, userObject.id, clearUser));
+
+    return (
+      <div className="page-profile-submit row center-xs">
+      <div className="col-xs-12">
+      <form onSubmit={ submitHandler }>
+      <div className="row center-xs">
+      <Field 
+        name="userName" 
+        component={PrefilledNamePicker} 
+        defaultValue={userObject.name}
+        className="profile-editfield"/>
+      </div>
+      <div className="row center-xs">
+      <TextField
+        className="profile-editfield"
+        disabled
+        hintText="Your email address"
+        defaultValue={userObject.email}
+        floatingLabelText="Your email address"/>
+      </div>
+      <div className="row center-xs">
+      <PasswordFormField
+        className="profile-editfield"
+        name="userPassword" 
+        floatingLabelText="Your new password (more than 8 digits)" />
+      </div>
+      <div className="row center-xs">
+      <PasswordFormField
+        name="userConfirmPassword" 
+        floatingLabelText="Confirm your new password"
+        className="profile-editfield" />
+      </div>
+
+      <p className="profilepic-title">Profile Picture</p>
+      <div className="row center-xs">
+      <Field
+        name={FILE_FIELD_NAME}
+        component={renderDropzoneInput}/>
+      </div>
+
+      <div className="row center-xs" style={{ marginTop: 18 }}>
+        <div className="info-container-col signup-button-container">
+          <RaisedButton className="raised-btn" disabled={pristine || submitting}
+          label="Submit Changes" primary type="submit" style={{ width: '100%' }}/>
+        </div>
+      </div>
+
+      </form>
+
+      </div>
+      </div>
+    )
+  }
+
   onDrop(acceptedFiles) {
     this.setState({
-        files: acceptedFiles
+      files: acceptedFiles
     });
   }
 
@@ -126,88 +185,29 @@ class ProfileForm extends Component {
     this.dropzone.open();
   }
 
-
-	render() {
-		const { handleSubmit, pristine, reset, submitting, 
-      userObject, editProfile, clearUser } = this.props;
-
-    const submitHandler = handleSubmit(profileForm(reset, editProfile, userObject.id, clearUser));
-
-    		return (
-          <div className="page-profile-submit row center-xs">
-          <div className='col-xs-12'>
-    			<form onSubmit={ submitHandler }>
-          <div className="row center-xs">
-          <Field 
-            name="userName" 
-            component={PrefilledNamePicker} 
-            defaultValue={userObject.name}
-            className='profile-editfield'/>
-          </div>
-          <div className="row center-xs">
-          <TextField
-            className='profile-editfield'
-            disabled={true}
-            hintText="Your email address"
-            defaultValue={userObject.email}
-            floatingLabelText="Your email address"/>
-          </div>
-          <div className="row center-xs">
-          <PasswordFormField
-            className='profile-editfield'
-            name="userPassword" 
-            floatingLabelText="Your new password (more than 8 digits)" />
-          </div>
-          <div className="row center-xs">
-          <PasswordFormField
-            name="userConfirmPassword" 
-            floatingLabelText="Confirm your new password"
-            className='profile-editfield' />
-          </div>
-
-          <p className="profilepic-title">Profile Picture</p>
-          <div className="row center-xs">
-          <Field
-            name={FILE_FIELD_NAME}
-            component={renderDropzoneInput}/>
-          </div>
-
-          <div className="row center-xs" style={{marginTop: "18px"}}>
-            <div className="info-container-col signup-button-container">
-              <RaisedButton className="raised-btn" disabled={pristine || submitting}
-              label="Submit Changes" primary={true} type="submit" style={{ width: "100%" }}/>
-            </div>
-          </div>
-
-    			</form>
-
-          </div>
-          </div>
-    		)
-  }
 }
 
-class PrefilledNamePicker extends React.Component{
-  render(){
-    const {value,onChange} = this.props.input;
-    const{defaultValue}=this.props;
-    const{error}=this.props.meta;
-    return(
+class PrefilledNamePicker extends React.Component {
+  render() {
+    const { value,onChange } = this.props.input;
+    const { defaultValue } = this.props;
+    const { error } = this.props.meta;
+
+    return (
       <TextField
-      className='profile-editfield'
-      errorText={error}
-      hintText="Your name"
-      floatingLabelText="Your name"
-      onChange={(x,newName)=>{
-        onChange(newName);
-      }}
-      defaultValue={defaultValue}
-      />
-      );
+        className="profile-editfield"
+        errorText={error}
+        hintText="Your name"
+        floatingLabelText="Your name"
+        onChange={(x,newName)=>{
+          onChange(newName);
+        }}
+        defaultValue={defaultValue} />
+    );
   }
 }
 
 export default reduxForm({
-	form: 'profileForm'
-	,validate
+  form: 'profileForm'
+  ,validate
 })(ProfileForm);

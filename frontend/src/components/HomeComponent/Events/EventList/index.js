@@ -6,10 +6,10 @@ import Loading from '../../../Loading';
 // Action creators
 import { 
   resetEvents, goForAnEventSuccessUpdate, ungoForAnEventSuccessUpdate, deleteAnEventSuccessUpdate
-} from '../../../../actions/home';
-import { showSnackbar } from '../../../../actions/messageSnackbar';
-import { fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure } from '../../../../actions/utilityInfo';
-import { clearUser } from '../../../../actions/authActions';
+} from 'actions/home';
+import { showSnackbar } from 'actions/messageSnackbar';
+import { fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure } from 'actions/utilityInfo';
+import { clearUser } from 'actions/authActions';
 
 
 // Component

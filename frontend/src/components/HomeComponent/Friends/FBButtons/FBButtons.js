@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-import * as GroupHelper from '../../../../util/group';
+import * as GroupHelper from 'util/group';
 
 export default class FBButtons extends React.Component {
 
@@ -14,15 +14,15 @@ export default class FBButtons extends React.Component {
     return(
       <div>
         
-        <div className='row middle-xs'>
+        <div className="row middle-xs">
           {
             (userPartOfGroup)?
             (
-              <div className='col-xs-12'>
+              <div className="col-xs-12">
               </div>
             ):
             (
-              <div className='col-xs-12'>
+              <div className="col-xs-12">
               </div>
             )
           }

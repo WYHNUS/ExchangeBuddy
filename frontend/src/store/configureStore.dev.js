@@ -5,8 +5,8 @@
 import {createStore, compose, applyMiddleware} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import throttle from 'lodash/throttle';
-import rootReducer from '../reducers/rootReducer';
-import { saveState } from '../util/localStorage';
+import rootReducer from 'reducers/rootReducer';
+import { saveState } from 'util/localStorage';
 
 export default function configureStore(initialState) {
   const middewares = [
@@ -25,8 +25,8 @@ export default function configureStore(initialState) {
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
-    module.hot.accept('../reducers/rootReducer', () => {
-      const nextReducer = require('../reducers/rootReducer').default; // eslint-disable-line global-require
+    module.hot.accept('reducers/rootReducer', () => {
+      const nextReducer = require('reducers/rootReducer').default; // eslint-disable-line global-require
       store.replaceReducer(nextReducer);
     });
   }

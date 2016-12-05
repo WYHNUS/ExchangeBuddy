@@ -20,7 +20,7 @@ exports.authenticateOrCreateByFB = function(req, res){
             }).then(function(existingUser){
                 if(!!existingUser){
                     return res.status(200).json({
-                            status: "success",
+                            status: 'success',
                             user: existingUser,
                             token: existingUser.generateJwt()
                         });
@@ -33,7 +33,7 @@ exports.authenticateOrCreateByFB = function(req, res){
                         isEmailVerified: 1
                     }).then(function(user){
                         res.status(200).json({
-                            status: "success",
+                            status: 'success',
                             user: user,
                             token: user.generateJwt()
                         })

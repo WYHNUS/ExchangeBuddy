@@ -7,10 +7,10 @@ import { connect } from 'react-redux';
 // Action creators
 import { 
   submitSignupForm, signupSuccess, signupFail
-} from '../../actions/user';
+} from 'actions/user';
 import { 
   attemptFacebookLogin
-} from '../../actions/authActions';
+} from 'actions/authActions';
 // Component
 import ChildComponent from './SignupForm';
 

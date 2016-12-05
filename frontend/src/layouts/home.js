@@ -8,15 +8,15 @@ import {
   toggleHomeSearchDrawerOpenButtonVisibility,
   toggleTopBarBackButtonVisibility, toggleTopBarVisibility, 
   toggleTopBarSettingsButtonVisibility
-} from '../actions/pageVisibility';
+} from 'actions/pageVisibility';
 import {
   fetchMyGroups, fetchMyGroupsSuccess, fetchMyGroupsFailure,
   fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure,
   toggleSelectedHomeGroup, resetEvents, startJoyride
-} from '../actions/home';
-import { clearUser } from '../actions/authActions';
+} from 'actions/home';
+import { clearUser } from 'actions/authActions';
 
-import Header from '../components/Header';
+import Header from 'components/Header';
 
 import Spinner from 'react-spinkit';
 
@@ -70,12 +70,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility)),
     toggleTopBarVisibility: visibility=>dispatch(toggleTopBarVisibility(visibility)),
-    toggleHomeSearchDrawerOpenButtonVisibility:visibility=>dispatch
-    (toggleHomeSearchDrawerOpenButtonVisibility(visibility)),
-    toggleTopBarBackButtonVisibility:visibility=>dispatch
-    (toggleTopBarBackButtonVisibility(visibility)),
-    toggleTopBarSettingsButtonVisibility:visibility=>dispatch
-    (toggleTopBarSettingsButtonVisibility(visibility)),
+    toggleHomeSearchDrawerOpenButtonVisibility:visibility=>dispatch(toggleHomeSearchDrawerOpenButtonVisibility(visibility)),
+    toggleTopBarBackButtonVisibility:visibility=>dispatch(toggleTopBarBackButtonVisibility(visibility)),
+    toggleTopBarSettingsButtonVisibility:visibility=>dispatch(toggleTopBarSettingsButtonVisibility(visibility)),
     fetchMyGroups: (userId) => {
       dispatch(fetchMyGroups(userId)).payload.then((response) => {
         if (!response.error) {

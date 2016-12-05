@@ -1,9 +1,9 @@
 import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { toggleBottomBarVisibility, toggleTopBarVisibility,
-toggleTopBarBackButtonVisibility } from '../../actions/pageVisibility';
+toggleTopBarBackButtonVisibility } from 'actions/pageVisibility';
 
-import StoryDetails from '../../components/StoriesComponent/StoryDetails';
+import StoryDetails from 'components/StoriesComponent/StoryDetails';
 
 class Story extends React.Component{
 

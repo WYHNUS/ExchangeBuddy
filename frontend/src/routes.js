@@ -79,55 +79,55 @@ export const getRoutes = (store) =>{
     });
   }
 
-  return(
-  <Route path="/" component={ App }>
-    <IndexRoute component={ Landing }/>
-    <Route path="home" onEnter={ authRequired }>
-      <IndexRoute onEnter={ goToDefaultGroup }/>
-      <Route path=":id" component={ Home }> 
-        <IndexRoute component={ Friends }/>
-        <Route path="events">
-          <IndexRoute component={ Events }/>
-          <Route path="new" component={ NewEvent }/>
+  return (
+    <Route path="/" component={ App }>
+      <IndexRoute component={ Landing }/>
+      <Route path="home" onEnter={ authRequired }>
+        <IndexRoute onEnter={ goToDefaultGroup }/>
+        <Route path=":id" component={ Home }> 
+          <IndexRoute component={ Friends }/>
+          <Route path="events">
+            <IndexRoute component={ Events }/>
+            <Route path="new" component={ NewEvent }/>
+          </Route>
+          <Route path="chat" component={ Chat }/>
+          <Route path="friends" component={ Friends }/>
         </Route>
-        <Route path="chat" component={ Chat }/>
-        <Route path="friends" component={ Friends }/>
       </Route>
+      {/*<Route path="newstory" component={ EditStory } onEnter={ authRequired }/>*/}
+      <Route path="stories">
+        <IndexRoute component={ Stories }/>
+        <Route path=":storyId" component={ StoryDetails }/>
+      </Route>
+      <Route path="wiki">
+        <IndexRoute component={ Wiki }/>
+        <Route path=":wikiTitle" component={ WikiDetails }/>
+        <Route path="history(/:wikiTitle)/*" component={ WikiHistory }/>
+        <Route path="editWiki(/:wikiTitle/:wikiSection)" component={ EditWiki } onEnter={ authRequired }/>
+        <Route path="newSection(/:wikiTitle)" component={ WikiNewSection } onEnter={ authRequired }/>
+      </Route>
+      <Route path="profile(/:userId)" onEnter={ authRequired }>
+        <IndexRoute component={ Profile }/>
+        <Route path="edit" component={ ProfileEdit }/>
+        <Route path="editUni" component={ IdentifyUniversity }/>
+      </Route>
+      <Route path="notloggedin" component={ NotLoggedIn }/>
+      <Route path="signup" component={ Signup }/>
+      <Route path="login" component={ Login }/>
+      <Route path="verify">
+        <Route path=":token" component={ Verify }/>
+      </Route>
+      <Route path="identifyUniversity" component={ IdentifyUniversity }/>
+      <Route path="settings" component={ Settings }/>
+      <Route path="*" component={ NotFound }/>
     </Route>
-    {/*<Route path="newstory" component={ EditStory } onEnter={ authRequired }/>*/}
-    <Route path="stories">
-      <IndexRoute component={ Stories }/>
-      <Route path=":storyId" component={ StoryDetails }/>
-    </Route>
-    <Route path="wiki">
-      <IndexRoute component={ Wiki }/>
-      <Route path=":wikiTitle" component={ WikiDetails }/>
-      <Route path="history(/:wikiTitle)/*" component={ WikiHistory }/>
-      <Route path="editWiki(/:wikiTitle/:wikiSection)" component={ EditWiki } onEnter={ authRequired }/>
-      <Route path="newSection(/:wikiTitle)" component={ WikiNewSection } onEnter={ authRequired }/>
-    </Route>
-    <Route path="profile(/:userId)" onEnter={ authRequired }>
-      <IndexRoute component={ Profile }/>
-      <Route path="edit" component={ ProfileEdit }/>
-      <Route path="editUni" component={ IdentifyUniversity }/>
-    </Route>
-    <Route path="notloggedin" component={ NotLoggedIn }/>
-    <Route path="signup" component={ Signup }/>
-    <Route path="login" component={ Login }/>
-    <Route path="verify">
-      <Route path=":token" component={ Verify }/>
-    </Route>
-    <Route path="identifyUniversity" component={ IdentifyUniversity }/>
-    <Route path='settings' component={ Settings }/>
-    <Route path="*" component={ NotFound }/>
-  </Route>
   );
 }
 
 export default (
-      <Provider store={ store }>
-        <Router history={ history } onUpdate={ logPageView } >
-          { getRoutes(store) }
-        </Router>
-      </Provider>
+  <Provider store={ store }>
+    <Router history={ history } onUpdate={ logPageView } >
+      { getRoutes(store) }
+    </Router>
+  </Provider>
 );

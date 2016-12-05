@@ -4,7 +4,7 @@ import Avatar from 'material-ui/Avatar';
 
 import * as Colors from 'material-ui/styles/colors';
 import * as IconsHelper from './icons';
-import userImg from '../res/user.png'
+import userImg from 'res/user.png'
 
 export const resolveGender = (gender) => {
   gender = gender.toLowerCase();
@@ -22,7 +22,7 @@ export const getAvatarUrl = (user, size=64) => {
   //console.log(user);
 
   if (!user)
-    return "";
+    return '';
 
   const profilePictureUrl = user.profilePictureUrl;
   const fbUserId = user.fbUserId;

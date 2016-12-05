@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import FlatButton from 'material-ui/FlatButton';
 
-import SignupForm from '../components/SignupForm';
-import ExchangeBuddySpreadIcon from '../res/ExchangeBuddySpreadIcon.png';
+import SignupForm from 'components/SignupForm';
+import ExchangeBuddySpreadIcon from 'res/ExchangeBuddySpreadIcon.png';
 
 class Signup extends React.Component {
   render() {

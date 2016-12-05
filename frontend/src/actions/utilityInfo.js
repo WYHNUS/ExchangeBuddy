@@ -6,7 +6,7 @@ export const FETCH_All_UNIVERSITIES_SUCCESS = 'FETCH_All_UNIVERSITIES_SUCCESS';
 export const FETCH_All_UNIVERSITIES_FAILURE = 'FETCH_All_UNIVERSITIES_FAILURE';
 export const RESET_All_UNIVERSITIES = 'RESET_All_UNIVERSITIES';
 
-import {ROOT_URL} from '../util/backend';
+import { ROOT_URL } from 'util/backend';
 
 export function fetchAllUniversities() {
 	const request = axios({
@@ -21,22 +21,22 @@ export function fetchAllUniversities() {
 	};
 }
 
-export function fetchAllUniversitiesSuccess(unis){
+export function fetchAllUniversitiesSuccess(unis) {
 	return {
 		type: FETCH_All_UNIVERSITIES_SUCCESS,
 		payload: unis
 	};
 }
 
-export function fetchAllUniversitiesFailure(error){
+export function fetchAllUniversitiesFailure(error) {
 	return {
 		type: FETCH_All_UNIVERSITIES_FAILURE,
 		payload: error
 	};
 }
 
-export function resetAllUniversities(){
-	return{
+export function resetAllUniversities() {
+	return {
 		type: RESET_All_UNIVERSITIES
-	}
+	};
 }

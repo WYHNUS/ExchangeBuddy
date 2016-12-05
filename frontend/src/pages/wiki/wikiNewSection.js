@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 import { 
 	toggleBottomBarVisibility, toggleTopBarVisibility,
 	toggleTopBarBackButtonVisibility 
-} from '../../actions/pageVisibility';
+} from 'actions/pageVisibility';
 import {
 	fetchWikiPage
-} from '../../actions/wiki';
+} from 'actions/wiki';
 
-import WikiContentTable from '../../components/WikiComponent/WikiContentTable';
-import WikiSection from '../../components/WikiComponent/WikiSection';
-import WikiSectionForm from '../../components/WikiComponent/WikiSectionForm';
+import WikiContentTable from 'components/WikiComponent/WikiContentTable';
+import WikiSection from 'components/WikiComponent/WikiSection';
+import WikiSectionForm from 'components/WikiComponent/WikiSectionForm';
 
 class WikiDetails extends React.Component{
 	componentWillMount() {
@@ -77,7 +77,7 @@ class WikiDetails extends React.Component{
 
 const mapStateToProps = (state) => {
 	return{
-		wikiTitle: state.routing.locationBeforeTransitions.pathname.split("/")[3],
+		wikiTitle: state.routing.locationBeforeTransitions.pathname.split('/')[3],
 		wiki: state.wiki
 	};
 }

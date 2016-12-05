@@ -5,11 +5,11 @@ import { browserHistory } from 'react-router'
 import RaisedButton from 'material-ui/RaisedButton';
 
 import request from 'superagent';
-import { bearer } from '../../../../util/bearer';
-import { ROOT_URL } from '../../../../util/backend';
-import * as UniversityHelper from '../../../../util/university';
+import { bearer } from 'util/bearer';
+import { ROOT_URL } from 'util/backend';
+import * as UniversityHelper from 'util/university';
 
-import { getAvatar } from '../../../../util/user';
+import { getAvatar } from 'util/user';
 
 const styles = {
   root: {
@@ -19,8 +19,8 @@ const styles = {
   },
 
   gridList: {
-    width: "100%",
-    margin: "0 auto",
+    width: '100%',
+    margin: '0 auto',
   },
 };
 
@@ -47,8 +47,8 @@ export default class MemberList extends React.Component {
     return(
       <div>
 
-        <div className='row start-xs'>
-          <div className='col-xs-12'>
+        <div className="row start-xs">
+          <div className="col-xs-12">
             { homeGroupDetails.user.map((user, idx) => <MemberTile key={ idx } user={ user } />) }
           </div>
         </div>

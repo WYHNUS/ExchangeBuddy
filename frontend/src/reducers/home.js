@@ -14,7 +14,7 @@ import {
 	GO_FOR_AN_EVENT_SUCCESS_UPDATE,UNGO_FOR_AN_EVENT_SUCCESS_UPDATE,
 	DELETE_AN_EVENT_SUCCESS_UPDATE, ADD_ONBOARDING_STEP, ADD_JOYRIDE,
 	SET_FIRST_TIME, START_JOYRIDE, ADDING_GROUP_SUCCESS_UPDATE, 
-	LEAVING_GROUP_SUCCESS_UPDATE} from '../actions/home';
+	LEAVING_GROUP_SUCCESS_UPDATE} from 'actions/home';
 
 	/*const homeGroups=
 	[
@@ -109,8 +109,8 @@ import {
 	}
 	]*/
 
-	const imgUrl = '../res/Exchange-In-Singapore.jpg';
-	const defaultUrl = '../res/user.png';
+	const imgUrl = 'res/Exchange-In-Singapore.jpg';
+	const defaultUrl = 'res/user.png';
 
 	/*const homeEvents=
 	[
@@ -244,194 +244,211 @@ import {
 
 	export function home(state=initialState, action) {
 
-		let error;
+		let error, EventId, user, newHomeEvent, userObject, newHomeGroupDetails, newHomeGroups, newHomeEvents, homeEventIterable;
 
 		switch (action.type) {
 
 			case START_JOYRIDE:
-			//state.homeJoyride.joyride.start(true);
-			return {...state, homeJoyride:{...state.homeJoyride,start:true}}
+				//state.homeJoyride.joyride.start(true);
+				return { ...state, homeJoyride:{ ...state.homeJoyride, start: true }}
 
 			case SET_FIRST_TIME:
-			return {...state, homeJoyride:{...state.homeJoyride,isFirstTime:action.isFirstTime}}
+				return { ...state, homeJoyride:{ ...state.homeJoyride, isFirstTime: action.isFirstTime }}
 
 			case ADD_ONBOARDING_STEP:
-			var newSteps = state.homeJoyride.steps.slice();
-			newSteps.concat(action.steps);	
-			return {...state, homeJoyride:{...state.homeJoyride,steps:newSteps}}
+				var newSteps = state.homeJoyride.steps.slice();
+				newSteps.concat(action.steps);	
+				return { ...state, homeJoyride:{ ...state.homeJoyride, steps: newSteps }}
 
 			case ADD_JOYRIDE:
-			// console.log('adding a joyride?', action.joyride);
-			return {...state, homeJoyride:{...state.homeJoyride,joyride:action.joyride}}
+				// console.log('adding a joyride?', action.joyride);
+				return { ...state, homeJoyride:{ ...state.homeJoyride, joyride: action.joyride }}
 
 			case TOGGLE_HOME_TAB:
-			return {...state, homeTabValue:action.tabValue}
+				return { ...state, homeTabValue: action.tabValue}
 
 			case TOGGLE_SELECTED_HOME_GROUP:
-			return {...state, homeGroups: {...state.homeGroups,selected:action.index}}
+				return { ...state, homeGroups: { ...state.homeGroups, selected: action.index }}
+			
 			case FETCH_HOME_MESSAGES:
-			return {...state, homeMessages: {homeMessages:[], error: null, loading: true}};
+				return { ...state, homeMessages: { homeMessages:[], error: null, loading: true}};
+			
 			case FETCH_HOME_MESSAGES_SUCCESS:
-			return {...state, homeMessages: {homeMessages: action.payload, error:null, loading: false}};
+				return { ...state, homeMessages: { homeMessages: action.payload, error:null, loading: false }};
+			
 			case FETCH_HOME_MESSAGES_FAILURE:
-			error = action.payload || {message: action.payload};
-			return {...state, homeMessages: {homeMessages: [], error: error, loading: false}};
+				error = action.payload || { message: action.payload };
+				return { ...state, homeMessages: { homeMessages: [], error: error, loading: false }};
+			
 			case RESET_HOME_MESSAGES:
-			return {...state, homeMessages: {homeMessages: [], error:null, loading: false}}
+				return { ...state, homeMessages: { homeMessages: [], error:null, loading: false }}
 
 			case FETCH_EVENTS:
-			return {...state, homeEvents: {homeEvents:[], error: null, loading: true, id:action.id}};
+				return { ...state, homeEvents: { homeEvents:[], error: null, loading: true, id: action.id }};
+			
 			case FETCH_EVENTS_SUCCESS:
-			return {...state, homeEvents: {homeEvents: action.payload, error: null, loading: false, id:state.homeEvents.id}};
+				return { ...state, homeEvents: { homeEvents: action.payload, error: null, loading: false, id:state.homeEvents.id }};
+			
 			case FETCH_EVENTS_FAILURE:
-			error = action.payload || {message: action.payload};
-			return {...state, homeEvents: {homeEvents: [], error: error, loading: false, id:-1}};
+				error = action.payload || { message: action.payload };
+				return { ...state, homeEvents: { homeEvents: [], error: error, loading: false, id:-1}};
+			
 			case RESET_EVENTS:
-			return {...state, homeEvents: {homeEvents: [], error: null, loading: false, id:-1}};
+				return { ...state, homeEvents: { homeEvents: [], error: null, loading: false, id:-1}};
 
 			case FETCH_MY_GROUPS:
-			return {...state, homeGroups: {groupsLoaded:false, selected:-1, homeGroups:[], error: null, loading: true}};
+				return { ...state, homeGroups: { groupsLoaded: false, selected: -1, homeGroups:[], error: null, loading: true }};
+			
 			case FETCH_MY_GROUPS_SUCCESS://sorting to ensure that the groups are displayed in order
-			action.payload.sort(function(a, b) {
-				return parseInt(a.groupType) - parseInt(b.groupType);
-			});
-			return {...state, homeGroups: {groupsLoaded:true, selected:0, homeGroups: action.payload, error: null, loading: false}};
+				action.payload.sort(function(a, b) {
+					return parseInt(a.groupType) - parseInt(b.groupType);
+				});
+				return { ...state, homeGroups: { groupsLoaded: true, selected: 0, homeGroups: action.payload, error: null, loading: false }};
+			
 			case FETCH_MY_GROUPS_FAILURE:
-			error = action.payload || {message: action.payload};
-			return {...state, homeGroups: {groupsLoaded:false, selected:-1, homeGroups: [], error: error, loading: false}};
+				error = action.payload || { message: action.payload };
+				return { ...state, homeGroups: { groupsLoaded: false, selected:-1, homeGroups: [], error: error, loading: false }};
+			
 			case RESET_MY_GROUPS:
-			return {...state, homeGroups: {groupsLoaded:false, selected:-1, homeGroups: [], error: null, loading: false}};
+				return { ...state, homeGroups: { groupsLoaded: false, selected:-1, homeGroups: [], error: null, loading: false }};
 
 			case FETCH_CURRENT_GROUP:
-			return {...state, homeGroupDetails: {...state.homeGroupDetails, error: null, loading: true, detailsLoaded:false}}
+				return { ...state, homeGroupDetails: { ...state.homeGroupDetails, error: null, loading: true, detailsLoaded:false }}
+			
 			case FETCH_CURRENT_GROUP_SUCCESS:
-			return {...state, homeGroupDetails: {homeGroupDetails: action.payload, error: null, loading: false, detailsLoaded:true}}
+				return { ...state, homeGroupDetails: { homeGroupDetails: action.payload, error: null, loading: false, detailsLoaded:true }}
+			
 			case FETCH_CURRENT_GROUP_FAILURE:
-			error = action.payload || {message: action.payload};
-			return {...state, homeGroupDetails: {homeGroupDetails: {}, error: error, loading: false, detailsLoaded:false}}
+				error = action.payload || { message: action.payload };
+				return { ...state, homeGroupDetails: { homeGroupDetails: {}, error: error, loading: false, detailsLoaded:false }}
+			
 			case RESET_CURRENT_GROUP:
-			return {...state, homeGroupDetails: {homeGroupDetails: {}, error: null, loading: false, detailsLoaded:false}}
+				return { ...state, homeGroupDetails: { homeGroupDetails: {}, error: null, loading: false, detailsLoaded:false }}
 
 			case FETCH_GROUP_MESSAGES:
-			return {...state, homeMessages: { homeMessages:[], error: null, loading: true}};
+				return { ...state, homeMessages: { homeMessages: [], error: null, loading: true }};
+			
 			case FETCH_GROUP_MESSAGES_SUCCESS:
-			return {...state, homeMessages: { homeMessages: action.payload, error: null, loading: false}};
+				return { ...state, homeMessages: { homeMessages: action.payload, error: null, loading: false }};
+			
 			case FETCH_GROUP_MESSAGES_FAILURE:
-			error = action.payload || {message: action.payload};
-			return {...state, homeMessages: { homeMessages: [], error: error, loading: false}};
+				error = action.payload || { message: action.payload };
+				return { ...state, homeMessages: { homeMessages: [], error: error, loading: false }};
+			
 			case RESET_GROUP_MESSAGES:
-			return {...state, homeMessages: { homeMessages: [], error: null, loading: false}};
+				return { ...state, homeMessages: { homeMessages: [], error: null, loading: false }};
+			
 			case UPDATE_GROUP_MESSAGE_FROM_SOCKET:
-			return {...state, homeMessages: { homeMessages: [action.payload].concat(state.homeMessages.homeMessages), error: null, loading: false}};
+				return { ...state, homeMessages: { homeMessages: [action.payload].concat(state.homeMessages.homeMessages), error: null, loading: false }};
 
 			case GO_FOR_AN_EVENT_SUCCESS_UPDATE:
+				EventId = action.payload.EventId;
+				user = action.payload.user;
+				newHomeEvent = [];
 
-			var EventId = action.payload.EventId;
-			var user = action.payload.user;
-			var newHomeEvent = [];
+				for (let i=0; i < state.homeEvents.homeEvents.length; i++) {
+					newEvent=state.homeEvents.homeEvents[i];
 
-			for (var i=0;i<state.homeEvents.homeEvents.length;i++){
-				var newEvent=state.homeEvents.homeEvents[i];
-
-				if(parseInt(newEvent.id)==parseInt(EventId)){
-					newEvent.going.push(user);
-
-				}
-
-				newHomeEvent.push(newEvent)
-			}
-
-			return {...state, homeEvents: {homeEvents:newHomeEvent, error: null, loading: false}}
-
-			case UNGO_FOR_AN_EVENT_SUCCESS_UPDATE:
-
-			var EventId = action.payload.EventId;
-			var user = action.payload.user;
-			var newHomeEvent = [];
-
-			for (var i=0;i<state.homeEvents.homeEvents.length;i++){
-				var newEvent=state.homeEvents.homeEvents[i];
-
-				if(parseInt(newEvent.id)==parseInt(EventId)){
-					var goingArray = newEvent.going;
-
-					for(var k=0;k<goingArray.length;k++){
-
-						if(parseInt(goingArray[k].id)===user.id){
-							goingArray.splice(k, 1);
-							break;
-						}
+					if (parseInt(newEvent.id)==parseInt(EventId)) {
+						newEvent.going.push(user);
 					}
 
-					newEvent.going = goingArray;
+					newHomeEvent.push(newEvent)
 				}
 
-				newHomeEvent.push(newEvent)
-			}
+				return { ...state, homeEvents: { homeEvents:newHomeEvent, error: null, loading: false }}
 
-			return {...state, homeEvents: {homeEvents:newHomeEvent, error: null, loading: false}}
+			case UNGO_FOR_AN_EVENT_SUCCESS_UPDATE:
+				EventId = action.payload.EventId;
+				user = action.payload.user;
+				newHomeEvent = [];
+
+				for (let i=0; i < state.homeEvents.homeEvents.length; i++) {
+					var newEvent = state.homeEvents.homeEvents[i];
+
+					if (parseInt(newEvent.id)==parseInt(EventId)) {
+						var goingArray = newEvent.going;
+
+						for (let k=0; k < goingArray.length; k++) {
+							if (parseInt(goingArray[k].id) === user.id) {
+								goingArray.splice(k, 1);
+								break;
+							}
+						}
+
+						newEvent.going = goingArray;
+					}
+
+					newHomeEvent.push(newEvent)
+				}
+
+				return { ...state, homeEvents: { homeEvents:newHomeEvent, error: null, loading: false }}
 
 			case DELETE_AN_EVENT_SUCCESS_UPDATE:
-			var EventId = action.payload.EventId;
-			var newHomeEvents = [];
-			var homeEventIterable = state.homeEvents.homeEvents;
-			for(var i=0;i<homeEventIterable.length;i++){
-				if(!(parseInt(homeEventIterable[i].id)===parseInt(EventId))){
-					newHomeEvents.push(homeEventIterable[i]);
+				EventId = action.payload.EventId;
+				newHomeEvents = [];
+				homeEventIterable = state.homeEvents.homeEvents;
+				for (let i=0; i < homeEventIterable.length; i++) {
+					if (!(parseInt(homeEventIterable[i].id) === parseInt(EventId))) {
+						newHomeEvents.push(homeEventIterable[i]);
+					}
 				}
-			}
-			return {...state, homeEvents: {homeEvents:newHomeEvents, error: null, loading: false}}
+				return { ...state, homeEvents: { homeEvents:newHomeEvents, error: null, loading: false }}
 
 			case ADDING_GROUP_SUCCESS_UPDATE:
-			
-			var userObject = action.payload.userObject;
-			var newHomeGroupDetails = state.homeGroupDetails.homeGroupDetails;
-			var newHomeGroups = state.homeGroups.homeGroups;
+				userObject = action.payload.userObject;
+				newHomeGroupDetails = state.homeGroupDetails.homeGroupDetails;
+				newHomeGroups = state.homeGroups.homeGroups;
 
-			newHomeGroupDetails.user.push(
-				{
-					id:userObject.id,
-					name:userObject.name,
-					profilePictureUrl:userObject.profilePictureUrl,
-					University:userObject.University
-				})
+				newHomeGroupDetails.user.push(
+					{
+						id:userObject.id,
+						name:userObject.name,
+						profilePictureUrl:userObject.profilePictureUrl,
+						University:userObject.University
+					})
 
-			newHomeGroupDetails.number = newHomeGroupDetails.user.length;
+				newHomeGroupDetails.number = newHomeGroupDetails.user.length;
 
-			newHomeGroups.push(newHomeGroupDetails);
-			var selected = newHomeGroups.length-1;
+				newHomeGroups.push(newHomeGroupDetails);
+				var selected = newHomeGroups.length - 1;
 
-			return {...state, homeGroupDetails: {homeGroupDetails:newHomeGroupDetails, error: null, loading: false, detailsLoaded:true},homeGroups: {homeGroups:newHomeGroups, error: null, loading: false, groupsLoaded:true, selected:selected}}
+				return { 
+					...state, 
+					homeGroupDetails: { homeGroupDetails:newHomeGroupDetails, error: null, loading: false, detailsLoaded:true }, 
+					homeGroups: { homeGroups:newHomeGroups, error: null, loading: false, groupsLoaded:true, selected:selected}
+				};
 
 			case LEAVING_GROUP_SUCCESS_UPDATE:
-			
-			var userObject = action.payload.userObject;
-			var newHomeGroupDetails = state.homeGroupDetails.homeGroupDetails;
-			var newHomeGroups = state.homeGroups.homeGroups;
-			
-			for(var i=0;i<newHomeGroups.length;i++){
+				userObject = action.payload.userObject;
+				newHomeGroupDetails = state.homeGroupDetails.homeGroupDetails;
+				newHomeGroups = state.homeGroups.homeGroups;
 				
-				if(parseInt(newHomeGroups[i].id)===parseInt(newHomeGroupDetails.id)){
-					newHomeGroups.splice(i,1);
-					break;
+				for (let i = 0; i < newHomeGroups.length; i++) {
+					if (parseInt(newHomeGroups[i].id) === parseInt(newHomeGroupDetails.id)) {
+						newHomeGroups.splice(i,1);
+						break;
+					}
 				}
-			}
 
-			var userArray = newHomeGroupDetails.user;
+				let userArray = newHomeGroupDetails.user;
 
-			for(var i=0;i<userArray.length;i++){
-				
-				if(parseInt(userArray[i].id)===parseInt(userObject.id)){
-					userArray.splice(i,1);
-					break;
+				for (let i = 0; i < userArray.length; i++) {
+					if (parseInt(userArray[i].id) === parseInt(userObject.id)) {
+						userArray.splice(i,1);
+						break;
+					}
 				}
-			}
 
-			newHomeGroupDetails.user = userArray;
+				newHomeGroupDetails.user = userArray;
 
-			return {...state, homeGroupDetails: {homeGroupDetails:newHomeGroupDetails, error: null, loading: false, detailsLoaded:true},homeGroups: {homeGroups:newHomeGroups, error: null, loading: false, groupsLoaded:true}}
+				return { 
+					...state, 
+					homeGroupDetails: { homeGroupDetails:newHomeGroupDetails, error: null, loading: false, detailsLoaded:true},
+					homeGroups: { homeGroups:newHomeGroups, error: null, loading: false, groupsLoaded:true}
+				};
 
 			default:
-			return state
+				return state;
 		}
 	}

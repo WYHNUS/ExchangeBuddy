@@ -47,23 +47,13 @@ class AspiringExchangerForm extends React.Component {
   componentDidUpdate() {
     const { fetchingAuthUpdate, error } = this.props.updateStatus;
     if (!!this.props.user.UniversityId && !fetchingAuthUpdate && !error) {
-      if(!(window.location.pathname.split('/')[1]==="profile")){
+      if(!(window.location.pathname.split('/')[1]==='profile')){
         browserHistory.push('/home');
       }else{
         if(this.state.submitted){
           browserHistory.push('/profile');
           this.props.showSnackbar('Universties have been updated!');
         }
-      }
-    }
-  }
-
-  submitForm(val) {
-    const { user, universities } = this.props;
-    for (var i=0; i<universities.length; i++) {
-      if (universities[i].name === val.homeUniName) {
-        this.props.updateUniInfo(user.id, universities[i].id);
-        this.setState({...this.state, submitted:true});
       }
     }
   }
@@ -110,6 +100,16 @@ class AspiringExchangerForm extends React.Component {
         </form>
       </div>
     );
+  }
+
+  submitForm(val) {
+    const { user, universities } = this.props;
+    for (var i=0; i<universities.length; i++) {
+      if (universities[i].name === val.homeUniName) {
+        this.props.updateUniInfo(user.id, universities[i].id);
+        this.setState({...this.state, submitted:true});
+      }
+    }
   }
 }
 

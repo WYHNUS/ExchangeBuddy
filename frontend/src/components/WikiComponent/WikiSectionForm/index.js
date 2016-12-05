@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 // Action creators
 import { 
 	submitNewSection
-} from '../../../actions/wiki'
+} from 'actions/wiki'
 
 // Component
 import ChildComponent from './WikiSectionForm';

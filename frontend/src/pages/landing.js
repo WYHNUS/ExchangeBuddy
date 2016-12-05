@@ -1,17 +1,17 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
-import * as IconsHelper from '../util/icons';
+import * as IconsHelper from 'util/icons';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import RaisedButton from 'material-ui/RaisedButton';
-import landing from '../res/ExchangeBuddySpread.jpg';
-import ExchangeBuddySpreadIcon from '../res/ExchangeBuddySpreadIcon.png';
-//import LoginButton from '../components/LoginButton';
+import landing from 'res/ExchangeBuddySpread.jpg';
+import ExchangeBuddySpreadIcon from 'res/ExchangeBuddySpreadIcon.png';
+//import LoginButton from 'components/LoginButton';
 import FlatButton from 'material-ui/FlatButton';
 import ReactPaginate from 'react-paginate';
 
 import { connect } from 'react-redux';
-import { toggleTopBarVisibility, toggleBottomBarVisibility } from '../actions/pageVisibility';
+import { toggleTopBarVisibility, toggleBottomBarVisibility } from 'actions/pageVisibility';
 var request = require('superagent');
 
 
@@ -25,22 +25,22 @@ const landingContainerStyle = {
 }*/
 const landingImg= {
   background: `url(${landing}) no-repeat`,
-  backgroundPosition: "top center",
-  backgroundSize: "cover",
+  backgroundPosition: 'top center',
+  backgroundSize: 'cover',
 }
 
 //TODO check login logic before deciding which button to serve to users
 
-class Landing extends React.Component{
+class Landing extends React.Component {
+  state = {
+    pageNum: 0
+  };
+
   componentDidMount() {
     this.props.toggleBottomBarVisibility(false);
     this.props.toggleTopBarVisibility(false);
     // console.log("enter landing page!");
   }
-
-  state = {
-    pageNum: 0
-  };
 
   render(){
 
@@ -52,13 +52,13 @@ class Landing extends React.Component{
       <div id="welcome-header" style={landingImg}>
 
       <div className="row start-xs">
-      <div className='col-xs welcome-icon-container'>
+      <div className="col-xs welcome-icon-container">
       <img id="welcome-icon" src={ExchangeBuddySpreadIcon} alt="Icons"/>
       </div>
       <div>
       <FlatButton
         onClick={()=>browserHistory.push('/settings')}
-        icon={IconsHelper.materialIcon("menu")}>
+        icon={IconsHelper.materialIcon('menu')}>
       </FlatButton>
       </div>
       </div>
@@ -69,7 +69,7 @@ class Landing extends React.Component{
         
         {/*<h1>Find out who else is on an adventure</h1>*/}
           {<h2 id="app-title">Going for Student Exchange?</h2>}
-          <div id='app-subtitle-container'>
+          <div id="app-subtitle-container">
           <p className="app-subtitle">Connect to our network of over 900 universities!</p>
           {/*Find your travel buddies from over 900 universities on ExchangeBuddy!*/}
           {/*<p className="app-subtitle">Share tips for the trip, by students, for students.</p>
@@ -81,29 +81,29 @@ class Landing extends React.Component{
           label="Connect"
           onTouchTap={ () => browserHistory.push('/signup')}
           style={{ maxWidth: 250, margin: '0 auto', height: 50 }}
-          labelStyle={{ fontSize: "16px", padding: "0 20px" }} />
+          labelStyle={{ fontSize: '16px', padding: '0 20px' }} />
       </div>
     </div>
     </div>
-    <div id='cover-lists'>
+    <div id="cover-lists">
     <div id="feature-list">
       <div className="row center-xs">
       <h2>Maximize your exchange experience!</h2>
       </div>
       <div className="row feature-row center-xs">
           
-          <div className="icon-container col-xs-12 col-md-4 col-lg-4">{IconsHelper.materialIcon("group")}
-          <p id='icon-title'>Know your group</p>
+          <div className="icon-container col-xs-12 col-md-4 col-lg-4">{IconsHelper.materialIcon('group')}
+          <p id="icon-title">Know your group</p>
           <p>Find travel buddies within your different groups</p>
           </div>
 
-          <div className="icon-container col-xs-12 col-md-4 col-lg-4">{IconsHelper.materialIcon("library_books")}
-          <p id='icon-title'>Read senior's stories</p>
+          <div className="icon-container col-xs-12 col-md-4 col-lg-4">{IconsHelper.materialIcon('library_books')}
+          <p id="icon-title">Read senior's stories</p>
           <p>Learn tips and tricks from stories shared by other exchangers</p>
           </div>
 
-          <div className="icon-container col-xs-12 col-md-4 col-lg-4">{IconsHelper.materialIcon("event")}
-          <p id='icon-title'>Attend and organise events</p>
+          <div className="icon-container col-xs-12 col-md-4 col-lg-4">{IconsHelper.materialIcon('event')}
+          <p id="icon-title">Attend and organise events</p>
           <p>Know people within your group by participating in new events</p>
           </div>
 
@@ -119,7 +119,7 @@ class Landing extends React.Component{
       <div>
       </div>
     </div>*/}
-    <div id='terms-and-services'>
+    <div id="terms-and-services">
       2016 &copy; ExchangeBuddy.com. All Rights Reserved.
     </div>
     </div>

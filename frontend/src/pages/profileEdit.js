@@ -1,9 +1,9 @@
 import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { toggleBottomBarVisibility, toggleTopBarVisibility,
-toggleTopBarSettingsButtonVisibility, toggleTopBarBackButtonVisibility } from '../actions/pageVisibility';
+toggleTopBarSettingsButtonVisibility, toggleTopBarBackButtonVisibility } from 'actions/pageVisibility';
 
-import ProfileForm from '../components/ProfileForm';
+import ProfileForm from 'components/ProfileForm';
 
 
 class ProfileEdit extends React.Component{

@@ -5,10 +5,10 @@ import ChildComponent from './GroupButtons';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { showSnackbar } from '../../../../actions/messageSnackbar';
-import { clearUser } from '../../../../actions/authActions';
-import {addingGroupSuccessUpdate, leavingGroupSuccessUpdate} from '../../../../actions/home';
-import { fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure } from '../../../../actions/utilityInfo';
+import { showSnackbar } from 'actions/messageSnackbar';
+import { clearUser } from 'actions/authActions';
+import {addingGroupSuccessUpdate, leavingGroupSuccessUpdate} from 'actions/home';
+import { fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure } from 'actions/utilityInfo';
 
 
 const mapDispatchToProps = (dispatch) => {

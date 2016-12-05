@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 //import { withGoogleMap } from "react-google-maps";
 import {browserHistory} from 'react-router';
-import * as geo from '../util/geolocator';
+import * as geo from 'util/geolocator';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import * as IconsHelper from '../util/icons';
+import * as IconsHelper from 'util/icons';
 
 export default class MapComponent extends Component{
 	constructor(props) {

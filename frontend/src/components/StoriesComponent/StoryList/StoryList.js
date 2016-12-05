@@ -4,17 +4,17 @@ import ReactHtmlParser from 'react-html-parser';
 import Truncate from 'react-truncate';
 import {Link, browserHistory} from 'react-router';
 
-import { formatTime } from '../../../util/helper';
-import * as UserHelper from '../../../util/user';
-import * as IconsHelper from '../../../util/icons';
+import { formatTime } from 'util/helper';
+import * as UserHelper from 'util/user';
+import * as IconsHelper from 'util/icons';
 
 import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
-import coverPhoto from '../../../res/story/storyimg.png';
+import coverPhoto from 'res/story/storyimg.png';
 import TextField from 'material-ui/TextField';
 
 import $ from 'jquery';
-var moment = require('moment');
+import moment from 'moment';
 
 const styles={
 	stories_list_grid: {
@@ -35,14 +35,6 @@ class Story extends React.Component{
 	componentDidMount(){
 	}
 
-	clickHandler(e) {
-		browserHistory.push('/stories/' + this.props.story.id);
-	}
-
-	/*actionIcon={ 
-					<IconButton><StarBorder color="white" /></IconButton> 
-				}*/
-
 	render(){
 		const { id, title, /* favorites, status, ,*//*tags, */coverPhoto, User, createdAt, key } = this.props.story;
 		return (
@@ -55,8 +47,8 @@ class Story extends React.Component{
 					<div>
 					<div className="col-xs-12 story-item-info">
 						{IconsHelper.icon('person')}<span>&nbsp;
-						{id===1?
-						(<a href={"https://www.youtube.com/watch?v=eVhtup5r55I"}>
+						{id === 1 ?
+						(<a href="https://www.youtube.com/watch?v=eVhtup5r55I">
 							<span style={{marginLeft:'3px',fontWeight:'bold',color:'white',textDecoration:'underline'}}>{`by ${User.name}`}</span>
 						</a>
 						):
@@ -80,9 +72,13 @@ class Story extends React.Component{
 					</span>*/
 				}
 				titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.6) 70%,rgba(0,0,0,0.4) 100%)">
-				<img className='storyImage' src={coverPhoto} />
+				<img className="storyImage" src={coverPhoto} />
 			</GridTile>
 		)
+	}
+
+	clickHandler(e) {
+		browserHistory.push('/stories/' + this.props.story.id);
 	}
 }
 
@@ -93,12 +89,57 @@ export default class StoryList extends React.Component {
 		this.state={
 			cols:1,
 			storiesShown:[],
-			value:""
+			value:''
 		}
+	}
+	
+  componentWillMount() {
+      this.updateDimensions();
+  }
+  componentDidMount() {
+      window.addEventListener('resize', this.updateDimensions);
+  }
+  componentWillUnmount() {
+      window.removeEventListener('resize', this.updateDimensions);
+  }
+
+	render() {
+		const { stories, user } = this.props;
+		
+		return (
+			<div>
+				<TextField
+				hintText="Search titles" className="search-textfield"
+				value={this.state.value}
+				onChange={this.filterChange}/>
+
+				{ this.getDataSource().length > 0 ?
+					(
+						<div className="stories-outer-container">
+						<hr className="green-separator" style={{ width: '85%' }}></hr>
+						<div style={styles.stories_list_root}>
+						<GridList 
+						className="stories-container"
+						cols={this.state.cols}
+						cellHeight={300}
+						padding={1}
+						style={styles.stories_list_grid}>
+						{ 
+							(this.getDataSource().map(function(story, idx){return (<Story story={story} key={ idx } />) }))
+						}
+						</GridList>
+						</div>
+						<hr className="green-separator" style={{ width: '85%' }}></hr>
+						</div>
+					)
+					: null
+				}	
+			</div>
+		)
 	}
 
 	getDataSource = () => {
-		if (this.state.value === "") {
+		if (this.state.value === '') {
 			return this.props.stories;
 
 		} else {
@@ -141,51 +182,7 @@ export default class StoryList extends React.Component {
 		} else {
 			this.setState({cols: 1});
 		}
-    }
-    componentWillMount() {
-        this.updateDimensions();
-    }
-    componentDidMount() {
-        window.addEventListener("resize", this.updateDimensions);
-    }
-    componentWillUnmount() {
-        window.removeEventListener("resize", this.updateDimensions);
-    }
-
-	render() {
-		const { stories, user } = this.props;
-		
-		return (
-			<div>
-				<TextField
-				hintText="Search titles" className="search-textfield"
-				value={this.state.value}
-				onChange={this.filterChange}/>
-
-				{ this.getDataSource().length > 0 ?
-					(
-						<div className="stories-outer-container">
-						<hr className="green-separator" style={{ width: "85%"}}></hr>
-						<div style={styles.stories_list_root}>
-						<GridList 
-						className="stories-container"
-						cols={this.state.cols}
-						cellHeight={300}
-						padding={1}
-						style={styles.stories_list_grid}>
-						{ 
-							(this.getDataSource().map(function(story, idx){return (<Story story={story} key={ idx } />) }))
-						}
-						</GridList>
-						</div>
-						<hr className="green-separator" style={{ width: "85%"}}></hr>
-						</div>
-					)
-					: null
-				}	
-			</div>
-		)
-	}
+   }
 }
 
 

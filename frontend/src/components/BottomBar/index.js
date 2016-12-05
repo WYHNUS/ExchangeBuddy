@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 import ChildComponent from './BottomBar';
 
-import { toggleBottomBarVisibility } from '../../actions/pageVisibility';
-import {toggleHomeTab} from '../../actions/home';
+import { toggleBottomBarVisibility } from 'actions/pageVisibility';
+import {toggleHomeTab} from 'actions/home';
 
 const mapStateToProps = (state, ownProps)=>{
   return {

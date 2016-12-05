@@ -1,12 +1,12 @@
-var moment=require('moment');
-
 import React, {PropTypes} from 'react';
 import { browserHistory } from 'react-router';
+import $ from 'jquery';
+import moment from 'moment';
 
-import { formatTime } from '../../../util/helper';
-import * as UserHelper from '../../../util/user';
+import { formatTime } from 'util/helper';
+import * as UserHelper from 'util/user';
 
-//import coverPhoto from '../../../res/story/storyimg.png';
+//import coverPhoto from 'res/story/storyimg.png';
 
 
 export default class StoryDetails extends React.Component {
@@ -37,14 +37,14 @@ export default class StoryDetails extends React.Component {
 
 		return (
 			<div className="text-content-wrapper">
-				<div className='row center-xs'>
-				<div className='col-xs-12 col-md-6 col-lg-4'>
+				<div className="row center-xs">
+				<div className="col-xs-12 col-md-6 col-lg-4">
 				<div className="user-profile-container">
 					<div className="story-avatar">{ UserHelper.getAvatar(User, 60) }</div>
 					<div className="author-details">
 						<div>{ User.name }</div>
 						{
-							!!createdAt ?
+							createdAt ?
 								<div><span>{moment(createdAt).fromNow()}</span></div>
 							: null
 						}
@@ -56,8 +56,8 @@ export default class StoryDetails extends React.Component {
 				<div className="story-container">
 					<div className="story-row">
 						{	
-							!!coverPhoto ?
-								<img className='img' src={coverPhoto}/>
+							coverPhoto ?
+								<img className="img" src={coverPhoto}/>
 							: null
 						}
 						<h1 className="title">{ title }</h1>

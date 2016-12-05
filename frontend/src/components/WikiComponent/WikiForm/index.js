@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 // Action creators
 import { 
 	initializeWikiForm, submitNewSectionVersion
-} from '../../../actions/wiki'
+} from 'actions/wiki'
 
 // Component
 import ChildComponent from './WikiForm';

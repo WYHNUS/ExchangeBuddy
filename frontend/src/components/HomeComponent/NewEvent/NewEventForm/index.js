@@ -7,9 +7,9 @@ import Loading from '../../../Loading';
 // Component
 import ChildComponent from './NewEventForm';
 
-import { postEvents, fetchEvents, fetchEventsSuccess, fetchEventsFailure } from '../../../../actions/home'
-import { showSnackbar } from '../../../../actions/messageSnackbar';
-import { clearUser } from '../../../../actions/authActions';
+import { postEvents, fetchEvents, fetchEventsSuccess, fetchEventsFailure } from 'actions/home'
+import { showSnackbar } from 'actions/messageSnackbar';
+import { clearUser } from 'actions/authActions';
 
 // Redux
 import { connect } from 'react-redux';
