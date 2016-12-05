@@ -52,7 +52,7 @@ class Wiki extends React.Component {
           </div>
           <hr className="green-separator" style={{ width: '85%' }}></hr>
 
-          <ul className="recommendation-item-list">
+          <div className="recommendation-item-list">
           {
             (recommendWikis.length > 0) ?
               (
@@ -64,7 +64,7 @@ class Wiki extends React.Component {
               )
             : <Spinner spinnerName="circle" />
           }
-          </ul>
+          </div>
 
           <hr className="green-separator" style={{ width: '85%' }}></hr>
         </div>

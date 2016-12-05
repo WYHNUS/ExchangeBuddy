@@ -9,33 +9,20 @@
 }
 
 .recommendation-item-list {
-	overflow: hidden;
-    padding: 0;
-    margin: 20px;
-    margin-bottom: 50px;
+	overflow: hidden; padding: 0; margin: 20px 20px 50px;
+  display: flex; flex-direction: row; justify-content: center;
 
-    li {
-    	float: left;
-	    display: inline-block;
-	    width: 150px;
-	    height: 220px;
-	    padding: 0 0 30px 50px;
+  @include media-xs-only { flex-direction: column; align-items: center; }
 
-	    .recommendation-item-wrapper {
-	    	cursor: pointer;
-    	    width: 140px;
-		    height: 140px;
-		    img {
-			    width: 100%;
-			    height: 100%;
-		    }
-		    p {
-		    	display: inline-block;
-			    max-width: 100%;
-			    vertical-align: middle;
-			}
-	    }
+  .recommendation-item {
+	   width: 200px; height: 220px; 
+
+    .recommendation-item-wrapper {
+    	cursor: pointer; width: 140px; height: 140px; margin: 0 auto; text-align: center;
+	    img { width: 100%; height: 100%; }
+	    p { display: inline-block; max-width: 100%; vertical-align: middle; }
     }
+  }
 }
 
 .wiki-detail-wrapper {
