@@ -39,58 +39,7 @@ models.sequelize.Promise.all([
                     <li> Telecommunication</li>\
                 </ul>\
             </div>",
-            'Visa' :
-            "<div>\
-                <h3 style='color:red'>Contribute, get credited and help other students!</h3> <br>\
-                <p>Some Tips to write this wiki: </p><br>\
-                <ul> \
-                    <li>Details of visa</li>\
-                </ul>\
-            </div>",
-            'Safety Tips':
-            "<div>\
-                <h3 style='color:red'>Contribute, get credited and help other students!</h3> <br>\
-                <p>Some Tips to write this wiki: </p><br>\
-                <ul> \
-                    <li>Emergency Contact</li>\
-                </ul>\
-            </div>",
-            "Pre-departure Checklist":
-            "<div>\
-                <h3 style='color:red'>Contribute, get credited and help other students!</h3> <br>\
-                <p>Some Tips to write this wiki: </p><br>\
-                <ul> \
-                    <li> Packing List</li>\
-                    <li>Essential documents</li>\
-                </ul>\
-            </div>",
-
-            'Expenses':
-            '<div>\
-                <h3 style="color:red">Contribute, get credited and help other students!</h3> <br>\
-                <p>Some Tips to write this wiki: </p><br>\
-                <ul> \
-                    <li>School fees</li>\
-                    <li>On-campus accommodation</li>\
-                    <li>Transport</li>\
-                    <li>Living Cost</li>\
-                    <li>Rough Budget</li>\
-                    <li>Common goods price (beers, milk, McDonald\'s etc)</li>\
-                </ul>\
-            </div>',
-
-            'Getting Around':
-            "<div>\
-                <h3 style='color:red'>Contribute, get credited and help other students!</h3> <br>\
-                <p>Some Tips to write this wiki: </p><br>\
-                <ul> \
-                    <li>Trains</li>\
-                    <li>Buses</li>\
-                    <li>Taxis</li>\
-                    <li>Flight</li>\
-                </ul>\
-            </div>",
-            'Academic':
+            'Academics':
             "<div>\
                 <h3 style='color:red'>Contribute, get credited and help other students!</h3> <br>\
                 <p>Some Tips to write this wiki: </p><br>\
