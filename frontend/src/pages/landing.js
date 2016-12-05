@@ -22,7 +22,7 @@ const landingImgStyle = {
 const ActionButton = ({ user }) => {
   let buttonLabel, targetUrl;
 
-  if (user) {
+  if (user && user.id) {
     buttonLabel = 'Enter';
     targetUrl = '/home';
   } else {
@@ -38,6 +38,10 @@ const ActionButton = ({ user }) => {
       style={{ maxWidth: 250, margin: '0 auto', height: 50 }}
       labelStyle={{ fontSize: '16px', padding: '0 20px' }} />
   );
+};
+
+ActionButton.propTypes = {
+  user: React.PropTypes.object,
 };
 
 class Landing extends React.Component {
