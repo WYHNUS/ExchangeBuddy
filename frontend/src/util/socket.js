@@ -2,7 +2,9 @@ import {ROOT_URL} from './backend';
 import url from 'url';
 
 // Will be deprecated soon? Fix later.
-var socket = io.connect(ROOT_URL, { path: `${ url.parse(ROOT_URL).pathname }/socket.io` }); // eslint-disable-line no-undef
+const socketUrl = `${ url.parse(ROOT_URL).protocol }//${ url.parse(ROOT_URL).host }`;
+const socketPath = url.parse(ROOT_URL).pathname === '/' ? '' : url.parse(ROOT_URL).pathname;
+var socket = io.connect(socketUrl, { path: `${ socketPath }/socket.io` }); // eslint-disable-line no-undef
 
 export default class Socket{
 
