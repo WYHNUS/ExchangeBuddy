@@ -16,13 +16,13 @@ export const getAvatarUrl = (user, size=64) => {
   const profilePictureUrl = user.profilePictureUrl;
   const fbUserId = user.fbUserId;
 
-  // Using native Cloudinary
-  if (profilePictureUrl)
-    return profilePictureUrl;
   // Using Facebook Graph
-  else if (fbUserId)
+  if (fbUserId)
     return `https://graph.facebook.com/${fbUserId}/picture/?width=${size*2}&height=${size*2}`;
-  else
+  // Using default profile picture URL
+  else if (profilePictureUrl)
+    return profilePictureUrl;
+  else 
     return null;
 };
 
