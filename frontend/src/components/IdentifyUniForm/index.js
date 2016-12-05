@@ -7,10 +7,10 @@ import { connect } from 'react-redux';
 // Action creators
 import { 
   updateUserProfile,
-} from '../../actions/user';
+} from 'actions/user';
 import { 
   fetchAllUniversities, fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure 
-} from '../../actions/utilityInfo';
+} from 'actions/utilityInfo';
 
 // Component
 import ChildComponent from './IdentifyUniForm';

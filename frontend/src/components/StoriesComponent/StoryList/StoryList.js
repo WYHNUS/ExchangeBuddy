@@ -4,13 +4,13 @@ import ReactHtmlParser from 'react-html-parser';
 import Truncate from 'react-truncate';
 import {Link, browserHistory} from 'react-router';
 
-import { formatTime } from '../../../util/helper';
-import * as UserHelper from '../../../util/user';
-import * as IconsHelper from '../../../util/icons';
+import { formatTime } from 'util/helper';
+import * as UserHelper from 'util/user';
+import * as IconsHelper from 'util/icons';
 
 import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
-import coverPhoto from '../../../res/story/storyimg.png';
+import coverPhoto from 'res/story/storyimg.png';
 import TextField from 'material-ui/TextField';
 
 import $ from 'jquery';

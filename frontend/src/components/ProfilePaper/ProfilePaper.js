@@ -1,6 +1,6 @@
 import request from 'superagent';
-import {bearer} from '../../util/bearer';
-import {ROOT_URL} from '../../util/backend';
+import {bearer} from 'util/bearer';
+import {ROOT_URL} from 'util/backend';
 
 import React, {PropTypes} from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -12,11 +12,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Spinner from 'react-spinkit';
 
 import Link from '../Link';
-import * as UserHelper from '../../util/user';
-import * as UniversityHelper from '../../util/university';
-import { fetchAllUniversities } from '../../actions/utilityInfo';
-import{ fetchProfile } from '../../actions/profile';
-import * as IconsHelper from '../../util/icons';
+import * as UserHelper from 'util/user';
+import * as UniversityHelper from 'util/university';
+import { fetchAllUniversities } from 'actions/utilityInfo';
+import{ fetchProfile } from 'actions/profile';
+import * as IconsHelper from 'util/icons';
 
 const text_header_style = {
   fontSize: '-webkit-xxx-large',

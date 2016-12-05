@@ -2,10 +2,10 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import IdentifyUniForm from '../components/IdentifyUniForm';
+import IdentifyUniForm from 'components/IdentifyUniForm';
 import { 
   toggleBottomBarVisibility, toggleTopBarVisibility, toggleTopBarBackButtonVisibility
-} from '../actions/pageVisibility';
+} from 'actions/pageVisibility';
 
 
 class IdentifyUniversity extends React.Component {

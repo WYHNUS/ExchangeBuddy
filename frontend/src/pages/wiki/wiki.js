@@ -6,12 +6,12 @@ import Spinner from 'react-spinkit';
 import { 
   toggleBottomBarVisibility, toggleTopBarVisibility,
   toggleTopBarSettingsButtonVisibility 
-} from '../../actions/pageVisibility';
+} from 'actions/pageVisibility';
 import {
   fetchRecommendation
-} from '../../actions/wiki';
+} from 'actions/wiki';
 
-import WikiRecommendation from '../../components/WikiComponent/WikiRecommendation';
+import WikiRecommendation from 'components/WikiComponent/WikiRecommendation';
 
 class Wiki extends React.Component {
   constructor(props) {

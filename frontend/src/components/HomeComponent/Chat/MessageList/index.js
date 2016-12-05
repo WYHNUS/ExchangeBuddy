@@ -8,8 +8,8 @@ import ChildComponent from './MessageList';
 
 import { 
   fetchGroupMessages, fetchGroupMessagesSuccess, fetchGroupMessagesFailure
-} from '../../../../actions/home'
-import { clearUser } from '../../../../actions/authActions';
+} from 'actions/home'
+import { clearUser } from 'actions/authActions';
 
 // Redux
 import { bindActionCreators } from 'redux';

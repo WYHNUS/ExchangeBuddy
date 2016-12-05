@@ -3,7 +3,7 @@ import {TOGGLE_BOTTOM_BAR_VISIBILITY,
 	TOGGLE_TOP_BAR_SETTINGS_BUTTON, 
 	TOGGLE_HOME_SEARCH_DRAWER,
 TOGGLE_HOME_SEARCH_DRAWER_BUTTON_VISIBILITY,
-TOGGLE_TOP_BAR_VISIBILITY} from '../actions/pageVisibility';
+TOGGLE_TOP_BAR_VISIBILITY} from 'actions/pageVisibility';
 
 //designing state shape
 const initialState = {

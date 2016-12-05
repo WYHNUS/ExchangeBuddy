@@ -1,11 +1,11 @@
-import storyImg0 from '../res/story/storyImg0.png';
-import storyImg1 from '../res/story/storyImg1.jpg';
-import storyImg2 from '../res/story/storyImg2.png';
-import minhan from '../res/story/minhan.jpg';
-import eugeneng from '../res/story/eugeneng.jpg';
-/*import group1Uni from '../../res/group1_uni.jpg';
-import group2Uni from '../../res/group2_uni.jpg';
-import group3Uni from '../../res/group3_uni.jpg';*/
+import storyImg0 from 'res/story/storyImg0.png';
+import storyImg1 from 'res/story/storyImg1.jpg';
+import storyImg2 from 'res/story/storyImg2.png';
+import minhan from 'res/story/minhan.jpg';
+import eugeneng from 'res/story/eugeneng.jpg';
+/*import group1Uni from 'res/group1_uni.jpg';
+import group2Uni from 'res/group2_uni.jpg';
+import group3Uni from 'res/group3_uni.jpg';*/
 
 /* eslint-disable quotes */
 

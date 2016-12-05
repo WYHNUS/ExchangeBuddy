@@ -1,6 +1,6 @@
-/*import {TOGGLE_HOME_GROUP_UNIVERSITY_SEARCH_LIST} from '../actions/homeSearchGroups';*/
+/*import {TOGGLE_HOME_GROUP_UNIVERSITY_SEARCH_LIST} from 'actions/homeSearchGroups';*/
 import {FETCH_ALL_GROUPS,FETCH_ALL_GROUPS_SUCCESS,
-FETCH_ALL_GROUPS_FAILURE, RESET_ALL_GROUPS} from '../actions/home';
+FETCH_ALL_GROUPS_FAILURE, RESET_ALL_GROUPS} from 'actions/home';
 
 const initialState={
   homeGroupUniversitySearchListOpen: false,

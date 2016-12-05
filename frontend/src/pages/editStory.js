@@ -6,9 +6,9 @@
 import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { toggleBottomBarVisibility, toggleTopBarVisibility,
-toggleTopBarSettingsButtonVisibility } from '../actions/pageVisibility';
+toggleTopBarSettingsButtonVisibility } from 'actions/pageVisibility';
 
-import StoryForm from '../components/StoryForm';
+import StoryForm from 'components/StoryForm';
 
 // require('jquery/dist/jquery.min.js');
 // require('medium-editor/dist/js/medium-editor.js');

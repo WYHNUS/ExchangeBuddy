@@ -1,6 +1,6 @@
 import {
   FETCH_ALL_UNIVERSITIES, FETCH_All_UNIVERSITIES_SUCCESS, FETCH_All_UNIVERSITIES_FAILURE, RESET_All_UNIVERSITIES
-} from '../actions/utilityInfo';
+} from 'actions/utilityInfo';
 
 //designing state shape
 const initialState = {

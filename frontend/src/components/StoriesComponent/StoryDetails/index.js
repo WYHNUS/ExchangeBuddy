@@ -4,11 +4,11 @@ import React from 'react';
 import ChildComponent from './StoryDetails';
 
 // Action creators
-import { fetchOneStory, fetchStorySuccess, fetchStoryFail } from '../../../actions/stories';
+import { fetchOneStory, fetchStorySuccess, fetchStoryFail } from 'actions/stories';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import stories from '../../../util/storyData';
+import stories from 'util/storyData';
 
 const mapStateToProps = (state) => {
   return {

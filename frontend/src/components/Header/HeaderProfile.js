@@ -7,12 +7,12 @@ import Avatar from 'material-ui/Avatar';
 import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 
-import * as ImagesHelper from '../../../util/images';
-import * as IconsHelper from '../../../util/icons';
-import * as UserHelper from '../../../util/user';
-import * as UniversityHelper from '../../../util/university';
-import { FullWidthAvatar } from '../../../util/avatar';
-import { handleLogout } from '../../../util/session';
+import * as ImagesHelper from 'util/images';
+import * as IconsHelper from 'util/icons';
+import * as UserHelper from 'util/user';
+import * as UniversityHelper from 'util/university';
+import { FullWidthAvatar } from 'util/avatar';
+import { handleLogout } from 'util/session';
 
 export default class HeaderProfile extends React.Component {
   constructor(props) {

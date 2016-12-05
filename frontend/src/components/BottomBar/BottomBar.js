@@ -3,7 +3,7 @@ import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigati
 import Paper from 'material-ui/Paper';
 import {browserHistory} from 'react-router';
 
-import * as IconsHelper from '../../util/icons';
+import * as IconsHelper from 'util/icons';
 
 
 function urlToIdx(url) {

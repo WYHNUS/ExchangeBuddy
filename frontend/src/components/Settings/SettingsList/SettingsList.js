@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-import * as IconsHelper from '../../../util/icons';
+import * as IconsHelper from 'util/icons';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -9,16 +9,16 @@ import { Row, Col } from 'react-flexbox-grid';
 import {browserHistory} from 'react-router';
 import cookie from 'react-cookie';
 
-import ChiThanh from '../../../res/about/ChiThanh.jpg';
-import EugeneNg from '../../../res/about/EugeneNg.jpg';
-import IrvinLim from '../../../res/about/IrvinLim.jpg';
-import KaiYiLee from '../../../res/about/KaiYiLee.jpg';
-import KiatHan from '../../../res/about/KiatHan.jpg';
-import LeonMak from '../../../res/about/LeonMak.jpg';
-import SueMae from '../../../res/about/SueMae.jpg';
-import WangYanHao from '../../../res/about/WangYanHao.jpg';
-import ZhangHanMing from '../../../res/about/ZhangHanMing.jpg';
-import ExchangeBuddyIcon from '../../../res/ExchangeBuddySpreadIcon.png'
+import ChiThanh from 'res/about/ChiThanh.jpg';
+import EugeneNg from 'res/about/EugeneNg.jpg';
+import IrvinLim from 'res/about/IrvinLim.jpg';
+import KaiYiLee from 'res/about/KaiYiLee.jpg';
+import KiatHan from 'res/about/KiatHan.jpg';
+import LeonMak from 'res/about/LeonMak.jpg';
+import SueMae from 'res/about/SueMae.jpg';
+import WangYanHao from 'res/about/WangYanHao.jpg';
+import ZhangHanMing from 'res/about/ZhangHanMing.jpg';
+import ExchangeBuddyIcon from 'res/ExchangeBuddySpreadIcon.png'
 
 export default class SettingsList extends React.Component {
 

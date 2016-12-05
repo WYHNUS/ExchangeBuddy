@@ -2,8 +2,8 @@ import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { toggleBottomBarVisibility, toggleTopBarVisibility, 
 	toggleTopBarBackButtonVisibility
-} from '../actions/pageVisibility';
-import SettingsList from '../components/Settings/SettingsList';
+} from 'actions/pageVisibility';
+import SettingsList from 'components/Settings/SettingsList';
 
 class Settings extends React.Component{
 

@@ -1,4 +1,4 @@
-import {SHOW_SNACKBAR, HIDE_SNACKBAR} from '../actions/messageSnackbar';
+import {SHOW_SNACKBAR, HIDE_SNACKBAR} from 'actions/messageSnackbar';
 
 //designing state shape
 const initialState = {

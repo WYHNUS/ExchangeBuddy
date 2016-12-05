@@ -5,7 +5,7 @@ import IconButton from 'material-ui/IconButton';
 import { TextFormField } from '../../../Field';
 import $ from 'jquery';
 
-import * as UserHelper from '../../../../util/user';
+import * as UserHelper from 'util/user';
 
 const submitForm = (callback, socket, updateGroupMessageFromSocket) => (values) => {
   //const params = { userToken: Meteor.userToken(), userId: Meteor.userId(), groupId: groupId, content: values.message, type: "user" };

@@ -1,5 +1,5 @@
 import request from 'superagent';
-import {ROOT_URL} from '../util/backend';
+import {ROOT_URL} from 'util/backend';
 
 export const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';
 

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 // Action creators
 import { 
   attemptLogin, attemptFacebookLogin, loginSuccess, loginFail
-} from '../../actions/authActions';
+} from 'actions/authActions';
 // Component
 import ChildComponent from './LoginForm';
 

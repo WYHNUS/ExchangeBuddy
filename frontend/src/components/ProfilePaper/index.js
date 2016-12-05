@@ -10,11 +10,11 @@ import { connect } from 'react-redux';
 // Component
 import ChildComponent from './ProfilePaper';
 
-import { fetchProfileSuccess, fetchProfileFailure } from '../../actions/profile';
-import { fetchProfileGroups,fetchProfileGroupsSuccess, fetchProfileGroupsFailure } from '../../actions/profile';
-import { fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure } from '../../actions/utilityInfo';
-import { attemptLogout, clearUser } from '../../actions/authActions'
-import { showSnackbar } from '../../actions/messageSnackbar';
+import { fetchProfileSuccess, fetchProfileFailure } from 'actions/profile';
+import { fetchProfileGroups,fetchProfileGroupsSuccess, fetchProfileGroupsFailure } from 'actions/profile';
+import { fetchAllUniversitiesSuccess, fetchAllUniversitiesFailure } from 'actions/utilityInfo';
+import { attemptLogout, clearUser } from 'actions/authActions'
+import { showSnackbar } from 'actions/messageSnackbar';
 
 // redux
 const mapStateToProps = (state) => {

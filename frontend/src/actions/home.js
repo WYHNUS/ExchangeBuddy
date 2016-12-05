@@ -1,6 +1,6 @@
 import request from 'superagent';
-import { bearer } from '../util/bearer';
-import { ROOT_URL } from '../util/backend';
+import { bearer } from 'util/bearer';
+import { ROOT_URL } from 'util/backend';
 
 export const TOGGLE_SELECTED_HOME_GROUP = 'TOGGLE_SELECTED_HOME_GROUP';
 export const TOGGLE_HOME_TAB = 'TOGGLE_HOME_TAB';

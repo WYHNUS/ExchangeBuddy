@@ -4,11 +4,11 @@ import cookie from 'react-cookie';
 
 // Component
 import ChildComponent from './ProfileForm';
-import { showSnackbar } from '../../actions/messageSnackbar';
+import { showSnackbar } from 'actions/messageSnackbar';
 
 import { connect } from 'react-redux';
 
-import {editProfile, editProfileSuccess} from '../../actions/profile';
+import {editProfile, editProfileSuccess} from 'actions/profile';
 import { clearUser } from 'actions/authActions';
 
 const mapDispatchToProps = (dispatch) => {

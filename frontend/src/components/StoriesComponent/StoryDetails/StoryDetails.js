@@ -3,10 +3,10 @@ import { browserHistory } from 'react-router';
 import $ from 'jquery';
 import moment from 'moment';
 
-import { formatTime } from '../../../util/helper';
-import * as UserHelper from '../../../util/user';
+import { formatTime } from 'util/helper';
+import * as UserHelper from 'util/user';
 
-//import coverPhoto from '../../../res/story/storyimg.png';
+//import coverPhoto from 'res/story/storyimg.png';
 
 
 export default class StoryDetails extends React.Component {

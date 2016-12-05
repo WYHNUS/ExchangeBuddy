@@ -3,7 +3,7 @@ import {
   EDIT_PROFILE_SUCCESS,
   START_FETCHING_PROFILE_GROUPS, FETCH_PROFILE_GROUPS_SUCCESS, 
   FETCH_PROFILE_GROUPS_FAILURE, RESET_PROFILE_GROUPS,
- } from '../actions/profile';
+ } from 'actions/profile';
 
 const initialState={
   //user:{user:user,error:null,loading:false},

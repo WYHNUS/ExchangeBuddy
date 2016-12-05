@@ -10,8 +10,8 @@ var Dropzone = require('react-dropzone');
 import { TextFormField } from '../Field';
 import { PasswordFormField } from '../Field';
 
-import { ROOT_URL } from '../../util/backend';
-import { bearer } from '../../util/bearer';
+import { ROOT_URL } from 'util/backend';
+import { bearer } from 'util/bearer';
 import request from 'superagent';
 import cookie from 'react-cookie';
 

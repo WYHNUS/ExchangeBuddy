@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import { browserHistory } from 'react-router';
-/*import { handleLogout } from '../../util/session';*/
+/*import { handleLogout } from 'util/session';*/
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import IconButton from 'material-ui/IconButton';
@@ -9,12 +9,12 @@ import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
 //import HeaderProfile from './HeaderProfile';
-import * as IconsHelper from '../../util/icons';
-import group0Uni from '../../res/group0_uni.jpg';
-import group1Uni from '../../res/group1_uni.jpg';
-import group2Uni from '../../res/group2_uni.jpg';
-import group3Uni from '../../res/group3_uni.jpg';
-import group4Uni from '../../res/group4_uni.jpg';
+import * as IconsHelper from 'util/icons';
+import group0Uni from 'res/group0_uni.jpg';
+import group1Uni from 'res/group1_uni.jpg';
+import group2Uni from 'res/group2_uni.jpg';
+import group3Uni from 'res/group3_uni.jpg';
+import group4Uni from 'res/group4_uni.jpg';
 
 const imgArray=[group0Uni,group1Uni, group2Uni, group3Uni, group4Uni];
 

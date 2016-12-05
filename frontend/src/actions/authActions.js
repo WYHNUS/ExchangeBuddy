@@ -22,7 +22,7 @@ export const Navigate_Away_From_Auth_Form = 'Navigate_Away_From_Auth_Form';
 
 export const CLEAR_USER = 'CLEAR_USER';
 
-import { ROOT_URL } from '../util/backend';
+import { ROOT_URL } from 'util/backend';
 
 /*
  * action creators

@@ -6,13 +6,13 @@ import { browserHistory } from 'react-router';
 import { 
 	toggleBottomBarVisibility, toggleTopBarVisibility,
 	toggleTopBarBackButtonVisibility 
-} from '../../actions/pageVisibility';
+} from 'actions/pageVisibility';
 import {
 	fetchWikiPage
-} from '../../actions/wiki';
+} from 'actions/wiki';
 
-import WikiContentTable from '../../components/WikiComponent/WikiContentTable';
-import WikiSection from '../../components/WikiComponent/WikiSection';
+import WikiContentTable from 'components/WikiComponent/WikiContentTable';
+import WikiSection from 'components/WikiComponent/WikiSection';
 
 var shouldRefresh = false;
 

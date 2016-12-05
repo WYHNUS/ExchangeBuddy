@@ -4,7 +4,7 @@ import {
   INITIALIZE_WIKI_FORM,
   CLICK_SUBMIT, CREATE_SECTION_VERSION_SUCCESS, CREATE_SECTION_VERSION_FAIL,
   CREATE_NEW_SECTION_SUCCESS, CREATE_NEW_SECTION_FAIL
-} from '../actions/wiki';
+} from 'actions/wiki';
 
 const initialState=
 {

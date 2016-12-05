@@ -5,18 +5,18 @@ import cookie from 'react-cookie';
 
 var moment = require('moment');
 import GoogleMap from 'google-map-react';
-import eventimg from '../../../../res/event-img.jpg';
-import * as Icons from '../../../../util/icons';
+import eventimg from 'res/event-img.jpg';
+import * as Icons from 'util/icons';
 import { Link, browserHistory } from 'react-router';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import {MemberTile} from '../../Friends/MemberList/MemberList'
 
 import request from 'superagent';
-import { bearer } from '../../../../util/bearer';
-import { ROOT_URL } from '../../../../util/backend';
-import { fetchAllUniversities } from '../../../../actions/utilityInfo';
-import * as UniversityHelper from '../../../../util/university';
+import { bearer } from 'util/bearer';
+import { ROOT_URL } from 'util/backend';
+import { fetchAllUniversities } from 'actions/utilityInfo';
+import * as UniversityHelper from 'util/university';
 
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';

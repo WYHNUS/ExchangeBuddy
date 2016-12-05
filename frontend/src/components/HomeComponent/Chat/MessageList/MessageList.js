@@ -8,8 +8,8 @@ import truncate from 'truncate';
 import Linkify from 'react-linkify';
 import Spinner from 'react-spinkit';
 
-import { formatTime } from '../../../../util/helper';
-import * as UserHelper from '../../../../util/user';
+import { formatTime } from 'util/helper';
+import * as UserHelper from 'util/user';
 
 const MessageFBEvent = ({ message }) => {
   const { content, user, createdAt, type, eventPosting, id } = message;

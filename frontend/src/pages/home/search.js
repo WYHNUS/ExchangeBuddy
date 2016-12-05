@@ -12,13 +12,13 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import Chip from 'material-ui/Chip'
 
-import GroupList from '../../components/HomeComponent/Search/GroupList';
+import GroupList from 'components/HomeComponent/Search/GroupList';
 import {fetchAllGroups, fetchAllGroupsSuccess, fetchAllGroupsFailure, resetAllGroups,
   fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure, toggleHomeTab
-} from '../../actions/home';
-import { toggleHomeSearchDrawerVisibility } from '../../actions/pageVisibility';
-import { toggleSelectedHomeGroup } from '../../actions/home';
-import { clearUser } from '../../actions/authActions';
+} from 'actions/home';
+import { toggleHomeSearchDrawerVisibility } from 'actions/pageVisibility';
+import { toggleSelectedHomeGroup } from 'actions/home';
+import { clearUser } from 'actions/authActions';
 
 class Search extends Component {
 

@@ -6,11 +6,11 @@ import Dialog from 'material-ui/Dialog';
 
 import cookie from 'react-cookie';
 import request from 'superagent';
-import { bearer } from '../../../../util/bearer';
-import { ROOT_URL } from '../../../../util/backend';
-import * as UniversityHelper from '../../../../util/university';
-import * as GroupHelper from '../../../../util/group';
-import {fetchAllUniversities } from '../../../../actions/utilityInfo';
+import { bearer } from 'util/bearer';
+import { ROOT_URL } from 'util/backend';
+import * as UniversityHelper from 'util/university';
+import * as GroupHelper from 'util/group';
+import {fetchAllUniversities } from 'actions/utilityInfo';
 
 export default class GroupButtons extends React.Component {
 

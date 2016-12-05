@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
 // Action creators
-import { verifyToken, verifyTokenSuccess, verifyTokenFail } from '../actions/authActions';
+import { verifyToken, verifyTokenSuccess, verifyTokenFail } from 'actions/authActions';
 
 
 class Verify extends React.Component{

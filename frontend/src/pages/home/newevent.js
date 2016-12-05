@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import NewEventForm from '../../components/HomeComponent/NewEvent/NewEventForm';
+import NewEventForm from 'components/HomeComponent/NewEvent/NewEventForm';
 import {browserHistory} from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';

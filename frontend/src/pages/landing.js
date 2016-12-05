@@ -1,17 +1,17 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
-import * as IconsHelper from '../util/icons';
+import * as IconsHelper from 'util/icons';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import RaisedButton from 'material-ui/RaisedButton';
-import landing from '../res/ExchangeBuddySpread.jpg';
-import ExchangeBuddySpreadIcon from '../res/ExchangeBuddySpreadIcon.png';
-//import LoginButton from '../components/LoginButton';
+import landing from 'res/ExchangeBuddySpread.jpg';
+import ExchangeBuddySpreadIcon from 'res/ExchangeBuddySpreadIcon.png';
+//import LoginButton from 'components/LoginButton';
 import FlatButton from 'material-ui/FlatButton';
 import ReactPaginate from 'react-paginate';
 
 import { connect } from 'react-redux';
-import { toggleTopBarVisibility, toggleBottomBarVisibility } from '../actions/pageVisibility';
+import { toggleTopBarVisibility, toggleBottomBarVisibility } from 'actions/pageVisibility';
 var request = require('superagent');
 
 

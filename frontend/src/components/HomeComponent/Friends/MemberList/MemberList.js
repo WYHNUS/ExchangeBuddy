@@ -5,11 +5,11 @@ import { browserHistory } from 'react-router'
 import RaisedButton from 'material-ui/RaisedButton';
 
 import request from 'superagent';
-import { bearer } from '../../../../util/bearer';
-import { ROOT_URL } from '../../../../util/backend';
-import * as UniversityHelper from '../../../../util/university';
+import { bearer } from 'util/bearer';
+import { ROOT_URL } from 'util/backend';
+import * as UniversityHelper from 'util/university';
 
-import { getAvatar } from '../../../../util/user';
+import { getAvatar } from 'util/user';
 
 const styles = {
   root: {

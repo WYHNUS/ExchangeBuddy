@@ -3,19 +3,19 @@ import {PropTypes} from 'react';
 import MuiTheme from './mui-theme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Helmet from 'react-helmet';
-import { makeRouteSlug } from '../util/helper';
-import BottomBar from '../components/BottomBar';
-import TopBar from '../components/TopBar';
-import '../stylesheets/application.scss';
-import MessageSnackbar from '../components/MessageSnackbar'
+import { makeRouteSlug } from 'util/helper';
+import BottomBar from 'components/BottomBar';
+import TopBar from 'components/TopBar';
+import 'stylesheets/application.scss';
+import MessageSnackbar from 'components/MessageSnackbar'
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { resizeBrowserWindow } from '../actions/browser';
+import { resizeBrowserWindow } from 'actions/browser';
 
-import Search from '../pages/home/search';
-import {addJoyride} from '../actions/home';
+import Search from 'pages/home/search';
+import { addJoyride } from 'actions/home';
 import Joyride from 'react-joyride';
 
 class App extends React.Component{

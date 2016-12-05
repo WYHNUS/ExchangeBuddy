@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-import * as GroupHelper from '../../../../util/group';
+import * as GroupHelper from 'util/group';
 
 export default class FBButtons extends React.Component {
 

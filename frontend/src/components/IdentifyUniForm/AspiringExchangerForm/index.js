@@ -8,9 +8,9 @@ import { connect } from 'react-redux';
 
 import {
   editUniversities, editUniversitiesSuccess, editUniversitiesFailure
-} from '../../../actions/profile';
+} from 'actions/profile';
 
-import { showSnackbar } from '../../../actions/messageSnackbar';
+import { showSnackbar } from 'actions/messageSnackbar';
 import { clearUser } from 'actions/authActions';
 
 // Component

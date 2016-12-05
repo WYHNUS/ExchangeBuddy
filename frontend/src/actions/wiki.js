@@ -1,7 +1,7 @@
 import request from 'superagent';
 import cookie from 'react-cookie';
-import { bearer } from '../util/bearer';
-import { ROOT_URL } from '../util/backend';
+import { bearer } from 'util/bearer';
+import { ROOT_URL } from 'util/backend';
 
 export const INITIALIZE_WIKI_FORM = 'INITIALIZE_WIKI_FORM';
 

@@ -4,16 +4,16 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { showSnackbar } from '../../actions/messageSnackbar';
-import { pageVisibility } from '../../actions/pageVisibility';
-import {updateGroupMessageFromSocket,resetGroupMessages} from '../../actions/home';
-import {toggleHomeTab} from '../../actions/home';
+import { showSnackbar } from 'actions/messageSnackbar';
+import { pageVisibility } from 'actions/pageVisibility';
+import {updateGroupMessageFromSocket,resetGroupMessages} from 'actions/home';
+import {toggleHomeTab} from 'actions/home';
 
-import SubmitForm from '../../components/HomeComponent/Chat/SubmitForm';
-import MessageList from '../../components/HomeComponent/Chat/MessageList';
-import {ROOT_URL} from '../../util/backend';
-import Socket from '../../util/socket';
-import * as GroupHelper from '../../util/group';
+import SubmitForm from 'components/HomeComponent/Chat/SubmitForm';
+import MessageList from 'components/HomeComponent/Chat/MessageList';
+import {ROOT_URL} from 'util/backend';
+import Socket from 'util/socket';
+import * as GroupHelper from 'util/group';
 
 import { browserHistory } from 'react-router';
 

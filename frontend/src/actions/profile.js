@@ -1,6 +1,6 @@
 import request from 'superagent';
-import {bearer} from '../util/bearer';
-import {ROOT_URL} from '../util/backend';
+import {bearer} from 'util/bearer';
+import {ROOT_URL} from 'util/backend';
 
 /************************************************************
 FETCHING A PROFILE

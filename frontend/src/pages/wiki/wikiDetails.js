@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import { 
   toggleBottomBarVisibility, toggleTopBarVisibility,
   toggleTopBarBackButtonVisibility 
-} from '../../actions/pageVisibility';
+} from 'actions/pageVisibility';
 import {
   fetchWikiPage
-} from '../../actions/wiki';
+} from 'actions/wiki';
 
-import WikiDetail from '../../components/WikiComponent/WikiDetail';
+import WikiDetail from 'components/WikiComponent/WikiDetail';
 
 class WikiDetails extends React.Component{
   componentWillMount() {

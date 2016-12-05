@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { toggleBottomBarVisibility, toggleTopBarVisibility } from '../actions/pageVisibility';
+import { toggleBottomBarVisibility, toggleTopBarVisibility } from 'actions/pageVisibility';
 
 class NotLoggedIn extends React.Component {
   componentDidMount() {

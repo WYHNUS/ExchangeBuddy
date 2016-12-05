@@ -8,15 +8,15 @@ import {
   toggleHomeSearchDrawerOpenButtonVisibility,
   toggleTopBarBackButtonVisibility, toggleTopBarVisibility, 
   toggleTopBarSettingsButtonVisibility
-} from '../actions/pageVisibility';
+} from 'actions/pageVisibility';
 import {
   fetchMyGroups, fetchMyGroupsSuccess, fetchMyGroupsFailure,
   fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure,
   toggleSelectedHomeGroup, resetEvents, startJoyride
-} from '../actions/home';
-import { clearUser } from '../actions/authActions';
+} from 'actions/home';
+import { clearUser } from 'actions/authActions';
 
-import Header from '../components/Header';
+import Header from 'components/Header';
 
 import Spinner from 'react-spinkit';
 

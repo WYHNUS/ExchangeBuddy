@@ -4,16 +4,16 @@ import { bindActionCreators } from 'redux';
 import cookie from 'react-cookie';
 import { clearUser } from 'actions/authActions';
 
-import { showSnackbar } from '../../actions/messageSnackbar';
-import { pageVisibility } from '../../actions/pageVisibility';
-import { toggleHomeTab, fetchEvents, fetchEventsFailure, fetchEventsSuccess } from '../../actions/home';
+import { showSnackbar } from 'actions/messageSnackbar';
+import { pageVisibility } from 'actions/pageVisibility';
+import { toggleHomeTab, fetchEvents, fetchEventsFailure, fetchEventsSuccess } from 'actions/home';
 import RaisedButton from 'material-ui/RaisedButton';
 import MenuItem from 'material-ui/MenuItem';
 import { browserHistory } from 'react-router';
-import * as IconsHelper from '../../util/icons';
-import * as GroupHelper from '../../util/group';
+import * as IconsHelper from 'util/icons';
+import * as GroupHelper from 'util/group';
 
-import EventList from '../../components/HomeComponent/Events/EventList';
+import EventList from 'components/HomeComponent/Events/EventList';
 
 import SelectField from 'material-ui/SelectField';
 

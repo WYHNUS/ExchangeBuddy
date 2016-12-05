@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { 
   saveStoryContent, resetEditingStory,
   uploadContentToServer, uploadContentSuccess, uploadContentFail 
-} from '../../actions/stories'
+} from 'actions/stories'
 // Component
 import ChildComponent from './StoryForm';
 

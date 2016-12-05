@@ -8,9 +8,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Action creators
-import { showSnackbar } from '../../actions/messageSnackbar';
-import {toggleHomeTab, addOnboardStep, startJoyride} from '../../actions/home';
-//import { openSwitchGroupDialog } from '../../actions/switchGroupDialog';
+import { showSnackbar } from 'actions/messageSnackbar';
+import {toggleHomeTab, addOnboardStep, startJoyride} from 'actions/home';
+//import { openSwitchGroupDialog } from 'actions/switchGroupDialog';
 
 // Component
 import ChildComponent from './Header';

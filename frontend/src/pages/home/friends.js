@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import MemberList from '../../components/HomeComponent/Friends/MemberList';
-import GroupIndicator from '../../components/HomeComponent/Friends/GroupIndicator';
-import GroupButtons from '../../components/HomeComponent/Friends/GroupButtons';
-import FBButtons from '../../components/HomeComponent/Friends/FBButtons';
-import {toggleHomeTab} from '../../actions/home'
+import MemberList from 'components/HomeComponent/Friends/MemberList';
+import GroupIndicator from 'components/HomeComponent/Friends/GroupIndicator';
+import GroupButtons from 'components/HomeComponent/Friends/GroupButtons';
+import FBButtons from 'components/HomeComponent/Friends/FBButtons';
+import {toggleHomeTab} from 'actions/home'
 
 import Spinner from 'react-spinkit';
 

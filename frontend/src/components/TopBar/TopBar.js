@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import AppBar from 'material-ui/AppBar';
 
 //import '../styles/TopBar.css'
-import * as IconsHelper from '../../util/icons';
+import * as IconsHelper from 'util/icons';
 import IconButton from 'material-ui/IconButton';
 
 import {browserHistory} from 'react-router';
@@ -10,7 +10,7 @@ import classNames from 'classnames';
 
 import FlatButton from 'material-ui/FlatButton';
 
-const src = require('../../static/ExchangeBuddyMini.png');
+const src = require('static/ExchangeBuddyMini.png');
 
 class TopBar extends Component {
   render() {

@@ -8,14 +8,14 @@ import ChildComponent from './GroupList';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { toggleHomeSearchDrawerVisibility } from '../../../../actions/pageVisibility';
-import { toggleSelectedHomeGroup } from '../../../../actions/home';
-import { toggleHomeTab } from '../../../../actions/home';
+import { toggleHomeSearchDrawerVisibility } from 'actions/pageVisibility';
+import { toggleSelectedHomeGroup } from 'actions/home';
+import { toggleHomeTab } from 'actions/home';
 import {
   fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure,
 	fetchEvents, fetchEventsSuccess, fetchEventsFailure, resetEvents
-} from '../../../../actions/home';
-import { clearUser } from '../../../../actions/authActions';
+} from 'actions/home';
+import { clearUser } from 'actions/authActions';
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {

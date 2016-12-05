@@ -14,7 +14,7 @@ import {
 	GO_FOR_AN_EVENT_SUCCESS_UPDATE,UNGO_FOR_AN_EVENT_SUCCESS_UPDATE,
 	DELETE_AN_EVENT_SUCCESS_UPDATE, ADD_ONBOARDING_STEP, ADD_JOYRIDE,
 	SET_FIRST_TIME, START_JOYRIDE, ADDING_GROUP_SUCCESS_UPDATE, 
-	LEAVING_GROUP_SUCCESS_UPDATE} from '../actions/home';
+	LEAVING_GROUP_SUCCESS_UPDATE} from 'actions/home';
 
 	/*const homeGroups=
 	[
@@ -109,8 +109,8 @@ import {
 	}
 	]*/
 
-	const imgUrl = '../res/Exchange-In-Singapore.jpg';
-	const defaultUrl = '../res/user.png';
+	const imgUrl = 'res/Exchange-In-Singapore.jpg';
+	const defaultUrl = 'res/user.png';
 
 	/*const homeEvents=
 	[

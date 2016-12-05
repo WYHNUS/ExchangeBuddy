@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { toggleBottomBarVisibility, toggleTopBarVisibility,
-toggleTopBarSettingsButtonVisibility, toggleTopBarBackButtonVisibility } from '../actions/pageVisibility';
-import ProfilePaper from '../components/ProfilePaper';
+toggleTopBarSettingsButtonVisibility, toggleTopBarBackButtonVisibility } from 'actions/pageVisibility';
+import ProfilePaper from 'components/ProfilePaper';
 
 class Profile extends React.Component{
 

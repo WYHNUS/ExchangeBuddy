@@ -1,11 +1,11 @@
 import React, {PropTypes} from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import Loading from '../../../Loading';
-import * as UniversityHelper from '../../../../util/university';
+import * as UniversityHelper from 'util/university';
 import * as Colors from 'material-ui/styles/colors';
 import { List, ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
-import imageUrl from '../../../../res/kth.svg';
+import imageUrl from 'res/kth.svg';
 import { browserHistory } from 'react-router';
 
 
