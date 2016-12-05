@@ -20,7 +20,7 @@
     "tar:staging": "NODE_ENV=staging webpack -p --progress --colors --config webpack/webpack.tar.config.js",
     "tar:prod": "NODE_ENV=production webpack -p --progress --colors --config webpack/webpack.tar.config.js",
     "deploy:staging": "./sh/deploy.sh exchangebuddy-staging /home/ubuntu/www staging",
-    "deploy:prod": "./sh/deploy.sh exchangebuddy-prod /var/www/ExchangeBuddy prod"
+    "deploy:prod": "./sh/deploy.sh exchangebuddy-prod /var/www/ExchangeBuddy production"
   },
   "dependencies": {
     "axios": "^0.14.0",

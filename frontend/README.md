@@ -39,7 +39,7 @@ npm run tar:staging
 npm run tar:prod
 ```
 
-This builds and `tar`s the build file into a `.tar.gz` package. This requires a `.env.staging` or `.env.prod` file to be present in this directory as well, since we are building for staging/production respectively.
+This builds and `tar`s the build file into a `.tar.gz` package. This requires a `.env.staging` or `.env.production` file to be present in this directory as well, since we are building for staging/production respectively.
 
 The packaged file will be found in `/build`.
 

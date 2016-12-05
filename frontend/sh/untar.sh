@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # $1: Root directory of the application on the server.
-# $2: Type of deployment. Either 'staging' or 'prod'.
+# $2: Type of deployment. Either 'staging' or 'production'.
 
 TARFILE="build.$2.tar.gz"
 

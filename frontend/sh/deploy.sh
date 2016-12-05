@@ -2,7 +2,7 @@
 
 # $1: SSH server alias, as defined in `~/.ssh/config`.
 # $2: Root directory of the application on the server.
-# $3: Type of deployment. Either 'staging' or 'prod'.
+# $3: Type of deployment. Either 'staging' or 'production'.
 
 TARFILE="build.$3.tar.gz"
 
