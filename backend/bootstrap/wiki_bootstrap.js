@@ -27,7 +27,7 @@ models.sequelize.Promise.all([
         ))
     ]).spread(function(countryWikis, universityWikis){
         var uniCats = {
-            'General Tips':
+            'About':
             "<div>\
                 <h3 style='color:red'>Contribute, get credited and help other students!</h3> <br>\
                 <p>Some Tips to write this wiki: </p><br>\
@@ -90,8 +90,6 @@ models.sequelize.Promise.all([
                     <li>Flight</li>\
                 </ul>\
             </div>",
-
-
             'Academic':
             "<div>\
                 <h3 style='color:red'>Contribute, get credited and help other students!</h3> <br>\
@@ -103,8 +101,6 @@ models.sequelize.Promise.all([
                     <li>Scholarships</li>\
                 </ul>\
             </div>",
-
-
             'Campus Life':
             "<div>\
                 <h3 style='color:red'>Contribute, get credited and help other students!</h3> <br>\
@@ -121,10 +117,7 @@ models.sequelize.Promise.all([
                     <li>Internet(WiFi, Ethernet)</li>\
                 </ul>\
             </div>",
-
-            'Night Life': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
-            'Student Perks': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
-            'Activities Outside School':
+            'Activities Near School':
             "<div>\
                 <h3 style='color:red'>Contribute, get credited and help other students!</h3> <br>\
                 <p>Some Tips to write this wiki: </p><br>\
@@ -134,20 +127,17 @@ models.sequelize.Promise.all([
                     <li>Food</li>\
                 </ul>\
             </div>",
-            'Work Part-time': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
-            'Others': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
+            'Student Perks': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
+            'Getting There': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
         };
 
         var countryCats = {
             'Culture': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
             'Holidays': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
-            'Language': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
             'Attractions': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
             'Local Food': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
             'Travel': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
-            'Visa': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
             'Telecom': '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
-            "Others": '<h3 style="color:red">Contribute, get credited and help other students!</h3>',
         }
 
         universityWikis.map((wiki) => {
