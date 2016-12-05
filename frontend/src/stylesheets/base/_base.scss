@@ -1,5 +1,6 @@
 @import '../common/mixins';
 @import '../common/colors';
+@import '../common/variables';
 
 // Base
 html body {
@@ -35,7 +36,10 @@ html body {
 .page { min-height: 100vh; background-size: cover; background-position: center center; background-repeat: no-repeat;  }
 
 // Layout
-body .container { padding: 0 1rem; } // Make all containers fluid
+.container { 
+  justify-content: center; max-width: $max-container-width; width: 100%; 
+  .row { margin: 0; }
+}
 
 // Common elements
 a.button:hover { text-decoration: none; }

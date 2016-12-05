@@ -7,67 +7,49 @@
   margin-top: 20px;
 }
 
-#landing-container {
-  min-height: 804px
-}
-
-#welcome-header-container{
-  @include media-xs-only { max-height: 567px; }
-  @include media-sm-up { max-height: 729px; }
-}
-
 #welcome-header {
-  min-height: 1200px; position: relative; background-size: cover !important; /*padding-top: 64px;*/
+  @include media-xs-only { min-height: 567px; background-size: 1300px; }
+  @include media-sm-up { min-height: 400px; background-size: 1500px; }
+  @include media-lg-up { background-size: cover; }
 }
 
 #welcome-main-container {
-  display: flex; flex-direction: column; justify-content: space-around; height: 60vh; padding: 0vh 20px;
-  @include media-lg-up {
-    height: 600px;
-  }
-@include media-xs-only { /*height: 120vh;*/ }
+  display: flex; flex-direction: column; justify-content: space-between; height: 60vh; padding: 0vh 20px;
+  @include media-lg-up { height: 600px; }
 }
 
 .welcome-icon-container{
   max-width: 750px;
-  #welcome-icon{
-    width:200px;
-  }
+  #welcome-icon{ width: 200px; }
 }
 
+.action-button-container {
+  margin: 80px 0;
+}
 
 #welcome-header-title {
-  text-align: center; margin: 0 auto; /*padding-top: 6rem;*/ max-width: 750px;
+  text-align: center; margin: 0 auto; max-width: 750px;
 
   #app-title {
-    color: #000; font-family:'Josefin Sans', sans-serif; font-size: 54px; /*font-weight: bold;*/ letter-spacing: 1px; line-height: 1.125; text-transform: uppercase;
-    @include media-xs-only { font-size: 30px; }
+    color: #000; font-family:'Josefin Sans', sans-serif; font-size: 54px; letter-spacing: 1px; line-height: 1.125; text-transform: uppercase;
+    @include media-xs-only { font-size: 32px; }
   }
 
   #app-subtitle-container{
-    /*background: rgba(0,0,0,0.6);*/
     .app-subtitle {
-      font-family:'Lato', sans-serif; color: #000;  /*opacity: 0.75;*/ font-size: 1.4rem; padding: 0 10px; margin-bottom: 10px;
-      @include media-xs-only { font-size: 16px; }
+      font-family:'Lato', sans-serif; color: #000; font-size: 22px; padding: 0 10px; margin-bottom: 10px;
+      @include media-xs-only { font-size: 20px; }
     }
   }
-
-  
 }
 
 #welcome-body {
-  margin-top: 25px;margin-bottom: 25px;
+  margin: 25px 0; 
   #welcome-body-message { text-align: center; color: #fff; font-size: 1rem }
 }
 
 #login-button {
   text-align: center;
-}
-
-.kep-login-facebook {
-  background-color: rgba(76, 105, 186, 0.86) !important;
-  font-size: 18px; font-family: Roboto, sans-serif !important; font-weight: 500 !important; @include transition-standard(background-color 150ms); border: 0;
-  &:hover { background-color: #3d5084 !important; }
 }
 
 .page-sign-flow {
@@ -99,7 +81,6 @@
     margin-top: 40px;
   }
   .social-network-wrapper {
-    /*>div { display: inline-block; }*/
     margin: 30px 0;
     .facebook-login-button {
       cursor: pointer; 
@@ -141,62 +122,38 @@
   @include media-xs-only { height: 250px; }
 }
 
-#cover-lists{
-  position: absolute;
-  min-width: 100%;
+#landing-container{
+  background: #efefef; min-height: 100vh;
 
-  #feature-list{
-    background: #efefef;
-    min-height: 400px;
-    @include media-md-up{
-      min-height: 500px;
-    }
-    >div>h2{
-      margin-right: 10px;
-      margin-left: 10px;
-      font-size: 44px;
+  #feature-list{    
+    > div > h2 {
+      margin: 30px 10px; font-size: 36px;
       @include media-xs-only { font-size: 30px; } 
     }
-    .feature-row{
-      .icon-container{
+
+    .feature-row {
+      .icon-container {
         margin-bottom: 30px;
-        #icon-title{
-          margin-top: -10px;
-          font-size: 24px;
-          @include media-xs-only { font-size: 20px; } 
-        }  
+
+        .icon-title{ font-size: 24px; margin: 10px 0; }
       }
       
       > div {
-        /*min-width: 200px!important;*/
-        > span { font-size: 100px !important; border-radius: 18px; color: grey !important; }
+        > span { color: grey !important; }
         > p { 
           margin-top: -5px;
           font-family: "Lato", 
           sans-serif; 
           bottom: -13px; 
-          color: #000 !important; 
           font-size: 1.2rem; padding: 0 10px; margin-bottom: 10px;
-          @include media-xs-only { font-size: 14px; } 
+          @include media-xs-only { font-size: 16px; } 
         }
       }
     } 
   }
 
-  #people-quote-list{
-    @include media-xs-only { min-height: 600px; }
-    @include media-sm-up { min-height: 740px; }
-    background: #cae8f9;
-    #quote-title{
-      font-size: 44px;
-      @include media-xs-only { font-size: 30px; }
-    }
-  }
-
   #terms-and-services{
-    font-size: 10px;
-    color: black;
-    background: #efefef;
+    font-size: 11px; padding: 20px 0;
   }
 
 }

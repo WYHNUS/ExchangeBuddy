@@ -6,16 +6,17 @@ import { connect } from 'react-redux';
 import { toggleTopBarVisibility, toggleBottomBarVisibility } from 'actions/pageVisibility';
 
 import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
-import * as IconsHelper from 'util/icons';
+import IconButton from 'material-ui/IconButton';
+import Icon from 'components/Icon';
+import * as Colors from 'material-ui/styles/colors';
 
 import landingBackgroundImage from 'res/ExchangeBuddySpread.jpg';
 import landingHeaderLogo from 'res/ExchangeBuddySpreadIcon.png';
 
 const landingImgStyle = {
-  background: `url(${landingBackgroundImage}) no-repeat`,
-  backgroundPosition: 'top center',
-  backgroundSize: 'cover',
+  backgroundImage: `url(${ landingBackgroundImage })`,
+  backgroundPositionX: 'center',
+  backgroundRepeat: 'no-repeat',
 };
 
 const ActionButton = ({ user }) => {
@@ -60,48 +61,57 @@ class Landing extends React.Component {
         <div id="welcome-header-container">
           <div id="welcome-header" style={landingImgStyle}>
 
-            <div className="row start-xs">
-              <div className="col-xs welcome-icon-container">
-                <img id="welcome-icon" src={landingHeaderLogo} alt="Icons" />
-              </div>
+            <div className="container">
+              <div className="row start-xs middle-xs">
+                <div className="col-xs-9">
+                  <img id="welcome-icon" src={ landingHeaderLogo } alt="Icons" style={{ margin: 10, width: 250 }} />
+                </div>
 
-              <FlatButton
-                onClick={ () => browserHistory.push('/settings') }
-                icon={ IconsHelper.materialIcon('menu') } />
+                <div className="col-xs-3" style={{ textAlign: 'right' }}>
+                  <IconButton onClick={ () => browserHistory.push('/settings') } style={{ margin: 10 }}>
+                    <Icon name="menu" />
+                  </IconButton>
+                </div>
+              </div>
             </div>
 
             <div id="welcome-main-container">
               <div id="welcome-header-title">
                 <h2 id="app-title">Going for Student Exchange?</h2>
-                <div id="app-sub title-container">
+                <div id="app-subtitle-container">
                   <p className="app-subtitle">Connect to our network of over 900 universities!</p>
                 </div>
               </div>
 
-              <ActionButton user={ user } />
+              <div className="action-button-container">
+                <ActionButton user={ user } />
+              </div>
             </div>
           </div>
         </div>
 
         <div id="cover-lists">
-          <div id="feature-list">
+          <div id="feature-list" className="container">
             <div className="row center-xs">
               <h2>Maximize your exchange experience!</h2>
             </div>
 
             <div className="row feature-row center-xs">
-              <div className="icon-container col-xs-12 col-md-4 col-lg-4">{ IconsHelper.materialIcon('group') }
-                <p id="icon-title">Know your group</p>
+              <div className="icon-container col-xs-12 col-md-4 col-lg-4">
+                <Icon name="group" color={ Colors.grey500 } size={ 64 } />
+                <p className="icon-title">Know your group</p>
                 <p>Find travel buddies within your different groups</p>
               </div>
 
-              <div className="icon-container col-xs-12 col-md-4 col-lg-4">{ IconsHelper.materialIcon('library_books') }
-                <p id="icon-title">Read senior's stories</p>
+              <div className="icon-container col-xs-12 col-md-4 col-lg-4">
+                <Icon name="library_books" color={ Colors.grey500 } size={ 64 } />
+                <p className="icon-title">Read senior's stories</p>
                 <p>Learn tips and tricks from stories shared by other exchangers</p>
               </div>
 
-              <div className="icon-container col-xs-12 col-md-4 col-lg-4">{ IconsHelper.materialIcon('event') }
-                <p id="icon-title">Attend and organise events</p>
+              <div className="icon-container col-xs-12 col-md-4 col-lg-4">
+                <Icon name="event" color={ Colors.grey500 } size={ 64 } />
+                <p className="icon-title">Attend and organise events</p>
                 <p>Know people within your group by participating in new events</p>
               </div>
             </div>
