@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router'
 import request from 'superagent'
 import { TextField, Toggle} from 'redux-form-material-ui'
 import moment from 'moment';
+import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
@@ -34,13 +35,13 @@ const newEventForm = (callback, userId, isGeocodingError, foundAddress, position
       var ending = moment(values['endTime']);
       //console.log(beginning, ending);
       if (ending.isBefore(beginning)) {
-        errors.push('Start time is later than End time...') 
+        errors.push('Start time cannot be later than end time.') 
       }
     }
   }
 
   if (isGeocodingError) {
-    errors.push('Please enter a valid address before submitting')
+    errors.push('Please enter a valid address.')
   }
 
   //logic to check if you have actually found an address!
@@ -182,58 +183,67 @@ class NewEventForm extends Component {
       </div>
 
       <div className="row center-xs">
-      <div className="col-xs-12 col-md-4">
-      <div className="row center-xs">
-        <div className="col-xs-4">
-        <h5>Start Date/Time</h5>
+        <div className="col-xs-12 col-md-10">
+          <div className="row center-xs">
+            <div className="col-xs-4">
+              <h5>Start Date/Time</h5>
+            </div>
+            <div className="col-xs-4">
+              <Field 
+                name="startDate" 
+                component={StartDatePick} 
+                errorStyle={{ textAlign: 'left' }}
+                updateMinDate={this.updateMinDate} />
+            </div>
+            <div className="col-xs-4">
+              <Field 
+                name="startTime" 
+                component={StartTimePick}
+                errorStyle={{ textAlign: 'left' }} />
+            </div>
+          </div>
         </div>
-        <div className="col-xs-4">
-          <Field name="startDate" component={StartDatePick} 
-          errorStyle={{ textAlign: 'left' }}
-          updateMinDate={this.updateMinDate}/>
-        </div>
-        <div className="col-xs-4">
-          <Field name="startTime" component={StartTimePick}
-          errorStyle={{ textAlign: 'left' }}/>
+        <div className="col-xs-12 col-md-10">
+          <div className="row center-xs">
+            <div className="col-xs-4">
+              <h5>End Date/Time</h5>
+            </div>
+            <div className="col-xs-4">
+              <Field 
+                name="endDate" 
+                component={EndDatePick} 
+                errorStyle={{ textAlign: 'left' }}
+                minDate={this.state.minDate}/>
+            </div>
+          <div className="col-xs-4">
+            <Field 
+              name="endTime" 
+              component={EndTimePick}
+              errorStyle={{ textAlign: 'left' }}/>
+          </div>
         </div>
       </div>
-      </div>
-      <div className="col-xs-12 col-md-4">
-      <div className="row center-xs">
-        <div className="col-xs-4">
-        <h5>End Date/Time</h5>
-        </div>
-        <div className="col-xs-4">
-          <Field name="endDate" component={EndDatePick} 
-          errorStyle={{ textAlign: 'left' }}
-          minDate={this.state.minDate}/>
-        </div>
-        <div className="col-xs-4">
-          <Field name="endTime" component={EndTimePick}
-          errorStyle={{ textAlign: 'left' }}/>
-        </div>
-      </div>
-      </div>
-      </div>
+    </div>
       {/*<GoogleMap
 	    bootstrapURLKeys = {{key:process.env.GOOGLE_MAP_APIKEY}}
       defaultCenter={this.props.center}
       defaultZoom={this.props.zoom}></GoogleMap>*/}
 
       <div className="row center-xs">
-        <div className="col-xs-11 col-md-8">
+        <div className="col-xs-12 col-md-5">
           <TextField ref={this.setSearchInputElementReference} hintText="Enter Address"/>
-          <RaisedButton label="Find Address"
-          labelStyle={{fontSize:'1.2rem'}}
-          disabled={submitting} primary
-          onTouchTap={()=>{
-            this.geocodeAddress(this.searchInputElement.refs.component.input.value);
-          }}
-          />
+        </div>
+        <div className="col-xs-12 col-md-5">
+          <FlatButton 
+            primary
+            label="Find Address"
+            disabled={submitting} 
+            onTouchTap={ () => this.geocodeAddress(this.searchInputElement.refs.component.input.value) } />
         </div>
       </div>
       
-      <div className="map" ref={this.setMapElementReference}></div>
+      <div className="map" style={{ margin: '20px 0' }} ref={this.setMapElementReference}></div>
+
       <div>
         { this.state.isGeocodingError 
           ? <p className="bg-danger">Address not found.</p>

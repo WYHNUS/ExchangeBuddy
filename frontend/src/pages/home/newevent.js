@@ -16,7 +16,7 @@ class NewEvent extends Component {
 
   render() {
     return (
-      <div className="row center-xs new-event-container">
+      <div className="row center-xs new-event-container ">
         <div className="col-xs-12">
           <NewEventForm/>
         </div>

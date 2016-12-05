@@ -42,14 +42,12 @@ class Home extends React.Component{
     const { homeGroupsLoaded } = this.props;
 
     return (
-      <div>
-      {<Header params={ this.props.params } tab={ this.props.routes[2].path } />}
-      <div id="group-container">
-
-      { homeGroupsLoaded?(this.props.children):(<Spinner spinnerName="circle" />) }
+      <div className="home-wrapper container panel">
+        <Header params={ this.props.params } tab={ this.props.routes[2].path } />
+        <div className="home-content-wrapper">
+          { homeGroupsLoaded?(this.props.children):(<Spinner spinnerName="circle" />) }
+        </div>
       </div>
-
-    </div>
     );
   }
 

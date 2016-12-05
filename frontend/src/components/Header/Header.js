@@ -107,6 +107,7 @@ export default class Header extends React.Component {
     return (
       <div
         id="header"
+        className="container"
         style={{
           backgroundImage: `linear-gradient(to bottom, rgba(25,25,25,0.5) 0%,rgba(0,0,0,0.9) 100%),
             url('${getBackgroundImg()}')`,
