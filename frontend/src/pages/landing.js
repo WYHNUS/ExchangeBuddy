@@ -32,10 +32,10 @@ const ActionButton = ({ user }) => {
 
   return (
      <RaisedButton
-      primary
+      secondary
       label={ buttonLabel }
       onTouchTap={ () => browserHistory.push(targetUrl) }
-      style={{ maxWidth: 250, margin: '0 auto', height: 50 }}
+      style={{ maxWidth: 250, margin: '0 auto', height: 40 }}
       labelStyle={{ fontSize: '16px', padding: '0 20px' }} />
   );
 };

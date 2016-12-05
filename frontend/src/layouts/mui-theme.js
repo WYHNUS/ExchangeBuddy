@@ -1,11 +1,12 @@
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import * as Colors from 'material-ui/styles/colors';
 
 export default getMuiTheme({
   palette: {
-    primary1Color: '#46629E',
-    primary2Color: '#3C4C6F',
-    accent1Color: '#1C96B9',
-    pickerHeaderColor: '#3A4B6E',
+    primary1Color: Colors.teal700,
+    primary2Color: Colors.tealA700,
+    accent1Color: Colors.red700,
+    pickerHeaderColor: Colors.tealA700,
   },
   datePicker: {
   }
