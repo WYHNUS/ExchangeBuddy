@@ -1,7 +1,6 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 
-import request from 'superagent';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { toggleTopBarVisibility, toggleBottomBarVisibility } from 'actions/pageVisibility';
@@ -19,7 +18,34 @@ const landingImgStyle = {
   backgroundSize: 'cover',
 };
 
+const ActionButton = ({ user }) => {
+  let buttonLabel, targetUrl;
+
+  if (user) {
+    buttonLabel = 'Enter';
+    targetUrl = '/home';
+  } else {
+    buttonLabel = 'Connect';
+    targetUrl = '/signup';
+  }
+
+  return (
+     <RaisedButton
+      primary
+      label={ buttonLabel }
+      onTouchTap={ () => browserHistory.push(targetUrl) }
+      style={{ maxWidth: 250, margin: '0 auto', height: 50 }}
+      labelStyle={{ fontSize: '16px', padding: '0 20px' }} />
+  );
+};
+
 class Landing extends React.Component {
+  static propTypes = {
+    toggleBottomBarVisibility: React.PropTypes.func.isRequired,
+    toggleTopBarVisibility: React.PropTypes.func.isRequired,
+    user: React.PropTypes.object,
+  };
+
   componentDidMount() {
     this.props.toggleBottomBarVisibility(false);
     this.props.toggleTopBarVisibility(false);
@@ -27,6 +53,7 @@ class Landing extends React.Component {
 
   render() {
     const { user } = this.props;
+
     return (
       <div id="landing-container">
       
@@ -51,12 +78,7 @@ class Landing extends React.Component {
                 </div>
               </div>
 
-              <RaisedButton
-                primary
-                label="Connect"
-                onTouchTap={ () => browserHistory.push('/signup') }
-                style={{ maxWidth: 250, margin: '0 auto', height: 50 }}
-                labelStyle={{ fontSize: '16px', padding: '0 20px' }} />
+              <ActionButton user={ user } />
             </div>
           </div>
         </div>
