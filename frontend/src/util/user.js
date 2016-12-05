@@ -1,26 +1,15 @@
 import React from 'react';
-import { propExistsDeep } from './helper';
+import cookie from 'react-cookie';
+import { browserHistory } from 'react-router';
+
 import Avatar from 'material-ui/Avatar';
 
+import { propExistsDeep } from './helper';
 import * as Colors from 'material-ui/styles/colors';
-import * as IconsHelper from './icons';
-import userImg from 'res/user.png'
 
-export const resolveGender = (gender) => {
-  gender = gender.toLowerCase();
-
-  if (gender === 'male')
-    return 'male';
-  else if (gender === 'female')
-    return 'female';
-  else
-    return 'others';
-}
+import defaultAvatar from 'res/user.png';
 
 export const getAvatarUrl = (user, size=64) => {
-
-  //console.log(user);
-
   if (!user)
     return '';
 
@@ -43,6 +32,11 @@ export const getAvatar = (user, size=64, style) => {
   if (avatarUrl)
     return <Avatar src={ avatarUrl } size={size} style={style} />;
   else
-    //return <Avatar backgroundColor={ Colors.grey700 } icon={ IconsHelper.materialIcon("person") } />;
-    return <Avatar src={ userImg } size={size} style={style} />;
+    return <Avatar src={ defaultAvatar } size={size} style={style} />;
+};
+
+export const logoutUser = (cb) => {
+  cookie.remove('authToken');
+  browserHistory.push('/');
+  cb && cb();
 };

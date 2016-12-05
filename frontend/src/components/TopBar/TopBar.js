@@ -1,44 +1,36 @@
-import React, {Component, PropTypes} from 'react';
-import AppBar from 'material-ui/AppBar';
-
-//import '../styles/TopBar.css'
-import * as IconsHelper from 'util/icons';
-import IconButton from 'material-ui/IconButton';
-
-import {browserHistory} from 'react-router';
+import React from 'react';
+import { browserHistory } from 'react-router';
 import classNames from 'classnames';
 
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
 import FlatButton from 'material-ui/FlatButton';
+import Icon from 'components/Icon';
 
-const src = require('static/ExchangeBuddyMini.png');
+import miniLogoSrc from 'static/ExchangeBuddyMini.png';
+import * as Colors from 'material-ui/styles/colors';
 
-class TopBar extends Component {
+class TopBar extends React.Component {
   render() {
-
     const appClass = classNames({
       'back-btn': this.props.pageVisibility.topBarSettingsButton,
       'app-bar': true,
     });
 
-    const{topBarVisibility} = this.props.pageVisibility;
+    const { topBarVisibility } = this.props.pageVisibility;
 
-    return(
-      <div>
-      {topBarVisibility?
-        (<AppBar
-          className={appClass}
-          title={<span id="app-title">{<img src={src}/>}</span>}
-          style={{textAlign:'center'}}
-          iconElementLeft={ this.getIconElementLeft() }
-          iconElementRight={ this.getIconElementRight()}
-          showMenuIconButton={true}
-          />)
-        :
-        (<div></div>)
-      }
+    if (!topBarVisibility)
+      return null;
 
-      </div>
-      )
+    return (
+      <AppBar
+        className={ appClass }
+        title={ <span id="app-title"><img src={ miniLogoSrc }/></span> }
+        style={{ textAlign: 'center' }}
+        iconElementLeft={ this.getIconElementLeft() }
+        iconElementRight={ this.getIconElementRight() }
+        showMenuIconButton />
+    );
   }
 
   navigateBack() {
@@ -46,27 +38,22 @@ class TopBar extends Component {
   }
 
   getIconElementLeft() {
+    const { topBarSettingsButton, topBarBackButtonVisibility } = this.props.pageVisibility;
 
-    const{topBarSettingsButton, topBarBackButtonVisibility} = this.props.pageVisibility;
-
-    if((topBarSettingsButton)&&(!topBarBackButtonVisibility)){
+    if (topBarSettingsButton && !topBarBackButtonVisibility) {
       return (
-        <IconButton
-        onClick={()=>browserHistory.push('/settings')}>
-        {IconsHelper.materialIcon('settings')}
+        <IconButton onClick={ () => browserHistory.push('/settings') }>
+          <Icon name="settings" color={ Colors.grey900 } />
         </IconButton>
-        )
-
-    }else if ((!topBarSettingsButton)&&(topBarBackButtonVisibility)){
-      return(
-        <IconButton
-        onClick={this.navigateBack}>
-        {IconsHelper.materialIcon('chevron_left')}
+      );
+    } else if (!topBarSettingsButton && topBarBackButtonVisibility) {
+      return (
+        <IconButton onClick={ this.navigateBack }>
+          <Icon name="chevron_left" color={ Colors.grey900 } />
         </IconButton>
-        )
-
-    }else{
-      return (<div style={{ margin: 24 }}></div>)
+      );
+    } else {
+      return <div style={{ margin: 24 }}></div>;
     }
   }
 
@@ -76,19 +63,18 @@ class TopBar extends Component {
     if (homeSearchDrawerOpenButtonVisibility) {
       return (
         <FlatButton
-        className="flat-button-top"
-        label="Groups"
-        onClick={ () => this.props.toggleHomeSearchDrawerVisibility(true) } />
+          label="Groups"
+          labelStyle={{ color: Colors.grey900 }}
+          onClick={ () => this.props.toggleHomeSearchDrawerVisibility(true) } />
       );
     } else {
       return <div style={{ marginLeft: 44, marginRight: 44, marginTop: 24,  marginBottom: 24 }}></div>;
     }
   }
-
 }
 
 TopBar.propTypes = {
-  pageVisibility: PropTypes.object.isRequired
+  pageVisibility: React.PropTypes.object.isRequired
 };
 
 export default TopBar;
