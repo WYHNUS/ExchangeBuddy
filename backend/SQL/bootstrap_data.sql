@@ -7811,6 +7811,7 @@ values
 (
 "932", "Budapest University of Technology and Economics", "", "https://www.bme.hu/?language=en", "",
 "HU", "", "",
+"", "",
 "[""[]""]", "[]", -7,
 "2016-12-05", "2016-12-05"
 )
