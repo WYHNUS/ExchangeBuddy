@@ -7807,5 +7807,11 @@ values
 "https://media.licdn.com/mpr/mpr/shrink_200_200/p/2/005/02f/34d/1990bb3.png", "",
 "[""[]""]", "[]", -6,
 "2016-11-9", "2016-11-9"
+),
+(
+"932", "Budapest University of Technology and Economics", "", "https://www.bme.hu/?language=en", "",
+"HU", "", "",
+"[""[]""]", "[]", -7,
+"2016-12-05", "2016-12-05"
 )
 ;
