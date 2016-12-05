@@ -85,78 +85,8 @@ export default class Header extends React.Component {
     };
   }
 
-  componentWillMount() {
-
-    //console.log(window.location.pathname);
-    //console.log(this.props.params);
-    //console.log(this.props.tab);
-  }
-
-  /*addJoyrideSteps(steps) {
-
-    const{isFirstTime, joyride} = this.props.homeJoyride;
-    const{addOnboardStep} = this.props;
-    
-    if((isFirstTime)||(joyride==null)){
-      return;
-    }
-    
-    console.log('try adding to joyride')
-    //const joyride = this.props.joyride;
-
-    let newSteps = steps;
-
-    if (!Array.isArray(newSteps)) {
-      newSteps = [newSteps];
-    }
-
-    if (!newSteps.length) {
-      return;
-    }
-
-    console.log('trying to add', joyride.parseSteps(newSteps));
-    addOnboardStep(joyride.parseSteps(newSteps));
-  }*/
-
-  componentDidMount(){
-
-    //console.log('header did mount');
-    
-    const steps = 
-    [
-      {
-        title: 'Friends',
-        text: 'Find friends in this group here!',
-        selector: '.header-friends',
-        position: 'top',
-        type: 'hover'
-      },
-      {
-        title: 'Chat',
-        text: 'Talk to people exclusively in this group here!',
-        selector: '.header-chat',
-        position: 'top',
-        type: 'hover'
-      },
-      {
-        title: 'Events',
-        text: 'Arrange events and meet up with friends in this group!',
-        selector: '.header-events',
-        position: 'top',
-        type: 'hover'
-      }
-    ]
-
-    //this.addJoyrideSteps(steps);
-    //this.props.addSteps(steps);
-
-  }
-
-  
-
   render() {
-    const { user, uni, group, actions, params, homeTabValue, 
-      addOnboardStep, homeJoyride } = this.props;
+    const { user, uni, group, actions, params, homeTabValue } = this.props;
     const { homeGroupDetails, loading, error } = this.props.homeGroupDetails;
     
 
@@ -178,12 +108,6 @@ export default class Header extends React.Component {
       <div
         id="header"
         style={{
-          /*backgroundImage: `linear-gradient(to bottom, rgba(25,25,25,0.5) 0%,rgba(0,0,0,0.9) 100%),
-            url('${ImagesHelper.getUrlScale(this.state.bgImageId, 1000)}')`,
-          backgroundColor: "#000000",
-          backgroundPosition: 'center center',
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',*/
           backgroundImage: `linear-gradient(to bottom, rgba(25,25,25,0.5) 0%,rgba(0,0,0,0.9) 100%),
             url('${getBackgroundImg()}')`,
           backgroundColor: '#000000',
@@ -259,9 +183,6 @@ export default class Header extends React.Component {
 
 Header.propTypes = {
   toggleHomeTab: PropTypes.func.isRequired,
-  addOnboardStep: PropTypes.func.isRequired,
-  homeJoyride: PropTypes.object.isRequired,
-  //addSteps: PropTypes.func.isRequired
 }
 
 function getName(homeGroupDetailsName){
