@@ -7,7 +7,7 @@
 	text-align: left;
 }
 
-.settings-item-card{
+.settings-item-card {
 	margin-top: 10px!important;
 	margin-bottom: 10px!important;
 	.crop {
@@ -38,24 +38,4 @@
 		}
 	}
 
-}
-
-.settings-item-card-button{
-	margin-top: 100px;
-	width:500px;
-	>button{
-		background-color:crimson!important;
-		>div>div>span{
-			color: white!important;
-		}
-	}
-
-}
-
-
-.settings-title{
-	>div{
-		float: left;
-		padding-bottom: inherit;
-	}
 }

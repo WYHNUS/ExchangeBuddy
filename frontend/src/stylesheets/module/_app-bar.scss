@@ -1,36 +1,9 @@
-/*@import "../common/mixins";*/
-
-.app-bar{
+.app-bar {
 	background-color: rgb(255,255,255) !important;
 	position: fixed!important;
 	left: 0;
 	top: 0;
 	width: 100%;
-
-
-	>div{
-		color: rgb(0,0,0)!important;
-	}
-
-	/*.iconButton-Settings{
-		padding-right: 40px;
-	}*/
-
-	.flat-button-top{
-		border: 2px solid green!important;
-	}
-
-	>div>button>div{
-		background:white;
-		>span{
-			color:black;
-		}
-	}
-	
-
-	>div>button>div>span.material-icons{
-		color: rgb(0,0,0)!important;
-	}
 
 	img{
 		margin-bottom: -15px;

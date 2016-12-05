@@ -67,18 +67,22 @@ export default class GroupButtons extends React.Component {
             (!userPartOfGroup)?
             (
               <div className="col-xs-12">
-                <RaisedButton label="Join group"
-                className="join-button"
-                primary 
-                onTouchTap={(e)=>{e.preventDefault();this.joinGroup()}}/>
+                <RaisedButton 
+                  primary 
+                  label="Join group"
+                  className="join-button"
+                  onTouchTap={(e)=>{e.preventDefault();this.joinGroup()}}
+                  style={{ margin: '30px 0' }} />
                 </div>
             ):
             (
               <div className="col-xs-12">
-                <RaisedButton label="Leave group"
-                className="join-button"
-                secondary 
-                onTouchTap={(e)=>{e.preventDefault();this.showLeaveDialog()}}/>
+                <RaisedButton 
+                  secondary 
+                  label="Leave group"
+                  className="join-button"
+                  onTouchTap={(e)=>{e.preventDefault();this.showLeaveDialog()}}
+                  style={{ margin: '30px 0' }} />
               </div>
             )
           }

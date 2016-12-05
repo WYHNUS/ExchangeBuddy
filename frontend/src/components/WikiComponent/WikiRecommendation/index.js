@@ -6,7 +6,7 @@ export default class WikiRecommendation extends React.Component {
     const { previewItem } = this.props;
     
     return (
-      <li className="recommendation-item">
+      <div className="recommendation-item">
         <div 
           className="recommendation-item-wrapper" 
           onClick={this.getComponent.bind(this, previewItem.name)}>
@@ -16,7 +16,7 @@ export default class WikiRecommendation extends React.Component {
           }
           <p>{ previewItem.name }</p>
         </div>
-      </li>
+      </div>
     )
   }
 

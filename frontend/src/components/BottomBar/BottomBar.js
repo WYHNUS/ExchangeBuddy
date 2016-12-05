@@ -77,8 +77,6 @@ class BottomBar extends Component {
 BottomBar.propTypes = {
   pageVisibility: PropTypes.object.isRequired,
   toggleHomeTab: PropTypes.func.isRequired,
-  addSteps: PropTypes.func.isRequired,
-  homeJoyride: PropTypes.object.isRequired
 }
 
 export default BottomBar;

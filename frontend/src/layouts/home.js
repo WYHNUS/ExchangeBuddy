@@ -12,7 +12,7 @@ import {
 import {
   fetchMyGroups, fetchMyGroupsSuccess, fetchMyGroupsFailure,
   fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure,
-  toggleSelectedHomeGroup, resetEvents, startJoyride
+  toggleSelectedHomeGroup, resetEvents
 } from 'actions/home';
 import { clearUser } from 'actions/authActions';
 
@@ -21,17 +21,6 @@ import Header from 'components/Header';
 import Spinner from 'react-spinkit';
 
 class Home extends React.Component{
-
-  constructor(props){
-    super(props);
-    this.state = {
-      ready: false
-    };
-  }
-
-  componentWillMount(){
-    //this.props.startJoyride();
-  }
 
   componentDidMount() {
     this.props.toggleBottomBarVisibility(true);
@@ -43,24 +32,22 @@ class Home extends React.Component{
 
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.props.toggleHomeSearchDrawerOpenButtonVisibility(false);
     this.props.toggleTopBarBackButtonVisibility(false);
     this.props.toggleTopBarSettingsButtonVisibility(false);
   }
 
   render() {
-    const{homeGroupsLoaded} = this.props;
+    const { homeGroupsLoaded } = this.props;
 
     return (
-      <div>
-      {<Header params={ this.props.params } tab={ this.props.routes[2].path } />}
-      <div id="group-container">
-
-      { homeGroupsLoaded?(this.props.children):(<Spinner spinnerName="circle" />) }
+      <div className="home-wrapper container panel">
+        <Header params={ this.props.params } tab={ this.props.routes[2].path } />
+        <div className="home-content-wrapper">
+          { homeGroupsLoaded?(this.props.children):(<Spinner spinnerName="circle" />) }
+        </div>
       </div>
-
-    </div>
     );
   }
 
@@ -110,7 +97,6 @@ const mapDispatchToProps = (dispatch) => {
         }
       });
     },
-    startJoyride:()=>{dispatch(startJoyride())}
   };
 };
 

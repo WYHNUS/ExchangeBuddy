@@ -16,26 +16,23 @@ class Friends extends React.Component{
     this.props.toggleHomeTab('friends');
   }
 
-  render(){
+  render() {
 
     const { loading, error } = this.props.homeGroupDetails;
 
+    if (loading) {
+      return <Spinner spinnerName="circle" />      
+    } else if(error) {
+      return <div className="alert alert-danger">Error: {error.message}</div>
+    }
 
-      if(loading) {
-        return <Spinner spinnerName="circle" />      
-      } else if(error) {
-        return <div className="alert alert-danger">Error: {error.message}</div>
-      }
-
-    return(
-
-    <div className="friends-container">
-    <GroupIndicator/>
-    <MemberList />
-    <FBButtons/>
-    <GroupButtons/>
-    </div>
-
+    return (
+      <div>
+        <GroupIndicator/>
+        <MemberList />
+        <FBButtons/>
+        <GroupButtons/>
+      </div>
     );
   }
 }

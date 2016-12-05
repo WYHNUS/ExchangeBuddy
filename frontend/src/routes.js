@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { render } from 'react-dom';
-import { Router, Route, Redirect, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { loadState } from './util/localStorage';
@@ -56,7 +55,6 @@ function logPageView() {
 
 export const getRoutes = (store) =>{
   const authRequired = (nextState, replace) => {
-    // Now you can access the store object here.
     const state = store.getState();
 
     if (!state.user.token) {
@@ -70,14 +68,12 @@ export const getRoutes = (store) =>{
     }
   };
 
-  const goToDefaultGroup = (nextState, replace)=>{
-    // Now you can access the store object here.
-    const state = store.getState();
+  const goToDefaultGroup = (nextState, replace) => {
     replace({
       pathname: '/home/default', //should be state.user.defaultGroupId
       state: { nextPathname: nextState.location.pathname }
     });
-  }
+  };
 
   return (
     <Route path="/" component={ App }>
