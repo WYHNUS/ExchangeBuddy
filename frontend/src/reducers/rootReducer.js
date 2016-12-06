@@ -3,8 +3,10 @@ import { routerReducer } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 
 // Reducers
+import Browser from './Browser';
+
+// Refactor the rest soon
 import { messageSnackbar } from './messageSnackbar';
-import { browserIsMobileWidth } from './browser';
 import { pageVisibility } from './pageVisibility';
 import { home } from './home';
 import { user } from './user';
@@ -15,8 +17,8 @@ import { wiki } from './wiki';
 import { homeSearchGroups } from './homeSearchGroups';
 
 const rootReducer = combineReducers({
+  ...Browser,
   messageSnackbar,
-  browserIsMobileWidth,
   pageVisibility,
   home,
   user,

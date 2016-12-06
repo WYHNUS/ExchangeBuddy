@@ -10,7 +10,42 @@ import Search from 'pages/home/search';
 
 import { makeRouteSlug } from 'util/helper';
 
-export default class App extends React.Component {
+class App extends React.Component {
+  static propTypes = {
+    children: React.PropTypes.element.isRequired,
+    routes: React.PropTypes.array.isRequired,
+    location: React.PropTypes.object,
+    actions: React.PropTypes.object.isRequired,
+  };
+
+  componentDidMount() {
+    const { actions: { resizeBrowserWindow } } = this.props;
+
+    // Declare window resize handlers
+    let timer;
+    this.windowResizeHandlers = [
+      () => {
+        const handler = () => resizeBrowserWindow(window.innerWidth);
+
+        if (!timer)
+          handler();
+        else
+          clearTimeout(timer);
+
+        timer = setTimeout(handler, 100);
+      },
+    ];
+
+    this.windowResizeHandlers.forEach(handler => {
+      window.addEventListener('resize', handler);
+      window.dispatchEvent(new Event('resize'));
+    });
+  }
+
+  componentWillUnmount() {
+    this.windowResizeHandlers.forEach(handler => window.removeEventListener('resize', handler));
+  }
+
   render() {
     return (
       <MuiThemeProvider muiTheme={ MuiTheme }>
@@ -51,3 +86,17 @@ export default class App extends React.Component {
       );
   }
 }
+
+// Redux
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { resizeBrowserWindow } from 'actions/Browser';
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators({ resizeBrowserWindow }, dispatch),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(App);
