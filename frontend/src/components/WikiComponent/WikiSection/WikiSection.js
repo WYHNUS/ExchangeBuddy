@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { browserHistory } from 'react-router';
 
-import { Card, CardText, CardTitle, CardActions } from 'material-ui/Card';
+import { Card, CardText, CardHeader, CardActions } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import FlatButton from 'material-ui/FlatButton';
 import Icon from 'components/Icon';
@@ -37,7 +37,7 @@ export default class WikiSection extends React.Component {
     
     return (
       <Card className="wiki-section-wrapper" initiallyExpanded={ !isMobile }>
-        <CardTitle title={ <span className="wiki-section-title">{ section.title }</span> } actAsExpander showExpandableButton />
+        <CardHeader title={ <span className="wiki-section-title">{ section.title }</span> } actAsExpander showExpandableButton />
         <CardText expandable>
           { currentDisplayedVersion !== section.WikiSection.displayVersionNumber &&
             <p className="displaying-old-version">Displaying an outdated version from { formatDateTime(section.updatedAt) }</p> }
@@ -58,7 +58,7 @@ export default class WikiSection extends React.Component {
                   avatar={ section.User.profilePictureUrl } 
                   size={24} 
                   style={{ alignItems: 'center' }}
-                  bodyStyle={{ paddingLeft: 0, textAlign: 'left' }}>
+                  bodyStyle={{ paddingLeft: 0 }}>
                   Last updated by <Link to={ `/profile/${ section.User.id }` }>{ section.User.name }</Link> on { formatDate(section.updatedAt) }
                 </AvatarRow> 
               }
