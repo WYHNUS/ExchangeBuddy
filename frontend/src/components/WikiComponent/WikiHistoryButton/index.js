@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
 import { List, ListItem } from 'material-ui/List';
 import Icon from 'components/Icon';
 
@@ -30,12 +30,12 @@ export default class WikiHistoryDropdown extends React.Component {
     const closeDialog = () => this.setState({ isOpen: false });
 
     return (
-      <FlatButton 
-        label="Version History" 
-        labelStyle={{ color: Colors.grey500 }} 
-        icon={ <Icon name="history" color={ Colors.grey500 } /> }
+      <IconButton 
+        tooltip="Version History" 
         color={ Colors.grey500 }
         onClick={ openDialog }>
+
+        <Icon name="history" color={ Colors.grey500 } />
 
         <Dialog 
           open={ isOpen } 
@@ -48,7 +48,7 @@ export default class WikiHistoryDropdown extends React.Component {
           </List>
         </Dialog>
         
-      </FlatButton>
+      </IconButton>
     );
   }
 }

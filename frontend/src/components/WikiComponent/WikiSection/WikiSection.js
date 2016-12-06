@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 
 import { Card, CardText, CardHeader, CardActions } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
-import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
 import Icon from 'components/Icon';
 import Link from 'components/Link';
 import AvatarRow from 'components/AvatarRow';
@@ -12,6 +12,7 @@ import WikiHistoryButton from '../WikiHistoryButton';
 
 import { formatDate, formatDateTime } from 'util/helper';
 import * as Colors from 'material-ui/styles/colors';
+import { palette } from 'layouts/mui-theme';
 
 import './WikiSection.scss';
 
@@ -45,10 +46,13 @@ export default class WikiSection extends React.Component {
           <div dangerouslySetInnerHTML={{ __html: section.content }}></div>
         </CardText>
         <CardActions expandable>
-          <div className="row center-xs start-sm middle-xs">
+          <div className="row start-xs start-sm middle-xs">
             <div className="col-xs-12 col-sm">
               { userToken && 
-                <FlatButton primary label="Contribute!" icon={ <Icon name="edit" /> } onClick={ this.editComponent.bind(this) } /> }
+                <IconButton tooltip="Contribute!" onClick={ this.editComponent.bind(this) }> 
+                  <Icon name="edit" color={ palette.primary1Color } />
+                </IconButton>
+              }
               <WikiHistoryButton section={ section } setVersion={ version => this.setState({ currentDisplayedVersion: version }) } />
             </div>
             <div className="col-xs-12 col-sm-offset-2 col-sm-4">
