@@ -110,7 +110,6 @@ exports.getAllEvents = function(req, res){
         models.sequelize.Promise.all(promises).then(function(userEvents){
             userEvents = userEvents.map(users => (users.map(user => (
                 {
-
                     name: user.name,
                     id: user.id,
                     profilePictureUrl: user.profilePictureUrl,

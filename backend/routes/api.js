@@ -82,6 +82,7 @@ router.get('/wikiCustomizedRecommend', verifyToken, WikiCtrl.getCustomizedRecomm
 router.get('/wiki', WikiCtrl.getWiki);  // ?q= &param= [stringified array: {section= &version=}]
 router.put('/wiki', verifyToken, WikiCtrl.createNewWiki);
 router.put('/wiki/section', verifyToken, WikiCtrl.createNewSection);
+router.delete('/wiki/section', verifyToken, WikiCtrl.deleteSection);
 router.put('/wiki/section/version', verifyToken, WikiCtrl.createNewSectionVersion);
 // router.post('/wiki/section/version/vote', verifyToken, WikiCtrl.vote);
 

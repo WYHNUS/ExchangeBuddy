@@ -211,8 +211,12 @@ exports.getCustomizedRecommendation = function(req, res) {
     });
 }
 
-// user get specific wiki page, if
 
+/*********************************
+    Create and Read for Wiki
+*********************************/
+
+// user get specific wiki page, if present, return a list of latest section versions
 exports.getWiki = function(req, res) {
     var query = req.query;
     var historyArray = null;    // to store parsed history
@@ -357,6 +361,11 @@ exports.createNewWiki = function(req, res) {
     }
 }
 
+
+/******************************************
+    Create and Delete for WikiSection
+******************************************/
+
 // user create a new wikiSection page, together with first version
 exports.createNewSection = function(req, res) {
     // check if wiki name exists
@@ -469,6 +478,65 @@ exports.createNewSection = function(req, res) {
     }
 }
 
+exports.deleteSection = function(req, res) {
+    // WARNING: no user role assigned, hence any user can perform deletion now...
+    // later need to check user role once admin is assigned check if wiki name exists
+    if (!req.body.wikiTitle || !req.body.sectionIndex) {
+        invalidError(res);
+    } else {
+        // check if wiki exists
+        Wiki.findOne({
+            attributes: ['id', 'title'],
+            where: {
+                title: req.body.wikiTitle
+            }
+        }).then(function(wiki) {
+            if (!wiki) {
+                return res.status(404)
+                    .json({
+                        status: 'fail',
+                        message:'wiki doesn\'t exist'
+                    });
+            }
+
+            WikiSection.findOne({
+                where: {
+                    WikiId: wiki.id,
+                    sectionIndex: req.body.sectionIndex
+                }
+            }).then(function(wikiSection) {
+                if (!wikiSection) {
+                    return res.status(404)
+                        .json({
+                            status: 'fail',
+                            message:'wiki section doesn\'t exist'
+                        });
+                }
+
+                // delete all related versions first, then delete section
+                WikiSectionVersion.destroy({
+                    where: {
+                        WikiSectionId: wikiSection.id,
+                        sectionIndex: req.body.sectionIndex
+                    }
+                }).then(function(affectedRows) {
+                    wikiSection.destroy();
+                    res.send({
+                        success: true
+                    });
+                }).catch(function(err) {
+                    resError(res, err);
+                });
+            });
+        };
+    }
+}
+
+
+/**********************************************
+    Create and Delete for WikiSectionVersion
+**********************************************/
+
 // user upload a new version of wiki section
 exports.createNewSectionVersion = function(req, res) {
     // this part not sure yet... but quick solution is:
@@ -508,7 +576,6 @@ exports.createNewSectionVersion = function(req, res) {
             // check if new content is the same as the old one
             Version.findOne({
                 where: {
-
                     versionNumber: wiki.WikiSections[0].displayVersionNumber,
                     WikiSectionId: wiki.WikiSections[0].id
                 }
