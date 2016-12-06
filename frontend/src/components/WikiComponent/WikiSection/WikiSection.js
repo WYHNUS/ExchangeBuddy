@@ -53,7 +53,10 @@ export default class WikiSection extends React.Component {
                   <Icon name="edit" color={ palette.primary1Color } />
                 </IconButton>
               }
-              <WikiHistoryButton section={ section } setVersion={ version => this.setState({ currentDisplayedVersion: version }) } />
+              <WikiHistoryButton 
+                wiki={ wiki } 
+                section={ section } 
+                setVersion={ version => this.setState({ currentDisplayedVersion: version }) } />
             </div>
             <div className="col-xs-12 col-sm-offset-2 col-sm-4">
               { section.User && 

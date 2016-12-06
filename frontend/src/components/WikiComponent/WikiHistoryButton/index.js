@@ -8,9 +8,11 @@ import Icon from 'components/Icon';
 import { iterate } from 'util/helper';
 import * as Colors from 'material-ui/styles/colors';
 
-export default class WikiHistoryDropdown extends React.Component {
+class WikiHistoryDropdown extends React.Component {
   static propTypes = {
+    fetchWikiPage: React.PropTypes.func.isRequired,
     setVersion: React.PropTypes.func.isRequired,
+    wiki: React.PropTypes.object.isRequired,
     section: React.PropTypes.object.isRequired,
   };
 
@@ -23,11 +25,17 @@ export default class WikiHistoryDropdown extends React.Component {
   }
 
   render() {
-    const { section, setVersion } = this.props;
+    const { wiki, section, setVersion, fetchWikiPage } = this.props;
     const { isOpen } = this.state;
 
     const openDialog = () => this.setState({ isOpen: true });
     const closeDialog = () => this.setState({ isOpen: false });
+
+    const handleSelectVersion = (version) => () => {
+      fetchWikiPage(wiki.title, [{ sectionIndex: section.WikiSection.sectionIndex, versionIndex: version }]);
+      setVersion(version);
+      closeDialog();
+    };
 
     return (
       <IconButton 
@@ -37,14 +45,14 @@ export default class WikiHistoryDropdown extends React.Component {
 
         <Icon name="history" color={ Colors.grey500 } />
 
-        <Dialog 
+        <Dialog
           open={ isOpen } 
           className="version-history-dialog" 
           title="View Version History"
           onRequestClose={ closeDialog }>
           <List>
             { iterate(section.WikiSection.totalVersionCount).map(i => i + 1)
-              .map(i => <ListItem key={ i } primaryText={ `Version ${ i }` } />) }
+              .map(i => <ListItem key={ i } primaryText={ `Version ${ i }` } onClick={ handleSelectVersion(i) } />) }
           </List>
         </Dialog>
         
@@ -52,3 +60,17 @@ export default class WikiHistoryDropdown extends React.Component {
     );
   }
 }
+
+// Redux
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { fetchWikiPage } from 'actions/wiki';
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    ...bindActionCreators({ fetchWikiPage }, dispatch),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(WikiHistoryDropdown);
