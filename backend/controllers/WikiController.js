@@ -516,13 +516,12 @@ exports.deleteSection = function(req, res) {
                 // delete all related versions first, then delete section
                 WikiSectionVersion.destroy({
                     where: {
-                        WikiSectionId: wikiSection.id,
-                        sectionIndex: req.body.sectionIndex
+                        WikiSectionId: wikiSection.id
                     }
                 }).then(function(affectedRows) {
                     wikiSection.destroy();
                     res.send({
-                        success: true
+                        status: 'success'
                     });
                 }).catch(function(err) {
                     resError(res, err);
@@ -534,7 +533,7 @@ exports.deleteSection = function(req, res) {
 
 
 /**********************************************
-    Create and Delete for WikiSectionVersion
+    Create and Read for WikiSectionVersion
 **********************************************/
 
 // user upload a new version of wiki section
@@ -642,6 +641,58 @@ exports.createNewSectionVersion = function(req, res) {
         }).catch(function(err) {
             resError(res, err);
         });
+    }
+}
+
+exports.getWikiSectionAllVersions = function(req, res) {
+    var query = req.query;
+
+    if (!query.q || !query.sectionIndex) {
+        invalidError(res);
+    } else {
+        // check if wiki exists
+        Wiki.findOne({
+            attributes: ['id', 'title'],
+            where: {
+                title: query.q
+            }
+        }).then(function(wiki) {
+            if (!wiki) {
+                return res.status(404)
+                    .json({
+                        status: 'fail',
+                        message:'wiki doesn\'t exist'
+                    });
+            }
+
+            WikiSection.findOne({
+                where: {
+                    WikiId: wiki.id,
+                    sectionIndex: query.sectionIndex
+                }
+            }).then(function(wikiSection) {
+                if (!wikiSection) {
+                    return res.status(404)
+                        .json({
+                            status: 'fail',
+                            message:'wiki section doesn\'t exist'
+                        });
+                }
+
+                WikiSectionVersion.findAll({
+                    where: {
+                        WikiSectionId: wikiSection.id
+                    }
+                }).then(function(allVersions) {
+                    res.send({
+                        status: 'success',
+                        versions: allVersions
+                    });
+                }).catch(function(err) {
+                    resError(res, err);
+                });
+            });
+        };
     }
 }
 
