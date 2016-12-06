@@ -1,13 +1,11 @@
 import React from 'react';
-import moment from 'moment';
-import { browserHistory } from 'react-router';
 
 import { Card, CardText, CardHeader, CardActions } from 'material-ui/Card';
-import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import Icon from 'components/Icon';
 import Link from 'components/Link';
 import AvatarRow from 'components/AvatarRow';
+import IconRow from 'components/IconRow';
 import WikiHistoryButton from '../WikiHistoryButton';
 
 import { formatDate, formatDateTime } from 'util/helper';
@@ -20,6 +18,7 @@ export default class WikiSection extends React.Component {
   static propTypes = {
     wiki: React.PropTypes.object.isRequired,
     section: React.PropTypes.object.isRequired,
+    userToken: React.PropTypes.string.isRequired,
     isMobile: React.PropTypes.bool.isRequired,
   };
 
@@ -28,20 +27,27 @@ export default class WikiSection extends React.Component {
 
     this.state = {
       isEditing: false,
-      currentDisplayedVersion: props.section.WikiSection.displayVersionNumber,
+      currentDisplayedVersion: props.section.versionNumber,
     };
   }
 
   render() {
     const { wiki, section, userToken, isMobile } = this.props;
     const { isEditing, currentDisplayedVersion } = this.state;
+
+    const isDisplayingOld = currentDisplayedVersion !== section.WikiSection.displayVersionNumber;
     
     return (
-      <Card className="wiki-section-wrapper" initiallyExpanded={ !isMobile }>
+      <Card className="wiki-section-wrapper" initiallyExpanded>
         <CardHeader title={ <span className="wiki-section-title">{ section.title }</span> } actAsExpander showExpandableButton />
         <CardText expandable>
-          { currentDisplayedVersion !== section.WikiSection.displayVersionNumber &&
-            <p className="displaying-old-version">Displaying an outdated version from { formatDateTime(section.updatedAt) }</p> }
+          { isDisplayingOld &&
+            <IconRow 
+              className="displaying-old-version"
+              icon={ <Icon name="access_time" /> }
+              label={ `Displaying an outdated version from ${ formatDateTime(section.updatedAt) }.` }
+              style={{ marginBottom: 20 }} /> 
+          }
 
           <div dangerouslySetInnerHTML={{ __html: section.content }}></div>
         </CardText>
@@ -61,8 +67,8 @@ export default class WikiSection extends React.Component {
             <div className="col-xs-12 col-sm-offset-2 col-sm-4">
               { section.User && 
                 <AvatarRow 
-                  className="last-edited-by" 
                   avatar={ section.User.profilePictureUrl } 
+                  className="last-edited-by" 
                   size={24} 
                   style={{ alignItems: 'center' }}
                   bodyStyle={{ paddingLeft: 0 }}>
@@ -77,8 +83,6 @@ export default class WikiSection extends React.Component {
   }
 
   editComponent() {
-    const { wikiTitle } = this.props;
-    const { title, WikiSection } = this.props.section;
-    browserHistory.push('/wiki/editWiki/' + wikiTitle + '/' + WikiSection.sectionIndex + '#' + title);
+
   }
 }
