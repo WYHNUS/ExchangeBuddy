@@ -23,6 +23,7 @@ module.exports = {
       static: path.join(__dirname, '../src', 'static'),
       store: path.join(__dirname, '../src', 'store'),
       stylesheets: path.join(__dirname, '../src', 'stylesheets'),
+      scss: path.join(__dirname, '../src', 'stylesheets'),
       util: path.join(__dirname, '../src', 'util'),
       ie: 'component-ie'
     }
