@@ -1,13 +1,15 @@
-import React, { PropTypes } from 'react';
-import { reduxForm } from 'redux-form';
+import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
-import { browserHistory } from 'react-router';
 
 import { TextField } from 'redux-form-material-ui';
 import { EditableField } from '../../EditableField';
 
 
 export default class WikiForm extends React.Component {
+  static propTypes = {
+    closeEditForm: React.PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
 
@@ -26,17 +28,18 @@ export default class WikiForm extends React.Component {
 
   componentDidUpdate() {
     if (this.props.uploadSuccess) {
-      this.redirectBack();
+      this.props.closeEditForm();
     }
   }
 
   render() {
-    const { section, submitting, error, uploadSuccess } = this.props;
+    const { section, submitting, error, uploadSuccess, closeEditForm } = this.props;
 
     return (
       <div id={ section.WikiSection.name }>
         <TextField 
           name="sectionTitle" 
+          fullWidth
           floatingLabelText="Title" 
           value={ this.state.title }
           onChange={ this.handleTitleChange.bind(this) } />
@@ -67,17 +70,13 @@ export default class WikiForm extends React.Component {
             label="Save changes" 
             style={{ marginRight: 18 }}
             disabled={ submitting }
-            onClick={this.submitForm.bind(this)}
+            onClick={ this.submitForm.bind(this) }
             />
-            <RaisedButton className="raised-btn" label="Cancel" onClick={this.redirectBack.bind(this)}/>
+            <RaisedButton className="raised-btn" label="Cancel" onClick={ closeEditForm }/>
           </div>
         </div>
       </div>
     );
-  }
-
-  redirectBack() {
-    browserHistory.push('/wiki/' + this.props.wikiName);
   }
 
   submitForm() {
