@@ -11,7 +11,7 @@ import WikiForm from '../WikiForm';
 
 import { formatDate, formatDateTime } from 'util/helper';
 import * as Colors from 'material-ui/styles/colors';
-import { palette } from 'layouts/mui-theme';
+import { palette } from 'layouts/MuiTheme';
 
 import './WikiSection.scss';
 
