@@ -1,21 +1,47 @@
-import React, {Component, PropTypes} from 'react';
-import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
+import React from 'react';
+import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
 import Paper from 'material-ui/Paper';
-import {browserHistory} from 'react-router';
+import { browserHistory } from 'react-router';
 
 import * as IconsHelper from 'util/icons';
+
+class BottomBar extends React.Component {
+  render() {
+    const tabIdx = urlToIdx(window.location.pathname);
+
+    return (
+      <Paper zDepth={1} className="bottom-navigation">
+
+        <BottomNavigation selectedIndex={tabIdx}>
+        <BottomNavigationItem onTouchTap={this.goToURL('/home')} label="Home" icon={IconsHelper.materialIcon('home')} />
+        <BottomNavigationItem onTouchTap={this.goToURL('/wiki')} label="Wiki" icon={IconsHelper.materialIcon('info')} />
+        {/*<BottomNavigationItem onTouchTap={this.goToURL('/newstory')} label="NewStory" icon={IconsHelper.materialIcon('create')} />*/}
+        <BottomNavigationItem onTouchTap={this.goToURL('/stories')} label="Stories" icon={IconsHelper.materialIcon('library_books')} />
+        <BottomNavigationItem onTouchTap={this.goToURL('/profile/me')} label="Profile" icon={IconsHelper.materialIcon('account_circle')} />
+        </BottomNavigation>
+
+      </Paper>
+    )
+  }
+
+  goToURL(url) {
+    if (url === '/home') {
+      return () => {
+        browserHistory.push(url);
+        this.props.toggleHomeTab('friends');
+      };
+    } else {
+      return () => browserHistory.push(url);
+    }
+  }
+}
 
 
 function urlToIdx(url) {
   let urlFmt = url.substring(1).toLowerCase();
-  // /drops -> drops
   let urlArr = urlFmt.split('/');
   const firstLvl = urlArr[0];
-  /*if(urlArr.length > 1 && firstLvl === "drops") {
-    // drops/:id have second lvl
-    return -1;
-  }*/
-  //console.log(firstLvl);
+
   switch (firstLvl) {
     case 'home':
       return 0;
@@ -34,49 +60,8 @@ function urlToIdx(url) {
   }
 }
 
-
-
-class BottomBar extends Component {
-  render() {
-    const tabIdx = urlToIdx(window.location.pathname);
-    return (
-      <div>
-        {
-        this.props.pageVisibility.bottomBarVisibility ?
-        <Paper zDepth={1} className="bottom-navigation">
-
-
-          <BottomNavigation selectedIndex={tabIdx}>
-          <BottomNavigationItem onTouchTap={this.goToURL('/home')} label="Home" icon={IconsHelper.materialIcon('home')} />
-          <BottomNavigationItem onTouchTap={this.goToURL('/wiki')} label="Wiki" icon={IconsHelper.materialIcon('info')} />
-          {/*<BottomNavigationItem onTouchTap={this.goToURL('/newstory')} label="NewStory" icon={IconsHelper.materialIcon('create')} />*/}
-          <BottomNavigationItem onTouchTap={this.goToURL('/stories')} label="Stories" icon={IconsHelper.materialIcon('library_books')} />
-          <BottomNavigationItem onTouchTap={this.goToURL('/profile/me')} label="Profile" icon={IconsHelper.materialIcon('account_circle')} />
-          </BottomNavigation>
-
-        </Paper>
-        :
-        <div></div>
-        }
-      </div>
-    )
-  }
-
-  goToURL(url) {
-    if (url === '/home') {
-      return () => {
-        browserHistory.push(url);
-        this.props.toggleHomeTab('friends');
-      };
-    } else {
-      return () => browserHistory.push(url);
-    }
-  }
-}
-
 BottomBar.propTypes = {
-  pageVisibility: PropTypes.object.isRequired,
-  toggleHomeTab: PropTypes.func.isRequired,
-}
+  toggleHomeTab: React.PropTypes.func.isRequired,
+};
 
 export default BottomBar;

@@ -3,10 +3,7 @@
 // require('medium-editor/dist/css/themes/default.min.css');
 // require('medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.min.css');
 
-import React, {PropTypes} from 'react';
-import { connect } from 'react-redux';
-import { toggleBottomBarVisibility, toggleTopBarVisibility,
-toggleTopBarSettingsButtonVisibility } from 'actions/pageVisibility';
+import React from 'react';
 
 import StoryForm from 'components/StoryForm';
 
@@ -20,7 +17,7 @@ import StoryForm from 'components/StoryForm';
 // require('medium-editor-insert-plugin/dist/js/medium-editor-insert-plugin.min.js');
 
 
-class Story extends React.Component{
+export default class Story extends React.Component{
 	constructor(props) {
 		super(props);
 	}
@@ -67,13 +64,3 @@ class Story extends React.Component{
 				</a>
 			</div>*/
 }
-
-const mapDispatchToProps = (dispatch) => {
-	return {
-		toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility)),
-		toggleTopBarVisibility: visibility=>dispatch(toggleTopBarVisibility(visibility)),
-		toggleTopBarSettingsButtonVisibility: visibility=>dispatch(toggleTopBarSettingsButtonVisibility(visibility))
-	};
-};
-
-export default connect(null, mapDispatchToProps)(Story);

@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import cookie from 'react-cookie';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import SearchInput, {createFilter} from 'react-search-input'
 
@@ -16,7 +17,7 @@ import GroupList from 'components/HomeComponent/Search/GroupList';
 import {fetchAllGroups, fetchAllGroupsSuccess, fetchAllGroupsFailure, resetAllGroups,
   fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure, toggleHomeTab
 } from 'actions/home';
-import { toggleHomeSearchDrawerVisibility } from 'actions/pageVisibility';
+import { toggleHomeSearchDrawer } from 'actions/HomeSearchDrawer';
 import { toggleSelectedHomeGroup } from 'actions/home';
 import { clearUser } from 'actions/authActions';
 
@@ -33,14 +34,14 @@ class Search extends Component {
   }
 
   render(){
-    const { allGroups, toggleHomeTab, toggleHomeSearchDrawerVisibility, fetchNewGroup } = this.props;
+    const { allGroups, toggleHomeTab, toggleHomeSearchDrawer, fetchNewGroup } = this.props;
     const { groupListShown, filterChips } = this.state;
 
     const goToGroup = (id) => { 
       browserHistory.push(`/home/${id}`);
       fetchNewGroup(id);
       toggleHomeTab('friends');
-      toggleHomeSearchDrawerVisibility(false); 
+      toggleHomeSearchDrawer(false); 
     };
 
     const styles = {
@@ -61,7 +62,7 @@ class Search extends Component {
       open={this.props.homeSearchDrawerOpen}
       disableSwipeToOpen={false}
       docked={false} 
-      onRequestChange={(open) => this.props.toggleHomeSearchDrawerVisibility(open)}>
+      onRequestChange={(open) => this.props.toggleHomeSearchDrawer(open)}>
 
       <div className="row search-container center-xs middle-xs">
       <div className={ this.state.isSearchOpen ? 'col-xs-9 col-md-10 col-lg-11' : 'col-xs-12' }>
@@ -308,8 +309,7 @@ class Search extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleHomeSearchDrawerVisibility: visibility=>dispatch(
-      toggleHomeSearchDrawerVisibility(visibility)),
+    ...bindActionCreators({ toggleHomeSearchDrawer, toggleSelectedHomeGroup, toggleHomeTab }, dispatch),
     fetchAllGroups: () => {
       dispatch(fetchAllGroups()).payload.then((response) => {
         if (!response.error) {
@@ -346,14 +346,12 @@ const mapDispatchToProps = (dispatch) => {
         }
     });
     },
-    toggleSelectedHomeGroup: index => dispatch(toggleSelectedHomeGroup(index)),
-    toggleHomeTab: tabValue => dispatch(toggleHomeTab(tabValue)),
   };
 };
 
 const mapStateToProps = (state)=>{
   return {
-    homeSearchDrawerOpen: state.pageVisibility.homeSearchDrawerOpen,
+    homeSearchDrawerOpen: state['HomeSearchDrawer/isOpen'],
     allGroups: state.homeSearchGroups.allGroups.allGroups
   };
 }

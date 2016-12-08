@@ -2,10 +2,6 @@ import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 
 // import actions
-import { 
-  toggleBottomBarVisibility, toggleTopBarVisibility,
-  toggleTopBarBackButtonVisibility 
-} from 'actions/pageVisibility';
 import {
   fetchWikiPage
 } from 'actions/wiki';
@@ -18,15 +14,6 @@ class WikiDetails extends React.Component{
     if (this.props.wikiTitle !== this.props.currentWikiTitle
       || this.props.needReload)
       this.props.fetchWikiPage(this.props.wikiTitle);
-  }
-
-  componentDidMount() {
-    this.props.toggleBottomBarVisibility(true);
-    this.props.toggleTopBarVisibility(true);
-    this.props.toggleTopBarBackButtonVisibility(true);
-  }
-  componentWillUnmount(){
-    this.props.toggleTopBarBackButtonVisibility(false);
   }
 
   render() {
@@ -62,9 +49,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleBottomBarVisibility: visibility => dispatch(toggleBottomBarVisibility(visibility)),
-    toggleTopBarVisibility: visibility => dispatch(toggleTopBarVisibility(visibility)),
-    toggleTopBarBackButtonVisibility: visibility => dispatch(toggleTopBarBackButtonVisibility(visibility)),
     fetchWikiPage: (title) => dispatch(fetchWikiPage(title)),
   };
 };

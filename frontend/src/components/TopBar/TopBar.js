@@ -13,14 +13,9 @@ import * as Colors from 'material-ui/styles/colors';
 class TopBar extends React.Component {
   render() {
     const appClass = classNames({
-      'back-btn': this.props.pageVisibility.topBarSettingsButton,
+      'back-btn': this.props.showSettingsButton,
       'app-bar': true,
     });
-
-    const { topBarVisibility } = this.props.pageVisibility;
-
-    if (!topBarVisibility)
-      return null;
 
     return (
       <AppBar
@@ -38,15 +33,15 @@ class TopBar extends React.Component {
   }
 
   getIconElementLeft() {
-    const { topBarSettingsButton, topBarBackButtonVisibility } = this.props.pageVisibility;
+    const { showSettingsButton, showBackButton } = this.props;
 
-    if (topBarSettingsButton && !topBarBackButtonVisibility) {
+    if (showSettingsButton && !showBackButton) {
       return (
         <IconButton onClick={ () => browserHistory.push('/settings') }>
           <Icon name="settings" color={ Colors.grey900 } />
         </IconButton>
       );
-    } else if (!topBarSettingsButton && topBarBackButtonVisibility) {
+    } else if (!showSettingsButton && showBackButton) {
       return (
         <IconButton onClick={ this.navigateBack }>
           <Icon name="chevron_left" color={ Colors.grey900 } />
@@ -58,14 +53,14 @@ class TopBar extends React.Component {
   }
 
   getIconElementRight() {
-    const { homeSearchDrawerOpenButtonVisibility } = this.props.pageVisibility;
+    const { showHomeSearchDrawerOpenButton, toggleHomeSearchDrawer } = this.props;
 
-    if (homeSearchDrawerOpenButtonVisibility) {
+    if (showHomeSearchDrawerOpenButton) {
       return (
         <FlatButton
           label="Groups"
           labelStyle={{ color: Colors.grey900 }}
-          onClick={ () => this.props.toggleHomeSearchDrawerVisibility(true) } />
+          onClick={ () => toggleHomeSearchDrawer(true) } />
       );
     } else {
       return <div style={{ marginLeft: 44, marginRight: 44, marginTop: 24,  marginBottom: 24 }}></div>;
@@ -74,7 +69,10 @@ class TopBar extends React.Component {
 }
 
 TopBar.propTypes = {
-  pageVisibility: React.PropTypes.object.isRequired
+  showSettingsButton: React.PropTypes.bool,
+  showHomeSearchDrawerOpenButton: React.PropTypes.bool,
+  showBackButton: React.PropTypes.bool,
+  toggleHomeSearchDrawer: React.PropTypes.func.isRequired,
 };
 
 export default TopBar;
