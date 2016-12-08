@@ -3,7 +3,6 @@ import { browserHistory } from 'react-router';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { toggleTopBarVisibility, toggleBottomBarVisibility } from 'actions/pageVisibility';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
@@ -46,15 +45,8 @@ ActionButton.propTypes = {
 
 class Landing extends React.Component {
   static propTypes = {
-    toggleBottomBarVisibility: React.PropTypes.func.isRequired,
-    toggleTopBarVisibility: React.PropTypes.func.isRequired,
     user: React.PropTypes.object,
   };
-
-  componentDidMount() {
-    this.props.toggleBottomBarVisibility(false);
-    this.props.toggleTopBarVisibility(false);
-  }
 
   render() {
     const { user } = this.props;
@@ -133,7 +125,7 @@ class Landing extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    ...bindActionCreators({ toggleBottomBarVisibility, toggleTopBarVisibility }, dispatch)
+    
   };
 };
 

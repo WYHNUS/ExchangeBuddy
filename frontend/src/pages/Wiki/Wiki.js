@@ -3,10 +3,6 @@ import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
 import Spinner from 'react-spinkit';
 
-import { 
-  toggleBottomBarVisibility, toggleTopBarVisibility,
-  toggleTopBarSettingsButtonVisibility 
-} from 'actions/pageVisibility';
 import {
   fetchRecommendation
 } from 'actions/wiki';
@@ -25,16 +21,6 @@ class Wiki extends React.Component {
   componentWillMount() {
     // need to check if already in reducer ?
     this.props.fetchRecommendation();
-  }
-
-  componentDidMount() {
-    this.props.toggleBottomBarVisibility(true);
-    this.props.toggleTopBarVisibility(true);
-    this.props.toggleTopBarSettingsButtonVisibility(true);
-  }
-
-  componentWillUnmount() {
-    this.props.toggleTopBarSettingsButtonVisibility(false);
   }
 
   // if user is signedin, display wiki related to his home and exchange Universities
@@ -133,9 +119,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility)),
-    toggleTopBarVisibility: visibility=>dispatch(toggleTopBarVisibility(visibility)),
-    toggleTopBarSettingsButtonVisibility: visibility=>dispatch(toggleTopBarSettingsButtonVisibility(visibility)),
     fetchRecommendation: () => dispatch(fetchRecommendation()),
   };
 };

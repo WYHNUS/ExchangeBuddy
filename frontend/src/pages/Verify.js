@@ -1,14 +1,7 @@
-import React, {PropTypes} from 'react';
-import { connect } from 'react-redux';
-
+import React from 'react';
 import { browserHistory } from 'react-router';
 
-// Action creators
-import { verifyToken, verifyTokenSuccess, verifyTokenFail } from 'actions/authActions';
-
-
 class Verify extends React.Component{
-
   componentDidMount() {
     this.props.verifyToken(this.props.routeParams.token);
   }
@@ -25,30 +18,25 @@ class Verify extends React.Component{
     const { error, isVerified } = this.props; 
 
     return (
-      <div>
-            <div className="row center-md center-xs" style={{ marginTop: 50 }}>
-          {   !error && !isVerified ?
-              <p> Activating your account ... </p>
-            : null
-          }
-          {   error ?
-                    <p> An error has occured ... </p>
-                  : null
-              }
-              {   isVerified ? 
-                  <div>
-                      <p> Your are a verified user! </p>
-                <p> Redirecting to the home page ...  </p>
-                    </div>
-                : null
-              }
-            </div>
+      <div className="row center-md center-xs" style={{ marginTop: 50 }}>
+        { error 
+          ? <p>An error has occured...</p>
+          : isVerified 
+            ?  <div>
+                <p>Your are already verified!</p>
+                <p>Redirecting back to home...</p>
+              </div>
+            : <p>Activating your account...</p>
+        }
       </div>
     );
   }
 }
 
-// redux
+// Redux
+import { connect } from 'react-redux';
+import { verifyToken, verifyTokenSuccess, verifyTokenFail } from 'actions/authActions';
+
 const mapStateToProps = (state) => {
   return {
     error: state.user.error,
