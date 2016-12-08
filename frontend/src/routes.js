@@ -9,8 +9,8 @@ import configureStore from './store/configureStore';
 /** ROUTES **/
 
 // Layout
-import App from './layouts/app';
-import Home from './layouts/home';
+import App from './layouts/App';
+import Home from './layouts/Home';
 
 import Events from './pages/Home/Events';
 import Chat from './pages/Home/Chat';

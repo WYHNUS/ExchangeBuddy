@@ -1,5 +1,5 @@
 import React from 'react';
-import MuiTheme from './mui-theme';
+import MuiTheme from './MuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Helmet from 'react-helmet';
 
