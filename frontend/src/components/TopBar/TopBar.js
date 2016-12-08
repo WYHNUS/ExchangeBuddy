@@ -53,14 +53,14 @@ class TopBar extends React.Component {
   }
 
   getIconElementRight() {
-    const { showHomeSearchDrawerOpenButton } = this.props;
+    const { showHomeSearchDrawerOpenButton, toggleHomeSearchDrawer } = this.props;
 
     if (showHomeSearchDrawerOpenButton) {
       return (
         <FlatButton
           label="Groups"
           labelStyle={{ color: Colors.grey900 }}
-          onClick={ () => this.props.toggleHomeSearchDrawerVisibility(true) } />
+          onClick={ () => toggleHomeSearchDrawer(true) } />
       );
     } else {
       return <div style={{ marginLeft: 44, marginRight: 44, marginTop: 24,  marginBottom: 24 }}></div>;
@@ -72,6 +72,7 @@ TopBar.propTypes = {
   showSettingsButton: React.PropTypes.bool,
   showHomeSearchDrawerOpenButton: React.PropTypes.bool,
   showBackButton: React.PropTypes.bool,
+  toggleHomeSearchDrawer: React.PropTypes.func.isRequired,
 };
 
 export default TopBar;

@@ -4,18 +4,17 @@ import { connect } from 'react-redux';
 
 import ChildComponent from './BottomBar';
 
-import { toggleBottomBarVisibility } from 'actions/pageVisibility';
-import {toggleHomeTab} from 'actions/home';
+import { toggleHomeTab } from 'actions/home';
 
 const mapStateToProps = (state, ownProps)=>{
   return {
-    pageVisibility: state.pageVisibility,
+
   };
 }
 const mapDispatchToProps = (dispatch) => {
-	return {
-		toggleHomeTab: tabValue=>dispatch(toggleHomeTab(tabValue))
-	};
+  return {
+    ...bindActionCreators({ toggleHomeTab }, dispatch),
+  };
 };
 
 

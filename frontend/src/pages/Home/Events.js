@@ -5,7 +5,6 @@ import cookie from 'react-cookie';
 import { clearUser } from 'actions/authActions';
 
 import { showSnackbar } from 'actions/messageSnackbar';
-import { pageVisibility } from 'actions/pageVisibility';
 import { toggleHomeTab, fetchEvents, fetchEventsFailure, fetchEventsSuccess } from 'actions/home';
 import RaisedButton from 'material-ui/RaisedButton';
 import MenuItem from 'material-ui/MenuItem';

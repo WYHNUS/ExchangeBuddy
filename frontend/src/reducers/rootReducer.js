@@ -4,10 +4,10 @@ import { reducer as formReducer } from 'redux-form';
 
 // Reducers
 import Browser from './Browser';
+import HomeSearchDrawer from './HomeSearchDrawer';
 
 // Refactor the rest soon
 import { messageSnackbar } from './messageSnackbar';
-import { pageVisibility } from './pageVisibility';
 import { home } from './home';
 import { user } from './user';
 import { utilityInfo } from './utilityInfo';
@@ -18,8 +18,8 @@ import { homeSearchGroups } from './homeSearchGroups';
 
 const rootReducer = combineReducers({
   ...Browser,
+  ...HomeSearchDrawer,
   messageSnackbar,
-  pageVisibility,
   home,
   user,
   utilityInfo,

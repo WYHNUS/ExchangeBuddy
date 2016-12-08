@@ -27,7 +27,7 @@ class Home extends React.Component {
 
     return (
       <div className="app-container">
-        <TopBar showSettingsButton showHomeSearchDrawerOpenButton onTouchTap={ () => this.props.toggleHomeSearchDrawerVisibility(false) } />
+        <TopBar showSettingsButton showHomeSearchDrawerOpenButton />
 
         <div className="home-wrapper container panel">
           <Header params={ this.props.params } tab={ this.props.routes[2].path } />
