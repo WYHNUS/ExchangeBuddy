@@ -1,6 +1,5 @@
 .wiki-recommendation-wrapper {
-    padding: 20px 20px 40px;
-    margin: 20px;
+    padding: 20px;
 
     .recommendation-nav-bar {
     	padding: 0 10px;
@@ -9,17 +8,17 @@
 }
 
 .recommendation-item-list {
-	overflow: hidden; padding: 0; margin: 20px 20px 50px;
-  display: flex; flex-direction: row; justify-content: center;
+	overflow: hidden; padding: 20px;
+  display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap;
 
   @include media-xs-only { flex-direction: column; align-items: center; }
 
   .recommendation-item {
-	   width: 200px; height: 220px; 
+	   width: 200px; min-height: 200px; padding: 15px;
 
     .recommendation-item-wrapper {
-    	cursor: pointer; width: 140px; height: 140px; margin: 0 auto; text-align: center;
-	    img { width: 100%; height: 100%; }
+    	cursor: pointer; margin: 0 auto; text-align: center;
+	    img { width: 140px; height: 140px; }
 	    p { display: inline-block; max-width: 100%; vertical-align: middle; }
     }
   }
