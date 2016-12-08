@@ -7,7 +7,7 @@ export default class WikiAddSectionButton extends React.Component {
     return (
       <div className="row center-md center-xs" style={{ margin: '30px 0' }}>
         <div>
-          <RaisedButton className="raised-btn" label="Add a new Section" primary onClick={this.redirectToAddSection.bind(this)} />
+          <RaisedButton className="raised-btn" label="Add a new Section" primary  />
         </div>
       </div>
     );
