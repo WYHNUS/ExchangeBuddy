@@ -6,7 +6,7 @@ import Helmet from 'react-helmet';
 import BottomBar from 'components/BottomBar';
 import TopBar from 'components/TopBar';
 import MessageSnackbar from 'components/MessageSnackbar'
-import Search from 'pages/home/search';
+import Search from 'pages/Home/Search';
 
 import { makeRouteSlug } from 'util/helper';
 
