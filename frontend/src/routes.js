@@ -11,6 +11,7 @@ import configureStore from './store/configureStore';
 // Layout
 import App from './layouts/App';
 import Home from './layouts/Home';
+import AppShell from './layouts/AppShell';
 
 import Events from './pages/Home/Events';
 import Chat from './pages/Home/Chat';
@@ -90,32 +91,34 @@ export const getRoutes = (store) =>{
           <Route path="friends" component={ Friends }/>
         </Route>
       </Route>
-      {/*<Route path="newstory" component={ EditStory } onEnter={ authRequired }/>*/}
-      <Route path="stories">
-        <IndexRoute component={ Stories }/>
-        <Route path=":storyId" component={ StoryDetails }/>
+      <Route component={ AppShell }>
+        {/*<Route path="newstory" component={ EditStory } onEnter={ authRequired }/>*/}
+        <Route path="stories">
+          <IndexRoute component={ Stories }/>
+          <Route path=":storyId" component={ StoryDetails }/>
+        </Route>
+        <Route path="wiki">
+          <IndexRoute component={ Wiki }/>
+          <Route path=":wikiTitle" component={ WikiDetails }/>
+          <Route path="history(/:wikiTitle)/*" component={ WikiHistory }/>
+          <Route path="editWiki(/:wikiTitle/:wikiSection)" component={ EditWiki } onEnter={ authRequired }/>
+          <Route path="newSection(/:wikiTitle)" component={ WikiNewSection } onEnter={ authRequired }/>
+        </Route>
+        <Route path="profile(/:userId)" onEnter={ authRequired }>
+          <IndexRoute component={ Profile }/>
+          <Route path="edit" component={ ProfileEdit }/>
+          <Route path="editUni" component={ IdentifyUniversity }/>
+        </Route>
+        <Route path="notloggedin" component={ NotLoggedIn }/>
+        <Route path="signup" component={ Signup }/>
+        <Route path="login" component={ Login }/>
+        <Route path="verify">
+          <Route path=":token" component={ Verify }/>
+        </Route>
+        <Route path="identifyUniversity" component={ IdentifyUniversity }/>
+        <Route path="settings" component={ Settings }/>
+        <Route path="*" component={ NotFound }/>
       </Route>
-      <Route path="wiki">
-        <IndexRoute component={ Wiki }/>
-        <Route path=":wikiTitle" component={ WikiDetails }/>
-        <Route path="history(/:wikiTitle)/*" component={ WikiHistory }/>
-        <Route path="editWiki(/:wikiTitle/:wikiSection)" component={ EditWiki } onEnter={ authRequired }/>
-        <Route path="newSection(/:wikiTitle)" component={ WikiNewSection } onEnter={ authRequired }/>
-      </Route>
-      <Route path="profile(/:userId)" onEnter={ authRequired }>
-        <IndexRoute component={ Profile }/>
-        <Route path="edit" component={ ProfileEdit }/>
-        <Route path="editUni" component={ IdentifyUniversity }/>
-      </Route>
-      <Route path="notloggedin" component={ NotLoggedIn }/>
-      <Route path="signup" component={ Signup }/>
-      <Route path="login" component={ Login }/>
-      <Route path="verify">
-        <Route path=":token" component={ Verify }/>
-      </Route>
-      <Route path="identifyUniversity" component={ IdentifyUniversity }/>
-      <Route path="settings" component={ Settings }/>
-      <Route path="*" component={ NotFound }/>
     </Route>
   );
 }

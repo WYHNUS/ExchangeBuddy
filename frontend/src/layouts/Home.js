@@ -2,51 +2,41 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookie';
+import Spinner from 'react-spinkit';
 
-import { 
-  toggleBottomBarVisibility, 
-  toggleHomeSearchDrawerOpenButtonVisibility,
-  toggleTopBarBackButtonVisibility, toggleTopBarVisibility, 
-  toggleTopBarSettingsButtonVisibility
-} from 'actions/pageVisibility';
 import {
   fetchMyGroups, fetchMyGroupsSuccess, fetchMyGroupsFailure,
   fetchCurrentGroup, fetchCurrentGroupSuccess, fetchCurrentGroupFailure,
   toggleSelectedHomeGroup, resetEvents
 } from 'actions/home';
+
 import { clearUser } from 'actions/authActions';
 
+import BottomBar from 'components/BottomBar';
+import TopBar from 'components/TopBar';
 import Header from 'components/Header';
 
-import Spinner from 'react-spinkit';
-
-class Home extends React.Component{
+class Home extends React.Component {
 
   componentDidMount() {
-    this.props.toggleBottomBarVisibility(true);
-    this.props.toggleTopBarVisibility(true);
-    this.props.toggleHomeSearchDrawerOpenButtonVisibility(true);
-    this.props.toggleTopBarBackButtonVisibility(false);
-    this.props.toggleTopBarSettingsButtonVisibility(true);
     this.props.fetchMyGroups(this.props.user.id);
-
-  }
-
-  componentWillUnmount() {
-    this.props.toggleHomeSearchDrawerOpenButtonVisibility(false);
-    this.props.toggleTopBarBackButtonVisibility(false);
-    this.props.toggleTopBarSettingsButtonVisibility(false);
   }
 
   render() {
     const { homeGroupsLoaded } = this.props;
 
     return (
-      <div className="home-wrapper container panel">
-        <Header params={ this.props.params } tab={ this.props.routes[2].path } />
-        <div className="home-content-wrapper">
-          { homeGroupsLoaded?(this.props.children):(<Spinner spinnerName="circle" />) }
+      <div className="app-container">
+        <TopBar showSettingsButton showHomeSearchDrawerOpenButton onTouchTap={ () => this.props.toggleHomeSearchDrawerVisibility(false) } />
+
+        <div className="home-wrapper container panel">
+          <Header params={ this.props.params } tab={ this.props.routes[2].path } />
+          <div className="home-content-wrapper">
+            { homeGroupsLoaded?(this.props.children):(<Spinner spinnerName="circle" />) }
+          </div>
         </div>
+
+        <BottomBar />
       </div>
     );
   }
@@ -55,11 +45,6 @@ class Home extends React.Component{
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleBottomBarVisibility: visibility=>dispatch(toggleBottomBarVisibility(visibility)),
-    toggleTopBarVisibility: visibility=>dispatch(toggleTopBarVisibility(visibility)),
-    toggleHomeSearchDrawerOpenButtonVisibility:visibility=>dispatch(toggleHomeSearchDrawerOpenButtonVisibility(visibility)),
-    toggleTopBarBackButtonVisibility:visibility=>dispatch(toggleTopBarBackButtonVisibility(visibility)),
-    toggleTopBarSettingsButtonVisibility:visibility=>dispatch(toggleTopBarSettingsButtonVisibility(visibility)),
     fetchMyGroups: (userId) => {
       dispatch(fetchMyGroups(userId)).payload.then((response) => {
         if (!response.error) {

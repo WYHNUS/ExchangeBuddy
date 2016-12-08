@@ -3,8 +3,6 @@ import MuiTheme from './MuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Helmet from 'react-helmet';
 
-import BottomBar from 'components/BottomBar';
-import TopBar from 'components/TopBar';
 import MessageSnackbar from 'components/MessageSnackbar'
 import Search from 'pages/Home/Search';
 
@@ -50,7 +48,6 @@ class App extends React.Component {
     return (
       <MuiThemeProvider muiTheme={ MuiTheme }>
         <div>
-          <TopBar onTouchTap={ () => this.props.toggleHomeSearchDrawerVisibility(false) } />
 
           <div id="root-container">
             <Helmet
@@ -80,7 +77,6 @@ class App extends React.Component {
           </div>
 
           <MessageSnackbar/>
-          <BottomBar />
         </div>
       </MuiThemeProvider>
       );
