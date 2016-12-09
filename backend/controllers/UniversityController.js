@@ -117,6 +117,12 @@ exports.updateUni = function(req, res){
                 status: 'fail',
                 message: 'Invalid authenticate data.'
             });
+    } else if (data.homeUniversityId === data.exchangeUniversityId) {
+        // check if homeUni and exchangeUni are the same
+        return res.status(400).json({
+                status: 'fail',
+                message: 'Home uni and exchange uni cannot be the same.'
+            });
     } else {
         models.sequelize.Promise.all([
             models.User.findOne({
