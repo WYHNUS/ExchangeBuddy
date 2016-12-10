@@ -450,7 +450,6 @@ exports.createNewSection = function(req, res) {
                             }).then(function(version) {
 
                                 // link the new section to Wiki
-
                                 existingWiki.addWikiSection(section).then(function(wiki) {
                                     versions.push(version);
                                     return res.status(200)
@@ -499,7 +498,7 @@ exports.deleteSection = function(req, res) {
                     });
             }
 
-            WikiSection.findOne({
+            Section.findOne({
                 where: {
                     WikiId: wiki.id,
                     sectionIndex: req.body.sectionIndex
@@ -514,7 +513,7 @@ exports.deleteSection = function(req, res) {
                 }
 
                 // delete all related versions first, then delete section
-                WikiSectionVersion.destroy({
+                Version.destroy({
                     where: {
                         WikiSectionId: wikiSection.id
                     }
@@ -527,7 +526,7 @@ exports.deleteSection = function(req, res) {
                     resError(res, err);
                 });
             });
-        };
+        });
     }
 }
 
@@ -611,7 +610,6 @@ exports.createNewSectionVersion = function(req, res) {
                         }).then(function(version) {
 
                             // update WikiSection's display with the latest version
-
                             wiki.WikiSections[0].update({
                                 displayVersionNumber: version.versionNumber,
                                 totalVersionCount: wiki.WikiSections[0].totalVersionCount + 1
@@ -665,7 +663,7 @@ exports.getWikiSectionAllVersions = function(req, res) {
                     });
             }
 
-            WikiSection.findOne({
+            Section.findOne({
                 where: {
                     WikiId: wiki.id,
                     sectionIndex: query.sectionIndex
@@ -679,7 +677,7 @@ exports.getWikiSectionAllVersions = function(req, res) {
                         });
                 }
 
-                WikiSectionVersion.findAll({
+                Version.findAll({
                     where: {
                         WikiSectionId: wikiSection.id
                     }
@@ -692,7 +690,7 @@ exports.getWikiSectionAllVersions = function(req, res) {
                     resError(res, err);
                 });
             });
-        };
+        });
     }
 }
 
@@ -821,7 +819,7 @@ function invalidError(res) {
 
 function resError(res, err) {
     return res.status(500).json({
+        status: 'fail',
         message: err.message
     });
-
 }

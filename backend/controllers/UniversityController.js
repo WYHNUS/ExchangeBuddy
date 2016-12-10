@@ -215,7 +215,7 @@ exports.updateUni = function(req, res){
             })
         }).catch(function(err){
             resError(res, err);
-        })
+        });
     }
 }
 
