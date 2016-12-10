@@ -2,10 +2,9 @@ import React from 'react';
 
 import Dialog from 'material-ui/Dialog';
 import IconButton from 'material-ui/IconButton';
-import { List, ListItem } from 'material-ui/List';
 import Icon from 'components/Icon';
+import WikiHistoryDialogList from './WikiHistoryDialogList';
 
-import { iterate } from 'util/helper';
 import * as Colors from 'material-ui/styles/colors';
 
 class WikiHistoryDropdown extends React.Component {
@@ -50,10 +49,7 @@ class WikiHistoryDropdown extends React.Component {
           className="version-history-dialog" 
           title="View Version History"
           onRequestClose={ closeDialog }>
-          <List>
-            { iterate(section.WikiSection.totalVersionCount).map(i => i + 1)
-              .map(i => <ListItem key={ i } primaryText={ `Version ${ i }` } onClick={ handleSelectVersion(i) } />) }
-          </List>
+          <WikiHistoryDialogList wiki={ wiki } section={ section } handleSelectVersion={ handleSelectVersion } />
         </Dialog>
         
       </IconButton>
