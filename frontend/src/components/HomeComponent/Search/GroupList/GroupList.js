@@ -12,7 +12,7 @@ import { browserHistory } from 'react-router';
 class GroupItem extends React.Component {
   render(){
     const {group, heading, toggleHomeTab, 
-      toggleSelectedHomeGroup, toggleHomeSearchDrawerVisibility,
+      toggleSelectedHomeGroup, toggleHomeSearchDrawer,
       homeGroupDetails, index, fetchNewGroup} = this.props;
       const {selected} = this.props.homeGroups;
 
@@ -21,7 +21,7 @@ class GroupItem extends React.Component {
         fetchNewGroup(group.id); 
         toggleSelectedHomeGroup(index);
         toggleHomeTab('friends');
-        toggleHomeSearchDrawerVisibility(false); 
+        toggleHomeSearchDrawer(false); 
       };
       return (
         <div className="group-body">
@@ -91,7 +91,7 @@ class GroupItem extends React.Component {
   export default class GroupList extends React.Component {
 
    render() {
-    const {groups, user, toggleHomeSearchDrawerVisibility, toggleSelectedHomeGroup} = this.props;
+    const { groups, user } = this.props;
     var index =0;
     return(
       <div>
@@ -108,7 +108,7 @@ GroupList.PropTypes={
  user: PropTypes.object.isRequired,
  groups: PropTypes.object.isRequired,
  homeGroups: PropTypes.object.isRequired,
- toggleHomeSearchDrawerVisibility: PropTypes.func.isRequired,
+ toggleHomeSearchDrawer: PropTypes.func.isRequired,
  toggleSelectedHomeGroup: PropTypes.func.isRequired,
  toggleHomeTab: PropTypes.func.isRequired,
  homeGroupDetails: PropTypes.object.isRequired,

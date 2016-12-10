@@ -37,7 +37,7 @@ html body {
 
 // Layout
 .container { 
-  justify-content: center; max-width: $max-container-width; width: 100%; 
+  justify-content: center; max-width: $max-container-width; width: 100%; margin: 0 auto;
   &.panel { 
     background-color: #fff; min-height: 100%;
     .col-xs-12 { padding: 0; }

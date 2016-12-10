@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, Redirect, IndexRoute, IndexRedirect, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { loadState } from './util/localStorage';
@@ -9,31 +9,36 @@ import configureStore from './store/configureStore';
 /** ROUTES **/
 
 // Layout
-import App from './layouts/app';
-import Home from './layouts/home';
+import App from './layouts/App';
+import Home from './layouts/Home';
+import AppShell from './layouts/AppShell';
+import AppShellWithBackButton from './layouts/AppShellWithBackButton';
+import AppShellWithoutBottomBar from './layouts/AppShellWithoutBottomBar';
+import AppShellPlainWithoutBottomBar from './layouts/AppShellPlainWithoutBottomBar';
 
-import Events from './pages/home/events';
-import Chat from './pages/home/chat';
-import Friends from './pages/home/friends';
-import Landing from './pages/landing';
-import NotFound from './pages/not-found';
-import Profile from './pages/profile';
-import Wiki from './pages/wiki/wiki';
-import WikiDetails from './pages/wiki/wikiDetails';
-import WikiHistory from './pages/wiki/wikiHistory';
-import EditWiki from './pages/wiki/editWiki';
-import WikiNewSection from './pages/wiki/wikiNewSection';
-import Stories from './pages/stories/stories';
-import StoryDetails from './pages/stories/story';
-import EditStory from './pages/editStory';
-import NotLoggedIn from './pages/notloggedin';
-import Signup from './pages/signup';
-import Login from './pages/login';
-import Verify from './pages/verify';
-import IdentifyUniversity from './pages/identifyUniversity';
-import Settings from './pages/settings';
-import NewEvent from './pages/home/newevent';
-import ProfileEdit from './pages/profileEdit';
+import Events from './pages/Home/Events';
+import Chat from './pages/Home/Chat';
+import Friends from './pages/Home/Friends';
+import Landing from './pages/Landing';
+import NotFound from './pages/NotFound';
+import Profile from './pages/Profile';
+import Wiki from './pages/Wiki/Wiki';
+import WikiDetails from './pages/Wiki/WikiDetails';
+import WikiHistory from './pages/Wiki/WikiHistory';
+import EditWiki from './pages/Wiki/EditWiki';
+import WikiNewSection from './pages/Wiki/WikiNewSection';
+import Stories from './pages/Stories/Stories';
+import StoryDetails from './pages/Stories/Story';
+import EditStory from './pages/EditStory';
+import NotLoggedIn from './pages/NotLoggedIn';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import Verify from './pages/Verify';
+import IdentifyUniversity from './pages/IdentifyUniversity';
+import EditUniversity from './pages/EditUniversity';
+import Settings from './pages/Settings';
+import NewEvent from './pages/Home/NewEvent';
+import ProfileEdit from './pages/ProfileEdit';
 
 // Redux
 const persistedState = loadState();
@@ -59,7 +64,7 @@ export const getRoutes = (store) =>{
 
     if (!state.user.token) {
       replace({ 
-        pathname: '/notloggedin'
+        pathname: '/notLoggedIn'
       });
     } else if (!state.user.userObject.UniversityId) {
       replace({ 
@@ -77,52 +82,91 @@ export const getRoutes = (store) =>{
 
   return (
     <Route path="/" component={ App }>
-      <IndexRoute component={ Landing }/>
-      <Route path="home" onEnter={ authRequired }>
-        <IndexRoute onEnter={ goToDefaultGroup }/>
-        <Route path=":id" component={ Home }> 
-          <IndexRoute component={ Friends }/>
+      <IndexRoute component={ Landing } />
+
+      <Route path="signup" component={ Signup } />
+      <Route path="login" component={ Login } />
+      <Route path="verify/:token" component={ Verify } />
+
+      <Route path="home" onEnter={ authRequired } component={ Home }>
+        <IndexRoute onEnter={ goToDefaultGroup } />
+
+        <Route path=":id">
+          <IndexRoute component={ Friends } />
           <Route path="events">
-            <IndexRoute component={ Events }/>
-            <Route path="new" component={ NewEvent }/>
+            <IndexRoute component={ Events } />
+            <Route path="new" component={ NewEvent } />
           </Route>
-          <Route path="chat" component={ Chat }/>
-          <Route path="friends" component={ Friends }/>
+          <Route path="chat" component={ Chat } />
+          <Route path="friends" component={ Friends } />
+        </Route>
+
+        <Redirect path="*" to="home" />
+      </Route>
+      
+      <Route component={ AppShellPlainWithoutBottomBar }>
+        <Route path="identifyUniversity" component={ IdentifyUniversity } />
+      </Route>
+
+      <Route path="profile" onEnter={ authRequired }>
+        <IndexRedirect to="profile/me" />
+        
+        <Route path="me">
+          <Route component={ AppShell }>
+            <IndexRoute component={ Profile } />
+          </Route>
+
+          <Route component={ AppShellWithBackButton }>
+            <Route path="edit" component={ ProfileEdit } />
+            <Route path="editUni" component={ EditUniversity } />
+          </Route>
+        </Route>
+
+        <Route component={ AppShellWithBackButton }>
+          <Route path=":userId" component={ Profile } />
         </Route>
       </Route>
-      {/*<Route path="newstory" component={ EditStory } onEnter={ authRequired }/>*/}
+      
       <Route path="stories">
-        <IndexRoute component={ Stories }/>
-        <Route path=":storyId" component={ StoryDetails }/>
+        <Route component={ AppShell }>
+          <IndexRoute component={ Stories } />
+        </Route>
+        
+        <Route component={ AppShellWithBackButton }>
+          {/*<Route path="newstory" component={ EditStory } onEnter={ authRequired } />*/}
+          <Route path=":storyId" component={ StoryDetails } />
+        </Route>
       </Route>
+
       <Route path="wiki">
-        <IndexRoute component={ Wiki }/>
-        <Route path=":wikiTitle" component={ WikiDetails }/>
-        <Route path="history(/:wikiTitle)/*" component={ WikiHistory }/>
-        <Route path="editWiki(/:wikiTitle/:wikiSection)" component={ EditWiki } onEnter={ authRequired }/>
-        <Route path="newSection(/:wikiTitle)" component={ WikiNewSection } onEnter={ authRequired }/>
+        <Route component={ AppShell }>
+          <IndexRoute component={ Wiki } />
+        </Route>
+        
+        <Route component={ AppShellWithBackButton }>
+          <Route path=":wikiTitle" component={ WikiDetails } />
+          <Route path="history(/:wikiTitle)/*" component={ WikiHistory } />
+          <Route path="editWiki(/:wikiTitle/:wikiSection)" component={ EditWiki } onEnter={ authRequired } />
+          <Route path="newSection(/:wikiTitle)" component={ WikiNewSection } onEnter={ authRequired } />
+        </Route>
       </Route>
-      <Route path="profile(/:userId)" onEnter={ authRequired }>
-        <IndexRoute component={ Profile }/>
-        <Route path="edit" component={ ProfileEdit }/>
-        <Route path="editUni" component={ IdentifyUniversity }/>
+      
+      <Route component={ AppShellWithoutBottomBar }>
+        <Route path="settings" component={ Settings } />
       </Route>
-      <Route path="notloggedin" component={ NotLoggedIn }/>
-      <Route path="signup" component={ Signup }/>
-      <Route path="login" component={ Login }/>
-      <Route path="verify">
-        <Route path=":token" component={ Verify }/>
+
+
+      <Route component={ AppShellPlainWithoutBottomBar }>
+        <Route path="notLoggedIn" component={ NotLoggedIn } />
+        <Route path="*" component={ NotFound } />
       </Route>
-      <Route path="identifyUniversity" component={ IdentifyUniversity }/>
-      <Route path="settings" component={ Settings }/>
-      <Route path="*" component={ NotFound }/>
     </Route>
   );
 }
 
 export default (
   <Provider store={ store }>
-    <Router history={ history } onUpdate={ logPageView } >
+    <Router history={ history } onUpdate={ logPageView }>
       { getRoutes(store) }
     </Router>
   </Provider>
