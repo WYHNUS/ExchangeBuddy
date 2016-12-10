@@ -78,9 +78,33 @@ router.get('/wikiRecommend', WikiCtrl.getRecommendation);
 router.get('/wikiCustomizedRecommend', verifyToken, WikiCtrl.getCustomizedRecommendation);
 router.get('/wiki', WikiCtrl.getWiki);  // ?q= &param= [stringified array: {section= &version=}]
 router.put('/wiki', verifyToken, WikiCtrl.createNewWiki);
+/*
+request:
+{
+    wikiTitle: Singapore,
+    versionTitle: History,
+    content: <div><p>Singapore has a loooong history. :)</p></div>
+}
+*/
 router.put('/wiki/section', verifyToken, WikiCtrl.createNewSection);
+/*
+request:
+{
+    wikiTitle: Singapore,
+    sectionIndex: 10
+}
+*/
 router.delete('/wiki/section', verifyToken, WikiCtrl.deleteSection);
 router.get('/wiki/section/allVersions', WikiCtrl.getWikiSectionAllVersions);  // ?q= &sectionIndex= 
+/*
+request:
+{
+    wikiTitle: Singapore,
+    sectionIndex: 1,
+    sectionTitle: Food,
+    content: <div><p>Singapore has a variety of nice food. :)</p></div>
+}
+*/
 router.put('/wiki/section/version', verifyToken, WikiCtrl.createNewSectionVersion);
 // router.post('/wiki/section/version/vote', verifyToken, WikiCtrl.vote);
 
