@@ -74,6 +74,7 @@
     "react-markdown": "^2.4.2",
     "react-paginate": "^2.2.3",
     "react-redux": "^4.4.5",
+    "react-refetch": "^1.0.0-beta.10",
     "react-router": "^2.8.0",
     "react-router-redux": "^4.0.5",
     "react-search-input": "^0.10.3",
