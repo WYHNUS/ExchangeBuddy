@@ -527,7 +527,7 @@ exports.deleteSection = function(req, res) {
                     resError(res, err);
                 });
             });
-        };
+        });
     }
 }
 
@@ -692,7 +692,7 @@ exports.getWikiSectionAllVersions = function(req, res) {
                     resError(res, err);
                 });
             });
-        };
+        });
     }
 }
 
