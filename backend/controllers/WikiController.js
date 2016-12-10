@@ -211,8 +211,12 @@ exports.getCustomizedRecommendation = function(req, res) {
     });
 }
 
-// user get specific wiki page, if
 
+/*********************************
+    Create and Read for Wiki
+*********************************/
+
+// user get specific wiki page, if present, return a list of latest section versions
 exports.getWiki = function(req, res) {
     var query = req.query;
     var historyArray = null;    // to store parsed history
@@ -357,6 +361,11 @@ exports.createNewWiki = function(req, res) {
     }
 }
 
+
+/******************************************
+    Create and Delete for WikiSection
+******************************************/
+
 // user create a new wikiSection page, together with first version
 exports.createNewSection = function(req, res) {
     // check if wiki name exists
@@ -441,7 +450,6 @@ exports.createNewSection = function(req, res) {
                             }).then(function(version) {
 
                                 // link the new section to Wiki
-
                                 existingWiki.addWikiSection(section).then(function(wiki) {
                                     versions.push(version);
                                     return res.status(200)
@@ -468,6 +476,64 @@ exports.createNewSection = function(req, res) {
         });
     }
 }
+
+exports.deleteSection = function(req, res) {
+    // WARNING: no user role assigned, hence any user can perform deletion now...
+    // later need to check user role once admin is assigned check if wiki name exists
+    if (!req.body.wikiTitle || !req.body.sectionIndex) {
+        invalidError(res);
+    } else {
+        // check if wiki exists
+        Wiki.findOne({
+            attributes: ['id', 'title'],
+            where: {
+                title: req.body.wikiTitle
+            }
+        }).then(function(wiki) {
+            if (!wiki) {
+                return res.status(404)
+                    .json({
+                        status: 'fail',
+                        message:'wiki doesn\'t exist'
+                    });
+            }
+
+            Section.findOne({
+                where: {
+                    WikiId: wiki.id,
+                    sectionIndex: req.body.sectionIndex
+                }
+            }).then(function(wikiSection) {
+                if (!wikiSection) {
+                    return res.status(404)
+                        .json({
+                            status: 'fail',
+                            message:'wiki section doesn\'t exist'
+                        });
+                }
+
+                // delete all related versions first, then delete section
+                Version.destroy({
+                    where: {
+                        WikiSectionId: wikiSection.id
+                    }
+                }).then(function(affectedRows) {
+                    wikiSection.destroy();
+                    res.send({
+                        status: 'success'
+                    });
+                }).catch(function(err) {
+                    resError(res, err);
+                });
+            });
+        });
+    }
+}
+
+
+/**********************************************
+    Create and Read for WikiSectionVersion
+**********************************************/
 
 // user upload a new version of wiki section
 exports.createNewSectionVersion = function(req, res) {
@@ -508,7 +574,6 @@ exports.createNewSectionVersion = function(req, res) {
             // check if new content is the same as the old one
             Version.findOne({
                 where: {
-
                     versionNumber: wiki.WikiSections[0].displayVersionNumber,
                     WikiSectionId: wiki.WikiSections[0].id
                 }
@@ -545,7 +610,6 @@ exports.createNewSectionVersion = function(req, res) {
                         }).then(function(version) {
 
                             // update WikiSection's display with the latest version
-
                             wiki.WikiSections[0].update({
                                 displayVersionNumber: version.versionNumber,
                                 totalVersionCount: wiki.WikiSections[0].totalVersionCount + 1
@@ -574,6 +638,58 @@ exports.createNewSectionVersion = function(req, res) {
 
         }).catch(function(err) {
             resError(res, err);
+        });
+    }
+}
+
+exports.getWikiSectionAllVersions = function(req, res) {
+    var query = req.query;
+
+    if (!query.q || !query.sectionIndex) {
+        invalidError(res);
+    } else {
+        // check if wiki exists
+        Wiki.findOne({
+            attributes: ['id', 'title'],
+            where: {
+                title: query.q
+            }
+        }).then(function(wiki) {
+            if (!wiki) {
+                return res.status(404)
+                    .json({
+                        status: 'fail',
+                        message:'wiki doesn\'t exist'
+                    });
+            }
+
+            Section.findOne({
+                where: {
+                    WikiId: wiki.id,
+                    sectionIndex: query.sectionIndex
+                }
+            }).then(function(wikiSection) {
+                if (!wikiSection) {
+                    return res.status(404)
+                        .json({
+                            status: 'fail',
+                            message:'wiki section doesn\'t exist'
+                        });
+                }
+
+                Version.findAll({
+                    where: {
+                        WikiSectionId: wikiSection.id
+                    }
+                }).then(function(allVersions) {
+                    res.send({
+                        status: 'success',
+                        versions: allVersions
+                    });
+                }).catch(function(err) {
+                    resError(res, err);
+                });
+            });
         });
     }
 }
@@ -703,7 +819,7 @@ function invalidError(res) {
 
 function resError(res, err) {
     return res.status(500).json({
+        status: 'fail',
         message: err.message
     });
-
 }

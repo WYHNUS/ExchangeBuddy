@@ -5,8 +5,6 @@ var config = require('../config/config');
 var multer = require('multer');
 var upload = multer({dest: __dirname+'/../public/uploads'});
 
-
-
 var models  = require('../models');
 var CountryCtrl = require('../controllers/CountryController');
 var UniCtrl = require('../controllers/UniversityController');
@@ -23,9 +21,9 @@ var ChatCtrl = require('../controllers/ChatController');
 var verifyToken = jwt({secret: config.secret});
 
 router.get('/', function(req, res) {
-  res.json({
-    status: 'ok'
-  });
+    res.json({
+        status: 'ok'
+    });
 });
 
 // Authenticate with Facebook access token or email with password
@@ -33,7 +31,7 @@ router.post('/authenticateOrCreateByFB', AuthCtrl.authenticateOrCreateByFB);
 router.post('/authenticateByEmail', AuthCtrl.authenticateByEmail);
 // Verify JSWT
 router.get('/me', verifyToken, function(req, res) {
-  res.send(req.user);
+    res.send(req.user);
 });
 
 /*
@@ -59,7 +57,6 @@ request:
     name: "haha",
 }
 */
-
 router.patch('/updateUser', verifyToken, UserCtrl.updateUser);
 router.put('/createUser', UserCtrl.createUser);
 router.post('/uploadProfile',[verifyToken, upload.single('profilePicture'), UserCtrl.uploadProfile]);
@@ -81,7 +78,33 @@ router.get('/wikiRecommend', WikiCtrl.getRecommendation);
 router.get('/wikiCustomizedRecommend', verifyToken, WikiCtrl.getCustomizedRecommendation);
 router.get('/wiki', WikiCtrl.getWiki);  // ?q= &param= [stringified array: {section= &version=}]
 router.put('/wiki', verifyToken, WikiCtrl.createNewWiki);
+/*
+request:
+{
+    wikiTitle: Singapore,
+    versionTitle: History,
+    content: <div><p>Singapore has a loooong history. :)</p></div>
+}
+*/
 router.put('/wiki/section', verifyToken, WikiCtrl.createNewSection);
+/*
+request:
+{
+    wikiTitle: Singapore,
+    sectionIndex: 10
+}
+*/
+router.delete('/wiki/section', verifyToken, WikiCtrl.deleteSection);
+router.get('/wiki/section/allVersions', WikiCtrl.getWikiSectionAllVersions);  // ?q= &sectionIndex= 
+/*
+request:
+{
+    wikiTitle: Singapore,
+    sectionIndex: 1,
+    sectionTitle: Food,
+    content: <div><p>Singapore has a variety of nice food. :)</p></div>
+}
+*/
 router.put('/wiki/section/version', verifyToken, WikiCtrl.createNewSectionVersion);
 // router.post('/wiki/section/version/vote', verifyToken, WikiCtrl.vote);
 
