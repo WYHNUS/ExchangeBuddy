@@ -1,4 +1,8 @@
 var models = require('../models');
+var Wiki = models.Wiki;
+var Section = models.WikiSection;
+var Version = models.WikiSectionVersion;
+var defaultUniWikiTemplate = require('../public/DefaultUniversityWikiContent.json');
 
 exports.getAllUniversities = function(req, res){
     models.University.findAll({
@@ -11,12 +15,54 @@ exports.getAllUniversities = function(req, res){
 };
 
 exports.createUniversity = function(req, res) {
+    var userId = req.body.userId;
+
     models.University.create({
         name: req.body.name,
-        logoImageUrl: req.body.logoImageUrl,
-        emailDomains: JSON.stringify(req.body.emailDomains)
+        logoImageUrl: req.body.logoImageUrl
     }).then(function(university) {
-        res.json(university);
+        // create wiki and wikiSection for newly added wiki
+        Wiki.create({
+            title: req.body.name,
+            UserId: userId
+        }).then(function(wiki){
+            var resultArray = Object.keys(defaultUniWikiTemplate).map(title => {
+                var content = defaultUniWikiTemplate[title].content;
+                var index = defaultUniWikiTemplate[title].index;
+                Section.create({
+                    sectionIndex: index,
+                    displayVersionNumber: 1,    // default first version number
+                    totalVersionCount: 1,
+                    sectionType: 'OpenToEdit',  // default value for now...
+                    WikiId: wiki.id,
+                    UserId: userId
+                }).then(function(section) {
+                    return Version.create({
+                        title: title,
+                        content: content,
+                        versionNumber: 1,   // only one exists
+                        WikiSectionId: section.id,
+                        UserId: userId
+                    });
+                });
+            });
+
+            models.sequelize.Promise.all(resultArray).then(versions => {
+                for (var i in versions) {
+                    if (!versions[i]) {
+                        return res.status(500).json({
+                            message: err.message
+                        });
+                    }
+                }
+                // indicate successful
+                return res.status(200)
+                    .json({
+                        status: 'success'
+                        university: university
+                    });
+            });
+        });
     }).catch(function(err) {
         resError(res, err);
     });

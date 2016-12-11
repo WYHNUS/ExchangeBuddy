@@ -68,7 +68,15 @@ router.get('/resendVerificationMail/:userId', MailCtrl.resend);
 router.get('/country', CountryCtrl.getAllCountries);
 router.get('/country/:id', CountryCtrl.getCountry);
 
-router.get('/university/', UniCtrl.getAllUniversities);
+router.get('/university', UniCtrl.getAllUniversities);
+/*
+request:
+{
+    name: National University of Singapore,
+    logoImageUrl: http://...
+}
+*/
+router.put('/university', verifyToken, UniCtrl.createUniversity);
 router.get('/university/:id', UniCtrl.getUniversity);
 
 router.post('/messages', verifyToken, ChatCtrl.getMessages);
