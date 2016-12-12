@@ -58,7 +58,7 @@ const DropzoneField = ({ name, input, meta, ...rest }) => (
       multiple={ false }
       accept="image/*"
       { ...rest }>
-      { input.value && Array.isArray(input.value) && input.value.length > 0
+      { input.value && Array.isArray(input.value) && input.value.length > 0 && input.value[0].preview
         ? <div className="upload-preview">
             <img src={ input.value[0].preview }/>
           </div>
@@ -69,7 +69,7 @@ const DropzoneField = ({ name, input, meta, ...rest }) => (
         }
     </Dropzone>
 
-    { input.value && Array.isArray(input.value) && input.value.length > 0 &&
+    { input.value && Array.isArray(input.value) && input.value.length > 0 && input.value[0].preview &&
       <FlatButton onClick={ (e) => { e.stopPropagation(); input.onChange(null); } } label="Remove Image" icon={ <Icon name="delete" /> } style={{ margin: 10 }} />
     }
 
