@@ -1,3 +1,6 @@
+@import '~scss/common/colors';
+@import '~scss/common/mixins';
+
 // Loading
 .loading-container { display: flex; width: 100%; justify-content: center; padding: 20px 0; }
 .floating-loading {
@@ -17,3 +20,33 @@
 
 // Icons
 .material-icons { vertical-align: middle; }
+
+// Fields
+.dropzone-upload {
+  width: 200px; height: 200px; margin: 0 auto; cursor: pointer; border: 1px dashed palette(Grey, 400); 
+  display: flex; flex-direction: column; justify-content: center; text-align: center;
+  @include transition-standard(225ms);
+
+  &:hover { background-color: palette(Grey, 100); }
+  &.dropzone-active { 
+    opacity: 0.7;
+    p { display: none; }
+    span.material-icons { font-size: 64px !important; }
+  }
+
+  .upload-placeholder {
+    p { margin: 10px; font-size: 16px; }
+    span.material-icons { @include transition-standard(350ms); }
+  }
+
+  .upload-preview {
+    position: relative;
+    .remove-file { position: absolute !important; top: 5px; right: 5px; }
+
+    img {
+      background: #fff; width: 200px; height: 200px; vertical-align: middle; @include transition-standard(225ms);
+      &:hover { opacity: 0.8; }
+    }
+  }
+}
+
