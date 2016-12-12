@@ -1,12 +1,10 @@
-import React from 'react';
-
 // Redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Action creators
 import { 
-	initializeWikiForm, submitNewSectionVersion
+	initializeWikiForm, submitNewSection, submitNewSectionVersion, fetchWikiPage
 } from 'actions/wiki'
 
 // Component
@@ -23,10 +21,18 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		actions: bindActionCreators({  }, dispatch),
-		initializeForm: (title, content) => dispatch(initializeWikiForm(title, content)),
-		createVersion: (wikiTitle, sectionIndex, title, content) => {
+		...bindActionCreators({ initializeWikiForm }, dispatch),
+		submitNewSection: (wikiTitle, title, content) => {
+			dispatch(submitNewSection(wikiTitle, title, content));
+
+			// Temp, until we use a proper fetching library.
+			setTimeout(() => dispatch(fetchWikiPage(wikiTitle)), 1000);
+		},
+		submitNewSectionVersion: (wikiTitle, sectionIndex, title, content) => {
 			dispatch(submitNewSectionVersion(wikiTitle, sectionIndex, title, content));
+
+			// Temp, until we use a proper fetching library.
+			setTimeout(() => dispatch(fetchWikiPage(wikiTitle)), 1000);
 		},
 	};
 };

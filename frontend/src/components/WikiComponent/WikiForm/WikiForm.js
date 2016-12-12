@@ -1,42 +1,67 @@
-import React, { PropTypes } from 'react';
-import { reduxForm } from 'redux-form';
+import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
-import { browserHistory } from 'react-router';
 
 import { TextField } from 'redux-form-material-ui';
 import { EditableField } from '../../EditableField';
 
-
 export default class WikiForm extends React.Component {
+  static propTypes = {
+    closeEditForm: React.PropTypes.func.isRequired,
+    wikiName: React.PropTypes.string.isRequired,
+    section: React.PropTypes.object,
+    submitting: React.PropTypes.bool.isRequired,
+    error: React.PropTypes.object,
+    uploadSuccess: React.PropTypes.bool.isRequired,
+    submitNewSection: React.PropTypes.func.isRequired,
+    submitNewSectionVersion: React.PropTypes.func.isRequired,
+    initializeWikiForm: React.PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
 
-    const { title, content } = this.props.section;
-    this.state = {
-      title: title,
-      content: content
+    const { section } = this.props;
+
+    if (!section) {
+      this.state = {
+        title: 'New Section',
+        content: '',
+      };
+    } else {
+      const { title, content } = this.props.section;
+
+      this.state = {
+        title: title,
+        content: content
+      };
     }
   }
 
   componentWillMount() {
-    const { title, content } = this.props.section;
-    // assign initialValues
-    this.props.initializeForm(title, content);
+    const { section, initializeWikiForm } = this.props;
+
+    if (section) {
+      const { title, content } = this.props.section;
+
+      // Assign initialValues
+      initializeWikiForm(title, content);
+    }
   }
 
   componentDidUpdate() {
     if (this.props.uploadSuccess) {
-      this.redirectBack();
+      this.props.closeEditForm();
     }
   }
 
   render() {
-    const { section, submitting, error, uploadSuccess } = this.props;
+    const { section, submitting, error, uploadSuccess, closeEditForm } = this.props;
 
     return (
-      <div id={ section.WikiSection.name }>
+      <div>
         <TextField 
           name="sectionTitle" 
+          fullWidth
           floatingLabelText="Title" 
           value={ this.state.title }
           onChange={ this.handleTitleChange.bind(this) } />
@@ -46,43 +71,44 @@ export default class WikiForm extends React.Component {
           content={ this.state.content }
           onChange={ this.handleEditorChange.bind(this) } />
 
-        {
-          submitting ? 
-          <p>Uploading new version to the server...</p>
-          :
-          error ?
-          error.message ?
-          <p> { error.message } </p>
-          : <p>{ error }</p>
-          : uploadSuccess ?
-          <p>Upload new version successful! :)</p>
-        : null
-      }
+        { // TODO: Refactor this into a proper loading container
+          submitting 
+          ?  <p>Uploading new version to the server...</p>
+          : error 
+            ? error.message 
+              ? <p> { error.message } </p>
+              : <p>{ error }</p>
+            : uploadSuccess 
+              ? <p>Upload new version successful! :)</p>
+              : null
+        }
 
-      <div className="row center-md center-xs" style={{ marginTop: 18 }}>
-        <div>
-          <RaisedButton 
-            primary 
-            className="raised-btn" 
-            label="Save changes" 
-            style={{ marginRight: 18 }}
-            disabled={ submitting }
-            onClick={this.submitForm.bind(this)}
-            />
-            <RaisedButton className="raised-btn" label="Cancel" onClick={this.redirectBack.bind(this)}/>
+        <div className="row center-md center-xs" style={{ marginTop: 18 }}>
+          <div>
+            <RaisedButton 
+              primary 
+              className="raised-btn" 
+              label="Save changes" 
+              style={{ marginRight: 18 }}
+              disabled={ submitting }
+              onClick={ this.submitForm.bind(this) } />
+            <RaisedButton className="raised-btn" label="Cancel" onClick={ closeEditForm }/>
           </div>
         </div>
       </div>
     );
   }
 
-  redirectBack() {
-    browserHistory.push('/wiki/' + this.props.wikiName);
-  }
-
   submitForm() {
-    const { section, wikiName } = this.props;
-    this.props.createVersion(wikiName, section.WikiSection.sectionIndex, this.state.title, this.state.content);
+    const { section, wikiName, submitNewSectionVersion, submitNewSection } = this.props;
+    const { title, content } = this.state;
+
+    if (!section) {
+      console.log(wikiName, title, content);
+      submitNewSection(wikiName, title, content);
+    } else {
+      submitNewSectionVersion(wikiName, section.WikiSection.sectionIndex, title, content);
+    }
   }
 
   handleTitleChange(e) {

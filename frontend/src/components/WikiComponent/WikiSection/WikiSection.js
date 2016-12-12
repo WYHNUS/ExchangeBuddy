@@ -1,49 +1,107 @@
-import moment from 'moment';
-import $ from 'jquery';
+import React from 'react';
 
-import React, {PropTypes} from 'react';
-import { browserHistory } from 'react-router';
+import { Card, CardText, CardHeader, CardActions } from 'material-ui/Card';
+import IconButton from 'material-ui/IconButton';
+import Icon from 'components/Icon';
+import Link from 'components/Link';
+import AvatarRow from 'components/AvatarRow';
+import IconRow from 'components/IconRow';
+import WikiHistoryButton from '../WikiHistoryButton';
+import WikiForm from '../WikiForm';
 
-import WikiHistoryDropdown from '../WikiHistoryDropdown';
+import { formatDate, formatDateTime } from 'util/helper';
+import * as Colors from 'material-ui/styles/colors';
+import { palette } from 'layouts/MuiTheme';
+
+import './WikiSection.scss';
 
 export default class WikiSection extends React.Component {
-  componentDidMount() {
-    const { section } = this.props;
-    $('#section' + section.WikiSection.sectionIndex + 'content').append(section.content);
+  static propTypes = {
+    wiki: React.PropTypes.object.isRequired,
+    section: React.PropTypes.object.isRequired,
+    userToken: React.PropTypes.string.isRequired,
+    isMobile: React.PropTypes.bool.isRequired,
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isEditing: false,
+      currentDisplayedVersion: props.section.versionNumber,
+    };
   }
 
   render() {
-    const { wikiTitle, section, userToken } = this.props;
-    
-    return (
-      <div className="wiki-section-wrapper" id={ section.title }>
-        <h2>
-          <div>
-            { section.title }
-            {
-              userToken ?
-                <span className="edit-span" onClick={this.editComponent.bind(this)}><a>[ edit ]</a></span>
-              : null
-            }
-          </div>
-          <WikiHistoryDropdown 
-            wikiTitle = { wikiTitle }
-            section={ section } 
-          />
-        </h2>
-        {
-          (section.versionNumber !== section.WikiSection.displayVersionNumber) ?
-            <div><p style={{color: 'red'}}>Reminder: This is not the latest version!</p></div>
-          : null
-        }
-        <div id={'section' + section.WikiSection.sectionIndex + 'content'}></div>
-      </div>
-    );
-  }
+    const { wiki, section, userToken, isMobile } = this.props;
+    const { isEditing, currentDisplayedVersion } = this.state;
 
-  editComponent() {
-    const { wikiTitle } = this.props;
-    const { title, WikiSection } = this.props.section;
-    browserHistory.push('/wiki/editWiki/' + wikiTitle + '/' + WikiSection.sectionIndex + '#' + title);
+    const isDisplayingOld = currentDisplayedVersion !== section.WikiSection.displayVersionNumber;
+    
+    if (isEditing) {
+
+      return (
+        <Card className="wiki-section-wrapper">
+          <CardText>
+            <IconRow 
+              className="displaying-old-version"
+              icon={ <Icon name="access_time" /> }
+              label="You are currently in Edit mode! Click 'Save Changes' to make your contributions, or cancel to return to View mode."
+              style={{ marginBottom: 20 }} /> 
+            <WikiForm
+              wikiName={ wiki.title }
+              section={ section }
+              closeEditForm={ () => this.setState({ isEditing: false }) } />
+          </CardText>
+        </Card>
+      );
+
+    } else {
+
+      return (
+        <Card className="wiki-section-wrapper" initiallyExpanded={ isDisplayingOld || !isMobile }>
+          <CardHeader title={ <span className="wiki-section-title">{ section.title }</span> } actAsExpander showExpandableButton />
+          <CardText expandable>
+            { isDisplayingOld &&
+              <IconRow 
+                className="displaying-old-version"
+                icon={ <Icon name="access_time" /> }
+                label={ `Displaying an outdated version from ${ formatDateTime(section.updatedAt) }.` }
+                style={{ marginBottom: 20 }} /> 
+            }
+
+            <div dangerouslySetInnerHTML={{ __html: section.content }}></div>
+          </CardText>
+          <CardActions expandable>
+            <div className="row start-xs start-sm middle-xs">
+              <div className="col-xs-12 col-sm">
+                { !isDisplayingOld && userToken && 
+                  <IconButton tooltip="Contribute!" onClick={ () => this.setState({ isEditing: true }) }> 
+                    <Icon name="edit" color={ palette.primary1Color } />
+                  </IconButton>
+                }
+                <WikiHistoryButton 
+                  wiki={ wiki } 
+                  section={ section } 
+                  setVersion={ version => this.setState({ currentDisplayedVersion: version }) } />
+              </div>
+              <div className="col-xs-12 col-sm-offset-2 col-sm-4">
+                { section.User && 
+                  <AvatarRow 
+                    avatar={ section.User.profilePictureUrl } 
+                    className="last-edited-by" 
+                    size={24} 
+                    style={{ alignItems: 'center' }}
+                    bodyStyle={{ paddingLeft: 0 }}>
+                    Last updated by <Link to={ `/profile/${ section.User.id }` }>{ section.User.name }</Link> on { formatDate(section.updatedAt) }
+                  </AvatarRow> 
+                }
+              </div>
+            </div>
+          </CardActions>
+        </Card>
+      );
+
+    }
   }
 }

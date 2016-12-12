@@ -24,9 +24,6 @@ import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
 import Wiki from './pages/Wiki/Wiki';
 import WikiDetails from './pages/Wiki/WikiDetails';
-import WikiHistory from './pages/Wiki/WikiHistory';
-import EditWiki from './pages/Wiki/EditWiki';
-import WikiNewSection from './pages/Wiki/WikiNewSection';
 import Stories from './pages/Stories/Stories';
 import StoryDetails from './pages/Stories/Story';
 import EditStory from './pages/EditStory';
@@ -145,9 +142,6 @@ export const getRoutes = (store) =>{
         
         <Route component={ AppShellWithBackButton }>
           <Route path=":wikiTitle" component={ WikiDetails } />
-          <Route path="history(/:wikiTitle)/*" component={ WikiHistory } />
-          <Route path="editWiki(/:wikiTitle/:wikiSection)" component={ EditWiki } onEnter={ authRequired } />
-          <Route path="newSection(/:wikiTitle)" component={ WikiNewSection } onEnter={ authRequired } />
         </Route>
       </Route>
       
