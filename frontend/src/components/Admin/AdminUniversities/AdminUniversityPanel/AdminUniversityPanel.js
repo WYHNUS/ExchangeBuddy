@@ -12,6 +12,18 @@ import { universityPropType, countryPropType } from 'util/propTypes';
 const validate = values => {
   const errors = {};
 
+  // Required fields
+  const requiredFields = ['universityName', 'countryCode'];
+  requiredFields.forEach(field => {
+    if (!values[ field ])
+      errors[ field ] = 'Required';
+  });
+
+  // URL
+  const isURL = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i.test(values.website);
+  if (values.website && values.website.length > 0 && !isURL)
+    errors.website = 'Invalid URL.';
+
   return errors;
 };
 
