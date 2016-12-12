@@ -7,6 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Icon from 'components/Icon';
 
 import AdminUniversitiesList from './AdminUniversitiesList';
+import AdminUniversityForm from './AdminUniversityForm';
 
 import { countryPropType } from 'util/propTypes';
 
@@ -25,7 +26,7 @@ export default class AdminUniversities extends React.Component {
   }
 
   render() {
-    const { selectedCountryCode } = this.state;
+    const { selectedCountryCode, isAdding } = this.state;
     const { countries } = this.props;
 
     return (
@@ -48,11 +49,14 @@ export default class AdminUniversities extends React.Component {
         
         { selectedCountryCode && <AdminUniversitiesList countries={ countries } countryCode={ selectedCountryCode } /> }
 
-        <div className="row middle-xs center-xs">
-          <div className="col-xs">
-            <RaisedButton secondary label="Add University" icon={ <Icon name="add" /> } onClick={ () => this.setState({ isAdding: true }) } />
-          </div>
-        </div>
+        { isAdding
+          ? <AdminUniversityForm form="AdminUniversityPanel_new" university={ null } countries={ countries } />
+          : <div className="row middle-xs center-xs">
+              <div className="col-xs">
+                <RaisedButton secondary label="Add University" icon={ <Icon name="add" /> } onClick={ () => this.setState({ isAdding: true }) } />
+              </div>
+            </div> 
+        }
       </div>
     );
   }
