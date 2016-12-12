@@ -2,6 +2,17 @@ var models = require('../models');
 
 exports.getAllUniversities = function(req, res){
     models.University.findAll({
+        attributes: ['id', 'name', 'city', 'logoImageUrl', 'emailDomains', 'terms']
+    }).then(function(universities){
+        res.json(universities);
+    }).catch(function(err) {
+        resError(res, err);
+    });
+};
+
+exports.getAllUniversitiesForCountry = function(req, res){
+    models.University.findAll({
+        where: { countryCode: req.params.alpha2Code },
     	attributes: ['id', 'name', 'city', 'logoImageUrl', 'emailDomains', 'terms']
     }).then(function(universities){
         res.json(universities);
