@@ -38,14 +38,14 @@ const AdminUniversityPanel = ({ university: { name, city, logoImageUrl }, countr
                 <TextFormField name="website" floatingLabelText="Website URL" />
               </div>
             </div>
-            <div className="row center-xs">
-              <div className="col-xs">
-                <RaisedButton primary type="submit" label="Update"  style={{ margin: 20 }} />
-              </div>
-            </div>
           </div>
           <div className="col-xs-12 col-sm-6 center-xs">
             <DropzoneFormField name="logoImageUrl" />
+          </div>
+        </div>
+        <div className="row center-xs">
+          <div className="col-xs">
+            <RaisedButton primary type="submit" label="Update"  style={{ margin: 20 }} />
           </div>
         </div>
       </form>
@@ -59,6 +59,5 @@ AdminUniversityPanel.propTypes = {
 };
 
 export default reduxForm({
-  form: 'adminUniversityForm',
   validate,
 })(AdminUniversityPanel);
