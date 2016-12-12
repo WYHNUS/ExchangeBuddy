@@ -58,15 +58,12 @@ exports.updateUniInfo = function(req, res){
             id: req.body.UniversityId,
         }
     }).then(function(user){
-        res.send({
+        res.json({
             status: 'success'
-        }, function(err){
-            res.send({
-                status: 'fail',
-                err,
-            })
-        })
-    })
+        });
+    }).catch(function(err) {
+        resError(res, err);
+    });
 }
 
 exports.updateUniLogo = function(req, res){
