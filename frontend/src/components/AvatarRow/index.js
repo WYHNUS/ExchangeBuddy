@@ -15,7 +15,7 @@ const AvatarRow = ({ avatar, className, avatarStyle, bodyStyle, size=40, childre
 );
 
 AvatarRow.propTypes = {
-  avatar: React.PropTypes.string.isRequired,
+  avatar: React.PropTypes.string,
   size: React.PropTypes.number,
   className: React.PropTypes.string,
   avatarStyle: React.PropTypes.object,

@@ -8,7 +8,6 @@ import LinearProgress from 'material-ui/LinearProgress';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
-//import HeaderProfile from './HeaderProfile';
 import * as IconsHelper from 'util/icons';
 import group0Uni from 'res/group0_uni.jpg';
 import group1Uni from 'res/group1_uni.jpg';

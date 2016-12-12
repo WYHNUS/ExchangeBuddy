@@ -29,53 +29,43 @@ class Wiki extends React.Component {
   // later maybe can use user's location to give suggestions?
   render() {
     const { recommendWikis } = this.props;
+    const { value, wikisShown } = this.state;
 
     return (
-      <div>
+      <div className="container">
         <div className="wiki-recommendation-wrapper">
           <div className="recommendation-nav-bar">
-            <h2>Recommendation</h2>
+            <h2>Recommended for you</h2>
           </div>
           <hr className="green-separator" style={{ width: '85%' }}></hr>
 
           <div className="recommendation-item-list">
-          {
-            (recommendWikis.length > 0) ?
-              (
-                recommendWikis.map(function(wikiPreview, idx){
-                  return (
-                    <WikiRecommendation previewItem={ wikiPreview } key={ idx } />
-                  ) 
-                })
-              )
+          { recommendWikis.length > 0 
+            ? recommendWikis.map((wikiPreview, idx) => <WikiRecommendation previewItem={ wikiPreview } key={ idx } /> )
             : <Spinner spinnerName="circle" />
           }
           </div>
 
-          <hr className="green-separator" style={{ width: '85%' }}></hr>
         </div>
 
         <div className="search wiki-recommendation-wrapper">
-          <TextField
-            hintText="Search for more! :D" 
-            className="search-textfield"
-            style={{width: '50%'}}
-            value={this.state.value}
-            onChange={this.filterChange}
-          />
+          <h2>Search for other wikis</h2>
+          <hr className="green-separator" style={{ width: '85%' }}></hr>
 
-          <ul className="recommendation-item-list">
-          { this.state.wikisShown.length > 0 ?
-            (
-              (this.state.wikisShown.map(function(wiki, idx) {
-                return (
-                  <WikiRecommendation previewItem={ wiki } key={ idx } />
-                ) 
-              }))
-            )
-            : null
-          } 
-          </ul>
+          <div className="recommendation-item-list">
+            <TextField
+              hintText="Type university or country name..." 
+              className="search-textfield"
+              style={{width: '50%'}}
+              value={ value }
+              onChange={ this.filterChange } />
+          </div>
+
+          <div className="recommendation-item-list">
+            { wikisShown.length > 0 &&
+              wikisShown.map((wiki, idx) => <WikiRecommendation previewItem={ wiki } key={ idx } /> )
+            }
+          </div>
         </div>
       </div>
     );
@@ -111,7 +101,7 @@ class Wiki extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return{
+  return {
     recommendWikis: state.wiki.previews,
     allWikis: state.wiki.allWikis
   };

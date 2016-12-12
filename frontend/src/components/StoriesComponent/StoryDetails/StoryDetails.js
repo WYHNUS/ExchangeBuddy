@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import { browserHistory } from 'react-router';
-import $ from 'jquery';
 import moment from 'moment';
 
 import { formatTime } from 'util/helper';
@@ -14,26 +13,9 @@ export default class StoryDetails extends React.Component {
 		this.props.fetchStory(this.props.id, this.props.user.id);
 	}
 
-	componentDidMount(){
-		
-	}
-
-	componentDidUpdate(){
-		$('#content').append(this.props.storyDetails.content);
-	}
-
 	render() {
-		const { user/*, fetching_result*/ } = this.props;
-		const { 
-			id, title, content, User, 
-			/*tags, favorites, status,*/ coverPhoto, 
-			createdAt, updatedAt 
-		} = this.props.storyDetails;
-
-		/*if (fetching_result) {
-			$('#content').append(content);
-		}*/
-		
+		const { user, storyDetails } = this.props;
+		const { id, title, content, User, coverPhoto, createdAt, updatedAt } = storyDetails;
 
 		return (
 			<div className="text-content-wrapper">
@@ -61,7 +43,7 @@ export default class StoryDetails extends React.Component {
 							: null
 						}
 						<h1 className="title">{ title }</h1>
-						<div id="content" className="story-content"></div>
+						<div className="story-content" dangerouslySetInnerHTML={{ __html: storyDetails.content }}></div>
 					</div>
 				</div>
 			</div>
