@@ -48,34 +48,38 @@ export const AutoCompleteFormField = ({ name, ...rest }) =>
     fullWidth
     {...rest} />;
 
-const DropzoneField = ({ name, input, meta, ...rest }) => (
-  <div className="dropzone-field">
-    <Dropzone
-      className="dropzone-upload"
-      activeClassName="dropzone-active"
-      name={ name }
-      onDrop={ filesToUpload => input.onChange(filesToUpload) }
-      multiple={ false }
-      accept="image/*"
-      { ...rest }>
-      { input.value && Array.isArray(input.value) && input.value.length > 0 && input.value[0].preview
-        ? <div className="upload-preview">
-            <img src={ input.value[0].preview }/>
-          </div>
-        : <div className="upload-placeholder">
-            <Icon name="cloud_upload" size={30} color={ Colors.grey500 } />
-            <p>Drag and drop files here or click upload.</p>
-          </div> 
-        }
-    </Dropzone>
+const DropzoneField = ({ name, input, meta, ...rest }) => { 
+  const { value } = input;
+  const file = value && Array.isArray(value) && value.length > 0 && value[0];
 
-    { input.value && Array.isArray(input.value) && input.value.length > 0 && input.value[0].preview &&
-      <FlatButton onClick={ (e) => { e.stopPropagation(); input.onChange(null); } } label="Remove Image" icon={ <Icon name="delete" /> } style={{ margin: 10 }} />
-    }
+  return (
+    <div className="dropzone-field">
+      <Dropzone
+        className="dropzone-upload"
+        activeClassName="dropzone-active"
+        name={ name }
+        onDrop={ filesToUpload => input.onChange(filesToUpload) }
+        multiple={ false }
+        accept="image/*"
+        { ...rest }>
+        { file && file.preview
+          ? <div className="upload-preview">
+              <img src={ file && file.preview }/>
+            </div>
+          : <div className="upload-placeholder">
+              <Icon name="cloud_upload" size={30} color={ Colors.grey500 } />
+              <p>Drag and drop files here or click upload.</p>
+            </div> 
+          }
+      </Dropzone>
 
-    { meta.touched && meta.error && <span className="error">{ meta.error }</span> }
-  </div>
-);
+      { file && file.preview && <FlatButton onClick={ (e) => { e.stopPropagation(); input.onChange(null); } } label="Remove Image" icon={ <Icon name="delete" /> } style={{ margin: 10 }} />
+      }
+
+      { meta.touched && meta.error && <span className="error">{ meta.error }</span> }
+    </div>
+  );
+};
 
 DropzoneField.propTypes = {
   name: React.PropTypes.string.isRequired,

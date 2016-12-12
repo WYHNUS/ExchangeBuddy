@@ -1,6 +1,6 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { makeReq, patch } from 'util/api';
+import { makeReq, post, patch } from 'util/api';
 import { showSnackbar } from 'actions/messageSnackbar';
 
 import AdminUniversityPanel from './AdminUniversityPanel';
@@ -13,9 +13,10 @@ const mapStateToProps = (state, props) => {
     initialValues: {
       countryCode, city, website,
       universityName: name,
-      logoImageUrl: [{ preview: logoImageUrl }],
+      logoImage: [{ preview: logoImageUrl }],
     },
     submitUpdateUniversity: makeReq(patch, `/updateUniInfo/${ props.university.id }`, { userToken: true }),
+    submitUpdateUniversityLogo: makeReq(post, `/updateUniLogo/${ props.university.id }`, { userToken: true }),
   };
 };
 

@@ -44,7 +44,7 @@
     .remove-file { position: absolute !important; top: 5px; right: 5px; }
 
     img {
-      background: #fff; width: 200px; height: 200px; vertical-align: middle; @include transition-standard(225ms);
+      background: #fff; width: 200px; height: 200px; object-fit: cover; vertical-align: middle; @include transition-standard(225ms);
       &:hover { opacity: 0.8; }
     }
   }
