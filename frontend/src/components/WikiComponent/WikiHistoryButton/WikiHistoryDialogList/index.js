@@ -6,7 +6,7 @@ import WikiHistoryDialogList from './WikiHistoryDialogList';
 import Loading from 'components/Loading';
 import ErrorComponent from 'components/Error';
 
-const Container = ({ versionsFetch }) => {
+const Container = ({ versionsFetch, ...rest }) => {
   if (versionsFetch.pending)
     return <Loading />;
   
@@ -18,7 +18,7 @@ const Container = ({ versionsFetch }) => {
   // Can simply use reverse if we can ensure that that it returns in sorted order.
   const sortedVersions = versions.sort((a, b) => a.versionNumber < b.versionNumber);
 
-  return <WikiHistoryDialogList versions={ sortedVersions } />;
+  return <WikiHistoryDialogList versions={ sortedVersions } { ...rest } />;
 };
 
 Container.propTypes = {

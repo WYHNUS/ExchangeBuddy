@@ -37,6 +37,7 @@ export const formatMoney = (money) => `$${ money.toFixed(2) }`;
 export const formatDate = (date) => moment(date).format('D MMM YYYY');
 export const formatTime = (date) => moment(date).format('h:mm A');
 export const formatDateTime = (date) => moment(date).format('ddd, D MMM, h:mm A');
+export const formatRelaTime = (date) => moment(date).fromNow()
 export const isFuture = (startDate, endDate) => moment(startDate).isAfter(moment()) && moment(endDate).isAfter(moment());
 export const isOver = (startDate, endDate) => moment(startDate).isBefore(moment()) && moment(endDate).isBefore(moment());
 export const isOngoing = (startDate, endDate) => moment(startDate).isBefore(moment()) && moment(endDate).isAfter(moment());
