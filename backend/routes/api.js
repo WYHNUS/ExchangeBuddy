@@ -44,7 +44,7 @@ request:
     year: 2017
 }
 */
-router.patch('/updateUni', UniCtrl.updateUni);
+router.patch('/updateUni', UserCtrl.updateUni);
 
 router.get('/user/:id', verifyToken, UserCtrl.getUser);
 
@@ -95,7 +95,7 @@ request:
 }
 */
 router.delete('/wiki/section', verifyToken, WikiCtrl.deleteSection);
-router.get('/wiki/section/allVersions', WikiCtrl.getWikiSectionAllVersions);  // ?q= &sectionIndex= 
+router.get('/wiki/section/allVersions', WikiCtrl.getWikiSectionAllVersions);  // ?q= &sectionIndex=
 /*
 request:
 {
