@@ -27,14 +27,24 @@ const validate = values => {
   return errors;
 };
 
-const AdminUniversityPanel = ({ university: { name, city, logoImageUrl }, countries, submitUpdateUniversity, handleSubmit, submitting }) => (
+const AdminUniversityPanel = ({ 
+  university: { name, city, logoImageUrl }, 
+  countries, showSnackbar, refreshUniversities, submitUpdateUniversity, handleSubmit, submitting 
+}) => (
   <Card className="admin-university-panel" style={{ textAlign: 'left' }}>
     <CardHeader title={ name } subtitle={ city } avatar={ logoImageUrl && <Avatar src={ logoImageUrl } /> } actAsExpander showExpandableButton />
     <CardText expandable>
       <form onSubmit={ handleSubmit(values => {
-        const { universityName, countryCode, city, website } = values;
-        submitUpdateUniversity({ name: universityName, countryCode, city, website });
-      }) }>
+          const { universityName, countryCode, city, website } = values;
+          
+          submitUpdateUniversity({ 
+            name: universityName, countryCode, city, website 
+          }, function afterSubmit() {
+            showSnackbar('Successfully updated.');
+            refreshUniversities();
+          });
+
+        }) }>
         <div className="row">
           <div className="col-xs-12 col-sm-6">
             <div className="row">
@@ -73,6 +83,8 @@ AdminUniversityPanel.propTypes = {
   university: universityPropType.isRequired,
   countries: React.PropTypes.arrayOf(countryPropType).isRequired,
   submitUpdateUniversity: React.PropTypes.func.isRequired,
+  showSnackbar: React.PropTypes.func.isRequired,
+  refreshUniversities: React.PropTypes.func.isRequired,
   ...reduxFormPropTypes,
 };
 

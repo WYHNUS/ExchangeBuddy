@@ -23,8 +23,15 @@ Container.propTypes = {
   universitiesFetch: React.PropTypes.instanceOf(PromiseState).isRequired,
 };
 
-const refetch = (props) => ({
-  universitiesFetch: `${ ROOT_URL }/universitiesByCountry/${ props.countryCode }`,
-});
+const refetch = (props) => {
+  const url = `${ ROOT_URL }/universitiesByCountry/${ props.countryCode }`;
+
+  return {
+    universitiesFetch: url,
+    refreshUniversities: () => ({
+      universitiesFetch: { url, force: true, refreshing: true },
+    })
+  };
+};
 
 export default connect(refetch)(Container);
