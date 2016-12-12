@@ -3,7 +3,6 @@ import { reduxForm, Field } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 import IconButton from 'material-ui/IconButton';
 import { TextFormField } from '../../../Field';
-import $ from 'jquery';
 
 import * as UserHelper from 'util/user';
 
@@ -26,10 +25,6 @@ const handleKeyPress = (submitHandler) => (event) => {
 };
 
 class SubmitForm extends Component {
-  componentDidMount() {
-    $('.message-send-field').focus();
-  }
-
   render() {
     const { handleSubmit, pristine, reset, submitting, user, socket, updateGroupMessageFromSocket } = this.props;
 
@@ -43,6 +38,7 @@ class SubmitForm extends Component {
           <div className="message-user-avatar">{ UserHelper.getAvatar(user.userObject, 48) }</div>
 
           <TextFormField
+            autoFocus
             className="message-send-field"
             name="message"
             component={TextField}

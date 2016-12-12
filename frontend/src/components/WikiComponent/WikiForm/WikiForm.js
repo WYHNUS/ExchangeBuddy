@@ -55,7 +55,7 @@ export default class WikiForm extends React.Component {
   }
 
   render() {
-    const { section, submitting, error, uploadSuccess, closeEditForm } = this.props;
+    const { submitting, error, uploadSuccess, closeEditForm } = this.props;
 
     return (
       <div>

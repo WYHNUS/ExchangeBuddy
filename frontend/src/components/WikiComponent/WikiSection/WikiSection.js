@@ -10,7 +10,6 @@ import WikiHistoryButton from '../WikiHistoryButton';
 import WikiForm from '../WikiForm';
 
 import { formatDate, formatDateTime } from 'util/helper';
-import * as Colors from 'material-ui/styles/colors';
 import { palette } from 'layouts/MuiTheme';
 
 import './WikiSection.scss';

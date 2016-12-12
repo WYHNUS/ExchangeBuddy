@@ -1,10 +1,7 @@
-import React from 'react';
-
-// Component
-import ChildComponent from './WikiSection';
-
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import ChildComponent from './WikiSection';
 
 const mapStateToProps = (state) => {
   return {

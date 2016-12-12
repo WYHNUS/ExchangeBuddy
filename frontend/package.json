@@ -47,8 +47,6 @@
     "google-map-react": "^0.20.0",
     "html-webpack-plugin": "^2.22.0",
     "ip": "^1.1.2",
-    "jquery": "^2.2.4",
-    "jquery-ui-bundle": "^1.11.4",
     "json-loader": "^0.5.4",
     "lodash": "^4.16.4",
     "material-ui": "^0.16.3",
