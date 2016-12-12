@@ -28,21 +28,34 @@ const validate = values => {
 };
 
 const AdminUniversityPanel = ({ 
-  university: { name, city, logoImageUrl }, 
-  countries, showSnackbar, refreshUniversities, submitUpdateUniversity, handleSubmit, submitting 
+  university: { name, city, logoImageUrl, id: universityId }, countries, 
+  showSnackbar, refreshUniversities, submitUpdateUniversity, submitUpdateUniversityLogo, handleSubmit, submitting 
 }) => (
   <Card className="admin-university-panel" style={{ textAlign: 'left' }}>
     <CardHeader title={ name } subtitle={ city } avatar={ logoImageUrl && <Avatar src={ logoImageUrl } /> } actAsExpander showExpandableButton />
     <CardText expandable>
       <form onSubmit={ handleSubmit(values => {
-          const { universityName, countryCode, city, website } = values;
-          
-          submitUpdateUniversity({ 
-            name: universityName, countryCode, city, website 
-          }, function afterSubmit() {
-            showSnackbar('Successfully updated.');
-            refreshUniversities();
-          });
+          const { universityName, countryCode, city, website, logoImage } = values;
+
+          const processFields = () => {
+            submitUpdateUniversity({ 
+              name: universityName, countryCode, city, website 
+            }, function afterSubmit() {
+              showSnackbar('Successfully updated.');
+              refreshUniversities();
+            });
+          };
+
+          // Process file upload if present.
+          if (logoImage && logoImage[0] && logoImage[0] instanceof File) {
+            const formData = new FormData();
+            formData.append('uniLogo', logoImage[0]);
+            formData.append('UniversityId', universityId)
+
+            submitUpdateUniversityLogo(formData, processFields);
+          } else {
+            processFields();
+          }
 
         }) }>
         <div className="row">
@@ -65,7 +78,7 @@ const AdminUniversityPanel = ({
             </div>
           </div>
           <div className="col-xs-12 col-sm-6 center-xs">
-            <DropzoneFormField name="logoImageUrl" />
+            <DropzoneFormField name="logoImage" />
           </div>
         </div>
 
