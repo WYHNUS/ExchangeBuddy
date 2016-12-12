@@ -50,7 +50,7 @@ exports.updateUniInfo = function(req, res){
 
     models.University.update(query, {
         where: {
-            id: req.body.UniversityId,
+            id: req.params.id,
         }
     }).then(function(user){
         res.send({
