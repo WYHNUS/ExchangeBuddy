@@ -29,7 +29,7 @@ const validate = values => {
 
 const AdminUniversityPanel = ({ 
   university: { name, city, logoImageUrl, id: universityId }, countries, 
-  showSnackbar, refreshUniversities, submitUpdateUniversity, submitUpdateUniversityLogo, handleSubmit, submitting 
+  showSnackbar, refreshUniversities, submitUpdateUniversity, submitUpdateUniversityLogo, handleSubmit, submitting,
 }) => (
   <Card className="admin-university-panel" style={{ textAlign: 'left' }}>
     <CardHeader title={ name } subtitle={ city } avatar={ logoImageUrl && <Avatar src={ logoImageUrl } /> } actAsExpander showExpandableButton />
@@ -37,9 +37,10 @@ const AdminUniversityPanel = ({
       <form onSubmit={ handleSubmit(values => {
           const { universityName, countryCode, city, website, logoImage } = values;
 
-          const processFields = () => {
-            submitUpdateUniversity({ 
-              name: universityName, countryCode, city, website 
+          const processFields = (submitValues) => {
+            submitUpdateUniversity({
+              ...submitValues,
+              name: universityName, countryCode, city, website
             }, function afterSubmit() {
               showSnackbar('Successfully updated.');
               refreshUniversities();
@@ -50,9 +51,11 @@ const AdminUniversityPanel = ({
           if (logoImage && logoImage[0] && logoImage[0] instanceof File) {
             const formData = new FormData();
             formData.append('uniLogo', logoImage[0]);
-            formData.append('UniversityId', universityId)
+            formData.append('UniversityId', universityId);
 
             submitUpdateUniversityLogo(formData, processFields);
+          } else if (logoImageUrl && (!logoImage || !logoImage[0] || !(logoImage[0] instanceof File))) {
+            processFields({ logoImageUrl: '' });
           } else {
             processFields();
           }
