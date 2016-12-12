@@ -15,11 +15,14 @@ const validate = values => {
   return errors;
 };
 
-const AdminUniversityPanel = ({ university: { name, city, logoImageUrl }, countries }) => (
+const AdminUniversityPanel = ({ university: { name, city, logoImageUrl }, countries, submitUpdateUniversity, handleSubmit, submitting }) => (
   <Card className="admin-university-panel" style={{ textAlign: 'left' }}>
     <CardHeader title={ name } subtitle={ city } avatar={ logoImageUrl && <Avatar src={ logoImageUrl } /> } actAsExpander showExpandableButton />
     <CardText expandable>
-      <form>
+      <form onSubmit={ handleSubmit(values => {
+        const { universityName, countryCode, city, website } = values;
+        submitUpdateUniversity({ name: universityName, countryCode, city, website });
+      }) }>
         <div className="row">
           <div className="col-xs-12 col-sm-6">
             <div className="row">
@@ -43,9 +46,10 @@ const AdminUniversityPanel = ({ university: { name, city, logoImageUrl }, countr
             <DropzoneFormField name="logoImageUrl" />
           </div>
         </div>
+
         <div className="row center-xs">
           <div className="col-xs">
-            <RaisedButton primary type="submit" label="Update"  style={{ margin: 20 }} />
+            <RaisedButton primary disabled={ submitting } type="submit" label="Update"  style={{ margin: 20 }} />
           </div>
         </div>
       </form>
@@ -56,6 +60,8 @@ const AdminUniversityPanel = ({ university: { name, city, logoImageUrl }, countr
 AdminUniversityPanel.propTypes = {
   university: universityPropType.isRequired,
   countries: React.PropTypes.arrayOf(countryPropType).isRequired,
+  submitUpdateUniversity: React.PropTypes.func.isRequired,
+  ...reduxFormPropTypes,
 };
 
 export default reduxForm({
