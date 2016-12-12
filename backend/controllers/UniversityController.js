@@ -90,20 +90,24 @@ exports.updateUniLogo = function(req, res){
             }
         }).then(function(university){
             if(!!university){
-                var splitString = user.profilePictureUrl.split('/');
-                var Key = splitString[splitString.length - 1];
-                if(!!Key){
-                    client.deleteObjects({
-                        Bucket,
-                        Delete: {
-                            Objects: [
-                                {
-                                    Key,
-                                }
-                            ]
-                        }
-                    })
+
+                if(!!university.logoImageUrl){
+                    var splitString = university.logoImageUrl.split('/');
+                    var Key = splitString[splitString.length - 1];
+                    if(!!Key){
+                        client.deleteObjects({
+                            Bucket,
+                            Delete: {
+                                Objects: [
+                                    {
+                                        Key,
+                                    }
+                                ]
+                            }
+                        })
+                    }
                 }
+
 
                 university.update({
                     logoImageUrl: url
