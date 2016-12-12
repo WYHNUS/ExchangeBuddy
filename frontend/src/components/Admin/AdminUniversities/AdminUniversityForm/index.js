@@ -22,7 +22,7 @@ const mapStateToProps = (state, props) => {
       universityName: name,
       logoImage: [{ preview: logoImageUrl }],
     },
-    submitUpdateUniversity: makeReq(patch, `/updateUniInfo/${ props.university.id }`, { userToken: true }),
+    submitUpdateUniversity: makeReq(patch, `/updateUniInfo`, { userToken: true }),
     submitUpdateUniversityLogo: makeReq(post, `/updateUniLogo`, { userToken: true, contentType: null }),
   };
 };

@@ -28,7 +28,7 @@ const validate = values => {
 const AdminUniversityForm = ({ university, countries, showSnackbar, refreshUniversities, submitCreateUniversity, submitUpdateUniversity, submitUpdateUniversityLogo, handleSubmit, submitting }) => (
   <form onSubmit={ handleSubmit(values => {
     const { universityName, countryCode, city, website, logoImage } = values;
-    const fileExists = logoImage && logoImage[0] && logoImage[0] instanceof File;
+    const fileExists = logoImage && logoImage[0];
 
     const afterSubmitUniversity = () => {
       if (university) {
@@ -47,6 +47,11 @@ const AdminUniversityForm = ({ university, countries, showSnackbar, refreshUnive
     // Unset logoImageUrl if it existed before
     if (university && university.logoImageUrl && !fileExists) {
       preparedValues.logoImageUrl = '';
+    } 
+
+    // Set UniversityId for update
+    if (university) {
+      preparedValues.UniversityId = university.id;
     }
 
     // Choose method to create/update
@@ -54,9 +59,8 @@ const AdminUniversityForm = ({ university, countries, showSnackbar, refreshUnive
 
     // Create or update university info
     submitUniversityMethod(preparedValues, function(response) {
-      if (fileExists) {
-        console.log(response);
-        const universityId = university ? university.id : response.body.id;
+      if (fileExists && logoImage[0] instanceof File) {
+        const universityId = university ? university.id : response.body.university.id;
 
         const formData = new FormData();
         formData.append('uniLogo', logoImage[0]);

@@ -2,7 +2,7 @@ import React from 'react';
 
 import AdminUniversityPanel from '../AdminUniversityPanel';
 
-import { universityPropType, countryPropType } from 'util/propTypes';
+import { universityPropType } from 'util/propTypes';
 
 const AdminUniversitiesList = ({ universities, ...rest }) => (
   <div className="admin-universities-container" style={{ margin: '20px 0' }}>

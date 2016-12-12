@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Card, CardText, CardTitle } from 'material-ui/Card';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Subheader from 'material-ui/Subheader';
@@ -50,7 +51,15 @@ export default class AdminUniversities extends React.Component {
         { selectedCountryCode && <AdminUniversitiesList countries={ countries } countryCode={ selectedCountryCode } /> }
 
         { isAdding
-          ? <AdminUniversityForm form="AdminUniversityPanel_new" university={ null } countries={ countries } />
+          ? <Card>
+              <CardTitle title="Add a new university" />
+              <CardText>
+                <AdminUniversityForm form="AdminUniversityPanel_new" university={ null } countries={ countries } />
+                <div style={{ textAlign: 'center' }}>
+                  <RaisedButton label="Cancel" icon={ <Icon name="close" /> } onClick={ () => this.setState({ isAdding: false }) } />
+                </div>
+              </CardText>
+            </Card>
           : <div className="row middle-xs center-xs">
               <div className="col-xs">
                 <RaisedButton secondary label="Add University" icon={ <Icon name="add" /> } onClick={ () => this.setState({ isAdding: true }) } />
