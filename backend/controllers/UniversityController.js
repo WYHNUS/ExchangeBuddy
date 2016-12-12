@@ -34,6 +34,28 @@ exports.getUniversity = function(req, res){
     });
 };
 
+exports.updateUniInfo = function(req, res){
+    var query = req.body;
+
+    models.University.update(query, {
+        where: {
+            id: req.body.UniversityId,
+        }
+    }).then(function(user){
+        res.send({
+            status: 'success'
+        }, function(err){
+            res.send({
+                status: 'fail',
+                err,
+            })
+        })
+    })
+}
+
+exports.updateUniLogo = function(req, res){
+
+}
 
 function resError(res, err) {
     return res.status(500).json({
