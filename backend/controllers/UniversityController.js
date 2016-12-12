@@ -95,7 +95,7 @@ exports.updateUniLogo = function(req, res){
 
     uploader.on('end',function(){
         var url = s3.getPublicUrl(Bucket, req.file.originalname.replace(/ /g, '-'), "ap-southeast-1");
-        models.User.findOne({
+        models.University.findOne({
             where: {
                 id: req.body.UniversityId
             }
