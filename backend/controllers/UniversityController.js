@@ -82,7 +82,7 @@ exports.updateUniLogo = function(req, res){
         localFile: req.file.path,
         s3Params: {
             Bucket,
-            Key: req.file.originalname,
+            Key: req.file.originalname.replace(/ /g, '-'),
             ACL: 'public-read'
         }
     }
@@ -94,27 +94,31 @@ exports.updateUniLogo = function(req, res){
     })
 
     uploader.on('end',function(){
-        var url = s3.getPublicUrl(Bucket, req.file.originalname, "ap-southeast-1");
+        var url = s3.getPublicUrl(Bucket, req.file.originalname.replace(/ /g, '-'), "ap-southeast-1");
         models.User.findOne({
             where: {
                 id: req.body.UniversityId
             }
         }).then(function(university){
             if(!!university){
-                var splitString = user.profilePictureUrl.split('/');
-                var Key = splitString[splitString.length - 1];
-                if(!!Key){
-                    client.deleteObjects({
-                        Bucket,
-                        Delete: {
-                            Objects: [
-                                {
-                                    Key,
-                                }
-                            ]
-                        }
-                    })
+
+                if(!!university.logoImageUrl){
+                    var splitString = university.logoImageUrl.split('/');
+                    var Key = splitString[splitString.length - 1];
+                    if(!!Key){
+                        client.deleteObjects({
+                            Bucket,
+                            Delete: {
+                                Objects: [
+                                    {
+                                        Key,
+                                    }
+                                ]
+                            }
+                        })
+                    }
                 }
+
 
                 university.update({
                     logoImageUrl: url
