@@ -61,7 +61,7 @@ router.patch('/updateUser', verifyToken, UserCtrl.updateUser);
 router.put('/createUser', UserCtrl.createUser);
 router.post('/uploadProfile',[verifyToken, upload.single('profilePicture'), UserCtrl.uploadProfile]);
 
-router.patch('/updateUniInfo/:id', verifyToken, UniCtrl.updateUniInfo);
+router.patch('/updateUniInfo', verifyToken, UniCtrl.updateUniInfo);
 router.post('/updateUniLogo', [verifyToken, upload.single('uniLogo'), UniCtrl.updateUniLogo]);
 
 router.get('/verify/:token', MailCtrl.verifyToken);
