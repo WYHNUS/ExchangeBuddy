@@ -24,8 +24,9 @@ const mapStateToProps = (state, props) => {
 
   return {
     initialValues: {
-      countryCode, city, website, logoImageUrl,
+      countryCode, city, website,
       universityName: name,
+      logoImageUrl: [{ preview: logoImageUrl }],
     },
   };
 };
