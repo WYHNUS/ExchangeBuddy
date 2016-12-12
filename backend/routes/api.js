@@ -44,7 +44,7 @@ request:
     year: 2017
 }
 */
-router.patch('/updateUni', UniCtrl.updateUni);
+router.patch('/updateUni', UserCtrl.updateUni);
 
 router.get('/user/:id', verifyToken, UserCtrl.getUser);
 
@@ -60,6 +60,9 @@ request:
 router.patch('/updateUser', verifyToken, UserCtrl.updateUser);
 router.put('/createUser', UserCtrl.createUser);
 router.post('/uploadProfile',[verifyToken, upload.single('profilePicture'), UserCtrl.uploadProfile]);
+
+router.patch('/updateUniInfo', verifyToken, UniCtrl.updateUniInfo);
+router.post('/updateUniLogo', [verifyToken, upload.single('uniLogo'), UniCtrl.updateUniLogo]);
 
 router.get('/verify/:token', MailCtrl.verifyToken);
 router.get('/resendVerificationMail/:userId', MailCtrl.resend);
@@ -96,7 +99,7 @@ request:
 }
 */
 router.delete('/wiki/section', verifyToken, WikiCtrl.deleteSection);
-router.get('/wiki/section/allVersions', WikiCtrl.getWikiSectionAllVersions);  // ?q= &sectionIndex= 
+router.get('/wiki/section/allVersions', WikiCtrl.getWikiSectionAllVersions);  // ?q= &sectionIndex=
 /*
 request:
 {
