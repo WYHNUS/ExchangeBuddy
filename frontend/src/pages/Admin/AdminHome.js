@@ -9,7 +9,7 @@ const AdminHome = () => (
         <h1>Admin Dashboard</h1>
 
         <div className="admin-dashboard-container">
-          <AdminDashboardButton icon="school" label="Manage Universities" description="Create and update universtities here." link="/admin/universities" />
+          <AdminDashboardButton icon="school" label="Manage Universities" description="Create and update universities here." link="/admin/universities" />
         </div>
       </div>
     </div>

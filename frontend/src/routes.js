@@ -38,6 +38,7 @@ import Settings from './pages/Settings';
 import NewEvent from './pages/Home/NewEvent';
 import ProfileEdit from './pages/ProfileEdit';
 import AdminHome from './pages/Admin/AdminHome';
+import AdminUniversities from './pages/Admin/AdminUniversities';
 
 // Redux
 const persistedState = loadState();
@@ -153,6 +154,7 @@ export const getRoutes = (store) =>{
       
       <Route path="admin" component={ AdminAppShell }>
         <IndexRoute component={ AdminHome } />
+        <Route path="universities" component={ AdminUniversities } />
       </Route>
 
 
