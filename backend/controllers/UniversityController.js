@@ -58,7 +58,7 @@ exports.createUniversity = function(req, res) {
                 // indicate successful
                 return res.status(200)
                     .json({
-                        status: 'success'
+                        status: 'success',
                         university: university
                     });
             });
