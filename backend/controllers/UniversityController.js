@@ -16,10 +16,10 @@ var options = {
 };
 var client = s3.createClient(options);
 
-exports.getAllUniversities = function(req, res){
+exports.getAllUniversities = function(req, res) {
     models.University.findAll({
-    	attributes: ['id', 'name', 'city', 'logoImageUrl', 'emailDomains', 'terms']
-    }).then(function(universities){
+        attributes: ['id', 'name', 'city', 'logoImageUrl', 'emailDomains', 'terms']
+    }).then(function(universities) {
         res.json(universities);
     }).catch(function(err) {
         resError(res, err);
@@ -38,26 +38,26 @@ exports.createUniversity = function(req, res) {
     });
 };
 
-exports.getUniversity = function(req, res){
+exports.getUniversity = function(req, res) {
     models.University.findOne({
         where: {
             id: req.params.id
         }
-    }).then(function(university){
+    }).then(function(university) {
         res.json(university);
     }).catch(function(err) {
         resError(res, err);
     });
 };
 
-exports.updateUniInfo = function(req, res){
+exports.updateUniInfo = function(req, res) {
     var query = req.body;
 
     models.University.update(query, {
         where: {
             id: req.body.UniversityId,
         }
-    }).then(function(user){
+    }).then(function(user) {
         res.json({
             status: 'success'
         });
@@ -66,43 +66,45 @@ exports.updateUniInfo = function(req, res){
     });
 }
 
-exports.updateUniLogo = function(req, res){
-    var params = {
-        localFile: req.file.path,
-        s3Params: {
-            Bucket,
-            Key: req.file.originalname.replace(/ /g, '-'),
-            ACL: 'public-read'
+exports.updateUniLogo = function(req, res) {
+    models.User.findOne({
+        where: {
+            id: req.body.UniversityId
         }
-    }
-
-    var uploader = client.uploadFile(params);
-
-    uploader.on('error', function(err){
-        console.log(err);
-    })
-
-    uploader.on('end',function(){
-        var url = s3.getPublicUrl(Bucket, req.file.originalname.replace(/ /g, '-'), "ap-southeast-1");
-        models.User.findOne({
-            where: {
-                id: req.body.UniversityId
+    }).then(function(university) {
+        if (!!university) {
+            var dbName = university.name;
+            var Key = dbName.split('/')[0].split('(')[0].trim().toLowerCase().replace(/ /g, '-') + '.jpg';
+            var params = {
+                localFile: req.file.path,
+                s3Params: {
+                    Bucket,
+                    Key,
+                    ACL: 'public-read'
+                }
             }
-        }).then(function(university){
-            if(!!university){
 
-                if(!!university.logoImageUrl){
+            var uploader = client.uploadFile(params);
+
+            uploader.on('error', function(err) {
+                console.log(err);
+            })
+
+            uploader.on('end', function() {
+                var url = s3.getPublicUrl(Bucket, Key, "ap-southeast-1");
+
+
+
+                if (!!university.logoImageUrl) {
                     var splitString = university.logoImageUrl.split('/');
                     var Key = splitString[splitString.length - 1];
-                    if(!!Key){
+                    if (!!Key) {
                         client.deleteObjects({
                             Bucket,
                             Delete: {
-                                Objects: [
-                                    {
-                                        Key,
-                                    }
-                                ]
+                                Objects: [{
+                                    Key,
+                                }]
                             }
                         })
                     }
@@ -118,14 +120,16 @@ exports.updateUniLogo = function(req, res){
                     url,
                     status: 'success'
                 })
-            } else {
-                res.status(400).send({
-                    status: 'fail',
-                    message: 'invalid university'
-                })
-            }
-        })
+
+            })
+        } else {
+            res.status(400).send({
+                status: 'fail',
+                message: 'invalid university'
+            })
+        }
     })
+
 }
 
 function resError(res, err) {
