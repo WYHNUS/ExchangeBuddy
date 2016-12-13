@@ -76,7 +76,7 @@ request:
     logoImageUrl: http://...
 }
 */
-router.put('/university', verifyToken, UniCtrl.createUniversity);
+router.put('/university', /*verifyToken,*/ UniCtrl.createUniversity);
 router.get('/university/:id', UniCtrl.getUniversity);
 
 router.post('/messages', verifyToken, ChatCtrl.getMessages);

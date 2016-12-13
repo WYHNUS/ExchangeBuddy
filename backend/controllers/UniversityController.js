@@ -17,6 +17,12 @@ exports.getAllUniversities = function(req, res){
 exports.createUniversity = function(req, res) {
     var userId = req.body.userId;
 
+    if (!req.body.name || !req.body.logoImageUrl) {
+        return res.status(400).json({
+                status: 'fail',
+                message: 'Invalid post parameter.'
+            });
+    }
     models.University.create({
         name: req.body.name,
         logoImageUrl: req.body.logoImageUrl
@@ -26,42 +32,48 @@ exports.createUniversity = function(req, res) {
             title: req.body.name,
             UserId: userId
         }).then(function(wiki){
-            var resultArray = Object.keys(defaultUniWikiTemplate).map(title => {
-                var content = defaultUniWikiTemplate[title].content;
-                var index = defaultUniWikiTemplate[title].index;
-                Section.create({
-                    sectionIndex: index,
+            var resultSectionArray = Object.keys(defaultUniWikiTemplate).map(title => {
+                return Section.create({
+                    sectionIndex: defaultUniWikiTemplate[title].index,
                     displayVersionNumber: 1,    // default first version number
                     totalVersionCount: 1,
-                    sectionType: 'OpenToEdit',  // default value for now...
+                    sectionType: 'OpenToEdit',  // default value for now
                     WikiId: wiki.id,
                     UserId: userId
-                }).then(function(section) {
-                    return Version.create({
-                        title: title,
-                        content: content,
-                        versionNumber: 1,   // only one exists
-                        WikiSectionId: section.id,
-                        UserId: userId
-                    });
                 });
             });
 
-            models.sequelize.Promise.all(resultArray).then(versions => {
-                for (var i in versions) {
-                    if (!versions[i]) {
-                        return res.status(500).json({
-                            message: err.message
-                        });
+            models.sequelize.Promise.all(resultSectionArray).then(sections => {
+                var resultVersionArray = sections.map(section => {
+                    for (var title in defaultUniWikiTemplate) {
+                        if (defaultUniWikiTemplate[title].index === section.sectionIndex) {
+                            return Version.create({
+                                title: title,
+                                content: defaultUniWikiTemplate[title].content,
+                                versionNumber: 1,   // only one exists
+                                WikiSectionId: section.id,
+                                UserId: userId
+                            });
+                        }
                     }
-                }
-                // indicate successful
-                return res.status(200)
-                    .json({
-                        status: 'success',
-                        university: university
-                    });
-            });
+                });
+
+                models.sequelize.Promise.all(resultVersionArray).then(versions => {
+                    for (var i in versions) {
+                        if (!versions[i]) {
+                            return res.status(500).json({
+                                message: 'university wiki section version creation fail'
+                            });
+                        }
+                    }
+                    // indicate successful
+                    return res.status(200)
+                        .json({
+                            status: 'success',
+                            university: university
+                        });
+                });
+            });                    
         });
     }).catch(function(err) {
         resError(res, err);
