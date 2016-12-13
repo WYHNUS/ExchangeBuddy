@@ -6,6 +6,7 @@
 
 - Eugene Ng - *Founder*
 - Kiat Han
+- Xin Ru
 
 ### Development Team
 
