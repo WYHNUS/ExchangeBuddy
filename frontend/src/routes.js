@@ -106,7 +106,7 @@ export const getRoutes = (store) =>{
       </Route>
 
       <Route path="profile" onEnter={ authRequired }>
-        <IndexRedirect to="profile/me" />
+        <IndexRedirect to="/profile/me" />
         
         <Route path="me">
           <Route component={ AppShell }>
