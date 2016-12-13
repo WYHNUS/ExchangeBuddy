@@ -18,8 +18,20 @@ var client = s3.createClient(options);
 
 exports.getAllUniversities = function(req, res) {
     models.University.findAll({
-        attributes: ['id', 'name', 'city', 'logoImageUrl', 'emailDomains', 'terms']
-    }).then(function(universities) {
+
+        attributes: ['id', 'name', 'city', 'logoImageUrl', 'website']
+    }).then(function(universities){
+        res.json(universities);
+    }).catch(function(err) {
+        resError(res, err);
+    });
+};
+
+exports.getAllUniversitiesForCountry = function(req, res){
+    models.University.findAll({
+        where: { countryCode: req.params.alpha2Code },
+    	attributes: ['id', 'name', 'city', 'logoImageUrl', 'website']
+    }).then(function(universities){
         res.json(universities);
     }).catch(function(err) {
         resError(res, err);
@@ -92,6 +104,7 @@ exports.updateUniLogo = function(req, res) {
 
             uploader.on('end', function() {
                 var url = s3.getPublicUrl(Bucket, Key, "ap-southeast-1");
+
 
 
 

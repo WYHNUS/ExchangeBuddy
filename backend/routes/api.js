@@ -73,6 +73,7 @@ router.get('/country/:id', CountryCtrl.getCountry);
 
 router.get('/university/', UniCtrl.getAllUniversities);
 router.get('/university/:id', UniCtrl.getUniversity);
+router.get('/universitiesByCountry/:alpha2Code', UniCtrl.getAllUniversitiesForCountry);
 
 router.post('/messages', verifyToken, ChatCtrl.getMessages);
 

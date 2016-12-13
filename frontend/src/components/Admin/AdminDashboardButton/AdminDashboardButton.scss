@@ -1,0 +1,11 @@
+@import '~scss/common/colors';
+@import '~scss/common/mixins';
+
+.admin-dashboard-button { 
+  display: flex; flex-direction: column; border: 2px solid palette(Grey, 300); max-width: 300px; padding: 25px; 
+  border-radius: 10px; cursor: pointer; @include transition-standard(225ms);
+
+  &:hover { background-color: palette(Grey, 100); }
+  h2 { font-weight: 400; font-size: 28px; color: palette(Grey, 700); }
+  p { color: palette(Grey, 500); }
+}
