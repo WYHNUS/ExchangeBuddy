@@ -191,12 +191,16 @@ export default class SettingsList extends React.Component {
     return (
       <div className="container">
         <div className="row center-xs">
-          <div className="col-xs-11">
+          <div className="col-xs-11 col-sm-8">
 
             <About />
             <PrivacyPolicy />
             <TOS />
             <Credits />
+
+            <Link to="/admin">
+              <RaisedButton primary label="Admin Dashboard" style={{ width: '100%', margin: '20px 0' }} />
+            </Link>
 
             { user && user.token &&
               <RaisedButton

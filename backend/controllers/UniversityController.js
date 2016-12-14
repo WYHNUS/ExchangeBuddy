@@ -4,9 +4,38 @@ var Section = models.WikiSection;
 var Version = models.WikiSectionVersion;
 var defaultUniWikiTemplate = require('../public/DefaultUniversityWikiContent.json');
 
-exports.getAllUniversities = function(req, res){
+var AWS = require('aws-sdk');
+var s3 = require('s3');
+var fs = require('fs');
+var config = require('../config/config')
+
+var Bucket = "exchangebuddy-university-public-image";
+var s3Options = {
+    accessKeyId: config.AWS_ACCESS_KEY_ID,
+    secretAccessKey: config.AWS_SECRET_ACCESS_KEY
+}
+var awsS3Client = new AWS.S3(s3Options);
+var options = {
+    s3Client: awsS3Client
+};
+var client = s3.createClient(options);
+
+exports.getAllUniversities = function(req, res) {
     models.University.findAll({
-    	attributes: ['id', 'name', 'city', 'logoImageUrl', 'emailDomains', 'terms']
+        attributes: ['id', 'name', 'city', 'logoImageUrl', 'website']
+    }).then(function(universities){
+        res.json(universities);
+    }).catch(function(err) {
+        resError(res, err);
+    });
+};
+
+exports.getAllUniversitiesForCountry = function(req, res){
+    models.University.findAll({
+        where: { 
+            countryCode: req.params.alpha2Code 
+        },
+    	attributes: ['id', 'name', 'city', 'logoImageUrl', 'website']
     }).then(function(universities){
         res.json(universities);
     }).catch(function(err) {
@@ -80,201 +109,93 @@ exports.createUniversity = function(req, res) {
     });
 };
 
-exports.getUniversity = function(req, res){
+exports.getUniversity = function(req, res) {
     models.University.findOne({
         where: {
             id: req.params.id
         }
-    }).then(function(university){
+    }).then(function(university) {
         res.json(university);
     }).catch(function(err) {
         resError(res, err);
     });
 };
 
-exports.updateUni = function(req, res){
-    // hack here -- need to improve: only two possibilities
-    var data = req.body;
-    if (!data.userId) {
-        return res.status(400).json({
-                status: 'fail',
-                message: 'Invalid authenticate data.'
-            });
-    } else if (data.homeUniversityId && !data.exchangeUniversityId) {
-        // assume this is first time login for now... -> quick hack
-        models.sequelize.Promise.all([
-            models.User.findOne({
-                where: {
-                    id: data.userId
-                }
-            }),
-            models.University.findOne({
-                where: {
-                    id: data.homeUniversityId
-                }
-            })
-        ]).spread(function(user, uni){
-            models.sequelize.Promise.all([
-                user.getGroup(),
-                user.getExchangeEvent(),
-                user.setUniversity(uni)
-            ]).spread(function(groups, exchange, user){
-                user.removeGroup(groups);
-                user.removeExchangeEvent(exchange);
-                var homeUniversity = uni;
-                var defaultGroup = {
-                    // todo: ask new user for years they want to exchange, hence make :
-                    // check: if req.body.year exists, if exchange event exists,
-                    // remember: alter existing db user data
-                    // id: 1,
-                    // name: homeUniversity.name + " going abroad -- Year " + exchange.year
+exports.updateUniInfo = function(req, res) {
+    var query = req.body;
 
-                    id: 4,
-                    name: homeUniversity.name + " interested in exchange"
-                }
-
-                console.log(homeUniversity.name);
-
-                models.Group.findOrCreate({
-                    where: {
-                        name: defaultGroup.name,
-                        groupType: defaultGroup.id,
-                    }
-                }).then(function(group) {
-                    console.log(group[0]);
-                    group[0].addUser(user);
-
-                    // return user object
-                    models.User.findOne({
-                        where: {
-                            id: user.id
-                        },
-                        include: [{
-                            model: models.University
-                        }],
-                        attributes: ['id', 'email', 'name', 'profilePictureUrl', 'fbUserId', 'bio', 'UniversityId']
-                    }).then(function(currentUser) {
-                        return res.status(200).json({
-                            status: 'success',
-                            user: currentUser
-                        });
-                    }).catch(function(err) {
-                        resError(res, err);
-                    });
-                }).catch(function(err) {
-                    resError(res, err);
-                });
-            });
-
-        }).catch(function(err){
-            resError(res, err);
+    models.University.update(query, {
+        where: {
+            id: req.body.UniversityId,
+        }
+    }).then(function(user) {
+        res.json({
+            status: 'success'
         });
-    } else if (!data.homeUniversityId || !data.exchangeUniversityId || !data.year || !data.term) {
-        // check if all fields are present -> quick hack
-        return res.status(400).json({
-                status: 'fail',
-                message: 'Invalid authenticate data.'
-            });
-    } else if (data.homeUniversityId === data.exchangeUniversityId) {
-        // check if homeUni and exchangeUni are the same
-        return res.status(400).json({
-                status: 'fail',
-                message: 'Home uni and exchange uni cannot be the same.'
-            });
-    } else {
-        models.sequelize.Promise.all([
-            models.User.findOne({
-                where: {
-                    id: req.body.userId
-                }
-            }),
+    }).catch(function(err) {
+        resError(res, err);
+    });
+}
 
-            models.University.findOne({
-                where: {
-                    id: req.body.exchangeUniversityId
+exports.updateUniLogo = function(req, res) {
+    models.User.findOne({
+        where: {
+            id: req.body.UniversityId
+        }
+    }).then(function(university) {
+        if (!!university) {
+            var dbName = university.name;
+            var Key = dbName.split('/')[0].split('(')[0].trim().toLowerCase().replace(/ /g, '-') + '.jpg';
+            var params = {
+                localFile: req.file.path,
+                s3Params: {
+                    Bucket,
+                    Key,
+                    ACL: 'public-read'
                 }
-            }),
+            }
 
-            models.Exchange.findOrCreate({
-                where: {
-                    year: req.body.year,
-                    term: req.body.term,
-                    UniversityId: req.body.exchangeUniversityId
-                }
-            }),
+            var uploader = client.uploadFile(params);
 
-            models.University.findOne({
-                where: {
-                    id: req.body.homeUniversityId
-                }
+            uploader.on('error', function(err) {
+                console.log(err);
             })
-        ]).spread(function(user, exchangeUniversity, exchange, university){
-            models.sequelize.Promise.all([
-                user.getGroup(),
-                user.getUniversity(),
-                user.getExchangeEvent(),
-                user.setUniversity(university)
-            ]).spread(function(groups, homeUniversity, exchangeEvent){
-                var homeUniversity = university;
-                user.removeGroup(groups);
-                user.removeExchangeEvent(exchangeEvent);
 
-                exchange = exchange[0];
-                user.addExchangeEvent(exchange);
-
-                var defaultGroups = [
-                    {
-                        id: 0,
-                        name: exchangeUniversity.name + " exchange students -- Year " + exchange.year + " " + exchange.term
-                    },
-                    {
-                        id: 1,
-                        // todo -> remove exchange.term , this group only consider exchange year
-                        name: homeUniversity.name + " going abroad -- Year " + exchange.year
-                    },
-                    {
-                        id: 2,
-                        name: homeUniversity.name + " students in " + exchangeUniversity.name
+            uploader.on('end', function() {
+                var url = s3.getPublicUrl(Bucket, Key, "ap-southeast-1");
+                
+                if (!!university.logoImageUrl) {
+                    var splitString = university.logoImageUrl.split('/');
+                    var Key = splitString[splitString.length - 1];
+                    if (!!Key) {
+                        client.deleteObjects({
+                            Bucket,
+                            Delete: {
+                                Objects: [{
+                                    Key,
+                                }]
+                            }
+                        })
                     }
-                ];
+                }
 
-                var defaultGroupArray = defaultGroups.map(group => {
-                    return models.Group.findOrCreate({
-                        where: {
-                            name: group.name,
-                            groupType: group.id,
-                        }
-                    });
-                });
+                university.update({
+                    logoImageUrl: url
+                })
 
-                models.sequelize.Promise.all(defaultGroupArray).then(groups => {
-                    groups.map(group => {
-                        group[0].addUser(user);
-                    })
-
-                    // return user object
-                    models.User.findOne({
-                        where: {
-                            id: user.id
-                        },
-                        include: [{
-                            model: models.University
-                        }],
-                        attributes: ['id', 'email', 'name', 'profilePictureUrl', 'fbUserId', 'bio', 'UniversityId']
-                    }).then(function(currentUser) {
-                        res.send({
-                            status: 'success',
-                            user: currentUser
-                        });
-                    }).catch(function(err) {
-                        resError(res, err);
-                    });
-                });
+                fs.unlinkSync(req.file.path);
+                res.status(200).send({
+                    url,
+                    status: 'success'
+                })
             })
-        }).catch(function(err){
-            resError(res, err);
-        });
-    }
+        } else {
+            res.status(400).send({
+                status: 'fail',
+                message: 'invalid university'
+            })
+        }
+    })
 }
 
 function resError(res, err) {
