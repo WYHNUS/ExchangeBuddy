@@ -44,7 +44,15 @@ exports.getAllUniversitiesForCountry = function(req, res){
 };
 
 exports.createUniversity = function(req, res) {
-    var userId = req.body.userId;
+    var userId = req.user.id;
+
+    // hard-code an admin priviledge value here
+    if (req.user.role < 8) {
+        return res.status(403).json({
+                status: 'fail',
+                message: 'Not authorized.'
+            });
+    }
 
     if (!req.body.name || !req.body.alpha2Code) {
         return res.status(400).json({
