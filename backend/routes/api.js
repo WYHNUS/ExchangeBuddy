@@ -75,8 +75,8 @@ router.get('/university', UniCtrl.getAllUniversities);
 /*
 request:
 {
-    name: National University of Singapore,
-    logoImageUrl: http://...
+    name: "National University of Singapore",
+    alpha2Code: "AD"
 }
 */
 router.put('/university', verifyToken, UniCtrl.createUniversity);

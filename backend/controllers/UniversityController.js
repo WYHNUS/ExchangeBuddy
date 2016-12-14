@@ -46,63 +46,88 @@ exports.getAllUniversitiesForCountry = function(req, res){
 exports.createUniversity = function(req, res) {
     var userId = req.body.userId;
 
-    if (!req.body.name || !req.body.logoImageUrl) {
+    if (!req.body.name || !req.body.alpha2Code) {
         return res.status(400).json({
                 status: 'fail',
                 message: 'Invalid post parameter.'
             });
     }
-    models.University.create({
-        name: req.body.name,
-        logoImageUrl: req.body.logoImageUrl
-    }).then(function(university) {
-        // create wiki and wikiSection for newly added wiki
-        Wiki.create({
-            title: req.body.name,
-            UserId: userId
-        }).then(function(wiki){
-            var resultSectionArray = Object.keys(defaultUniWikiTemplate).map(title => {
-                return Section.create({
-                    sectionIndex: defaultUniWikiTemplate[title].index,
-                    displayVersionNumber: 1,    // default first version number
-                    totalVersionCount: 1,
-                    sectionType: 'OpenToEdit',  // default value for now
-                    WikiId: wiki.id,
-                    UserId: userId
-                });
+    models.Country.findOne({
+        where: {
+            alpha2Code: req.body.alpha2Code
+        }
+    }).then(function(country) {
+        if (!country) {
+            res.status(400).json({
+                status: 'fail',
+                message: 'Invalid alpha2Code.'
             });
+        }
 
-            models.sequelize.Promise.all(resultSectionArray).then(sections => {
-                var resultVersionArray = sections.map(section => {
-                    for (var title in defaultUniWikiTemplate) {
-                        if (defaultUniWikiTemplate[title].index === section.sectionIndex) {
-                            return Version.create({
-                                title: title,
-                                content: defaultUniWikiTemplate[title].content,
-                                versionNumber: 1,   // only one exists
-                                WikiSectionId: section.id,
-                                UserId: userId
-                            });
-                        }
-                    }
+        models.University.create({
+            name: req.body.name,
+            city: req.body.city ? req.body.city : null,
+            website: req.body.website ? req.body.website : null,
+            fbPageId: req.body.fbPageId ? req.body.fbPageId : null,
+            logoImageUrl: req.body.logoImageUrl ? req.body.logoImageUrl : null,
+            bgImageUrl: req.body.bgImageUrl ? req.body.bgImageUrl : null,
+            emailDomains: req.body.emailDomains ? JSON.parse(req.body.emailDomains) : null,
+            terms: req.body.terms ? JSON.parse(req.body.terms) : null,
+            topUnisId: req.body.topUnisId ? req.body.topUnisId : null
+        }).then(function(university) {
+            // link university and country together
+            country.addUniversity(university);
+
+            // create wiki and wikiSection for newly added wiki
+            Wiki.create({
+                title: req.body.name,
+                UserId: userId
+            }).then(function(wiki){
+                var resultSectionArray = Object.keys(defaultUniWikiTemplate).map(title => {
+                    return Section.create({
+                        sectionIndex: defaultUniWikiTemplate[title].index,
+                        displayVersionNumber: 1,    // default first version number
+                        totalVersionCount: 1,
+                        sectionType: 'OpenToEdit',  // default value for now
+                        WikiId: wiki.id,
+                        UserId: userId
+                    });
                 });
 
-                models.sequelize.Promise.all(resultVersionArray).then(versions => {
-                    for (var i in versions) {
-                        if (!versions[i]) {
-                            return res.status(500).json({
-                                message: 'university wiki section version creation fail'
-                            });
+                models.sequelize.Promise.all(resultSectionArray).then(sections => {
+                    var resultVersionArray = sections.map(section => {
+                        for (var title in defaultUniWikiTemplate) {
+                            if (defaultUniWikiTemplate[title].index === section.sectionIndex) {
+                                return Version.create({
+                                    title: title,
+                                    content: defaultUniWikiTemplate[title].content,
+                                    versionNumber: 1,   // only one exists
+                                    WikiSectionId: section.id,
+                                    UserId: userId
+                                });
+                            }
                         }
-                    }
-                    // indicate successful
-                    return res.status(200)
-                        .json({
-                            status: 'success',
-                            university: university
-                        });
-                });
-            });                    
+                    });
+
+                    models.sequelize.Promise.all(resultVersionArray).then(versions => {
+                        for (var i in versions) {
+                            if (!versions[i]) {
+                                return res.status(500).json({
+                                    message: 'university wiki section version creation fail'
+                                });
+                            }
+                        }
+                        // indicate successful
+                        return res.status(200)
+                            .json({
+                                status: 'success',
+                                university: university
+                            });
+                    });
+                });                    
+            });
+        }).catch(function(err) {
+            resError(res, err);
         });
     }).catch(function(err) {
         resError(res, err);
