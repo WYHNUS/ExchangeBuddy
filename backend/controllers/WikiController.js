@@ -676,7 +676,11 @@ exports.getWikiSectionAllVersions = function(req, res) {
                 Version.findAll({
                     where: {
                         WikiSectionId: wikiSection.id
-                    }
+                    },
+                    include: [{
+                        model: User,
+                        attributes: ['id', 'profilePictureUrl', 'name']
+                    }]
                 }).then(function(allVersions) {
                     res.send({
                         status: 'success',

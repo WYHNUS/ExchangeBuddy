@@ -13,7 +13,6 @@ import IconButton from 'material-ui/IconButton';
 import coverPhoto from 'res/story/storyimg.png';
 import TextField from 'material-ui/TextField';
 
-import $ from 'jquery';
 import moment from 'moment';
 
 const styles={

@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import $ from 'jquery';
 import moment from 'moment';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -40,10 +39,6 @@ class Message extends React.Component{
   }
 }
 
-const chatScrollToLatest = () => {
-  $('.messages-container').scrollTop($('.messages-container')[0].scrollHeight);
-};
-
 export default class MessageList extends React.Component {
   constructor(props) {
     super(props);
@@ -51,14 +46,8 @@ export default class MessageList extends React.Component {
 
   componentDidMount() {
     if(this.props.homeGroupDetails.detailsLoaded){
-      //console.log('id', this.props.homeGroupDetails.homeGroupDetails.id);
       this.props.fetchGroupMessages(this.props.homeGroupDetails.homeGroupDetails.id);
     }
-    //chatScrollToLatest();
-  }
-
-  componentDidUpdate() {
-    //chatScrollToLatest();
   }
 
   render() {
