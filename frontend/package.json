@@ -15,10 +15,10 @@
   "proxy": "http://localhost:3001",
   "scripts": {
     "clean": "rimraf dist",
-    "dev": "NODE_ENV=development webpack-dev-server --devtool eval --progress --colors --hot --config webpack/webpack.dev.config.js --content-base ../app --port 3000",
-    "build": "NODE_ENV=production webpack -p --progress --colors --config webpack/webpack.prod.config.js && [ -d 'dist_build' ] && rm -rf dist/ && mv dist_build/ dist/",
-    "tar:staging": "NODE_ENV=staging webpack -p --progress --colors --config webpack/webpack.tar.config.js",
-    "tar:prod": "NODE_ENV=production webpack -p --progress --colors --config webpack/webpack.tar.config.js",
+    "dev": "set NODE_ENV=development && webpack-dev-server --devtool eval --progress --colors --hot --config webpack/webpack.dev.config.js --content-base ../app --port 3000",
+    "build": "set NODE_ENV=production && webpack -p --progress --colors --config webpack/webpack.prod.config.js && [ -d 'dist_build' ] && rm -rf dist/ && mv dist_build/ dist/",
+    "tar:staging": "set NODE_ENV=staging && webpack -p --progress --colors --config webpack/webpack.tar.config.js",
+    "tar:prod": "set NODE_ENV=production && webpack -p --progress --colors --config webpack/webpack.tar.config.js",
     "deploy:staging": "./sh/deploy.sh exchangebuddy-staging /home/ubuntu/www staging",
     "deploy:prod": "./sh/deploy.sh exchangebuddy-prod /var/www/ExchangeBuddy production"
   },
