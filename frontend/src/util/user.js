@@ -35,6 +35,8 @@ export const getAvatar = (user, size=64, style) => {
     return <Avatar src={ defaultAvatar } size={size} style={style} />;
 };
 
+export const isUserAdmin = (user) => user.userObject.role && user.userObject.role >= 8;
+
 export const logoutUser = (cb) => {
   cookie.remove('authToken');
   browserHistory.push('/');

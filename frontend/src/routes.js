@@ -4,6 +4,7 @@ import { Router, Route, Redirect, IndexRoute, IndexRedirect, browserHistory } fr
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { loadState } from './util/localStorage';
+import { isUserAdmin } from 'util/user';
 import configureStore from './store/configureStore';
 
 /** ROUTES **/
@@ -69,6 +70,16 @@ export const getRoutes = (store) =>{
     } else if (!state.user.userObject.UniversityId) {
       replace({ 
         pathname: '/identifyUniversity'
+      });
+    }
+  };
+
+  const adminRequired = (nextState, replace) => {
+    const state = store.getState();
+
+    if (!isUserAdmin(state.user)) {
+      replace({
+        pathname: '/'
       });
     }
   };
@@ -152,7 +163,7 @@ export const getRoutes = (store) =>{
         <Route path="settings" component={ Settings } />
       </Route>
       
-      <Route path="admin" component={ AdminAppShell }>
+      <Route path="admin" component={ AdminAppShell } onEnter={ adminRequired }>
         <IndexRoute component={ AdminHome } />
         <Route path="universities" component={ AdminUniversities } />
       </Route>
