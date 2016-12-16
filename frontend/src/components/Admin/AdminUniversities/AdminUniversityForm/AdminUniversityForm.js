@@ -39,9 +39,19 @@ const AdminUniversityForm = ({ university, countries, showSnackbar, refreshUnive
       }
     };
 
+    const failSubmitUniversity = (err) => {
+      if (university) {
+        showSnackbar('Could not update university: ' + err);
+      } else {
+        showSnackbar('Could not add university: ' + err);
+      }
+    };
+
     // Prepare values
     const preparedValues = {
-      name: universityName, countryCode, city, website
+      name: universityName, 
+      alpha2Code: countryCode, 
+      city, website
     };
 
     // Unset logoImageUrl if it existed before
@@ -66,11 +76,11 @@ const AdminUniversityForm = ({ university, countries, showSnackbar, refreshUnive
         formData.append('uniLogo', logoImage[0]);
         formData.append('UniversityId', universityId);
 
-        submitUpdateUniversityLogo(formData, afterSubmitUniversity);
+        submitUpdateUniversityLogo(formData, afterSubmitUniversity, failSubmitUniversity);
       } else {
         afterSubmitUniversity();
       }
-    });
+    }, failSubmitUniversity);
 
   }) }>
 

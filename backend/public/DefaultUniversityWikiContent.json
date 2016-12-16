@@ -1,0 +1,50 @@
+{
+    "General Tips": {
+        "index": 1,
+        "content": "<div><p>Some Tips to write this wiki: </p><br><ul> <li>Includes senior reviews</li> <li>How to buy cheap flights etc</li> <li>Important phone numbers at host university</li> <li>How to get help</li> <li>Telecommunication</li> </ul> </div>"
+    },
+    "Visa": {
+        "index": 2,
+        "content": "<div><p>Some Tips to write this wiki: </p><br><ul> <li>Details of Visa</li> </ul> </div>"
+    },
+    "Safety Tips": {
+        "index": 3,
+        "content": "<div><p>Some Tips to write this wiki: </p><br><ul> <li>Emergency Contact</li> </ul> </div>"
+    },
+    "Pre-departure Checklist": {
+        "index": 4,
+        "content": "<div><p>Some Tips to write this wiki: </p><br><ul> <li>Packing List</li> <li>Essential documents</li> </ul> </div>"
+    },
+    "Expenses": {
+        "index": 5,
+        "content": "<div><p>Some Tips to write this wiki: </p><br><ul> <li>School fees</li> <li>On-campus accommodation</li> <li>Transport</li> <li>Living Cost</li> <li>Rough Budget</li> </ul> </div>"
+    },
+    "Getting Around": {
+        "index": 6,
+        "content": "<div><p>Some Tips to write this wiki: </p><br><ul> <li>Trains</li> <li>Buses</li> <li>Taxis</li> <li>Flight</li> </ul> </div>"
+    },
+    "Academics": {
+        "index": 7,
+        "content": "<div><p>Some Tips to write this wiki: </p><br><ul> <li>Language of Instructions</li><li>Academic study term</li><li>Academic Rigor (Modules)</li><li>Scholarships</li></ul> </div>"
+    },
+    "Campus Life": {
+        "index": 8,
+        "content": "<div><p>Some Tips to write this wiki: </p><br><ul> <li>Orientation Activities</li><li>Clubs and Societies</li><li>University Evenets</li> <li>Sports Facilities</li><li>Buying Daily Necessities</li><li>Banking Facilities</li><li>Healthcare (Hospitals, Pharmacies)</li><li>Post Offices</li><li>Internet(WiFi, Ethernet)</li></ul> </div>"
+    },
+    "Night Life": {
+        "index": 9,
+        "content": ""
+    },
+    "Student Perks": {
+        "index": 10,
+        "content": ""
+    },
+    "Activities Near School": {
+        "index": 11,
+        "content": "<div><p>Some Tips to write this wiki: </p><br><ul> <li>Places of Interest</li> <li>Shopping Malls</li> <li>Food</li> </ul></div>"
+    },
+    "Others": {
+        "index": 12,
+        "content": ""
+    }
+}

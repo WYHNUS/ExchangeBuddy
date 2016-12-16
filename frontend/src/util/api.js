@@ -5,6 +5,8 @@ require('superagent-auth-bearer')(request);
 import { getToken } from './bearer';
 import { ROOT_URL } from './backend';
 
+const ERROR_NO_USER_TOKEN = new Error('Not logged in.');
+
 export const apiUrl = (endpoint) => {
   return `${ ROOT_URL }${endpoint}`;
 };
@@ -29,7 +31,7 @@ export const get = (endpoint, params={}, options={}, onSuccess, onError) => {
     if (token)
       http = http.authBearer(token);
     else
-      return onError && onError({ type: 'NO_USER_TOKEN' });
+      return onError && onError(ERROR_NO_USER_TOKEN);
   }
 
   // Query String
@@ -69,7 +71,7 @@ const postLike = (method, endpoint, params={}, options={}, onSuccess, onError) =
     if (token)
       http = http.authBearer(token);
     else
-      return onError && onError({ type: 'NO_USER_TOKEN' });
+      return onError && onError(ERROR_NO_USER_TOKEN);
   }
 
   // Request body

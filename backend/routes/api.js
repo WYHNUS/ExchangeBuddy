@@ -71,7 +71,15 @@ router.get('/resendVerificationMail/:userId', MailCtrl.resend);
 router.get('/country', CountryCtrl.getAllCountries);
 router.get('/country/:id', CountryCtrl.getCountry);
 
-router.get('/university/', UniCtrl.getAllUniversities);
+router.get('/university', UniCtrl.getAllUniversities);
+/*
+request:
+{
+    name: "National University of Singapore",
+    alpha2Code: "AD"
+}
+*/
+router.put('/university', verifyToken, UniCtrl.createUniversity);
 router.get('/university/:id', UniCtrl.getUniversity);
 router.get('/universitiesByCountry/:alpha2Code', UniCtrl.getAllUniversitiesForCountry);
 
