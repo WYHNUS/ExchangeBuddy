@@ -32,8 +32,8 @@ exports.getAllUniversities = function(req, res) {
 
 exports.getAllUniversitiesForCountry = function(req, res){
     models.University.findAll({
-        where: { 
-            countryCode: req.params.alpha2Code 
+        where: {
+            countryCode: req.params.alpha2Code
         },
     	attributes: ['id', 'name', 'city', 'logoImageUrl', 'website']
     }).then(function(universities){
@@ -132,7 +132,7 @@ exports.createUniversity = function(req, res) {
                                 university: university
                             });
                     });
-                });                    
+                });
             });
         }).catch(function(err) {
             resError(res, err);
@@ -171,14 +171,18 @@ exports.updateUniInfo = function(req, res) {
 }
 
 exports.updateUniLogo = function(req, res) {
-    models.User.findOne({
+    models.University.findOne({
         where: {
             id: req.body.UniversityId
         }
     }).then(function(university) {
         if (!!university) {
             var dbName = university.name;
-            var Key = dbName.split('/')[0].split('(')[0].trim().toLowerCase().replace(/ /g, '-') + '.jpg';
+            var Key = dbName.split('/')[0].trim().toLowerCase()
+            .replace(/ /g, '-')
+            .replace(')', '')
+            .replace('(', '') + '.jpg';
+
             var params = {
                 localFile: req.file.path,
                 s3Params: {
@@ -196,7 +200,7 @@ exports.updateUniLogo = function(req, res) {
 
             uploader.on('end', function() {
                 var url = s3.getPublicUrl(Bucket, Key, "ap-southeast-1");
-                
+
                 if (!!university.logoImageUrl) {
                     var splitString = university.logoImageUrl.split('/');
                     var Key = splitString[splitString.length - 1];
