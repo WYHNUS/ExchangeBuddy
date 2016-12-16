@@ -47,7 +47,7 @@ exports.createUniversity = function(req, res) {
     var userId = req.user.id;
 
     // hard-code an admin priviledge value here
-    if (req.user.role < 8) {
+    if (!req.user.role || req.user.role < 8) {
         return res.status(403).json({
                 status: 'fail',
                 message: 'Not authorized.'
