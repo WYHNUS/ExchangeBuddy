@@ -32,7 +32,10 @@ module.exports = function(sequelize, DataType) {
       associate: function(models) {
         Wiki.belongsTo(models.University);
         Wiki.belongsTo(models.Country);
-        Wiki.belongsTo(models.User);
+        Wiki.belongsTo(models.User, {
+            onDelete: "CASCADE",
+            as: "author"
+        });
 
         Wiki.hasMany(models.WikiSection);
       }
