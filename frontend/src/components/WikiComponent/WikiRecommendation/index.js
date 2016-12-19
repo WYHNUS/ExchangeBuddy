@@ -1,7 +1,11 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { browserHistory } from 'react-router';
 
 export default class WikiRecommendation extends React.Component {
+  static propTypes = {
+    previewItem: React.PropTypes.object.isRequired,
+  };
+
   render() {
     const { previewItem } = this.props;
     

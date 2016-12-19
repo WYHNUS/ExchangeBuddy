@@ -1,14 +1,13 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { fetchWikiPage } from 'actions/wiki';
-
-import WikiHistoryDropdown from './WikiHistoryDropdown';
+import WikiHistoryButton from './WikiHistoryButton';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    ...bindActionCreators({ fetchWikiPage }, dispatch),
+    ...bindActionCreators({  }, dispatch),
   };
 };
 
-export default connect(null, mapDispatchToProps)(WikiHistoryDropdown);
+export default connect(null, mapDispatchToProps)(WikiHistoryButton);
+

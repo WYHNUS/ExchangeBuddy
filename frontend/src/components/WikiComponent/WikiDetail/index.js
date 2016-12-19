@@ -1,22 +1,35 @@
 import React from 'react';
 
-// Component
-import ChildComponent from './WikiDetail';
+import { connect, PromiseState } from 'react-refetch';
+import { ROOT_URL } from 'util/api';
 
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import WikiDetail from './WikiDetail';
+import Loading from 'components/Loading';
+import ErrorComponent from 'components/Error';
 
-const mapStateToProps = (state) => {
-	return {
-		wiki: state.wiki.wiki,
-		sections: state.wiki.sections,
-	};
+const Container = ({ wikiFetch, ...rest }) => {
+  if (wikiFetch.pending)
+    return <Loading />;
+  
+  if (wikiFetch.rejected)
+    return <ErrorComponent error={ wikiFetch.reason } />;
+  
+  return <WikiDetail sections={ wikiFetch.value.sections } wiki={ wikiFetch.value.wiki } { ...rest } />;
 };
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		actions: bindActionCreators({  }, dispatch)
-	};
+Container.propTypes = {
+  wikiFetch: React.PropTypes.instanceOf(PromiseState).isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChildComponent);
+const refetch = (props) => {
+  const url = `${ ROOT_URL }/wiki/?q=${props.wikiTitle}`;
+
+  return {
+    wikiFetch: url,
+    refreshWiki: () => ({
+      wikiFetch: { url, force: true, refreshing: true },
+    }),
+  };
+};
+
+export default connect(refetch)(Container);

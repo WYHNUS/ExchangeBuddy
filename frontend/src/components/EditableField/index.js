@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import TinyMCE from 'react-tinymce';
 
+// TODO: To be deprecated
 export const EditableField = ({ name, content, ...rest }) => {
   return (
     <TinyMCE
@@ -22,4 +23,9 @@ export const EditableField = ({ name, content, ...rest }) => {
       }}
       { ...rest } />
   );
+};
+
+EditableField.propTypes = {
+  name: React.PropTypes.string,
+  content: React.PropTypes.string,
 };

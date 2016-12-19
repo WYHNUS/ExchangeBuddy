@@ -2,7 +2,7 @@ const nocache = require('superagent-no-cache');
 const request = require('superagent');
 require('superagent-auth-bearer')(request);
 
-import { getToken } from './bearer';
+import { getUserToken } from './session';
 export const ROOT_URL = process.env.API_ROOT_URL;
 
 const ERROR_NO_USER_TOKEN = new Error('Not logged in.');
@@ -26,7 +26,7 @@ export const get = (endpoint, params={}, options={}, onSuccess, onError) => {
 
   // userToken
   if (userToken === true) {
-    const token = getToken();
+    const token = getUserToken();
 
     if (token)
       http = http.authBearer(token);
@@ -66,7 +66,7 @@ const postLike = (method, endpoint, params={}, options={}, onSuccess, onError) =
 
   // userToken
   if (userToken === true) {
-    const token = getToken();
+    const token = getUserToken();
 
     if (token)
       http = http.authBearer(token);
@@ -100,3 +100,22 @@ export const patch = (...args) => postLike(request.patch, ...args);
 export const local = (endpoint) => `localData${endpoint}`;
 
 export const makeReq = (method, url, options) => (values, afterSubmit, failSubmit) => method(url, values, options, afterSubmit, failSubmit);
+
+export const makeRefetch = (url, options, transformations) => {
+  const refetcher = {};
+
+  refetcher.url = ROOT_URL + url;
+  refetcher.headers = {};
+
+  options = { userToken: false, ...options };
+  const { userToken } = options;
+
+  if (userToken === true) {
+    refetcher.headers.Authorization = 'Bearer ' + getUserToken();
+  }
+
+  if (transformations && Array.isArray(transformations))
+    refetcher.then = (value) => ({ value: transformations.reduce((p, f) => f(p), value) });
+
+  return refetcher;
+};

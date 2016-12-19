@@ -19,8 +19,8 @@ import Signup from 'pages/Signup';
 
 // Pages
 import Landing from 'pages/Landing';
-// import Wiki from 'pages/Wiki/Wiki';
-// import WikiDetails from 'pages/Wiki/WikiDetails';
+import Wiki from 'pages/Wiki/Wiki';
+import WikiDetails from 'pages/Wiki/WikiDetails';
 import AdminHome from 'pages/Admin/AdminHome';
 import AdminUniversities from 'pages/Admin/AdminUniversities';
 
@@ -59,14 +59,10 @@ const Routes = ({ store }) => {
             <Route path="signup" component={ Signup } />
             <Route path="login" component={ Login } />
 
-            { /* 
-
             <Route path="wiki">
               <IndexRoute component={ Wiki } />
               <Route path=":wikiTitle" component={ WikiDetails } />
-            </Route> 
-
-            */ }
+            </Route>
             
             <Route path="admin" onEnter={ adminRequired }>
               <IndexRoute component={ AdminHome } />

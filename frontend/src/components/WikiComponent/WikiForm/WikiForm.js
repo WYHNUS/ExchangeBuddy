@@ -9,12 +9,10 @@ export default class WikiForm extends React.Component {
     closeEditForm: React.PropTypes.func.isRequired,
     wikiName: React.PropTypes.string.isRequired,
     section: React.PropTypes.object,
-    submitting: React.PropTypes.bool.isRequired,
-    error: React.PropTypes.object,
-    uploadSuccess: React.PropTypes.bool.isRequired,
     submitNewSection: React.PropTypes.func.isRequired,
     submitNewSectionVersion: React.PropTypes.func.isRequired,
-    initializeWikiForm: React.PropTypes.func.isRequired,
+    refreshWiki: React.PropTypes.func.isRequired,
+    showSnackbar: React.PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -37,25 +35,8 @@ export default class WikiForm extends React.Component {
     }
   }
 
-  componentWillMount() {
-    const { section, initializeWikiForm } = this.props;
-
-    if (section) {
-      const { title, content } = this.props.section;
-
-      // Assign initialValues
-      initializeWikiForm(title, content);
-    }
-  }
-
-  componentDidUpdate() {
-    if (this.props.uploadSuccess) {
-      this.props.closeEditForm();
-    }
-  }
-
   render() {
-    const { submitting, error, uploadSuccess, closeEditForm } = this.props;
+    const { closeEditForm } = this.props;
 
     return (
       <div>
@@ -71,18 +52,6 @@ export default class WikiForm extends React.Component {
           content={ this.state.content }
           onChange={ this.handleEditorChange.bind(this) } />
 
-        { // TODO: Refactor this into a proper loading container
-          submitting 
-          ?  <p>Uploading new version to the server...</p>
-          : error 
-            ? error.message 
-              ? <p> { error.message } </p>
-              : <p>{ error }</p>
-            : uploadSuccess 
-              ? <p>Upload new version successful! :)</p>
-              : null
-        }
-
         <div className="row center-md center-xs" style={{ marginTop: 18 }}>
           <div>
             <RaisedButton 
@@ -90,7 +59,6 @@ export default class WikiForm extends React.Component {
               className="raised-btn" 
               label="Save changes" 
               style={{ marginRight: 18 }}
-              disabled={ submitting }
               onClick={ this.submitForm.bind(this) } />
             <RaisedButton className="raised-btn" label="Cancel" onClick={ closeEditForm }/>
           </div>
@@ -100,14 +68,23 @@ export default class WikiForm extends React.Component {
   }
 
   submitForm() {
-    const { section, wikiName, submitNewSectionVersion, submitNewSection } = this.props;
+    const { section, wikiName, submitNewSectionVersion, submitNewSection, refreshWiki, showSnackbar } = this.props;
     const { title, content } = this.state;
 
     if (!section) {
-      console.log(wikiName, title, content);
-      submitNewSection(wikiName, title, content);
+      submitNewSection({ wikiTitle: wikiName, versionTitle: title, content }, () => {
+        refreshWiki();
+        showSnackbar('New section created!');
+      }, (err) => {
+        showSnackbar('Could not create section: ' + err);
+      });
     } else {
-      submitNewSectionVersion(wikiName, section.WikiSection.sectionIndex, title, content);
+      submitNewSectionVersion({ wikiTitle: wikiName, sectionIndex: section.WikiSection.sectionIndex, versionTitle: title, content }, () => {
+        refreshWiki();
+        showSnackbar('Section updated!');
+      }, (err) => {
+        showSnackbar('Could not update section: ' + err)
+      });
     }
   }
 

@@ -7,9 +7,8 @@ import WikiHistoryDialogList from './WikiHistoryDialogList';
 
 import * as Colors from 'material-ui/styles/colors';
 
-export default class WikiHistoryDropdown extends React.Component {
+export default class WikiHistoryButton extends React.Component {
   static propTypes = {
-    fetchWikiPage: React.PropTypes.func.isRequired,
     setVersion: React.PropTypes.func.isRequired,
     wiki: React.PropTypes.object.isRequired,
     section: React.PropTypes.object.isRequired,
@@ -24,14 +23,13 @@ export default class WikiHistoryDropdown extends React.Component {
   }
 
   render() {
-    const { wiki, section, setVersion, fetchWikiPage } = this.props;
+    const { wiki, section, setVersion } = this.props;
     const { isOpen } = this.state;
 
     const openDialog = () => this.setState({ isOpen: true });
     const closeDialog = () => this.setState({ isOpen: false });
 
     const handleSelectVersion = (version) => () => {
-      fetchWikiPage(wiki.title, [{ sectionIndex: section.WikiSection.sectionIndex, versionIndex: version }]);
       setVersion(version);
       closeDialog();
     };
