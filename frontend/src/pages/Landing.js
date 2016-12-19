@@ -122,16 +122,10 @@ class Landing extends React.Component {
   }
 }
 
-const mapDispatchToProps = () => {
-  return {
-    
-  };
-};
-
 const mapStateToProps = (state) => {
   return {
     user: state['User/currentUser'],
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Landing);
+export default connect(mapStateToProps)(Landing);

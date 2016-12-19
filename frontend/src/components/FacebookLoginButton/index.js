@@ -4,16 +4,9 @@ import { showSnackbar } from 'actions/MessageSnackbar';
 
 import { post } from 'util/api';
 import { setSession } from 'util/session';
+import { browserHistory } from 'react-router';
 
-import ChildComponent from './LoginForm';
-
-const mapStateToProps = () => ({
-  initialValues: { 
-    // TODO: To check if null initialValues has any effect.
-    userEmail: null,
-    userPassword: null,
-  },
-});
+import ChildComponent from './FacebookLoginButton';
 
 const mapDispatchToProps = (dispatch) => ({
   attemptFacebookLogin(token) {
@@ -24,6 +17,7 @@ const mapDispatchToProps = (dispatch) => ({
         setSession(userToken, () => {
           dispatch(setCurrentUser(user));
           dispatch(showSnackbar('Logged in!'));
+          browserHistory.push('/home');
         });
       } catch (exc) {
         dispatch(showSnackbar('Could not log in: ' + exc));
@@ -32,6 +26,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-const LoginForm = connect(mapStateToProps, mapDispatchToProps)(ChildComponent);
-
-export default LoginForm;
+export default connect(null, mapDispatchToProps)(ChildComponent);

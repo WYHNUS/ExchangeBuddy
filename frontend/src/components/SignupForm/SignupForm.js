@@ -1,16 +1,12 @@
-import React, { PropTypes } from 'react';
-import { reduxForm } from 'redux-form';
+import React from 'react';
+import { reduxForm, propTypes as reduxPropTypes } from 'redux-form';
 import validator from 'validator';
 import RaisedButton from 'material-ui/RaisedButton';
-import { browserHistory } from 'react-router';
-import FacebookLogin from 'react-facebook-login';
+import FacebookLoginButton from 'components/FacebookLoginButton';
 
 import { TextFormField } from '../Field';
 import { EmailFormField } from '../Field';
 import { PasswordFormField } from '../Field';
-
-
-const responseFacebook = (attemptFacebookLogin) => (response) => {attemptFacebookLogin(response.accessToken)};
 
 const validate = (values) => {
   const errors = {};
@@ -40,32 +36,18 @@ const validate = (values) => {
   return errors;
 };
 
-class SignupForm extends React.Component {
-  componentDidUpdate() {
-    const { isLoggedIn, isAuthenticated, token } = this.props.userAuthData;
-    
-    if (isLoggedIn && isAuthenticated && token){
-      browserHistory.push('/home');
-    }
-  }
-
+class SignupForm extends React.PureComponent {
+  static propTypes = {
+    ...reduxPropTypes
+  };
+  
   render() {
-    const { handleSubmit, submitting, authEmailError } = this.props;
-    const { isEmailSent } = this.props.userAuthData;
+    const { handleSubmit, submitting } = this.props;
 
     return (
       <div>
         <div className="social-network-wrapper">
-          {/*<div style={{marginRight: 40}}><p>Social Network Signup :</p></div>*/}
-          <div><FacebookLogin
-            appId="580995375434079"
-            scope="public_profile"
-            fields="name, email"
-            callback={ responseFacebook(this.props.attemptFacebookLogin) }
-            cssClass="facebook-login-button"
-            textButton= "Continue with Facebook"
-            icon="fa-facebook fa-1x" 
-          /></div>
+          <FacebookLoginButton />
         </div>
 
         <p className="line-seperator" style={{marginTop: 20}}> or </p>
@@ -92,25 +74,6 @@ class SignupForm extends React.Component {
         </form>
 
         { submitting ? <p>Registering user. Please be patient. :)</p> : null }
-
-        { 
-          isEmailSent ? 
-          <div className="verification-msg-wrapper"> 
-            <p>Verification email sent!</p> 
-            <p>Check your mail to start connecting with people!</p>
-            <p>If you did not receive the mail, kindly check your <b>JUNK</b> mail.</p>
-            <p>We're still in the process of recycling. :)</p>
-          </div> 
-          : null 
-        }
-
-        { 
-          authEmailError ? 
-            authEmailError.error ?
-              <p>{ authEmailError.error }</p> 
-            : <p>{ authEmailError }</p> 
-          : null
-        }
       </div>
     );
   }

@@ -6,11 +6,13 @@ import { reducer as formReducer } from 'redux-form';
 import Browser from './Browser';
 import HomeSearchDrawer from './HomeSearchDrawer';
 import MessageSnackbar from './MessageSnackbar';
+import User from './User';
 
 const rootReducer = combineReducers({
   ...Browser,
   ...HomeSearchDrawer,
   ...MessageSnackbar,
+  ...User,
 
   // Add routerReducer
   routing: routerReducer,

@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { makeReq, post, patch, put } from 'util/api';
-import { showSnackbar } from 'actions/messageSnackbar';
+import { showSnackbar } from 'actions/MessageSnackbar';
 
 import AdminUniversityForm from './AdminUniversityForm';
 

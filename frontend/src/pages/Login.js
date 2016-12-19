@@ -4,9 +4,8 @@ import { browserHistory } from 'react-router';
 import FlatButton from 'material-ui/FlatButton';
 
 import LoginForm from 'components/LoginForm';
-import ExchangeBuddySpreadIcon from 'assets/ExchangeBuddySpreadIcon.png';
 
-class Login extends React.Component { 
+class Login extends React.PureComponent { 
   render() {
     return(
       <div className="page-sign-flow">
@@ -30,15 +29,8 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = (state)=>{
-  return {
-    user: state.user.userObject
-  };
-}
+const mapStateToProps = (state) => ({
+  user: state['User/currentUser'],
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps)(Login);

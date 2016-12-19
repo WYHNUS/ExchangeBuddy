@@ -10,7 +10,7 @@ import {
   editUniversities, editUniversitiesSuccess, editUniversitiesFailure
 } from 'actions/profile';
 
-import { showSnackbar } from 'actions/messageSnackbar';
+import { showSnackbar } from 'actions/MessageSnackbar';
 import { clearUser } from 'actions/authActions';
 
 // Component

@@ -16,8 +16,8 @@ import AppShell from 'layouts/AppShell';
 // Auth
 import NotFound from 'pages/NotFound';
 import NotLoggedIn from 'pages/NotLoggedIn';
-// import Login from 'pages/Login';
-// import Signup from 'pages/Signup';
+import Login from 'pages/Login';
+import Signup from 'pages/Signup';
 
 // Pages
 import Landing from 'pages/Landing';
@@ -60,10 +60,10 @@ export default (
         <IndexRoute component={ Landing } />
 
         <Route component={ AppShell }>
-          { /* 
-
           <Route path="signup" component={ Signup } />
           <Route path="login" component={ Login } />
+
+          { /* 
 
           <Route path="wiki">
             <IndexRoute component={ Wiki } />

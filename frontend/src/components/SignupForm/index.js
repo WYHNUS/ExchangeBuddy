@@ -1,44 +1,36 @@
-import React from 'react';
-
-// Redux
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { setCurrentUser } from 'actions/User';
+import { showSnackbar } from 'actions/MessageSnackbar';
 
-// Action creators
-import { 
-  submitSignupForm, signupSuccess, signupFail
-} from 'actions/user';
-import { 
-  attemptFacebookLogin
-} from 'actions/authActions';
-// Component
+import { post } from 'util/api';
+import { setSession } from 'util/session';
+
 import ChildComponent from './SignupForm';
 
-// redux
-const mapStateToProps = (state) => {
-  return {
-    submitting: state.user.fetchingAuthUpdate,
-    userAuthData: state.user,
-    authEmailError: state.user.error,
-    initialValues: { 
-      userName: state.user.signupInfo.displayName, 
-      userEmail: state.user.signupInfo.email,
-      userPassword: state.user.signupInfo.password
-    }
-  };
-};
+const mapStateToProps = () => ({
+  initialValues: { 
+    // TODO: To check if null initialValues has any effect.
+    userEmail: null,
+    userPassword: null,
+  },
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    actions: bindActionCreators({  }, dispatch),
-    submitSignupForm: (signupInfo) => {
-      dispatch(submitSignupForm(signupInfo));
-    },
-    attemptFacebookLogin: (accessToken) => {
-      dispatch(attemptFacebookLogin(accessToken));
-    }
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  attemptFacebookLogin(token) {
+    post('/authenticateOrCreateByFB', { facebookToken: token }, { userToken: false }, ({ body }) => {
+      const { token: userToken, user } = body;
+
+      try {
+        setSession(userToken, () => {
+          dispatch(setCurrentUser(user));
+          dispatch(showSnackbar('Logged in!'));
+        });
+      } catch (exc) {
+        dispatch(showSnackbar('Could not log in: ' + exc));
+      }
+    });
+  },
+});
 
 const SignupForm = connect(mapStateToProps, mapDispatchToProps)(ChildComponent);
 
