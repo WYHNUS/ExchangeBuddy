@@ -42,7 +42,7 @@ const Routes = ({ store }) => {
   const adminRequired = (nextState, replace) => {
     const state = store.getState();
 
-    if (!isUserAdmin(state.user)) {
+    if (!isUserAdmin(state['User/currentUser'])) {
       replace({
         pathname: '/'
       });
