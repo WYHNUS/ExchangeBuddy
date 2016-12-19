@@ -1,4 +1,3 @@
-import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { toggleHomeSearchDrawer } from 'actions/HomeSearchDrawer';
@@ -6,7 +5,7 @@ import { toggleHomeSearchDrawer } from 'actions/HomeSearchDrawer';
 // Component
 import ChildComponent from './TopBar';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = () => {
   return {
     
   };

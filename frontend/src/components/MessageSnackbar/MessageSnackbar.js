@@ -6,8 +6,12 @@ const MessageSnackbar = ({ actions, open, message }) =>
     open={ open }
     message={ message }
     autoHideDuration={2000}
-    onRequestClose={ actions.hideSnackbar } 
-    />;
-    /*style="z-index: 100" */
+    onRequestClose={ actions.hideNotifBar } />;
+
+MessageSnackbar.propTypes = {
+  actions: React.PropTypes.object.isRequired,
+  open: React.PropTypes.bool.isRequired,
+  message: React.PropTypes.string.isRequired,
+};
 
 export default MessageSnackbar;

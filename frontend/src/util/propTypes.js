@@ -1,5 +1,5 @@
 import { PropTypes } from 'react';
-const { shape, string, number, object } = PropTypes;
+const { shape, string, number } = PropTypes;
 
 export const countryPropType = shape({
   alpha2Code: string.isRequired,

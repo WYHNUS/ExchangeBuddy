@@ -2,8 +2,28 @@ import React from 'react';
 import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
 import Paper from 'material-ui/Paper';
 import { browserHistory } from 'react-router';
+import Icon from 'components/Icon';
 
-import * as IconsHelper from 'util/icons';
+function urlToIdx(url) {
+  let urlFmt = url.substring(1).toLowerCase();
+  let urlArr = urlFmt.split('/');
+  const firstLvl = urlArr[0];
+
+  switch (firstLvl) {
+    case 'home':
+      return 0;
+    case 'wiki':
+      return 1;
+    case 'stories':
+      return 2;
+    case 'profile':
+      return 3;
+    case '':
+      return 0;
+    default:
+      return -1;
+  }
+}
 
 class BottomBar extends React.Component {
   render() {
@@ -13,11 +33,10 @@ class BottomBar extends React.Component {
       <Paper zDepth={1} className="bottom-navigation">
 
         <BottomNavigation selectedIndex={tabIdx}>
-        <BottomNavigationItem onTouchTap={this.goToURL('/home')} label="Home" icon={IconsHelper.materialIcon('home')} />
-        <BottomNavigationItem onTouchTap={this.goToURL('/wiki')} label="Wiki" icon={IconsHelper.materialIcon('info')} />
-        {/*<BottomNavigationItem onTouchTap={this.goToURL('/newstory')} label="NewStory" icon={IconsHelper.materialIcon('create')} />*/}
-        <BottomNavigationItem onTouchTap={this.goToURL('/stories')} label="Stories" icon={IconsHelper.materialIcon('library_books')} />
-        <BottomNavigationItem onTouchTap={this.goToURL('/profile/me')} label="Profile" icon={IconsHelper.materialIcon('account_circle')} />
+        <BottomNavigationItem onTouchTap={this.goToURL('/home')} label="Home" icon={ <Icon name="home" /> } />
+        <BottomNavigationItem onTouchTap={this.goToURL('/wiki')} label="Wiki" icon={ <Icon name="info" /> } />
+        <BottomNavigationItem onTouchTap={this.goToURL('/stories')} label="Stories" icon={ <Icon name="library_books" /> } />
+        <BottomNavigationItem onTouchTap={this.goToURL('/profile/me')} label="Profile" icon={ <Icon name="account_circle" /> } />
         </BottomNavigation>
 
       </Paper>
@@ -33,30 +52,6 @@ class BottomBar extends React.Component {
     } else {
       return () => browserHistory.push(url);
     }
-  }
-}
-
-
-function urlToIdx(url) {
-  let urlFmt = url.substring(1).toLowerCase();
-  let urlArr = urlFmt.split('/');
-  const firstLvl = urlArr[0];
-
-  switch (firstLvl) {
-    case 'home':
-      return 0;
-    case 'wiki':
-      return 1;
-    // case 'newstory':
-    // return 1;
-    case 'stories':
-      return 2;
-    case 'profile':
-      return 3;
-    case '':
-      return 0;
-    default:
-      return -1;
   }
 }
 

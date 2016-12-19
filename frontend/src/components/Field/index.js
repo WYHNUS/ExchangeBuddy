@@ -4,10 +4,13 @@ import { TextField, SelectField, AutoComplete } from 'redux-form-material-ui';
 import Dropzone from 'react-dropzone';
 
 import Icon from 'components/Icon';
-import IconButton from 'material-ui/IconButton';
 import FlatButton from 'material-ui/FlatButton';
 
 import * as Colors from 'material-ui/styles/colors';
+
+const propTypes = {
+  name: React.PropTypes.string.isRequired,
+};
 
 export const TextFormField = ({ name, ...rest }) => {
   return (
@@ -20,7 +23,10 @@ export const TextFormField = ({ name, ...rest }) => {
   );
 }
 
+TextFormField.propTypes = propTypes;
+
 export const EmailFormField = TextFormField;
+EmailFormField.propTypes = propTypes;
 
 export const PasswordFormField = ({ name, ...rest }) => {
   return (
@@ -34,6 +40,8 @@ export const PasswordFormField = ({ name, ...rest }) => {
   );
 };
 
+PasswordFormField.propTypes = propTypes;
+
 export const SelectFormField = ({ name, ...rest }) => 
   <Field
     component={ SelectField }
@@ -41,12 +49,16 @@ export const SelectFormField = ({ name, ...rest }) =>
     fullWidth
     {...rest} />;
 
+SelectFormField.propTypes = propTypes;
+
 export const AutoCompleteFormField = ({ name, ...rest }) =>
   <Field
     component={ AutoComplete }
     name={name}
     fullWidth
     {...rest} />;
+
+AutoCompleteFormField.propTypes = propTypes;
 
 const DropzoneField = ({ name, input, meta, ...rest }) => { 
   const { value } = input;
@@ -92,3 +104,5 @@ export const DropzoneFormField = ({ name, ...rest }) =>
     component={ DropzoneField }
     name={ name }
     {...rest} />;
+
+DropzoneFormField.propTypes = propTypes;

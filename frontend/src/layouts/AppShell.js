@@ -4,7 +4,7 @@ import TopBar from 'components/TopBar';
 
 const AppShell = ({ children }) => (
   <div className="app-container">
-    <TopBar showSettingsButton />
+    <TopBar />
 
     { children }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { connect, PromiseState } from 'react-refetch';
-import { ROOT_URL } from 'util/backend';
+import { ROOT_URL } from 'util/api';
 
 import AdminUniversitiesList from './AdminUniversitiesList';
 import Loading from 'components/Loading';

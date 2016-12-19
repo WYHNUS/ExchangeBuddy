@@ -3,11 +3,7 @@ import cookie from 'react-cookie';
 import { browserHistory } from 'react-router';
 
 import Avatar from 'material-ui/Avatar';
-
-import { propExistsDeep } from './helper';
-import * as Colors from 'material-ui/styles/colors';
-
-import defaultAvatar from 'res/user.png';
+import Icon from 'components/Icon';
 
 export const getAvatarUrl = (user, size=64) => {
   if (!user)
@@ -32,7 +28,7 @@ export const getAvatar = (user, size=64, style) => {
   if (avatarUrl)
     return <Avatar src={ avatarUrl } size={size} style={style} />;
   else
-    return <Avatar src={ defaultAvatar } size={size} style={style} />;
+    return <Avatar icon={ <Icon name="person" /> } size={size} style={style} />;
 };
 
 export const isUserAdmin = (user) => user.userObject.role && user.userObject.role >= 8;

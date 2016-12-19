@@ -18,15 +18,13 @@ module.exports = {
     extensions: ['', '.js', '.jsx'],
     alias: {
       actions: path.join(__dirname, '../src', 'actions'),
+      assets: path.join(__dirname, '../assets'),
       components: path.join(__dirname, '../src', 'components'),
       layouts: path.join(__dirname, '../src', 'layouts'),
       pages: path.join(__dirname, '../src', 'pages'),
       reducers: path.join(__dirname, '../src', 'reducers'),
-      res: path.join(__dirname, '../src', 'res'),
-      static: path.join(__dirname, '../src', 'static'),
       store: path.join(__dirname, '../src', 'store'),
-      stylesheets: path.join(__dirname, '../src', 'stylesheets'),
-      scss: path.join(__dirname, '../src', 'stylesheets'),
+      scss: path.join(__dirname, '../src', 'scss'),
       util: path.join(__dirname, '../src', 'util'),
       ie: 'component-ie'
     }
@@ -41,7 +39,7 @@ module.exports = {
       template: path.join(__dirname, '../src/index.html'),
       inject: 'body',
       filename: 'index.html',
-      favicon: path.join(__dirname, '../src/static/android-chrome-512x512.png'),
+      favicon: path.join(__dirname, '../assets/favicon.png'),
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),

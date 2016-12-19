@@ -46,16 +46,16 @@ class LoginForm extends React.Component {
     return (
       <div>
         <div className="social-network-wrapper">
-          {/*<div style={{marginRight: 40}}><p>Social Network Signup :</p></div>*/}
-          <div><FacebookLogin
-            appId="580995375434079"
-            scope="public_profile"
-            fields="name, email"
-            callback={ responseFacebook(this.props.attemptFacebookLogin) }
-            cssClass="facebook-login-button"
-            textButton= "Continue with Facebook"
-            icon="fa-facebook fa-1x" 
-          /></div>
+          <div>
+            <FacebookLogin
+              appId="580995375434079"
+              scope="public_profile"
+              fields="name, email"
+              callback={ responseFacebook(this.props.attemptFacebookLogin) }
+              cssClass="facebook-login-button"
+              textButton= "Continue with Facebook"
+              icon="fa-facebook fa-1x" />
+          </div>
         </div>
 
         <p className="line-seperator" style={{ marginTop: 20 }}> or </p>

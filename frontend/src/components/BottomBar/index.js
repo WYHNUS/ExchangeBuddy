@@ -1,19 +1,15 @@
-import React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import ChildComponent from './BottomBar';
 
-import { toggleHomeTab } from 'actions/home';
-
-const mapStateToProps = (state, ownProps)=>{
+const mapStateToProps = () => {
   return {
 
   };
 }
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = () => {
   return {
-    ...bindActionCreators({ toggleHomeTab }, dispatch),
+
   };
 };
 

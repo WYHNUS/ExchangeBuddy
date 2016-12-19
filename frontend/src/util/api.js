@@ -3,7 +3,7 @@ const request = require('superagent');
 require('superagent-auth-bearer')(request);
 
 import { getToken } from './bearer';
-import { ROOT_URL } from './backend';
+export const ROOT_URL = process.env.API_ROOT_URL;
 
 const ERROR_NO_USER_TOKEN = new Error('Not logged in.');
 

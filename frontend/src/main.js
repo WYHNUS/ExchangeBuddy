@@ -6,7 +6,7 @@ import Router from './routes.js';
 import './startup';
 
 // Main SCSS import
-import 'stylesheets/application.scss';
+import 'scss/application.scss';
 
 // Render the main component into the dom
 ReactDOM.render(Router, document.getElementById('react-root'));

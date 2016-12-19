@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, PromiseState } from 'react-refetch';
-import { ROOT_URL } from 'util/backend';
+import { ROOT_URL } from 'util/api';
 
 import WikiHistoryDialogList from './WikiHistoryDialogList';
 import Loading from 'components/Loading';

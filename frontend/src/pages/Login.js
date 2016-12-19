@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import FlatButton from 'material-ui/FlatButton';
 
 import LoginForm from 'components/LoginForm';
-import ExchangeBuddySpreadIcon from 'res/ExchangeBuddySpreadIcon.png';
+import ExchangeBuddySpreadIcon from 'assets/ExchangeBuddySpreadIcon.png';
 
 class Login extends React.Component { 
   render() {

@@ -1,7 +1,6 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import RaisedButton from 'material-ui/RaisedButton';
@@ -9,8 +8,8 @@ import IconButton from 'material-ui/IconButton';
 import Icon from 'components/Icon';
 import * as Colors from 'material-ui/styles/colors';
 
-import landingBackgroundImage from 'res/ExchangeBuddySpread.jpg';
-import landingHeaderLogo from 'res/ExchangeBuddySpreadIcon.png';
+import landingBackgroundImage from 'assets/ExchangeBuddySpread.jpg';
+import landingHeaderLogo from 'assets/ExchangeBuddySpreadIcon.png';
 
 const landingImgStyle = {
   backgroundImage: `url(${ landingBackgroundImage })`,
@@ -123,7 +122,7 @@ class Landing extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = () => {
   return {
     
   };
@@ -131,7 +130,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user.userObject
+    user: state['User/currentUser'],
   };
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { connect, PromiseState } from 'react-refetch';
-import { ROOT_URL } from 'util/backend';
+import { ROOT_URL } from 'util/api';
 
 import AdminUniversities from './AdminUniversities';
 import Loading from 'components/Loading';
@@ -23,7 +23,7 @@ Container.propTypes = {
   countriesFetch: React.PropTypes.instanceOf(PromiseState).isRequired,
 };
 
-const refetch = (props) => ({
+const refetch = () => ({
   countriesFetch: `${ ROOT_URL }/country`,
 });
 
