@@ -44,19 +44,8 @@ class BottomBar extends React.Component {
   }
 
   goToURL(url) {
-    if (url === '/home') {
-      return () => {
-        browserHistory.push(url);
-        this.props.toggleHomeTab('friends');
-      };
-    } else {
-      return () => browserHistory.push(url);
-    }
+    () => browserHistory.push(url);
   }
 }
-
-BottomBar.propTypes = {
-  toggleHomeTab: React.PropTypes.func.isRequired,
-};
 
 export default BottomBar;
