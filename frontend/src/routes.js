@@ -3,9 +3,7 @@ import React from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
-import { loadState } from 'util/localStorage';
 import { isUserAdmin } from 'util/user';
-import configureStore from 'store/configureStore';
 
 /** ROUTES **/
 
@@ -26,12 +24,6 @@ import Landing from 'pages/Landing';
 import AdminHome from 'pages/Admin/AdminHome';
 import AdminUniversities from 'pages/Admin/AdminUniversities';
 
-// Redux
-const persistedState = loadState();
-const store = configureStore(persistedState);
-
-// Create an enhanced history that syncs navigation events with the store
-const history = syncHistoryWithStore(browserHistory, store);
 
 // Google Analytics
 import ReactGA from 'react-ga';
@@ -42,45 +34,56 @@ const logPageView = () => {
   ReactGA.pageview(window.location.pathname);
 };
 
-// Route hooks
-const adminRequired = (nextState, replace) => {
-  const state = store.getState();
+const Routes = ({ store }) => {
+  // Create an enhanced history that syncs navigation events with the store
+  const history = syncHistoryWithStore(browserHistory, store);
 
-  if (!isUserAdmin(state.user)) {
-    replace({
-      pathname: '/'
-    });
-  }
+  // Route hooks
+  const adminRequired = (nextState, replace) => {
+    const state = store.getState();
+
+    if (!isUserAdmin(state.user)) {
+      replace({
+        pathname: '/'
+      });
+    }
+  };
+
+  return (
+    <Provider store={ store }>
+      <Router history={ history } onUpdate={ logPageView }>
+        <Route path="/" component={ App }>
+          <IndexRoute component={ Landing } />
+
+          <Route component={ AppShell }>
+            <Route path="signup" component={ Signup } />
+            <Route path="login" component={ Login } />
+
+            { /* 
+
+            <Route path="wiki">
+              <IndexRoute component={ Wiki } />
+              <Route path=":wikiTitle" component={ WikiDetails } />
+            </Route> 
+
+            */ }
+            
+            <Route path="admin" onEnter={ adminRequired }>
+              <IndexRoute component={ AdminHome } />
+              <Route path="universities" component={ AdminUniversities } />
+            </Route>
+
+            <Route path="notLoggedIn" component={ NotLoggedIn } />
+            <Route path="*" component={ NotFound } />
+          </Route>
+        </Route>
+      </Router>
+    </Provider>
+  );
 };
 
-export default (
-  <Provider store={ store }>
-    <Router history={ history } onUpdate={ logPageView }>
-      <Route path="/" component={ App }>
-        <IndexRoute component={ Landing } />
+Routes.propTypes = {
+  store: React.PropTypes.object.isRequired,
+};
 
-        <Route component={ AppShell }>
-          <Route path="signup" component={ Signup } />
-          <Route path="login" component={ Login } />
-
-          { /* 
-
-          <Route path="wiki">
-            <IndexRoute component={ Wiki } />
-            <Route path=":wikiTitle" component={ WikiDetails } />
-          </Route> 
-
-          */ }
-          
-          <Route path="admin" onEnter={ adminRequired }>
-            <IndexRoute component={ AdminHome } />
-            <Route path="universities" component={ AdminUniversities } />
-          </Route>
-
-          <Route path="notLoggedIn" component={ NotLoggedIn } />
-          <Route path="*" component={ NotFound } />
-        </Route>
-      </Route>
-    </Router>
-  </Provider>
-);
+export default Routes;

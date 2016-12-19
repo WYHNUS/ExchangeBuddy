@@ -22,6 +22,12 @@ export const isUserLoggedIn = () => {
     return true;
 };
 
+export const getUserProfile = (onSuccess, onError) => {
+  get('/me', {}, { userToken: true }, function({ body: user }) {
+    onSuccess && onSuccess(user);
+  }, onError);
+};
+
 export const verifyToken = (cb) => {
   const userToken = getUserToken();
 
