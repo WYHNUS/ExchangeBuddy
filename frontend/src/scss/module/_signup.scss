@@ -139,8 +139,6 @@
         > span { color: grey !important; }
         > p { 
           margin-top: -5px;
-          font-family: "Lato", 
-          sans-serif; 
           bottom: -13px; 
           font-size: 1.2rem; padding: 0 10px; margin-bottom: 10px;
           @include media-xs-only { font-size: 16px; } 

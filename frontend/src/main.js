@@ -6,6 +6,7 @@ import Router from './routes.js';
 import './startup';
 
 // Main SCSS import
+import 'react-flexbox-grid';
 import 'scss/application.scss';
 
 // Render the main component into the dom
