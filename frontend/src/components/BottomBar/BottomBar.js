@@ -19,7 +19,7 @@ const BottomBar = ({ currentPath }) => (
           return (
             <BottomNavigationItem key={ idx } onClick={ () => browserHistory.push(item.to) } icon={ <Icon name={ item.icon } size={24} /> } />
           );
-        } ).filter(x => !!x) }
+        } ).filter(x => x) }
     </BottomNavigation>
 
   </Paper>

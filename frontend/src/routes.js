@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, IndexRedirect, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { isUserAdmin } from 'util/user';
@@ -23,7 +23,7 @@ import Wiki from 'pages/Wiki/Wiki';
 import WikiDetails from 'pages/Wiki/WikiDetails';
 import AdminHome from 'pages/Admin/AdminHome';
 import AdminUniversities from 'pages/Admin/AdminUniversities';
-
+import GroupHome from 'pages/Group/GroupHome';
 
 // Google Analytics
 import ReactGA from 'react-ga';
@@ -39,6 +39,16 @@ const Routes = ({ store }) => {
   const history = syncHistoryWithStore(browserHistory, store);
 
   // Route hooks
+  const authRequired = (nextState, replace) => {
+    const state = store.getState();
+
+    if (!state['User/currentUser']) {
+      replace({
+        pathname: '/'
+      });
+    }
+  };
+
   const adminRequired = (nextState, replace) => {
     const state = store.getState();
 
@@ -62,6 +72,11 @@ const Routes = ({ store }) => {
             <Route path="wiki">
               <IndexRoute component={ Wiki } />
               <Route path=":wikiTitle" component={ WikiDetails } />
+            </Route>
+            
+            <Route path="group" onEnter={ authRequired }>
+              <IndexRedirect to="/group/1" />
+              <Route path=":id" component={ GroupHome } />
             </Route>
             
             <Route path="admin" onEnter={ adminRequired }>

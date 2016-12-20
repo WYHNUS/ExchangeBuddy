@@ -14,3 +14,16 @@ export const universityPropType = shape({
   city: string,
   logoImageUrl: string,
 });
+
+export const groupPropType = shape({
+  id: number.isRequired,
+  university: universityPropType.isRequired,
+});
+
+export const userPropType = shape({
+  id: number.isRequired,
+  name: string.isRequired,
+  email: string.isRequired,
+  role: number.isRequired,
+  profilePictureUrl: string.isRequired,
+});
