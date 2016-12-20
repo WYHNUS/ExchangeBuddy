@@ -13,6 +13,7 @@ export const universityPropType = shape({
   name: string.isRequired,
   city: string,
   logoImageUrl: string,
+  country: countryPropType,
 });
 
 export const groupPropType = shape({
@@ -23,7 +24,9 @@ export const groupPropType = shape({
 export const userPropType = shape({
   id: number.isRequired,
   name: string.isRequired,
-  email: string.isRequired,
-  role: number.isRequired,
-  profilePictureUrl: string.isRequired,
+  email: string,
+  role: number,
+  profilePictureUrl: string,
+  fbUserId: string, // big int is too big
+  university: universityPropType,
 });
