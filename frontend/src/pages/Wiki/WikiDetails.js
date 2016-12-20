@@ -6,7 +6,7 @@ const WikiDetails = ({ params }) => (
   <WikiDetail wikiTitle={ params.wikiTitle } />
 );
 
-WikiDetails.propTypes ={
+WikiDetails.propTypes = {
   params: React.PropTypes.shape({
     wikiTitle: React.PropTypes.string.isRequired,
   }).isRequired,

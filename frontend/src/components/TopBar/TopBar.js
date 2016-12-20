@@ -8,7 +8,7 @@ import AppBar from 'material-ui/AppBar';
 import { isUserAdmin } from 'util/user';
 import * as Colors from 'material-ui/styles/colors';
 
-const menuItems = [
+export const menuItems = [
   { label: 'Admin Area', icon: 'fa fa-wrench', to: '/admin', admin: true },
   { label: 'Your Exchange Group', icon: 'fa fa-users', to: '/group' },
   { label: 'WikiExchange', icon: 'fa fa-graduation-cap', to: '/wiki' },

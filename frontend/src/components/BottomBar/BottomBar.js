@@ -1,51 +1,32 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
+
 import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
 import Paper from 'material-ui/Paper';
-import { browserHistory } from 'react-router';
 import Icon from 'components/Icon';
 
-function urlToIdx(url) {
-  let urlFmt = url.substring(1).toLowerCase();
-  let urlArr = urlFmt.split('/');
-  const firstLvl = urlArr[0];
+import { menuItems } from 'components/TopBar/TopBar';
 
-  switch (firstLvl) {
-    case 'home':
-      return 0;
-    case 'wiki':
-      return 1;
-    case 'stories':
-      return 2;
-    case 'profile':
-      return 3;
-    case '':
-      return 0;
-    default:
-      return -1;
-  }
-}
+const getCurrentMenuItemIndex = (currentPath) => menuItems.filter(item => !item.admin).map(item => item.to).indexOf(currentPath);
 
-class BottomBar extends React.Component {
-  render() {
-    const tabIdx = urlToIdx(window.location.pathname);
+const BottomBar = ({ currentPath }) => (
+  <Paper zDepth={1} className="bottom-navigation">
+    <BottomNavigation selectedIndex={ getCurrentMenuItemIndex(currentPath) }>
+      { menuItems.map((item, idx) => {
+          if (item.admin) 
+            return null;
 
-    return (
-      <Paper zDepth={1} className="bottom-navigation">
+          return (
+            <BottomNavigationItem key={ idx } onClick={ () => browserHistory.push(item.to) } icon={ <Icon name={ item.icon } size={24} /> } />
+          );
+        } ).filter(x => !!x) }
+    </BottomNavigation>
 
-        <BottomNavigation selectedIndex={tabIdx}>
-        <BottomNavigationItem onTouchTap={this.goToURL('/home')} label="Home" icon={ <Icon name="home" /> } />
-        <BottomNavigationItem onTouchTap={this.goToURL('/wiki')} label="Wiki" icon={ <Icon name="info" /> } />
-        <BottomNavigationItem onTouchTap={this.goToURL('/stories')} label="Stories" icon={ <Icon name="library_books" /> } />
-        <BottomNavigationItem onTouchTap={this.goToURL('/profile/me')} label="Profile" icon={ <Icon name="account_circle" /> } />
-        </BottomNavigation>
+  </Paper>
+);
 
-      </Paper>
-    )
-  }
-
-  goToURL(url) {
-    () => browserHistory.push(url);
-  }
-}
+BottomBar.propTypes = {
+  currentPath: React.PropTypes.string.isRequired,
+};
 
 export default BottomBar;
