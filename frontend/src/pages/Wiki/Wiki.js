@@ -11,7 +11,7 @@ export default class Wiki extends React.PureComponent {
     return (
       <div className="container">
         <div className="wiki-recommendation-wrapper">
-          <div className="recommendation-nav-bar">
+          <div className="recommendation-nav-bar center-xs">
             <h2>WikiExchange</h2>
           </div>
           <hr className="green-separator" style={{ width: '85%' }}></hr>

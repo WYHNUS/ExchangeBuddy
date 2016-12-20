@@ -78,7 +78,7 @@ class Landing extends React.Component {
                 </div>
               </div>
 
-              <div className="action-button-container">
+              <div className="action-button-container center-xs">
                 <ActionButton user={ user } />
               </div>
             </div>
