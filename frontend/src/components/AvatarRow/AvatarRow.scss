@@ -1,5 +1,5 @@
 .avatarrow {
-  display: flex; flex-direction: row;
+  display: flex; flex-direction: row; align-items: center;
 
   .avatar { padding: 12px; }
   .body { padding: 12px; width: 100%; }

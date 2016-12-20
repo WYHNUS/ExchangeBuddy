@@ -47,7 +47,9 @@ const _tempGroup = {
     name: 'Technical University of Munich',
     city: 'Munich',
     logoImageUrl: 'https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/technical-university-of-munich.jpg',
-  }
+  },
+  month: 7,
+  year: 2017,
 };
 
 const mapStateToProps = () => ({

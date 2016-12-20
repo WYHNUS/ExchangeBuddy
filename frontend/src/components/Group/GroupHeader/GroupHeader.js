@@ -1,13 +1,19 @@
 import React from 'react';
 
 import Paper from 'components/Paper';
+import AvatarRow from 'components/AvatarRow';
 
 import { groupPropType } from 'util/propTypes';
+import { formatMonth } from 'util/helper';
 
-const GroupHeader = ({ group }) => (
+import './GroupHeader.scss';
+
+const GroupHeader = ({ group: { university, month, year } }) => (
   <Paper>
-    <h1>Your Exchange Group</h1>
-    <p>{ group.university.name }</p>
+    <AvatarRow avatar={ university.logoImageUrl } size={80} className="group-header">
+      <h1>Your Exchange Group</h1>
+      <p>Exchangers to { university.name }, { formatMonth(month) } { year }</p>
+    </AvatarRow>
   </Paper>
 );
 
