@@ -50,6 +50,12 @@
   }
 }
 
+// Flat Paper
+.flatpaper {
+  &:not(.transparent) { background-color: #fff; }
+  &:not(.full) { padding: 1em; }
+}
+
 
 #not-logged-in-text-container {
   margin: 100px;

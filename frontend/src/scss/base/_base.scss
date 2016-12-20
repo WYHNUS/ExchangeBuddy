@@ -4,7 +4,7 @@
 
 // Base
 html body {
-  background: #fcfcfc; margin: 0;
+  background: $background-color; margin: 0;
 
   &, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, p { font-family: Roboto, sans-serif; color: #444; }
   .h1, .h2, .h3, .h4, h1, h2, h3, h4 { font-weight: 300; }
@@ -37,11 +37,15 @@ html body {
 // Layout
 .container { 
   justify-content: center; max-width: $max-container-width; width: 100%; margin: 0 auto;
+
   &.panel { 
     background-color: #fff; min-height: 100%;
     .col-xs-12 { padding: 0; }
   }
-  .row { margin: 0; }
+
+  .row {
+    &:not(.no-margin) { margin-bottom: 15px; }
+  }
 }
 
 // Common elements

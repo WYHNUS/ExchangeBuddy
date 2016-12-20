@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Paper from 'material-ui/Paper';
+import Paper from 'components/Paper';
 
 import { groupPropType } from 'util/propTypes';
 

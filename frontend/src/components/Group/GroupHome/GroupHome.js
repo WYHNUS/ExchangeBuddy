@@ -15,12 +15,20 @@ const GroupHome = ({ group }) => (
       </div>
     </div>
     <div className="row">
-      <div className="col-xs-12 col-sm-8">
-        <GroupWritePost group={ group } />
-        <GroupFeed group={ group } />
-      </div>
-      <div className="col-xs-12 col-sm-4 first-xs">
+      <div className="col-xs-12 col-sm-4">
         <GroupMembers group={ group } />
+      </div>
+      <div className="col-xs-12 col-sm-8">
+        <div className="row">
+          <div className="col-xs">
+            <GroupWritePost group={ group } />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-xs">
+            <GroupFeed group={ group } />
+          </div>
+        </div>
       </div>
     </div>
   </div>
