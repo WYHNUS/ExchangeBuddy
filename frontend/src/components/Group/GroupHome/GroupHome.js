@@ -16,7 +16,11 @@ const GroupHome = ({ group }) => (
     </div>
     <div className="row">
       <div className="col-xs-12 col-sm-4">
-        <GroupMembers group={ group } />
+        <div className="row">
+          <div className="col-xs">
+            <GroupMembers group={ group } />
+          </div>
+        </div>
       </div>
       <div className="col-xs-12 col-sm-8">
         <div className="row">
