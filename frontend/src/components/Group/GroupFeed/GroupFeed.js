@@ -1,6 +1,5 @@
 import React from 'react';
 import GroupFeedPost from './GroupFeedPost/GroupFeedPost';
-import Paper from 'components/Paper';
 
 import { groupPropType, userPropType } from 'util/propTypes';
 

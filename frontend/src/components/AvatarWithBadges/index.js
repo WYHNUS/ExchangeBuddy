@@ -1,7 +1,4 @@
 import React from 'react';
-
-import Avatar from 'material-ui/Avatar';
-
 import './AvatarWithBadges.scss';
 
 const AvatarWithBadges = ({ topBadge, bottomBadge, avatar, ...rest }) => (
