@@ -29,4 +29,5 @@ export const userPropType = shape({
   profilePictureUrl: string,
   fbUserId: string, // big int is too big
   university: universityPropType,
+  homeCountry: countryPropType,
 });

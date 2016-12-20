@@ -1,0 +1,12 @@
+.avatar-with-badge {
+  position: relative;
+
+  $offset: -5px;
+  .badge {
+    position: absolute; 
+
+    img { border: 1px solid #f5f5f5; }
+    &.top { top: $offset; right: $offset; }
+    &.bottom { bottom: $offset; right: $offset; }
+  }
+}
