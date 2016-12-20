@@ -1,0 +1,17 @@
+@import '~scss/common/mixins';
+
+@include media-xs-only {
+  .hidden-xs { display: none; }
+}
+
+@include media-sm-up {
+  .hidden-sm { display: none; }
+}
+
+@include media-md-up {
+  .hidden-md { display: none; }
+}
+
+@include media-lg-up {
+  .hidden-lg { display: none; }
+}

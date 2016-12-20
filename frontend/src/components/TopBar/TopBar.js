@@ -9,11 +9,11 @@ import { isUserAdmin } from 'util/user';
 import * as Colors from 'material-ui/styles/colors';
 
 const menuItems = [
-  { icon: 'fa fa-wrench', to: '/admin', admin: true },
-  { icon: 'fa fa-users', to: '/group' },
-  { icon: 'fa fa-graduation-cap', to: '/wiki' },
-  { icon: 'fa fa-comments', to: '/qna' },
-  { icon: 'fa fa-newspaper-o', to: '/stories' },
+  { label: 'Admin Area', icon: 'fa fa-wrench', to: '/admin', admin: true },
+  { label: 'Your Exchange Group', icon: 'fa fa-users', to: '/group' },
+  { label: 'WikiExchange', icon: 'fa fa-graduation-cap', to: '/wiki' },
+  { label: 'ExchangeAnswers', icon: 'fa fa-comments', to: '/qna' },
+  { label: 'Stories', icon: 'fa fa-newspaper-o', to: '/stories' },
 ];
 
 const TopBar = ({ user }) => (
@@ -23,17 +23,21 @@ const TopBar = ({ user }) => (
     title={
       <div className="container">
         <div className="row">
-          <div className="col col-xs-6 start-xs">
+          <div className="col col-xs-12 col-sm-6 center-xs start-sm">
             <Icon name="fa fa-globe" color={ Colors.grey50 } size={28} /> ExchangeBuddy
           </div>
-          <div className="col col-xs-6 end-xs">
+          <div className="col col-xs-6 end-xs hidden-xs">
             <div className="menu-items">
               { menuItems.map((item, idx) => {
                   if (item.admin && !isUserAdmin(user))
                     return null;
 
                   return (
-                    <IconButton key={ idx } onClick={ () => browserHistory.push(item.to) }>
+                    <IconButton 
+                      key={ idx } 
+                      onClick={ () => browserHistory.push(item.to) } 
+                      tooltip={ item.label } 
+                      tooltipStyles={{ fontWeight: 400, fontSize: 12 }}>
                       <Icon name={ item.icon } size={20} color={ Colors.grey50 } />
                     </IconButton>
                   );
@@ -43,7 +47,7 @@ const TopBar = ({ user }) => (
         </div>
       </div>
     }
-    titleStyle={{ fontWeight: 100, fontSize: 28 }} />
+    titleStyle={{ fontWeight: 100, fontSize: 28, overflow: 'visible' }} />
 );
 
 TopBar.propTypes = {
