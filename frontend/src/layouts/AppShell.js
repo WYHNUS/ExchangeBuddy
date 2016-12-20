@@ -6,7 +6,9 @@ const AppShell = ({ children, location }) => (
   <div className="app-container">
     <TopBar />
 
-    { children }
+    <div className="main-container">
+      { children }
+    </div>
 
     <BottomBar currentPath={ location.pathname } />
   </div>

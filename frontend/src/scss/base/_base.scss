@@ -62,7 +62,10 @@ a.button:hover { text-decoration: none; }
 
 #main {
   @include media-xs-only { 
-    .app-container { height: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; }
+    .app-container { 
+      height: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; 
+      .main-container { flex-grow: 1; }
+    }
   }
 
   @include media-sm-up {
