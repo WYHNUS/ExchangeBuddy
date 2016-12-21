@@ -14,7 +14,6 @@ var StoryCtrl = require('../controllers/StoryController');
 var WikiCtrl = require('../controllers/WikiController');
 var GroupCtrl = require('../controllers/GroupController');
 var MailCtrl = require('../controllers/MailController');
-var EventCtrl = require('../controllers/EventController');
 var ChatCtrl = require('../controllers/ChatController');
 
 // Set up token authenticate
@@ -71,7 +70,7 @@ router.get('/resendVerificationMail/:userId', MailCtrl.resend);
 router.get('/country', CountryCtrl.getAllCountries);
 router.get('/country/:id', CountryCtrl.getCountry);
 
-router.get('/university', UniCtrl.getAllUniversities);
+router.get('/universities', UniCtrl.getAllUniversities);
 /*
 request:
 {

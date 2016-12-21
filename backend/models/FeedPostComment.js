@@ -10,6 +10,7 @@ module.exports = function(sequelize, DataType){
         classMethods: {
             associate: function(models){
                 FeedPostComment.hasMany(models.FeedPostCommentReply);
+                FeedPostComment.hasMany(models.FeedPostCommentReaction);
                 FeedPostComment.belongsTo(models.User, {
                     onDelete: "CASCADE",
                     as: 'author',

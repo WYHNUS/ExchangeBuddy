@@ -28,7 +28,7 @@ module.exports = function(sequelize, DataType) {
     }, {
         classMethods: {
             associate: function(models) {
-                Group.belongsToMany(models.User, {
+                Group.hasMany(models.User, {
                     as: 'user',
                     through: 'UserGroup',
                     foreignKey: 'groupId'
