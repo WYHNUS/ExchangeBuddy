@@ -27,9 +27,11 @@ const TopBar = ({ user }) => (
         <div className="container">
           <div className="row">
             <div className="col col-xs-12 col-sm-6 center-xs start-sm">
-              <Link to="/">
-                <Icon name="fa fa-globe" color={ Colors.grey50 } size={28} /> ExchangeBuddy
-              </Link>
+              <div className="topbar-logo">
+                <Link to="/">
+                  <Icon name="fa fa-globe" color={ Colors.grey50 } size={28} /> ExchangeBuddy
+                </Link>
+              </div>
             </div>
             <div className="col col-xs-6 end-xs middle-xs hidden-xs">
               { menuItems.map((item, idx) => {
