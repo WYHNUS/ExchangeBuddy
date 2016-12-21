@@ -5,19 +5,31 @@ import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNaviga
 import Paper from 'material-ui/Paper';
 import Icon from 'components/Icon';
 
-import { menuItems } from 'components/TopBar/TopBar';
+import { makeMenuItems } from 'components/TopBar/TopBar';
 
-const getCurrentMenuItemIndex = (currentPath) => menuItems.filter(item => !item.admin).map(item => item.to).indexOf(currentPath);
+import * as Colors from 'material-ui/styles/colors';
+import { palette } from 'layouts/MuiTheme';
 
-const BottomBar = ({ currentPath }) => (
+const getCurrentMenuItemIndex = (user, currentPath) => makeMenuItems(user).filter(item => !item.admin).map(item => item.to).indexOf('/' + currentPath.split('/')[1]);
+
+const BottomBar = ({ user, currentPath }) => (
   <Paper zDepth={1} className="bottom-navigation">
-    <BottomNavigation selectedIndex={ getCurrentMenuItemIndex(currentPath) }>
-      { menuItems.map((item, idx) => {
+    <BottomNavigation>
+      { makeMenuItems(user).map((item, idx) => {
           if (item.admin) 
             return null;
 
+          const iconColor = getCurrentMenuItemIndex(user, currentPath) + 1 === idx ? palette.primary1Color : Colors.grey400;
+
           return (
-            <BottomNavigationItem key={ idx } onClick={ () => browserHistory.push(item.to) } icon={ <Icon name={ item.icon } size={24} /> } />
+            <BottomNavigationItem 
+              key={ idx } 
+              icon={ 
+                item.icon 
+                ? <Icon name={ item.icon } size={24} color={ iconColor } /> 
+                : item.avatar
+              }
+              onClick={ () => browserHistory.push(item.to) } /> 
           );
         } ).filter(x => x) }
     </BottomNavigation>
@@ -27,6 +39,7 @@ const BottomBar = ({ currentPath }) => (
 
 BottomBar.propTypes = {
   currentPath: React.PropTypes.string.isRequired,
+  user: React.PropTypes.object,
 };
 
 export default BottomBar;

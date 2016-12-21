@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import ChildComponent from './BottomBar';
 
-const mapStateToProps = () => {
+const mapStateToProps = (state) => {
   return {
-
+    user: state['User/currentUser'],
   };
 }
 const mapDispatchToProps = () => {
