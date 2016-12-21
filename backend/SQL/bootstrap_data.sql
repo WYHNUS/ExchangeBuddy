@@ -2255,7 +2255,7 @@ values
 ;
 
 Insert into Universities
-(id, name, city, website, fbPageId, countryCode, logoUrl, linkUrl, logoImageUrl,
+(id, name, city, website, fbPageId, CountryAlpha2Code, logoUrl, linkUrl, logoImageUrl,
 bgImageUrl, emailDomains, terms, topUnisId, createdAt, updatedAt)
 values
 (

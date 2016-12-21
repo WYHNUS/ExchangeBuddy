@@ -33,7 +33,7 @@ exports.getAllUniversities = function(req, res) {
 exports.getAllUniversitiesForCountry = function(req, res){
     models.University.findAll({
         where: {
-            countryCode: req.params.alpha2Code
+            CountryAlpha2Code: req.params.alpha2Code
         },
     	attributes: ['id', 'name', 'city', 'logoImageUrl', 'website']
     }).then(function(universities){
@@ -178,7 +178,7 @@ exports.updateUniLogo = function(req, res) {
     }).then(function(university) {
         if (!!university) {
             var dbName = university.name;
-            var Key = dbName.split('/')[0].trim().toLowerCase()
+            Key = dbName.split('/')[0].trim().toLowerCase()
             .replace(/ /g, '-')
             .replace(')', '')
             .replace('(', '') + '.jpg';
@@ -193,13 +193,12 @@ exports.updateUniLogo = function(req, res) {
             }
 
             var uploader = client.uploadFile(params);
-
+            var url = s3.getPublicUrl(Bucket, Key, "ap-southeast-1");
             uploader.on('error', function(err) {
                 console.log(err);
             })
 
             uploader.on('end', function() {
-                var url = s3.getPublicUrl(Bucket, Key, "ap-southeast-1");
 
                 if (!!university.logoImageUrl) {
                     var splitString = university.logoImageUrl.split('/');
