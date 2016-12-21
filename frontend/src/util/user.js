@@ -4,6 +4,8 @@ import Avatar from 'material-ui/Avatar';
 import AvatarWithBadges from 'components/AvatarWithBadges';
 import Icon from 'components/Icon';
 
+import { getUniAvatar } from 'util/university';
+
 export const getAvatarUrl = (user, size=64) => {
   if (!user)
     return '';
@@ -32,7 +34,7 @@ export const getAvatar = (user, size=64, style) => {
 
 export const getBadgedAvatar = (user, country, university, size=64, style) => (
   <AvatarWithBadges 
-    topBadge={ university && university.logoImageUrl && <Avatar src={ university.logoImageUrl } size={20} /> } 
+    topBadge={ university && university.logoImageUrl && getUniAvatar(university, 20) } 
     avatar={ getAvatar(user, size, style) } />
 );
 
