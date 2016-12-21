@@ -15,8 +15,12 @@ module.exports = function(sequelize, DataType){
                 });
 
 
-                FeedPost.hasMany(models.FeedPostComment);
-                FeedPost.hasMany(models.FeedPostReaction);
+                FeedPost.hasMany(models.FeedPostComment, {
+                    onDelete: "CASCADE"
+                });
+                FeedPost.hasMany(models.FeedPostReaction, {
+                    onDelete: "CASCADE"
+                });
             }
         }
     })

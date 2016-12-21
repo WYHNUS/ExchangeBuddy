@@ -46,11 +46,13 @@ module.exports = function(sequelize, DataType) {
                 University.hasOne(models.Wiki);
 
                 University.hasMany(models.User, {
-                    as: 'homeUniversity'
+                    as: 'homeUniversity',
+                    onDelete: 'SET NULL',
                 });
 
                 University.hasMany(models.Exchange, {
-                    as: 'exchangeUniversity'
+                    as: 'exchangeUniversity',
+                    onDelete: 'CASCADE',
                 });
 
                 University.hasMany(models.UniversityCourse);

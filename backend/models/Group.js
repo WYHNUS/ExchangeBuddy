@@ -34,7 +34,9 @@ module.exports = function(sequelize, DataType) {
                     foreignKey: 'groupId'
                 });
 
-                Group.hasMany(models.FeedPost)
+                Group.hasMany(models.FeedPost, {
+                    onDelete: "CASCADE"
+                })
 
             }
         }

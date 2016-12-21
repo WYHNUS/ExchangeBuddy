@@ -66,7 +66,9 @@ module.exports = function(sequelize, DataType) {
 
                 Country.hasMany(models.User);
 
-                Country.hasMany(models.University);
+                Country.hasMany(models.University, {
+                    onDelete: "CASCADE"
+                });
             }
         }
     });

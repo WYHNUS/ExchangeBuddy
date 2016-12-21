@@ -9,9 +9,15 @@ module.exports = function(sequelize, DataType){
     }, {
         classMethods: {
             associate: function(models){
-                Question.hasMany(models.QuestionComment);
-                Question.hasMany(models.QuestionVote);
-                Question.hasMany(models.Answer);
+                Question.hasMany(models.QuestionComment, {
+                    onDelete: "CASCADE"
+                });
+                Question.hasMany(models.QuestionVote, {
+                    onDelete: "CASCADE"
+                });
+                Question.hasMany(models.Answer, {
+                    onDelete: "CASCADE"
+                });
                 Question.belongsTo(models.User, {
                     onDelete: "CASCADE",
                     as: "author"

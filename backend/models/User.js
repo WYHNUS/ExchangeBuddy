@@ -94,7 +94,9 @@ module.exports = function(sequelize, DataType) {
                 });
 
 
-                User.hasMany(models.Story);
+                User.hasMany(models.Story, {
+                    onDelete: "CASCADE"
+                });
 
                 User.hasMany(models.Wiki);
                 User.hasMany(models.WikiSection);

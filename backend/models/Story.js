@@ -28,8 +28,12 @@ module.exports = function(sequelize, DataType) {
                     as: "author"
                 });
 
-                Story.hasMany(models.StoryComment);
-                Story.hasMany(models.StoryReaction);
+                Story.hasMany(models.StoryComment, {
+                    onDelete: "CASCADE"
+                });
+                Story.hasMany(models.StoryReaction, {
+                    onDelete: "CASCADE"
+                });
             }
         }
     });

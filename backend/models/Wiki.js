@@ -37,7 +37,9 @@ module.exports = function(sequelize, DataType) {
             as: "author"
         });
 
-        Wiki.hasMany(models.WikiSection);
+        Wiki.hasMany(models.WikiSection, {
+            onDelete: "CASCADE"
+        });
       }
     }
   });

@@ -9,7 +9,9 @@ module.exports = function(sequelize, DataType){
     }, {
         classMethods: {
             associate: function(models){
-                Answer.hasMany(models.AnswerComment);
+                Answer.hasMany(models.AnswerComment, {
+                    onDelete: "CASCADE"
+                });
                 Answer.belongsTo(models.User, {
                     onDelete: "CASCADE",
                     as: "author",
