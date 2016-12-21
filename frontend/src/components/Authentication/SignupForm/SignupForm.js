@@ -1,12 +1,10 @@
 import React from 'react';
 import { reduxForm, propTypes as reduxPropTypes } from 'redux-form';
 import validator from 'validator';
+
 import RaisedButton from 'material-ui/RaisedButton';
 import FacebookLoginButton from 'components/FacebookLoginButton';
-
-import { TextFormField } from '../Field';
-import { EmailFormField } from '../Field';
-import { PasswordFormField } from '../Field';
+import { TextFormField, EmailFormField, PasswordFormField } from 'components/Field';
 
 const validate = (values) => {
   const errors = {};
@@ -22,7 +20,7 @@ const validate = (values) => {
   if (!userEmail || !userEmail.length) {
     errors['userEmail'] = 'Required'
   } else if (!validator.isEmail(userEmail)) {
-    errors['userEmail'] = 'That doesn\'t look like an email address. :o';
+    errors['userEmail'] = 'That doesn\'t look like an email address...';
   }
 
   if (!!userPassword && !!userConfirmPassword) {
@@ -55,16 +53,16 @@ class SignupForm extends React.PureComponent {
         <form onSubmit={ handleSubmit((values) => {
           this.submitForm(values)
         }) }>
-          <TextFormField name="userName" floatingLabelText="Your name" />
+          <TextFormField name="userName" floatingLabelText="Name" />
 
           <EmailFormField
             name="userEmail"
-            floatingLabelText="Your email address" />
+            floatingLabelText="Email" />
 
-          <PasswordFormField
-            name="userPassword" floatingLabelText="Your password (more than 8 digits)" />
-          <PasswordFormField
-            name="userConfirmPassword" floatingLabelText="Confirm your password" />
+          <PasswordFormField name="userPassword" floatingLabelText="Password" />
+          <p className="small">Password must be more than 8 characters.</p>
+
+          <PasswordFormField name="userConfirmPassword" floatingLabelText="Confirm password" />
 
           <div className="row" style={{marginTop: 18}}>
             <div className="info-container-col signup-button-container">

@@ -1,0 +1,7 @@
+.profile-info-row { 
+  display: flex; flex-direction: row; align-items: center; width: auto;
+  font-weight: 300; font-size: 18px;
+
+  .flag-icon, img { width: 40px; margin-right: 10px; }
+  .info-text { text-align: left; }
+}

@@ -77,7 +77,7 @@ module.exports = {
       loader: 'style!css?sourceMap&-minimize',
       include: /flexboxgrid/,
     }, {
-      test: /\.(png|jpe?g|gif|svg)$/,
+      test: /\.(png|jpe?g|gif)$/,
       loader: "file-loader?name=img/img-[hash:6].[ext]"
     }, {
       test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,

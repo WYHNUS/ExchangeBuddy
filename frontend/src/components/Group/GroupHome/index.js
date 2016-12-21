@@ -69,6 +69,10 @@ const _tempGroup = {
           name: 'Singapore',
         },
       },
+      homeCountry: {
+        alpha2Code: 'SG',
+        name: 'Singapore',
+      }
     },
     {
       id: 2,
@@ -84,6 +88,10 @@ const _tempGroup = {
           name: 'China',
         },
       },
+      homeCountry: {
+        alpha2Code: 'GB',
+        name: 'United Kingdom',
+      }
     },
     {
       id: 3,

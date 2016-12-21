@@ -1,14 +1,13 @@
 import React from 'react';
-
-import GroupHome from 'components/Group/GroupHome';
+import Profile from 'components/Profile';
 
 const Page = ({ params }) => (
-  <GroupHome groupId={ parseInt(params.id) } />
+  <Profile userId={ parseInt(params.id) } />
 );
 
 Page.propTypes = {
   params: React.PropTypes.shape({
-    id: React.PropTypes.string.isRequired,
+    id: React.PropTypes.string,
   }).isRequired,
 };
 

@@ -61,11 +61,17 @@ a.button:hover { text-decoration: none; }
   }
 }
 
+#root-container { overflow-x: hidden; }
+
 #main {
+  .main-container { padding-bottom: 30px; }
+
   @include media-xs-only { 
     .app-container { 
       height: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; 
-      .main-container { flex-grow: 1; }
+      .topbar { position: fixed; width: 100%; z-index: $topbar-zindex; }
+      .main-container { flex-grow: 1; height: $main-container-height-xs; margin-top: $topbar-height; }
+      .bottom-navigation { position: fixed; bottom: 0; z-index: $bottombar-zindex; }
     }
   }
 

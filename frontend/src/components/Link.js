@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link as ReactLink, browserHistory } from 'react-router';
-import { OutboundLink } from 'react-ga';
 import FlatButton from 'material-ui/FlatButton';
 
 export default class Link extends React.Component {
@@ -10,14 +9,14 @@ export default class Link extends React.Component {
   };
 
   render() {
-    const {to, children, ...rest} = this.props;
+    const { to, children, ...rest } = this.props;
     const toLocation = this.parseTo(to);
     const isInternal = this.isInternal(toLocation);
 
     if (isInternal) {
-      return (<ReactLink to={toLocation.pathname} {...rest}>{children}</ReactLink>);
+      return <ReactLink to={ toLocation.pathname } { ...rest }>{ children }</ReactLink>;
     } else {
-      return (<OutboundLink eventLabel={to} to={to} target="_blank" {...rest}>{children}</OutboundLink>);
+      return <a href={ to } target="_blank" { ...rest }>{ children }</a>;
     }
   }
 
@@ -33,7 +32,7 @@ export default class Link extends React.Component {
 }
 
 export const LinkButton = ({ to, label, children, ...rest }) => (
-  <FlatButton onTouchTap={ () => browserHistory.push(to) } label={ label || children } {...rest} />
+  <FlatButton onTouchTap={ () => browserHistory.push(to) } label={ label || children } { ...rest } />
 );
 
 LinkButton.propTypes = {
