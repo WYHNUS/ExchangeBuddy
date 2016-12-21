@@ -1,6 +1,9 @@
 @import '~scss/common/colors';
 @import '~scss/common/mixins';
 
+// Paragraphs
+p.small { font-size: 11px; color: palette(Grey, 500); }
+
 // Loading
 .loading-container { display: flex; width: 100%; justify-content: center; padding: 20px 0; }
 .floating-loading {

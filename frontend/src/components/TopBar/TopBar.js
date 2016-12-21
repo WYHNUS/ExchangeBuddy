@@ -2,11 +2,14 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 
 import IconButton from 'material-ui/IconButton';
+import Link from 'components/Link';
 import Icon from 'components/Icon';
 import AppBar from 'material-ui/AppBar';
 
 import { isUserAdmin } from 'util/user';
 import * as Colors from 'material-ui/styles/colors';
+
+import './TopBar.scss';
 
 export const menuItems = [
   { label: 'Admin Area', icon: 'fa fa-wrench', to: '/admin', admin: true },
@@ -24,7 +27,9 @@ const TopBar = ({ user }) => (
       <div className="container">
         <div className="row">
           <div className="col col-xs-12 col-sm-6 center-xs start-sm">
-            <Icon name="fa fa-globe" color={ Colors.grey50 } size={28} /> ExchangeBuddy
+            <Link to="/">
+              <Icon name="fa fa-globe" color={ Colors.grey50 } size={28} /> ExchangeBuddy
+            </Link>
           </div>
           <div className="col col-xs-6 end-xs hidden-xs">
             <div className="menu-items">
@@ -51,7 +56,7 @@ const TopBar = ({ user }) => (
 );
 
 TopBar.propTypes = {
-  user: React.PropTypes.object.isRequired,
+  user: React.PropTypes.object,
 };
 
 export default TopBar;

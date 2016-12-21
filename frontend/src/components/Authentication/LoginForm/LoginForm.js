@@ -1,11 +1,10 @@
 import React from 'react';
 import { reduxForm, propTypes as reduxPropTypes } from 'redux-form';
 import validator from 'validator';
+
 import RaisedButton from 'material-ui/RaisedButton';
 import FacebookLoginButton from 'components/FacebookLoginButton';
-
-import { EmailFormField } from '../Field';
-import { PasswordFormField } from '../Field';
+import { EmailFormField, PasswordFormField } from 'components/Field';
 
 const validate = (values) => {
   const errors = {};
