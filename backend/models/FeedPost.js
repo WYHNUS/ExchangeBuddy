@@ -14,6 +14,10 @@ module.exports = function(sequelize, DataType){
                     as: "author"
                 });
 
+                FeedPost.belongsTo(models.Group, {
+                    onDelete: "CASCADE",
+                })
+
                 FeedPost.hasMany(models.FeedPostComment);
                 FeedPost.hasMany(models.FeedPostReaction);
             }
