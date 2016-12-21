@@ -61,6 +61,8 @@ a.button:hover { text-decoration: none; }
   }
 }
 
+#root-container { overflow-x: hidden; }
+
 #main {
   @include media-xs-only { 
     .app-container { 

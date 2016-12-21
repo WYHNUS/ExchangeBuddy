@@ -3,9 +3,7 @@ import React from 'react';
 import GroupHome from 'components/Group/GroupHome';
 
 const Page = ({ params }) => (
-  <div className="group-home container">
-    <GroupHome groupId={ parseInt(params.id) } />
-  </div>
+  <GroupHome groupId={ parseInt(params.id) } />
 );
 
 Page.propTypes = {

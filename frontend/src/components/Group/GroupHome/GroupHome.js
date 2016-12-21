@@ -8,7 +8,7 @@ import GroupMembers from 'components/Group/GroupMembers';
 import { groupPropType } from 'util/propTypes';
 
 const GroupHome = ({ group }) => (
-  <div className="group-home">
+  <div className="group-home container">
     <div className="row">
       <div className="col-xs">
         <GroupHeader group={ group } />
