@@ -1,1 +1,7 @@
 $max-container-width: 1060px;
+$topbar-height: 64px;
+$bottombar-height: 56px;
+$main-container-height-xs: calc(100% - $topbar-height - $bottombar-height);
+
+$topbar-zindex: 100000;
+$bottombar-zindex: 100001;
