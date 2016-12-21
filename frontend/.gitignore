@@ -12,6 +12,8 @@ coverage
 # misc
 .DS_Store
 .env
+.env.production
+.env.staging
 npm-debug.log.*
 
 # intelliJ
