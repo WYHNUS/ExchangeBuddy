@@ -1,0 +1,42 @@
+@import '~scss/common/mixins';
+@import '~scss/common/colors';
+
+.timestamp{
+  color: #CCCCCC;
+  font-weight: normal;
+  font-size: 10px;
+  margin-left: 5px;
+}
+
+.reply { 
+  cursor: pointer; 
+  display: flex; 
+  flex-direction: row; 
+  align-items: center;
+  font-size: 10px;
+  color: palette(Grey, 500);
+  margin-top: 5px;
+  .material-icons { margin-right: 5px; }
+}
+
+.reply-icon{
+  width: 30px;
+  height: 30px;
+}
+
+.reply-main-container{
+  margin-left: 50px;
+}
+
+.comment-main-container{
+}
+
+.comment-overall-container{
+  border-top: 1px solid #d0dee4;
+  border-left: 7px solid #d0dee4;
+}
+
+.comment-info{
+  font-size:12px;
+  font-weight: bold;
+}

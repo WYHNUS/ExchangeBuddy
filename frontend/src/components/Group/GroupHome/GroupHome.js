@@ -30,7 +30,7 @@ const GroupHome = ({ group }) => (
         </div>
         <div className="row">
           <div className="col-xs">
-            <GroupFeed group={ group } />
+            <GroupFeed group={ group }/>
           </div>
         </div>
       </div>

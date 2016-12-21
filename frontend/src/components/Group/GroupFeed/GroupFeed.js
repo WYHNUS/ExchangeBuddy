@@ -1,20 +1,18 @@
 import React from 'react';
-import GroupFeedPost from './GroupFeedPost/GroupFeedPost';
-import Paper from 'components/Paper';
-
-import { groupPropType, userPropType } from 'util/propTypes';
+import GroupFeedPost from './GroupFeedPost';
+import { groupPropType, userPropType, feedPostPropType } from 'util/propTypes';
 
 import './GroupFeed.scss';
 
-const GroupFeed = ({group}) => (
+const GroupFeed = ({ group, feedPosts }) => (
   <div className ="group-feed">
-    <GroupFeedPost group={ group } />
-    <GroupFeedPost group={ group } />
+    { feedPosts.map((feedPost, idx) => <GroupFeedPost key={ idx } feedPost={ feedPost } group={ group } />) }
   </div>
 );
 
 GroupFeed.propTypes = {
   group: groupPropType.isRequired,
+  feedPosts: React.PropTypes.arrayOf(feedPostPropType).isRequired,
   user: userPropType,
 };
 
