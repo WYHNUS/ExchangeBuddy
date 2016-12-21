@@ -63,6 +63,12 @@ p.small { font-size: 11px; color: palette(Grey, 500); }
 // Subheader
 .subheader { margin: 0 0 10px; }
 
+// Bottom Nav
+.bottom-navigation button { 
+  min-width: 60px !important; 
+  img { width: auto !important; margin: 0 auto; }
+}
+
 
 #not-logged-in-text-container {
   margin: 100px;
