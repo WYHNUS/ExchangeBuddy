@@ -34,6 +34,8 @@ module.exports = function(sequelize, DataType) {
                     foreignKey: 'groupId'
                 });
 
+                Group.hasMany(models.FeedPost)
+
             }
         }
     });
