@@ -1,6 +1,4 @@
 import React from 'react';
-import cookie from 'react-cookie';
-import { browserHistory } from 'react-router';
 
 import Avatar from 'material-ui/Avatar';
 import AvatarWithBadges from 'components/AvatarWithBadges';
@@ -40,8 +38,3 @@ export const getBadgedAvatar = (user, country, university, size=64, style) => (
 
 export const isUserAdmin = (user) => user && user.role && user.role >= 8;
 
-export const logoutUser = (cb) => {
-  cookie.remove('authToken');
-  browserHistory.push('/');
-  cb && cb();
-};

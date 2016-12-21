@@ -15,6 +15,7 @@ import AppShell from 'layouts/AppShell';
 import NotFound from 'pages/NotFound';
 import NotLoggedIn from 'pages/NotLoggedIn';
 import Login from 'pages/Login';
+import Logout from 'pages/Logout';
 import Signup from 'pages/Signup';
 
 // Pages
@@ -85,6 +86,7 @@ const Routes = ({ store }) => {
             </Route>
 
             <Route path="notLoggedIn" component={ NotLoggedIn } />
+            <Route path="logout" component={ Logout } />
             <Route path="*" component={ NotFound } />
           </Route>
         </Route>
