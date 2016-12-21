@@ -1,0 +1,9 @@
+@import '~scss/common/mixins';
+
+.profile-header { 
+  padding: 20px; background-image: url(~assets/profile-bg.png);
+
+  @include media-sm-up {
+    .profile-details { margin-top: 150px; margin-left: 30px; }
+  }
+}

@@ -25,6 +25,7 @@ import WikiDetails from 'pages/Wiki/WikiDetails';
 import AdminHome from 'pages/Admin/AdminHome';
 import AdminUniversities from 'pages/Admin/AdminUniversities';
 import GroupHome from 'pages/Group/GroupHome';
+import Profile from 'pages/Profile';
 
 // Google Analytics
 import ReactGA from 'react-ga';
@@ -85,6 +86,7 @@ const Routes = ({ store }) => {
               <Route path="universities" component={ AdminUniversities } />
             </Route>
 
+            <Route path="profile(/:id)" component={ Profile } />
             <Route path="notLoggedIn" component={ NotLoggedIn } />
             <Route path="logout" component={ Logout } />
             <Route path="*" component={ NotFound } />

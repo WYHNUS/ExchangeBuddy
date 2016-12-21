@@ -22,7 +22,7 @@ const GroupMembers = ({ group: { users } }) => (
               <span>{ user.university.name }</span><br />
               { user.homeCountry && 
                 <span className="group-member-item-country">
-                  <FlagIcon code={ user.homeCountry.alpha2Code.toLowerCase() } /> { user.homeCountry.name }
+                  <FlagIcon code={ user.homeCountry.alpha2Code } /> { user.homeCountry.name }
                 </span>
               }
             </div>

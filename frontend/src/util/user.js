@@ -38,3 +38,4 @@ export const getBadgedAvatar = (user, country, university, size=64, style) => (
 
 export const isUserAdmin = (user) => user && user.role && user.role >= 8;
 
+export const getFirstWord = (user) => user && user.name && user.name.split(' ')[0];
