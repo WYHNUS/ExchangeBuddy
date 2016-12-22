@@ -1,4 +1,5 @@
 'use strict';
+var reactions = require('../config/config').reactions;
 
 module.exports = function(sequelize, DataType){
     var FeedPostReaction = sequelize.define("FeedPostReaction", {
@@ -7,7 +8,7 @@ module.exports = function(sequelize, DataType){
             allowNull: false,
             validate: {
                 // add more reactions here
-                isIn: [["like"]]
+                isIn: reactions
             }
         }
     }, {

@@ -14,5 +14,6 @@ module.exports = {
     'facebookClientId': process.env.FB_CLIENT_ID,
     'facebookClientSecret': process.env.FB_CLIENT_SECRET,
     'AWS_ACCESS_KEY_ID': process.env.AWS_ACCESS_KEY_ID,
-    'AWS_SECRET_ACCESS_KEY': process.env.AWS_SECRET_ACCESS_KEY
+    'AWS_SECRET_ACCESS_KEY': process.env.AWS_SECRET_ACCESS_KEY,
+    'reactions': [["like"]],
 };
