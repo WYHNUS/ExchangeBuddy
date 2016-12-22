@@ -16,6 +16,7 @@ var GroupCtrl = require('../controllers/GroupController');
 var MailCtrl = require('../controllers/MailController');
 var ChatCtrl = require('../controllers/ChatController');
 var FeedPostCtrl = require('../controllers/FeedPostController');
+var FeedPostCommentCtrl = require('../controllers/FeedPostCommentController');
 
 // Set up token authenticate
 var verifyToken = jwt({secret: config.secret});
@@ -96,6 +97,7 @@ router.post('/unreactToFeedPost', verifyToken, FeedPostCtrl.unreactToFeedPost);
 
 // FEEDPOST COMMENT CONTROLLER
 router.put('/feedpostComment', verifyToken, FeedPostCommentCtrl.createComment);
+router.patch('/feedpostComment', verifyToken, FeedPostCommentCtrl.updateComment);
 
 // MISC
 router.get('/signups', function(req, res){
