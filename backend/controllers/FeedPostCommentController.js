@@ -65,7 +65,38 @@ exports.updateComment = function(req, res){
 }
 
 exports.deleteComment = function(req, res){
-
+    if(!!req.body.FeedPostId){
+        models.FeedPostComment.findOne({
+            where: {
+                id: req.body.FeedPostId,
+            }
+        }).then(function(comment){
+            if(!!comment){
+                if(comment.authorId == req.user.id){
+                    comment.destroy().then(function(){
+                        res.status(200).send({
+                            status: 'success'
+                        })
+                    })
+                }else{
+                    res.status(401).send({
+                        status: 'fail',
+                        message: 'comment does not belong to user',
+                    })
+                }
+            }else{
+                res.status(400).send({
+                    status: 'fail',
+                    message: 'invalid FeedPostId',
+                })
+            }
+        })
+    }else{
+        res.status(400).send({
+            status: 'fail',
+            message: 'missing or FeedPostId'
+        })
+    }
 }
 
 exports.reactToComment = function(req, res){

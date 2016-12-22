@@ -98,6 +98,7 @@ router.post('/unreactToFeedPost', verifyToken, FeedPostCtrl.unreactToFeedPost);
 // FEEDPOST COMMENT CONTROLLER
 router.put('/feedpostComment', verifyToken, FeedPostCommentCtrl.createComment);
 router.patch('/feedpostComment', verifyToken, FeedPostCommentCtrl.updateComment);
+router.delete('/feedpostComment', verifyToken, FeedPostCommentCtrl.deleteComment);
 
 // MISC
 router.get('/signups', function(req, res){
