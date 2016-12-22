@@ -91,6 +91,7 @@ router.put('/feedpost', verifyToken, FeedPostCtrl.createFeedPost);
 router.get('/feedpost', verifyToken, FeedPostCtrl.getFeedPostByGroup);
 router.patch('/feedpost', verifyToken, FeedPostCtrl.updateFeedPost);
 router.delete('/feedpost', verifyToken, FeedPostCtrl.deleteFeedPost);
+router.post('/reactToFeedPost', verifyToken, FeedPostCtrl.reactToFeedPost);
 
 // MISC
 router.get('/signups', function(req, res){

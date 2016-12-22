@@ -1,4 +1,5 @@
 var models = require("../models");
+var reactions = require('../config/config').reactions;
 
 exports.createFeedPost = function(req, res){
     if(!!req.body.content && !!req.body.GroupId){
@@ -145,7 +146,51 @@ exports.updateFeedPost = function(req, res){
 }
 
 exports.reactToFeedPost = function(req, res){
+    if(!!req.body.FeedPostId && !!req.body.reaction){
+        models.FeedPostReaction.findOne({
+            where: {
+                FeedPostId: req.body.FeedPostId,
+                UserId: req.user.id,
+            }
+        }).then(function(reaction){
+            if(!!reaction){
+                res.status(400).send({
+                    status: 'fail',
+                    message: 'user already reacted to the feedpost'
+                })
+            }else {
+                if(reactions[0].indexOf(req.body.reaction) != -1){
+                    models.FeedPostReaction.create({
+                        reaction: req.body.reaction,
+                        FeedPostId: req.body.FeedPostId,
+                        UserId: req.user.id,
+                    }).then(function(feedpostreaction){
+                        if(!!feedpostreaction){
+                            res.status(200).send({
+                                status: 'success',
+                            })
+                        }else{
+                            res.status(500).send({
+                                status: 'fail',
+                                message: 'fails to create reaction',
+                            })
+                        }
+                    })
+                }else{
+                    res.status(400).send({
+                        status: 'fail',
+                        message: 'unsupported reaction',
+                    })
+                }
+            }
+        })
 
+    }else{
+        res.status(400).send({
+            status: 'fail',
+            message: 'missing FeedPostId or reaction',
+        })
+    }
 }
 
 exports.unreactToFeedPost = function(req, res){
