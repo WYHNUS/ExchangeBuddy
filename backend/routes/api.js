@@ -93,6 +93,10 @@ router.patch('/feedpost', verifyToken, FeedPostCtrl.updateFeedPost);
 router.delete('/feedpost', verifyToken, FeedPostCtrl.deleteFeedPost);
 router.post('/reactToFeedPost', verifyToken, FeedPostCtrl.reactToFeedPost);
 router.post('/unreactToFeedPost', verifyToken, FeedPostCtrl.unreactToFeedPost);
+
+// FEEDPOST COMMENT CONTROLLER
+router.put('/feedpostComment', verifyToken, FeedPostCommentCtrl.createComment);
+
 // MISC
 router.get('/signups', function(req, res){
     models.User.findAll().then(function(users){
