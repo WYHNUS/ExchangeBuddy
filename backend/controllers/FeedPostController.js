@@ -194,5 +194,36 @@ exports.reactToFeedPost = function(req, res){
 }
 
 exports.unreactToFeedPost = function(req, res){
-
+    if(!!req.body.ReactionId){
+        models.FeedPostReaction.findOne({
+            where: {
+                id: req.body.ReactionId,
+            }
+        }).then(function(reaction){
+            if(!!reaction){
+                if(reaction.UserId == req.user.id){
+                    reaction.destroy().then(function(){
+                        res.status(200).send({
+                            status: 'success'
+                        })
+                    })
+                }else{
+                    res.status(401).send({
+                        status: 'fail',
+                        message: 'reaction does not belong to user',
+                    })
+                }
+            }else{
+                res.status(400).send({
+                    status: 'fail',
+                    message: 'invalid reaction id',
+                })
+            }
+        })
+    }else{
+        res.status(400).send({
+            status: 'fail',
+            message: 'missing ReactionId',
+        })
+    }
 }

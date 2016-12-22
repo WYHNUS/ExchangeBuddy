@@ -92,7 +92,7 @@ router.get('/feedpost', verifyToken, FeedPostCtrl.getFeedPostByGroup);
 router.patch('/feedpost', verifyToken, FeedPostCtrl.updateFeedPost);
 router.delete('/feedpost', verifyToken, FeedPostCtrl.deleteFeedPost);
 router.post('/reactToFeedPost', verifyToken, FeedPostCtrl.reactToFeedPost);
-
+router.post('/unreactToFeedPost', verifyToken, FeedPostCtrl.unreactToFeedPost);
 // MISC
 router.get('/signups', function(req, res){
     models.User.findAll().then(function(users){
