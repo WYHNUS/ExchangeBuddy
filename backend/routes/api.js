@@ -99,7 +99,8 @@ router.post('/unreactToFeedPost', verifyToken, FeedPostCtrl.unreactToFeedPost);
 router.put('/feedpostComment', verifyToken, FeedPostCommentCtrl.createComment);
 router.patch('/feedpostComment', verifyToken, FeedPostCommentCtrl.updateComment);
 router.delete('/feedpostComment', verifyToken, FeedPostCommentCtrl.deleteComment);
-
+router.post('/reactToFeedPostComment', verifyToken, FeedPostCommentCtrl.reactToComment);
+router.post('/unreactToFeedPostComment', verifyToken, FeedPostCommentCtrl.unreactToComment);
 // MISC
 router.get('/signups', function(req, res){
     models.User.findAll().then(function(users){
