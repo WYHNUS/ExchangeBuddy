@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import GroupHeader from './GroupHeader';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = () => {
   return {
-    isMobile: state['Browser/isMobile'],
+
   };
 };
 

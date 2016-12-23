@@ -76,6 +76,7 @@ a.button:hover { text-decoration: none; }
   }
 
   @include media-sm-up {
+    .main-container { padding-top: 20px; }
     .bottom-navigation { display: none; }
   }
 }

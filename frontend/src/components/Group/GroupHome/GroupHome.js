@@ -10,12 +10,12 @@ import { groupPropType } from 'util/propTypes';
 const GroupHome = ({ group }) => (
   <div className="group-home container">
     <div className="row">
-      <div className="col-xs">
-        <GroupHeader group={ group } />
-      </div>
-    </div>
-    <div className="row">
       <div className="col-xs-12 col-sm-4">
+        <div className="row">
+          <div className="col-xs">
+            <GroupHeader group={ group } />
+          </div>
+        </div>
         <div className="row">
           <div className="col-xs">
             <GroupMembers group={ group } />
