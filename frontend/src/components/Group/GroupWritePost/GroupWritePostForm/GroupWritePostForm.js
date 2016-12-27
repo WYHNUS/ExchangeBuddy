@@ -20,11 +20,12 @@ const validate = ({ content }) => {
   return errors;
 };
 
-const GroupWritePostForm = ({ group, user, showSnackbar, submitPost, handleSubmit, reset }) => (
+const GroupWritePostForm = ({ group, user, refreshGroupFeed, showSnackbar, submitPost, handleSubmit, reset }) => (
   <form onSubmit={ handleSubmit(({ content }) => {
     submitPost({ content, userId: user.id, groupId: group.id }, () => {
       reset();
       showSnackbar('Posted to group!');
+      refreshGroupFeed();
     }, (err) => {
       showSnackbar('Could not post to group: ' + err);
     });
@@ -49,6 +50,7 @@ GroupWritePostForm.propTypes = {
   user: userPropType.isRequired,
   group: groupPropType.isRequired,
   showSnackbar: React.PropTypes.func.isRequired,
+  refreshGroupFeed: React.PropTypes.func.isRequired,
 };
 
 export default reduxForm({

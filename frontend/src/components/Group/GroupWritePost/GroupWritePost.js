@@ -5,14 +5,15 @@ import GroupWritePostForm from './GroupWritePostForm';
 
 import { groupPropType } from 'util/propTypes';
 
-const GroupWritePost = ({ group }) => (
+const GroupWritePost = ({ group, refreshGroupFeed }) => (
   <Paper>
-    <GroupWritePostForm group={ group } />
+    <GroupWritePostForm group={ group } refreshGroupFeed={ refreshGroupFeed } />
   </Paper>
 );
 
 GroupWritePost.propTypes = {
   group: groupPropType.isRequired,
+  refreshGroupFeed: React.PropTypes.func.isRequired,
 };
 
 export default GroupWritePost;

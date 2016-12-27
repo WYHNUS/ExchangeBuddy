@@ -27,7 +27,7 @@ const refetch = ({ group }) => {
 
   return {
     groupFeedFetch,
-    refreshGroup: () => ({
+    refreshGroupFeed: () => ({
       groupFeedFetch: { ...groupFeedFetch, force: true, refreshing: true },
     }),
   };
