@@ -27,7 +27,7 @@ const defaultTransform = (props) => transform(props, {
   updatedAt: optional(props.updatedAt, date),
 });
 
-const chainTransforms = (...transforms) => (original) => transforms.reduce((p, f) => f(p), original);
+const chainTransforms = (...transforms) => (original) => transforms.reduce((p, f) => transform(p, f(p)), original);
 
 export const makeMap = (f) => (x) => x.map(f);
 
