@@ -82,21 +82,13 @@ exports.getGroup = function(req, res) {
         },
         attributes: ['id', 'name', 'groupType'],
         include: [{
-        	attributes: ['id', 'name', 'profilePictureUrl'],
+        	attributes: ['id', 'name', 'profilePictureUrl', 'fbUserId'],
         	model: User,
         	as: 'user',
-			include: [{
-				attributes: ['name', 'id'],
-				model: University
-			}]
-        	// through: {
-			// 	where: {
-			// 		userId: req.user.id
-			// 	}
-			// }
-        }, {
-        	attributes: ['message'],
-        	model: ChatMsg
+    			include: [{
+    				attributes: ['name', 'id'],
+    				model: University
+    			}]
         }]
     }).then(function(group) {
         res.json(group);
