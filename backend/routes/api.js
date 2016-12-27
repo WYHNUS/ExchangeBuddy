@@ -89,7 +89,7 @@ router.post('/members', verifyToken, GroupCtrl.getMembers);
 
 // FEEDPOST CONTROLLER
 router.put('/feedpost', verifyToken, FeedPostCtrl.createFeedPost);
-router.get('/feedpost', verifyToken, FeedPostCtrl.getFeedPostByGroup);
+router.get('/feedpost/:id', verifyToken, FeedPostCtrl.getFeedPostByGroup);
 router.patch('/feedpost', verifyToken, FeedPostCtrl.updateFeedPost);
 router.delete('/feedpost', verifyToken, FeedPostCtrl.deleteFeedPost);
 router.post('/reactToFeedPost', verifyToken, FeedPostCtrl.reactToFeedPost);
