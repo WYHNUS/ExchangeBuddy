@@ -10,7 +10,7 @@ const int = parseInt;
 // const float = parseFloat;
 const date = (x) => new Date(x);
 const optional = (val, transform, defaultVal) => {
-  if (val !== undefined || val !== null)
+  if (val !== undefined && val !== null)
     return transform(val);
   else 
     return defaultVal;
