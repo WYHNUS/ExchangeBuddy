@@ -23,12 +23,13 @@ const defaultPropTypes = {
 };
 
 const defaultTransform = (props) => transform(props, {
-  id: optional(props.id, int),
   createdAt: optional(props.createdAt, date),
   updatedAt: optional(props.updatedAt, date),
 });
 
 const chainTransforms = (...transforms) => (original) => transforms.reduce((p, f) => f(p), original);
+
+export const makeMap = (f) => (x) => x.map(f);
 
 export const countryPropType = shape({
   ...defaultPropTypes,
@@ -38,9 +39,7 @@ export const countryPropType = shape({
   capital: string,
 });
 
-export const countryTransform = chainTransforms(defaultTransform, () => ({
-
-}));
+export const countryTransform = chainTransforms(defaultTransform);
 
 export const universityPropType = shape({
   ...defaultPropTypes,
@@ -131,5 +130,5 @@ export const feedPostCommentTransform = chainTransforms(defaultTransform, ({ id,
   id: int(id),
   feedPostId: int(feedPostId),
   author: userTransform(author),
-  replies: replies.map(feedPostCommentReplyTransform),
+  replies: optional(replies, makeMap(feedPostCommentReplyTransform)),
 }));
