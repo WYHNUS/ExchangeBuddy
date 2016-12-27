@@ -1,12 +1,13 @@
 import React from 'react';
 
 import Paper from 'components/Paper';
+import GroupWritePostForm from './GroupWritePostForm';
 
 import { groupPropType, userPropType } from 'util/propTypes';
 
 const GroupWritePost = () => (
   <Paper>
-    Say something to your fellow exchangers!
+    <GroupWritePostForm />
   </Paper>
 );
 
