@@ -28,6 +28,9 @@ exports.getFeedPostByGroup = function(req, res){
                 GroupId: req.params.id,
             },
             attributes: ['id', 'content'],
+            order: [
+                ['createdAt', 'DESC'],
+            ],
             include: [
                 {
                     model: models.User,
