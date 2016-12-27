@@ -5,6 +5,8 @@ import { groupPropType, userPropType, feedPostPropType } from 'util/propTypes';
 import FlatButton from 'material-ui/FlatButton';
 import GroupFeedPostComments from './GroupFeedPostComments';
 
+import { getAvatar } from 'util/user';
+
 import './GroupFeedPost.scss';
 
 class GroupFeedPost extends React.Component { 
@@ -37,7 +39,7 @@ class GroupFeedPost extends React.Component {
                 <CardHeader
                   title={ author.name }  
                   subtitle={ author.university.name }
-                  avatar={ author.profilePictureUrl }
+                  avatar={ getAvatar(author, 40) }
                 />
                 <CardText> { content } </CardText>
 
