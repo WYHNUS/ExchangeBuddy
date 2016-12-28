@@ -1,18 +1,19 @@
 import React from 'react';
 
 import Paper from 'components/Paper';
+import GroupWritePostForm from './GroupWritePostForm';
 
-import { groupPropType, userPropType } from 'util/propTypes';
+import { groupPropType } from 'util/propTypes';
 
-const GroupWritePost = () => (
+const GroupWritePost = ({ group, refreshGroupFeed }) => (
   <Paper>
-    Say something to your fellow exchangers!
+    <GroupWritePostForm group={ group } refreshGroupFeed={ refreshGroupFeed } />
   </Paper>
 );
 
 GroupWritePost.propTypes = {
   group: groupPropType.isRequired,
-  user: userPropType,
+  refreshGroupFeed: React.PropTypes.func.isRequired,
 };
 
 export default GroupWritePost;

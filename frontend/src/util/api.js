@@ -101,7 +101,7 @@ export const local = (endpoint) => `localData${endpoint}`;
 
 export const makeReq = (method, url, options) => (values, afterSubmit, failSubmit) => method(url, values, options, afterSubmit, failSubmit);
 
-export const makeRefetch = (url, options, transformations) => {
+export const makeRefetch = (url, options, transform) => {
   const refetcher = {};
 
   refetcher.url = ROOT_URL + url;
@@ -114,8 +114,8 @@ export const makeRefetch = (url, options, transformations) => {
     refetcher.headers.Authorization = 'Bearer ' + getUserToken();
   }
 
-  if (transformations && Array.isArray(transformations))
-    refetcher.then = (value) => ({ value: transformations.reduce((p, f) => f(p), value) });
+  if (transform)
+    refetcher.then = (value) => ({ value: transform(value) });
 
   return refetcher;
 };

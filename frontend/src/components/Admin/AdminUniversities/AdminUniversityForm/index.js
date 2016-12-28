@@ -11,6 +11,7 @@ const mapStateToProps = (state, props) => {
   if (!university) {
     return {
       submitCreateUniversity: makeReq(put, '/university', { userToken: true }),
+      submitUpdateUniversityLogo: makeReq(post, `/updateUniLogo`, { userToken: true, contentType: null }),
     };
   }
 

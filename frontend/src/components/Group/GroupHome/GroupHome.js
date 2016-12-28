@@ -1,7 +1,6 @@
 import React from 'react';
 
 import GroupHeader from 'components/Group/GroupHeader';
-import GroupWritePost from 'components/Group/GroupWritePost';
 import GroupFeed from 'components/Group/GroupFeed';
 import GroupMembers from 'components/Group/GroupMembers';
 
@@ -23,16 +22,7 @@ const GroupHome = ({ group }) => (
         </div>
       </div>
       <div className="col-xs-12 col-sm-8">
-        <div className="row">
-          <div className="col-xs">
-            <GroupWritePost group={ group } />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-xs">
-            <GroupFeed group={ group }/>
-          </div>
-        </div>
+        <GroupFeed group={ group } />
       </div>
     </div>
   </div>

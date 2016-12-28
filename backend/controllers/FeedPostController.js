@@ -22,16 +22,23 @@ exports.createFeedPost = function(req, res){
 }
 
 exports.getFeedPostByGroup = function(req, res){
-    if(!!req.body.GroupId){
+    if(!!req.params.id){
         models.FeedPost.findAll({
             where: {
-                GroupId: req.body.GroupId,
+                GroupId: req.params.id,
             },
             attributes: ['id', 'content'],
+            order: [
+                ['createdAt', 'DESC'],
+            ],
             include: [
                 {
                     model: models.User,
-                    attributes: ['id', 'name', 'profilePictureUrl']
+                    as: 'author',
+                    attributes: ['id', 'name', 'profilePictureUrl'],
+                    include: [{
+                        model: models.University
+                    }]
                 },
                 {
                     model: models.FeedPostComment,
@@ -43,12 +50,14 @@ exports.getFeedPostByGroup = function(req, res){
                             include: [
                                 {
                                     model: models.User,
+                                    as: 'author',
                                     attributes: ['id', 'name', 'profilePictureUrl'],
                                 }
                             ]
                         },
                         {
                             model: models.User,
+                            as: 'author',
                             attributes: ['id', 'name', 'profilePictureUrl'],
                         },
                         {
