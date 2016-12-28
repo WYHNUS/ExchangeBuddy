@@ -21,7 +21,63 @@ exports.createFeedPost = function(req, res){
     }
 }
 
+exports.getFeedPostComment = function(req, res){
+    console.log(models.FeedPost.Instance.prototype);
+    if(!!req.params.id){
+
+    }else{
+        res.send(400).send({
+            status: 'fail',
+            message: 'missing feedpost id',
+        })
+    }
+}
+
 exports.getFeedPostByGroup = function(req, res){
+    if(!!req.params.id){
+        models.FeedPost.findAll({
+            where: {
+                GroupId: req.params.id,
+            },
+            attributes: ['id', 'content'],
+            order: [
+                ['createdAt', 'DESC'],
+            ],
+            include: [
+                {
+                    model: models.User,
+                    as: 'author',
+                    attributes: ['id', 'name', 'profilePictureUrl'],
+                    include: [{
+                        model: models.University
+                    }]
+                },
+                {
+                    model: models.FeedPostReaction,
+                    attributes: ['id', 'reaction'],
+                    include: [
+                        {
+                            model: models.User,
+                            attributes: ['id', 'name', 'profilePictureUrl'],
+                        }
+                    ]
+                }
+            ]
+        }).then(function(feedposts){
+            res.status(200).send({
+                status: 'success',
+                feedposts,
+            })
+        })
+    }else{
+        res.status(400).send({
+            status: 'fail',
+            message: 'missing GroupId',
+        })
+    }
+}
+
+exports.getFeedPostByGroupWithComment = function(req, res){
     if(!!req.params.id){
         models.FeedPost.findAll({
             where: {
