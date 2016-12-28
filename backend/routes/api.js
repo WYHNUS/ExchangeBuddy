@@ -16,7 +16,7 @@ var GroupCtrl = require('../controllers/GroupController');
 var MailCtrl = require('../controllers/MailController');
 var FeedPostCtrl = require('../controllers/FeedPostController');
 var FeedPostCommentCtrl = require('../controllers/FeedPostCommentController');
-
+var FeedPostCommentReplyCtrl = require('../controllers/FeedPostCommentReplyController');
 // Set up token authenticate
 var verifyToken = jwt({secret: config.secret});
 
@@ -99,6 +99,8 @@ router.delete('/feedpostComment', verifyToken, FeedPostCommentCtrl.deleteComment
 router.post('/reactToFeedPostComment', verifyToken, FeedPostCommentCtrl.reactToComment);
 router.post('/unreactToFeedPostComment', verifyToken, FeedPostCommentCtrl.unreactToComment);
 
+// FEEDPOST COMMENT REPLY CONTROLLER
+router.put('/feedpostCommentReply', verifyToken, FeedPostCommentReplyCtrl.createReply);
 
 // MISC
 router.get('/signups', function(req, res){
