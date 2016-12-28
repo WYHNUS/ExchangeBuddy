@@ -1,5 +1,4 @@
 var models = require('./models');
-var ChatCtrl = require('./controllers/ChatController');
 var Group = models.Group;
 
 module.exports = function(io){

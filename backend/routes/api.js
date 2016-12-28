@@ -14,18 +14,13 @@ var StoryCtrl = require('../controllers/StoryController');
 var WikiCtrl = require('../controllers/WikiController');
 var GroupCtrl = require('../controllers/GroupController');
 var MailCtrl = require('../controllers/MailController');
-var ChatCtrl = require('../controllers/ChatController');
 var FeedPostCtrl = require('../controllers/FeedPostController');
 var FeedPostCommentCtrl = require('../controllers/FeedPostCommentController');
 
 // Set up token authenticate
 var verifyToken = jwt({secret: config.secret});
 
-router.get('/', function(req, res) {
-    res.json({
-        status: 'ok'
-    });
-});
+
 
 // AUTHENTICATE CONTROLLER
 
@@ -101,6 +96,8 @@ router.patch('/feedpostComment', verifyToken, FeedPostCommentCtrl.updateComment)
 router.delete('/feedpostComment', verifyToken, FeedPostCommentCtrl.deleteComment);
 router.post('/reactToFeedPostComment', verifyToken, FeedPostCommentCtrl.reactToComment);
 router.post('/unreactToFeedPostComment', verifyToken, FeedPostCommentCtrl.unreactToComment);
+
+
 // MISC
 router.get('/signups', function(req, res){
     models.User.findAll().then(function(users){
@@ -109,5 +106,11 @@ router.get('/signups', function(req, res){
 })
 router.get('/me', verifyToken, function(req, res) {
     res.send(req.user);
+});
+
+router.get('/', function(req, res) {
+    res.json({
+        status: 'ok'
+    });
 });
 module.exports = router;
