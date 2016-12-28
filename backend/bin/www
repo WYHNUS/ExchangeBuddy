@@ -11,7 +11,6 @@ var httpServer = http.createServer(app);
 
 // set up socket
 var io = require('socket.io')(httpServer);
-require('../socket')(io);
 
 models.sequelize.sync({force: false}).then(function () {
     httpServer.listen(app.get('port'));
