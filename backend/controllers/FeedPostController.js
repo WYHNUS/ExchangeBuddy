@@ -22,9 +22,53 @@ exports.createFeedPost = function(req, res){
 }
 
 exports.getFeedPostComment = function(req, res){
-    console.log(models.FeedPost.Instance.prototype);
     if(!!req.params.id){
-
+        models.FeedPostComment.findAll({
+            where: {
+                FeedPostId: req.params.id
+            },
+            attributes: ['id', 'content'],
+            include: [
+                {
+                    model: models.FeedPostCommentReply,
+                    attributes: ['id', 'content'],
+                    include: [
+                        {
+                            model: models.User,
+                            as: 'author',
+                            attributes: ['id', 'name', 'profilePictureUrl'],
+                        }
+                    ]
+                },
+                {
+                    model: models.User,
+                    as: 'author',
+                    attributes: ['id', 'name', 'profilePictureUrl'],
+                },
+                {
+                    model: models.FeedPostCommentReaction,
+                    attributes: ['id', 'reaction'],
+                    include: [
+                        {
+                            model: models.User,
+                            attributes: ['id', 'name', 'profilePictureUrl'],
+                        }
+                    ]
+                }
+            ]
+        }).then(function(comments){
+            if(!!comments){
+                res.status(200).send({
+                    status: 'success',
+                    data: comments
+                })
+            }else{
+                res.status(400).send({
+                    status: 'fail',
+                    message: 'invalid feedpost id',
+                })
+            }
+        })
     }else{
         res.send(400).send({
             status: 'fail',
@@ -66,7 +110,7 @@ exports.getFeedPostByGroup = function(req, res){
         }).then(function(feedposts){
             res.status(200).send({
                 status: 'success',
-                feedposts,
+                data: feedposts,
             })
         })
     }else{
@@ -142,7 +186,7 @@ exports.getFeedPostByGroupWithComment = function(req, res){
         }).then(function(feedposts){
             res.status(200).send({
                 status: 'success',
-                feedposts,
+                data: feedposts,
             })
         })
     }else{
