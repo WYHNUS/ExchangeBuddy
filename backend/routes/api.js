@@ -101,6 +101,7 @@ router.post('/unreactToFeedPostComment', verifyToken, FeedPostCommentCtrl.unreac
 
 // FEEDPOST COMMENT REPLY CONTROLLER
 router.put('/feedpostCommentReply', verifyToken, FeedPostCommentReplyCtrl.createReply);
+router.delete('/feedpostCommentReply', verifyToken, FeedPostCommentReplyCtrl.deleteReply);
 
 // MISC
 router.get('/signups', function(req, res){

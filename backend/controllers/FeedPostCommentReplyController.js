@@ -28,7 +28,39 @@ exports.createReply = function(req, res){
 }
 
 exports.deleteReply = function(req, res){
-
+    if(!!req.body.ReplyId){
+        models.FeedPostCommentReply.findOne({
+            where: {
+                id: req.body.ReplyId,
+            }
+        }).then(function(reply){
+            if(!!reply){
+                if(reply.authorId == req.user.id){
+                    reply.destroy().then(function(){
+                        res.status(200).send({
+                            status: 'success',
+                            message: 'reply deleted',
+                        })
+                    })
+                }else{
+                    res.status(401).send({
+                        status: 'fail',
+                        message: 'unauthorized'
+                    })
+                }
+            }else{
+                res.status(400).send({
+                    status: 'fail',
+                    message: 'invalid ReplyId'
+                })
+            }
+        })
+    }else{
+        res.status(400).send({
+            status: 'fail',
+            message: 'missing ReplyId',
+        })
+    }
 }
 
 exports.updateReply = function(req, res){
