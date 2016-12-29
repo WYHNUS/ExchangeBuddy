@@ -38,6 +38,10 @@ module.exports = function(sequelize, DataType) {
                     onDelete: "CASCADE"
                 })
 
+                Group.belongsTo(models.Exchange, {
+                    onDelete: "SET NULL"
+                })
+
             }
         }
     });

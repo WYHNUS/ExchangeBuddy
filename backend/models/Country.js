@@ -69,6 +69,12 @@ module.exports = function(sequelize, DataType) {
                 Country.hasMany(models.University, {
                     onDelete: "CASCADE"
                 });
+
+                Country.hasMany(models.Question, {
+                    foreignKey: {
+                        allowNull: true
+                    }
+                });
             }
         }
     });
