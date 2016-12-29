@@ -23,7 +23,7 @@ Container.propTypes = {
 };
 
 const refetch = ({ group }) => {
-  const groupFeedFetch = makeRefetch(`/feedpost/${ group.id }`, { userToken: true }, ({ feedposts }) => feedposts.map(feedPostTransform));
+  const groupFeedFetch = makeRefetch(`/feedposts/${ group.id }`, { userToken: true }, ({ data }) => data.map(feedPostTransform));
 
   return {
     groupFeedFetch,
