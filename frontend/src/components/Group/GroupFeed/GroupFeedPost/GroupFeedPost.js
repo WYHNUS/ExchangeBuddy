@@ -5,6 +5,7 @@ import { groupPropType, userPropType, feedPostPropType } from 'util/propTypes';
 import FlatButton from 'material-ui/FlatButton';
 import GroupFeedPostComments from './GroupFeedPostComments';
 
+import { formatRelaTime } from 'util/helper';
 import { getAvatar } from 'util/user';
 
 import './GroupFeedPost.scss';
@@ -28,7 +29,7 @@ class GroupFeedPost extends React.Component {
   render() {
 
     const { group, feedPost } = this.props;
-    const { content, author } = feedPost;
+    const { content, author, createdAt } = feedPost;
 
     return (
       <div>
@@ -37,11 +38,19 @@ class GroupFeedPost extends React.Component {
             <div className="post-main-container"> 
               <Paper full>           
                 <CardHeader
-                  title={ author.name }  
-                  subtitle={ author.university.name }
-                  avatar={ getAvatar(author, 40) }
-                />
-                <CardText> { content } </CardText>
+                  title={ 
+                    <span className="post-title"> 
+                      <span className="post-author-name">{ author.name }</span>
+                      <span className="post-timestamp">{ formatRelaTime(createdAt) }</span>
+                    </span>
+                  }
+                  subtitle={ 
+                    <span className="post-subtitle">{ author.university.name  }</span>
+                  }
+                  avatar={ getAvatar(author, 40) } />
+                <CardText>
+                  <div className="post-content">{ content }</div>
+                </CardText>
 
                 <CardActions>
                   <FlatButton label="Comments" onTouchTap={this.handleExpand.bind(this)} />

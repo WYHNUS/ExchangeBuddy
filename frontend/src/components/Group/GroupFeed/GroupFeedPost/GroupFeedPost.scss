@@ -1,6 +1,11 @@
 @import '~scss/common/mixins';
 @import '~scss/common/colors';
 
-.comments-main-container{
+.post-title {
+  line-height: 22px;
+  .post-timestamp { font-size: 11px; color: palette(Grey, 400); font-weight: 400; margin-left: 10px; }
+}
 
+.post-subtitle {
+  font-weight: 400; font-size: 13px;
 }
