@@ -1,12 +1,18 @@
 import React from 'react';
-import Paper from 'components/Paper';
+
 import { CardText, CardHeader, CardActions } from 'material-ui/Card';
-import { groupPropType, userPropType, feedPostPropType } from 'util/propTypes';
+import { MenuItem } from 'material-ui/Menu';
 import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
+import AvatarRow from 'components/AvatarRow';
+import Icon from 'components/Icon';
+import Paper from 'components/Paper';
 import GroupFeedPostComments from './GroupFeedPostComments';
 
 import { formatRelaTime } from 'util/helper';
-import { getAvatar } from 'util/user';
+import { getAvatarUrl } from 'util/user';
+import { groupPropType, userPropType, feedPostPropType } from 'util/propTypes';
 
 import './GroupFeedPost.scss';
 
@@ -26,45 +32,53 @@ class GroupFeedPost extends React.Component {
     };
 
     this.toggleComments = this.toggleComments.bind(this);
+    this.editFeedPost = this.editFeedPost.bind(this);
+    this.deleteFeedPost = this.deleteFeedPost.bind(this);
   }
 
   render() {
-    const { expanded } = this.state;
-    const { group, feedPost } = this.props;
+    const { expanded, isPostDropdownOpen } = this.state;
+    const { user, group, feedPost } = this.props;
     const { content, author, createdAt } = feedPost;
 
+    const postDropdown = (
+      <IconMenu iconButtonElement={ <IconButton><Icon name="keyboard_arrow_down" /></IconButton> }>
+        <MenuItem className="post-dropdown-menuitem" primaryText="Edit" onClick={ this.editFeedPost } />
+        <MenuItem className="post-dropdown-menuitem" primaryText="Delete" onClick={ this.deleteFeedPost } />
+      </IconMenu>
+    );
+
     return (
-      <div>
-        <div className="row">
-          <div className="col-xs-12">
-            <div className="post-main-container"> 
-              <Paper full>           
-                <CardHeader
-                  title={ 
-                    <span className="post-title"> 
-                      <span className="post-author-name">{ author.name }</span>
-                      <span className="post-timestamp">{ formatRelaTime(createdAt) }</span>
-                    </span>
-                  }
-                  subtitle={ 
-                    <span className="post-subtitle">{ author.university.name  }</span>
-                  }
-                  avatar={ getAvatar(author, 40) } />
-                <CardText>
-                  <div className="post-content">{ content }</div>
-                </CardText>
+      <div className="row">
+        <div className="col-xs-12">
+          <div className="post-main-container"> 
+            <Paper full>           
+              <AvatarRow 
+                className="post-header-row"
+                avatar={ getAvatarUrl(author, 40) } 
+                rightIcon={ user && user.id === author.id ? postDropdown : null }>
+                <div className="post-header">
+                  <span className="post-title"> 
+                    <span className="post-author-name">{ author.name }</span>
+                    <span className="post-timestamp">{ formatRelaTime(createdAt) }</span>
+                  </span>
+                  <span className="post-subtitle">{ author.university.name  }</span>
+                </div>
+              </AvatarRow>
+              <CardText>
+                <div className="post-content">{ content }</div>
+              </CardText>
 
-                <CardActions>
-                  <FlatButton label="Comments" onTouchTap={ this.toggleComments } />
-                </CardActions>
+              <CardActions>
+                <FlatButton label="Comments" onTouchTap={ this.toggleComments } />
+              </CardActions>
 
-              </Paper>    
-            </div>
-
-            { expanded &&
-              <GroupFeedPostComments group={ group } feedPost={ feedPost } />
-            }    
+            </Paper>    
           </div>
+
+          { expanded &&
+            <GroupFeedPostComments group={ group } feedPost={ feedPost } />
+          }    
         </div>
       </div>
     );
@@ -74,6 +88,13 @@ class GroupFeedPost extends React.Component {
     this.setState({ expanded: !this.state.expanded });
   }
 
+  editFeedPost() {
+    // TODO: Open edit box
+  }
+
+  deleteFeedPost() {
+    // TODO: Open confirmation dialog
+  }
 }
 
 export default GroupFeedPost;
