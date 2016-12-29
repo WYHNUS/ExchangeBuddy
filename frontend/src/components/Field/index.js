@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createElement } from 'react';
 import { Field } from 'redux-form';
 import { TextField, SelectField, AutoComplete } from 'redux-form-material-ui';
 import Dropzone from 'react-dropzone';
@@ -12,53 +12,34 @@ const propTypes = {
   name: React.PropTypes.string.isRequired,
 };
 
-export const TextFormField = ({ name, ...rest }) => {
-  return (
-    <Field
-      component={ TextField }
-      name={name}
-      fullWidth
-      autoComplete="off"
-      {...rest} />
-  );
-}
+const createFieldComponent = (RFMUIComponent, props) => {
+  class FormField extends React.Component {
+    static propTypes = propTypes;
 
-TextFormField.propTypes = propTypes;
+    render() {
+      return createElement(Field, {
+        component: RFMUIComponent,
+        ref: 'formComponent',
+        withRef: true,
+        ...props,
+        ...this.props,
+      });
+    }
 
-export const EmailFormField = TextFormField;
-EmailFormField.propTypes = propTypes;
+    getFieldComponent() {
+      return this.refs.formComponent;
+    }
+  }
 
-export const PasswordFormField = ({ name, ...rest }) => {
-  return (
-    <Field
-      component={ TextField }
-      name={name}
-      fullWidth
-      type="password"
-      autoComplete="off"
-      {...rest} />
-  );
+  FormField.displayName = `ReduxFormMaterialUIField${ RFMUIComponent.name }`;
+  return FormField;
 };
 
-PasswordFormField.propTypes = propTypes;
-
-export const SelectFormField = ({ name, ...rest }) => 
-  <Field
-    component={ SelectField }
-    name={name}
-    fullWidth
-    {...rest} />;
-
-SelectFormField.propTypes = propTypes;
-
-export const AutoCompleteFormField = ({ name, ...rest }) =>
-  <Field
-    component={ AutoComplete }
-    name={name}
-    fullWidth
-    {...rest} />;
-
-AutoCompleteFormField.propTypes = propTypes;
+export const TextFormField = createFieldComponent(TextField, { fullWidth: true, autoComplete: 'off' });
+export const EmailFormField = createFieldComponent(TextField, { fullWidth: true, autoComplete: 'off' });
+export const PasswordFormField = createFieldComponent(TextField, { type: 'password', fullWidth: true, autoComplete: 'off' });
+export const SelectFormField = createFieldComponent(SelectField, { fullWidth: true });
+export const AutoCompleteFormField = createFieldComponent(AutoComplete, { fullWidth: true });
 
 const DropzoneField = ({ name, input, meta, ...rest }) => { 
   const { value } = input;
@@ -99,10 +80,4 @@ DropzoneField.propTypes = {
   meta: React.PropTypes.object,
 };
 
-export const DropzoneFormField = ({ name, ...rest }) => 
-  <Field
-    component={ DropzoneField }
-    name={ name }
-    {...rest} />;
-
-DropzoneFormField.propTypes = propTypes;
+export const DropzoneFormField = createFieldComponent(DropzoneField, {});

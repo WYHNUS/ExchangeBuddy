@@ -2,8 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import { reduxForm, propTypes as reduxFormPropTypes } from 'redux-form';
 
-import { Field } from 'redux-form';
-import { TextField } from 'redux-form-material-ui';
+import { TextFormField } from 'components/Field';
 import Icon from 'components/Icon';
 import IconButton from 'material-ui/IconButton';
 
@@ -43,7 +42,7 @@ class GroupFeedPostWriteReply extends React.PureComponent {
     const { isOpen } = this.props;
 
     if (!prevIsOpen && isOpen) {
-      this.contentTextField && this.contentTextField.getRenderedComponent().getRenderedComponent().focus();
+      this.contentTextField && this.contentTextField.getFieldComponent().getRenderedComponent().getRenderedComponent().focus();
     }
   }
 
@@ -57,13 +56,10 @@ class GroupFeedPostWriteReply extends React.PureComponent {
             <Icon name="close" color={ Colors.grey500 } size={16} />
           </IconButton> 
 
-          <Field 
-            component={ TextField }
-            withRef
+          <TextFormField
             ref={ (input) => this.contentTextField = input }
             name="content" 
             hintText="Reply" 
-            fullWidth
             underlineShow={ false } 
             style={{ fontSize: 12 }}
             errorStyle={{ display: 'none' }} />
