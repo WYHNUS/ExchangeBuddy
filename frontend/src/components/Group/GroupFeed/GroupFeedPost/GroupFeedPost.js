@@ -10,7 +10,9 @@ import AvatarRow from 'components/AvatarRow';
 import Icon from 'components/Icon';
 import IconContainer from 'components/IconContainer';
 import Paper from 'components/Paper';
+
 import GroupFeedPostComments from './GroupFeedPostComments';
+import GroupFeedUpdatePost from '../GroupFeedUpdatePost';
 
 import { formatRelaTime } from 'util/helper';
 import { getAvatarUrl } from 'util/user';
@@ -36,27 +38,89 @@ class GroupFeedPost extends React.Component {
     this.state = {
       expanded: false,
       isDeleteConfirmationDialogOpen: false,
+      isEditing: false,
     };
 
+    this.getDeleteConfirmationDialog = this.getDeleteConfirmationDialog.bind(this);
+    this.getPostDropdown = this.getPostDropdown.bind(this);
     this.toggleComments = this.toggleComments.bind(this);
     this.editFeedPost = this.editFeedPost.bind(this);
+    this.stopEditingFeedPost = this.stopEditingFeedPost.bind(this);
     this.openDeleteConfirmationDialog = this.openDeleteConfirmationDialog.bind(this);
     this.closeDeleteConfirmationDialog = this.closeDeleteConfirmationDialog.bind(this);
   }
 
   render() {
-    const { expanded, isDeleteConfirmationDialogOpen } = this.state;
-    const { user, group, feedPost, showSnackbar, submitDeleteFeedPost, refreshGroupFeed } = this.props;
+    const { expanded, isEditing } = this.state;
+    const { user, group, feedPost, refreshGroupFeed } = this.props;
     const { content, author, createdAt } = feedPost;
 
-    const postDropdown = (
+    const PostDropdown = this.getPostDropdown();
+    const DeleteConfirmationDialog = this.getDeleteConfirmationDialog();
+
+    return (
+      <div className="row">
+        <div className="col-xs-12">
+          { isEditing 
+            ? <GroupFeedUpdatePost 
+                form={`groupFeedUpdatePost-${ feedPost.id }`}
+                feedPost={ feedPost } 
+                refreshGroupFeed={ refreshGroupFeed } 
+                stopEditingFeedPost={ this.stopEditingFeedPost } />
+            : <div>
+                <div className="post-main-container"> 
+                  <Paper full>           
+                    <AvatarRow 
+                      className="post-header-row"
+                      avatar={ getAvatarUrl(author, 40) } 
+                      rightIcon={ user && user.id === author.id && <PostDropdown /> }>
+                      <div className="post-header">
+                        <span className="post-title"> 
+                          <span className="post-author-name">{ author.name }</span>
+                          <span className="post-timestamp">{ formatRelaTime(createdAt) }</span>
+                        </span>
+                        <span className="post-subtitle">{ author.university.name  }</span>
+                      </div>
+                    </AvatarRow>
+                    <CardText>
+                      <div className="post-content">
+                        { content }
+                      </div>
+                    </CardText>
+
+                    <CardActions>
+                      <FlatButton label="Comments" onTouchTap={ this.toggleComments } />
+                    </CardActions>
+
+                  </Paper>    
+                </div>
+
+                { expanded &&
+                  <GroupFeedPostComments group={ group } feedPost={ feedPost } />
+                }
+
+                <DeleteConfirmationDialog />
+              </div>
+            }
+        </div>
+      </div>
+    );
+  }
+
+  getPostDropdown() {
+    return () => (
       <IconMenu iconButtonElement={ <IconButton><Icon name="keyboard_arrow_down" /></IconButton> }>
         <MenuItem className="post-dropdown-menuitem" primaryText="Edit" onClick={ this.editFeedPost } />
         <MenuItem className="post-dropdown-menuitem" primaryText="Delete" onClick={ this.openDeleteConfirmationDialog } />
       </IconMenu>
     );
+  }
 
-    const DeleteConfirmationDialog = () => (
+  getDeleteConfirmationDialog() {
+    const { isDeleteConfirmationDialogOpen } = this.state;
+    const { feedPost, submitDeleteFeedPost, refreshGroupFeed, showSnackbar } = this.props;
+
+    return () => (
       <Dialog 
         open={ isDeleteConfirmationDialogOpen }
         onRequestClose={ this.closeDeleteConfirmationDialog }
@@ -79,43 +143,6 @@ class GroupFeedPost extends React.Component {
         <IconContainer icon="warning" title="Are you sure you want to delete your post?" />
       </Dialog>
     );
-
-    return (
-      <div className="row">
-        <div className="col-xs-12">
-          <div className="post-main-container"> 
-            <Paper full>           
-              <AvatarRow 
-                className="post-header-row"
-                avatar={ getAvatarUrl(author, 40) } 
-                rightIcon={ user && user.id === author.id ? postDropdown : null }>
-                <div className="post-header">
-                  <span className="post-title"> 
-                    <span className="post-author-name">{ author.name }</span>
-                    <span className="post-timestamp">{ formatRelaTime(createdAt) }</span>
-                  </span>
-                  <span className="post-subtitle">{ author.university.name  }</span>
-                </div>
-              </AvatarRow>
-              <CardText>
-                <div className="post-content">{ content }</div>
-              </CardText>
-
-              <CardActions>
-                <FlatButton label="Comments" onTouchTap={ this.toggleComments } />
-              </CardActions>
-
-            </Paper>    
-          </div>
-
-          { expanded &&
-            <GroupFeedPostComments group={ group } feedPost={ feedPost } />
-          }
-
-          <DeleteConfirmationDialog />
-        </div>
-      </div>
-    );
   }
 
   toggleComments() {
@@ -131,7 +158,11 @@ class GroupFeedPost extends React.Component {
   }
 
   editFeedPost() {
-    // TODO: Open edit box
+    this.setState({ isEditing: true });
+  }
+
+  stopEditingFeedPost() {
+    this.setState({ isEditing: false });
   }
 }
 

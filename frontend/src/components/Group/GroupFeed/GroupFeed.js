@@ -15,7 +15,9 @@ const GroupFeed = ({ group, feedPosts, refreshGroupFeed }) => (
     </div>
     <div className="row">
       <div className="col-xs">
-        { feedPosts.map((feedPost, idx) => <GroupFeedPost key={ idx } feedPost={ feedPost } group={ group } refreshGroupFeed={ refreshGroupFeed } />) }
+        { feedPosts.map((feedPost, idx) => 
+          <GroupFeedPost key={ idx } feedPost={ feedPost } group={ group } refreshGroupFeed={ refreshGroupFeed } />
+        ) }
       </div>
     </div>
   </div>
