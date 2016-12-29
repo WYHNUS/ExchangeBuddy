@@ -26,9 +26,16 @@ class GroupFeedPostComment extends React.Component {
       expanded: false,
       isReplyBoxOpen: false,
     };
+
+    this.expandReplies = this.expandReplies.bind(this);
+    this.collapseReplies = this.collapseReplies.bind(this);
+    this.toggleReplies = this.toggleReplies.bind(this);
+    this.openReplyBox = this.openReplyBox.bind(this);
+    this.closeReplyBox = this.closeReplyBox.bind(this);
   }
 
   render() {
+    const { expanded, isReplyBoxOpen } = this.state;
     const { feedComment, refreshComments } = this.props;
     const { content, author, createdAt, replies } = feedComment;
 
@@ -45,8 +52,10 @@ class GroupFeedPostComment extends React.Component {
                 createdAt={ createdAt }
                 afterContent={
                   <div className="comment-actions">
-                    <div className="comment-action replies" onClick={ this.handleClickExpand.bind(this) }>Replies ({ replies.length })</div>
-                    <div className="comment-action reply" onClick={ this.handleClickReply.bind(this) }> 
+                    <div className="comment-action replies" onClick={ this.toggleReplies }>
+                      { expanded ? 'Hide' : 'Show' } Replies ({ replies.length })
+                    </div>
+                    <div className="comment-action reply" onClick={ this.openReplyBox }> 
                       <Icon name="reply" size={16} color={ Colors.grey400 } /> Reply
                     </div>
                   </div>
@@ -54,7 +63,7 @@ class GroupFeedPostComment extends React.Component {
             </div>
           </div>
 
-          { this.state.expanded &&
+          { expanded &&
             <div className="reply-main-container">
               <div className="col-xs-12">
                 { feedComment.replies.map((reply, idx) => (
@@ -65,25 +74,36 @@ class GroupFeedPostComment extends React.Component {
           }
 
           <GroupFeedPostWriteReply 
-            isOpen={ this.state.isReplyBoxOpen }
+            isOpen={ isReplyBoxOpen }
             form={`groupFeedPostWriteReplyForm-${ feedComment.id }`}
             feedComment={ feedComment } 
             refreshComments={ refreshComments } 
-            handleCloseReplyBox={ () => this.setState({ isReplyBoxOpen: false }) } />
+            closeReplyBox={ this.closeReplyBox }
+            expandReplies={ this.expandReplies } />
 
         </Paper>
       </div>
-
-      )
-
+    );
   }
 
-  handleClickExpand() {
+  expandReplies() {
     this.setState({ expanded: true });
   }
 
-  handleClickReply() {
+  collapseReplies() {
+    this.setState({ expanded: false });
+  }
+
+  toggleReplies() {
+    this.setState({ expanded: !this.state.expanded });
+  }
+
+  openReplyBox() {
     this.setState({ isReplyBoxOpen: true });
+  }
+
+  closeReplyBox() {
+    this.setState({ isReplyBoxOpen: false });
   }
 
 }

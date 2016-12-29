@@ -20,17 +20,19 @@ const validate = ({ content }) => {
   return errors;
 };
 
-const GroupFeedPostWriteReply = ({ feedComment, user, refreshComments, isOpen, handleCloseReplyBox, showSnackbar, submitPost, handleSubmit, reset }) => (
+const GroupFeedPostWriteReply = ({ feedComment, user, refreshComments, isOpen, closeReplyBox, expandReplies, showSnackbar, submitPost, handleSubmit, reset }) => (
   <form onSubmit={ handleSubmit(({ content }) => {
     submitPost({ content, userId: user.id, feedPostCommentId: feedComment.id }, () => {
       reset();
+      expandReplies();
       refreshComments();
+      closeReplyBox();
     }, (err) => {
       showSnackbar('Could not add reply: ' + err);
     });
   }) }>
     <div className={ cn('group-feed-post-write-reply', { visible: isOpen }) }>
-      <IconButton onClick={ handleCloseReplyBox }>
+      <IconButton onClick={ closeReplyBox }>
         <Icon name="close" color={ Colors.grey500 } size={16} />
       </IconButton> 
 
@@ -55,7 +57,8 @@ GroupFeedPostWriteReply.propTypes = {
   showSnackbar: React.PropTypes.func.isRequired,
   refreshComments: React.PropTypes.func.isRequired,
   isOpen: React.PropTypes.bool,
-  handleCloseReplyBox: React.PropTypes.func.isRequired,
+  closeReplyBox: React.PropTypes.func.isRequired,
+  expandReplies: React.PropTypes.func.isRequired,
 };
 
 export default reduxForm({
