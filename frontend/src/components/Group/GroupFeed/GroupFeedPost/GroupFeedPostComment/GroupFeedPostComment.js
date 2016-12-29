@@ -4,6 +4,7 @@ import Icon from 'components/Icon';
 
 import GroupFeedPostCommentReply from './GroupFeedPostCommentReply';
 import GroupFeedPostCommentCardHeader from './GroupFeedPostCommentCardHeader';
+import GroupFeedPostWriteReply from './GroupFeedPostWriteReply';
 
 import { groupPropType, userPropType, feedPostCommentPropType } from 'util/propTypes';
 
@@ -15,6 +16,7 @@ class GroupFeedPostComment extends React.Component {
     group: groupPropType.isRequired,
     feedComment: feedPostCommentPropType.isRequired,
     user: userPropType,
+    refreshComments: React.PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -22,11 +24,12 @@ class GroupFeedPostComment extends React.Component {
 
     this.state = {
       expanded: false,
+      isReplyBoxOpen: false,
     };
   }
 
   render() {
-    const { feedComment } = this.props;
+    const { feedComment, refreshComments } = this.props;
     const { content, author, createdAt, replies } = feedComment;
 
     return (
@@ -61,6 +64,13 @@ class GroupFeedPostComment extends React.Component {
             </div>
           }
 
+          <GroupFeedPostWriteReply 
+            isOpen={ this.state.isReplyBoxOpen }
+            form={`groupFeedPostWriteReplyForm-${ feedComment.id }`}
+            feedComment={ feedComment } 
+            refreshComments={ refreshComments } 
+            handleCloseReplyBox={ () => this.setState({ isReplyBoxOpen: false }) } />
+
         </Paper>
       </div>
 
@@ -73,7 +83,7 @@ class GroupFeedPostComment extends React.Component {
   }
 
   handleClickReply() {
-    // TODO: Open reply box
+    this.setState({ isReplyBoxOpen: true });
   }
 
 }

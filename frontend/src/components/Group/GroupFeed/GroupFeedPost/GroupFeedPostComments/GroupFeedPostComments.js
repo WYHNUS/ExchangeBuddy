@@ -9,9 +9,9 @@ import './GroupFeedPostComments.scss';
 const GroupFeedPostComments = ({ feedComments, group, feedPost, refreshComments }) => (
   <div className="comments-main-container">
     { feedComments.map((comment, idx) => (
-      <GroupFeedPostComment key={ idx } feedComment={ comment } group={ group } feedPost={ feedPost } />
+      <GroupFeedPostComment key={ idx } feedComment={ comment } group={ group } feedPost={ feedPost } refreshComments={ refreshComments } />
       )) }
-    <GroupFeedPostWriteComment feedPost={ feedPost } refreshComments={ refreshComments } />
+    <GroupFeedPostWriteComment form={`groupFeedPostWriteCommentForm-${ feedPost.id }`} feedPost={ feedPost } refreshComments={ refreshComments } />
   </div>
 );
 

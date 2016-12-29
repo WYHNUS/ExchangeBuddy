@@ -1,0 +1,8 @@
+@import '~scss/common/colors';
+
+.group-feed-post-write-reply {
+  display: flex; flex-direction: row;
+  background-color: palette(Blue Grey, 50); padding-left: 70px;
+
+  &:not(.visible) { display: none; }
+}

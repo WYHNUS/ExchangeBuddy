@@ -27,7 +27,6 @@ const GroupFeedPostWriteComment = ({ feedPost, user, refreshComments, showSnackb
     <form onSubmit={ handleSubmit(({ content }) => {
       submitPost({ content, userId: user.id, feedPostId: feedPost.id }, () => {
         reset();
-        showSnackbar('Comment added!');
         refreshComments();
       }, (err) => {
         showSnackbar('Could not add comment: ' + err);
@@ -61,6 +60,5 @@ GroupFeedPostWriteComment.propTypes = {
 };
 
 export default reduxForm({
-  form: 'groupFeedPostWriteCommentForm',
   validate
 })(GroupFeedPostWriteComment);
