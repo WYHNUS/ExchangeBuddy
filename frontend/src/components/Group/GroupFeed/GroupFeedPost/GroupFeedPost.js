@@ -24,10 +24,12 @@ class GroupFeedPost extends React.Component {
     this.state = {
       expanded: false,
     };
+
+    this.toggleComments = this.toggleComments.bind(this);
   }
 
   render() {
-
+    const { expanded } = this.state;
     const { group, feedPost } = this.props;
     const { content, author, createdAt } = feedPost;
 
@@ -53,13 +55,13 @@ class GroupFeedPost extends React.Component {
                 </CardText>
 
                 <CardActions>
-                  <FlatButton label="Comments" onTouchTap={this.handleExpand.bind(this)} />
+                  <FlatButton label="Comments" onTouchTap={ this.toggleComments } />
                 </CardActions>
 
               </Paper>    
             </div>
 
-            { this.state.expanded &&
+            { expanded &&
               <GroupFeedPostComments group={ group } feedPost={ feedPost } />
             }    
           </div>
@@ -68,9 +70,9 @@ class GroupFeedPost extends React.Component {
     );
   }
 
-  handleExpand = () => {
-    this.setState({expanded: !this.state.expanded});
-  };
+  toggleComments() {
+    this.setState({ expanded: !this.state.expanded });
+  }
 
 }
 
