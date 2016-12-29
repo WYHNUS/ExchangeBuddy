@@ -109,7 +109,7 @@ class GroupFeedPost extends React.Component {
 
   getPostDropdown() {
     return () => (
-      <IconMenu iconButtonElement={ <IconButton><Icon name="keyboard_arrow_down" /></IconButton> }>
+      <IconMenu iconButtonElement={ <IconButton><Icon name="more_horiz" /></IconButton> }>
         <MenuItem className="post-dropdown-menuitem" primaryText="Edit" onClick={ this.editFeedPost } />
         <MenuItem className="post-dropdown-menuitem" primaryText="Delete" onClick={ this.openDeleteConfirmationDialog } />
       </IconMenu>

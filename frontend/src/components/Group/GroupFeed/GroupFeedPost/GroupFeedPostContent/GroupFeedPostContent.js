@@ -1,13 +1,16 @@
 import React from 'react';
 
 import AvatarRow from 'components/AvatarRow';
-
-import GroupFeedPostContentAction from './GroupFeedPostContentAction';
+import Icon from 'components/Icon';
+import { MenuItem } from 'material-ui/Menu';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
 
 import { formatRelaTime } from 'util/helper';
 import { getAvatarUrl } from 'util/user';
 import { userPropType } from 'util/propTypes';
 
+import * as Colors from 'material-ui/styles/colors';
 import './GroupFeedPostContent.scss';
 
 const PostCommentContent = ({ content, afterContent }) => (
@@ -40,6 +43,7 @@ export default class GroupFeedPostContent extends React.PureComponent {
     author: userPropType.isRequired,
     content: React.PropTypes.string.isRequired, 
     createdAt: React.PropTypes.instanceOf(Date).isRequired,
+    avatarSize: React.PropTypes.number,
     commentActions: React.PropTypes.node,
     handleClickEdit: React.PropTypes.func.isRequired,
     handleClickDelete: React.PropTypes.func.isRequired,
@@ -49,25 +53,32 @@ export default class GroupFeedPostContent extends React.PureComponent {
     super(props);
   }
 
+  static defaultProps = {
+    avatarSize: 30,
+  };
+
   render() {
-    const { user, author, content, createdAt, commentActions, handleClickEdit, handleClickDelete } = this.props;
+    const { user, author, content, avatarSize, createdAt, commentActions, handleClickEdit, handleClickDelete } = this.props;
     const isUserAuthor = user && author && user.id === author.id;
 
     return (
       <AvatarRow 
-        avatar={ getAvatarUrl(author) } 
-        size={30}
-        valign="top">
+        avatar={ getAvatarUrl(author) }
+        bodyStyle={{ paddingLeft: 0 }}
+        size={ avatarSize }
+        valign="top"
+        rightIcon={
+          <IconMenu iconButtonElement={ <IconButton><Icon name="more_horiz" size={16} color={ Colors.grey500 } /></IconButton> }>
+            { isUserAuthor && 
+              <MenuItem className="post-dropdown-menuitem" primaryText="Edit" onClick={ handleClickEdit } /> }
+            { isUserAuthor && 
+              <MenuItem className="post-dropdown-menuitem" primaryText="Delete" onClick={ handleClickDelete } /> }
+          </IconMenu>
+        }>
         <PostCommentInfo name={ author.name } timestamp={ createdAt } />
         <PostCommentContent 
           content={ content } 
-          afterContent={
-            <div className="comment-actions">
-              { commentActions }
-              { isUserAuthor && <GroupFeedPostContentAction icon="edit" primaryText="Edit" onClick={ handleClickEdit } /> }
-              { isUserAuthor && <GroupFeedPostContentAction icon="delete" primaryText="Delete" onClick={ handleClickDelete } /> }
-            </div>
-          } />
+          afterContent={ <div className="comment-actions">{ commentActions }</div> } />
       </AvatarRow>
     );
   }

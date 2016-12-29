@@ -4,9 +4,9 @@ import Avatar from 'material-ui/Avatar';
 
 import './AvatarRow.scss';
 
-const AvatarRow = ({ avatar, className, avatarStyle, bodyStyle, rightIcon, size=40, valign, collapse=false, transparent=false, children, ...rest }) => (
+const AvatarRow = ({ avatar, className, avatarContainerStyle, avatarStyle, bodyStyle, rightIcon, size=40, valign, collapse=false, transparent=false, children, ...rest }) => (
   <div className={ cn('avatarrow', valign && `valign-${valign}`, { collapse, transparent }, className) } { ...rest }>
-    <div className="avatar" style={{ width: size }}>
+    <div className="avatar" style={{ width: size, ...avatarContainerStyle }}>
       <Avatar src={ avatar } size={ size } style={{ objectFit: 'cover', ...avatarStyle }} />
     </div>
     <div className="body" style={ bodyStyle }>
@@ -27,6 +27,7 @@ AvatarRow.propTypes = {
   size: React.PropTypes.number,
   className: React.PropTypes.string,
   avatarStyle: React.PropTypes.object,
+  avatarContainerStyle: React.PropTypes.object,
   bodyStyle: React.PropTypes.object,
   rightIcon: React.PropTypes.node,
   children: React.PropTypes.node.isRequired,
