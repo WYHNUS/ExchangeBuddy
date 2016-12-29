@@ -2,9 +2,9 @@ import React from 'react';
 import Paper from 'components/Paper';
 import Icon from 'components/Icon';
 
-import GroupFeedPostCommentReply from './GroupFeedPostCommentReply';
-import GroupFeedPostCommentCardHeader from './GroupFeedPostCommentCardHeader';
-import GroupFeedPostWriteReply from './GroupFeedPostWriteReply';
+import GroupFeedPostCommentReply from '../GroupFeedPostCommentReply';
+import GroupFeedPostHeader from '../GroupFeedPostHeader';
+import GroupFeedPostWriteReply from '../GroupFeedPostWriteReply';
 
 import { groupPropType, userPropType, feedPostCommentPropType } from 'util/propTypes';
 
@@ -46,7 +46,7 @@ class GroupFeedPostComment extends React.Component {
 
           <div className="comment-main-container">
             <div className="col-xs-12">
-              <GroupFeedPostCommentCardHeader 
+              <GroupFeedPostHeader 
                 author={ author } 
                 content={ content } 
                 createdAt={ createdAt }

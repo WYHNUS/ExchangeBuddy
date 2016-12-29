@@ -1,6 +1,6 @@
 import React from 'react';
 import Paper from 'components/Paper';
-import GroupFeedPostCommentCardHeader from '../GroupFeedPostCommentCardHeader';
+import GroupFeedPostHeader from '../GroupFeedPostHeader';
 
 import { feedPostCommentReplyPropType } from 'util/propTypes';
 
@@ -10,7 +10,7 @@ const GroupFeedPostCommentReply = ({ feedCommentReply: { author, content, create
   <div className="row no-margin">
     <div className="col-xs-12">
       <Paper full>
-        <GroupFeedPostCommentCardHeader author={ author } content={ content } createdAt={ createdAt } /> 
+        <GroupFeedPostHeader author={ author } content={ content } createdAt={ createdAt } /> 
       </Paper>
     </div>
   </div>
