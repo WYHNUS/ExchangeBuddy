@@ -95,7 +95,6 @@ export const feedPostCommentReplyPropType = shape({
   ...defaultPropTypes,
   id: number.isRequired,
   content: string.isRequired,
-  feedPostCommentId: number.isRequired,
   author: userPropType.isRequired,
 });
 
