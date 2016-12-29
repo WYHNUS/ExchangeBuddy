@@ -8,9 +8,11 @@ import './GroupFeedPostComments.scss';
 
 const GroupFeedPostComments = ({ feedComments, group, feedPost, refreshComments }) => (
   <div className="comments-main-container">
-    { feedComments.map((comment, idx) => (
-      <GroupFeedPostComment key={ idx } feedComment={ comment } group={ group } feedPost={ feedPost } refreshComments={ refreshComments } />
-      )) }
+    { feedComments.length 
+      ? <div className="comments-container">
+          { feedComments.map(comment => <GroupFeedPostComment key={ comment.id } feedComment={ comment } group={ group } feedPost={ feedPost } refreshComments={ refreshComments } /> ) }
+        </div>
+      : null }
     <GroupFeedPostWriteComment form={`groupFeedPostWriteCommentForm-${ feedPost.id }`} feedPost={ feedPost } refreshComments={ refreshComments } />
   </div>
 );
