@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import ChildComponent from './GroupWritePostForm';
+import ChildComponent from './GroupFeedWritePost';
 
 import { put } from 'util/api';
 import { showSnackbar } from 'actions/MessageSnackbar';

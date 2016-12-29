@@ -1,6 +1,6 @@
 import React from 'react';
 import GroupFeedPost from './GroupFeedPost';
-import GroupWritePost from 'components/Group/GroupWritePost';
+import GroupWritePost from './GroupFeedWritePost';
 
 import { groupPropType, userPropType, feedPostPropType } from 'util/propTypes';
 
