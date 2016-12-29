@@ -20,7 +20,7 @@ exports.createReply = function(req, res){
             }
         })
     }else{
-        res.status(400).sene({
+        res.status(400).send({
             status: 'fail',
             message: 'missing CommentId or content',
         })
