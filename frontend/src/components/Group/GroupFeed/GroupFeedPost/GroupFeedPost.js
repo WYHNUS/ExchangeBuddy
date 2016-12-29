@@ -3,26 +3,23 @@ import React from 'react';
 import { CardText, CardActions } from 'material-ui/Card';
 import { MenuItem } from 'material-ui/Menu';
 import FlatButton from 'material-ui/FlatButton';
-import Dialog from 'material-ui/Dialog';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import AvatarRow from 'components/AvatarRow';
 import Icon from 'components/Icon';
-import IconContainer from 'components/IconContainer';
 import Paper from 'components/Paper';
 
 import GroupFeedPostComments from './GroupFeedPostComments';
 import GroupFeedUpdatePost from '../GroupFeedUpdatePost';
+import GroupFeedDeleteDialog from '../GroupFeedDeleteDialog';
 
 import { formatRelaTime } from 'util/helper';
 import { getAvatarUrl } from 'util/user';
 import { groupPropType, userPropType, feedPostPropType } from 'util/propTypes';
 
-import * as Colors from 'material-ui/styles/colors';
 import './GroupFeedPost.scss';
 
 class GroupFeedPost extends React.Component { 
-
   static propTypes = {
     group: groupPropType.isRequired,
     feedPost: feedPostPropType.isRequired,
@@ -41,7 +38,6 @@ class GroupFeedPost extends React.Component {
       isEditing: false,
     };
 
-    this.getDeleteConfirmationDialog = this.getDeleteConfirmationDialog.bind(this);
     this.getPostDropdown = this.getPostDropdown.bind(this);
     this.toggleComments = this.toggleComments.bind(this);
     this.editFeedPost = this.editFeedPost.bind(this);
@@ -51,12 +47,11 @@ class GroupFeedPost extends React.Component {
   }
 
   render() {
-    const { expanded, isEditing } = this.state;
+    const { expanded, isEditing, isDeleteConfirmationDialogOpen } = this.state;
     const { user, group, feedPost, refreshGroupFeed } = this.props;
     const { content, author, createdAt } = feedPost;
 
     const PostDropdown = this.getPostDropdown();
-    const DeleteConfirmationDialog = this.getDeleteConfirmationDialog();
 
     return (
       <div className="row">
@@ -99,7 +94,12 @@ class GroupFeedPost extends React.Component {
                   <GroupFeedPostComments group={ group } feedPost={ feedPost } />
                 }
 
-                <DeleteConfirmationDialog />
+                <GroupFeedDeleteDialog
+                  endpoint="/feedpost"
+                  toSubmit={{ FeedPostId: feedPost.id }}
+                  isOpen={ isDeleteConfirmationDialogOpen }
+                  handleCloseDialog={ this.closeDeleteConfirmationDialog }
+                  afterDelete={ refreshGroupFeed } />
               </div>
             }
         </div>
@@ -113,35 +113,6 @@ class GroupFeedPost extends React.Component {
         <MenuItem className="post-dropdown-menuitem" primaryText="Edit" onClick={ this.editFeedPost } />
         <MenuItem className="post-dropdown-menuitem" primaryText="Delete" onClick={ this.openDeleteConfirmationDialog } />
       </IconMenu>
-    );
-  }
-
-  getDeleteConfirmationDialog() {
-    const { isDeleteConfirmationDialogOpen } = this.state;
-    const { feedPost, submitDeleteFeedPost, refreshGroupFeed, showSnackbar } = this.props;
-
-    return () => (
-      <Dialog 
-        open={ isDeleteConfirmationDialogOpen }
-        onRequestClose={ this.closeDeleteConfirmationDialog }
-        actions={[
-          <FlatButton label="Cancel" labelStyle={{ color: Colors.grey500 }} onClick={ this.closeDeleteConfirmationDialog } />,
-          <FlatButton 
-            primary 
-            label="Delete" 
-            onClick={ () => submitDeleteFeedPost({ 
-              id: feedPost.id 
-            }, () => {
-              this.closeDeleteConfirmationDialog();
-              refreshGroupFeed();
-              showSnackbar('Post deleted.');
-            }, (err) => {
-              this.closeDeleteConfirmationDialog();
-              showSnackbar('Could not delete post: ' + err);
-            }) } />
-        ]}>
-        <IconContainer icon="warning" title="Are you sure you want to delete your post?" />
-      </Dialog>
     );
   }
 

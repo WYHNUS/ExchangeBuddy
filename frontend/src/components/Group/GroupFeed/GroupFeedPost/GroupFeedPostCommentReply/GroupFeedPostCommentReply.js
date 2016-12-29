@@ -1,24 +1,98 @@
 import React from 'react';
+
 import Paper from 'components/Paper';
-import GroupFeedPostHeader from '../GroupFeedPostHeader';
+
+import GroupFeedPostContent from '../GroupFeedPostContent';
+import GroupFeedDeleteDialog from 'components/Group/GroupFeed/GroupFeedDeleteDialog';
 
 import { feedPostCommentReplyPropType } from 'util/propTypes';
 
 import './GroupFeedPostCommentReply.scss';
 
-const GroupFeedPostCommentReply = ({ feedCommentReply: { author, content, createdAt } }) => (
-  <div className="row no-margin">
-    <div className="col-xs-12">
+export default class GroupFeedPostCommentReply extends React.PureComponent {
+  static propTypes = {
+    feedCommentReply: feedPostCommentReplyPropType.isRequired,
+    refreshComments: React.PropTypes.func.isRequired,
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      expanded: false,
+      isReplyBoxOpen: false,
+      isDeleteConfirmationDialogOpen: false,
+      isEditing: false,
+    };
+
+    this.expandReplies = this.expandReplies.bind(this);
+    this.collapseReplies = this.collapseReplies.bind(this);
+    this.toggleReplies = this.toggleReplies.bind(this);
+    this.openReplyBox = this.openReplyBox.bind(this);
+    this.closeReplyBox = this.closeReplyBox.bind(this);
+    this.startEditing = this.startEditing.bind(this);
+    this.stopEditing = this.stopEditing.bind(this);
+    this.openDeleteConfirmationDialog = this.openDeleteConfirmationDialog.bind(this);
+    this.closeDeleteConfirmationDialog = this.closeDeleteConfirmationDialog.bind(this);
+  }
+
+  render() {
+    const { isDeleteConfirmationDialogOpen } = this.state;
+    const { feedCommentReply, refreshComments } = this.props;
+    const { author, content, createdAt } = feedCommentReply;
+
+    return (
       <Paper full>
-        <GroupFeedPostHeader author={ author } content={ content } createdAt={ createdAt } /> 
+        <GroupFeedPostContent 
+          author={ author } 
+          content={ content } 
+          createdAt={ createdAt }
+          handleClickEdit={ this.startEditing }
+          handleClickDelete={ this.openDeleteConfirmationDialog } /> 
+
+        <GroupFeedDeleteDialog
+          endpoint="/feedpostCommentReply"
+          toSubmit={{ ReplyId: feedCommentReply.id }}
+          isOpen={ isDeleteConfirmationDialogOpen }
+          handleCloseDialog={ this.closeDeleteConfirmationDialog }
+          afterDelete={ refreshComments } />
       </Paper>
-    </div>
-  </div>
-);
+    );
+  }
 
-GroupFeedPostCommentReply.propTypes = {
-  feedCommentReply: feedPostCommentReplyPropType.isRequired,
-};
+  expandReplies() {
+    this.setState({ expanded: true });
+  }
 
-export default GroupFeedPostCommentReply;
-  
+  collapseReplies() {
+    this.setState({ expanded: false });
+  }
+
+  toggleReplies() {
+    this.setState({ expanded: !this.state.expanded });
+  }
+
+  openReplyBox() {
+    this.setState({ isReplyBoxOpen: true, expanded: true });
+  }
+
+  closeReplyBox() {
+    this.setState({ isReplyBoxOpen: false });
+  }
+
+  openDeleteConfirmationDialog() {
+    this.setState({ isDeleteConfirmationDialogOpen: true });
+  }
+
+  closeDeleteConfirmationDialog() {
+    this.setState({ isDeleteConfirmationDialogOpen: false });
+  }
+
+  startEditing() {
+    this.setState({ isEditing: true });
+  }
+
+  stopEditing() {
+    this.setState({ isEditing: false });
+  }
+}

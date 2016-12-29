@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import ChildComponent from './GroupFeedPostHeader';
+import ChildComponent from './GroupFeedPostContent';
 
 const mapStateToProps = (state) => ({
   user: state['User/currentUser'],

@@ -1,14 +1,14 @@
 import React from 'react';
 import Paper from 'components/Paper';
-import Icon from 'components/Icon';
 
 import GroupFeedPostCommentReply from '../GroupFeedPostCommentReply';
-import GroupFeedPostHeader from '../GroupFeedPostHeader';
+import GroupFeedPostContent from '../GroupFeedPostContent';
 import GroupFeedPostWriteReply from '../GroupFeedPostWriteReply';
+import GroupFeedPostContentAction from '../GroupFeedPostContent/GroupFeedPostContentAction';
+import GroupFeedDeleteDialog from 'components/Group/GroupFeed/GroupFeedDeleteDialog';
 
 import { groupPropType, userPropType, feedPostCommentPropType } from 'util/propTypes';
 
-import * as Colors from 'material-ui/styles/colors';
 import './GroupFeedPostComment.scss';
 
 class GroupFeedPostComment extends React.Component {
@@ -25,6 +25,8 @@ class GroupFeedPostComment extends React.Component {
     this.state = {
       expanded: false,
       isReplyBoxOpen: false,
+      isDeleteConfirmationDialogOpen: false,
+      isEditing: false,
     };
 
     this.expandReplies = this.expandReplies.bind(this);
@@ -32,34 +34,37 @@ class GroupFeedPostComment extends React.Component {
     this.toggleReplies = this.toggleReplies.bind(this);
     this.openReplyBox = this.openReplyBox.bind(this);
     this.closeReplyBox = this.closeReplyBox.bind(this);
+    this.startEditing = this.startEditing.bind(this);
+    this.stopEditing = this.stopEditing.bind(this);
+    this.openDeleteConfirmationDialog = this.openDeleteConfirmationDialog.bind(this);
+    this.closeDeleteConfirmationDialog = this.closeDeleteConfirmationDialog.bind(this);
   }
 
   render() {
-    const { expanded, isReplyBoxOpen } = this.state;
+    const { expanded, isReplyBoxOpen, isDeleteConfirmationDialogOpen } = this.state;
     const { feedComment, refreshComments } = this.props;
     const { content, author, createdAt, replies } = feedComment;
 
     return (
-
       <div className="comment-overall-container">
         <Paper full>
 
           <div className="comment-main-container">
             <div className="col-xs-12">
-              <GroupFeedPostHeader 
+              <GroupFeedPostContent 
                 author={ author } 
                 content={ content } 
                 createdAt={ createdAt }
-                afterContent={
-                  <div className="comment-actions">
-                    <div className="comment-action replies" onClick={ this.toggleReplies }>
-                      { expanded ? 'Hide' : 'Show' } Replies ({ replies.length })
-                    </div>
-                    <div className="comment-action reply" onClick={ this.openReplyBox }> 
-                      <Icon name="reply" size={16} color={ Colors.grey400 } /> Reply
-                    </div>
-                  </div>
-                } />
+                commentActions={[
+                  <GroupFeedPostContentAction 
+                    key="replies"
+                    icon={ `keyboard_arrow_${ expanded ? 'up' : 'down' }` } 
+                    primaryText={ `${ expanded ? 'Hide' : 'Show' } Replies (${ replies.length })` }
+                    onClick={ this.toggleReplies } />,
+                  <GroupFeedPostContentAction key="reply" icon="reply" primaryText="Reply" onClick={ this.openReplyBox } />
+                ]}
+                handleClickEdit={ this.startEditing }
+                handleClickDelete={ this.openDeleteConfirmationDialog } />
             </div>
           </div>
 
@@ -67,7 +72,7 @@ class GroupFeedPostComment extends React.Component {
             <div className="reply-main-container">
               <div className="col-xs-12">
                 { feedComment.replies.map((reply, idx) => (
-                  <GroupFeedPostCommentReply key={ idx } feedCommentReply={ reply } />
+                  <GroupFeedPostCommentReply key={ idx } feedCommentReply={ reply } refreshComments={ refreshComments } />
                 )) }
               </div>
             </div>
@@ -80,6 +85,13 @@ class GroupFeedPostComment extends React.Component {
             refreshComments={ refreshComments } 
             closeReplyBox={ this.closeReplyBox }
             expandReplies={ this.expandReplies } />
+
+          <GroupFeedDeleteDialog
+            endpoint="/feedpostComment"
+            toSubmit={{ FeedPostId: feedComment.id }}
+            isOpen={ isDeleteConfirmationDialogOpen }
+            handleCloseDialog={ this.closeDeleteConfirmationDialog }
+            afterDelete={ refreshComments } />
 
         </Paper>
       </div>
@@ -104,6 +116,22 @@ class GroupFeedPostComment extends React.Component {
 
   closeReplyBox() {
     this.setState({ isReplyBoxOpen: false });
+  }
+
+  openDeleteConfirmationDialog() {
+    this.setState({ isDeleteConfirmationDialogOpen: true });
+  }
+
+  closeDeleteConfirmationDialog() {
+    this.setState({ isDeleteConfirmationDialogOpen: false });
+  }
+
+  startEditing() {
+    this.setState({ isEditing: true });
+  }
+
+  stopEditing() {
+    this.setState({ isEditing: false });
   }
 
 }
