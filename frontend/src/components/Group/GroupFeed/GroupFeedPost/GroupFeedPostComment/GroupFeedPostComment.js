@@ -99,7 +99,7 @@ class GroupFeedPostComment extends React.Component {
   }
 
   openReplyBox() {
-    this.setState({ isReplyBoxOpen: true });
+    this.setState({ isReplyBoxOpen: true, expanded: true });
   }
 
   closeReplyBox() {
