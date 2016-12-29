@@ -27,11 +27,11 @@ exports.getFeedPostComment = function(req, res){
             where: {
                 FeedPostId: req.params.id
             },
-            attributes: ['id', 'content'],
+            attributes: ['id', 'content', 'createdAt', 'updatedAt'],
             include: [
                 {
                     model: models.FeedPostCommentReply,
-                    attributes: ['id', 'content'],
+                    attributes: ['id', 'content', 'createdAt', 'updatedAt'],
                     include: [
                         {
                             model: models.User,
@@ -47,7 +47,7 @@ exports.getFeedPostComment = function(req, res){
                 },
                 {
                     model: models.FeedPostCommentReaction,
-                    attributes: ['id', 'reaction'],
+                    attributes: ['id', 'reaction', 'createdAt', 'updatedAt'],
                     include: [
                         {
                             model: models.User,
@@ -83,7 +83,7 @@ exports.getFeedPostByGroup = function(req, res){
             where: {
                 GroupId: req.params.id,
             },
-            attributes: ['id', 'content'],
+            attributes: ['id', 'content', 'createdAt', 'updatedAt'],
             order: [
                 ['createdAt', 'DESC'],
             ],
