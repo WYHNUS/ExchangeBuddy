@@ -28,6 +28,9 @@ exports.getFeedPostComment = function(req, res){
                 FeedPostId: req.params.id
             },
             attributes: ['id', 'content', 'createdAt', 'updatedAt'],
+            order: [
+                ['createdAt', 'DESC'],
+            ],
             include: [
                 {
                     model: models.FeedPostCommentReply,
