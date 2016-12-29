@@ -56,6 +56,11 @@ module.exports = function(sequelize, DataType) {
                 });
 
                 University.hasMany(models.UniversityCourse);
+                University.hasMany(models.Question, {
+                    foreignKey: {
+                        allowNull: true
+                    }
+                });
             }
         }
     });
