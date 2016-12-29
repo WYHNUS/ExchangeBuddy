@@ -8,7 +8,7 @@ import { userPropType } from 'util/propTypes';
 
 const PostCommentContent = ({ content, afterContent }) => (
   <div className="comment-reply-content">
-    <div>{ content }</div> 
+    <div className="comment-reply-content-body">{ content }</div> 
     { afterContent || null }
   </div>
 );

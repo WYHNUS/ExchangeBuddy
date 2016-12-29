@@ -16,15 +16,17 @@
 }
 
 .comment-overall-container{
-  
+
 }
 
 .comment-info {
   display: flex; align-items: center; flex-direction: row; margin-bottom: 3px;
-  .comment-author-name { font-size: 14px; font-weight: 500; }
-  .timestamp { color: palette(Grey, 400); font-weight: normal; font-size: 11px; margin-left: 5px; }
+  .comment-author-name { font-size: 14px; font-weight: 500; line-height: 22px; }
+  .timestamp { color: palette(Grey, 400); font-weight: normal; font-size: 11px; margin-left: 10px; }
 }
 
 .comment-reply-content {
   font-weight: 400; color: palette(Grey, 800);
+
+  .comment-reply-content-body { line-height: 22px; margin-bottom: 7px; }
 }
