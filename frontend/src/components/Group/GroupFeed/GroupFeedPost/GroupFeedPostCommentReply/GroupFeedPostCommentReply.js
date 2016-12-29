@@ -44,6 +44,7 @@ export default class GroupFeedPostCommentReply extends React.PureComponent {
     return (
       <Paper full>
         <GroupFeedPostContent 
+          className="group-feed-post-comment-reply-content"
           avatarSize={ 20 }
           author={ author } 
           content={ content } 

@@ -50,31 +50,28 @@ class GroupFeedPostComment extends React.Component {
         <Paper full>
 
           <div className="comment-main-container">
-            <div className="col-xs-12">
-              <GroupFeedPostContent 
-                author={ author } 
-                content={ content } 
-                createdAt={ createdAt }
-                commentActions={[
-                  <GroupFeedPostContentAction 
-                    key="replies"
-                    icon={ `keyboard_arrow_${ expanded ? 'up' : 'down' }` } 
-                    primaryText={ `${ expanded ? 'Hide' : 'Show' } Replies (${ replies.length })` }
-                    onClick={ this.toggleReplies } />,
-                  <GroupFeedPostContentAction key="reply" icon="reply" primaryText="Reply" onClick={ this.openReplyBox } />
-                ]}
-                handleClickEdit={ this.startEditing }
-                handleClickDelete={ this.openDeleteConfirmationDialog } />
-            </div>
+            <GroupFeedPostContent 
+              className="group-feed-post-comment-content"
+              author={ author } 
+              content={ content } 
+              createdAt={ createdAt }
+              contentActions={[
+                <GroupFeedPostContentAction 
+                  key="replies"
+                  icon={ `keyboard_arrow_${ expanded ? 'up' : 'down' }` } 
+                  primaryText={ `${ expanded ? 'Hide' : 'Show' } Replies (${ replies.length })` }
+                  onClick={ this.toggleReplies } />,
+                <GroupFeedPostContentAction key="reply" icon="reply" primaryText="Reply" onClick={ this.openReplyBox } />
+              ]}
+              handleClickEdit={ this.startEditing }
+              handleClickDelete={ this.openDeleteConfirmationDialog } />
           </div>
 
           { expanded &&
             <div className="reply-main-container">
-              <div className="col-xs-12">
-                { feedComment.replies.map((reply, idx) => (
-                  <GroupFeedPostCommentReply key={ idx } feedCommentReply={ reply } refreshComments={ refreshComments } />
-                )) }
-              </div>
+              { feedComment.replies.map((reply, idx) => (
+                <GroupFeedPostCommentReply key={ idx } feedCommentReply={ reply } refreshComments={ refreshComments } />
+              )) }
             </div>
           }
 

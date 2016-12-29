@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames';
 
 import AvatarRow from 'components/AvatarRow';
 import Icon from 'components/Icon';
@@ -13,38 +14,15 @@ import { userPropType } from 'util/propTypes';
 import * as Colors from 'material-ui/styles/colors';
 import './GroupFeedPostContent.scss';
 
-const PostCommentContent = ({ content, afterContent }) => (
-  <div className="comment-reply-content">
-    <div className="comment-reply-content-body">{ content }</div> 
-    { afterContent || null }
-  </div>
-);
-
-PostCommentContent.propTypes = {
-  content: React.PropTypes.string.isRequired,
-  afterContent: React.PropTypes.node,
-};
-
-const PostCommentInfo = ({ name, timestamp }) => (
-  <span className="comment-info"> 
-    <span className="comment-author-name">{ name }</span>
-    <span className="timestamp">{ formatRelaTime(timestamp) }</span>
-  </span>
-)
-
-PostCommentInfo.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  timestamp: React.PropTypes.instanceOf(Date).isRequired,
-};
-
 export default class GroupFeedPostContent extends React.PureComponent {
   static propTypes = {
+    className: React.PropTypes.string, 
     user: userPropType.isRequired,
     author: userPropType.isRequired,
     content: React.PropTypes.string.isRequired, 
     createdAt: React.PropTypes.instanceOf(Date).isRequired,
     avatarSize: React.PropTypes.number,
-    commentActions: React.PropTypes.node,
+    contentActions: React.PropTypes.node,
     handleClickEdit: React.PropTypes.func.isRequired,
     handleClickDelete: React.PropTypes.func.isRequired,
   };
@@ -58,13 +36,13 @@ export default class GroupFeedPostContent extends React.PureComponent {
   };
 
   render() {
-    const { user, author, content, avatarSize, createdAt, commentActions, handleClickEdit, handleClickDelete } = this.props;
+    const { user, author, content, avatarSize, className, createdAt, contentActions, handleClickEdit, handleClickDelete } = this.props;
     const isUserAuthor = user && author && user.id === author.id;
 
     return (
       <AvatarRow 
+        className={ cn('group-feed-post-content', className) }
         avatar={ getAvatarUrl(author) }
-        bodyStyle={{ paddingLeft: 0 }}
         size={ avatarSize }
         valign="top"
         rightIcon={
@@ -75,10 +53,20 @@ export default class GroupFeedPostContent extends React.PureComponent {
               <MenuItem className="post-dropdown-menuitem" primaryText="Delete" onClick={ handleClickDelete } /> }
           </IconMenu>
         }>
-        <PostCommentInfo name={ author.name } timestamp={ createdAt } />
-        <PostCommentContent 
-          content={ content } 
-          afterContent={ <div className="comment-actions">{ commentActions }</div> } />
+        
+        <div className="group-feed-post-content-info"> 
+          <span className="author-name">{ author.name }</span>
+          <span className="timestamp">{ formatRelaTime(createdAt) }</span>
+        </div>
+
+        <div className="group-feed-post-content-body">
+          <div className="content">{ content }</div> 
+          { contentActions && 
+            <div className="actions">
+              { contentActions }
+            </div> 
+          }
+        </div>
       </AvatarRow>
     );
   }

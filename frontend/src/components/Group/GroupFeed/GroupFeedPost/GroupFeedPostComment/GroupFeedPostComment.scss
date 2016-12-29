@@ -1,21 +1,8 @@
 @import '~scss/common/mixins';
 @import '~scss/common/colors';
 
-.comment-actions {
-  margin-top: 5px; display: flex; flex-direction: row; align-items: center;
+.group-feed-post-comment-content {
+  padding: 0 0.5em; 
 
-  .comment-action { cursor: pointer; font-size: 10px; color: palette(Grey, 500); margin-right: 15px; }
-  .reply {
-    display: flex; flex-direction: row; align-items: center;
-    .material-icons { margin-right: 2px; }
-  }
+  .body { padding-left: 0; }
 }
-
-.reply-main-container {
-  margin-left: 50px;
-}
-
-.comment-overall-container{
-
-}
-
