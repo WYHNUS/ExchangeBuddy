@@ -99,9 +99,20 @@ export const feedPostCommentReplyPropType = shape({
   author: userPropType.isRequired,
 });
 
-export const feedPostCommentReplyTransform = chainTransforms(defaultTransform, ({ id, feedPostCommentId, author }) => ({
+export const feedPostCommentReplyTransform = chainTransforms(defaultTransform, ({ id, author }) => ({
   id: int(id),
-  feedPostCommentId: int(feedPostCommentId),
+  author: userTransform(author),
+}));
+
+export const feedPostCommentReactionPropType = shape({
+  ...defaultPropTypes,
+  id: number.isRequired,
+  reaction: string.isRequired,
+  author: userPropType.isRequired,
+});
+
+export const feedPostCommentReactionTransform = chainTransforms(defaultTransform, ({ id, author }) => ({
+  id: int(id),
   author: userTransform(author),
 }));
 
@@ -121,14 +132,14 @@ export const feedPostCommentPropType = shape({
   ...defaultPropTypes,
   id: number.isRequired,
   content: string.isRequired,
-  feedPostId: number.isRequired,
   author: userPropType.isRequired,
   replies: arrayOf(feedPostCommentReplyPropType).isRequired,
+  reactions: arrayOf(feedPostCommentReactionPropType).isRequired,
 });
 
-export const feedPostCommentTransform = chainTransforms(defaultTransform, ({ id, feedPostId, author, replies }) => ({
+export const feedPostCommentTransform = chainTransforms(defaultTransform, ({ id, author, FeedPostCommentReplies, FeedPostCommentReactions }) => ({
   id: int(id),
-  feedPostId: int(feedPostId),
   author: userTransform(author),
-  replies: optional(replies, makeMap(feedPostCommentReplyTransform)),
+  replies: FeedPostCommentReplies.map(feedPostCommentReplyTransform),
+  reactions: FeedPostCommentReactions.map(feedPostCommentReactionTransform),
 }));

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { connect, PromiseState } from 'react-refetch';
 import { makeRefetch } from 'util/api';
-import { feedPostTransform } from 'util/propTypes';
+import { feedPostCommentTransform } from 'util/propTypes';
 
 import GroupFeedPostComments from './GroupFeedPostComments';
 import Loading from 'components/Loading';
@@ -23,7 +23,7 @@ Container.propTypes = {
 };
 
 const refetch = ({ feedPost }) => {
-  const commentsFetch = makeRefetch(`/feedpostComment/${ feedPost.id }`, { userToken: true }, ({ data }) => data.map(feedPostTransform));
+  const commentsFetch = makeRefetch(`/feedpostComment/${ feedPost.id }`, { userToken: true }, ({ data }) => data.map(feedPostCommentTransform));
 
   return {
     commentsFetch,
