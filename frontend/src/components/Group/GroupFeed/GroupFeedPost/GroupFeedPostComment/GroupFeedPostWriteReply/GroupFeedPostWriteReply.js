@@ -30,6 +30,10 @@ const GroupFeedPostWriteReply = ({ feedComment, user, refreshComments, isOpen, h
     });
   }) }>
     <div className={ cn('group-feed-post-write-reply', { visible: isOpen }) }>
+      <IconButton onClick={ handleCloseReplyBox }>
+        <Icon name="close" color={ Colors.grey500 } size={16} />
+      </IconButton> 
+
       <TextFormField 
         name="content" 
         hintText="Reply" 
@@ -39,10 +43,6 @@ const GroupFeedPostWriteReply = ({ feedComment, user, refreshComments, isOpen, h
 
       <IconButton type="submit">
         <Icon name="send" color={ Colors.grey500 } size={16} />
-      </IconButton> 
-
-      <IconButton onClick={ handleCloseReplyBox }>
-        <Icon name="close" color={ Colors.grey500 } size={16} />
       </IconButton> 
     </div>
   </form>
