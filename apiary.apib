@@ -55,8 +55,8 @@ Creates a new University.
 *Requires at least admin-level access (role >= 8).*
 
 + Attributes
-    + name          (string) - University name. (**required**)
-    + alpha2Code    (string) - Country code (**required**)
+    + name          (string, required) - University name.
+    + alpha2Code    (string, required) - Country code.
     + city          (string) - City that the university resides in.
     + website       (string) - URL for home page of university.
 
@@ -80,8 +80,8 @@ Updates a University.
 *Requires at least admin-level access (role >= 8).*
 
 + Attributes
-    + name          (string) - University name. (**required**)
-    + alpha2Code    (string) - Country code (**required**)
+    + name          (string, required) - University name.
+    + alpha2Code    (string, required) - Country code.
     + city          (string) - City that the university resides in.
     + website       (string) - URL for home page of university.
 
@@ -104,7 +104,7 @@ Updates a University.
 Uploads a new logo for university.
 
 + Attributes
-    + file      (string) - Image file to upload.
+    + file      (string, required) - Image file to upload.
 
 + Request (form-data)
 
@@ -155,7 +155,7 @@ Gets user by ID.
                 {
                     "id": 1,
                     "year": 2017,
-                    "month": 0,
+                    "month": "JAN",
                     "university": {
                         "id": 2,
                         "name": "Technical University of Munich",
@@ -178,15 +178,15 @@ Creates a new user.
 *Requires master-level access (role = 10).*
 
 + Attributes
-    + name              (string) - User name (**required**).
-    + password          (string) - New user password.
-    + fbUserId          (string) - Facebook user ID.
+    + name              (string, required) - User name.
+    + password          (string) - New user password. Either `password` of `fbUserId` must be provided. 
+    + fbUserId          (string) - Facebook user ID. Either `password` of `fbUserId` must be provided.
     + homeCountryCode   (string) - Country code for user's home country.
-    + homeUniversityId  (string) - University ID for user's home university. (**required**)
-    + exchanges         (array)  - Exchanges
+    + homeUniversityId  (string) - University ID for user's home university.
+    + exchanges         (array[object])  - Exchanges
         + universityId  (number)
         + year          (number)
-        + month         (number)
+        + month         (string)
 
 + Request
 
@@ -234,7 +234,7 @@ Gets the profile of the user identified by token.
                 {
                     "id": 1,
                     "year": 2017,
-                    "month": 0,
+                    "month": "JAN",
                     "university": {
                         "id": 2,
                         "name": "Technical University of Munich",
@@ -254,17 +254,15 @@ Gets the profile of the user identified by token.
 
 Update user profile.
 
-*All attributes are optional.*
-
 + Attributes
     + name              (string) - New name of user.
     + fbUserId          (string) - New Facebook user ID.
     + homeUniversityId  (string) - ID of home university of user.
     + homeCountryCode   (string) - 2-letter code of home country of user.
-    + exchanges         (array)  - Array of exchanges that the user is involved in.
+    + exchanges         (array[object])  - Array of exchanges that the user is involved in.
         + universityId  (number) - ID of exchange university.
         + year          (number) - Year of exchange.
-        + month         (number) - Month of exchange (zero-indexed, i.e. 0 = Jan).
+        + month         (enum)   - Month of exchange.
 
 + Request
 
@@ -284,7 +282,7 @@ Update user profile.
 Uploads a new profile picture for university.
 
 + Attributes
-    + file      (string) - Image file to upload.
+    + file      (string, required) - Image file to upload.
 
 + Request (form-data)
 
@@ -309,8 +307,8 @@ Uploads a new profile picture for university.
 Authenticate user by email.
 
 + Attributes
-    + email     (string) - Email address of user.
-    + password  (string) - Password of user.
+    + email     (string, required) - Email address of user.
+    + password  (string, required) - Password of user.
 
 + Request
 
@@ -371,7 +369,7 @@ Authenticate user by email.
 Authenticate user by Facebook token.
 
 + Attributes
-    + facebookToken     (string) - Facebook access token
+    + facebookToken     (string, required) - Facebook access token
 
 + Request
 
