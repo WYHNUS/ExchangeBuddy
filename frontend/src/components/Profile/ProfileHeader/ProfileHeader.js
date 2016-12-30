@@ -18,7 +18,7 @@ const ProfileHeader = ({ user }) => (
         <div className="col-xs-12">
           <AvatarRow avatar={ getAvatarUrl(user, 80) } size={80} transparent collapse>
             <h1>{ user.name }</h1>
-            <h4>{ user.university.name }</h4>
+            <h4>{ user.university && user.university.name }</h4>
             <div className="profile-links">
               { user.fbUserId && 
                 <Link to={ `https://www.facebook.com/app_scoped_user_id/${ user.fbUserId }` }>
