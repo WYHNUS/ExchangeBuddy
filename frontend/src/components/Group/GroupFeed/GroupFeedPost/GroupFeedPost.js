@@ -74,7 +74,7 @@ class GroupFeedPost extends React.Component {
                           <span className="post-author-name">{ author.name }</span>
                           <span className="post-timestamp">{ formatRelaTime(createdAt) }</span>
                         </span>
-                        <span className="post-subtitle">{ author.university.name  }</span>
+                        <span className="post-subtitle">{ author.university && author.university.name  }</span>
                       </div>
                     </AvatarRow>
                     <CardText>
