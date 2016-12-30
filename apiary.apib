@@ -1,0 +1,426 @@
+FORMAT: 1A
+HOST: https://app.exchangebuddy.com/api
+
+# ExchangeBuddy
+This is an API reference for [ExchangeBuddy](app.exchangebuddy.com).
+
+
+## Universities [/university]
+
+### List all universities [GET /universities{?alpha2Code}]
+
+Get all universities, optionally filtered by country code.
+
++ Attributes
+    + alpha2Code    (string) - Country code to filter university by.
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "name": "National University of Singapore (NUS)",
+                "city": "Singapore",
+                "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/national-university-of-singapore-nus.jpg",
+                "website": "http://www.nus.edu.sg/",
+                "country": {
+                    "alpha2Code": "SG",
+                    "name": "Singapore"
+                }
+            }
+        ]
+
+### Get university by ID [GET /university/{id}]
+
+Gets university by ID.
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "name": "National University of Singapore (NUS)",
+            "city": "Singapore",
+            "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/national-university-of-singapore-nus.jpg",
+            "website": "http://www.nus.edu.sg/",
+            "country": {
+                "alpha2Code": "SG",
+                "name": "Singapore"
+            }
+        }
+
+### Create a university [PUT /university]
+
+Creates a new University.
+
+*Requires at least admin-level access (role >= 8).*
+
++ Attributes
+    + name          (string) - University name. (**required**)
+    + alpha2Code    (string) - Country code (**required**)
+    + city          (string) - City that the university resides in.
+    + website       (string) - URL for home page of university.
+
++ Request
+
+        {
+            "name": "Technical University of Munich",
+            "alpha2Code": "DE"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "status": "created"
+        }
+
+### Updates a university [PATCH /university/{id}]
+
+Updates a University.
+
+*Requires at least admin-level access (role >= 8).*
+
++ Attributes
+    + name          (string) - University name. (**required**)
+    + alpha2Code    (string) - Country code (**required**)
+    + city          (string) - City that the university resides in.
+    + website       (string) - URL for home page of university.
+
++ Request
+
+        {
+            "city": "Munich",
+            "website": "https://www.tum.de/"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+
+### Upload university logo [PUT /university/{id}/uploadLogo]
+
+Uploads a new logo for university.
+
++ Attributes
+    + file      (string) - Image file to upload.
+
++ Request (form-data)
+
+            ------WebKitFormBoundary8M3sSU13ul5lXSJm
+
+            Content-Disposition: form-data; name="file"; filename="filename.jpg"
+            Content-Type: image/jpeg
+
+            image data here...
+            ------WebKitFormBoundary8M3sSU13ul5lXSJm--
+
++ Response 201 (application/json)
+
+        {
+            "status": "created"
+        }
+
+
+## User [/user]
+
+### Get user by ID [GET /user/{id}]
+
+Gets user by ID.
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "name": "Irvin Lim",
+            "profilePictureUrl": "https://scontent.xx.fbcdn.net/v/t1.0-1/p720x720/12744490_10154668045582575_8254141537094470326_n.jpg?oh=3225976ed7f71907c974cbcc5fc056e6&oe=58CCF01A",
+            "fbUserId": "10155216317967575"
+            "homeCountry": {
+                "alpha2Code": "SG",
+                "name": "Singapore"
+            },
+            "homeUniversity": {
+                "id": 1,
+                "name": "National University of Singapore (NUS)",
+                "city": "Singapore",
+                "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/national-university-of-singapore-nus.jpg",
+                "website": "http://www.nus.edu.sg/",
+                "country": {
+                    "alpha2Code": "SG",
+                    "name": "Singapore"
+                }
+            },
+            "exchanges": [
+                {
+                    "id": 1,
+                    "year": 2017,
+                    "month": 0,
+                    "university": {
+                        "id": 2,
+                        "name": "Technical University of Munich",
+                        "city": "Munich",
+                        "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/technical-university-of-munich.jpg",
+                        "website": "https://www.tum.de/",
+                        "country": {
+                            "alpha2Code": "DE",
+                            "name": "Germany"
+                        }
+                    }
+                }
+            ]
+        }
+
+### Create user [PUT /user]
+
+Creates a new user.
+
+*Requires master-level access (role = 10).*
+
++ Attributes
+    + name              (string) - User name (**required**).
+    + password          (string) - New user password.
+    + fbUserId          (string) - Facebook user ID.
+    + homeCountryCode   (string) - Country code for user's home country.
+    + homeUniversityId  (string) - University ID for user's home university. (**required**)
+    + exchanges         (array)  - Exchanges
+        + universityId  (number)
+        + year          (number)
+        + month         (number)
+
++ Request
+
+        {
+            "name": "Wang Yanhao",
+            "homeUniversityId": 1
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "created"
+        }
+
+
+## Current user [/me]
+
+### Get current user profile [GET]
+
+Gets the profile of the user identified by token.
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "name": "Irvin Lim",
+            "profilePictureUrl": "https://scontent.xx.fbcdn.net/v/t1.0-1/p720x720/12744490_10154668045582575_8254141537094470326_n.jpg?oh=3225976ed7f71907c974cbcc5fc056e6&oe=58CCF01A",
+            "fbUserId": "10155216317967575"
+            "homeCountry": {
+                "alpha2Code": "SG",
+                "name": "Singapore"
+            },
+            "homeUniversity": {
+                "id": 1,
+                "name": "National University of Singapore (NUS)",
+                "city": "Singapore",
+                "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/national-university-of-singapore-nus.jpg",
+                "website": "http://www.nus.edu.sg/",
+                "country": {
+                    "alpha2Code": "SG",
+                    "name": "Singapore"
+                }
+            },
+            "exchanges": [
+                {
+                    "id": 1,
+                    "year": 2017,
+                    "month": 0,
+                    "university": {
+                        "id": 2,
+                        "name": "Technical University of Munich",
+                        "city": "Munich",
+                        "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/technical-university-of-munich.jpg",
+                        "website": "https://www.tum.de/",
+                        "country": {
+                            "alpha2Code": "DE",
+                            "name": "Germany"
+                        }
+                    }
+                }
+            ]
+        }
+
+### Update user profile [PATCH]
+
+Update user profile.
+
+*All attributes are optional.*
+
++ Attributes
+    + name              (string) - New name of user.
+    + fbUserId          (string) - New Facebook user ID.
+    + homeUniversityId  (string) - ID of home university of user.
+    + homeCountryCode   (string) - 2-letter code of home country of user.
+    + exchanges         (array)  - Array of exchanges that the user is involved in.
+        + universityId  (number) - ID of exchange university.
+        + year          (number) - Year of exchange.
+        + month         (number) - Month of exchange (zero-indexed, i.e. 0 = Jan).
+
++ Request
+
+        {
+            "city": "Munich",
+            "website": "https://www.tum.de/"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+### Upload profile picture [PUT /me/uploadProfilePicture]
+
+Uploads a new profile picture for university.
+
++ Attributes
+    + file      (string) - Image file to upload.
+
++ Request (form-data)
+
+            ------WebKitFormBoundary8M3sSU13ul5lXSJm
+
+            Content-Disposition: form-data; name="file"; filename="filename.jpg"
+            Content-Type: image/jpeg
+
+            image data here...
+            ------WebKitFormBoundary8M3sSU13ul5lXSJm--
+
++ Response 201 (application/json)
+
+        {
+            "status": "created"
+        }
+
+## Authentication [/auth]
+
+### Authenticate by email [POST /auth/email]
+
+Authenticate user by email.
+
++ Attributes
+    + email     (string) - Email address of user.
+    + password  (string) - Password of user.
+
++ Request
+
+        {
+            "email": "irvinlimweiquan@gmail.com",
+            "password": "password123"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok",
+            "token": "JWT_USER_TOKEN",
+            "user": {
+                "id": 1,
+                "name": "Irvin Lim",
+                "profilePictureUrl": "https://scontent.xx.fbcdn.net/v/t1.0-1/p720x720/12744490_10154668045582575_8254141537094470326_n.jpg?oh=3225976ed7f71907c974cbcc5fc056e6&oe=58CCF01A",
+                "fbUserId": "10155216317967575"
+                "homeCountry": {
+                    "alpha2Code": "SG",
+                    "name": "Singapore"
+                },
+                "homeUniversity": {
+                    "id": 1,
+                    "name": "National University of Singapore (NUS)",
+                    "city": "Singapore",
+                    "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/national-university-of-singapore-nus.jpg",
+                    "website": "http://www.nus.edu.sg/",
+                    "country": {
+                        "alpha2Code": "SG",
+                        "name": "Singapore"
+                    }
+                },
+                "exchanges": [
+                    {
+                        "id": 1,
+                        "year": 2017,
+                        "month": 0,
+                        "university": {
+                            "id": 2,
+                            "name": "Technical University of Munich",
+                            "city": "Munich",
+                            "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/technical-university-of-munich.jpg",
+                            "website": "https://www.tum.de/",
+                            "country": {
+                                "alpha2Code": "DE",
+                                "name": "Germany"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+        
+
+### Authenticate by Facebook [POST /auth/facebook]
+
+Authenticate user by Facebook token.
+
++ Attributes
+    + facebookToken     (string) - Facebook access token
+
++ Request
+
+        {
+            "facebookToken": "FACEBOOK_ACCESS_TOKEN"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok",
+            "token": "JWT_USER_TOKEN",
+            "user": {
+                "id": 1,
+                "name": "Irvin Lim",
+                "profilePictureUrl": "https://scontent.xx.fbcdn.net/v/t1.0-1/p720x720/12744490_10154668045582575_8254141537094470326_n.jpg?oh=3225976ed7f71907c974cbcc5fc056e6&oe=58CCF01A",
+                "fbUserId": "10155216317967575"
+                "homeCountry": {
+                    "alpha2Code": "SG",
+                    "name": "Singapore"
+                },
+                "homeUniversity": {
+                    "id": 1,
+                    "name": "National University of Singapore (NUS)",
+                    "city": "Singapore",
+                    "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/national-university-of-singapore-nus.jpg",
+                    "website": "http://www.nus.edu.sg/",
+                    "country": {
+                        "alpha2Code": "SG",
+                        "name": "Singapore"
+                    }
+                },
+                "exchanges": [
+                    {
+                        "id": 1,
+                        "year": 2017,
+                        "month": 0,
+                        "university": {
+                            "id": 2,
+                            "name": "Technical University of Munich",
+                            "city": "Munich",
+                            "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/technical-university-of-munich.jpg",
+                            "website": "https://www.tum.de/",
+                            "country": {
+                                "alpha2Code": "DE",
+                                "name": "Germany"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
