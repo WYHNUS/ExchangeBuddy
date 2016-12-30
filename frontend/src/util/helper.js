@@ -30,6 +30,20 @@ export const propExistsDeep = function(parent, arrayOfChildProps) {
   });
 };
 
+/**
+ * Deletes a named object property from an object.
+ * 
+ * @param  {object} obj  Object to operate on.
+ * @param  {string} prop Property name to delete, if exists.
+ * @return {object}      Resultant object.
+ */
+export const deleteProp = (obj, prop) => {
+  if (prop in obj)
+    delete obj[prop];
+
+  return obj;
+};
+
 // Numbers
 export const formatMoney = (money) => `$${ money.toFixed(2) }`;
 
