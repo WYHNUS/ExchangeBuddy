@@ -29,7 +29,7 @@ exports.getFeedPostComment = function(req, res){
             },
             attributes: ['id', 'content', 'createdAt', 'updatedAt'],
             order: [
-                ['createdAt', 'DESC'],
+                ['createdAt', 'ASC'],
             ],
             include: [
                 {
