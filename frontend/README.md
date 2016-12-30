@@ -14,6 +14,12 @@ npm run dev
 
 This makes use of [`webpack-dev-server`](https://webpack.github.io/docs/webpack-dev-server.html) for easier development, together with [Hot Module Replacement](https://webpack.github.io/docs/hot-module-replacement.html). Development should be done in the `src` directory.
 
+### Cross-Origin Requests
+
+You may notice that particular API calls made are blocked by modern browsers, due to the same-origin policy. To overcome this, reverse proxy both `localhost:3000` (the frontend development app) and `localhost:3001` (the backend app) to the same hostname and port number, such as `exchangebuddy.local` (you will have to edit `/etc/hosts` and redirect it to `127.0.0.1` for it to work).
+
+One way to do this would be to use nginx's [reverse proxy feature](https://www.nginx.com/resources/admin-guide/reverse-proxy/).
+
 ## Building
 ```
 npm run build

@@ -1,26 +1,47 @@
-# ExchangeBuddy
+# [ExchangeBuddy](https://app.exchangebuddy.com/)
+
+- Current stable version: **1.0**
+- Current development version: **2.0** 
 
 ## The Team
 
-### Business and Marketing Team
+### Business Development/Marketing
 
 - Eugene Ng - *Founder*
-- Kiat Han
-- Xin Ru
+- Tan Kiat Han
+- Lee Xin Ru
 
-### Development Team
+### Developers
 
-- [Wang Yanhao](https://github.com/WYHNUS) - *Full-stack developer*
-- [Lee Kai Yi](https://github.com/kaiyisg)- *Frontend developer*
-- [Irvin Lim](https://github.com/irvinlim) - *Frontend developer*
-- [Zhang Hanming](https://github.com/ZhangHanming) - *Backend developer*
+- [Irvin Lim](https://github.com/irvinlim) - *Frontend lead, DevOps*
+- [Ng Kai Sing](https://github.com/whatthestone) - *Frontend development, design*
+- [Zhang Hanming](https://github.com/ZhangHanming) - *Backend lead, data migration*
+- [Wang Yanhao](https://github.com/WYHNUS) - *Backend development*
+- [Quek Kai Yu](https://github.com/kaiyu92) - *Backend development*
+- [Cai Deshun](https://github.com/unusep) - *Backend development*
 
-Project is based on [work](https://github.com/irvinlim/exchangebuddy) from a previous project. The team included:
+### Background
+
+ExchangeBuddy came a long way until where it is today. 
+
+#### CS3216 Assignment 1
+
+The very first iteration, found [here](https://github.com/irvinlim/exchangebuddy) was prototyped as part of [CS3216](http://www.cs3216.com/) Assignment 1. The team included:
 
 - Eugene Ng
 - [Irvin Lim Wei Quan](https://github.com/irvinlim)
 - [Leon Mak An Sheng](https://github.com/leonmak)
 - [Lam Chi Thanh](https://github.com/zevergreenz)
+
+#### CS3216 Final Project
+
+The second iteration, also known as Version 1.0, was prototyped as part of CS3216 Final Project. The team included:
+
+- Eugene Ng
+- [Wang Yanhao](https://github.com/WYHNUS) - *Full-stack developer*
+- [Zhang Hanming](https://github.com/ZhangHanming) - *Backend developer*
+- [Lee Kai Yi](https://github.com/kaiyisg) - *Frontend developer* 
+
 
 ## Setup
 
