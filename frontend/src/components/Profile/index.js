@@ -7,39 +7,8 @@ import Profile from './Profile';
 import Loading from 'components/Loading';
 import ErrorComponent from 'components/Error';
 
-// TEMP
-const _tempAdditionalUserFields = {
-  university: { 
-    id: 1, 
-    name: 'National University of Singapore', 
-    city: 'Singapore', 
-    logoImageUrl: 'https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/national-university-of-singapore-nus.jpg',
-    country: {
-      alpha2Code: 'SG',
-      name: 'Singapore',
-    },
-  },
-  homeCountry: {
-    alpha2Code: 'SG',
-    name: 'Singapore',
-  },
-  exchanges: [
-    {
-      month: 7, 
-      year: 2017,
-      university: {
-        id: 2,
-        name: 'Fudan University',
-        city: 'Shanghai',
-        logoImageUrl: 'https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/fudan-university.jpg',
-        country: {
-          alpha2Code: 'CN',
-          name: 'China',
-        },
-      },
-    },
-  ],
-};
+import { redirect } from 'util/links';
+import { userTransform } from 'util/propTypes';
 
 const Container = ({ userFetch, ...rest }) => {
   if (userFetch.pending)
@@ -47,21 +16,25 @@ const Container = ({ userFetch, ...rest }) => {
   
   if (userFetch.rejected)
     return <ErrorComponent error={ userFetch.reason } />;
+
+  const user = userFetch.value;
   
-  return <Profile user={ { ...userFetch.value, ..._tempAdditionalUserFields } } { ...rest } />;
+  return <Profile user={ user } { ...rest } />;
 };
 
 Container.propTypes = {
   userFetch: React.PropTypes.instanceOf(PromiseState).isRequired,
 };
 
-const refetch = ({ userId }) => {
+const refetch = ({ currentUser, userId }) => {
   let userFetch;
 
   if (userId) {
-    userFetch = makeRefetch(`/user/${ userId }`, { userToken: true });
+    userFetch = makeRefetch(`/user/${ userId }`, { userToken: true }, userTransform);
+  } else if (currentUser) {
+    userFetch = makeRefetch(`/user/${ currentUser.id }`, { userToken: true }, userTransform);
   } else {
-    userFetch = makeRefetch(`/me`, { userToken: true });
+    redirect();
   }
 
   return {
@@ -72,4 +45,13 @@ const refetch = ({ userId }) => {
   };
 };
 
-export default connect(refetch)(Container);
+const RefetchedComponent = connect(refetch)(Container);
+
+// Redux
+import { connect as reduxConnect } from 'react-redux';
+
+const mapStateToProps = (state) => ({
+  currentUser: state['User/currentUser'],
+});
+
+export default reduxConnect(mapStateToProps)(RefetchedComponent);
