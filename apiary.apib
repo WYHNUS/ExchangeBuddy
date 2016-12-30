@@ -10,8 +10,8 @@ This is an API reference for [ExchangeBuddy](app.exchangebuddy.com).
 
 Get all universities, optionally filtered by country code.
 
-+ Attributes
-    + alpha2Code    (string) - Country code to filter university by.
++ Parameters
+    + alpha2Code    (string, optional, `SG`) ... Country code to filter university by.
 
 + Response 200 (application/json)
 
@@ -33,10 +33,13 @@ Get all universities, optionally filtered by country code.
 
 Gets university by ID.
 
++ Parameters
+    + id            (number, `12`) ... University ID to retrieve.
+
 + Response 200 (application/json)
 
         {
-            "id": 1,
+            "id": 12,
             "name": "National University of Singapore (NUS)",
             "city": "Singapore",
             "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/national-university-of-singapore-nus.jpg",
@@ -78,6 +81,9 @@ Updates a University.
 
 *Requires at least admin-level access (role >= 8).*
 
++ Parameters
+    + id            (number, `12`) ... University ID to update.
+
 + Attributes
     + name          (string, required) - University name.
     + alpha2Code    (string, required) - Country code.
@@ -102,8 +108,11 @@ Updates a University.
 
 Uploads a new logo for university.
 
++ Parameters
+    + id            (number, `12`) ... University to upload logo for. 
+
 + Attributes
-    + file      (string, required) - Image file to upload.
+    + file          (string, required) - Image file to upload.
 
 + Request (form-data)
 
@@ -127,6 +136,9 @@ Uploads a new logo for university.
 ### Get user by ID [GET /user/{id}]
 
 Gets user by ID.
+
++ Parameters
+    + id            (number, `1`) ... User ID to retrieve.
 
 + Response 200 (application/json)
 
@@ -275,7 +287,7 @@ Update user profile.
 Uploads a new profile picture for university.
 
 + Attributes
-    + file      (string, required) - Image file to upload.
+    + file          (string, required) - Image file to upload.
 
 + Request (form-data)
 
@@ -300,8 +312,8 @@ Uploads a new profile picture for university.
 Authenticate user by email.
 
 + Attributes
-    + email     (string, required) - Email address of user.
-    + password  (string, required) - Password of user.
+    + email         (string, required) - Email address of user.
+    + password      (string, required) - Password of user.
 
 + Request  (application/json)
 
@@ -362,7 +374,7 @@ Authenticate user by email.
 Authenticate user by Facebook token.
 
 + Attributes
-    + facebookToken     (string, required) - Facebook access token
+    + facebookToken (string, required) - Facebook access token
 
 + Request  (application/json)
 
@@ -420,6 +432,9 @@ Authenticate user by Facebook token.
 
 Verifies the user account from email verification.
 
++ Parameters
+    + token         (string) ... Verification token that was sent to the user's email.
+
 + Response 200 (application/json)
     
         {
@@ -429,6 +444,9 @@ Verifies the user account from email verification.
 ### Resend verification mail [GET /auth/resendVerification/{userId}]
 
 Resends the verification email for a user.
+
++ Parameters
+    + userId        (number, `1`) ... User ID.
 
 + Response 200 (application/json)
 
@@ -472,9 +490,12 @@ Lists all countries.
             }
         ]
 
-### Get country by ID [GET /country/{id}]
+### Get country by ID [GET /country/{alpha2Code}]
 
 Gets a country by its 2-letter ISO code.
+
++ Parameters
+    + alpha2Code    (string, `SG`) ... Two-letter code of country to retrieve.
 
 + Response 200 (application/json)
 
@@ -497,6 +518,9 @@ Gets a country by its 2-letter ISO code.
 ### Get group by ID [GET /group/{id}]
 
 Gets group by ID.
+
++ Parameters
+    + id            (number, `1`) ... ID of group to retrieve.
 
 + Response 200 (application/json)
 
@@ -521,6 +545,9 @@ Gets group by ID.
 ### Get members of group [GET /group/{id}/members]
 
 Gets all members of group.
+
++ Parameters
+    + id            (number, `1`) ... ID of group to retrieve.
 
 + Response 200 (application/json)
 
@@ -547,6 +574,9 @@ Gets all members of group.
 ### Get country wiki by alpha2Code [GET /wiki/country/{alpha2Code}]
 
 Gets a country's wiki by its two-letter ISO code.
+
++ Parameters
+    + alpha2Code    (string, `SG`) ... Two-letter ISO code of country whose wiki is to be retrieved.
 
 + Response 200 (application/json)
 
@@ -577,6 +607,9 @@ Gets a country's wiki by its two-letter ISO code.
 ### Get university wiki by university ID [GET /wiki/university/{universityId}]
 
 Gets a university's wiki by university ID.
+
++ Parameters
+    + universityId      (number, `1`) ... ID of university whose wiki is to be retrieved.
 
 + Response 200 (application/json)
 
@@ -615,6 +648,9 @@ Gets a university's wiki by university ID.
 
 Adds a new section to a wiki.
 
++ Parameters
+    + wikiId        (number, `1`) ... ID of wiki to add section to.
+
 + Attributes
     + title         (string, required)
     + content       (string, required)
@@ -636,6 +672,9 @@ Adds a new section to a wiki.
 ### Add a wiki section version [PUT /wiki/section/{sectionId}/version]
 
 Adds a new section version to a wiki section.
+
++ Parameters
+    + sectionId     (number, `1`) ... ID of section to add a new version to.
 
 + Attributes
     + title         (string, required)
@@ -660,6 +699,9 @@ Deletes a section from a wiki.
 
 *Requires admin-level access (role >= 8).*
 
++ Parameters
+    + sectionId     (number, `1`) ... ID of section to delete.
+
 + Response 200 (application/json)
 
         {
@@ -669,6 +711,9 @@ Deletes a section from a wiki.
 ### Get all versions for a section [GET /wiki/section/{sectionId}/versions]
 
 Gets all versions for a wiki section, sorted in descending order of creation time.
+
++ Parameters
+    + sectionId     (number, `1`) ... ID of section to get all versions for.
 
 + Response 200 (application/json)
 
@@ -701,6 +746,9 @@ Gets all versions for a wiki section, sorted in descending order of creation tim
 
 Gets a specific version for a wiki section, by version ID.
 
++ Parameters
+    + versionId     (number, `1`) ... ID of WikiSectionVersion to retrieve.
+
 + Response 200 (application/json)
 
         {
@@ -720,6 +768,9 @@ Gets a specific version for a wiki section, by version ID.
 ### Get all feed posts for a group [GET /group/{groupId}/feedposts]
 
 Gets all feed posts for a group, sorted in descending order of creation time.
+
++ Parameters
+    + groupId       (number, `1`) ... ID of group to retrieve feed posts for.
 
 + Response 200 (application/json)
 
@@ -754,6 +805,9 @@ Gets all feed posts for a group, sorted in descending order of creation time.
 ### Get comments and replies for a feed post [GET /feedpost/{id}/comments]
 
 Gets all comments and replies for a feed post, sorted in ascending order of creation time.
+
++ Parameters
+    + id            (number, `1`) ... ID of feedpost to retrieve comments for.
 
 + Response 200 (application/json)
 
@@ -802,6 +856,9 @@ Gets all comments and replies for a feed post, sorted in ascending order of crea
 
 Gets detailed reactions and users who reacted for a specific feed post, sorted in descending order of total count of reactors.
 
++ Parameters
+    + id            (number, `1`) ... ID of feed post to retrieve reactions for.
+
 + Response 200 (application/json)
 
         [
@@ -825,6 +882,9 @@ Gets detailed reactions and users who reacted for a specific feed post, sorted i
 ### Get reactions and reactors for a feed post comment [GET /feedpost/comment/{id}/reactions]
 
 Gets detailed reactions and users who reacted for a specific feed post comment, sorted in descending order of total count of reactors.
+
++ Parameters
+    + id            (number, `1`) ... ID of feed post comment to retrieve reactions for.
 
 + Response 200 (application/json)
 
@@ -850,6 +910,9 @@ Gets detailed reactions and users who reacted for a specific feed post comment, 
 
 Adds a new feed post to a group.
 
++ Parameters
+    + groupId       (number, `1`) ... ID of group to add feed post to.
+
 + Attributes
     + content       (string, required)
 
@@ -868,6 +931,9 @@ Adds a new feed post to a group.
 ### Update feed post [PATCH /feedpost/{id}]
 
 Updates a feed post.
+
++ Parameters
+    + id            (number, `1`) ... ID of feed post to update.
 
 + Attributes
     + content       (string, required)
@@ -888,6 +954,9 @@ Updates a feed post.
 
 Deletes a feed post.
 
++ Parameters
+    + id            (number, `1`) ... ID of feed post to delete.
+
 + Response 200 (application/json)
 
         {
@@ -898,8 +967,11 @@ Deletes a feed post.
 
 Adds/updates reaction to a feed post.
 
++ Parameters
+    + id            (number, `1`) ... ID of feed post to add reaction to.
+
 + Attributes
-    + emoji     (string, required)
+    + emoji         (string, required)
 
 + Request  (application/json)
 
@@ -917,6 +989,9 @@ Adds/updates reaction to a feed post.
 
 Removes reaction to a feed post.
 
++ Parameters
+    + id            (number, `1`) ... ID of feed post to remove reaction from.
+
 + Response 200 (application/json)
 
         {
@@ -926,6 +1001,9 @@ Removes reaction to a feed post.
 ### Adds a comment to a feed post [PUT /feedpost/{feedPostId}/comment]
 
 Adds a comment to a feed post.
+
++ Parameters
+    + feedPostId    (number, `1`) ... ID of feed post to add comment to.
 
 + Attributes
     + content       (string, required)
@@ -944,7 +1022,10 @@ Adds a comment to a feed post.
 
 ### Update feed post comment [PATCH /feedpost/comment/{id}]
 
-Updates a feed post.
+Updates a feed post comment.
+
++ Parameters
+    + id            (number, `1`) ... ID of feed post comment to update.
 
 + Attributes
     + content       (string, required)
@@ -963,7 +1044,10 @@ Updates a feed post.
 
 ### Delete feed post comment [DELETE /feedpost/comment/{id}]
 
-Deletes a feed post.
+Deletes a feed post comment.
+
++ Parameters
+    + id            (number, `1`) ... ID of feed post comment to delete.
 
 + Response 200 (application/json)
 
@@ -973,10 +1057,13 @@ Deletes a feed post.
 
 ### React to a feed post comment [POST /feedpost/comment/{id}/reaction]
 
-Adds/updates reaction to a feed post.
+Adds/updates reaction to a feed post comment.
+
++ Parameters
+    + id            (number, `1`) ... ID of feed post comment to add reaction to.
 
 + Attributes
-    + emoji     (string, required)
+    + emoji         (string, required)
 
 + Request  (application/json)
 
@@ -994,6 +1081,9 @@ Adds/updates reaction to a feed post.
 
 Removes reaction to a feed post.
 
++ Parameters
+    + id            (number, `1`) ... ID of feed post comment to remove reaction from.
+
 + Response 200 (application/json)
 
         {
@@ -1003,6 +1093,9 @@ Removes reaction to a feed post.
 ### Adds a reply to a feed post comment [PUT /feedpost/comment/{feedPostCommentId}/reply]
 
 Adds a reply to a feed post comment.
+
++ Parameters
+    + feedPostCommentId     (number, `1`) ... ID of feed post comment to reply to.
 
 + Attributes
     + content       (string, required)
@@ -1023,6 +1116,9 @@ Adds a reply to a feed post comment.
 
 Updates a feed post.
 
++ Parameters
+    + id            (number, `1`) ... ID of feed post comment reply to update.
+
 + Attributes
     + content       (string, required)
 
@@ -1042,6 +1138,9 @@ Updates a feed post.
 
 Deletes a feed post.
 
++ Parameters
+    + id            (number, `1`) ... ID of feed post comment reply to delete.
+
 + Response 200 (application/json)
 
         {
@@ -1058,11 +1157,11 @@ search results should be ordered in descending order of score.
 
 All searched stories should be public, unless user has at least moderator-level access (role >= 6).
 
-+ Attributes
-    + alpha2Code            (string)
-    + universityId          (number)
-    + universityCourseId    (number)
-    + searchQuery           (string) - Search parameter to search in the title and content body.
++ Parameters
+    + alpha2Codes               (string, optional, `alpha2Codes[]=US&alpha2Codes[]=GB`) ... Country codes to filter stories by. Use with square brackets `[]`
+    + universityIds             (number, optional, `universityIds[]=1&universityIds[]=123`) ... University IDs to filter stories by. Use with square brackets `[]`
+    + universityCourseIds       (number, optional, `universityCourseIds[]=1&universityCourseIds[]=123`) ... University course IDs to filter by. Use with square brackets `[]`
+    + searchQuery               (string, optional, `donald trump`) ... Search parameter to search in the title and content body.
 
 + Response 200 (application/json)
 
@@ -1118,6 +1217,9 @@ All searched stories should be public, unless user has at least moderator-level 
 ### Get story by ID [GET /story/{id}]
 
 Gets story by ID.
+
++ Parameters
+    + id            (number, `1`) ... ID of story to retrieve.
 
 + Response 200 (application/json)
 
@@ -1199,6 +1301,9 @@ Updates a story.
 
 *Only the author or users with at least moderator-level access (role >= 6) are allowed to perform this action.*
 
++ Parameters
+    + id            (number, `1`) ... ID of story to update.
+
 + Attributes
     + title                 (string)
     + content               (string)
@@ -1225,6 +1330,9 @@ Deletes a story.
 
 *Only the author or users with at least moderator-level access (role >= 6) are allowed to perform this action.*
 
++ Parameters
+    + id            (number, `1`) ... ID of story to delete.
+
 + Response 200 (application/json)
 
         {
@@ -1234,6 +1342,9 @@ Deletes a story.
 ### React to story [POST /story/{id}/reaction]
 
 React to a story.
+
++ Parameters
+    + id            (number, `1`) ... ID of story to add reaction to.
 
 + Attributes
     + emoji         (string, required)
@@ -1253,6 +1364,9 @@ React to a story.
 ### Unreact to story [DELETE /story/{id}/reaction]
 
 Unreact to a story.
+
++ Parameters
+    + id            (number, `1`) ... ID of story to remove reaction from.
 
 + Response 200 (application/json)
 
