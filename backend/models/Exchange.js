@@ -6,6 +6,9 @@ module.exports = function(sequelize, DataType) {
         year: {
             type: DataType.INTEGER(4),
         },
+        month: {
+            type: DataType.ENUM('JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'),
+        },
         term: {
             type: DataType.STRING(50),
         }

@@ -2,21 +2,20 @@ import React from 'react';
 
 import { CardText, CardActions } from 'material-ui/Card';
 import { MenuItem } from 'material-ui/Menu';
-import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import AvatarRow from 'components/AvatarRow';
 import Icon from 'components/Icon';
 import Paper from 'components/Paper';
 
-import GroupFeedPostComments from './GroupFeedPostComments';
 import GroupFeedUpdatePost from '../GroupFeedUpdatePost';
 import GroupFeedDeleteDialog from '../GroupFeedDeleteDialog';
+import GroupFeedPostIcons from './GroupFeedPostIcons';
+import GroupFeedPostComments from './GroupFeedPostComments';
 
 import { formatRelaTime } from 'util/helper';
 import { getAvatarUrl } from 'util/user';
 import { groupPropType, userPropType, feedPostPropType } from 'util/propTypes';
-import { availableEmojis } from 'util/helper';
 
 import './GroupFeedPost.scss';
 
@@ -37,7 +36,6 @@ class GroupFeedPost extends React.Component {
       expanded: false,
       isDeleteConfirmationDialogOpen: false,
       isEditing: false,
-      emojiExpand: false,
     };
 
     this.getPostDropdown = this.getPostDropdown.bind(this);
@@ -87,42 +85,11 @@ class GroupFeedPost extends React.Component {
                     </CardText>
 
                     <CardActions>
-                      <div className="row">
-                        <div className="col-xs-3 middle-xs">
-                          <FlatButton label="Comments" onTouchTap={this.toggleComments} />
-                        </div>
-
-                        <div className="col-xs-9 middle-xs">
-                          <div className="emoji-select">
-                            <IconButton> 
-                              <Icon name="mood" />
-                            </IconButton>
-
-                            <div className="available-emojis">
-                              <div className="bubble">
-                                { availableEmojis.map((emoji,idx) => (
-                                  
-                                    <IconButton style = {{ padding:0, width:20, height:20, margin:5 }} key = { idx }> 
-                                      <Icon size={ 16 } name={`twa twa-${ emoji }`} key={ idx } /> 
-                                    </IconButton>
-                                  
-
-                                )) } 
-                              </div>
-                            </div>
-
-                          </div>
-                        </div>
-                      </div>
-
+                      <GroupFeedPostIcons handleToggleComments={ this.toggleComments } />
                     </CardActions>
 
                   </Paper>    
                 </div>
-
-                { expanded &&
-                  <GroupFeedPostComments group={ group } feedPost={ feedPost } />
-                }
 
                 <GroupFeedDeleteDialog
                   endpoint="/feedpost"
@@ -130,12 +97,20 @@ class GroupFeedPost extends React.Component {
                   isOpen={ isDeleteConfirmationDialogOpen }
                   handleCloseDialog={ this.closeDeleteConfirmationDialog }
                   afterDelete={ refreshGroupFeed } />
+
+
+
+                { expanded &&
+                  <GroupFeedPostComments group={ group } feedPost={ feedPost } />
+                }
               </div>
             }
 
         </div>
       </div>
+
     );
+
   }
 
   getPostDropdown() {
@@ -145,10 +120,6 @@ class GroupFeedPost extends React.Component {
         <MenuItem className="post-dropdown-menuitem" primaryText="Delete" onClick={ this.openDeleteConfirmationDialog } />
       </IconMenu>
     );
-  }
-
-  toggleComments() {
-    this.setState({ expanded: !this.state.expanded });
   }
 
   openDeleteConfirmationDialog() {
@@ -165,6 +136,10 @@ class GroupFeedPost extends React.Component {
 
   stopEditingFeedPost() {
     this.setState({ isEditing: false });
+  }
+
+  toggleComments() {
+    this.setState({ expanded: !this.state.expanded });
   }
 
 }

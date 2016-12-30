@@ -23,24 +23,7 @@
   > * { font-size: 12px; line-height: 36px; }
 }
 
-.emoji-select {
-  display: flex; flex-direction: row;
-  .available-emojis { display: none; }
-  &:hover .available-emojis { display: flex; }
+.post-icons {
+  padding-left: 5px;
 }
 
-.available-emojis {
-  display: flex;
-  align-items: center;
-
-}
-
-.bubble{
-  height: 25px;
-  background: palette(Grey, 200);
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-}
