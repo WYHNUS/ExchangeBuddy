@@ -16,6 +16,7 @@ import GroupFeedDeleteDialog from '../GroupFeedDeleteDialog';
 import { formatRelaTime } from 'util/helper';
 import { getAvatarUrl } from 'util/user';
 import { groupPropType, userPropType, feedPostPropType } from 'util/propTypes';
+import { availableEmojis } from 'util/helper';
 
 import './GroupFeedPost.scss';
 
@@ -36,6 +37,7 @@ class GroupFeedPost extends React.Component {
       expanded: false,
       isDeleteConfirmationDialogOpen: false,
       isEditing: false,
+      emojiExpand: false,
     };
 
     this.getPostDropdown = this.getPostDropdown.bind(this);
@@ -54,6 +56,7 @@ class GroupFeedPost extends React.Component {
     const PostDropdown = this.getPostDropdown();
 
     return (
+
       <div className="row">
         <div className="col-xs-12">
           { isEditing 
@@ -84,7 +87,34 @@ class GroupFeedPost extends React.Component {
                     </CardText>
 
                     <CardActions>
-                      <FlatButton label="Comments" onTouchTap={ this.toggleComments } />
+                      <div className="row">
+                        <div className="col-xs-3 middle-xs">
+                          <FlatButton label="Comments" onTouchTap={this.toggleComments} />
+                        </div>
+
+                        <div className="col-xs-9 middle-xs">
+                          <div className="emoji-select">
+                            <IconButton> 
+                              <Icon name="mood" />
+                            </IconButton>
+
+                            <div className="available-emojis">
+                              <div className="bubble">
+                                { availableEmojis.map((emoji,idx) => (
+                                  
+                                    <IconButton style = {{ padding:0, width:20, height:20, margin:5 }} key = { idx }> 
+                                      <Icon size={ 16 } name={`twa twa-${ emoji }`} key={ idx } /> 
+                                    </IconButton>
+                                  
+
+                                )) } 
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+
                     </CardActions>
 
                   </Paper>    
@@ -102,6 +132,7 @@ class GroupFeedPost extends React.Component {
                   afterDelete={ refreshGroupFeed } />
               </div>
             }
+
         </div>
       </div>
     );
@@ -135,6 +166,7 @@ class GroupFeedPost extends React.Component {
   stopEditingFeedPost() {
     this.setState({ isEditing: false });
   }
+
 }
 
 export default GroupFeedPost;
