@@ -1,9 +1,9 @@
 import { PropTypes } from 'react';
+
 const { shape, string, number, instanceOf, arrayOf } = PropTypes;
 const dateObject = instanceOf(Date);
 
 // Transformation for react-refetch's "then" callback
-const transform = (original, value) => ({ ...original, ...value });
 
 // Standard transformations
 const int = parseInt;
@@ -22,12 +22,10 @@ const defaultPropTypes = {
   updatedAt: dateObject,
 };
 
-const defaultTransform = (props) => transform(props, {
-  createdAt: optional(props.createdAt, date),
-  updatedAt: optional(props.updatedAt, date),
+const defaultTransform = ({ createdAt, updatedAt }) => ({
+  createdAt: optional(createdAt, date),
+  updatedAt: optional(updatedAt, date),
 });
-
-const chainTransforms = (...transforms) => (original) => transforms.reduce((p, f) => transform(p, f(p)), original);
 
 export const makeMap = (f) => (x) => x.map(f);
 
@@ -39,7 +37,10 @@ export const countryPropType = shape({
   capital: string,
 });
 
-export const countryTransform = chainTransforms(defaultTransform);
+export const countryTransform = ({ ...props }) => ({
+  ...props,
+  ...defaultTransform(props),
+});
 
 export const universityPropType = shape({
   ...defaultPropTypes,
@@ -50,10 +51,28 @@ export const universityPropType = shape({
   country: countryPropType,
 });
 
-export const universityTransform = chainTransforms(defaultTransform, ({ id, country }) => ({
+export const universityTransform = ({ id, CountryAlpha2Code: _, Country, ...props }) => ({
+  ...props,
+  ...defaultTransform(props),
   id: int(id),
-  country: optional(country, countryTransform),
-}));
+  country: optional(Country, countryTransform),
+});
+
+export const exchangePropType = shape({
+  ...defaultPropTypes,
+  university: universityPropType.isRequired,
+  month: number.isRequired,
+  year: number.isRequired,
+});
+
+export const exchangeTransform = ({ id, University, UniversityId: _, month, year, ...props }) => ({
+  ...props,
+  ...defaultTransform(props),
+  id: int(id),
+  university: universityTransform(University),
+  month: optional(month, int),
+  year: optional(year, int),
+});
 
 export const userPropType = shape({
   ...defaultPropTypes,
@@ -65,31 +84,33 @@ export const userPropType = shape({
   fbUserId: string, // big int is too big
   university: universityPropType,
   homeCountry: countryPropType,
+  exchanges: arrayOf(exchangePropType),
 });
 
-export const userTransform = chainTransforms(defaultTransform, ({ id, role, University, homeCountry }) => ({
+export const userTransform = ({ id, role, University, homeCountry, Exchanges, ...props }) => ({
+  ...props,
+  ...defaultTransform(props),
   id: int(id),
   role: optional(role, int, 0),
   university: optional(University, universityTransform),
   homeCountry: optional(homeCountry, countryTransform),
-}));
+  exchanges: optional(Exchanges, makeMap(exchangeTransform), []),
+});
 
 export const groupPropType = shape({
   ...defaultPropTypes,
   id: number.isRequired,
-  university: universityPropType.isRequired,
-  month: number.isRequired,
-  year: number.isRequired,
+  exchange: exchangePropType.isRequired,
   users: arrayOf(userPropType).isRequired,
 });
 
-export const groupTransform = chainTransforms(defaultTransform, ({ id, University, month, year, users }) => ({
+export const groupTransform = ({ id, Exchange, users, ...props }) => ({
+  ...props,
+  ...defaultTransform(props),
   id: int(id),
-  university: universityTransform(University),
-  month: int(month),
-  year: int(year),
+  exchange: exchangeTransform(Exchange),
   users: users.map(userTransform),
-}));
+});
 
 export const feedPostCommentReplyPropType = shape({
   ...defaultPropTypes,
@@ -98,10 +119,12 @@ export const feedPostCommentReplyPropType = shape({
   author: userPropType.isRequired,
 });
 
-export const feedPostCommentReplyTransform = chainTransforms(defaultTransform, ({ id, author }) => ({
+export const feedPostCommentReplyTransform = ({ id, author, ...props }) => ({
+  ...props,
+  ...defaultTransform(props),
   id: int(id),
   author: userTransform(author),
-}));
+});
 
 export const feedPostCommentReactionPropType = shape({
   ...defaultPropTypes,
@@ -110,10 +133,12 @@ export const feedPostCommentReactionPropType = shape({
   author: userPropType.isRequired,
 });
 
-export const feedPostCommentReactionTransform = chainTransforms(defaultTransform, ({ id, author }) => ({
+export const feedPostCommentReactionTransform = ({ id, author, ...props }) => ({
+  ...props,
+  ...defaultTransform(props),
   id: int(id),
   author: userTransform(author),
-}));
+});
 
 export const feedPostPropType = shape({
   ...defaultPropTypes,
@@ -122,10 +147,12 @@ export const feedPostPropType = shape({
   author: userPropType.isRequired,
 });
 
-export const feedPostTransform = chainTransforms(defaultTransform, ({ id, author }) => ({
+export const feedPostTransform = ({ id, author, ...props }) => ({
+  ...props,
+  ...defaultTransform(props),
   id: int(id),
   author: userTransform(author),
-}));
+});
 
 export const feedPostCommentPropType = shape({
   ...defaultPropTypes,
@@ -136,9 +163,11 @@ export const feedPostCommentPropType = shape({
   reactions: arrayOf(feedPostCommentReactionPropType).isRequired,
 });
 
-export const feedPostCommentTransform = chainTransforms(defaultTransform, ({ id, author, FeedPostCommentReplies, FeedPostCommentReactions }) => ({
+export const feedPostCommentTransform = ({ id, author, FeedPostCommentReplies, FeedPostCommentReactions, ...props }) => ({
+  ...props,
+  ...defaultTransform(props),
   id: int(id),
   author: userTransform(author),
   replies: FeedPostCommentReplies.map(feedPostCommentReplyTransform),
   reactions: FeedPostCommentReactions.map(feedPostCommentReactionTransform),
-}));
+});
