@@ -1,0 +1,73 @@
+FORMAT: 1A
+HOST: https://app.exchangebuddy.com/api
+
+# ExchangeBuddy
+This is an API reference for [ExchangeBuddy](app.exchangebuddy.com).
+
+## Universities [/universities]
+
+### List All Universities [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "name": "National University of Singapore (NUS)",
+                "city": "Singapore",
+                "logoImageUrl": "",
+                "website": ""
+            }
+        ]
+
+## University by ID [/university/{id}]
+
+### Get a University by ID [GET]
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "name": "Massachusetts Institute of Technology (MIT) ",
+            "city": "",
+            "website": "http://web.mit.edu/",
+            "fbPageId": "",
+            "countryCode": "US",
+            "logoUrl": "http://www.topuniversities.com/sites/default/files/massachusetts-institute-of-technology-mit_410_small.jpg",
+            "linkUrl": "",
+            "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/massachusetts-institute-of-technology-mit.jpg",
+            "bgImageUrl": "",
+            "emailDomains": "[\"mit.edu\"]",
+            "terms": "[]",
+            "topUnisId": 410,
+            "createdAt": "2016-10-18T00:00:00.000Z",
+            "updatedAt": "2016-12-13T04:50:23.000Z",
+            "CountryAlpha2Code": null
+        }
+        
+## Add a University Entry [/university]
+
+### Create a University Entry [PUT]
+
++ Request
+
+        {
+            "name": "University Name",
+            "alpha2Code": "UN",
+            "city": "optional",
+            "website": "optional",
+            "fbPageId": "optional",
+            "logoImageUrl": "optional",
+            "bgImageUrl": "optional",
+            "emailDomains": "optional",
+            "terms": "optional",
+            "topUnisId": "optional"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "success",
+            "university": [[Univeristy Object Created]]
+        
+        }
