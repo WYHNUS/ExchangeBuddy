@@ -43,8 +43,25 @@ exports.getUser = function(req, res) {
         attributes: ['id', 'email', 'name', 'profilePictureUrl', 'fbUserId', 'bio']
     }).then(function(user) {
         user.getExchangeEvent().then(function(exchanges){
-            user.setDataValue("Exchanges", exchanges);
-            res.json(user);
+            models.University.findAll({
+                where: {
+                    id: {
+                        $in: exchanges.map(exchange => exchange.UniversityId)
+                    }
+                }
+            }).then(function(universities){
+                for(var university of universities){
+                    for(var exchange of exchanges){
+                        if(exchange.UniversityId == university.id){
+                            exchange.setDataValue("University", university);
+                        }
+                    }
+                }
+                user.setDataValue("Exchanges", exchanges);
+
+                res.json(user);
+            })
+
         })
 
     }).catch(function(err) {

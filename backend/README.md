@@ -14,3 +14,18 @@ To bootstrap database with default country and university data, connect to your 
 ```
 mysql -u username -p database_name < bootstrap_data.sql
 ```
+
+### Migrations
+Create a `config.json` file in `config` directory based on `config.json.example` and change the variables accordingly
+
+install the sequelize cli globally
+```
+npm install sequelize-cli -g
+```
+
+run migrations command
+```
+sequelize db:migrate --config config/config.json
+```
+
+If it is executed without changing the actually database, rename the migration file in `migrations` directory to any other name and run the command again
