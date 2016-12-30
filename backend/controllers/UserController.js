@@ -52,7 +52,6 @@ exports.getUser = function(req, res) {
                         }
                     }
                 }
-                console.log(exchanges);
                 user.setDataValue("Exchanges", exchanges);
 
                 res.json(user);
