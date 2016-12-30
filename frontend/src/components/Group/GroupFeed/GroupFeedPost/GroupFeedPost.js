@@ -37,7 +37,6 @@ class GroupFeedPost extends React.Component {
       expanded: false,
       isDeleteConfirmationDialogOpen: false,
       isEditing: false,
-      emojiExpand: false,
     };
 
     this.getPostDropdown = this.getPostDropdown.bind(this);
@@ -87,34 +86,34 @@ class GroupFeedPost extends React.Component {
                     </CardText>
 
                     <CardActions>
-                      <div className="row">
-                        <div className="col-xs-3 middle-xs">
-                          <FlatButton label="Comments" onTouchTap={this.toggleComments} />
+                      <div className="row post-icons">
+                        <div className="middle-xs comments-select">
+                          <IconButton size = { 30 } onClick={this.toggleComments} >
+                            <div className="no-speak"><Icon name={`twa twa-left-speech-bubble`} /></div>
+                            <div className="speak"><Icon name={`twa twa-speech-balloon`} /></div>
+                          </IconButton>
                         </div>
 
-                        <div className="col-xs-9 middle-xs">
-                          <div className="emoji-select">
-                            <IconButton> 
-                              <Icon name="mood" />
-                            </IconButton>
+                        <div className="emoji-select">
+                         
+                          <IconButton size = { 30 }>   
+                            <div className="normal-face"><Icon name={`twa twa-grin`} /></div>
+                            <div className="shock-face"> <Icon name={`twa twa-open-mouth`} /></div>
+                          </IconButton>
 
-                            <div className="available-emojis">
-                              <div className="bubble">
-                                { availableEmojis.map((emoji,idx) => (
-                                  
-                                    <IconButton style = {{ padding:0, width:20, height:20, margin:5 }} key = { idx }> 
-                                      <Icon size={ 16 } name={`twa twa-${ emoji }`} key={ idx } /> 
-                                    </IconButton>
-                                  
-
-                                )) } 
-                              </div>
+                          <div className="available-emojis">
+                            <div className="bubble">
+                              { availableEmojis.map((emoji,idx) => (
+                                
+                                  <IconButton style = {{ padding:0, width:20, height:20, margin:5 }} key = { idx }> 
+                                    <Icon size={ 16 } name={`twa twa-${ emoji }`} key={ idx } /> 
+                                  </IconButton>
+                              )) } 
                             </div>
-
                           </div>
                         </div>
                       </div>
-
+                   
                     </CardActions>
 
                   </Paper>    
