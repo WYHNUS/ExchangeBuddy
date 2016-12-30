@@ -61,3 +61,12 @@ export const iterate = (n) => {
 
   return iterator;
 };
+
+// Icons
+export const availableEmojis = [
+  'heart-eyes',
+  'yum',
+  'joy',
+  'two-hearts',
+  'cry',
+];
