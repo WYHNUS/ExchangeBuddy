@@ -1,6 +1,6 @@
 import { PropTypes } from 'react';
 
-const { shape, string, number, instanceOf, arrayOf } = PropTypes;
+const { shape, string, number, instanceOf, arrayOf, oneOf } = PropTypes;
 const dateObject = instanceOf(Date);
 
 // Transformation for react-refetch's "then" callback
@@ -61,16 +61,15 @@ export const universityTransform = ({ id, CountryAlpha2Code: _, Country, ...prop
 export const exchangePropType = shape({
   ...defaultPropTypes,
   university: universityPropType.isRequired,
-  month: number.isRequired,
+  month: oneOf([ 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC' ]).isRequired,
   year: number.isRequired,
 });
 
-export const exchangeTransform = ({ id, University, UniversityId: _, month, year, ...props }) => ({
+export const exchangeTransform = ({ id, University, UniversityId: _, StudentExchange: _2, year, ...props }) => ({
   ...props,
   ...defaultTransform(props),
   id: int(id),
   university: universityTransform(University),
-  month: optional(month, int),
   year: optional(year, int),
 });
 

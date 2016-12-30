@@ -1,4 +1,4 @@
-var moment = require('moment');
+import moment from 'moment';
 
 // Routes
 export const makeRouteSlug = (routes) => {
@@ -49,7 +49,7 @@ export const formatMoney = (money) => `$${ money.toFixed(2) }`;
 
 // Dates
 export const formatDate = (date) => moment(date).format('D MMM YYYY');
-export const formatMonth = (zeroIndexedMonth) => zeroIndexedMonth && moment().month(zeroIndexedMonth).format('MMM');
+export const formatMonth = (month) => month.charAt(0).toUpperCase() + month.toLowerCase().slice(1);
 export const formatTime = (date) => moment(date).format('h:mm A');
 export const formatDateTime = (date) => moment(date).format('ddd, D MMM, h:mm A');
 export const formatRelaTime = (date) => moment(date).fromNow()
