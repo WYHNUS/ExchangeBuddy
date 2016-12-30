@@ -9,6 +9,7 @@ var fs = require('fs');
 var models = require('../models');
 var User = models.User;
 var University = models.University;
+var Country = models.Country;
 var Exchange = models.Exchange;
 var Group = models.Group;
 var MailCtrl = require('./MailController');
@@ -33,9 +34,13 @@ exports.getUser = function(req, res) {
             id: req.params.id
         },
         include: [{
-            model: University
+            model: University,
+            include: [{
+                model: Country,
+                attributes: ['alpha2Code', 'name']
+            }]
         }],
-        attributes: ['id', 'email', 'name', 'profilePictureUrl', 'fbUserId', 'bio', 'UniversityId']
+        attributes: ['id', 'email', 'name', 'profilePictureUrl', 'fbUserId', 'bio']
     }).then(function(user) {
         user.getExchangeEvent().then(function(exchanges){
             user.setDataValue("Exchanges", exchanges);
