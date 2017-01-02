@@ -100,14 +100,12 @@ exports.createUser = function(req, res){
             }).then(function(user){
                 MailCtrl.sendVerificationEmail(user)
                 .then(function(value) {
-                    console.log(value); // Success!
                     res.status(201)
                         .json({
                             status: 'success',
                             message: 'Verification email sent.'
                         });
                 }, function(reason) {
-                    console.log(reason); // Error!
                     res.status(400)
                         .json({
                             status: 'fail',
@@ -350,15 +348,6 @@ exports.updateUni = function(req, res){
                         id: 0,
                         name: exchangeUniversity.name + " exchange students -- Year " + exchange.year + " " + exchange.term
                     },
-                    {
-                        id: 1,
-                        // todo -> remove exchange.term , this group only consider exchange year
-                        name: homeUniversity.name + " going abroad -- Year " + exchange.year
-                    },
-                    {
-                        id: 2,
-                        name: homeUniversity.name + " students in " + exchangeUniversity.name
-                    }
                 ];
 
                 var defaultGroupArray = defaultGroups.map(group => {
