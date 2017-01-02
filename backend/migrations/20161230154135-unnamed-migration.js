@@ -14,6 +14,21 @@ module.exports = {
             queryInterface.dropTable('Events'),
             queryInterface.dropTable('Journals'),
             queryInterface.dropTable('Tokens'),
+            queryInterface.removeColumn('Universities', 'logoUrl'),
+            queryInterface.removeColumn('Universities', 'countryCode'),
+            queryInterface.removeColumn('Universities', 'linkUrl'),
+            queryInterface.renameColumn('Stories', 'UserId', 'authorId'),
+            queryInterface.addColumn('Groups', 'ExchangeId', {
+                type: Sequelize.INTERGER(11),
+                references: 'Exchanges',
+                referencesKey: 'id',
+                onDelete: 'CASCADE',
+            }),
+            queryInterface.addColumn('Exchanges', 'month', {
+                type: Sequelize.type: DataType.ENUM('JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'),
+
+            }),
+
 
         ]
     },
