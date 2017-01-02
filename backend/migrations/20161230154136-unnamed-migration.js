@@ -19,13 +19,15 @@ module.exports = {
             queryInterface.removeColumn('Universities', 'linkUrl'),
             queryInterface.renameColumn('Stories', 'UserId', 'authorId'),
             queryInterface.addColumn('Groups', 'ExchangeId', {
-                type: Sequelize.INTERGER(11),
-                references: 'Exchanges',
-                referencesKey: 'id',
+                type: Sequelize.INTEGER(11),
+                references: {
+                    model: 'Exchange',
+                    key: 'id',
+                },
                 onDelete: 'CASCADE',
             }),
             queryInterface.addColumn('Exchanges', 'month', {
-                type: Sequelize.type: DataType.ENUM('JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'),
+                type: Sequelize.ENUM('JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'),
 
             }),
 
