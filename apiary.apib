@@ -1376,3 +1376,66 @@ Unreact to a story.
         {
             "status": "ok"
         }
+
+## Questions [/question]
+
+### Get all questions [GET /questions]
+
+Retrieves all questions.
+
+All searched questions should be public, unless user has at least moderator-level access (role >= 6).
+
+### Create question [POST /question]
+
+Creates a new question
+
++ Attributes
+    + content       (string, required) - Question content
+    + UniversityId  (integer, required) - Id of university associated with this question
+
++ Request  (application/json)
+
+        {
+            "content": "poop"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "success"
+        }
+
+### Update question [PATCH /question/{id}]
+
+Update content of a question
+
++ Parameters
+    + id            (number, `1`) ... ID of question to update
+
++ Attributes
+    + content       (string, required) - Question content
+
++ Request  (application/json)
+
+        {
+            "content": "poop"
+        }
+
+### Delete question [DELETE /question/{id}]
+
++ Parameters
+    + id            (number, `1`) ... ID of question to delete
+
+### Vote question [POST /question/{id}/vote]
+
++ Parameters
+    + id            (number, `1`) ... ID of question to vote for
+
++ Attributes
+    + content       (integer, required) - Vote points only (-1, 0, 1) allowed
+
++ Request  (application/json)
+
+        {
+            "vote": 1
+        }

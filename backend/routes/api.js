@@ -95,8 +95,8 @@ router.post('/unreactToFeedPost', verifyToken, FeedPostCtrl.unreactToFeedPost);
 
 // QUESTION CONTROLLER
 router.post('/question', verifyToken, QuestionCtrl.createQuestion);
-router.patch('/updateQuestion/:id', verifyToken, QuestionCtrl.updateQuestion);
-router.delete('/deleteQuestion/:id', verifyToken, QuestionCtrl.deleteQuestion);
+router.patch('/question/:id', verifyToken, QuestionCtrl.updateQuestion);
+router.delete('/question/:id', verifyToken, QuestionCtrl.deleteQuestion);
 router.get('/questions', verifyToken, QuestionCtrl.getQuestions);
 router.post('/question/:id/vote', verifyToken, QuestionCtrl.voteQuestion);
 
