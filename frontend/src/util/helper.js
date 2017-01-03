@@ -1,4 +1,4 @@
-var moment = require('moment');
+import moment from 'moment';
 
 // Routes
 export const makeRouteSlug = (routes) => {
@@ -30,12 +30,26 @@ export const propExistsDeep = function(parent, arrayOfChildProps) {
   });
 };
 
+/**
+ * Deletes a named object property from an object.
+ * 
+ * @param  {object} obj  Object to operate on.
+ * @param  {string} prop Property name to delete, if exists.
+ * @return {object}      Resultant object.
+ */
+export const deleteProp = (obj, prop) => {
+  if (prop in obj)
+    delete obj[prop];
+
+  return obj;
+};
+
 // Numbers
 export const formatMoney = (money) => `$${ money.toFixed(2) }`;
 
 // Dates
 export const formatDate = (date) => moment(date).format('D MMM YYYY');
-export const formatMonth = (zeroIndexedMonth) => zeroIndexedMonth && moment().month(zeroIndexedMonth).format('MMM');
+export const formatMonth = (month) => month && month.lenght && month.charAt(0).toUpperCase() + month.toLowerCase().slice(1);
 export const formatTime = (date) => moment(date).format('h:mm A');
 export const formatDateTime = (date) => moment(date).format('ddd, D MMM, h:mm A');
 export const formatRelaTime = (date) => moment(date).fromNow()

@@ -22,7 +22,12 @@
     "react"
   ],
   "rules": {
-    "no-unused-vars": ["warn", { "vars": "all", "args": "after-used" }],
+    "no-unused-vars": ["warn", { 
+      "vars": "all",
+      "varsIgnorePattern": "^_",
+      "args": "after-used",
+      "argsIgnorePattern": "^_"
+    }],
     "no-console": ["error", { allow: ["log", "warn", "error"] }],
     "no-case-declarations": 0,
     "no-return-assign": 0,

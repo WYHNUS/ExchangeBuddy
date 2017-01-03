@@ -9,6 +9,7 @@ var fs = require('fs');
 var models = require('../models');
 var User = models.User;
 var University = models.University;
+var Country = models.Country;
 var Exchange = models.Exchange;
 var Group = models.Group;
 var MailCtrl = require('./MailController');
@@ -33,13 +34,34 @@ exports.getUser = function(req, res) {
             id: req.params.id
         },
         include: [{
-            model: University
+            model: University,
+            include: [{
+                model: Country,
+                attributes: ['alpha2Code', 'name']
+            }]
         }],
-        attributes: ['id', 'email', 'name', 'profilePictureUrl', 'fbUserId', 'bio', 'UniversityId']
+        attributes: ['id', 'email', 'name', 'profilePictureUrl', 'fbUserId', 'bio']
     }).then(function(user) {
         user.getExchangeEvent().then(function(exchanges){
-            user.setDataValue("Exchanges", exchanges);
-            res.json(user);
+            models.University.findAll({
+                where: {
+                    id: {
+                        $in: exchanges.map(exchange => exchange.UniversityId)
+                    }
+                }
+            }).then(function(universities){
+                for(var university of universities){
+                    for(var exchange of exchanges){
+                        if(exchange.UniversityId == university.id){
+                            exchange.setDataValue("University", university);
+                        }
+                    }
+                }
+                user.setDataValue("Exchanges", exchanges);
+
+                res.json(user);
+            })
+
         })
 
     }).catch(function(err) {
@@ -78,14 +100,12 @@ exports.createUser = function(req, res){
             }).then(function(user){
                 MailCtrl.sendVerificationEmail(user)
                 .then(function(value) {
-                    console.log(value); // Success!
                     res.status(201)
                         .json({
                             status: 'success',
                             message: 'Verification email sent.'
                         });
                 }, function(reason) {
-                    console.log(reason); // Error!
                     res.status(400)
                         .json({
                             status: 'fail',
@@ -328,15 +348,6 @@ exports.updateUni = function(req, res){
                         id: 0,
                         name: exchangeUniversity.name + " exchange students -- Year " + exchange.year + " " + exchange.term
                     },
-                    {
-                        id: 1,
-                        // todo -> remove exchange.term , this group only consider exchange year
-                        name: homeUniversity.name + " going abroad -- Year " + exchange.year
-                    },
-                    {
-                        id: 2,
-                        name: homeUniversity.name + " students in " + exchangeUniversity.name
-                    }
                 ];
 
                 var defaultGroupArray = defaultGroups.map(group => {

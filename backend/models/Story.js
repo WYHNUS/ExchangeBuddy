@@ -23,11 +23,6 @@ module.exports = function(sequelize, DataType) {
     }, {
         classMethods: {
             associate: function(models) {
-                Story.belongsTo(models.User, {
-                    onDelete: 'CASCADE',
-                    as: "author"
-                });
-
                 Story.hasMany(models.StoryComment, {
                     onDelete: "CASCADE"
                 });

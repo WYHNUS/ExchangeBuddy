@@ -1,0 +1,1378 @@
+FORMAT: 1A
+HOST: https://app.exchangebuddy.com/api
+
+# ExchangeBuddy
+This is an API reference for [ExchangeBuddy](app.exchangebuddy.com).
+
+## Universities [/university]
+
+### List all universities [GET /universities{?alpha2Code}]
+
+Get all universities, optionally filtered by country code.
+
++ Parameters
+    + alpha2Code    (string, optional, `SG`) ... Country code to filter university by.
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "name": "National University of Singapore (NUS)",
+                "city": "Singapore",
+                "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/national-university-of-singapore-nus.jpg",
+                "website": "http://www.nus.edu.sg/",
+                "country": {
+                    "alpha2Code": "SG",
+                    "name": "Singapore"
+                }
+            }
+        ]
+
+### Get university by ID [GET /university/{id}]
+
+Gets university by ID.
+
++ Parameters
+    + id            (number, `12`) ... University ID to retrieve.
+
++ Response 200 (application/json)
+
+        {
+            "id": 12,
+            "name": "National University of Singapore (NUS)",
+            "city": "Singapore",
+            "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/national-university-of-singapore-nus.jpg",
+            "website": "http://www.nus.edu.sg/",
+            "country": {
+                "alpha2Code": "SG",
+                "name": "Singapore"
+            }
+        }
+
+### Create a university [PUT /university]
+
+Creates a new University.
+
+*Requires at least admin-level access (role >= 8).*
+
++ Attributes
+    + name          (string, required) - University name.
+    + alpha2Code    (string, required) - Country code.
+    + city          (string) - City that the university resides in.
+    + website       (string) - URL for home page of university.
+
++ Request  (application/json)
+
+        {
+            "name": "Technical University of Munich",
+            "alpha2Code": "DE"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "status": "created"
+        }
+
+### Updates a university [PATCH /university/{id}]
+
+Updates a University.
+
+*Requires at least admin-level access (role >= 8).*
+
++ Parameters
+    + id            (number, `12`) ... University ID to update.
+
++ Attributes
+    + name          (string, required) - University name.
+    + alpha2Code    (string, required) - Country code.
+    + city          (string) - City that the university resides in.
+    + website       (string) - URL for home page of university.
+
++ Request  (application/json)
+
+        {
+            "city": "Munich",
+            "website": "https://www.tum.de/"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+
+### Upload university logo [PUT /university/{id}/uploadLogo]
+
+Uploads a new logo for university.
+
++ Parameters
+    + id            (number, `12`) ... University to upload logo for. 
+
++ Attributes
+    + file          (string, required) - Image file to upload.
+
++ Request (form-data)
+
+            ------WebKitFormBoundary8M3sSU13ul5lXSJm
+
+            Content-Disposition: form-data; name="file"; filename="filename.jpg"
+            Content-Type: image/jpeg
+
+            image data here...
+            ------WebKitFormBoundary8M3sSU13ul5lXSJm--
+
++ Response 201 (application/json)
+
+        {
+            "status": "created"
+        }
+
+
+## User [/user]
+
+### Get user by ID [GET /user/{id}]
+
+Gets user by ID.
+
++ Parameters
+    + id            (number, `1`) ... User ID to retrieve.
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "name": "Irvin Lim",
+            "profilePictureUrl": "https://scontent.xx.fbcdn.net/v/t1.0-1/p720x720/12744490_10154668045582575_8254141537094470326_n.jpg?oh=3225976ed7f71907c974cbcc5fc056e6&oe=58CCF01A",
+            "fbUserId": "10155216317967575"
+            "homeCountry": {
+                "alpha2Code": "SG",
+                "name": "Singapore"
+            },
+            "homeUniversity": {
+                "id": 1,
+                "name": "National University of Singapore (NUS)",
+                "city": "Singapore",
+                "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/national-university-of-singapore-nus.jpg",
+                "website": "http://www.nus.edu.sg/",
+                "country": {
+                    "alpha2Code": "SG",
+                    "name": "Singapore"
+                }
+            },
+            "exchanges": [
+                {
+                    "id": 1,
+                    "year": 2017,
+                    "month": "JAN",
+                    "university": {
+                        "id": 2,
+                        "name": "Technical University of Munich",
+                        "city": "Munich",
+                        "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/technical-university-of-munich.jpg",
+                        "website": "https://www.tum.de/",
+                        "country": {
+                            "alpha2Code": "DE",
+                            "name": "Germany"
+                        }
+                    }
+                }
+            ]
+        }
+
+### Create user [PUT /user]
+
+Creates a new user.
+
+*Requires master-level access (role = 10).*
+
++ Attributes
+    + name              (string, required) - User name.
+    + password          (string) - New user password. Either `password` of `fbUserId` must be provided. 
+    + fbUserId          (string) - Facebook user ID. Either `password` of `fbUserId` must be provided.
+    + homeCountryCode   (string) - Country code for user's home country.
+    + homeUniversityId  (string) - University ID for user's home university.
+    + exchanges         (array[Exchange])  - Exchanges
+
++ Request  (application/json)
+
+        {
+            "name": "Wang Yanhao",
+            "homeUniversityId": 1
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "created"
+        }
+
+
+## Current User [/me]
+
+### Get current user profile [GET]
+
+Gets the profile of the user identified by token.
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "name": "Irvin Lim",
+            "profilePictureUrl": "https://scontent.xx.fbcdn.net/v/t1.0-1/p720x720/12744490_10154668045582575_8254141537094470326_n.jpg?oh=3225976ed7f71907c974cbcc5fc056e6&oe=58CCF01A",
+            "fbUserId": "10155216317967575"
+            "homeCountry": {
+                "alpha2Code": "SG",
+                "name": "Singapore"
+            },
+            "homeUniversity": {
+                "id": 1,
+                "name": "National University of Singapore (NUS)",
+                "city": "Singapore",
+                "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/national-university-of-singapore-nus.jpg",
+                "website": "http://www.nus.edu.sg/",
+                "country": {
+                    "alpha2Code": "SG",
+                    "name": "Singapore"
+                }
+            },
+            "exchanges": [
+                {
+                    "id": 1,
+                    "year": 2017,
+                    "month": "JAN",
+                    "university": {
+                        "id": 2,
+                        "name": "Technical University of Munich",
+                        "city": "Munich",
+                        "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/technical-university-of-munich.jpg",
+                        "website": "https://www.tum.de/",
+                        "country": {
+                            "alpha2Code": "DE",
+                            "name": "Germany"
+                        }
+                    }
+                }
+            ]
+        }
+
+### Update user profile [PATCH]
+
+Update user profile.
+
++ Attributes
+    + name              (string) - New name of user.
+    + fbUserId          (string) - New Facebook user ID.
+    + homeUniversityId  (string) - ID of home university of user.
+    + homeCountryCode   (string) - 2-letter code of home country of user.
+    + exchanges         (array[Exchange])  - Array of exchanges that the user is involved in.
+
++ Request  (application/json)
+
+        {
+            "city": "Munich",
+            "website": "https://www.tum.de/"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+### Upload profile picture [PUT /me/uploadProfilePicture]
+
+Uploads a new profile picture for university.
+
++ Attributes
+    + file          (string, required) - Image file to upload.
+
++ Request (form-data)
+
+            ------WebKitFormBoundary8M3sSU13ul5lXSJm
+
+            Content-Disposition: form-data; name="file"; filename="filename.jpg"
+            Content-Type: image/jpeg
+
+            image data here...
+            ------WebKitFormBoundary8M3sSU13ul5lXSJm--
+
++ Response 201 (application/json)
+
+        {
+            "status": "created"
+        }
+
+## Authentication [/auth]
+
+### Authenticate by email [POST /auth/email]
+
+Authenticate user by email.
+
++ Attributes
+    + email         (string, required) - Email address of user.
+    + password      (string, required) - Password of user.
+
++ Request  (application/json)
+
+        {
+            "email": "irvinlimweiquan@gmail.com",
+            "password": "password123"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok",
+            "token": "JWT_USER_TOKEN",
+            "user": {
+                "id": 1,
+                "name": "Irvin Lim",
+                "profilePictureUrl": "https://scontent.xx.fbcdn.net/v/t1.0-1/p720x720/12744490_10154668045582575_8254141537094470326_n.jpg?oh=3225976ed7f71907c974cbcc5fc056e6&oe=58CCF01A",
+                "fbUserId": "10155216317967575"
+                "homeCountry": {
+                    "alpha2Code": "SG",
+                    "name": "Singapore"
+                },
+                "homeUniversity": {
+                    "id": 1,
+                    "name": "National University of Singapore (NUS)",
+                    "city": "Singapore",
+                    "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/national-university-of-singapore-nus.jpg",
+                    "website": "http://www.nus.edu.sg/",
+                    "country": {
+                        "alpha2Code": "SG",
+                        "name": "Singapore"
+                    }
+                },
+                "exchanges": [
+                    {
+                        "id": 1,
+                        "year": 2017,
+                        "month": 0,
+                        "university": {
+                            "id": 2,
+                            "name": "Technical University of Munich",
+                            "city": "Munich",
+                            "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/technical-university-of-munich.jpg",
+                            "website": "https://www.tum.de/",
+                            "country": {
+                                "alpha2Code": "DE",
+                                "name": "Germany"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+        
+
+### Authenticate by Facebook [POST /auth/facebook]
+
+Authenticate user by Facebook token.
+
++ Attributes
+    + facebookToken (string, required) - Facebook access token
+
++ Request  (application/json)
+
+        {
+            "facebookToken": "FACEBOOK_ACCESS_TOKEN"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok",
+            "token": "JWT_USER_TOKEN",
+            "user": {
+                "id": 1,
+                "name": "Irvin Lim",
+                "profilePictureUrl": "https://scontent.xx.fbcdn.net/v/t1.0-1/p720x720/12744490_10154668045582575_8254141537094470326_n.jpg?oh=3225976ed7f71907c974cbcc5fc056e6&oe=58CCF01A",
+                "fbUserId": "10155216317967575"
+                "homeCountry": {
+                    "alpha2Code": "SG",
+                    "name": "Singapore"
+                },
+                "homeUniversity": {
+                    "id": 1,
+                    "name": "National University of Singapore (NUS)",
+                    "city": "Singapore",
+                    "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/national-university-of-singapore-nus.jpg",
+                    "website": "http://www.nus.edu.sg/",
+                    "country": {
+                        "alpha2Code": "SG",
+                        "name": "Singapore"
+                    }
+                },
+                "exchanges": [
+                    {
+                        "id": 1,
+                        "year": 2017,
+                        "month": 0,
+                        "university": {
+                            "id": 2,
+                            "name": "Technical University of Munich",
+                            "city": "Munich",
+                            "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/technical-university-of-munich.jpg",
+                            "website": "https://www.tum.de/",
+                            "country": {
+                                "alpha2Code": "DE",
+                                "name": "Germany"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+
+### Verify user account [GET /auth/verify/{token}]
+
+Verifies the user account from email verification.
+
++ Parameters
+    + token         (string) ... Verification token that was sent to the user's email.
+
++ Response 200 (application/json)
+    
+        {
+            "status": "ok"
+        }
+
+### Resend verification mail [GET /auth/resendVerification/{userId}]
+
+Resends the verification email for a user.
+
++ Parameters
+    + userId        (number, `1`) ... User ID.
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+
+## Countries [/country]
+
+### List all countries [GET /countries]
+
+Lists all countries.
+
++ Response 200 (application/json)
+
+        [
+            {
+                "alpha2Code": "AD",
+                "name": "Andorra",
+                "region": "Europe",
+                "capital": "Southern Europe",
+                "timezones": [
+                    "UTC+01:00"
+                ],
+                "callingCodes": [
+                    376
+                ]
+            },
+            {
+                "alpha2Code": "AE",
+                "name": "United Arab Emirates",
+                "region": "Asia",
+                "capital": "Western Asia",
+                "timezones": [
+                    "UTC+04"
+                ],
+                "callingCodes": [
+                    971
+                ]
+            }
+        ]
+
+### Get country by ID [GET /country/{alpha2Code}]
+
+Gets a country by its 2-letter ISO code.
+
++ Parameters
+    + alpha2Code    (string, `SG`) ... Two-letter code of country to retrieve.
+
++ Response 200 (application/json)
+
+        {
+            "alpha2Code": "AD",
+            "name": "Andorra",
+            "region": "Europe",
+            "capital": "Southern Europe",
+            "timezones": [
+                "UTC+01:00"
+            ],
+            "callingCodes": [
+                376
+            ]
+        }
+
+
+## Group [/group]
+
+### Get group by ID [GET /group/{id}]
+
+Gets group by ID.
+
++ Parameters
+    + id            (number, `1`) ... ID of group to retrieve.
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "groupType": 1,
+            "exchange": {
+                "university": {
+                    "id": 1,
+                    "name": "National University of Singapore (NUS)",
+                    "city": "Singapore",
+                    "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/national-university-of-singapore-nus.jpg",
+                    "website": "http://www.nus.edu.sg/",
+                    "country": {
+                        "alpha2Code": "SG",
+                        "name": "Singapore"
+                    }
+                },
+            }
+        }
+
+### Get members of group [GET /group/{id}/members]
+
+Gets all members of group.
+
++ Parameters
+    + id            (number, `1`) ... ID of group to retrieve.
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "name": "Irvin Lim",
+                "profilePictureUrl": "...",
+                "fbUserId": "10155216317967575"
+            }
+        ]
+
+
+## Exchange [/exchange]
+
++ Attributes
+    + universityId  (number)
+    + year          (number)
+    + month         (string)
+
+
+## Wiki [/wiki]
+
+### Get country wiki by alpha2Code [GET /wiki/country/{alpha2Code}]
+
+Gets a country's wiki by its two-letter ISO code.
+
++ Parameters
+    + alpha2Code    (string, `SG`) ... Two-letter ISO code of country whose wiki is to be retrieved.
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "viewCount": 100,
+            "latestSectionVersions": [
+                {
+                    "id": 1,    // this refers to WikiSectionVersion.id
+                    "title": "Culture",
+                    "content": "Lorem ipsum dolor sit amet.",
+                    "versionNumber": 2,
+                    "createdAt": "2016-11-16T19:56:57.000Z",
+                    "author": {
+                        "id": 1,
+                        "name": "Irvin Lim",
+                        "profilePictureUrl": "..."
+                    },
+                    "sectionType": "OpenToEdit"
+                }
+            ],
+            "country": {
+                "alpha2Code": "SG",
+                "name": "Singapore"
+            }
+        }
+
+### Get university wiki by university ID [GET /wiki/university/{universityId}]
+
+Gets a university's wiki by university ID.
+
++ Parameters
+    + universityId      (number, `1`) ... ID of university whose wiki is to be retrieved.
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "viewCount": 100,
+            "latestSectionVersions": [
+                {
+                    "id": 1,    // this refers to WikiSectionVersion.id
+                    "title": "Culture",
+                    "content": "Lorem ipsum dolor sit amet.",
+                    "versionNumber": 2,
+                    "createdAt": "2016-11-16T19:56:57.000Z",
+                    "author": {
+                        "id": 1,
+                        "name": "Irvin Lim",
+                        "profilePictureUrl": "..."
+                    },
+                    "sectionType": "OpenToEdit"
+                }
+            ],
+            "university": {
+                "id": 1,
+                "name": "National University of Singapore (NUS)",
+                "city": "Singapore",
+                "logoImageUrl": "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/national-university-of-singapore-nus.jpg",
+                "website": "http://www.nus.edu.sg/",
+                "country": {
+                    "alpha2Code": "SG",
+                    "name": "Singapore"
+                }
+            }
+        }
+
+### Add a wiki section [PUT /wiki/{wikiId}/section]
+
+Adds a new section to a wiki.
+
++ Parameters
+    + wikiId        (number, `1`) ... ID of wiki to add section to.
+
++ Attributes
+    + title         (string, required)
+    + content       (string, required)
+
++ Request  (application/json)
+
+        {
+            "title": "Culture 2",
+            "content": "Lorem ipsum"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "status": "created"
+        }
+
+
+### Add a wiki section version [PUT /wiki/section/{sectionId}/version]
+
+Adds a new section version to a wiki section.
+
++ Parameters
+    + sectionId     (number, `1`) ... ID of section to add a new version to.
+
++ Attributes
+    + title         (string, required)
+    + content       (string, required)
+
++ Request  (application/json)
+
+        {
+            "title": "Culture",
+            "content": "Lorem ipsum 2!"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "status": "created"
+        }
+
+### Delete a section [DELETE /wiki/section/{sectionId}]
+
+Deletes a section from a wiki.
+
+*Requires admin-level access (role >= 8).*
+
++ Parameters
+    + sectionId     (number, `1`) ... ID of section to delete.
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+### Get all versions for a section [GET /wiki/section/{sectionId}/versions]
+
+Gets all versions for a wiki section, sorted in descending order of creation time.
+
++ Parameters
+    + sectionId     (number, `1`) ... ID of section to get all versions for.
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 2,
+                "title": "Culture",
+                "content": "Lorem ipsum 2",
+                "createdAt": "2016-12-01T01:12:43.000Z",
+                "author": {
+                    "id": 1,
+                    "name": "Irvin Lim",
+                    "profilePictureUrl": "..."
+                },
+            },
+            {
+                "id": 1,
+                "title": "Culture",
+                "content": "Lorem ipsum",
+                "createdAt": "2016-11-16T19:56:57.000Z",
+                "author": {
+                    "id": 1,
+                    "name": "Irvin Lim",
+                    "profilePictureUrl": "..."
+                },
+            },
+        ]
+
+### Get specific version for a section [GET /wiki/section/version/{versionId}]
+
+Gets a specific version for a wiki section, by version ID.
+
++ Parameters
+    + versionId     (number, `1`) ... ID of WikiSectionVersion to retrieve.
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "title": "Culture",
+            "content": "Lorem ipsum 2",
+            "author": {
+                "id": 1,
+                "name": "Irvin Lim",
+                "profilePictureUrl": "..."
+            },
+        }
+
+
+## Feed Posts [/feedpost]
+
+### Get all feed posts for a group [GET /group/{groupId}/feedposts]
+
+Gets all feed posts for a group, sorted in descending order of creation time.
+
++ Parameters
+    + groupId       (number, `1`) ... ID of group to retrieve feed posts for.
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "content": "Hi every buddy",
+                "createdAt": "2016-11-16T19:56:57.000Z",
+                "updatedAt": "2016-11-16T19:56:57.000Z",
+                "author": {
+                    "id": 1,
+                    "name": "Irvin Lim",
+                    "profilePictureUrl": "..."
+                },
+                "comments": {
+                    "totalCount": 100,
+                }
+                "reactions": [
+                    {
+                        "emoji": "stuck_out_tongue_closed_eyes",
+                        "totalCount": 43,
+                    },
+                    {
+                        "emoji": "kissing_smiling_eyes",
+                        "totalCount": 18
+                    },
+                    {
+                        "emoji": "poop",
+                        "totalCount": 2
+                    }
+                ]
+            }
+        ]
+
+### Get comments and replies for a feed post [GET /feedpost/{id}/comments]
+
+Gets all comments and replies for a feed post, sorted in ascending order of creation time.
+
++ Parameters
+    + id            (number, `1`) ... ID of feedpost to retrieve comments for.
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "content": "Hello to you too",
+                "createdAt": "2016-11-16T19:56:57.000Z",
+                "updatedAt": "2016-11-16T19:56:57.000Z",
+                "author": {
+                    "id": 1,
+                    "name": "Irvin Lim",
+                    "profilePictureUrl": "..."
+                },
+                "replies": [
+                    {
+                        "id": 1,
+                        "content": "Hello to you three",
+                        "createdAt": "2016-11-16T19:56:57.000Z",
+                        "updatedAt": "2016-11-16T19:56:57.000Z",
+                        "author": {
+                            "id": 1,
+                            "name": "Irvin Lim",
+                            "profilePictureUrl": "..."
+                        },
+                    }
+                ],
+                "reactions": [
+                    {
+                        "emoji": "poop",
+                        "totalCount": 200
+                    },
+                    {
+                        "emoji": "stuck_out_tongue_closed_eyes",
+                        "totalCount": 20,
+                    },
+                    {
+                        "emoji": "kissing_smiling_eyes",
+                        "totalCount": 10
+                    }
+                ]
+            }
+        ]
+
+### Get reactions and reactors for a feed post [GET /feedpost/{id}/reactions]
+
+Gets detailed reactions and users who reacted for a specific feed post, sorted in descending order of total count of reactors.
+
++ Parameters
+    + id            (number, `1`) ... ID of feed post to retrieve reactions for.
+
++ Response 200 (application/json)
+
+        [
+            {
+                "emoji": "poop",
+                "users": [
+                    {
+                        "id": 1,
+                        "name": "Irvin Lim",
+                        "profilePictureUrl": "..."
+                    },
+                    {
+                        "id": 2,
+                        "name": "Zhang Hanming",
+                        "profilePictureUrl": "..."
+                    },
+                ]
+            }
+        ]
+
+### Get reactions and reactors for a feed post comment [GET /feedpost/comment/{id}/reactions]
+
+Gets detailed reactions and users who reacted for a specific feed post comment, sorted in descending order of total count of reactors.
+
++ Parameters
+    + id            (number, `1`) ... ID of feed post comment to retrieve reactions for.
+
++ Response 200 (application/json)
+
+        [
+            {
+                "emoji": "poop",
+                "users": [
+                    {
+                        "id": 1,
+                        "name": "Irvin Lim",
+                        "profilePictureUrl": "..."
+                    },
+                    {
+                        "id": 2,
+                        "name": "Zhang Hanming",
+                        "profilePictureUrl": "..."
+                    },
+                ]
+            }
+        ]
+
+### Add feed post to group [PUT /group/{groupId}/feedpost]
+
+Adds a new feed post to a group.
+
++ Parameters
+    + groupId       (number, `1`) ... ID of group to add feed post to.
+
++ Attributes
+    + content       (string, required)
+
++ Request  (application/json)
+
+        {
+            "content": "Hello every buddy!"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "status": "created"
+        }
+
+### Update feed post [PATCH /feedpost/{id}]
+
+Updates a feed post.
+
++ Parameters
+    + id            (number, `1`) ... ID of feed post to update.
+
++ Attributes
+    + content       (string, required)
+
++ Request  (application/json)
+
+        {
+            "content": "A big hello every buddy!"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+### Delete feed post [DELETE /feedpost/{id}]
+
+Deletes a feed post.
+
++ Parameters
+    + id            (number, `1`) ... ID of feed post to delete.
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+### React to a feed post [POST /feedpost/{id}/reaction]
+
+Adds/updates reaction to a feed post.
+
++ Parameters
+    + id            (number, `1`) ... ID of feed post to add reaction to.
+
++ Attributes
+    + emoji         (string, required)
+
++ Request  (application/json)
+
+        {
+            "emoji": "poop"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+### Unreact to a feed post [DELETE /feedpost/{id}/reaction]
+
+Removes reaction to a feed post.
+
++ Parameters
+    + id            (number, `1`) ... ID of feed post to remove reaction from.
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+### Adds a comment to a feed post [PUT /feedpost/{feedPostId}/comment]
+
+Adds a comment to a feed post.
+
++ Parameters
+    + feedPostId    (number, `1`) ... ID of feed post to add comment to.
+
++ Attributes
+    + content       (string, required)
+
++ Request  (application/json)
+
+        {
+            "content": "Hello every buddy!"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "status": "created"
+        }
+
+### Update feed post comment [PATCH /feedpost/comment/{id}]
+
+Updates a feed post comment.
+
++ Parameters
+    + id            (number, `1`) ... ID of feed post comment to update.
+
++ Attributes
+    + content       (string, required)
+
++ Request  (application/json)
+
+        {
+            "content": "A big hello every buddy!"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+### Delete feed post comment [DELETE /feedpost/comment/{id}]
+
+Deletes a feed post comment.
+
++ Parameters
+    + id            (number, `1`) ... ID of feed post comment to delete.
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+### React to a feed post comment [POST /feedpost/comment/{id}/reaction]
+
+Adds/updates reaction to a feed post comment.
+
++ Parameters
+    + id            (number, `1`) ... ID of feed post comment to add reaction to.
+
++ Attributes
+    + emoji         (string, required)
+
++ Request  (application/json)
+
+        {
+            "emoji": "poop"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+### Unreact to a feed post [DELETE /feedpost/comment/{id}/reaction]
+
+Removes reaction to a feed post.
+
++ Parameters
+    + id            (number, `1`) ... ID of feed post comment to remove reaction from.
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+### Adds a reply to a feed post comment [PUT /feedpost/comment/{feedPostCommentId}/reply]
+
+Adds a reply to a feed post comment.
+
++ Parameters
+    + feedPostCommentId     (number, `1`) ... ID of feed post comment to reply to.
+
++ Attributes
+    + content       (string, required)
+
++ Request  (application/json)
+
+        {
+            "content": "Hello hello hello"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "status": "created"
+        }
+
+### Update feed post comment reply [PATCH /feedpost/comment/reply/{id}]
+
+Updates a feed post.
+
++ Parameters
+    + id            (number, `1`) ... ID of feed post comment reply to update.
+
++ Attributes
+    + content       (string, required)
+
++ Request  (application/json)
+
+        {
+            "content": "Hey hey hey"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+### Delete feed post comment [DELETE /feedpost/comment/reply/{id}]
+
+Deletes a feed post.
+
++ Parameters
+    + id            (number, `1`) ... ID of feed post comment reply to delete.
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+
+## Stories [/story]
+
+### Get all stories [GET /stories{?alpha2Code,universityId,universityCourseId,searchQuery}]
+
+Retrieves all stories, optionally filtered by some parameters. For fulltext searching, 
+search results should be ordered in descending order of score.
+
+All searched stories should be public, unless user has at least moderator-level access (role >= 6).
+
++ Parameters
+    + alpha2Codes               (string, optional, `alpha2Codes[]=US&alpha2Codes[]=GB`) ... Country codes to filter stories by. Use with square brackets `[]`
+    + universityIds             (number, optional, `universityIds[]=1&universityIds[]=123`) ... University IDs to filter stories by. Use with square brackets `[]`
+    + universityCourseIds       (number, optional, `universityCourseIds[]=1&universityCourseIds[]=123`) ... University course IDs to filter by. Use with square brackets `[]`
+    + searchQuery               (string, optional, `donald trump`) ... Search parameter to search in the title and content body.
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "title": "My Exchange Buddies",
+                "content": "Lorem ipsum dolor sit amet.",
+                "coverPhotoUrl": "...",
+                "createdAt": "2016-11-16T19:56:57.000Z",
+                "updatedAt": "2016-11-16T19:56:57.000Z",
+                "author": {
+                    "id": 1,
+                    "name": "Irvin Lim",
+                    "profilePictureUrl": "..."
+                },
+                "viewCount": 100,
+                "isPublic": true,
+                "reactions": [
+                    {
+                        "emoji": "poop",
+                        "totalCount": 9000
+                    }
+                ],
+                "countries": [
+                    {
+                        "alpha2Code": "DE",
+                        "name": "Germany"
+                    },
+                    {
+                        "alpha2Code": "GB",
+                        "name": "United Kingdom"
+                    }
+                ],
+                "universities": [
+                    {
+                        "id": 2,
+                        "name": "Technical University of Munich"
+                    }
+                ],
+                "universityCourses": [
+                    {
+                        "id": 1,
+                        "code": "CS101",
+                        "name": "Programming Methodology",
+                        "department": "Department of Electrical and Computer Engineering",
+                        "universityId": 2
+                    }
+                ]
+            }
+        ]
+
+### Get story by ID [GET /story/{id}]
+
+Gets story by ID.
+
++ Parameters
+    + id            (number, `1`) ... ID of story to retrieve.
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "title": "My Exchange Buddies",
+            "content": "Lorem ipsum dolor sit amet.",
+            "coverPhotoUrl": "...",
+            "createdAt": "2016-11-16T19:56:57.000Z",
+            "updatedAt": "2016-11-16T19:56:57.000Z",
+            "author": {
+                "id": 1,
+                "name": "Irvin Lim",
+                "profilePictureUrl": "..."
+            },
+            "viewCount": 100,
+            "isPublic": true,
+            "reactions": [
+                {
+                    "emoji": "poop",
+                    "totalCount": 9000
+                }
+            ],
+            "countries": [
+                {
+                    "alpha2Code": "DE",
+                    "name": "Germany"
+                },
+                {
+                    "alpha2Code": "GB",
+                    "name": "United Kingdom"
+                }
+            ],
+            "universities": [
+                {
+                    "id": 2,
+                    "name": "Technical University of Munich"
+                }
+            ],
+            "universityCourses": [
+                {
+                    "id": 1,
+                    "code": "CS101",
+                    "name": "Programming Methodology",
+                    "department": "Department of Electrical and Computer Engineering",
+                    "universityId": 2
+                }
+            ]
+        }
+
+### Add a new story [PUT /story]
+
+Adds a new story.
+
++ Attributes
+    + title                 (string, required)
+    + content               (string, required)
+    + coverPhotoUrl         (string)
+    + universities          (array[number]) - Array of university IDs that this story references.
+    + countries             (array[string]) - Array of country codes that this story references.
+    + universityCourses     (array[number]) - Array of university course IDs that this story references.
+
++ Request  (application/json)
+
+        {
+            "title": "My Wonderful Story",
+            "content": "Lorem ipsum"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "status": "created"
+        }
+
+### Update story [PATCH /story/{id}]
+
+Updates a story.
+
+*Only the author or users with at least moderator-level access (role >= 6) are allowed to perform this action.*
+
++ Parameters
+    + id            (number, `1`) ... ID of story to update.
+
++ Attributes
+    + title                 (string)
+    + content               (string)
+    + coverPhotoUrl         (string)
+    + universities          (array[number]) - Array of university IDs that this story references.
+    + countries             (array[string]) - Array of country codes that this story references.
+    + universityCourses     (array[number]) - Array of university course IDs that this story references.
+
++ Request  (application/json)
+
+        {
+            "content": "Lorem ipsum 2"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+### Delete story [DELETE /story/{id}]
+
+Deletes a story.
+
+*Only the author or users with at least moderator-level access (role >= 6) are allowed to perform this action.*
+
++ Parameters
+    + id            (number, `1`) ... ID of story to delete.
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+### React to story [POST /story/{id}/reaction]
+
+React to a story.
+
++ Parameters
+    + id            (number, `1`) ... ID of story to add reaction to.
+
++ Attributes
+    + emoji         (string, required)
+
++ Request  (application/json)
+
+        {
+            "emoji": "poop"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }
+
+### Unreact to story [DELETE /story/{id}/reaction]
+
+Unreact to a story.
+
++ Parameters
+    + id            (number, `1`) ... ID of story to remove reaction from.
+
++ Response 200 (application/json)
+
+        {
+            "status": "ok"
+        }

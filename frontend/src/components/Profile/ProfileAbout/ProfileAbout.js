@@ -17,14 +17,18 @@ const ProfileAbout = ({ user }) => (
         <h4 className="subheader">About { getFirstWord(user) }</h4>
 
         <List>
-          <ListItem
-            primaryText={ user.university.name }
-            secondaryText="Home university"
-            leftAvatar={ getUniAvatar(user.university) } />
-          <ListItem
-            primaryText={ user.homeCountry.name }
-            secondaryText="Country of origin"
-            leftAvatar={ <FlagIconAvatar squared code={ user.homeCountry.alpha2Code } /> } />
+          { user.university &&
+            <ListItem
+              primaryText={ user.university.name }
+              secondaryText="Home university"
+              leftAvatar={ getUniAvatar(user.university) } />
+          }
+          { user.homeCountry && 
+            <ListItem
+              primaryText={ user.homeCountry.name }
+              secondaryText="Country of origin"
+              leftAvatar={ <FlagIconAvatar squared code={ user.homeCountry.alpha2Code } /> } />
+          }
         </List>
 
       </div>
