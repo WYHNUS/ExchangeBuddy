@@ -91,7 +91,6 @@ exports.getCustomizedRecommendation = function(req, res) {
             */
             var countryArray = [];
 
-
             if (!!homeUniversity) {
                 result.push({
                     imageUrl: homeUniversity.logoImageUrl,
@@ -136,9 +135,7 @@ exports.getCustomizedRecommendation = function(req, res) {
 
                     var allCountry = countryArray.map(countryCode => {
                         // find list of exchange universities
-
                         return models.Country.findOne({
-
                             attributes: ['name', 'logoImage'],
                             where: {
                                 alpha2Code: countryCode
@@ -345,7 +342,6 @@ exports.createNewWiki = function(req, res) {
                 Wiki.create({
                     title: req.body.wikiTitle,
                     UserId: req.user.id
-
                 }).then(function(wiki){
 
                     return res.status(200)

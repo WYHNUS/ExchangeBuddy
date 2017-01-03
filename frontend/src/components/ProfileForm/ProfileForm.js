@@ -5,10 +5,7 @@ import { browserHistory } from 'react-router';
 import { TextField, Toggle} from 'redux-form-material-ui';
 import moment from 'moment';
 import RaisedButton from 'material-ui/RaisedButton';
-var Dropzone = require('react-dropzone');
-
-import { TextFormField } from '../Field';
-import { PasswordFormField } from '../Field';
+import { DropzoneFormField, PasswordFormField } from 'components/Field';
 
 import { ROOT_URL } from 'util/backend';
 import { bearer } from 'util/bearer';
@@ -86,30 +83,6 @@ const validate = (values) => {
   return errors;
 };
 
-const renderDropzoneInput = (field) => {
-  const files = field.input.value;
-  return (
-    <div>
-      <Dropzone
-        className="dropzone-upload"
-        name={field.name}
-        onDrop={( filesToUpload, e ) => field.input.onChange(filesToUpload)}
-        multiple={false}
-        accept="image/*">
-        {
-          (files && Array.isArray(files) && (files.length>0))?
-          (<img className="upload-preview" src={files[0].preview}/>):
-          (<div>Try dropping some files here, or click to select files to upload.</div>)
-        }
-      </Dropzone>
-      {field.meta.touched && field.meta.error && <span className="error">{field.meta.error}</span>}
-    </div>
-  );
-}
-        /*<ul>
-          { files.map((file, i) => <li key={i}>{file.name}</li>) }
-        </ul>*/
-
 class ProfileForm extends Component {
   
   state = {
@@ -156,9 +129,7 @@ class ProfileForm extends Component {
 
       <p className="profilepic-title">Profile Picture</p>
       <div className="row center-xs">
-      <Field
-        name={FILE_FIELD_NAME}
-        component={renderDropzoneInput}/>
+      <DropzoneFormField name={FILE_FIELD_NAME} />
       </div>
 
       <div className="row center-xs" style={{ marginTop: 18 }}>

@@ -44,7 +44,7 @@ request:
     year: 2017
 }
 */
-router.patch('/updateUni', UniCtrl.updateUni);
+router.patch('/updateUni', UserCtrl.updateUni);
 
 router.get('/user/:id', verifyToken, UserCtrl.getUser);
 
@@ -61,6 +61,9 @@ router.patch('/updateUser', verifyToken, UserCtrl.updateUser);
 router.put('/createUser', UserCtrl.createUser);
 router.post('/uploadProfile',[verifyToken, upload.single('profilePicture'), UserCtrl.uploadProfile]);
 
+router.patch('/updateUniInfo', verifyToken, UniCtrl.updateUniInfo);
+router.post('/updateUniLogo', [verifyToken, upload.single('uniLogo'), UniCtrl.updateUniLogo]);
+
 router.get('/verify/:token', MailCtrl.verifyToken);
 router.get('/resendVerificationMail/:userId', MailCtrl.resend);
 
@@ -68,8 +71,17 @@ router.get('/resendVerificationMail/:userId', MailCtrl.resend);
 router.get('/country', CountryCtrl.getAllCountries);
 router.get('/country/:id', CountryCtrl.getCountry);
 
-router.get('/university/', UniCtrl.getAllUniversities);
+router.get('/university', UniCtrl.getAllUniversities);
+/*
+request:
+{
+    name: "National University of Singapore",
+    alpha2Code: "AD"
+}
+*/
+router.put('/university', verifyToken, UniCtrl.createUniversity);
 router.get('/university/:id', UniCtrl.getUniversity);
+router.get('/universitiesByCountry/:alpha2Code', UniCtrl.getAllUniversitiesForCountry);
 
 router.post('/messages', verifyToken, ChatCtrl.getMessages);
 
@@ -95,7 +107,7 @@ request:
 }
 */
 router.delete('/wiki/section', verifyToken, WikiCtrl.deleteSection);
-router.get('/wiki/section/allVersions', WikiCtrl.getWikiSectionAllVersions);  // ?q= &sectionIndex= 
+router.get('/wiki/section/allVersions', WikiCtrl.getWikiSectionAllVersions);  // ?q= &sectionIndex=
 /*
 request:
 {

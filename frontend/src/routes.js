@@ -4,6 +4,7 @@ import { Router, Route, Redirect, IndexRoute, IndexRedirect, browserHistory } fr
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { loadState } from './util/localStorage';
+import { isUserAdmin } from 'util/user';
 import configureStore from './store/configureStore';
 
 /** ROUTES **/
@@ -15,6 +16,7 @@ import AppShell from './layouts/AppShell';
 import AppShellWithBackButton from './layouts/AppShellWithBackButton';
 import AppShellWithoutBottomBar from './layouts/AppShellWithoutBottomBar';
 import AppShellPlainWithoutBottomBar from './layouts/AppShellPlainWithoutBottomBar';
+import AdminAppShell from './layouts/AdminAppShell';
 
 import Events from './pages/Home/Events';
 import Chat from './pages/Home/Chat';
@@ -36,6 +38,8 @@ import EditUniversity from './pages/EditUniversity';
 import Settings from './pages/Settings';
 import NewEvent from './pages/Home/NewEvent';
 import ProfileEdit from './pages/ProfileEdit';
+import AdminHome from './pages/Admin/AdminHome';
+import AdminUniversities from './pages/Admin/AdminUniversities';
 
 // Redux
 const persistedState = loadState();
@@ -66,6 +70,16 @@ export const getRoutes = (store) =>{
     } else if (!state.user.userObject.UniversityId) {
       replace({ 
         pathname: '/identifyUniversity'
+      });
+    }
+  };
+
+  const adminRequired = (nextState, replace) => {
+    const state = store.getState();
+
+    if (!isUserAdmin(state.user)) {
+      replace({
+        pathname: '/'
       });
     }
   };
@@ -147,6 +161,11 @@ export const getRoutes = (store) =>{
       
       <Route component={ AppShellWithoutBottomBar }>
         <Route path="settings" component={ Settings } />
+      </Route>
+      
+      <Route path="admin" component={ AdminAppShell } onEnter={ adminRequired }>
+        <IndexRoute component={ AdminHome } />
+        <Route path="universities" component={ AdminUniversities } />
       </Route>
 
 

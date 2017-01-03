@@ -3,7 +3,7 @@ import { Card, CardHeader, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import Link from 'components/Link';
 
-import { logoutUser } from 'util/user';
+import { logoutUser, isUserAdmin } from 'util/user';
 
 import ChiThanh from 'res/about/ChiThanh.jpg';
 import EugeneNg from 'res/about/EugeneNg.jpg';
@@ -191,12 +191,18 @@ export default class SettingsList extends React.Component {
     return (
       <div className="container">
         <div className="row center-xs">
-          <div className="col-xs-11">
+          <div className="col-xs-11 col-sm-8">
 
             <About />
             <PrivacyPolicy />
             <TOS />
             <Credits />
+
+            { user && isUserAdmin(user) &&
+              <Link to="/admin">
+                <RaisedButton primary label="Admin Dashboard" style={{ width: '100%', margin: '20px 0' }} />
+              </Link>
+            }
 
             { user && user.token &&
               <RaisedButton

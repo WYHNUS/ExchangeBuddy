@@ -119,6 +119,7 @@ module.exports = function(sequelize, DataType) {
                     email: this.email,
                     name: this.name,
                     profilePictureUrl: this.profilePictureUrl,
+                    role: this.role,
                     exp: parseInt(expiry.getTime() / 1000),
                 }, config.secret);
             },

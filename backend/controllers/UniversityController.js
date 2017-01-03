@@ -1,8 +1,41 @@
 var models = require('../models');
+var Wiki = models.Wiki;
+var Section = models.WikiSection;
+var Version = models.WikiSectionVersion;
+var defaultUniWikiTemplate = require('../public/DefaultUniversityWikiContent.json');
 
-exports.getAllUniversities = function(req, res){
+var AWS = require('aws-sdk');
+var s3 = require('s3');
+var fs = require('fs');
+var config = require('../config/config')
+
+var Bucket = "exchangebuddy-university-public-image";
+var s3Options = {
+    accessKeyId: config.AWS_ACCESS_KEY_ID,
+    secretAccessKey: config.AWS_SECRET_ACCESS_KEY
+}
+var awsS3Client = new AWS.S3(s3Options);
+var options = {
+    s3Client: awsS3Client
+};
+var client = s3.createClient(options);
+
+exports.getAllUniversities = function(req, res) {
     models.University.findAll({
-    	attributes: ['id', 'name', 'city', 'logoImageUrl', 'emailDomains', 'terms']
+        attributes: ['id', 'name', 'city', 'logoImageUrl', 'website']
+    }).then(function(universities){
+        res.json(universities);
+    }).catch(function(err) {
+        resError(res, err);
+    });
+};
+
+exports.getAllUniversitiesForCountry = function(req, res){
+    models.University.findAll({
+        where: {
+            countryCode: req.params.alpha2Code
+        },
+    	attributes: ['id', 'name', 'city', 'logoImageUrl', 'website']
     }).then(function(universities){
         res.json(universities);
     }).catch(function(err) {
@@ -11,10 +44,109 @@ exports.getAllUniversities = function(req, res){
 };
 
 exports.createUniversity = function(req, res) {
-    models.University.create({
-        name: req.body.name,
-        logoImageUrl: req.body.logoImageUrl,
-        emailDomains: JSON.stringify(req.body.emailDomains)
+    var userId = req.user.id;
+
+    // hard-code an admin priviledge value here
+    if (!req.user.role || req.user.role < 8) {
+        return res.status(403).json({
+                status: 'fail',
+                message: 'Not authorized.'
+            });
+    }
+
+    if (!req.body.name || !req.body.alpha2Code) {
+        return res.status(400).json({
+                status: 'fail',
+                message: 'Invalid post parameter.'
+            });
+    }
+    models.Country.findOne({
+        where: {
+            alpha2Code: req.body.alpha2Code
+        }
+    }).then(function(country) {
+        if (!country) {
+            res.status(400).json({
+                status: 'fail',
+                message: 'Invalid alpha2Code.'
+            });
+        }
+
+        models.University.create({
+            name: req.body.name,
+            city: req.body.city ? req.body.city : null,
+            website: req.body.website ? req.body.website : null,
+            fbPageId: req.body.fbPageId ? req.body.fbPageId : null,
+            logoImageUrl: req.body.logoImageUrl ? req.body.logoImageUrl : null,
+            bgImageUrl: req.body.bgImageUrl ? req.body.bgImageUrl : null,
+            emailDomains: req.body.emailDomains ? JSON.parse(req.body.emailDomains) : null,
+            terms: req.body.terms ? JSON.parse(req.body.terms) : null,
+            topUnisId: req.body.topUnisId ? req.body.topUnisId : null
+        }).then(function(university) {
+            // link university and country together
+            country.addUniversity(university);
+
+            // create wiki and wikiSection for newly added wiki
+            Wiki.create({
+                title: req.body.name,
+                UserId: userId
+            }).then(function(wiki){
+                var resultSectionArray = Object.keys(defaultUniWikiTemplate).map(title => {
+                    return Section.create({
+                        sectionIndex: defaultUniWikiTemplate[title].index,
+                        displayVersionNumber: 1,    // default first version number
+                        totalVersionCount: 1,
+                        sectionType: 'OpenToEdit',  // default value for now
+                        WikiId: wiki.id,
+                        UserId: userId
+                    });
+                });
+
+                models.sequelize.Promise.all(resultSectionArray).then(sections => {
+                    var resultVersionArray = sections.map(section => {
+                        for (var title in defaultUniWikiTemplate) {
+                            if (defaultUniWikiTemplate[title].index === section.sectionIndex) {
+                                return Version.create({
+                                    title: title,
+                                    content: defaultUniWikiTemplate[title].content,
+                                    versionNumber: 1,   // only one exists
+                                    WikiSectionId: section.id,
+                                    UserId: userId
+                                });
+                            }
+                        }
+                    });
+
+                    models.sequelize.Promise.all(resultVersionArray).then(versions => {
+                        for (var i in versions) {
+                            if (!versions[i]) {
+                                return res.status(500).json({
+                                    message: 'university wiki section version creation fail'
+                                });
+                            }
+                        }
+                        // indicate successful
+                        return res.status(200)
+                            .json({
+                                status: 'success',
+                                university: university
+                            });
+                    });
+                });
+            });
+        }).catch(function(err) {
+            resError(res, err);
+        });
+    }).catch(function(err) {
+        resError(res, err);
+    });
+};
+
+exports.getUniversity = function(req, res) {
+    models.University.findOne({
+        where: {
+            id: req.params.id
+        }
     }).then(function(university) {
         res.json(university);
     }).catch(function(err) {
@@ -22,201 +154,85 @@ exports.createUniversity = function(req, res) {
     });
 };
 
-exports.getUniversity = function(req, res){
-    models.University.findOne({
+exports.updateUniInfo = function(req, res) {
+    var query = req.body;
+
+    models.University.update(query, {
         where: {
-            id: req.params.id
+            id: req.body.UniversityId,
         }
-    }).then(function(university){
-        res.json(university);
+    }).then(function(user) {
+        res.json({
+            status: 'success'
+        });
     }).catch(function(err) {
         resError(res, err);
     });
-};
+}
 
-exports.updateUni = function(req, res){
-    // hack here -- need to improve: only two possibilities
-    var data = req.body;
-    if (!data.userId) {
-        return res.status(400).json({
-                status: 'fail',
-                message: 'Invalid authenticate data.'
-            });
-    } else if (data.homeUniversityId && !data.exchangeUniversityId) {
-        // assume this is first time login for now... -> quick hack
-        models.sequelize.Promise.all([
-            models.User.findOne({
-                where: {
-                    id: data.userId
+exports.updateUniLogo = function(req, res) {
+    models.University.findOne({
+        where: {
+            id: req.body.UniversityId
+        }
+    }).then(function(university) {
+        if (!!university) {
+            var dbName = university.name;
+            var Key = dbName.split('/')[0].trim().toLowerCase()
+            .replace(/ /g, '-')
+            .replace(')', '')
+            .replace('(', '') + '.jpg';
+
+            var params = {
+                localFile: req.file.path,
+                s3Params: {
+                    Bucket,
+                    Key,
+                    ACL: 'public-read'
                 }
-            }),
-            models.University.findOne({
-                where: {
-                    id: data.homeUniversityId
-                }
+            }
+
+            var uploader = client.uploadFile(params);
+
+            uploader.on('error', function(err) {
+                console.log(err);
             })
-        ]).spread(function(user, uni){
-            models.sequelize.Promise.all([
-                user.getGroup(),
-                user.getExchangeEvent(),
-                user.setUniversity(uni)
-            ]).spread(function(groups, exchange, user){
-                user.removeGroup(groups);
-                user.removeExchangeEvent(exchange);
-                var homeUniversity = uni;
-                var defaultGroup = {
-                    // todo: ask new user for years they want to exchange, hence make :
-                    // check: if req.body.year exists, if exchange event exists,
-                    // remember: alter existing db user data
-                    // id: 1,
-                    // name: homeUniversity.name + " going abroad -- Year " + exchange.year
 
-                    id: 4,
-                    name: homeUniversity.name + " interested in exchange"
-                }
+            uploader.on('end', function() {
+                var url = s3.getPublicUrl(Bucket, Key, "ap-southeast-1");
 
-                console.log(homeUniversity.name);
-
-                models.Group.findOrCreate({
-                    where: {
-                        name: defaultGroup.name,
-                        groupType: defaultGroup.id,
+                if (!!university.logoImageUrl) {
+                    var splitString = university.logoImageUrl.split('/');
+                    var Key = splitString[splitString.length - 1];
+                    if (!!Key) {
+                        client.deleteObjects({
+                            Bucket,
+                            Delete: {
+                                Objects: [{
+                                    Key,
+                                }]
+                            }
+                        })
                     }
-                }).then(function(group) {
-                    console.log(group[0]);
-                    group[0].addUser(user);
-
-                    // return user object
-                    models.User.findOne({
-                        where: {
-                            id: user.id
-                        },
-                        include: [{
-                            model: models.University
-                        }],
-                        attributes: ['id', 'email', 'name', 'profilePictureUrl', 'fbUserId', 'bio', 'UniversityId']
-                    }).then(function(currentUser) {
-                        return res.status(200).json({
-                            status: 'success',
-                            user: currentUser
-                        });
-                    }).catch(function(err) {
-                        resError(res, err);
-                    });
-                }).catch(function(err) {
-                    resError(res, err);
-                });
-            });
-
-        }).catch(function(err){
-            resError(res, err);
-        });
-    } else if (!data.homeUniversityId || !data.exchangeUniversityId || !data.year || !data.term) {
-        // check if all fields are present -> quick hack
-        return res.status(400).json({
-                status: 'fail',
-                message: 'Invalid authenticate data.'
-            });
-    } else if (data.homeUniversityId === data.exchangeUniversityId) {
-        // check if homeUni and exchangeUni are the same
-        return res.status(400).json({
-                status: 'fail',
-                message: 'Home uni and exchange uni cannot be the same.'
-            });
-    } else {
-        models.sequelize.Promise.all([
-            models.User.findOne({
-                where: {
-                    id: req.body.userId
                 }
-            }),
 
-            models.University.findOne({
-                where: {
-                    id: req.body.exchangeUniversityId
-                }
-            }),
+                university.update({
+                    logoImageUrl: url
+                })
 
-            models.Exchange.findOrCreate({
-                where: {
-                    year: req.body.year,
-                    term: req.body.term,
-                    UniversityId: req.body.exchangeUniversityId
-                }
-            }),
-
-            models.University.findOne({
-                where: {
-                    id: req.body.homeUniversityId
-                }
+                fs.unlinkSync(req.file.path);
+                res.status(200).send({
+                    url,
+                    status: 'success'
+                })
             })
-        ]).spread(function(user, exchangeUniversity, exchange, university){
-            models.sequelize.Promise.all([
-                user.getGroup(),
-                user.getUniversity(),
-                user.getExchangeEvent(),
-                user.setUniversity(university)
-            ]).spread(function(groups, homeUniversity, exchangeEvent){
-                var homeUniversity = university;
-                user.removeGroup(groups);
-                user.removeExchangeEvent(exchangeEvent);
-
-                exchange = exchange[0];
-                user.addExchangeEvent(exchange);
-
-                var defaultGroups = [
-                    {
-                        id: 0,
-                        name: exchangeUniversity.name + " exchange students -- Year " + exchange.year + " " + exchange.term
-                    },
-                    {
-                        id: 1,
-                        // todo -> remove exchange.term , this group only consider exchange year
-                        name: homeUniversity.name + " going abroad -- Year " + exchange.year
-                    },
-                    {
-                        id: 2,
-                        name: homeUniversity.name + " students in " + exchangeUniversity.name
-                    }
-                ];
-
-                var defaultGroupArray = defaultGroups.map(group => {
-                    return models.Group.findOrCreate({
-                        where: {
-                            name: group.name,
-                            groupType: group.id,
-                        }
-                    });
-                });
-
-                models.sequelize.Promise.all(defaultGroupArray).then(groups => {
-                    groups.map(group => {
-                        group[0].addUser(user);
-                    })
-
-                    // return user object
-                    models.User.findOne({
-                        where: {
-                            id: user.id
-                        },
-                        include: [{
-                            model: models.University
-                        }],
-                        attributes: ['id', 'email', 'name', 'profilePictureUrl', 'fbUserId', 'bio', 'UniversityId']
-                    }).then(function(currentUser) {
-                        res.send({
-                            status: 'success',
-                            user: currentUser
-                        });
-                    }).catch(function(err) {
-                        resError(res, err);
-                    });
-                });
+        } else {
+            res.status(400).send({
+                status: 'fail',
+                message: 'invalid university'
             })
-        }).catch(function(err){
-            resError(res, err);
-        });
-    }
+        }
+    })
 }
 
 function resError(res, err) {
