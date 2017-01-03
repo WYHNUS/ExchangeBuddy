@@ -25,6 +25,16 @@
 
 }
 
+.emoji {
+  width: 50px; 
+}
+
+.emoji-display {
+  position: absolute;
+  right: 0px;
+  margin-right: 20px;
+}
+
 .bubble{
   height: 25px;
   background: palette(Grey, 200);
