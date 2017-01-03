@@ -17,6 +17,8 @@ var MailCtrl = require('../controllers/MailController');
 var FeedPostCtrl = require('../controllers/FeedPostController');
 var FeedPostCommentCtrl = require('../controllers/FeedPostCommentController');
 var FeedPostCommentReplyCtrl = require('../controllers/FeedPostCommentReplyController');
+var QuestionCtrl = require('../controllers/QuestionController');
+
 // Set up token authenticate
 var verifyToken = jwt({secret: config.secret});
 
@@ -103,6 +105,10 @@ router.post('/unreactToFeedPostComment', verifyToken, FeedPostCommentCtrl.unreac
 router.put('/feedpostCommentReply', verifyToken, FeedPostCommentReplyCtrl.createReply);
 router.delete('/feedpostCommentReply', verifyToken, FeedPostCommentReplyCtrl.deleteReply);
 router.patch('/feedpostCommentReply', verifyToken, FeedPostCommentReplyCtrl.updateReply);
+
+// QUESTION CONTROLLER
+router.post('/question', verifyToken, QuestionCtrl.createQuestion);
+router.post('/question/:id/vote', verifyToken, QuestionCtrl.voteQuestion);
 
 // MISC
 router.get('/signups', function(req, res){
