@@ -89,7 +89,17 @@ exports.getGroup = function(req, res) {
     				attributes: ['name', 'id'],
     				model: University
     			}]
-        }]
+        }, {
+			model: models.Exchange,
+			attributes: ['id', 'year', 'month', 'term'],
+			include: [{
+				model: models.University,
+				include: [{
+					model: models.Country,
+					attributes: ['alpha2Code', 'name']
+				}]
+			}]
+		}]
     }).then(function(group) {
         res.json(group);
     }).catch(function(err) {
