@@ -22,17 +22,12 @@
 .available-emojis {
   display: flex;
   align-items: center;
-
-}
-
-.emoji {
-  width: 50px; 
 }
 
 .emoji-display {
-  position: absolute;
-  right: 0px;
-  margin-right: 20px;
+  justify-content: flex-end;
+
+  .emoji { padding: 16px; }
 }
 
 .bubble{

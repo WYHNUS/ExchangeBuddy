@@ -49,7 +49,7 @@ class GroupFeedPost extends React.Component {
   render() {
     const { expanded, isEditing, isDeleteConfirmationDialogOpen } = this.state;
     const { user, group, feedPost, refreshGroupFeed } = this.props;
-    const { content, author, createdAt } = feedPost;
+    const { content, author, createdAt, reactions } = feedPost;
 
     const PostDropdown = this.getPostDropdown();
 
@@ -85,7 +85,7 @@ class GroupFeedPost extends React.Component {
                     </CardText>
 
                     <CardActions>
-                      <GroupFeedPostIcons handleToggleComments={ this.toggleComments } />
+                      <GroupFeedPostIcons reactions={ reactions } handleToggleComments={ this.toggleComments } />
                     </CardActions>
 
                   </Paper>    
