@@ -48,7 +48,8 @@ const GroupFeedPostUpdateComment = ({ feedComment, handleSubmit, submitPost, sho
       contentActions={[
         <GroupFeedPostContentAction key="save" isSubmit primaryText="Save" icon="save" />,
         <GroupFeedPostContentAction key="cancel" primaryText="Cancel" icon="cancel" onClick={ stopEditing } />
-      ]} />
+      ]}
+    showRightMenu={ false } />
   </div>
 );
 

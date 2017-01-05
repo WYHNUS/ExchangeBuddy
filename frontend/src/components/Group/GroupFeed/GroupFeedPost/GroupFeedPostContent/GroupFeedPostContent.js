@@ -28,6 +28,7 @@ export default class GroupFeedPostContent extends React.PureComponent {
     contentActions: React.PropTypes.node,
     handleClickEdit: React.PropTypes.func,
     handleClickDelete: React.PropTypes.func,
+    showRightMenu: React.PropTypes.bool,
   };
 
   constructor(props) {
@@ -36,10 +37,11 @@ export default class GroupFeedPostContent extends React.PureComponent {
 
   static defaultProps = {
     avatarSize: 30,
+    showRightMenu: true,
   };
 
   render() {
-    const { user, author, content, avatarSize, className, createdAt, contentActions, handleClickEdit, handleClickDelete } = this.props;
+    const { user, author, content, avatarSize, className, createdAt, contentActions, handleClickEdit, handleClickDelete, showRightMenu } = this.props;
     const isUserAuthor = user && author && user.id === author.id;
 
     return (
@@ -48,7 +50,7 @@ export default class GroupFeedPostContent extends React.PureComponent {
         avatar={ getAvatarUrl(author) }
         size={ avatarSize }
         valign="top"
-        rightIcon={
+        rightIcon={ showRightMenu &&
           <IconMenu iconButtonElement={ <IconButton><Icon name="more_horiz" size={16} color={ Colors.grey500 } /></IconButton> }>
             { isUserAuthor && 
               <MenuItem className="post-dropdown-menuitem" primaryText="Edit" onClick={ handleClickEdit } /> }

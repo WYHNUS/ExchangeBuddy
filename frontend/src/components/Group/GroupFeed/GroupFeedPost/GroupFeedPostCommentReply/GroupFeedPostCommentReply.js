@@ -3,6 +3,7 @@ import React from 'react';
 import Paper from 'components/Paper';
 
 import GroupFeedPostContent from '../GroupFeedPostContent';
+import GroupFeedPostUpdateReply from '../GroupFeedPostUpdateReply';
 import GroupFeedDeleteDialog from 'components/Group/GroupFeed/GroupFeedDeleteDialog';
 
 import { feedPostCommentReplyPropType } from 'util/propTypes';
@@ -37,20 +38,27 @@ export default class GroupFeedPostCommentReply extends React.PureComponent {
   }
 
   render() {
-    const { isDeleteConfirmationDialogOpen } = this.state;
+    const { isDeleteConfirmationDialogOpen, isEditing } = this.state;
     const { feedCommentReply, refreshComments } = this.props;
     const { author, content, createdAt } = feedCommentReply;
 
     return (
       <Paper full>
-        <GroupFeedPostContent 
-          className="group-feed-post-comment-reply-content"
-          avatarSize={ 20 }
-          author={ author } 
-          content={ content } 
-          createdAt={ createdAt }
-          handleClickEdit={ this.startEditing }
-          handleClickDelete={ this.openDeleteConfirmationDialog } /> 
+        { isEditing
+          ? <GroupFeedPostUpdateReply
+              form={`groupFeedPostUpdateReply-${ feedCommentReply.id }`}
+              feedCommentReply={ feedCommentReply } 
+              refresh={ refreshComments }
+              stopEditing={ this.stopEditing } />
+          : <GroupFeedPostContent 
+              className="group-feed-post-comment-reply-content"
+              avatarSize={ 20 }
+              author={ author } 
+              content={ content } 
+              createdAt={ createdAt }
+              handleClickEdit={ this.startEditing }
+              handleClickDelete={ this.openDeleteConfirmationDialog } /> 
+        }
 
         <GroupFeedDeleteDialog
           endpoint={`/feedpost/comment/reply/${ feedCommentReply.id }`}
