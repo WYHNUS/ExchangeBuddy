@@ -16,6 +16,10 @@
 
   .actions {
     margin-top: 10px; display: flex; flex-direction: row; align-items: center;
-    .action { cursor: pointer; font-size: 10px; color: palette(Grey, 500); margin-right: 15px; }
+    .action { 
+      display: flex; flex-direction: row; align-items: center; 
+      cursor: pointer; font-size: 10px; color: palette(Grey, 500); margin-right: 15px; 
+      .action-label { margin-left: 5px; }
+    }
   }
 }

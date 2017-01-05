@@ -21,35 +21,35 @@ const validate = ({ content }) => {
 
 
 const GroupFeedPostUpdateReply = ({ feedCommentReply, handleSubmit, submitPost, showSnackbar, refresh, stopEditing }) => (
-  <GroupFeedPostContent 
-    className="group-feed-post-comment-reply-content editing-reply"
-    author={ feedCommentReply.author } 
-    avatarSize={ 20 }
-    content={
-      <form 
-        onSubmit={ handleSubmit(({ content }) => {
-          submitPost({ feedPostCommentReplyId: feedCommentReply.id, content }, () => {
-            stopEditing();
-            refresh();
-            showSnackbar('Updated reply!');
-          }, (err) => {
-            showSnackbar('Could not update reply: ' + err);
-          });
-        }) }>
+  <form 
+    onSubmit={ handleSubmit(({ content }) => {
+      submitPost({ feedPostCommentReplyId: feedCommentReply.id, content }, () => {
+        stopEditing();
+        refresh();
+        showSnackbar('Updated reply!');
+      }, (err) => {
+        showSnackbar('Could not update reply: ' + err);
+      });
+    }) }>
 
+    <GroupFeedPostContent 
+      className="group-feed-post-comment-reply-content editing-reply"
+      author={ feedCommentReply.author } 
+      avatarSize={ 20 }
+      content={
         <TextFormField 
           name="content"
           underlineShow={ false }
           style={{ fontSize: 14 }}
           errorStyle={{ display: 'none' }} />
+      } 
+      contentActions={[
+        <GroupFeedPostContentAction key="save" isSubmit primaryText="Save" icon="save" />,
+        <GroupFeedPostContentAction key="cancel" primaryText="Cancel" icon="cancel" onClick={ stopEditing } />
+      ]}
+      showRightMenu={ false } />
 
-      </form>
-    } 
-    contentActions={[
-      <GroupFeedPostContentAction key="save" isSubmit primaryText="Save" icon="save" />,
-      <GroupFeedPostContentAction key="cancel" primaryText="Cancel" icon="cancel" onClick={ stopEditing } />
-    ]}
-    showRightMenu={ false } />
+  </form>
 );
 
 GroupFeedPostUpdateReply.propTypes = {

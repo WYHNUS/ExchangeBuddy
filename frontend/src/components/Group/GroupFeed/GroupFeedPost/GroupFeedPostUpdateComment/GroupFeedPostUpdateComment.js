@@ -22,34 +22,35 @@ const validate = ({ content }) => {
 
 const GroupFeedPostUpdateComment = ({ feedComment, handleSubmit, submitPost, showSnackbar, refresh, stopEditing }) => (
   <div className="comment-main-container">
-    <GroupFeedPostContent 
-      className="group-feed-post-comment-content editing-comment"
-      author={ feedComment.author } 
-      content={
-        <form 
-          onSubmit={ handleSubmit(({ content }) => {
-            submitPost({ feedPostCommentId: feedComment.id, content }, () => {
-              stopEditing();
-              refresh();
-              showSnackbar('Updated comment!');
-            }, (err) => {
-              showSnackbar('Could not update comment: ' + err);
-            });
-          }) }>
 
+    <form 
+      onSubmit={ handleSubmit(({ content }) => {
+        submitPost({ feedPostCommentId: feedComment.id, content }, () => {
+          stopEditing();
+          refresh();
+          showSnackbar('Updated comment!');
+        }, (err) => {
+          showSnackbar('Could not update comment: ' + err);
+        });
+      }) }>
+
+      <GroupFeedPostContent 
+        className="group-feed-post-comment-content editing-comment"
+        author={ feedComment.author } 
+        content={
           <TextFormField 
             name="content"
             underlineShow={ false }
             style={{ fontSize: 14 }}
             errorStyle={{ display: 'none' }} />
+        } 
+        contentActions={[
+          <GroupFeedPostContentAction key="save" isSubmit primaryText="Save" icon="save" />,
+          <GroupFeedPostContentAction key="cancel" primaryText="Cancel" icon="cancel" onClick={ stopEditing } />
+        ]}
+      showRightMenu={ false } />
 
-        </form>
-      } 
-      contentActions={[
-        <GroupFeedPostContentAction key="save" isSubmit primaryText="Save" icon="save" />,
-        <GroupFeedPostContentAction key="cancel" primaryText="Cancel" icon="cancel" onClick={ stopEditing } />
-      ]}
-    showRightMenu={ false } />
+    </form>
   </div>
 );
 
