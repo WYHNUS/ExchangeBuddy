@@ -19,12 +19,15 @@ export default class GroupFeedPostContent extends React.PureComponent {
     className: React.PropTypes.string, 
     user: userPropType.isRequired,
     author: userPropType.isRequired,
-    content: React.PropTypes.string.isRequired, 
-    createdAt: React.PropTypes.instanceOf(Date).isRequired,
+    content: React.PropTypes.oneOfType([
+      React.PropTypes.string.isRequired,
+      React.PropTypes.node.isRequired,
+    ]).isRequired, 
+    createdAt: React.PropTypes.instanceOf(Date),
     avatarSize: React.PropTypes.number,
     contentActions: React.PropTypes.node,
-    handleClickEdit: React.PropTypes.func.isRequired,
-    handleClickDelete: React.PropTypes.func.isRequired,
+    handleClickEdit: React.PropTypes.func,
+    handleClickDelete: React.PropTypes.func,
   };
 
   constructor(props) {
@@ -56,7 +59,7 @@ export default class GroupFeedPostContent extends React.PureComponent {
         
         <div className="group-feed-post-content-info"> 
           <span className="author-name">{ author.name }</span>
-          <span className="timestamp">{ formatRelaTime(createdAt) }</span>
+          { createdAt && <span className="timestamp">{ formatRelaTime(createdAt) }</span> }
         </div>
 
         <div className="group-feed-post-content-body">
