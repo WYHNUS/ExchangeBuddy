@@ -1,3 +1,5 @@
+var availableEmojis = require("../data/available-emojis.json");
+
 module.exports = {
     'port': process.env.PORT,
     'secret': process.env.APP_SECRET,
@@ -15,5 +17,5 @@ module.exports = {
     'facebookClientSecret': process.env.FB_CLIENT_SECRET,
     'AWS_ACCESS_KEY_ID': process.env.AWS_ACCESS_KEY_ID,
     'AWS_SECRET_ACCESS_KEY': process.env.AWS_SECRET_ACCESS_KEY,
-    'reactions': [["like"]],
+    'reactions': [ availableEmojis.emojis ],
 };

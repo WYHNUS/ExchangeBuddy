@@ -3,8 +3,6 @@ import { PropTypes } from 'react';
 const { shape, string, number, instanceOf, arrayOf, oneOf } = PropTypes;
 const dateObject = instanceOf(Date);
 
-// Transformation for react-refetch's "then" callback
-
 // Standard transformations
 const int = parseInt;
 // const float = parseFloat;
@@ -111,6 +109,20 @@ export const groupTransform = ({ id, Exchange, users, ...props }) => ({
   users: users.map(userTransform),
 });
 
+export const feedPostReactionPropType = shape({
+  ...defaultPropTypes,
+  id: number.isRequired,
+  reaction: string.isRequired,
+  user: userPropType.isRequired,
+});
+
+export const feedPostReactionTransform = ({ id, User, ...props }) => ({
+  ...props,
+  ...defaultTransform(props),
+  id: int(id),
+  user: userTransform(User),
+});
+
 export const feedPostCommentReplyPropType = shape({
   ...defaultPropTypes,
   id: number.isRequired,
@@ -129,14 +141,14 @@ export const feedPostCommentReactionPropType = shape({
   ...defaultPropTypes,
   id: number.isRequired,
   reaction: string.isRequired,
-  author: userPropType.isRequired,
+  user: userPropType.isRequired,
 });
 
-export const feedPostCommentReactionTransform = ({ id, author, ...props }) => ({
+export const feedPostCommentReactionTransform = ({ id, User, ...props }) => ({
   ...props,
   ...defaultTransform(props),
   id: int(id),
-  author: userTransform(author),
+  user: userTransform(User),
 });
 
 export const feedPostPropType = shape({
@@ -146,11 +158,12 @@ export const feedPostPropType = shape({
   author: userPropType.isRequired,
 });
 
-export const feedPostTransform = ({ id, author, ...props }) => ({
+export const feedPostTransform = ({ id, author, FeedPostReactions, ...props }) => ({
   ...props,
   ...defaultTransform(props),
   id: int(id),
   author: userTransform(author),
+  reactions: FeedPostReactions.map(feedPostReactionTransform),
 });
 
 export const feedPostCommentPropType = shape({
