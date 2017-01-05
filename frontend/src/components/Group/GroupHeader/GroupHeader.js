@@ -9,7 +9,7 @@ import { formatMonth } from 'util/helper';
 
 import './GroupHeader.scss';
 
-const GroupHeader = ({ group: { university, month, year } }) => (
+const GroupHeader = ({ group: { exchange: { university, month, year } } }) => (
   <Paper>
     <ListItem 
       disabled

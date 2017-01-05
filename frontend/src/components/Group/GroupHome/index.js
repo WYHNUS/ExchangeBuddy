@@ -42,18 +42,20 @@ import ChildComponent from './GroupHome';
 
 const _tempGroup = {
   id: 1,
-  university: {
-    id: 12,
-    name: 'Technical University of Munich',
-    city: 'Munich',
-    logoImageUrl: 'https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/technical-university-of-munich.jpg',
-    country: {
-      alpha2Code: 'DE',
-      name: 'Germany',
+  exchange: {
+    month: 'JAN',
+    year: 2017,
+    university: {
+      id: 12,
+      name: 'Technical University of Munich',
+      city: 'Munich',
+      logoImageUrl: 'https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/technical-university-of-munich.jpg',
+      country: {
+        alpha2Code: 'DE',
+        name: 'Germany',
+      },
     },
   },
-  month: 7,
-  year: 2017,
   users: [
     { 
       id: 1, 
