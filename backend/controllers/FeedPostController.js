@@ -99,21 +99,51 @@ exports.getFeedPostByGroup = function(req, res){
                         model: models.University
                     }]
                 },
-                {
-                    model: models.FeedPostReaction,
-                    attributes: ['id', 'reaction'],
-                    include: [
-                        {
-                            model: models.User,
-                            attributes: ['id', 'name', 'profilePictureUrl'],
-                        }
-                    ]
-                }
+
             ]
         }).then(function(feedposts){
-            res.status(200).send({
-                status: 'success',
-                data: feedposts,
+            models.sequelize.Promise.all(
+                feedposts.map(feedpost => feedpost.countFeedPostComments())
+            ).then(function(feedpostCommentCounts){
+                for(var i = 0; i < feedposts.length; i++){
+                    feedposts[i].setDataValue('comments', {
+                        totalCount: feedpostCommentCounts[i]
+                    });
+                }
+                models.sequelize.Promise.all(
+                    feedposts.map(feedpost => feedpost.getFeedPostReactions())
+                ).then(function(feedpostsReactions){
+                    var allReactions = [];
+                    for(var feedpostReactions of feedpostsReactions){
+                        var reactions = [];
+                        for(var feedpostReaction of feedpostReactions){
+                            var found = false;
+                            for(var reaction of reactions){
+                                if(reaction.emoji == feedpostReaction.reaction){
+                                    found = true;
+                                    reaction.totalCount = reaction.totalCount + 1;
+                                }
+                            }
+                            if(!found){
+                                var reaction = {
+                                    emoji: feedpostReaction.reaction,
+                                    totalCount: 1,
+                                }
+                                reactions.push(reaction);
+                            }
+                        }
+                        allReactions.push(reactions);
+                    }
+
+                    for(var j = 0; j < feedposts.length; j++){
+                        feedposts[j].setDataValue('reactions', allReactions[j]);
+                    }
+
+                    res.status(200).send({
+                        status: 'success',
+                        data: feedposts,
+                    })
+                })
             })
         })
     }else{
