@@ -111,7 +111,44 @@ router.get('/signups', function(req, res){
     })
 })
 router.get('/me', verifyToken, function(req, res) {
-    res.send(req.user);
+    User.findOne({
+        where: {
+            id: req.user.id
+        },
+        include: [{
+            model: University,
+            include: [{
+                model: Country,
+                attributes: ['alpha2Code', 'name']
+            }]
+        }],
+        attributes: ['id', 'email', 'name', 'profilePictureUrl', 'fbUserId', 'bio']
+    }).then(function(user) {
+        user.getExchangeEvent().then(function(exchanges){
+            models.University.findAll({
+                where: {
+                    id: {
+                        $in: exchanges.map(exchange => exchange.UniversityId)
+                    }
+                }
+            }).then(function(universities){
+                for(var university of universities){
+                    for(var exchange of exchanges){
+                        if(exchange.UniversityId == university.id){
+                            exchange.setDataValue("University", university);
+                        }
+                    }
+                }
+                user.setDataValue("Exchanges", exchanges);
+
+                res.json(user);
+            })
+
+        })
+
+    }).catch(function(err) {
+        resError(res, err);
+    });
 });
 
 router.get('/', function(req, res) {
