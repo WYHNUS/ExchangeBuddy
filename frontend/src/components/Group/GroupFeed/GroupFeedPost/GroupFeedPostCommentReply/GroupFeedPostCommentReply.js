@@ -53,8 +53,7 @@ export default class GroupFeedPostCommentReply extends React.PureComponent {
           handleClickDelete={ this.openDeleteConfirmationDialog } /> 
 
         <GroupFeedDeleteDialog
-          endpoint="/feedpostCommentReply"
-          toSubmit={{ ReplyId: feedCommentReply.id }}
+          endpoint={`/feedpost/comment/reply/${ feedCommentReply.id }`}
           isOpen={ isDeleteConfirmationDialogOpen }
           handleCloseDialog={ this.closeDeleteConfirmationDialog }
           afterDelete={ refreshComments } />

@@ -1,10 +1,10 @@
 var models = require('../models');
 
 exports.createReply = function(req, res){
-    if(!!req.body.CommentId && !!req.body.content){
+    if(!!req.params.id && !!req.body.content){
         models.FeedPostCommentReply.create({
             content: req.body.content,
-            FeedPostCommentId: req.body.CommentId,
+            FeedPostCommentId: req.params.id,
             authorId: req.user.id,
         }).then(function(reply){
             if(!!reply){
@@ -28,10 +28,10 @@ exports.createReply = function(req, res){
 }
 
 exports.deleteReply = function(req, res){
-    if(!!req.body.ReplyId){
+    if(!!req.params.id){
         models.FeedPostCommentReply.findOne({
             where: {
-                id: req.body.ReplyId,
+                id: req.params.id,
             }
         }).then(function(reply){
             if(!!reply){
@@ -64,10 +64,10 @@ exports.deleteReply = function(req, res){
 }
 
 exports.updateReply = function(req, res){
-    if(!!req.body.ReplyId && !!req.body.content){
+    if(!!req.params.id && !!req.body.content){
         models.FeedPostCommentReply.findOne({
             where: {
-                id: req.body.ReplyId,
+                id: req.params.id,
             }
         }).then(function(reply){
             if(!!reply){

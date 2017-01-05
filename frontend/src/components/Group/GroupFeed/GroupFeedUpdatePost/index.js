@@ -16,11 +16,10 @@ const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({ showSnackbar }, dispatch),
   submitPost({ feedPostId, content }, afterSubmit, failSubmit) {
     const toSubmit = {
-      FeedPostId: feedPostId,
       content,
     };
 
-    patch('/feedpost', toSubmit, { userToken: true }, afterSubmit, failSubmit);
+    patch(`/feedpost/${ feedPostId }`, toSubmit, { userToken: true }, afterSubmit, failSubmit);
   },
 });
 

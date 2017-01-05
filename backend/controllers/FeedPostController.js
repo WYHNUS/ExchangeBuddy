@@ -2,11 +2,11 @@ var models = require("../models");
 var reactions = require('../config/config').reactions;
 
 exports.createFeedPost = function(req, res){
-    if(!!req.body.content && !!req.body.GroupId){
+    if(!!req.body.content && !!req.params.id){
         models.FeedPost.create({
             authorId: req.user.id,
             content: req.body.content,
-            GroupId: req.body.GroupId,
+            GroupId: req.params.id,
         }).then(function(feedpost){
             res.status(200).send({
                 status: 'success',
@@ -21,7 +21,7 @@ exports.createFeedPost = function(req, res){
     }
 }
 
-exports.getFeedPostComment = function(req, res){
+exports.getFeedPostComments = function(req, res){
     if(!!req.params.id){
         models.FeedPostComment.findAll({
             where: {
@@ -201,10 +201,10 @@ exports.getFeedPostByGroupWithComment = function(req, res){
 }
 
 exports.deleteFeedPost = function(req, res){
-    if(!!req.body.FeedPostId){
+    if(!!req.params.id){
         models.FeedPost.destroy({
             where: {
-                id: req.body.FeedPostId,
+                id: req.params.id,
             }
         }).then(function(count){
             if(count < 1){
@@ -228,12 +228,12 @@ exports.deleteFeedPost = function(req, res){
 }
 
 exports.updateFeedPost = function(req, res){
-    if(!!req.body.FeedPostId && !!req.body.content){
+    if(!!req.params.id && !!req.body.content){
         models.FeedPost.update({
             content: req.body.content
         }, {
             where: {
-                id: req.body.FeedPostId
+                id: req.params.id
             }
         }).then(function(result){
             var count = result[0];
@@ -258,10 +258,10 @@ exports.updateFeedPost = function(req, res){
 }
 
 exports.reactToFeedPost = function(req, res){
-    if(!!req.body.FeedPostId && !!req.body.reaction){
+    if(!!req.params.id && !!req.body.reaction){
         models.FeedPostReaction.findOne({
             where: {
-                FeedPostId: req.body.FeedPostId,
+                FeedPostId: req.params.id,
                 UserId: req.user.id,
             }
         }).then(function(reaction){
@@ -274,7 +274,7 @@ exports.reactToFeedPost = function(req, res){
                 if(reactions[0].indexOf(req.body.reaction) != -1){
                     models.FeedPostReaction.create({
                         reaction: req.body.reaction,
-                        FeedPostId: req.body.FeedPostId,
+                        FeedPostId: req.params.id,
                         UserId: req.user.id,
                     }).then(function(feedpostreaction){
                         if(!!feedpostreaction){
@@ -306,10 +306,11 @@ exports.reactToFeedPost = function(req, res){
 }
 
 exports.unreactToFeedPost = function(req, res){
-    if(!!req.body.ReactionId){
+    if(!!req.params.id){
         models.FeedPostReaction.findOne({
             where: {
-                id: req.body.ReactionId,
+                FeedPostId: req.params.id,
+                UserId: req.user.id,
             }
         }).then(function(reaction){
             if(!!reaction){
@@ -335,7 +336,7 @@ exports.unreactToFeedPost = function(req, res){
     }else{
         res.status(400).send({
             status: 'fail',
-            message: 'missing ReactionId',
+            message: 'missing feed post id',
         })
     }
 }

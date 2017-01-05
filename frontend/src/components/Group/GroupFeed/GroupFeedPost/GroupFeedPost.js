@@ -92,13 +92,10 @@ class GroupFeedPost extends React.Component {
                 </div>
 
                 <GroupFeedDeleteDialog
-                  endpoint="/feedpost"
-                  toSubmit={{ FeedPostId: feedPost.id }}
+                  endpoint={`/feedpost/${ feedPost.id }`}
                   isOpen={ isDeleteConfirmationDialogOpen }
                   handleCloseDialog={ this.closeDeleteConfirmationDialog }
                   afterDelete={ refreshGroupFeed } />
-
-
 
                 { expanded &&
                   <GroupFeedPostComments group={ group } feedPost={ feedPost } />

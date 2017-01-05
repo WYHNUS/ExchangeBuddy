@@ -83,26 +83,26 @@ router.get('/getGroups', GroupCtrl.getGroups);
 router.post('/members', verifyToken, GroupCtrl.getMembers);
 
 // FEEDPOST CONTROLLER
-router.put('/feedpost', verifyToken, FeedPostCtrl.createFeedPost);
-router.get('/feedposts/:id', verifyToken, FeedPostCtrl.getFeedPostByGroup);
-router.get('/feedpostsWithComment/:id', verifyToken, FeedPostCtrl.getFeedPostByGroupWithComment);
-router.get('/feedpostComment/:id', verifyToken, FeedPostCtrl.getFeedPostComment);
-router.patch('/feedpost', verifyToken, FeedPostCtrl.updateFeedPost);
-router.delete('/feedpost', verifyToken, FeedPostCtrl.deleteFeedPost);
-router.post('/reactToFeedPost', verifyToken, FeedPostCtrl.reactToFeedPost);
-router.post('/unreactToFeedPost', verifyToken, FeedPostCtrl.unreactToFeedPost);
+router.get('/group/:id/feedposts', verifyToken, FeedPostCtrl.getFeedPostByGroup);
+router.put('/group/:id/feedpost', verifyToken, FeedPostCtrl.createFeedPost);
+router.get('/group/:id/feedpostsWithComments', verifyToken, FeedPostCtrl.getFeedPostByGroupWithComment);
+router.get('/feedpost/:id/comments', verifyToken, FeedPostCtrl.getFeedPostComments);
+router.patch('/feedpost/:id', verifyToken, FeedPostCtrl.updateFeedPost);
+router.delete('/feedpost/:id', verifyToken, FeedPostCtrl.deleteFeedPost);
+router.post('/feedpost/:id/reaction', verifyToken, FeedPostCtrl.reactToFeedPost);
+router.delete('/feedpost/:id/reaction', verifyToken, FeedPostCtrl.unreactToFeedPost);
 
 // FEEDPOST COMMENT CONTROLLER
-router.put('/feedpostComment', verifyToken, FeedPostCommentCtrl.createComment);
-router.patch('/feedpostComment', verifyToken, FeedPostCommentCtrl.updateComment);
-router.delete('/feedpostComment', verifyToken, FeedPostCommentCtrl.deleteComment);
-router.post('/reactToFeedPostComment', verifyToken, FeedPostCommentCtrl.reactToComment);
-router.post('/unreactToFeedPostComment', verifyToken, FeedPostCommentCtrl.unreactToComment);
+router.put('/feedpost/:id/comment', verifyToken, FeedPostCommentCtrl.createComment);
+router.patch('/feedpost/comment/:id', verifyToken, FeedPostCommentCtrl.updateComment);
+router.delete('/feedpost/comment/:id', verifyToken, FeedPostCommentCtrl.deleteComment);
+router.post('/feedpost/comment/:id/reaction', verifyToken, FeedPostCommentCtrl.reactToComment);
+router.delete('/feedpost/comment/:id/reaction', verifyToken, FeedPostCommentCtrl.unreactToComment);
 
 // FEEDPOST COMMENT REPLY CONTROLLER
-router.put('/feedpostCommentReply', verifyToken, FeedPostCommentReplyCtrl.createReply);
-router.delete('/feedpostCommentReply', verifyToken, FeedPostCommentReplyCtrl.deleteReply);
-router.patch('/feedpostCommentReply', verifyToken, FeedPostCommentReplyCtrl.updateReply);
+router.put('/feedpost/comment/:id/reply', verifyToken, FeedPostCommentReplyCtrl.createReply);
+router.patch('/feedpost/comment/reply/:id', verifyToken, FeedPostCommentReplyCtrl.updateReply);
+router.delete('/feedpost/comment/reply/:id', verifyToken, FeedPostCommentReplyCtrl.deleteReply);
 
 // MISC
 router.get('/signups', function(req, res){

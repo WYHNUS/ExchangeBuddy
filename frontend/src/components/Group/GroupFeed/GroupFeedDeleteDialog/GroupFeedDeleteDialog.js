@@ -29,7 +29,7 @@ const GroupFeedDeleteDialog = ({ toSubmit, submitDelete, isOpen, handleCloseDial
 );
 
 GroupFeedDeleteDialog.propTypes = {
-  toSubmit: React.PropTypes.object.isRequired,
+  toSubmit: React.PropTypes.object,
   endpoint: React.PropTypes.string.isRequired,
   submitDelete: React.PropTypes.func.isRequired,
   isOpen: React.PropTypes.bool,

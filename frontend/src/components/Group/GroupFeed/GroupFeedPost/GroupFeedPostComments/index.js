@@ -23,7 +23,7 @@ Container.propTypes = {
 };
 
 const refetch = ({ feedPost }) => {
-  const commentsFetch = makeRefetch(`/feedpostComment/${ feedPost.id }`, { userToken: true }, ({ data }) => data.map(feedPostCommentTransform));
+  const commentsFetch = makeRefetch(`/feedpost/${ feedPost.id }/comments`, { userToken: true }, ({ data }) => data.map(feedPostCommentTransform));
 
   return {
     commentsFetch,

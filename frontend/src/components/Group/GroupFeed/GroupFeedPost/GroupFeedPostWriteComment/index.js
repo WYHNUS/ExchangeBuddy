@@ -14,11 +14,10 @@ const mapDispatchToProps = (dispatch) => ({
   submitPost({ userId, feedPostId, content }, afterSubmit, failSubmit) {
     const toSubmit = {
       authorId: userId,
-      FeedPostId: feedPostId,
       content,
     };
 
-    put('/feedpostComment', toSubmit, { userToken: true }, afterSubmit, failSubmit);
+    put(`/feedpost/${ feedPostId }/comment`, toSubmit, { userToken: true }, afterSubmit, failSubmit);
   },
 });
 

@@ -2,10 +2,10 @@ var models = require('../models');
 var reactions = require('../config/config').reactions;
 
 exports.createComment = function(req, res){
-    if(!!req.body.content && !!req.body.FeedPostId){
+    if(!!req.body.content && !!req.params.id){
         models.FeedPostComment.create({
             content: req.body.content,
-            FeedPostId: req.body.FeedPostId,
+            FeedPostId: req.params.id,
             authorId: req.user.id,
         }).then(function(comment){
             if(!!comment){
@@ -29,10 +29,10 @@ exports.createComment = function(req, res){
 }
 
 exports.updateComment = function(req, res){
-    if(!!req.body.content && !!req.body.FeedPostId){
+    if(!!req.body.content && !!req.params.id){
         models.FeedPostComment.findOne({
             where: {
-                id: req.body.FeedPostId,
+                id: req.params.id,
             }
         }).then(function(comment){
             if(!!comment){
@@ -66,10 +66,10 @@ exports.updateComment = function(req, res){
 }
 
 exports.deleteComment = function(req, res){
-    if(!!req.body.FeedPostId){
+    if(!!req.params.id){
         models.FeedPostComment.findOne({
             where: {
-                id: req.body.FeedPostId,
+                id: req.params.id,
             }
         }).then(function(comment){
             if(!!comment){
@@ -101,10 +101,10 @@ exports.deleteComment = function(req, res){
 }
 
 exports.reactToComment = function(req, res){
-    if(!!req.body.CommentId && !!req.body.reaction){
+    if(!!req.params.id && !!req.body.reaction){
         models.FeedPostCommentReaction.findOne({
             where: {
-                FeedPostCommentId: req.body.CommentId,
+                FeedPostCommentId: req.params.id,
                 UserId: req.user.id,
             }
         }).then(function(reaction){
@@ -117,7 +117,7 @@ exports.reactToComment = function(req, res){
                 if(reactions[0].indexOf(req.body.reaction) != -1){
                     models.FeedPostReaction.create({
                         reaction: req.body.reaction,
-                        FeedPostCommentId: req.body.CommentId,
+                        FeedPostCommentId: req.params.id,
                         UserId: req.user.id,
                     }).then(function(feedPostCommentReaction){
                         if(!!feedPostCommentReaction){
@@ -149,10 +149,11 @@ exports.reactToComment = function(req, res){
 }
 
 exports.unreactToComment = function(req, res){
-    if(!!req.body.ReactionId){
+    if(!!req.params.id){
         models.FeedPostCommentReaction.findOne({
             where: {
-                id: req.body.ReactionId,
+                FeedPostId: req.params.id,
+                UserId: req.user.id,
             }
         }).then(function(reaction){
             if(!!reaction){
@@ -178,7 +179,7 @@ exports.unreactToComment = function(req, res){
     }else{
         res.status(400).send({
             status: 'fail',
-            message: 'missing ReactionId',
+            message: 'missing feed post id',
         })
     }
 }
