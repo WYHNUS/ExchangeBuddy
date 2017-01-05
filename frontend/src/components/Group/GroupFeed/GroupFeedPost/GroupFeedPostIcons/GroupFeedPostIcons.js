@@ -45,7 +45,7 @@ const GroupFeedPostIcons = ({ handleToggleComments }) => (
 
       { availableEmojis.map((emoji,idx) => (
         <div className= "emoji" key={ idx }>
-          <Badge badgeContent={10} secondary={true} key={ idx } badgeStyle={{top: 35, right: 48, height: 16, borderRadius: 8, backgroundColor: 'transparent', color: Colors.grey400}} >
+          <Badge badgeContent={10} secondary={true} key={ idx } badgeStyle={{top: 35, right: 48, height: 16, backgroundColor: 'transparent', color: Colors.grey400}} >
             <IconButton style = {{ padding:0, width:22, height:22, margin:5 }} key = { idx }> 
               <Icon size={ 18 } name={`twa twa-${ emoji }`} key={ idx } /> 
             </IconButton>
