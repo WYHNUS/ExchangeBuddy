@@ -94,11 +94,6 @@ module.exports = function(sequelize, DataType) {
                 });
 
 
-                User.hasMany(models.Story, {
-                    onDelete: "CASCADE",
-                    as: 'author',
-                });
-
                 User.hasMany(models.Wiki);
                 User.hasMany(models.WikiSection);
                 User.hasMany(models.WikiSectionVersion);

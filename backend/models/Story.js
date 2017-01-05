@@ -29,6 +29,10 @@ module.exports = function(sequelize, DataType) {
                 Story.hasMany(models.StoryReaction, {
                     onDelete: "CASCADE"
                 });
+                Story.belongsTo(models.User, {
+                    onDelete: "CASCADE",
+                    as: "author",
+                })
             }
         }
     });

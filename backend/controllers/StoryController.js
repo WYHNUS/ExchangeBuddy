@@ -82,6 +82,7 @@ exports.getAllStories = function(req, res){
         attributes: ['id', 'title', 'createdAt', 'coverPhoto'],
         include: [{
             model: models.User,
+            as: 'author',
             attributes: ['id', 'name', 'profilePictureUrl']
         }]
     }).then(function(stories){
