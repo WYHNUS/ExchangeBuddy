@@ -50,9 +50,9 @@ const GroupFeedPostIcons = ({ handleToggleComments, reactions }) => (
 
     <div className="col-xs-7 middle-xs emoji-display">
 
-      { reactions.map(({ user, reaction, id }) => (
+      { reactions.map(({ reaction, id }) => (
         <div className= "emoji" key={ id }>
-          <Icon size={ 18 } name={`twa twa-${ reaction }`} /> 
+          <Icon size={ 18 } name={`twa twa-${ reaction }`} />
         </div>
       )) } 
 
