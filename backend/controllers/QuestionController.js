@@ -126,6 +126,11 @@ exports.voteQuestion = function(req, res){
                 status: 'fail',
                 message: "Question doesn't exist"
             });
+        } else if (req.body.vote != -1 && req.body.vote != 1) {
+            res.status(400).json({
+                status: 'fail',
+                message: "vote must be 1 for upvote or -1 for downvote"
+            });
         } else {
             QuestionVote.findOrCreate({
                 where: {
