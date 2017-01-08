@@ -99,6 +99,7 @@ router.patch('/question/:id', verifyToken, QuestionCtrl.updateQuestion);
 router.delete('/question/:id', verifyToken, QuestionCtrl.deleteQuestion);
 router.get('/questions', verifyToken, QuestionCtrl.getQuestions);
 router.post('/question/:id/vote', verifyToken, QuestionCtrl.voteQuestion);
+router.delete('/question/:id/vote', verifyToken, QuestionCtrl.unvoteQuestion);
 
 // FEEDPOST COMMENT CONTROLLER
 router.put('/feedpostComment', verifyToken, FeedPostCommentCtrl.createComment);

@@ -121,7 +121,7 @@ exports.voteQuestion = function(req, res){
     // check if question exists
     Question.findById(req.params.id)
     .then((question) => {
-        if (!!question) {
+        if (!question) {
             res.status(400).json({
                 status: 'fail',
                 message: "Question doesn't exist"
@@ -175,6 +175,31 @@ exports.voteQuestion = function(req, res){
                     status: 'fail',
                     message: err.message
                 })
+            })
+        }
+    })
+    .catch(err => {
+        res.status(500).json({
+            status: 'fail',
+            message: err.message
+        });
+    });
+}
+
+exports.unvoteQuestion = function(req, res){
+    QuestionVote.destroy({
+        where: {
+            QuestionId: req.params.id,
+            voterId: req.user.id
+        }
+    })
+    .then(affectedRows => {
+        if (affectedRows == 1){
+            res.status(204).send();
+        } else {
+            res.status(404).json({
+                status: 'fail',
+                message: 'question vote not found'
             })
         }
     })
