@@ -1432,10 +1432,17 @@ Update content of a question
     + id            (number, `1`) ... ID of question to vote for
 
 + Attributes
-    + content       (integer, required) - Vote points only (-1, 0, 1) allowed
+    + content       (integer, required) - Vote points only -1 or 1 allowed
 
 + Request  (application/json)
 
         {
             "vote": 1
         }
+
+### Unvote question [DELETE /question/{id}/vote]
+
++ Parameters
+    + id            (number, `1`) ... ID of question to vote for
+
++ Response 204 no-content
