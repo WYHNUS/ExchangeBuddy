@@ -17,6 +17,7 @@ var MailCtrl = require('../controllers/MailController');
 var FeedPostCtrl = require('../controllers/FeedPostController');
 var FeedPostCommentCtrl = require('../controllers/FeedPostCommentController');
 var FeedPostCommentReplyCtrl = require('../controllers/FeedPostCommentReplyController');
+var QuestionCtrl = require('../controllers/QuestionController')
 // Set up token authenticate
 var verifyToken = jwt({secret: config.secret});
 
@@ -91,6 +92,14 @@ router.patch('/feedpost/:id', verifyToken, FeedPostCtrl.updateFeedPost);
 router.delete('/feedpost/:id', verifyToken, FeedPostCtrl.deleteFeedPost);
 router.post('/feedpost/:id/reaction', verifyToken, FeedPostCtrl.reactToFeedPost);
 router.delete('/feedpost/:id/reaction', verifyToken, FeedPostCtrl.unreactToFeedPost);
+
+// QUESTION CONTROLLER
+router.post('/question', verifyToken, QuestionCtrl.createQuestion);
+router.patch('/question/:id', verifyToken, QuestionCtrl.updateQuestion);
+router.delete('/question/:id', verifyToken, QuestionCtrl.deleteQuestion);
+router.get('/questions', verifyToken, QuestionCtrl.getQuestions);
+router.post('/question/:id/vote', verifyToken, QuestionCtrl.voteQuestion);
+router.delete('/question/:id/vote', verifyToken, QuestionCtrl.unvoteQuestion);
 
 // FEEDPOST COMMENT CONTROLLER
 router.put('/feedpost/:id/comment', verifyToken, FeedPostCommentCtrl.createComment);
