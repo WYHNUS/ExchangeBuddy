@@ -120,19 +120,20 @@ router.get('/signups', function(req, res){
     })
 })
 router.get('/me', verifyToken, function(req, res) {
-    User.findOne({
+    models.User.findOne({
         where: {
             id: req.user.id
         },
         include: [{
-            model: University,
+            model: models.University,
             include: [{
-                model: Country,
+                model: models.Country,
                 attributes: ['alpha2Code', 'name']
             }]
         }],
         attributes: ['id', 'email', 'name', 'profilePictureUrl', 'fbUserId', 'bio']
     }).then(function(user) {
+        console.log(user);
         user.getExchangeEvent().then(function(exchanges){
             models.University.findAll({
                 where: {
@@ -165,4 +166,13 @@ router.get('/', function(req, res) {
         status: 'ok'
     });
 });
+
+
+function resError(res, err) {
+    return res.status(500).json({
+        status: 'fail',
+        message: err.message
+    });
+}
+
 module.exports = router;
