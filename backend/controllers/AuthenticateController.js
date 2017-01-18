@@ -18,7 +18,7 @@ exports.authenticateOrCreateByFB = function(req, res){
                     fbUserId: response.id
                 },
                 attributes: {
-                  excludes: ['password']
+                  exclude: ['password']
                 }
             }).then(function(existingUser){
                 if(!!existingUser){
@@ -35,9 +35,12 @@ exports.authenticateOrCreateByFB = function(req, res){
                         profilePictureUrl: response.picture.data.url,
                         isEmailVerified: 1
                     }).then(function(user){
+                        userJSON = user.toJSON();
+                        delete userJSON['password'];
+                        console.log(userJSON);
                         res.status(200).json({
                             status: 'success',
-                            user: user,
+                            user: userJSON,
                             token: user.generateJwt()
                         })
                     })
