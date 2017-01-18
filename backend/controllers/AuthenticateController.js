@@ -16,6 +16,9 @@ exports.authenticateOrCreateByFB = function(req, res){
             User.findOne({
                 where: {
                     fbUserId: response.id
+                }，
+                attributes: {
+                  excludes: ['password']
                 }
             }).then(function(existingUser){
                 if(!!existingUser){
