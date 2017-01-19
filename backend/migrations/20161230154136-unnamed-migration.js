@@ -13,7 +13,6 @@ module.exports = {
             queryInterface.dropTable('user_event'),
             queryInterface.dropTable('Events'),
             queryInterface.dropTable('Journals'),
-            queryInterface.dropTable('Tokens'),
             queryInterface.removeColumn('Universities', 'logoUrl'),
             queryInterface.removeColumn('Universities', 'countryCode'),
             queryInterface.removeColumn('Universities', 'linkUrl'),
