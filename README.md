@@ -72,7 +72,7 @@ To get the backend process running:
 cd backend
 npm install
 touch .env   # Configuration in this file, follow .env.example
-node bin/www
+npm start
 ```
 
 The backend will be running on the port as defined in `.env`.
