@@ -3,38 +3,38 @@ var models = require('../models');
 var md5 = require('md5');
 var User = models.User;
 
-exports.authenticateOrCreateByFB = function(req, res){
-    if(!req.body.facebookToken){
+exports.authenticateOrCreateByFB = function (req, res) {
+    if (!req.body.facebookToken) {
         return res.status(400)
             .json({
                 status: 'fail',
                 message: 'Invalid authenticate data.'
             });
-    }else{
+    } else {
         var facebookToken = req.body.facebookToken;
-        graph.get("/me?fields=name,id,email,picture.width(720).height(720)&access_token=" + facebookToken, function(error, response){
+        graph.get("/me?fields=name,id,email,picture.width(720).height(720)&access_token=" + facebookToken, function (error, response) {
             User.findOne({
                 where: {
                     fbUserId: response.id
                 },
                 attributes: {
-                  exclude: ['password']
+                    exclude: ['password']
                 }
-            }).then(function(existingUser){
-                if(!!existingUser){
+            }).then(function (existingUser) {
+                if (!!existingUser) {
                     return res.status(200).json({
-                            status: 'success',
-                            user: existingUser,
-                            token: existingUser.generateJwt()
-                        });
-                }else{
+                        status: 'success',
+                        user: existingUser,
+                        token: existingUser.generateJwt()
+                    });
+                } else {
                     User.create({
                         fbUserId: response.id,
                         email: response.email,
                         name: response.name,
                         profilePictureUrl: response.picture.data.url,
                         isEmailVerified: 1
-                    }).then(function(user){
+                    }).then(function (user) {
                         userJSON = user.toJSON();
                         delete userJSON['password'];
                         console.log(userJSON);
@@ -45,13 +45,13 @@ exports.authenticateOrCreateByFB = function(req, res){
                         })
                     })
                 }
-            }).catch(function(err){
+            }).catch(function (err) {
                 console.log('error HERE: ', err);
                 resError(res, err);
             });
         });
     }
-}
+};
 
 exports.authenticateByEmail = function (req, res) {
     if (!req.body.password || !req.body.email) {
@@ -67,7 +67,7 @@ exports.authenticateByEmail = function (req, res) {
             email: req.body.email,
             password: md5(req.body.password)
         }
-    }).then(function(user){
+    }).then(function (user) {
         if (!user) {
             // 401 means that the user is unknown
             return res.status(401).json({
@@ -89,7 +89,7 @@ exports.authenticateByEmail = function (req, res) {
                 user: user
             });
         }
-    }).catch(function(err){
+    }).catch(function (err) {
         console.log('error HERE: ', err);
         resError(res, err);
     });

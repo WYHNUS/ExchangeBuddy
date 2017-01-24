@@ -20,51 +20,51 @@ var options = {
 };
 var client = s3.createClient(options);
 
-exports.getAllUniversities = function(req, res) {
+exports.getAllUniversities = function (req, res) {
     models.University.findAll({
         attributes: ['id', 'name', 'city', 'logoImageUrl', 'website']
-    }).then(function(universities){
+    }).then(function (universities) {
         res.json(universities);
-    }).catch(function(err) {
+    }).catch(function (err) {
         resError(res, err);
     });
 };
 
-exports.getAllUniversitiesForCountry = function(req, res){
+exports.getAllUniversitiesForCountry = function (req, res) {
     models.University.findAll({
         where: {
             CountryAlpha2Code: req.params.alpha2Code
         },
-    	attributes: ['id', 'name', 'city', 'logoImageUrl', 'website']
-    }).then(function(universities){
+        attributes: ['id', 'name', 'city', 'logoImageUrl', 'website']
+    }).then(function (universities) {
         res.json(universities);
-    }).catch(function(err) {
+    }).catch(function (err) {
         resError(res, err);
     });
 };
 
-exports.createUniversity = function(req, res) {
+exports.createUniversity = function (req, res) {
     var userId = req.user.id;
 
     // hard-code an admin priviledge value here
     if (!req.user.role || req.user.role < 8) {
         return res.status(403).json({
-                status: 'fail',
-                message: 'Not authorized.'
-            });
+            status: 'fail',
+            message: 'Not authorized.'
+        });
     }
 
     if (!req.body.name || !req.body.alpha2Code) {
         return res.status(400).json({
-                status: 'fail',
-                message: 'Invalid post parameter.'
-            });
+            status: 'fail',
+            message: 'Invalid post parameter.'
+        });
     }
     models.Country.findOne({
         where: {
             alpha2Code: req.body.alpha2Code
         }
-    }).then(function(country) {
+    }).then(function (country) {
         if (!country) {
             res.status(400).json({
                 status: 'fail',
@@ -82,7 +82,7 @@ exports.createUniversity = function(req, res) {
             emailDomains: req.body.emailDomains ? JSON.parse(req.body.emailDomains) : null,
             terms: req.body.terms ? JSON.parse(req.body.terms) : null,
             topUnisId: req.body.topUnisId ? req.body.topUnisId : null
-        }).then(function(university) {
+        }).then(function (university) {
             // link university and country together
             country.addUniversity(university);
 
@@ -90,7 +90,7 @@ exports.createUniversity = function(req, res) {
             Wiki.create({
                 title: req.body.name,
                 UserId: userId
-            }).then(function(wiki){
+            }).then(function (wiki) {
                 var resultSectionArray = Object.keys(defaultUniWikiTemplate).map(title => {
                     return Section.create({
                         sectionIndex: defaultUniWikiTemplate[title].index,
@@ -134,54 +134,54 @@ exports.createUniversity = function(req, res) {
                     });
                 });
             });
-        }).catch(function(err) {
+        }).catch(function (err) {
             resError(res, err);
         });
-    }).catch(function(err) {
+    }).catch(function (err) {
         resError(res, err);
     });
 };
 
-exports.getUniversity = function(req, res) {
+exports.getUniversity = function (req, res) {
     models.University.findOne({
         where: {
             id: req.params.id
         }
-    }).then(function(university) {
+    }).then(function (university) {
         res.json(university);
-    }).catch(function(err) {
+    }).catch(function (err) {
         resError(res, err);
     });
 };
 
-exports.updateUniInfo = function(req, res) {
+exports.updateUniInfo = function (req, res) {
     var query = req.body;
 
     models.University.update(query, {
         where: {
             id: req.body.UniversityId,
         }
-    }).then(function(user) {
+    }).then(function (user) {
         res.json({
             status: 'success'
         });
-    }).catch(function(err) {
+    }).catch(function (err) {
         resError(res, err);
     });
 }
 
-exports.updateUniLogo = function(req, res) {
+exports.updateUniLogo = function (req, res) {
     models.University.findOne({
         where: {
             id: req.body.UniversityId
         }
-    }).then(function(university) {
+    }).then(function (university) {
         if (!!university) {
             var dbName = university.name;
             Key = dbName.split('/')[0].trim().toLowerCase()
-            .replace(/ /g, '-')
-            .replace(')', '')
-            .replace('(', '') + '.jpg';
+                    .replace(/ /g, '-')
+                    .replace(')', '')
+                    .replace('(', '') + '.jpg';
 
             var params = {
                 localFile: req.file.path,
@@ -194,11 +194,11 @@ exports.updateUniLogo = function(req, res) {
 
             var uploader = client.uploadFile(params);
             var url = s3.getPublicUrl(Bucket, Key, "ap-southeast-1");
-            uploader.on('error', function(err) {
+            uploader.on('error', function (err) {
                 console.log(err);
             })
 
-            uploader.on('end', function() {
+            uploader.on('end', function () {
 
                 if (!!university.logoImageUrl) {
                     var splitString = university.logoImageUrl.split('/');

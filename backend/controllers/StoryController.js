@@ -1,7 +1,7 @@
 var models = require('../models');
 
 // user create story
-exports.createStory = function(req, res) {
+exports.createStory = function (req, res) {
     if (!req.body.userId) {
         return res.status(401)
             .json({
@@ -25,19 +25,19 @@ exports.createStory = function(req, res) {
         content: req.body.storyContent,
         isPublic: isStoryPublic,
         UserId: req.body.userId
-    }).then(function(story) {
+    }).then(function (story) {
         return res.status(200)
             .json({
                 status: 'success',
                 message: story
             });
-    }).catch(function(err) {
+    }).catch(function (err) {
         resError(res, err);
     });
 }
 
 // get story with specified story id
-exports.getStory = function(req, res) {
+exports.getStory = function (req, res) {
     models.Story.findOne({
         where: {
             id: req.params.id
@@ -46,9 +46,9 @@ exports.getStory = function(req, res) {
             model: models.User,
             attributes: ['id', 'name', 'profilePictureUrl', 'fbUserId']
         }]
-    }).then(function(story){
+    }).then(function (story) {
         if (!!story) {
-            if (story.isPublic ||( story.UserId === req.body.userId)) {
+            if (story.isPublic || ( story.UserId === req.body.userId)) {
                 return res.status(200)
                     .json({
                         status: 'success',
@@ -68,13 +68,13 @@ exports.getStory = function(req, res) {
                     message: 'Story not found.'
                 });
         }
-    }).catch(function(err) {
+    }).catch(function (err) {
         resError(res, err);
     });
 }
 
 // get all public stories id belongs to all people
-exports.getAllStories = function(req, res){
+exports.getAllStories = function (req, res) {
     models.Story.findAll({
         where: {
             isPublic: true
@@ -85,13 +85,13 @@ exports.getAllStories = function(req, res){
             as: 'author',
             attributes: ['id', 'name', 'profilePictureUrl']
         }]
-    }).then(function(stories){
+    }).then(function (stories) {
         return res.status(200)
             .json({
                 status: 'success',
                 message: stories
             });
-    }).catch(function(err) {
+    }).catch(function (err) {
         resError(res, err);
     });
 };

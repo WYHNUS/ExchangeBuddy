@@ -1,4 +1,5 @@
 .DS_Store
+.idea/
 npm-debug.log
 backend/bin/key.pem
 .db_backups

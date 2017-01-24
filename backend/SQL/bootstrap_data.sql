@@ -2263,7 +2263,7 @@ values
 "US", "http://www.topuniversities.com/sites/default/files/massachusetts-institute-of-technology-mit_410_small.jpg", "",
 "http://www.topuniversities.com/sites/default/files/massachusetts-institute-of-technology-mit_410_small.jpg", "", "[""mit.edu""]", "[]", 410,
 "2016-10-18", "2016-10-20"
-),\
+),
 (
 "2", "Harvard University", "", "http://www.harvard.edu/", "",
 "US", "http://www.topuniversities.com/sites/default/files/harvard-university_253_small.jpg", "",
