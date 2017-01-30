@@ -73,7 +73,26 @@ exports.updateAnswer = function (req, res) {
 };
 
 exports.deleteAnswer = function (req, res) {
-
+    models.Answer.findOne({
+        where: {
+            id: req.params.id,
+            authorId: req.user.id,
+        }
+    }).then(function(answer){
+        if(!!answer){
+            answer.destroy().then(function(){
+                res.status(200).send({
+                    status: 'success',
+                    message: 'instance deleted',
+                })
+            });
+        } else {
+            res.status(400).send({
+                status: 'fail',
+                message: 'answer entry not found',
+            })
+        }
+    });
 };
 
 exports.getAnswers = function (req, res) {
