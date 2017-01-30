@@ -129,10 +129,48 @@ exports.getAnswers = function(req, res) {
     })
 };
 
-exports.upvoteAnswer = function(req, res) {
+exports.voteAnswer = function(req, res){
+    if(!!req.body.vote){
+        if(vote == 1 || vote == -1){
+            models.AnswerVote.findOne({
+                where: {
+                    AnswerId: req.params.id,
+                    voterId: req.user.id,
+                }
+            }).then(function(vote){
+                if(!!vote){
+                    models.AnswerVote.create({
+                        vote: req.body.vote,
+                        AnswerId: req.params.id,
+                        voterId: req.user.id,
+                    }).then(function(newVote){
+                        res.status(200).send({
+                            message: 'vote created'
+                        });
+                    });
+                } else {
+                    if(vote.vote == req.body.vote){
+                        res.status(400).send({
+                            message: 'user already voted',
+                        });
+                    } else {
+                        vote.destroy().then(function(){
+                            res.status(200).send({
+                                message: 'vote deleted',
+                            })
+                        })
+                    }
+                }
+            })
+        } else {
+            res.status(400).send({
+                message: 'invalid vote',
+            });
+        }
 
-};
-
-exports.downvoteAnswer = function(req, res) {
-
-};
+    }else{
+        res.status(400).send({
+            message: 'missing vote'
+        });
+    }
+}

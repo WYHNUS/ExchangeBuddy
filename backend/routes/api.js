@@ -107,6 +107,7 @@ router.put('/question/:id/answer', verifyToken, AnswerCtrl.createAnswer);
 router.patch('/answer/:id', verifyToken, AnswerCtrl.updateAnswer);
 router.delete('/answer/:id', verifyToken, AnswerCtrl.deleteAnswer);
 router.get('/question/:id/answers', verifyToken, AnswerCtrl.getAnswers);
+router.post('/answer/:id/vote', verifyToken, AnswerCtrl.voteAnswer);
 
 // FEEDPOST COMMENT CONTROLLER
 router.put('/feedpost/:id/comment', verifyToken, FeedPostCommentCtrl.createComment);
