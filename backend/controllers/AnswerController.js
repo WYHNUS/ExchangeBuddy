@@ -1,17 +1,17 @@
 var models = require('../models');
 
 exports.createAnswer = function (req, res) {
-    if(!!req.body.QuestionId && !!req.body.content){
+    if(!!req.params.id && !!req.body.content){
         models.Question.findOne({
             where: {
-                id: req.body.QuestionId
+                id: req.params.id
             }
         }).then(function(question){
             if(!!question){
                 models.Answer.create({
                     content: req.body.content,
                     authorId: req.user.id,
-                    QuestionId: req.body.QuestionId,
+                    QuestionId: req.params.id,
                 }).then(function(answer){
                     if(!!answer){
                         res.status(200).send({
@@ -41,7 +41,35 @@ exports.createAnswer = function (req, res) {
 };
 
 exports.updateAnswer = function (req, res) {
-
+    if(!!req.body.content && !!req.params.id){
+        models.Answer.findOne({
+            where: {
+                id: req.params.id,
+                anthorId: req.user.id,
+            }
+        }).then(function(answer){
+            if(!!answer){
+                answer.update({
+                    content: req.body.content
+                }).then(function(answer){
+                    res.status(200).send({
+                        status: 'success',
+                        message: 'answer updated',
+                    })
+                })
+            } else {
+                res.status(400).send({
+                    status: 'fail',
+                    message: 'answer entry not found'
+                })
+            }
+        })
+    } else {
+        res.status(400).send({
+            status: 'fail',
+            message: 'missing content or AnswerId',
+        })
+    }
 };
 
 exports.deleteAnswer = function (req, res) {

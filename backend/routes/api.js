@@ -103,7 +103,8 @@ router.post('/question/:id/vote', verifyToken, QuestionCtrl.voteQuestion);
 router.delete('/question/:id/vote', verifyToken, QuestionCtrl.unvoteQuestion);
 
 // ANSWER CONTROLLER
-router.put('/answer', verifyToken, AnswerCtrl.createAnswer);
+router.put('/question/:id/answer', verifyToken, AnswerCtrl.createAnswer);
+router.patch('/answer/:id', verifyToken, AnswerCtrl.updateAnswer);
 
 // FEEDPOST COMMENT CONTROLLER
 router.put('/feedpost/:id/comment', verifyToken, FeedPostCommentCtrl.createComment);
