@@ -1,19 +1,19 @@
 var models = require('../models');
 
-exports.createAnswer = function (req, res) {
-    if(!!req.params.id && !!req.body.content){
+exports.createAnswer = function(req, res) {
+    if (!!req.params.id && !!req.body.content) {
         models.Question.findOne({
             where: {
                 id: req.params.id
             }
-        }).then(function(question){
-            if(!!question){
+        }).then(function(question) {
+            if (!!question) {
                 models.Answer.create({
                     content: req.body.content,
                     authorId: req.user.id,
                     QuestionId: req.params.id,
-                }).then(function(answer){
-                    if(!!answer){
+                }).then(function(answer) {
+                    if (!!answer) {
                         res.status(200).send({
                             status: 'success',
                             messsage: 'answer created',
@@ -40,18 +40,18 @@ exports.createAnswer = function (req, res) {
     }
 };
 
-exports.updateAnswer = function (req, res) {
-    if(!!req.body.content && !!req.params.id){
+exports.updateAnswer = function(req, res) {
+    if (!!req.body.content && !!req.params.id) {
         models.Answer.findOne({
             where: {
                 id: req.params.id,
                 anthorId: req.user.id,
             }
-        }).then(function(answer){
-            if(!!answer){
+        }).then(function(answer) {
+            if (!!answer) {
                 answer.update({
                     content: req.body.content
-                }).then(function(answer){
+                }).then(function(answer) {
                     res.status(200).send({
                         status: 'success',
                         message: 'answer updated',
@@ -72,15 +72,15 @@ exports.updateAnswer = function (req, res) {
     }
 };
 
-exports.deleteAnswer = function (req, res) {
+exports.deleteAnswer = function(req, res) {
     models.Answer.findOne({
         where: {
             id: req.params.id,
             authorId: req.user.id,
         }
-    }).then(function(answer){
-        if(!!answer){
-            answer.destroy().then(function(){
+    }).then(function(answer) {
+        if (!!answer) {
+            answer.destroy().then(function() {
                 res.status(200).send({
                     status: 'success',
                     message: 'instance deleted',
@@ -95,21 +95,44 @@ exports.deleteAnswer = function (req, res) {
     });
 };
 
-exports.getAnswers = function (req, res) {
+exports.getAnswers = function(req, res) {
     models.Answer.findAll({
         where: {
             QuestionId: req.params.id,
         },
+        attributes: ['id', 'content'],
         include: [{
-
+            model: models.AnswerComment,
+            attributes: ['id', 'content'],
+            order: [
+                ['createdAt', 'DESC']
+            ],
+            include: [{
+                model: models.User,
+                as: 'author',
+                attributes: ['id', 'name', 'profilePictureUrl']
+            }]
         }]
+    }).then(function(answers){
+        models.sequelize.Promise.all(
+            answers.map(answer => answer.getAnswerVotes())
+        ).then(function(answersVotes){
+            for(var i = 0; i < answersVotes.length; i++){
+                var totalVote = 0;
+                for(var answerVote of answersVotes[i]){
+                    totalVote　+= answerVote.vote;
+                }
+                answers[i].setDataValue('totalVote', totalVote);
+            }
+            res.send(answers);
+        })
     })
 };
 
-exports.upvoteAnswer = function (req, res) {
+exports.upvoteAnswer = function(req, res) {
 
 };
 
-exports.downvoteAnswer = function (req, res) {
+exports.downvoteAnswer = function(req, res) {
 
 };
