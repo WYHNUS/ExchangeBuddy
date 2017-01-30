@@ -15,7 +15,11 @@ module.exports = function(sequelize, DataType){
                 Answer.belongsTo(models.User, {
                     onDelete: "CASCADE",
                     as: "author",
-                })
+                });
+                
+                AnswerComment.hasMany(models.AnswerVote, {
+                    onDelete: "CASCADE"
+                });
             }
         }
     })
