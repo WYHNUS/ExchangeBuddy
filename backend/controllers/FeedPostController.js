@@ -1,13 +1,13 @@
 var models = require("../models");
 var reactions = require('../config/config').reactions;
 
-exports.createFeedPost = function (req, res) {
+exports.createFeedPost = function(req, res) {
     if (!!req.body.content && !!req.params.id) {
         models.FeedPost.create({
             authorId: req.user.id,
             content: req.body.content,
             GroupId: req.params.id,
-        }).then(function (feedpost) {
+        }).then(function(feedpost) {
             res.status(200).send({
                 status: 'success',
                 message: 'Feedpost created',
@@ -21,7 +21,7 @@ exports.createFeedPost = function (req, res) {
     }
 }
 
-exports.getFeedPostComments = function (req, res) {
+exports.getFeedPostComments = function(req, res) {
     if (!!req.params.id) {
         models.FeedPostComment.findAll({
             where: {
@@ -31,17 +31,14 @@ exports.getFeedPostComments = function (req, res) {
             order: [
                 ['createdAt', 'ASC'],
             ],
-            include: [
-                {
+            include: [{
                     model: models.FeedPostCommentReply,
                     attributes: ['id', 'content', 'createdAt', 'updatedAt'],
-                    include: [
-                        {
-                            model: models.User,
-                            as: 'author',
-                            attributes: ['id', 'name', 'profilePictureUrl'],
-                        }
-                    ]
+                    include: [{
+                        model: models.User,
+                        as: 'author',
+                        attributes: ['id', 'name', 'profilePictureUrl'],
+                    }]
                 },
                 {
                     model: models.User,
@@ -51,15 +48,13 @@ exports.getFeedPostComments = function (req, res) {
                 {
                     model: models.FeedPostCommentReaction,
                     attributes: ['id', 'reaction', 'createdAt', 'updatedAt'],
-                    include: [
-                        {
-                            model: models.User,
-                            attributes: ['id', 'name', 'profilePictureUrl'],
-                        }
-                    ]
+                    include: [{
+                        model: models.User,
+                        attributes: ['id', 'name', 'profilePictureUrl'],
+                    }]
                 }
             ]
-        }).then(function (comments) {
+        }).then(function(comments) {
             if (!!comments) {
                 res.status(200).send({
                     status: 'success',
@@ -80,7 +75,7 @@ exports.getFeedPostComments = function (req, res) {
     }
 }
 
-exports.getFeedPostByGroup = function (req, res) {
+exports.getFeedPostByGroup = function(req, res) {
     if (!!req.params.id) {
         models.FeedPost.findAll({
             where: {
@@ -90,8 +85,7 @@ exports.getFeedPostByGroup = function (req, res) {
             order: [
                 ['createdAt', 'DESC'],
             ],
-            include: [
-                {
+            include: [{
                     model: models.User,
                     as: 'author',
                     attributes: ['id', 'name', 'profilePictureUrl'],
@@ -101,10 +95,10 @@ exports.getFeedPostByGroup = function (req, res) {
                 },
 
             ]
-        }).then(function (feedposts) {
+        }).then(function(feedposts) {
             models.sequelize.Promise.all(
                 feedposts.map(feedpost => feedpost.countFeedPostComments())
-            ).then(function (feedpostCommentCounts) {
+            ).then(function(feedpostCommentCounts) {
                 for (var i = 0; i < feedposts.length; i++) {
                     feedposts[i].setDataValue('comments', {
                         totalCount: feedpostCommentCounts[i]
@@ -112,7 +106,7 @@ exports.getFeedPostByGroup = function (req, res) {
                 }
                 models.sequelize.Promise.all(
                     feedposts.map(feedpost => feedpost.getFeedPostReactions())
-                ).then(function (feedpostsReactions) {
+                ).then(function(feedpostsReactions) {
                     var allReactions = [];
                     for (var feedpostReactions of feedpostsReactions) {
                         var reactions = [];
@@ -154,7 +148,7 @@ exports.getFeedPostByGroup = function (req, res) {
     }
 }
 
-exports.getFeedPostByGroupWithComment = function (req, res) {
+exports.getFeedPostByGroupWithComment = function(req, res) {
     if (!!req.params.id) {
         models.FeedPost.findAll({
             where: {
@@ -164,8 +158,7 @@ exports.getFeedPostByGroupWithComment = function (req, res) {
             order: [
                 ['createdAt', 'DESC'],
             ],
-            include: [
-                {
+            include: [{
                     model: models.User,
                     as: 'author',
                     attributes: ['id', 'name', 'profilePictureUrl'],
@@ -176,17 +169,14 @@ exports.getFeedPostByGroupWithComment = function (req, res) {
                 {
                     model: models.FeedPostComment,
                     attributes: ['id', 'content'],
-                    include: [
-                        {
+                    include: [{
                             model: models.FeedPostCommentReply,
                             attributes: ['id', 'content'],
-                            include: [
-                                {
-                                    model: models.User,
-                                    as: 'author',
-                                    attributes: ['id', 'name', 'profilePictureUrl'],
-                                }
-                            ]
+                            include: [{
+                                model: models.User,
+                                as: 'author',
+                                attributes: ['id', 'name', 'profilePictureUrl'],
+                            }]
                         },
                         {
                             model: models.User,
@@ -196,27 +186,23 @@ exports.getFeedPostByGroupWithComment = function (req, res) {
                         {
                             model: models.FeedPostCommentReaction,
                             attributes: ['id', 'reaction'],
-                            include: [
-                                {
-                                    model: models.User,
-                                    attributes: ['id', 'name', 'profilePictureUrl'],
-                                }
-                            ]
+                            include: [{
+                                model: models.User,
+                                attributes: ['id', 'name', 'profilePictureUrl'],
+                            }]
                         }
                     ]
                 },
                 {
                     model: models.FeedPostReaction,
                     attributes: ['id', 'reaction'],
-                    include: [
-                        {
-                            model: models.User,
-                            attributes: ['id', 'name', 'profilePictureUrl'],
-                        }
-                    ]
+                    include: [{
+                        model: models.User,
+                        attributes: ['id', 'name', 'profilePictureUrl'],
+                    }]
                 }
             ]
-        }).then(function (feedposts) {
+        }).then(function(feedposts) {
             res.status(200).send({
                 status: 'success',
                 data: feedposts,
@@ -230,13 +216,13 @@ exports.getFeedPostByGroupWithComment = function (req, res) {
     }
 }
 
-exports.deleteFeedPost = function (req, res) {
+exports.deleteFeedPost = function(req, res) {
     if (!!req.params.id) {
         models.FeedPost.destroy({
             where: {
                 id: req.params.id,
             }
-        }).then(function (count) {
+        }).then(function(count) {
             if (count < 1) {
                 res.status(400).send({
                     status: 'fail',
@@ -257,7 +243,7 @@ exports.deleteFeedPost = function (req, res) {
     }
 }
 
-exports.updateFeedPost = function (req, res) {
+exports.updateFeedPost = function(req, res) {
     if (!!req.params.id && !!req.body.content) {
         models.FeedPost.update({
             content: req.body.content
@@ -265,7 +251,7 @@ exports.updateFeedPost = function (req, res) {
             where: {
                 id: req.params.id
             }
-        }).then(function (result) {
+        }).then(function(result) {
             var count = result[0];
             if (count < 1) {
                 res.status(400).send({
@@ -287,26 +273,32 @@ exports.updateFeedPost = function (req, res) {
     }
 }
 
-exports.reactToFeedPost = function (req, res) {
+exports.reactToFeedPost = function(req, res) {
     if (!!req.params.id && !!req.body.reaction) {
-        models.FeedPostReaction.findOne({
-            where: {
-                FeedPostId: req.params.id,
-                UserId: req.user.id,
-            }
-        }).then(function (reaction) {
-            if (!!reaction) {
-                res.status(400).send({
-                    status: 'fail',
-                    message: 'user already reacted to the feedpost'
-                })
-            } else {
-                if (reactions[0].indexOf(req.body.reaction) != -1) {
+        if (reactions[0].indexOf(req.body.reaction) != -1) {
+
+            models.FeedPostReaction.findOne({
+                where: {
+                    FeedPostId: req.params.id,
+                    UserId: req.user.id,
+                }
+            }).then(function(reaction) {
+                if (!!reaction) {
+                    reaction.update({
+                        reaction: req.body.reaction
+                    }).then(function(reaction) {
+                        res.status(200).send({
+                            status: 'success',
+                            message: 'updated',
+                        })
+                    });
+                } else {
+
                     models.FeedPostReaction.create({
                         reaction: req.body.reaction,
                         FeedPostId: req.params.id,
                         UserId: req.user.id,
-                    }).then(function (feedpostreaction) {
+                    }).then(function(feedpostreaction) {
                         if (!!feedpostreaction) {
                             res.status(200).send({
                                 status: 'success',
@@ -318,14 +310,15 @@ exports.reactToFeedPost = function (req, res) {
                             })
                         }
                     })
-                } else {
-                    res.status(400).send({
-                        status: 'fail',
-                        message: 'unsupported reaction',
-                    })
+
                 }
-            }
-        })
+            })
+        } else {
+            res.status(400).send({
+                status: 'fail',
+                message: 'unsupported reaction',
+            })
+        }
 
     } else {
         res.status(400).send({
@@ -335,17 +328,17 @@ exports.reactToFeedPost = function (req, res) {
     }
 }
 
-exports.unreactToFeedPost = function (req, res) {
+exports.unreactToFeedPost = function(req, res) {
     if (!!req.params.id) {
         models.FeedPostReaction.findOne({
             where: {
                 FeedPostId: req.params.id,
                 UserId: req.user.id,
             }
-        }).then(function (reaction) {
+        }).then(function(reaction) {
             if (!!reaction) {
                 if (reaction.UserId == req.user.id) {
-                    reaction.destroy().then(function () {
+                    reaction.destroy().then(function() {
                         res.status(200).send({
                             status: 'success'
                         })

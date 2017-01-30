@@ -91,7 +91,7 @@ router.get('/group/:id/feedpostsWithComments', verifyToken, FeedPostCtrl.getFeed
 router.get('/feedpost/:id/comments', verifyToken, FeedPostCtrl.getFeedPostComments);
 router.patch('/feedpost/:id', verifyToken, FeedPostCtrl.updateFeedPost);
 router.delete('/feedpost/:id', verifyToken, FeedPostCtrl.deleteFeedPost);
-router.post('/feedpost/:id/reaction', verifyToken, FeedPostCtrl.reactToFeedPost);
+router.put('/feedpost/:id/reaction', verifyToken, FeedPostCtrl.reactToFeedPost);
 router.delete('/feedpost/:id/reaction', verifyToken, FeedPostCtrl.unreactToFeedPost);
 
 // QUESTION CONTROLLER
@@ -109,7 +109,7 @@ router.put('/answer', verifyToken, AnswerCtrl.createAnswer);
 router.put('/feedpost/:id/comment', verifyToken, FeedPostCommentCtrl.createComment);
 router.patch('/feedpost/comment/:id', verifyToken, FeedPostCommentCtrl.updateComment);
 router.delete('/feedpost/comment/:id', verifyToken, FeedPostCommentCtrl.deleteComment);
-router.post('/feedpost/comment/:id/reaction', verifyToken, FeedPostCommentCtrl.reactToComment);
+router.put('/feedpost/comment/:id/reaction', verifyToken, FeedPostCommentCtrl.reactToComment);
 router.delete('/feedpost/comment/:id/reaction', verifyToken, FeedPostCommentCtrl.unreactToComment);
 
 // FEEDPOST COMMENT REPLY CONTROLLER
