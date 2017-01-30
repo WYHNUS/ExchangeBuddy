@@ -96,7 +96,14 @@ exports.deleteAnswer = function (req, res) {
 };
 
 exports.getAnswers = function (req, res) {
+    models.Answer.findAll({
+        where: {
+            QuestionId: req.params.id,
+        },
+        include: [{
 
+        }]
+    })
 };
 
 exports.upvoteAnswer = function (req, res) {

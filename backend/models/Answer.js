@@ -16,8 +16,8 @@ module.exports = function(sequelize, DataType){
                     onDelete: "CASCADE",
                     as: "author",
                 });
-                
-                AnswerComment.hasMany(models.AnswerVote, {
+
+                Answer.hasMany(models.AnswerVote, {
                     onDelete: "CASCADE"
                 });
             }
