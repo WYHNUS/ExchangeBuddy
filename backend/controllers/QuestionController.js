@@ -2,21 +2,19 @@ var models = require('../models');
 var Question = models.Question;
 var QuestionVote = models.QuestionVote;
 
-exports.createQuestion = function (req, res) {
+exports.createQuestion = function(req, res) {
     if (!!req.body.content && !!req.body.UniversityId) {
-        models.Question.create(
-            {
-                authorId: req.user.id,
-                content: req.body.content,
-                UniversityId: req.body.UniversityId,
-            }).then(function (question) {
+        models.Question.create({
+            authorId: req.user.id,
+            content: req.body.content,
+            UniversityId: req.body.UniversityId,
+        }).then(function(question) {
             res.status(200).send({
                 status: 'success',
                 message: 'Question created',
             })
         })
-    }
-    else {
+    } else {
         res.status(400).send({
             status: 'fail',
             message: 'missing content or UniversityId'
@@ -24,18 +22,18 @@ exports.createQuestion = function (req, res) {
     }
 }
 
-exports.updateQuestion = function (req, res) {
+exports.updateQuestion = function(req, res) {
     if (!!req.body.content && !!req.params.id) {
         models.Question.findOne({
             where: {
                 id: req.params.id
             }
-        }).then(function (question) {
+        }).then(function(question) {
             if (!!question) {
                 if (question.authorId == req.user.id) {
                     question.update({
                         content: req.body.content
-                    }).then(function (question) {
+                    }).then(function(question) {
                         res.status(200).send({
                             status: 'success'
                         })
@@ -56,13 +54,13 @@ exports.updateQuestion = function (req, res) {
     }
 }
 
-exports.deleteQuestion = function (req, res) {
+exports.deleteQuestion = function(req, res) {
     if (!!req.params.id) {
         models.Question.destroy({
             where: {
                 id: req.params.id
             }
-        }).then(function (count) {
+        }).then(function(count) {
             if (count < 1) {
                 res.status(400).send({
                     status: 'fail',
@@ -83,7 +81,7 @@ exports.deleteQuestion = function (req, res) {
     }
 }
 
-exports.getQuestions = function (req, res) {
+exports.getQuestions = function(req, res) {
     models.Question.findAll({
         attributes: ['id', 'content', 'CountryAlpha2Code'],
         order: [
@@ -98,7 +96,7 @@ exports.getQuestions = function (req, res) {
         //            {'country.CountryAlpha2Code' : 'CountryAlpha2Code'}
         //        ]
         // }
-    }).then(function (comments) {
+    }).then(function(comments) {
         if (!!comments) {
             res.status(200).send({
                 status: 'success',
@@ -114,7 +112,7 @@ exports.getQuestions = function (req, res) {
 
 }
 
-exports.voteQuestion = function (req, res) {
+exports.voteQuestion = function(req, res) {
     // check if question exists
     Question.findById(req.params.id)
         .then((question) => {
@@ -130,20 +128,20 @@ exports.voteQuestion = function (req, res) {
                 });
             } else {
                 QuestionVote.findOrCreate({
-                    where: {
-                        QuestionId: req.params.id,
-                        voterId: req.user.id
-                    },
-                    defaults: {
-                        vote: req.body.vote
-                    }
-                })
+                        where: {
+                            QuestionId: req.params.id,
+                            voterId: req.user.id
+                        },
+                        defaults: {
+                            vote: req.body.vote
+                        }
+                    })
                     .spread((vote, created) => {
                         if (!created) {
                             if (req.body.vote != vote.vote) {
                                 vote.update({
-                                    vote: req.body.vote
-                                })
+                                        vote: req.body.vote
+                                    })
                                     .then(newVote => {
                                         res.status(200).json({
                                             status: 'success',
@@ -188,13 +186,13 @@ exports.voteQuestion = function (req, res) {
         });
 }
 
-exports.unvoteQuestion = function (req, res) {
+exports.unvoteQuestion = function(req, res) {
     QuestionVote.destroy({
-        where: {
-            QuestionId: req.params.id,
-            voterId: req.user.id
-        }
-    })
+            where: {
+                QuestionId: req.params.id,
+                voterId: req.user.id
+            }
+        })
         .then(affectedRows => {
             if (affectedRows == 1) {
                 res.status(204).send();
