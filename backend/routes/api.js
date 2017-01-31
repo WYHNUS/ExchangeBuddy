@@ -19,6 +19,9 @@ var FeedPostCommentCtrl = require('../controllers/FeedPostCommentController');
 var FeedPostCommentReplyCtrl = require('../controllers/FeedPostCommentReplyController');
 var QuestionCtrl = require('../controllers/QuestionController');
 var AnswerCtrl = require('../controllers/AnswerController');
+var AnswerCommentCtrl = require('../controllers/AnswerCommentController');
+
+
 // Set up token authenticate
 var verifyToken = jwt({secret: config.secret});
 
@@ -127,6 +130,7 @@ router.get('/signups', function(req, res){
         res.send('Number of users: ' + users.length)
     })
 })
+
 router.get('/me', verifyToken, function(req, res) {
     models.User.findOne({
         where: {
