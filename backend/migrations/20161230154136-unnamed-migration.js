@@ -29,8 +29,6 @@ module.exports = {
                 type: Sequelize.ENUM('JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'),
 
             }),
-
-
         ]
     },
 
@@ -39,4 +37,4 @@ module.exports = {
 
         ]
     }
-}
+};

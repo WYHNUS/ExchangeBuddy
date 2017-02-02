@@ -1,7 +1,8 @@
+var app = require('../app');
 var fs = require('fs');
 var xml2js = require("xml2js");
-var app = require('../app');
 var models = require('../models');
+var imgs = require('./cover_imgs');
 
 var parser = new xml2js.Parser();
 
@@ -24,9 +25,10 @@ models.User.create(dummy).then(function(user){
                 }
 
                 models.Story.create({
-                    title,
-                    content,
-                    UserId: user.id
+                    title: title,
+                    content: content,
+                    coverPhoto: imgs[title],
+                    authorId: user.id
                 })
             }
         })
