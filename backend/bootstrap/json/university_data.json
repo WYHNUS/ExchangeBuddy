@@ -5492,7 +5492,7 @@
    {
       "id": 550,
       "name": "Wayne State University",
-      "countryCode": "",
+      "countryCode": "US",
       "logoUrl": "",
       "logoImageUrl": "",
       "topUnisId": 1866,
@@ -6032,7 +6032,7 @@
    {
       "id": 604,
       "name": "Clarkson University",
-      "countryCode": "",
+      "countryCode": "US",
       "logoUrl": "",
       "logoImageUrl": "",
       "topUnisId": 1790,
@@ -6982,7 +6982,7 @@
    {
       "id": 699,
       "name": "University of Wyoming",
-      "countryCode": "",
+      "countryCode": "US",
       "logoUrl": "",
       "logoImageUrl": "",
       "topUnisId": 1863,
@@ -8332,7 +8332,7 @@
    {
       "id": 834,
       "name": "Università degli Studi Roma Tre",
-      "countryCode": "",
+      "countryCode": "IT",
       "logoUrl": "",
       "logoImageUrl": "",
       "topUnisId": 15002,
@@ -8382,7 +8382,7 @@
    {
       "id": 839,
       "name": "Université de Poitiers",
-      "countryCode": "",
+      "countryCode": "FR",
       "logoUrl": "",
       "logoImageUrl": "",
       "topUnisId": 1311,
@@ -8582,7 +8582,7 @@
    {
       "id": 859,
       "name": "University of Dar es Salaam",
-      "countryCode": "",
+      "countryCode": "TZ",
       "logoUrl": "",
       "logoImageUrl": "",
       "topUnisId": 15044,
