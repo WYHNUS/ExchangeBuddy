@@ -5,27 +5,25 @@ var fs = require('fs');
 var removeDiacritics = require('diacritics').remove;
 var prefix = "https://s3-ap-southeast-1.amazonaws.com/exchangebuddy-university-public-image/";
 
-exports.bootstrap = function() {
-    fs.readFile('./json/university_data.json', function (err, data) {
-        var universities = JSON.parse(data);
+fs.readFile('./json/university_data.json', function (err, data) {
+    var universities = JSON.parse(data);
 
-        for (var i in universities) {
-            var uni = universities[i];
+    for (var i in universities) {
+        var uni = universities[i];
 
-            var logoName = uni.name.split('/')[0].trim().toLowerCase()
-                .replace(/ /g, '-')
-                .replace(')', '')
-                .replace('(', '');
-            logoName += '.jpg';
-            logoName = removeDiacritics(logoName);
+        var logoName = uni.name.split('/')[0].trim().toLowerCase()
+            .replace(/ /g, '-')
+            .replace(')', '')
+            .replace('(', '');
+        logoName += '.jpg';
+        logoName = removeDiacritics(logoName);
 
-            models.University.create({
-                name: uni.name,
-                logoImageUrl: (fs.existsSync('./University_Logos/' + logoName)) ? (prefix + logoName) : null,
-                website: uni.website,
-                emailDomains: JSON.stringify(uni.emailDomains),
-                CountryAlpha2Code: uni.countryCode
-            });
-        }
-    });
-};
+        models.University.create({
+            name: uni.name,
+            logoImageUrl: (fs.existsSync('./University_Logos/' + logoName)) ? (prefix + logoName) : null,
+            website: uni.website,
+            emailDomains: JSON.stringify(uni.emailDomains),
+            CountryAlpha2Code: uni.countryCode
+        });
+    }
+});

@@ -10,7 +10,7 @@ Handle routes in `routes/api.js`.
 ### Database
 This project uses MySQL database.
 
-To bootstrap database with default country and university data, enter *bootstrap* folder, create a `.env` file based on `.env.example`, and execute the following commands sequentially:
+To bootstrap database with default country and university data, enter `bootstrap` directory, create a `.env` file based on `.env.example`, and execute the following commands sequentially:
 ```
 node country_bootstrap.js
 node uni_bootstrap.js
