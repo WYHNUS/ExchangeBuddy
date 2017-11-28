@@ -1,23 +1,23 @@
 var models = require('../models');
 
-exports.getAllCountries = function(req, res){
+exports.getAllCountries = function (req, res) {
     models.Country.findAll({
-        attributes: ['id', 'name', 'region', 'capital', 'timezones', 'callingCodes']
-    }).then(function(countries){
+        attributes: ['alpha2Code', 'name', 'region', 'capital', 'timezones', 'callingCodes']
+    }).then(function (countries) {
         res.json(countries);
-    }).catch(function(err) {
+    }).catch(function (err) {
         resError(res, err);
     });
 };
 
-exports.getCountry = function(req, res){
+exports.getCountry = function (req, res) {
     models.Country.findOne({
         where: {
             alpha2Code: req.params.id
         }
-    }).then(function(country){
+    }).then(function (country) {
         res.json(country);
-    }).catch(function(err) {
+    }).catch(function (err) {
         resError(res, err);
     });
 };

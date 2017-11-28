@@ -1,8 +1,6 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 
-import TopBar from 'components/TopBar';
-
 export default class NotLoggedIn extends React.Component {
   componentDidMount() {
     this.redirect();

@@ -1,67 +1,45 @@
 import React from 'react';
-import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
-import Paper from 'material-ui/Paper';
 import { browserHistory } from 'react-router';
 
-import * as IconsHelper from 'util/icons';
+import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
+import Paper from 'material-ui/Paper';
+import Icon from 'components/Icon';
 
-class BottomBar extends React.Component {
-  render() {
-    const tabIdx = urlToIdx(window.location.pathname);
+import { makeMenuItems } from 'components/TopBar/TopBar';
 
-    return (
-      <Paper zDepth={1} className="bottom-navigation">
+import * as Colors from 'material-ui/styles/colors';
+import { palette } from 'layouts/MuiTheme';
 
-        <BottomNavigation selectedIndex={tabIdx}>
-        <BottomNavigationItem onTouchTap={this.goToURL('/home')} label="Home" icon={IconsHelper.materialIcon('home')} />
-        <BottomNavigationItem onTouchTap={this.goToURL('/wiki')} label="Wiki" icon={IconsHelper.materialIcon('info')} />
-        {/*<BottomNavigationItem onTouchTap={this.goToURL('/newstory')} label="NewStory" icon={IconsHelper.materialIcon('create')} />*/}
-        <BottomNavigationItem onTouchTap={this.goToURL('/stories')} label="Stories" icon={IconsHelper.materialIcon('library_books')} />
-        <BottomNavigationItem onTouchTap={this.goToURL('/profile/me')} label="Profile" icon={IconsHelper.materialIcon('account_circle')} />
-        </BottomNavigation>
+const getCurrentMenuItemIndex = (user, currentPath) => makeMenuItems(user).filter(item => !item.admin).map(item => item.to).indexOf('/' + currentPath.split('/')[1]);
 
-      </Paper>
-    )
-  }
+const BottomBar = ({ user, currentPath }) => (
+  <Paper zDepth={1} className="bottom-navigation">
+    <BottomNavigation>
+      { makeMenuItems(user).map((item, idx) => {
+          if (item.admin) 
+            return null;
 
-  goToURL(url) {
-    if (url === '/home') {
-      return () => {
-        browserHistory.push(url);
-        this.props.toggleHomeTab('friends');
-      };
-    } else {
-      return () => browserHistory.push(url);
-    }
-  }
-}
+          const iconColor = getCurrentMenuItemIndex(user, currentPath) + 1 === idx ? palette.primary1Color : Colors.grey400;
 
+          return (
+            <BottomNavigationItem 
+              key={ idx } 
+              icon={ 
+                item.icon 
+                ? <Icon name={ item.icon } size={24} color={ iconColor } /> 
+                : item.avatar
+              }
+              onClick={ () => browserHistory.push(item.to) } /> 
+          );
+        } ).filter(x => x) }
+    </BottomNavigation>
 
-function urlToIdx(url) {
-  let urlFmt = url.substring(1).toLowerCase();
-  let urlArr = urlFmt.split('/');
-  const firstLvl = urlArr[0];
-
-  switch (firstLvl) {
-    case 'home':
-      return 0;
-    case 'wiki':
-      return 1;
-    // case 'newstory':
-    // return 1;
-    case 'stories':
-      return 2;
-    case 'profile':
-      return 3;
-    case '':
-      return 0;
-    default:
-      return -1;
-  }
-}
+  </Paper>
+);
 
 BottomBar.propTypes = {
-  toggleHomeTab: React.PropTypes.func.isRequired,
+  currentPath: React.PropTypes.string.isRequired,
+  user: React.PropTypes.object,
 };
 
 export default BottomBar;

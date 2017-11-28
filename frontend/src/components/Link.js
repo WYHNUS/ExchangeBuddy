@@ -1,17 +1,22 @@
 import React from 'react';
-import { Link as ReactLink } from 'react-router';
+import { Link as ReactLink, browserHistory } from 'react-router';
 import FlatButton from 'material-ui/FlatButton';
 
 export default class Link extends React.Component {
+
+  static propTypes = {
+    to: React.PropTypes.string.isRequired
+  };
+
   render() {
-    const {to, children, ...rest} = this.props;
+    const { to, children, ...rest } = this.props;
     const toLocation = this.parseTo(to);
     const isInternal = this.isInternal(toLocation);
 
     if (isInternal) {
-      return (<ReactLink to={toLocation.pathname} {...rest}>{children}</ReactLink>);
+      return <ReactLink to={ toLocation.pathname } { ...rest }>{ children }</ReactLink>;
     } else {
-      return (<a href={to} target="_blank" {...rest}>{children}</a>);
+      return <a href={ to } target="_blank" { ...rest }>{ children }</a>;
     }
   }
 
@@ -27,7 +32,10 @@ export default class Link extends React.Component {
 }
 
 export const LinkButton = ({ to, label, children, ...rest }) => (
-  <Link to={to}>
-    <FlatButton label={ label || children } {...rest} />
-  </Link>
+  <FlatButton onTouchTap={ () => browserHistory.push(to) } label={ label || children } { ...rest } />
 );
+
+LinkButton.propTypes = {
+  to: React.PropTypes.string.isRequired,
+  label: React.PropTypes.string
+};

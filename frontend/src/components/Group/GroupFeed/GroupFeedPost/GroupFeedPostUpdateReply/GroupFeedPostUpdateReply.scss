@@ -1,0 +1,5 @@
+@import '~scss/common/colors';
+
+.editing-reply {
+  &, &:hover { background-color: palette(Blue Grey, 50); }
+}

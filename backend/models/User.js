@@ -83,30 +83,20 @@ module.exports = function(sequelize, DataType) {
 
                 User.belongsToMany(models.Exchange, {
                     as: 'exchangeEvent',
-                    through: 'student_exchange',
+                    through: 'StudentExchange',
                     foreignKey: 'userId'
                 });
-
-                User.belongsToMany(models.Event, {
-                    as: 'event',
-                    through: 'user_event',
-                    foreignKey: 'userId'
-                })
 
                 User.belongsToMany(models.Group, {
                     as: 'group',
-                    through: 'chat_group',
+                    through: 'UserGroup',
                     foreignKey: 'userId'
                 });
 
-                User.hasMany(models.ChatMessage);
-
-                User.hasMany(models.Story);
 
                 User.hasMany(models.Wiki);
                 User.hasMany(models.WikiSection);
                 User.hasMany(models.WikiSectionVersion);
-                User.hasMany(models.WikiSectionVote);
             }
         },
         instanceMethods: {
@@ -119,6 +109,7 @@ module.exports = function(sequelize, DataType) {
                     email: this.email,
                     name: this.name,
                     profilePictureUrl: this.profilePictureUrl,
+                    role: this.role,
                     exp: parseInt(expiry.getTime() / 1000),
                 }, config.secret);
             },

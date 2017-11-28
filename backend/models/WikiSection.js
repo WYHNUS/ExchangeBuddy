@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataType) {
       type: DataType.INTEGER(),
     },
 
-    // to make query faster (hopefully) 
+    // to make query faster (hopefully)
     //    --> later will have Archive to store past versions when expecting infrequent change
     displayVersionNumber: {
       type: DataType.INTEGER(),
@@ -37,9 +37,14 @@ module.exports = function(sequelize, DataType) {
             allowNull: false
           }
         });
-        WikiSection.belongsTo(models.User);
+        WikiSection.belongsTo(models.User, {
+            onDelete: "CASCADE",
+            as: "author"
+        });
 
-        WikiSection.hasMany(models.WikiSectionVersion);
+        WikiSection.hasMany(models.WikiSectionVersion, {
+            onDelete: "CASCADE"
+        });
       }
     }
   });

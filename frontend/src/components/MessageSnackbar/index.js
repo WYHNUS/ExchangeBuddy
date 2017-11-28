@@ -1,17 +1,16 @@
-import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Action creators
-import { hideSnackbar } from 'actions/messageSnackbar';
+import { hideSnackbar } from 'actions/MessageSnackbar';
 
 // Component
 import ChildComponent from './MessageSnackbar';
 
 const mapStateToProps = (state) => {
   return {
-    open: state.messageSnackbar.messageSnackbarOpen,
-    message: state.messageSnackbar.messageSnackbarMessage
+    open: state['MessageSnackbar/isOpen'],
+    message: state['MessageSnackbar/message'],
   };
 };
 

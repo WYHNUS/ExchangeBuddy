@@ -1,0 +1,25 @@
+@import '~scss/common/colors';
+
+.group-feed-post-content {
+  &:hover { background-color: palette(Grey, 100); }
+}
+
+.group-feed-post-content-info {
+  display: flex; align-items: center; flex-direction: row; margin-bottom: 3px;
+
+  .author-name { font-size: 14px; font-weight: 500; }
+  .timestamp { color: palette(Grey, 400); font-weight: normal; font-size: 11px; margin-left: 10px; }
+}
+
+.group-feed-post-content-body {
+  font-weight: 400; color: palette(Grey, 800); font-size: 13px;
+
+  .actions {
+    margin-top: 10px; display: flex; flex-direction: row; align-items: center;
+    .action { 
+      display: flex; flex-direction: row; align-items: center; 
+      cursor: pointer; font-size: 10px; color: palette(Grey, 500); margin-right: 15px; 
+      .action-label { margin-left: 5px; }
+    }
+  }
+}

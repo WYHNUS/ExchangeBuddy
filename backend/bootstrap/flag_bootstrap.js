@@ -15,11 +15,11 @@ models.sequelize.Promise.all([
         country.update({
             logoImage: prefix+country.alpha2Code.toLowerCase()+'.png'
         })
-    })
+    });
 
     wikis.map(wiki => {
         wiki.update({
             image: prefix+wiki.CountryAlpha2Code.toLowerCase()+'.png'
         })
     })
-})
+});

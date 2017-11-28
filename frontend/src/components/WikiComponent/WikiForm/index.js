@@ -1,36 +1,17 @@
-import React from 'react';
-
-// Redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { showSnackbar } from 'actions/MessageSnackbar';
 
-// Action creators
-import { 
-	initializeWikiForm, submitNewSectionVersion
-} from 'actions/wiki'
+import { makeReq, put } from 'util/api';
 
-// Component
 import ChildComponent from './WikiForm';
 
-// redux
-const mapStateToProps = (state) => {
-	return{
-		submitting: state.wiki.submitting,
-		error: state.wiki.uploadError,
-		uploadSuccess: state.wiki.uploadSuccess,
-	};
-};
-
 const mapDispatchToProps = (dispatch) => {
-	return {
-		actions: bindActionCreators({  }, dispatch),
-		initializeForm: (title, content) => dispatch(initializeWikiForm(title, content)),
-		createVersion: (wikiTitle, sectionIndex, title, content) => {
-			dispatch(submitNewSectionVersion(wikiTitle, sectionIndex, title, content));
-		},
-	};
+  return {
+    ...bindActionCreators({ showSnackbar }, dispatch),
+    submitNewSection: makeReq(put, '/wiki/section', { userToken: true }),
+    submitNewSectionVersion: makeReq(put, '/wiki/section/version', { userToken: true }),
+  };
 };
 
-const WikiForm = connect(mapStateToProps, mapDispatchToProps)(ChildComponent);
-
-export default WikiForm;
+export default connect(null, mapDispatchToProps)(ChildComponent);

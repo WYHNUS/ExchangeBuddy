@@ -1,0 +1,7 @@
+@import '~scss/common/mixins';
+
+.group-feed-post-comment-reply-content {
+  padding: 0 0.5em; padding-left: 50px;
+
+  .body { padding-left: 0; }
+}

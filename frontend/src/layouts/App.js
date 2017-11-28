@@ -4,7 +4,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Helmet from 'react-helmet';
 
 import MessageSnackbar from 'components/MessageSnackbar'
-import Search from 'pages/Home/Search';
 
 import { makeRouteSlug } from 'util/helper';
 
@@ -72,8 +71,6 @@ class App extends React.Component {
             <div id="main" className={`page-${ makeRouteSlug(this.props.routes) }`}>
               { this.props.children }
             </div>
-
-            <Search />
           </div>
 
           <MessageSnackbar/>

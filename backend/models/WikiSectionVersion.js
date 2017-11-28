@@ -31,9 +31,11 @@ module.exports = function(sequelize, DataType) {
           }
         });
 
-        WikiSectionVersion.belongsTo(models.User);
+        WikiSectionVersion.belongsTo(models.User, {
+            onDelete: "CASCADE",
+            as: "author"
+        });
 
-        WikiSectionVersion.hasMany(models.WikiSectionVote);
       }
     }
   });

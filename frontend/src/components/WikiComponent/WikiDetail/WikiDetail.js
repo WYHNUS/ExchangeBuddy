@@ -1,43 +1,52 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
 
-import WikiContentTable from '../WikiContentTable'
 import WikiSection from '../WikiSection';
-import WikiAddSectionButton from '../WikiAddSectionButton';
+import WikiForm from '../WikiForm';
 
 export default class WikiDetail extends React.Component {
-	render() {
-		const { wiki, sections } = this.props;
+  static propTypes = {
+    wiki: React.PropTypes.object.isRequired,
+    sections: React.PropTypes.array.isRequired
+  };
 
-		return (
-			<div className="wiki-detail-wrapper">
-				<h1>{ wiki.title }</h1>
-				<WikiContentTable sections={ sections }/>
+  constructor(props) {
+    super(props);
 
-				<div>
-					{ 
-						(sections.length > 0) ?
-							(
-								sections.map(function(section, idx){
-									return (
-										<WikiSection
-											wikiTitle={ wiki.title }
-											section={ section } 
-											key={ idx } 
-										/>
-									) 
-								})
-							)
-						: null
-					}
-				</div>
-				<WikiAddSectionButton wikiTitle={ wiki.title } />
-			</div>
-		);
-	}
+    this.state = {
+      isAddingSection: false,
+    };
+  }
+
+  render() {
+    const { wiki, sections } = this.props;
+    const { isAddingSection } = this.state;
+
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-xs wiki-detail-wrapper">
+            <h1>{ wiki.title }</h1>
+            <h4>All information is contributed by people like you!</h4>
+            
+            { sections.length > 0 && sections.map((section, idx) => 
+              <WikiSection wiki={ wiki } section={ section } key={ idx } />
+            ) }
+
+            { isAddingSection
+              ? <WikiForm
+                  section={ null }
+                  wikiName={ wiki.title }
+                  closeEditForm={ () => this.setState({ isAddingSection: false }) } />
+              : <div className="row center-md center-xs" style={{ margin: '30px 0' }}>
+                  <div>
+                    <RaisedButton className="raised-btn" label="Add a new Section" primary onClick={ () => this.setState({ isAddingSection: true }) } />
+                  </div>
+                </div>
+            }
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
-
-
-WikiDetail.propTypes = {
-	wiki: PropTypes.object.isRequired,
-	sections: PropTypes.array.isRequired
-};

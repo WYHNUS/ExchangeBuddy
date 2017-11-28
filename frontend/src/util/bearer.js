@@ -7,3 +7,5 @@ export function bearer ( request ){
         request.set( 'Authorization', 'Bearer ' + token );
     }
 }
+
+export const getToken = () => cookie.load('authToken');

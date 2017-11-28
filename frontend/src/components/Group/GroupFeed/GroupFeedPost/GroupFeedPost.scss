@@ -1,0 +1,29 @@
+@import '~scss/common/mixins';
+@import '~scss/common/colors';
+
+.post-header-row {
+  padding: 0.5em;
+}
+
+.post-header {
+  display: flex; flex-direction: column;
+}
+
+.post-title {
+  line-height: 22px;
+  .post-timestamp { font-size: 11px; color: palette(Grey, 400); font-weight: 400; margin-left: 10px; }
+}
+
+.post-subtitle {
+  font-weight: 400; font-size: 13px; color: palette(Grey, 600);
+}
+
+.post-dropdown-menuitem {
+  min-height: 36px !important;
+  > * { font-size: 12px; line-height: 36px; }
+}
+
+.post-icons {
+  padding-left: 5px;
+}
+

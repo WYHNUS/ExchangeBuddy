@@ -1,78 +1,67 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
-import classNames from 'classnames';
 
-import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
-import FlatButton from 'material-ui/FlatButton';
+import Link from 'components/Link';
 import Icon from 'components/Icon';
+import AppBar from 'material-ui/AppBar';
 
-import miniLogoSrc from 'static/ExchangeBuddyMini.png';
+import { isUserAdmin, getAvatar } from 'util/user';
 import * as Colors from 'material-ui/styles/colors';
 
-class TopBar extends React.Component {
-  render() {
-    const appClass = classNames({
-      'back-btn': this.props.showSettingsButton,
-      'app-bar': true,
-    });
+import './TopBar.scss';
 
-    return (
-      <AppBar
-        className={ appClass }
-        title={ <span id="app-title"><img src={ miniLogoSrc }/></span> }
-        style={{ textAlign: 'center' }}
-        iconElementLeft={ this.getIconElementLeft() }
-        iconElementRight={ this.getIconElementRight() }
-        showMenuIconButton />
-    );
-  }
+export const makeMenuItems = (user) => [
+  { label: 'Admin Area', icon: 'fa fa-wrench', to: '/admin', admin: true },
+  { label: 'Your Exchange Group', icon: 'fa fa-users', to: '/group' },
+  { label: 'WikiExchange', icon: 'fa fa-graduation-cap', to: '/wiki' },
+  { label: 'ExchangeAnswers', icon: 'fa fa-comments', to: '/qna' },
+  { label: 'Stories', icon: 'fa fa-newspaper-o', to: '/stories' },
+  { label: 'Profile', avatar: getAvatar(user, 24), to: '/profile' },
+];
 
-  navigateBack() {
-    browserHistory.goBack();
-  }
+const TopBar = ({ user }) => (
+  <div className="topbar">
+    <AppBar 
+      showMenuIconButton={false} 
+      title={
+        <div className="container">
+          <div className="row">
+            <div className="col col-xs-12 col-sm-6 center-xs start-sm">
+              <div className="topbar-logo">
+                <Link to="/">
+                  <Icon name="fa fa-globe" color={ Colors.grey50 } size={28} /> ExchangeBuddy
+                </Link>
+              </div>
+            </div>
+            <div className="col col-xs-6 end-xs middle-xs hidden-xs">
+              { makeMenuItems(user).map((item, idx) => {
+                  if (item.admin && !isUserAdmin(user))
+                    return null;
 
-  getIconElementLeft() {
-    const { showSettingsButton, showBackButton } = this.props;
-
-    if (showSettingsButton && !showBackButton) {
-      return (
-        <IconButton onClick={ () => browserHistory.push('/settings') }>
-          <Icon name="settings" color={ Colors.grey900 } />
-        </IconButton>
-      );
-    } else if (!showSettingsButton && showBackButton) {
-      return (
-        <IconButton onClick={ this.navigateBack }>
-          <Icon name="chevron_left" color={ Colors.grey900 } />
-        </IconButton>
-      );
-    } else {
-      return <div style={{ margin: 24 }}></div>;
-    }
-  }
-
-  getIconElementRight() {
-    const { showHomeSearchDrawerOpenButton, toggleHomeSearchDrawer } = this.props;
-
-    if (showHomeSearchDrawerOpenButton) {
-      return (
-        <FlatButton
-          label="Groups"
-          labelStyle={{ color: Colors.grey900 }}
-          onClick={ () => toggleHomeSearchDrawer(true) } />
-      );
-    } else {
-      return <div style={{ marginLeft: 44, marginRight: 44, marginTop: 24,  marginBottom: 24 }}></div>;
-    }
-  }
-}
+                  return (
+                    <IconButton 
+                      key={ idx } 
+                      onClick={ () => browserHistory.push(item.to) } 
+                      tooltip={ item.label } 
+                      tooltipStyles={{ fontWeight: 400, fontSize: 12 }}>
+                      { item.icon 
+                        ? <Icon name={ item.icon } size={20} color={ Colors.grey50 } /> 
+                        : item.avatar
+                      }
+                    </IconButton>
+                  );
+                }) }
+            </div>
+          </div>
+        </div>
+      }
+      titleStyle={{ fontWeight: 100, fontSize: 28, overflow: 'visible' }} />
+    </div>
+);
 
 TopBar.propTypes = {
-  showSettingsButton: React.PropTypes.bool,
-  showHomeSearchDrawerOpenButton: React.PropTypes.bool,
-  showBackButton: React.PropTypes.bool,
-  toggleHomeSearchDrawer: React.PropTypes.func.isRequired,
+  user: React.PropTypes.object,
 };
 
 export default TopBar;

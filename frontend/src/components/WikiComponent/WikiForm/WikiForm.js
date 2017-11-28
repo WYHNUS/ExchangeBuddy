@@ -1,42 +1,48 @@
-import React, { PropTypes } from 'react';
-import { reduxForm } from 'redux-form';
+import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
-import { browserHistory } from 'react-router';
 
 import { TextField } from 'redux-form-material-ui';
 import { EditableField } from '../../EditableField';
 
-
 export default class WikiForm extends React.Component {
+  static propTypes = {
+    closeEditForm: React.PropTypes.func.isRequired,
+    wikiName: React.PropTypes.string.isRequired,
+    section: React.PropTypes.object,
+    submitNewSection: React.PropTypes.func.isRequired,
+    submitNewSectionVersion: React.PropTypes.func.isRequired,
+    refreshWiki: React.PropTypes.func.isRequired,
+    showSnackbar: React.PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
 
-    const { title, content } = this.props.section;
-    this.state = {
-      title: title,
-      content: content
-    }
-  }
+    const { section } = this.props;
 
-  componentWillMount() {
-    const { title, content } = this.props.section;
-    // assign initialValues
-    this.props.initializeForm(title, content);
-  }
+    if (!section) {
+      this.state = {
+        title: 'New Section',
+        content: '',
+      };
+    } else {
+      const { title, content } = this.props.section;
 
-  componentDidUpdate() {
-    if (this.props.uploadSuccess) {
-      this.redirectBack();
+      this.state = {
+        title: title,
+        content: content
+      };
     }
   }
 
   render() {
-    const { section, submitting, error, uploadSuccess } = this.props;
+    const { closeEditForm } = this.props;
 
     return (
-      <div id={ section.WikiSection.name }>
+      <div>
         <TextField 
           name="sectionTitle" 
+          fullWidth
           floatingLabelText="Title" 
           value={ this.state.title }
           onChange={ this.handleTitleChange.bind(this) } />
@@ -46,43 +52,40 @@ export default class WikiForm extends React.Component {
           content={ this.state.content }
           onChange={ this.handleEditorChange.bind(this) } />
 
-        {
-          submitting ? 
-          <p>Uploading new version to the server...</p>
-          :
-          error ?
-          error.message ?
-          <p> { error.message } </p>
-          : <p>{ error }</p>
-          : uploadSuccess ?
-          <p>Upload new version successful! :)</p>
-        : null
-      }
-
-      <div className="row center-md center-xs" style={{ marginTop: 18 }}>
-        <div>
-          <RaisedButton 
-            primary 
-            className="raised-btn" 
-            label="Save changes" 
-            style={{ marginRight: 18 }}
-            disabled={ submitting }
-            onClick={this.submitForm.bind(this)}
-            />
-            <RaisedButton className="raised-btn" label="Cancel" onClick={this.redirectBack.bind(this)}/>
+        <div className="row center-md center-xs" style={{ marginTop: 18 }}>
+          <div>
+            <RaisedButton 
+              primary 
+              className="raised-btn" 
+              label="Save changes" 
+              style={{ marginRight: 18 }}
+              onClick={ this.submitForm.bind(this) } />
+            <RaisedButton className="raised-btn" label="Cancel" onClick={ closeEditForm }/>
           </div>
         </div>
       </div>
     );
   }
 
-  redirectBack() {
-    browserHistory.push('/wiki/' + this.props.wikiName);
-  }
-
   submitForm() {
-    const { section, wikiName } = this.props;
-    this.props.createVersion(wikiName, section.WikiSection.sectionIndex, this.state.title, this.state.content);
+    const { section, wikiName, submitNewSectionVersion, submitNewSection, refreshWiki, showSnackbar } = this.props;
+    const { title, content } = this.state;
+
+    if (!section) {
+      submitNewSection({ wikiTitle: wikiName, versionTitle: title, content }, () => {
+        refreshWiki();
+        showSnackbar('New section created!');
+      }, (err) => {
+        showSnackbar('Could not create section: ' + err);
+      });
+    } else {
+      submitNewSectionVersion({ wikiTitle: wikiName, sectionIndex: section.WikiSection.sectionIndex, versionTitle: title, content }, () => {
+        refreshWiki();
+        showSnackbar('Section updated!');
+      }, (err) => {
+        showSnackbar('Could not update section: ' + err)
+      });
+    }
   }
 
   handleTitleChange(e) {

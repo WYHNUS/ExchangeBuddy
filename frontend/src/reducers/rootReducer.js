@@ -5,28 +5,14 @@ import { reducer as formReducer } from 'redux-form';
 // Reducers
 import Browser from './Browser';
 import HomeSearchDrawer from './HomeSearchDrawer';
-
-// Refactor the rest soon
-import { messageSnackbar } from './messageSnackbar';
-import { home } from './home';
-import { user } from './user';
-import { utilityInfo } from './utilityInfo';
-import { profile } from './profile';
-import { stories } from './stories';
-import { wiki } from './wiki';
-import { homeSearchGroups } from './homeSearchGroups';
+import MessageSnackbar from './MessageSnackbar';
+import User from './User';
 
 const rootReducer = combineReducers({
   ...Browser,
   ...HomeSearchDrawer,
-  messageSnackbar,
-  home,
-  user,
-  utilityInfo,
-  profile,
-  stories,
-  wiki,
-  homeSearchGroups,
+  ...MessageSnackbar,
+  ...User,
 
   // Add routerReducer
   routing: routerReducer,

@@ -1,0 +1,8 @@
+@import '~scss/common/mixins';
+@import '~scss/common/colors';
+
+.group-feed-post-comment-content {
+  padding: 0 0.5em; 
+
+  .body { padding-left: 0; }
+}

@@ -6,7 +6,7 @@ var Version = models.WikiSectionVersion;
 var Vote = models.WikiSectionVote;
 
 // give default recommendation
-exports.getRecommendation = function(req, res) {
+exports.getRecommendation = function (req, res) {
     Wiki.findAll({
         attributes: [
             ['title', 'name'],
@@ -14,10 +14,10 @@ exports.getRecommendation = function(req, res) {
         ],
         // limit: 6,
         order: '`view` DESC'
-    }).then(function(wiki) {
+    }).then(function (wiki) {
         var recommendations = [];
         var recommendationNumber = Math.min(wiki.length, 6);
-        for (var i=0; i<recommendationNumber; i++) {
+        for (var i = 0; i < recommendationNumber; i++) {
             recommendations.push(wiki[i]);
         }
         return res.status(200)
@@ -27,11 +27,11 @@ exports.getRecommendation = function(req, res) {
                 allWikis: wiki
             });
     });
-}
+};
 
 
 function shouldAdd(arr, name) {
-    for (var i=0; i<arr.length; i++) {
+    for (var i = 0; i < arr.length; i++) {
         if (arr[i].name === name) {
             return false;
         }
@@ -40,7 +40,7 @@ function shouldAdd(arr, name) {
 }
 
 // give wiki recommendation based on User
-exports.getCustomizedRecommendation = function(req, res) {
+exports.getCustomizedRecommendation = function (req, res) {
     var result = [];
 
     User.findOne({
@@ -48,7 +48,7 @@ exports.getCustomizedRecommendation = function(req, res) {
         where: {
             id: req.user.id
         }
-    }).then(function(user) {
+    }).then(function (user) {
         // search for homeUni and homeCountry wiki as well as exchange uni wiki
         models.sequelize.Promise.all([
             Wiki.findAll({
@@ -83,14 +83,13 @@ exports.getCustomizedRecommendation = function(req, res) {
                     }
                 }]
             })
-        ]).spread(function(allWikis, homeUniversity, homeCountry, exchange) {
+        ]).spread(function (allWikis, homeUniversity, homeCountry, exchange) {
             /*
-                To store all country wiki -->
-                    this is a dirty fix as the bootstrapped db is not correctly set up
-                    for uni and country
-            */
+             To store all country wiki -->
+             this is a dirty fix as the bootstrapped db is not correctly set up
+             for uni and country
+             */
             var countryArray = [];
-
 
             if (!!homeUniversity) {
                 result.push({
@@ -121,7 +120,7 @@ exports.getCustomizedRecommendation = function(req, res) {
                 });
 
                 models.sequelize.Promise.all(exchangeUnis).then(exUni => {
-                    for (var i=0; i<exUni.length; i++) {
+                    for (var i = 0; i < exUni.length; i++) {
                         if (!!exUni[i]) {
                             countryArray.push(exUni[i].countryCode);
 
@@ -136,9 +135,7 @@ exports.getCustomizedRecommendation = function(req, res) {
 
                     var allCountry = countryArray.map(countryCode => {
                         // find list of exchange universities
-
                         return models.Country.findOne({
-
                             attributes: ['name', 'logoImage'],
                             where: {
                                 alpha2Code: countryCode
@@ -147,7 +144,7 @@ exports.getCustomizedRecommendation = function(req, res) {
                     });
 
                     models.sequelize.Promise.all(allCountry).then(countries => {
-                        for (var i=0; i<countries.length; i++) {
+                        for (var i = 0; i < countries.length; i++) {
                             if (!!countries[i] && shouldAdd(result, countries[i].name)) {
                                 result.push({
                                     imageUrl: countries[i].logoImage,
@@ -158,7 +155,7 @@ exports.getCustomizedRecommendation = function(req, res) {
 
                         var recommendations = [];
                         var recommendationNumber = Math.min(result.length, 6);
-                        for (var i=0; i<recommendationNumber; i++) {
+                        for (var i = 0; i < recommendationNumber; i++) {
                             recommendations.push(result[i])
                         }
 
@@ -169,7 +166,7 @@ exports.getCustomizedRecommendation = function(req, res) {
                                 allWikis: allWikis
                             });
                     });
-                }).catch(function(err) {
+                }).catch(function (err) {
                     resError(res, err);
                 });
             } else {
@@ -180,7 +177,7 @@ exports.getCustomizedRecommendation = function(req, res) {
                         where: {
                             alpha2Code: countryArray[0].countryCode
                         }
-                    }).then(function(country) {
+                    }).then(function (country) {
                         result.push({
                             imageUrl: country.logoImage,
                             name: country.name
@@ -192,7 +189,7 @@ exports.getCustomizedRecommendation = function(req, res) {
                                 wiki: result,
                                 allWikis: allWikis
                             });
-                    }).catch(function(err) {
+                    }).catch(function (err) {
                         resError(res, err);
                     });
 
@@ -205,7 +202,7 @@ exports.getCustomizedRecommendation = function(req, res) {
                         });
                 }
             }
-        }).catch(function(err) {
+        }).catch(function (err) {
             resError(res, err);
         });
     });
@@ -213,11 +210,11 @@ exports.getCustomizedRecommendation = function(req, res) {
 
 
 /*********************************
-    Create and Read for Wiki
-*********************************/
+ Create and Read for Wiki
+ *********************************/
 
 // user get specific wiki page, if present, return a list of latest section versions
-exports.getWiki = function(req, res) {
+exports.getWiki = function (req, res) {
     var query = req.query;
     var historyArray = null;    // to store parsed history
 
@@ -244,7 +241,7 @@ exports.getWiki = function(req, res) {
                 attributes: ['id', 'displayVersionNumber', 'totalVersionCount', 'sectionIndex'],
                 order: '`sectionIndex` ASC'
             }]
-        }).then(function(wiki) {
+        }).then(function (wiki) {
             if (!wiki) {
                 return res.status(404)
                     .json({
@@ -259,7 +256,7 @@ exports.getWiki = function(req, res) {
 
                 // process historyArray if present -- format: [{ sectionIndex: a, versionIndex: b }, ...]
                 if (!!historyArray) {
-                    for (var i=0; i<historyArray.length; i++) {
+                    for (var i = 0; i < historyArray.length; i++) {
                         // if not numerical, return false
                         if (isNaN(historyArray[i].sectionIndex) || isNaN(historyArray[i].versionIndex)) {
                             invalidError(res);
@@ -302,28 +299,28 @@ exports.getWiki = function(req, res) {
                 // increase wiki view count
                 wiki.update({
                     view: wiki.view + 1
-                }).then(function(updatedWiki) {
+                }).then(function (updatedWiki) {
                     return res.status(200)
                         .json({
                             status: 'success',
                             wiki: updatedWiki,
                             sections: versions
                         });
-                }).catch(function(err) {
+                }).catch(function (err) {
                     resError(res, err);
                 });
-            }).catch(function(err) {
+            }).catch(function (err) {
                 resError(res, err);
             });
 
-        }).catch(function(err) {
+        }).catch(function (err) {
             resError(res, err);
         });
     }
-}
+};
 
 // user create a new wiki page
-exports.createNewWiki = function(req, res) {
+exports.createNewWiki = function (req, res) {
     // check if wiki name exists
     if (!req.body.wikiTitle) {
         invalidError(res);
@@ -333,20 +330,19 @@ exports.createNewWiki = function(req, res) {
             where: {
                 title: req.body.wikiTitle
             }
-        }).then(function(existingWiki) {
+        }).then(function (existingWiki) {
             if (!!existingWiki) {
                 return res.status(409)
                     .json({
                         status: 'fail',
-                        message:'wiki already exists',
+                        message: 'wiki already exists',
                         wiki: existingWiki
                     });
             } else {
                 Wiki.create({
                     title: req.body.wikiTitle,
                     UserId: req.user.id
-
-                }).then(function(wiki){
+                }).then(function (wiki) {
 
                     return res.status(200)
                         .json({
@@ -355,19 +351,19 @@ exports.createNewWiki = function(req, res) {
                         });
                 });
             }
-        }).catch(function(err){
+        }).catch(function (err) {
             resError(res, err);
         });
     }
-}
+};
 
 
 /******************************************
-    Create and Delete for WikiSection
-******************************************/
+ Create and Delete for WikiSection
+ ******************************************/
 
 // user create a new wikiSection page, together with first version
-exports.createNewSection = function(req, res) {
+exports.createNewSection = function (req, res) {
     // check if wiki name exists
     if (!req.body.wikiTitle || !req.body.versionTitle || !req.body.content) {
         invalidError(res);
@@ -383,12 +379,12 @@ exports.createNewSection = function(req, res) {
                 attributes: ['id', 'displayVersionNumber'],
                 order: '`sectionIndex` ASC'
             }]
-        }).then(function(existingWiki) {
+        }).then(function (existingWiki) {
             if (!existingWiki) {
                 return res.status(404)
                     .json({
                         status: 'fail',
-                        message:'wiki doesn\'t exist'
+                        message: 'wiki doesn\'t exist'
                     });
             } else {
                 var displayedSectionVersionArray = existingWiki.WikiSections.map(section => {
@@ -413,12 +409,12 @@ exports.createNewSection = function(req, res) {
 
                 models.sequelize.Promise.all(displayedSectionVersionArray).then(versions => {
                     // check if duplicate section title exist
-                    for (var i=0; i<versions.length; i++) {
+                    for (var i = 0; i < versions.length; i++) {
                         if (versions[i].title === req.body.versionTitle) {
                             return res.status(409)
                                 .json({
                                     status: 'fail',
-                                    message:'wiki section already exist'
+                                    message: 'wiki section already exist'
                                 });
                         }
                     }
@@ -426,10 +422,10 @@ exports.createNewSection = function(req, res) {
                     // filter content -> disallow content less than 10 char?
                     if (req.body.content.length <= 10) {
                         return res.status(409)
-                                .json({
-                                    status: 'fail',
-                                    message: 'too little content'
-                                });
+                            .json({
+                                status: 'fail',
+                                message: 'too little content'
+                            });
                     } else {
                         // create new wikiSection
                         Section.create({
@@ -439,7 +435,7 @@ exports.createNewSection = function(req, res) {
                             sectionType: 'OpenToEdit',  // default value for now...
                             WikiId: existingWiki.WikiId,
                             UserId: req.user.id
-                        }).then(function(section) {
+                        }).then(function (section) {
                             // create first version and assign it to wikiSection
                             Version.create({
                                 title: req.body.versionTitle,
@@ -447,37 +443,37 @@ exports.createNewSection = function(req, res) {
                                 versionNumber: 1,   // only one exists
                                 WikiSectionId: section.id,
                                 UserId: req.user.id
-                            }).then(function(version) {
+                            }).then(function (version) {
 
                                 // link the new section to Wiki
-                                existingWiki.addWikiSection(section).then(function(wiki) {
+                                existingWiki.addWikiSection(section).then(function (wiki) {
                                     versions.push(version);
                                     return res.status(200)
                                         .json({
                                             status: 'success',
                                             message: 'creation succeed'
                                         });
-                                }).catch(function(err) {
+                                }).catch(function (err) {
                                     resError(res, err);
                                 });
-                            }).catch(function(err) {
+                            }).catch(function (err) {
                                 resError(res, err);
                             });
-                        }).catch(function(err) {
+                        }).catch(function (err) {
                             resError(res, err);
                         });
                     }
-                }).catch(function(err) {
+                }).catch(function (err) {
                     resError(res, err);
                 });
             }
-        }).catch(function(err) {
+        }).catch(function (err) {
             resError(res, err);
         });
     }
-}
+};
 
-exports.deleteSection = function(req, res) {
+exports.deleteSection = function (req, res) {
     // WARNING: no user role assigned, hence any user can perform deletion now...
     // later need to check user role once admin is assigned check if wiki name exists
     if (!req.body.wikiTitle || !req.body.sectionIndex) {
@@ -489,12 +485,12 @@ exports.deleteSection = function(req, res) {
             where: {
                 title: req.body.wikiTitle
             }
-        }).then(function(wiki) {
+        }).then(function (wiki) {
             if (!wiki) {
                 return res.status(404)
                     .json({
                         status: 'fail',
-                        message:'wiki doesn\'t exist'
+                        message: 'wiki doesn\'t exist'
                     });
             }
 
@@ -503,12 +499,12 @@ exports.deleteSection = function(req, res) {
                     WikiId: wiki.id,
                     sectionIndex: req.body.sectionIndex
                 }
-            }).then(function(wikiSection) {
+            }).then(function (wikiSection) {
                 if (!wikiSection) {
                     return res.status(404)
                         .json({
                             status: 'fail',
-                            message:'wiki section doesn\'t exist'
+                            message: 'wiki section doesn\'t exist'
                         });
                 }
 
@@ -517,26 +513,26 @@ exports.deleteSection = function(req, res) {
                     where: {
                         WikiSectionId: wikiSection.id
                     }
-                }).then(function(affectedRows) {
+                }).then(function (affectedRows) {
                     wikiSection.destroy();
                     res.send({
                         status: 'success'
                     });
-                }).catch(function(err) {
+                }).catch(function (err) {
                     resError(res, err);
                 });
             });
         });
     }
-}
+};
 
 
 /**********************************************
-    Create and Read for WikiSectionVersion
-**********************************************/
+ Create and Read for WikiSectionVersion
+ **********************************************/
 
 // user upload a new version of wiki section
-exports.createNewSectionVersion = function(req, res) {
+exports.createNewSectionVersion = function (req, res) {
     // this part not sure yet... but quick solution is:
 
     // create new version, hence increase version number and
@@ -562,12 +558,12 @@ exports.createNewSectionVersion = function(req, res) {
                     sectionIndex: req.body.sectionIndex
                 }
             }]
-        }).then(function(wiki) {
+        }).then(function (wiki) {
             if (!wiki) {
                 return res.status(404)
                     .json({
                         status: 'fail',
-                        message:'wiki doesn\'t exist'
+                        message: 'wiki doesn\'t exist'
                     });
 
             }
@@ -577,29 +573,29 @@ exports.createNewSectionVersion = function(req, res) {
                     versionNumber: wiki.WikiSections[0].displayVersionNumber,
                     WikiSectionId: wiki.WikiSections[0].id
                 }
-            }).then(function(currentVersion) {
+            }).then(function (currentVersion) {
                 if (currentVersion.title === req.body.sectionTitle &&
                     currentVersion.content === req.body.content) {
                     return res.status(304)
-                            .json({
-                                status: 'fail',
-                                message: 'Content is the same as previous version.'
-                            });
+                        .json({
+                            status: 'fail',
+                            message: 'Content is the same as previous version.'
+                        });
                 } else {
                     /*
-                        >>>>>>>>>>>>>>>>>>>>  TODO  <<<<<<<<<<<<<<<<<<<<<
-                            check if user has the permission to edit
-                            based on User.role, User.credibility and
-                            WikiSection.sectionType
-                        >>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<
-                    */
+                     >>>>>>>>>>>>>>>>>>>>  TODO  <<<<<<<<<<<<<<<<<<<<<
+                     check if user has the permission to edit
+                     based on User.role, User.credibility and
+                     WikiSection.sectionType
+                     >>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<
+                     */
                     // filter content -> disallow content less than 10 char?
                     if (req.body.content.length <= 10) {
                         return res.status(409)
-                                .json({
-                                    status: 'fail',
-                                    message: 'too little content'
-                                });
+                            .json({
+                                status: 'fail',
+                                message: 'too little content'
+                            });
                     } else {
                         Version.create({
                             title: req.body.sectionTitle,
@@ -607,13 +603,13 @@ exports.createNewSectionVersion = function(req, res) {
                             versionNumber: wiki.WikiSections[0].totalVersionCount + 1,
                             WikiSectionId: wiki.WikiSections[0].id,
                             UserId: req.user.id
-                        }).then(function(version) {
+                        }).then(function (version) {
 
                             // update WikiSection's display with the latest version
                             wiki.WikiSections[0].update({
                                 displayVersionNumber: version.versionNumber,
                                 totalVersionCount: wiki.WikiSections[0].totalVersionCount + 1
-                            }).then(function(updatedSection) {
+                            }).then(function (updatedSection) {
                                 return res.status(200)
                                     .json({
                                         status: 'success',
@@ -621,14 +617,14 @@ exports.createNewSectionVersion = function(req, res) {
                                         version: version
                                     });
                                 /*
-                                    >>>>>>>>>>>>>>>>>>>>  Consider  <<<<<<<<<<<<<<<<<<<<<
-                                        maybe can update author's credibility here?
-                                    >>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<
-                                */
-                            }).catch(function(err) {
+                                 >>>>>>>>>>>>>>>>>>>>  Consider  <<<<<<<<<<<<<<<<<<<<<
+                                 maybe can update author's credibility here?
+                                 >>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<
+                                 */
+                            }).catch(function (err) {
                                 resError(res, err);
                             });
-                        }).catch(function(err) {
+                        }).catch(function (err) {
                             resError(res, err);
                         });
                     }
@@ -636,13 +632,13 @@ exports.createNewSectionVersion = function(req, res) {
 
             });
 
-        }).catch(function(err) {
+        }).catch(function (err) {
             resError(res, err);
         });
     }
-}
+};
 
-exports.getWikiSectionAllVersions = function(req, res) {
+exports.getWikiSectionAllVersions = function (req, res) {
     var query = req.query;
 
     if (!query.q || !query.sectionIndex) {
@@ -654,12 +650,12 @@ exports.getWikiSectionAllVersions = function(req, res) {
             where: {
                 title: query.q
             }
-        }).then(function(wiki) {
+        }).then(function (wiki) {
             if (!wiki) {
                 return res.status(404)
                     .json({
                         status: 'fail',
-                        message:'wiki doesn\'t exist'
+                        message: 'wiki doesn\'t exist'
                     });
             }
 
@@ -668,34 +664,38 @@ exports.getWikiSectionAllVersions = function(req, res) {
                     WikiId: wiki.id,
                     sectionIndex: query.sectionIndex
                 }
-            }).then(function(wikiSection) {
+            }).then(function (wikiSection) {
                 if (!wikiSection) {
                     return res.status(404)
                         .json({
                             status: 'fail',
-                            message:'wiki section doesn\'t exist'
+                            message: 'wiki section doesn\'t exist'
                         });
                 }
 
                 Version.findAll({
                     where: {
                         WikiSectionId: wikiSection.id
-                    }
-                }).then(function(allVersions) {
+                    },
+                    include: [{
+                        model: User,
+                        attributes: ['id', 'profilePictureUrl', 'name']
+                    }]
+                }).then(function (allVersions) {
                     res.send({
                         status: 'success',
                         versions: allVersions
                     });
-                }).catch(function(err) {
+                }).catch(function (err) {
                     resError(res, err);
                 });
             });
         });
     }
-}
+};
 
 // user vote up or done for specific version of WikiSectionVersion
-exports.vote = function(req, res) {
+exports.vote = function (req, res) {
     // edit user's previous vote or create new Vote if none exists
     // change WikiSectionVersion's score
     // change author's credibility
@@ -725,7 +725,7 @@ exports.vote = function(req, res) {
                     }
                 }]
             })
-        ]).spread(function(wiki, section){
+        ]).spread(function (wiki, section) {
             console.log(wiki);
             console.log(section);
             if (!wiki || !section || !section.versions) {
@@ -741,16 +741,16 @@ exports.vote = function(req, res) {
                         WikiSectionVersionId: section.versions[0].id,
                         UserId: req.user.id
                     }
-                }).then(function(vote) {
+                }).then(function (vote) {
                     var userComment = req.body.comment || "";
                     // change vote and version score
                     if (!!vote) {
                         /*
-                            >>>>>>>>>>>>>>>>>>>>  TODO  <<<<<<<<<<<<<<<<<<<<<
-                                user a weighted sum to calculate based on
-                                User.role (maybe?) and User.credibility
-                            >>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<
-                        */
+                         >>>>>>>>>>>>>>>>>>>>  TODO  <<<<<<<<<<<<<<<<<<<<<
+                         user a weighted sum to calculate based on
+                         User.role (maybe?) and User.credibility
+                         >>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<
+                         */
                         var previousScore = vote.score;
                         models.sequelize.Promise.all([
                             vote.update({
@@ -760,13 +760,13 @@ exports.vote = function(req, res) {
                             section.versions[0].update({
                                 score: section.versions[0].score - previousScore + req.body.vote
                             })
-                        ]).spread(function(newVote, newSection){
+                        ]).spread(function (newVote, newSection) {
                             console.log(newVote);
                             console.log(newSection);
                             return res.status(200)
-                                    .json({
-                                        status: 'success'
-                                    });
+                                .json({
+                                    status: 'success'
+                                });
                         });
 
                     } else {
@@ -777,38 +777,38 @@ exports.vote = function(req, res) {
                             WikiSectionVersionId: section.versions[0].id,
 
                             UserId: req.user.id
-                        }).then(function(newVote) {
+                        }).then(function (newVote) {
                             /*
-                                >>>>>>>>>>>>>>>>>>>>  TODO  <<<<<<<<<<<<<<<<<<<<<
-                                    user a weighted sum to calculate based on
-                                    User.role (maybe?) and User.credibility
-                                >>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<
-                            */
+                             >>>>>>>>>>>>>>>>>>>>  TODO  <<<<<<<<<<<<<<<<<<<<<
+                             user a weighted sum to calculate based on
+                             User.role (maybe?) and User.credibility
+                             >>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<
+                             */
                             section.versions[0].update({
                                 score: section.versions[0].score + newVote.score
-                            }).then(function(updatedVersion) {
+                            }).then(function (updatedVersion) {
                                 console.log(updatedVersion);
                                 return res.status(200)
                                     .json({
                                         status: 'success'
                                     });
-                            }).catch(function(err) {
+                            }).catch(function (err) {
                                 resError(res, err);
                             });
 
-                        }).catch(function(err) {
+                        }).catch(function (err) {
                             resError(res, err);
                         });
                     }
-                }).catch(function(err) {
+                }).catch(function (err) {
                     resError(res, err);
                 });
             }
-        }).catch(function(err) {
+        }).catch(function (err) {
             resError(res, err);
         });
     }
-}
+};
 
 function invalidError(res) {
     return res.status(400).json({

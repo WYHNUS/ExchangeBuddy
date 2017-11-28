@@ -1,0 +1,41 @@
+@import '~scss/common/mixins';
+@import '~scss/common/colors';
+
+.emoji-select {
+  display: flex; flex-direction: row;
+  .available-emojis { display: none; }
+  .shock-face { display: none;}
+  .normal-face { display: flex; }
+  &:hover .available-emojis { display: flex; }
+  &:hover .shock-face { display:flex; }
+  &:hover .normal-face { display:none; }
+}
+
+.comments-select {
+  display:flex;
+  .no-speak { display: flex; }
+  .speak { display: none; }
+  &:hover .no-speak { display: none; }
+  &:hover .speak { display: flex; transform: scaleX(-1); -moz-transform: scaleX(-1); -webkit-transform: scaleX(-1); -ms-transform: scaleX(-1); }
+}
+
+.available-emojis {
+  display: flex;
+  align-items: center;
+}
+
+.emoji-display {
+  justify-content: flex-end;
+
+  .emoji { padding: 16px; }
+}
+
+.bubble{
+  height: 25px;
+  background: palette(Grey, 200);
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}

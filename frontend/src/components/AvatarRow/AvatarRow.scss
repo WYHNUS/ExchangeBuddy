@@ -1,7 +1,16 @@
+@import '~scss/common/mixins';
+
 .avatarrow {
-  display: flex; flex-direction: row;
+  display: flex; flex-direction: row; align-items: center;
+
+  &.valign-top { align-items: flex-start; }
+  &.valign-middle { align-items: center; }
+  &.valign-bottom { align-items: flex-end; }
+  &.collapse { 
+    @include media-xs-only { flex-direction: column; align-items: center; text-align: center; }
+  }
 
   .avatar { padding: 12px; }
   .body { padding: 12px; width: 100%; }
+  .right-icon { flex-shrink: 1; }
 }
-  

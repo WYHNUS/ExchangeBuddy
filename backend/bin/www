@@ -1,23 +1,17 @@
 #!/usr/bin/env node
 var debug = require('debug')('backend');
 var app = require('../app');
-var https = require('https');
+var http = require('http');
 
 var models = require('../models');
 var fs = require('fs');
 
-var options = {
-    key: fs.readFileSync('bin/key.pem'),
-    cert: fs.readFileSync('bin/cert.pem')
-}
-
 app.set('port', process.env.PORT || 3001);
-var httpsServer = https.createServer(options, app);
+var httpServer = http.createServer(app);
 
 // set up socket
-var io = require('socket.io')(httpsServer);
-require('../socket')(io);
+var io = require('socket.io')(httpServer);
 
 models.sequelize.sync({force: false}).then(function () {
-    httpsServer.listen(app.get('port'));
+    httpServer.listen(app.get('port'));
 });

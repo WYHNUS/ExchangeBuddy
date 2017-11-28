@@ -1,0 +1,11 @@
+@import '~scss/common/mixins';
+
+.group-header {
+  h2 { margin: 0 0 10px; }
+  p { margin: 0; }
+
+  @include media-xs-only {
+    h2 { font-size: 20px; font-weight: 400; }
+    p { font-size: 14px; }
+  }
+}
